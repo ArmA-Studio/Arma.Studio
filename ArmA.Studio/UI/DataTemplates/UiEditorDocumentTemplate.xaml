@@ -1,0 +1,153 @@
+﻿<DataTemplate
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
+      xmlns:SolutionUtil="clr-namespace:ArmA.Studio.SolutionUtil;assembly=ArmA.Studio"
+      xmlns:ev="clr-namespace:ArmA.Studio.UI.Attached.Eventing;assembly=ArmA.Studio"
+      xmlns:ae="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
+      xmlns:rvc="clr-namespace:RealVirtuality.Config.Control;assembly=RealVirtuality"
+      mc:Ignorable="d" DataType="{x:Type SolutionUtil:Solution}">
+    <Grid>
+        <Popup PlacementTarget="{Binding ElementName=TextEditor}" ev:Initialized.Command="{Binding CmdIntelliSensePopupInitialized}" ev:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+            <Grid Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="{Binding IntelliSenseCurrentWord}" Margin="4"/>
+                <ListView Grid.Row="1" MaxHeight="256" MinWidth="80" ItemsSource="{Binding IntelliSenseEntries}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="16"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{Binding IconPath}" Width="16" MaxHeight="16" VerticalAlignment="Center" Margin="0 0 2 0"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Text}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Popup>
+        <TabControl SelectedIndex="{Binding CurrentTabIndex}" TabStripPlacement="Left" Padding="0">
+            <TabItem Padding="2 4">
+                <TabItem.Header>
+                    <TextBlock Text="Config">
+                        <TextBlock.LayoutTransform>
+                            <RotateTransform Angle="90"/>
+                        </TextBlock.LayoutTransform>
+                    </TextBlock>
+                </TabItem.Header>
+                <ae:TextEditor x:Name="TextEditor" Document="{Binding Document}" SyntaxHighlighting="{Binding SyntaxDefinition}" ev:TextChanged.Command="{Binding CmdTextChanged}" ev:KeyDown.Command="{Binding CmdKeyDown}" ev:KeyDown.KeyDownHandled="{Binding CmdKeyDownHandledValue}" ShowLineNumbers="True" FontFamily="Consolas" ev:Initialized.Command="{Binding CmdTextEditorInitialized}" ev:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}" ev:PreviewMouseDown.Command="{Binding CmdEditorPreviewMouseDown}"></ae:TextEditor>
+            </TabItem>
+            <TabItem Padding="2 4">
+                <TabItem.Header>
+                    <TextBlock Text="Editor">
+                        <TextBlock.LayoutTransform>
+                            <RotateTransform Angle="90"/>
+                        </TextBlock.LayoutTransform>
+                    </TextBlock>
+                </TabItem.Header>
+                <ScrollViewer Grid.Row="0" Height="Auto" Width="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+                    <ScrollViewer.Template>
+                        <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Column="1" BorderThickness="0,1,1,1">
+                                    <ScrollContentPresenter />
+                                </Border>
+                                <ScrollBar x:Name="PART_VerticalScrollBar" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                                <Grid Grid.Row="1" Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Height="17" Grid.Column="0" BorderThickness="0" Width="32" Margin="1" Text="{Binding CurrentZoom}"/>
+                                    <TextBox Height="17" Grid.Column="1" BorderThickness="0" Width="32" Margin="1" Text="{Binding GridScale}"/>
+                                    <ScrollBar Grid.Column="2" x:Name="PART_HorizontalScrollBar" Orientation="Horizontal" Value="{TemplateBinding HorizontalOffset}" Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+                                    <ToggleButton IsChecked="{Binding GridSnapEnabled}">
+                                        <Image>
+                                            <Image.Style>
+                                                <Style TargetType="Image">
+                                                    <Setter Property="Source" Value="/ArmA.Studio;component/Resources/SnapToGrid/SnapGridOff_18x15.png"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding GridSnapEnabled}" Value="True">
+                                                            <Setter Property="Source" Value="/ArmA.Studio;component/Resources/SnapToGrid/SnapGridOn_18x15.png"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+                                    </ToggleButton>
+                                </Grid>
+                            </Grid>
+                        </ControlTemplate>
+                    </ScrollViewer.Template>
+                    <ItemsControl ItemsSource="{Binding Controls}">
+                        <ItemsControl.Resources>
+                            <DataTemplate DataType="rvc:ControlBase">
+                                
+                            </DataTemplate>
+                        </ItemsControl.Resources>
+                    <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas Background="White" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}">
+                                    <Canvas.LayoutTransform>
+                                        <ScaleTransform ScaleX="{Binding CurrentZoom, FallbackValue=1}" ScaleY="{Binding CurrentZoom, FallbackValue=1}"/>
+                                    </Canvas.LayoutTransform>
+                                    <Canvas.Style>
+                                        <Style TargetType="Canvas">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DisplayGrid}" Value="True">
+                                                    <Setter Property="Background">
+                                                        <Setter.Value>
+                                                            <VisualBrush TileMode="Tile" Viewport="{Binding}" ViewportUnits="Absolute" Viewbox="0,0,10,10" ViewboxUnits="Absolute">
+                                                                <VisualBrush.Visual>
+                                                                    <Path Data="M 0 0 L 0 10 M 0 0 L 10 0" Stroke="white" Opacity="0.1"/>
+                                                                </VisualBrush.Visual>
+                                                            </VisualBrush>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding DisplayImage}" Value="True">
+                                                    <Setter Property="Background">
+                                                        <Setter.Value>
+                                                            <ImageBrush ImageSource="/ArmA.Studio;component/Resources/back1.jpg"/>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Canvas.Style>
+                                </Canvas>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Rectangle Fill="Red" Width="{Binding Width}" Height="{Binding Height}" Canvas.Left="{Binding PositionX}" Canvas.Top="{Binding PositionY}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="Canvas.Top" Value="{Binding Path=Y}" />
+                                <Setter Property="Canvas.Left" Value="{Binding Path=X}" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                    </ItemsControl>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</DataTemplate>

@@ -1,0 +1,185 @@
+﻿<Window x:Class="ArmA.Studio.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ArmA.Studio"
+        xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:ads="clr-namespace:Xceed.Wpf.AvalonDock.Themes;assembly=Xceed.Wpf.AvalonDock.Themes.ArmAStudio"
+        xmlns:dt="clr-namespace:ArmA.Studio.UI.DataTemplates"
+        xmlns:ev="clr-namespace:ArmA.Studio.UI.Attached.Eventing"
+        xmlns:win="clr-namespace:System.Windows;assembly=PresentationCore"
+        xmlns:p="clr-namespace:ArmA.Studio.Properties"
+        mc:Ignorable="d"
+        Title="ArmA.Studio"
+        Height="{Binding WindowHeight, Mode=TwoWay}"
+        Width="{Binding WindowWidth, Mode=TwoWay}"
+        WindowState="{Binding WindowCurrentState, Mode=TwoWay}"
+        Top="{Binding WindowTop, Mode=TwoWay}"
+        Left="{Binding WindowLeft, Mode=TwoWay}"
+        DataContext="{x:Static local:Workspace.CurrentWorkspace}"
+        Icon="Resources/Logo.ico"
+        ev:Closing.Command="{Binding CmdMainWindowClosing}">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{x:Static p:Localization.MenuItem_File}">
+                <MenuItem Header="{x:Static p:Localization.MenuItem_Save}" Command="{Binding CmdSave}">
+                    <MenuItem.Icon>
+                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/Save/Save.ico"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static p:Localization.MenuItem_SaveAll}" Command="{Binding CmdSaveAll}">
+                    <MenuItem.Icon>
+                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/SaveAll/SaveAll.ico"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="{x:Static p:Localization.MenuItem_SwitchWorkspace}" Command="{Binding CmdSwitchWorkspace}">
+                    <MenuItem.Icon>
+                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/SwitchSourceOrTarget/SwitchSourceOrTarget_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static p:Localization.MenuItem_Properties}" Command="{Binding CmdShowProperties}">
+                    <MenuItem.Icon>
+                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/Settings/Settings.ico"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="{x:Static p:Localization.MenuItem_Quit}" Command="{Binding CmdQuit}">
+                    <MenuItem.Icon>
+                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/Exit/Exit_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="{x:Static p:Localization.MenuItem_Panels}" ItemsSource="{Binding PanelsAvailable}">
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="MenuItem">
+                        <Setter Property="Command" Value="{Binding DataContext.CmdDisplayPanel, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"/>
+                        <Setter Property="CommandParameter" Value="{Binding}"/>
+                        <Setter Property="IsCheckable" Value="True"/>
+                        <Setter Property="IsChecked">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource CollectionContainsConverter}" Mode="OneWay">
+                                    <Binding Path="DataContext.PanelsDisplayed" Mode="OneWay" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}"/>
+                                    <Binding Mode="OneWay"/>
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Header" Value="{Binding Title}"/>
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+            </MenuItem>
+            <MenuItem Header="{x:Static p:Localization.MenuItem_Help}">
+                <MenuItem Header="{x:Static p:Localization.MenuItem_Licenses}" Command="{Binding CmdDisplayLicensesDialog}"/>
+            </MenuItem>
+        </Menu>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBarTray.Resources>
+                <Style TargetType="Image">
+                    <Setter Property="Height" Value="16"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="False">
+                            <Setter Property="Opacity" Value="0.25"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ToolBarTray.Resources>
+            <ToolBar x:Name="ToolBar_FileIO">
+                <Button IsEnabled="{Binding IsDebuggerAttached}" Command="{Binding CmdSave}">
+                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/Save/Save.ico"/>
+                </Button>
+                <Button IsEnabled="{Binding IsDebuggerAttached}" Command="{Binding CmdSaveAll}">
+                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/SaveAll/SaveAll.ico"/>
+                </Button>
+            </ToolBar>
+            <ToolBar x:Name="ToolBar_Debugger" DataContext="{Binding DebugContext}">
+                <Button Command="{Binding CmdRunDebuggerClick}">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{StaticResource BoolOrMultiConverter}">
+                            <Binding Path="IsDebuggerAttached" Converter="{StaticResource BoolInvertConverter}"/>
+                            <Binding Path="IsPaused"/>
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="/ArmA.Studio;component/Resources/Pictograms/Run/Run.ico"/>
+                        <TextBlock Grid.Column="1">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="{x:Static p:Localization.Debugger_Start}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsDebuggerAttached}" Value="true">
+                                            <Setter Property="Text" Value="{x:Static p:Localization.Debugger_Continue}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                </Button>
+                <Separator/>
+                <Button IsEnabled="{Binding IsDebuggerAttached}" ToolTip="{x:Static p:Localization.Debugger_Pause_Tooltip}" Command="{Binding CmdPauseDebugger}">
+                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/Pause/Pause.ico"/>
+                </Button>
+                <Button IsEnabled="{Binding IsDebuggerAttached}" ToolTip="{x:Static p:Localization.Debugger_Stop_Tooltip}" Command="{Binding CmdStopDebugger}">
+                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/Stop/Stop.ico"/>
+                </Button>
+                <Separator/>
+                <Button IsEnabled="{Binding IsDebuggerAttached}" ToolTip="{x:Static p:Localization.Debugger_StepInto_Tooltip}" Command="{Binding CmdStepInto}">
+                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/StepIn/StepIn_16x.png"/>
+                </Button>
+                <Button IsEnabled="{Binding IsDebuggerAttached}" ToolTip="{x:Static p:Localization.Debugger_StepOver_Tooltip}" Command="{Binding CmdStepOver}">
+                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/StepOver/StepOver_16x.png"/>
+                </Button>
+                <Button IsEnabled="{Binding IsDebuggerAttached}" ToolTip="{x:Static p:Localization.Debugger_StepOut_Tooltip}" Command="{Binding CmdStepOut}">
+                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/StepOut/StepOut_16x.png"/>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <ad:DockingManager
+            ev:Initialized.Command="{Binding CmdDockingManagerInitialized}"
+            ev:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+            AnchorablesSource="{Binding PanelsDisplayed}"
+            DocumentsSource="{Binding DocumentsDisplayed}">
+            <ad:DockingManager.LayoutUpdateStrategy>
+                <local:LayoutUpdateStrategy/>
+            </ad:DockingManager.LayoutUpdateStrategy>
+            <!--<ad:DockingManager.Theme>
+                <ads:ArmAStudioTheme/>
+            </ad:DockingManager.Theme>-->
+            <ad:DockingManager.LayoutItemTemplateSelector>
+                <dt:AvalonDockTemplateSelector/>
+            </ad:DockingManager.LayoutItemTemplateSelector>
+            <ad:DockingManager.LayoutItemContainerStyleSelector>
+                <dt:AvalonDockStyleSelector>
+                    <dt:AvalonDockStyleSelector.DocumentBaseStyle>
+                        <Style TargetType="{x:Type ad:LayoutDocumentItem}">
+                            <Setter Property="Title" Value="{Binding Model.Title}"/>
+                            <Setter Property="IconSource" Value="{Binding Model.IconSource}"/>
+                            <Setter Property="ContentId" Value="{Binding Model.ContentId}"/>
+                            <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}"/>
+                            <Setter Property="IsActive" Value="{Binding Model.IsActive, Mode=TwoWay}"/>
+                            <Setter Property="Visibility" Value="{Binding Model.CurrentVisibility, Mode=TwoWay}"/>
+                            <Setter Property="CloseCommand" Value="{Binding Model.CmdClosing}"/>
+                        </Style>
+                    </dt:AvalonDockStyleSelector.DocumentBaseStyle>
+                    <dt:AvalonDockStyleSelector.PanelBaseStyle>
+                        <Style TargetType="{x:Type ad:LayoutAnchorableItem}">
+                            <Setter Property="Title" Value="{Binding Model.Title}"/>
+                            <Setter Property="IconSource" Value="{Binding Model.IconSource}"/>
+                            <Setter Property="ContentId" Value="{Binding Model.ContentId}"/>
+                            <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}"/>
+                            <Setter Property="IsActive" Value="{Binding Model.IsActive, Mode=TwoWay}"/>
+                            <Setter Property="Visibility" Value="{Binding Model.CurrentVisibility, Mode=TwoWay}"/>
+                        </Style>
+                    </dt:AvalonDockStyleSelector.PanelBaseStyle>
+                </dt:AvalonDockStyleSelector>
+            </ad:DockingManager.LayoutItemContainerStyleSelector>
+            <ad:LayoutRoot>
+            </ad:LayoutRoot>
+        </ad:DockingManager>
+    </DockPanel>
+</Window>

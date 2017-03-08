@@ -1,0 +1,2503 @@
+﻿<?xml version="1.0"?>
+<ArrayOfSqfDefinition>
+	<SqfDefinition Kind="Type" Name="SCALAR"/>
+	<SqfDefinition Kind="Type" Name="BOOL"/>
+	<SqfDefinition Kind="Type" Name="ARRAY"/>
+	<SqfDefinition Kind="Type" Name="STRING"/>
+	<SqfDefinition Kind="Type" Name="NOTHING"/>
+	<SqfDefinition Kind="Type" Name="ANY"/>
+	<SqfDefinition Kind="Type" Name="NAMESPACE"/>
+	<SqfDefinition Kind="Type" Name="NaN"/>
+	<SqfDefinition Kind="Type" Name="IF"/>
+	<SqfDefinition Kind="Type" Name="WHILE"/>
+	<SqfDefinition Kind="Type" Name="FOR"/>
+	<SqfDefinition Kind="Type" Name="SWITCH"/>
+	<SqfDefinition Kind="Type" Name="EXCEPTION"/>
+	<SqfDefinition Kind="Type" Name="WITH"/>
+	<SqfDefinition Kind="Type" Name="CODE"/>
+	<SqfDefinition Kind="Type" Name="OBJECT"/>
+	<SqfDefinition Kind="Type" Name="VECTOR"/>
+	<SqfDefinition Kind="Type" Name="TRANS"/>
+	<SqfDefinition Kind="Type" Name="ORIENT"/>
+	<SqfDefinition Kind="Type" Name="SIDE"/>
+	<SqfDefinition Kind="Type" Name="GROUP"/>
+	<SqfDefinition Kind="Type" Name="TEXT"/>
+	<SqfDefinition Kind="Type" Name="SCRIPT"/>
+	<SqfDefinition Kind="Type" Name="TARGET"/>
+	<SqfDefinition Kind="Type" Name="JCLASS"/>
+	<SqfDefinition Kind="Type" Name="CONFIG"/>
+	<SqfDefinition Kind="Type" Name="DISPLAY"/>
+	<SqfDefinition Kind="Type" Name="CONTROL"/>
+	<SqfDefinition Kind="Type" Name="NetObject"/>
+	<SqfDefinition Kind="Type" Name="SUBGROUP"/>
+	<SqfDefinition Kind="Type" Name="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Type" Name="TASK"/>
+	<SqfDefinition Kind="Type" Name="DIARY_RECORD"/>
+	<SqfDefinition Kind="Type" Name="LOCATION"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="waypointattachobject" RArgType="SCALAR,OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="enableattack" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeaction" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addplayerscores" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="neartargets" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkersizelocal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="campreparefov" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="isflatempty" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfontheightsecondary" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfonth5b" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsettextcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbcolorright" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbdeletecolumn" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsetpictureright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setobjecttextureglobal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setobjectmaterialglobal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="hideselection" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="setforcegeneratorrtd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removecuratoreditableobjects" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="swimindepth" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="setsize" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addgoggles" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setmimic" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="additem" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="disableconversation" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="setfsmvariable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="inareaarray" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="inareaarray" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="inareaarray" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="inareaarray" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetstructuredtext" RArgType="TEXT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setcuratorwaypointcost" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setcuratoreditingareatype" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menusetvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setlightintensity" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="attachobject" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="fademusic" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="getrelpos" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeweaponturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="action" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="fire" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="fire" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvehicleammodef" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="newoverlay" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="backpackspacefor" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="kbreact" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setfatigue" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsetcurselrow" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="setgusts" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="configclasses" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="animatesource" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setdynamicsimulationdistancemult" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="TASK" Name="setsimpletasktarget" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="TASK" Name="setsimpletasktype" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="exec" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="lockwp" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setparticlecircle" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="campreparerelpos" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="findemptyposition" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsettextsecondary" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsetcolumnspos" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbpicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsetcursel" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="animationphase" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setactualcollectivertd" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setcuratorcoef" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menuurl" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetmodelscale" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="addvehicle" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="removemenuitem" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="removemenuitem" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="setobjectarguments" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="getvariable" RArgType="ARRAY,STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="getvariable" RArgType="ARRAY,STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="getvariable" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="getvariable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="getvariable" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="getvariable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="NAMESPACE" Name="getvariable" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="NAMESPACE" Name="getvariable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="getvariable" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="getvariable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="TASK" Name="getvariable" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="getvariable" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="assignasdriver" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbdata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="buttonsetaction" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="settargetage" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="IF" Name="then" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="IF" Name="then" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="ordergetin" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkersize" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="cuttext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="cuttext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="faderadio" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="campreparedive" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="hcgroupparams" RArgType="GROUP"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="forceweaponfire" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="kbhastopic" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsettext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="addteammember" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Binary" LArgType="CODE" Name="foreachmemberteam" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menusetdata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="setlightnings" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enabledynamicsimulation" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="enabledynamicsimulation" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="TASK" Name="setsimpletaskalwaysvisible" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addlivestats" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="updatedrawicon" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="enableaifeature" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="triggerattachobject" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setface" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setrank" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="forceadduniform" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="getdir" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="addmenuitem" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SIDE" Name="setfriend" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="createdisplay" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetpicturecolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menutext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="sendtask" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="engineon" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addweaponglobal" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="linkitem" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="synchronizewaypoint" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="synchronizewaypoint" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="inrangeofartillery" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addownedmine" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="FOR" Name="step" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addheadgear" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="setgroupowner" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="drawicon" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbadd" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsettextright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="cbsetchecked" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="SIDE" Name="revealmine" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setunitloadout" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setunitloadout" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setunitloadout" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="nearroads" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="moveincargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="moveincargo" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="domove" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setnamesound" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="inserteditorobject" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvehicletipars" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlcommit" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbpicture" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbaddcolumn" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsetpicturecolorselectedright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enableautostartuprtd" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setpilotcameratarget" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="ppeffectcommit" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="ppeffectcommit" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="ppeffectcommit" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="WHILE" Name="do" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="WITH" Name="do" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="FOR" Name="do" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="SWITCH" Name="do" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="settriggeractivation" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="setfog" RArgType="SCALAR,ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointtimeout" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="setgroupidglobal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="lockturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbcolor" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetpicturecolorselected" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enablepersonturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addcuratoreditingarea" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menudelete" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setmagazineturretammo" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enableaimprecision" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="getsoundcontroller" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setconvoyseparation" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="canvehiclecargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="switchlight" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="camsetfocus" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="IF" Name="exitwith" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="cutfadeout" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="cutfadeout" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setdamage" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="setovercast" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="camsetdive" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="worldtomodel" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="assignascargoindex" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="buildingpos" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="FOR" Name="from" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="createmenu" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="canadditemtouniform" RArgType="ARRAY,STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="sethitindex" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="lockedturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="fadespeech" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="displayctrl" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsettext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbpictureright" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setbleedingremaining" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enableuavwaypoints" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkershapelocal" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointdescription" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="switchcamera" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="listobjects" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addrating" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="campreparefocus" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="nearobjectsready" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removealleventhandlers" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="gethidefrom" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="allow3dmode" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enablefatigue" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbisselected" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsetpicturecolorselected" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsetcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="customradio" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="vectordiff" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="drawlocation" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addmagazineturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointvisible" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setdropinterval" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="SIDE" Name="getfriend" RArgType="SIDE"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setpos" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="magazineturretammo" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkershape" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="seteditorobjectscope" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="land" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkertextlocal" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setlightambient" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="nearentities" RArgType="SCALAR,ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="isequalto" RArgType="ANY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsetselectcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsort" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addcuratoreditableobjects" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="setwinddir" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="animationsourcephase" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removesimpletask" RArgType="TASK"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="spawn" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="campreparefovrange" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvectorup" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SIDE" Name="countside" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="campreparedir" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="limitspeed" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setposatl" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="getobjectargument" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setdestination" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setunitability" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="kbtell" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsettooltipcolortext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsortbyvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removecuratoraddons" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menusetpicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setoxygenremaining" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="ctrlcreate" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="showneweditorobject" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ondoubleclick" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="distancesqr" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="distancesqr" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="distancesqr" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="distancesqr" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addbackpackglobal" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="iskindof" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="iskindof" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="iskindof" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="editobject" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="intersect" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvehiclearmor" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="nmenuitems" RArgType="SCALAR,STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="hideobject" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="kbwassaid" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlmapscreentoworld" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="set3denlayer" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="unregistertask" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="!=" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="!=" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="!=" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="!=" RArgType="GROUP"/>
+	<SqfDefinition Kind="Binary" LArgType="SIDE" Name="!=" RArgType="SIDE"/>
+	<SqfDefinition Kind="Binary" LArgType="TEXT" Name="!=" RArgType="TEXT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONFIG" Name="!=" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="!=" RArgType="DISPLAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="!=" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="!=" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Binary" LArgType="NetObject" Name="!=" RArgType="NetObject"/>
+	<SqfDefinition Kind="Binary" LArgType="TASK" Name="!=" RArgType="TASK"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="!=" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="joinassilent" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvectordirandup" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removehandgunitem" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setflagside" RArgType="SIDE"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointtype" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="emptypositions" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointname" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="remoteexec" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CODE" Name="foreachmember" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="clear3denattribute" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="get3denmissionattribute" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="setwindstr" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="vectoradd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="TASK" Name="settaskstate" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="deleteat" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enablesimulation" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="objstatus" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="weapondirection" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removemagazineturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="forcespeed" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="moveindriver" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="additemtouniform" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeallmpeventhandlers" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="gethit" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="drawarrow" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetpicturerightcolordisabled" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsetdata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsetpicturerightcolordisabled" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlremovealleventhandlers" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setunloadincombat" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="setrectangular" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="isequaltype" RArgType="ANY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="additemtovest" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="params" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="addmenu" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setuseractiontext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvehicleposition" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="assignascargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="sideradio" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="moveincommander" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="create3denentity" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="pushback" RArgType="ANY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="isflashlighton" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setposworld" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="createvehiclelocal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="triggerattachvehicle" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="inarea" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="inarea" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="inarea" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="inarea" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="inarea" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkerpos" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="assignitem" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="setdrawicon" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkeralphalocal" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="landat" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="disablecollisionwith" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfontp" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfontp" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetautoscrolldelay" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setskill" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setskill" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="savestatus" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="getenvsoundcontroller" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="diarysubjectexists" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeweaponattachmentcargo" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="dofire" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="allowdamage" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointscript" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setspeaker" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setrepaircargo" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvehicleid" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfont" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsetpicturecolorright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="displayaddeventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setsuppression" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="setleader" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="vectormultiply" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeweaponcargo" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="getobjectchildren" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="drawpolygon" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="closedisplay" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="skillfinal" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsetpicturecolordisabled" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="append" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addbackpackcargoglobal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="apply" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="stop" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="say2d" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="say2d" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="countunknown" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="select" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="select" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="select" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="select" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="select" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="CONFIG" Name="select" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addmagazinecargo" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="enablegunlights" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsettooltip" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbtext" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetpicturerightcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsetpicturecolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="curatorcoef" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setparticleparams" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="deleteeditorobject" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="cameraeffect" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addmagazinecargoglobal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="getcargoindex" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="doartilleryfire" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="showlegend" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="EXCEPTION" Name="catch" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setunitpos" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="BOOL" Name="setcamuseti" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="htmlload" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsetvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setcustomweightrtd" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="selectdiarysubject" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="ppeffectadjust" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="ppeffectadjust" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="selectionposition" RArgType="ARRAY,STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkeralpha" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="additemcargoglobal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="preloadobject" RArgType="STRING,OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setpitch" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="setmusiceffect" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="drawrectangle" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsetcolorright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menuenable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menupicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menuvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menusort" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="allowgetin" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CODE" Name="foreach" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="commandartilleryfire" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkerbrush" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="&lt;=" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="canadd" RArgType="ARRAY,STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="loadmagazine" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlshow" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="execvm" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetselectcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addcuratorcameraarea" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menushortcut" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setautonomous" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setunittrait" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="canslingload" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="registertask" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="TASK" Name="settaskresult" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="distance2d" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enablereload" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setunconscious" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="nearobjects" RArgType="SCALAR,ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeitem" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="countenemy" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="isequaltypearray" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="turretunit" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setlightflaresize" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsettooltip" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enablemimics" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetmodeldirandup" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="creatediarysubject" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="unlinkitem" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="execfsm" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="call" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="selectweapon" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvehiclelock" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setflagtexture" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addprimaryweaponitem" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="switchmove" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="commandtarget" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfonth2b" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addcuratoraddons" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="currentmagazineturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="currentmagazinedetailturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="minedetectedby" RArgType="SIDE"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setcustomaimcoef" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvehiclecargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="onshownewobject" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeweaponglobal" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="getreldir" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="setgroupid" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvehicleammo" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="camsetpos" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="&gt;=" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="createvehicle" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="debugfsm" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="attachto" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="drawline" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsetpicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="progresssetposition" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlremoveeventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="set3denmissionattribute" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="animatedoor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointloitertype" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointstatements" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="respawnvehicle" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="flyinheight" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setidentity" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="settitleeffect" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="isuniformallowed" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="joinsilent" RArgType="OBJECT,GROUP"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addmagazineammocargo" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removesecondaryweaponitem" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="switchgesture" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="camcommit" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvelocitytransformation" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONFIG" Name=">>" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="kbaddtopic" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlenable" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="displayseteventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbtext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="connectterminaltouav" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setshotparents" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="ppeffectenable" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="ppeffectenable" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="ppeffectenable" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="adduniform" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="allowdammage" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setcollisionlight" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlmapcursor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="enableirlasers" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enablecopilot" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfonth4b" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsortbyvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="loadidentity" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="getunittrait" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="createtask" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="settext" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="setside" RArgType="SIDE"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="setbehaviour" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="^" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="loadoverlay" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="assignasgunner" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="isequaltypeparams" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeitemfromvest" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="playmove" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addbackpackcargo" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="hcremovegroup" RArgType="GROUP"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setweaponreloadingtime" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="posscreentoworld" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsetpicturecolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="set3denattribute" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="isuavconnectable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setfaceanimation" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="counttype" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointposition" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="BOOL" Name="&amp;&amp;" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="BOOL" Name="&amp;&amp;" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="groupchat" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="globalchat" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbtextright" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="allowsprint" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="FOR" Name="to" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="useaudiotimeformoves" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="fadesound" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setrandomlip" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="modeltoworldvisual" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="setrain" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="updatemenuitem" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="setformdir" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="createunit" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="createunit" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="removedrawlinks" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="commandchat" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="cutrsc" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="cutrsc" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="groupselectunit" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="allowcrewinimmobile" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfonth6b" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsetpicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvdata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setwingforcescalertd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="allowcuratorlogicignoreareas" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menuenabled" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="doorphase" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="vectorcrossproduct" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetmodel" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="geteditorobjectscope" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="drawlink" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addmagazineglobal" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkercolorlocal" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="joinstring" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addsecondaryweaponitem" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="getartilleryeta" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="gethitindex" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="lockdriver" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbaddrow" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbtextright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsettextright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="controlsgroupctrl" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="lock" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="lock" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="sort" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="camsetfovrange" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="globalradio" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkertext" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enableai" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addscore" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="playaction" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="addwaypoint" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="arrayintersect" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="camcreate" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="unitsbelowheight" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="unitsbelowheight" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="weaponsturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetbackgroundcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetselected" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="radiochannelremove" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setlightdaylight" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="synchronizeobjectsremove" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addbackpack" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="commandmove" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING,TEXT" Name="setattributes" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="commandfollow" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="seteditormode" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="ammo" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="pushbackunique" RArgType="ANY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="lightattachobject" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="skill" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvpictureright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlmapanimadd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlmapworldtoscreen" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="synchronizeobjectsadd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="ropeattachto" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="say" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="say" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="resize" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="%" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointcompletionradius" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="findnearestenemy" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setunitposweak" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removemagazines" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="playgesture" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="dosuppressivefire" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="splitstring" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="add3denlayer" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setcenterofmass" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="TASK" Name="setsimpletaskdescription" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setdir" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="camsettarget" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="camsettarget" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="set" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvectordir" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="moveto" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="getobjectproxy" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CODE" Name="count" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="evalobjectargument" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="addpublicvariableeventhandler" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="addpublicvariableeventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="setgroupiconparams" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="setgroupicon" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enablecollisionwith" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setunitrecoilcoefficient" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvtooltip" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetpictureright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="createmissiondisplay" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="createmissiondisplay" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="setposition" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkertypelocal" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removemagazineglobal" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="groupradio" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setfuelcargo" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addmpeventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setdammage" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="hintc" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="hintc" RArgType="TEXT"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="hintc" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setcaptive" RArgType="SCALAR,BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="settriggerstatements" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="findcover" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="setcombatmode" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="setcombatmode" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="hcsetgroup" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="disabletiequipment" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="loadstatus" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menusize" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="vectordistance" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setstamina" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setdynamicsimulationdistance" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="removedrawicon" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="weaponaccessoriescargo" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="assignteam" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="camsetfov" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="actionparams" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="setspeedmode" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="settriggertext" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="setradiomsg" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="setformation" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="setformation" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removempeventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="joinas" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetcursel" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvpicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="displayremoveeventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="customchat" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="currentweaponturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="inpolygon" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="canadditemtobackpack" RArgType="ARRAY,STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointbehaviour" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="allowfileoperations" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="seteffectcondition" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setpilotlight" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbpictureright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addcuratorpoints" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setdebriefingtext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="getsoundcontrollerresult" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Binary" LArgType="TASK" Name="sendtaskresult" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="createsimpletask" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="*" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="setvisibleiftreecollapsed" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="assignasturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="editorseteventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfontpb" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsettext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setcuratorcameraareaceiling" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setlightattenuation" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="creatediaryrecord" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="setimportance" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="setvariable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="setvariable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvariable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="setvariable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="NAMESPACE" Name="setvariable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="setvariable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="TASK" Name="setvariable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="setvariable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="dowatch" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="dowatch" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvehiclevarname" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="moveobjecttoend" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="campreparetarget" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="campreparetarget" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="param" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="canadditemtovest" RArgType="ARRAY,STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="+" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="+" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="+" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="onmapsingleclick" RArgType="STRING,CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="getpos" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setlightcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="getgroupicon" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="hideobjectglobal" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetpicturecolordisabled" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsetdata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbcolorright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvcollapse" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CODE" Name="foreachmemberagent" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setbrakesrtd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="vectorfromto" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="enablechannel" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="enablechannel" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="setspeech" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="lockcamerato" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="atan2" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setposasl" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwppos" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="tofixed" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="sendsimplecommand" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="moveingunner" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="deleterange" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfontsecondary" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsettext" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfonth1" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvexpand" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="nearestobject" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="nearestobject" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="get3denattribute" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="get3denattribute" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="get3denattribute" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="get3denattribute" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="get3denattribute" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menudata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setlightflaremaxdistance" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setmass" RArgType="SCALAR,ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removemagazinesturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="settaskmarkeroffset" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addeventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="campreload" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="-" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="-" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkerdir" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="isirlaseron" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointcombatmode" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="knowsabout" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="SIDE" Name="knowsabout" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfonth2" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetactivecolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbdeleterow" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsetcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="vectordistancesqr" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="worldtomodelvisual" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="isequaltypeall" RArgType="ANY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeitems" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointformation" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="lockcargo" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="lockcargo" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="forcewalk" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="lookat" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setowner" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="kbadddatabasetargets" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfonth3" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsettooltipcolorshade" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="commandfsm" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetpicturerightcolorselected" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="slidersetspeed" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="ppeffectforceinnvg" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setcamerainterest" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="modeltoworld" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkerposlocal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addmagazines" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="playmovenow" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="in" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="in" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="in" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="assignascommander" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="countfriendly" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkercolor" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="IF" Name="throw" RArgType="ANY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addmagazine" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addmagazine" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="dotarget" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="/" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="CONFIG" Name="/" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="sidechat" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addvest" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="reveal" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="reveal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="setcurrentwaypoint" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addhandgunitem" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="aimedattarget" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfonth4" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsort" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrladdeventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="radiochannelsetlabel" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="remoteexeccall" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="deleteresources" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menushortcuttext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="setwaves" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setslingload" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="commandfire" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setname" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setname" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="setname" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addweaponturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="createsite" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addweaponcargo" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="getfsmvariable" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="disableai" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="setwindforce" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="drawellipse" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfonth5" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetdata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsetpicturerightcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="saveidentity" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enablestamina" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setpilotcamerarotation" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="settype" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="try" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="camcommand" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="additemtobackpack" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="weaponaccessories" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setparticlefire" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="getspeed" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setammo" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removemagazine" RArgType="ARRAY,STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="sethit" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="lockedcargo" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfonth6" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsettooltipcolorbox" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointloiterradius" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="deletevehiclecrew" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="turretlocal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addweaponitem" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="checkvisibility" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkerbrushlocal" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeweapon" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="removegroupicon" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="mapcenteroncamera" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetangle" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbvalue" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsetpicturerightcolorselected" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="slidersetposition" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="slidersetrange" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="radiochannelsetcallsign" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="addresources" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menusetaction" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setlightuseflare" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addweapon" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="campreparepos" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setformationtask" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setpipeffect" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="inflame" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="camconstuctionsetparams" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="switchaction" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="setairportside" RArgType="SIDE"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="publicvariableclient" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetchecked" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="assigncurator" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menuaction" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menuchecked" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsettooltip" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setanimspeedcoef" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="allowfleeing" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="suppressfor" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="addeditorobject" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="flyinheightasl" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="showwaypoint" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="commandradio" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="vehicleradio" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="findeditorobject" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="findeditorobject" RArgType="ANY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setflagowner" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="posworldtoscreen" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetposition" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvadd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsetvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="callextension" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="callextension" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="creatempcampaigndisplay" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="vectorcos" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="setdirection" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointhouseposition" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="campreparebank" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkertype" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="SIDE" Name="addscoreside" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT,GROUP" Name="move" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="camcommitprepared" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setvelocity" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="disablenvgequipment" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfade" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetpicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetcolorright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="moveinany" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setpilotcameradirection" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="ropedetach" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setcurrenttask" RArgType="TASK"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="waypointattachvehicle" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="sethidebehind" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="max" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="targetknowledge" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="commandwatch" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="commandwatch" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="show3dicons" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="camsetdir" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="setsoundeffect" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="setobjectproxy" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointforcebehaviour" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lnbsetpictureright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvdelete" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvsetpicturecolorselected" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="setfromeditor" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setrotorbrakertd" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="set3denobjecttype" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="distance" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="distance" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="distance" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="distance" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="mod" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="say3d" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="say3d" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="cutobj" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="cutobj" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="moveinturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeitemfromuniform" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setlightbrightness" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="directsay" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="buildingexit" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="synchronizetrigger" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="hasweapon" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="fireattarget" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="kbremovetopic" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menuadd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menucollapse" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="join" RArgType="OBJECT,GROUP"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="dofollow" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setposasl2" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="min" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setparticlerandom" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enablesimulationglobal" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="execeditorscript" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="playactionnow" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="magazinesturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfontheight" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfontheighth1" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetautoscrollrewind" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlseteventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetdisabledcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="animate" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setobjecttexture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setdriveonpath" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="targetsaggregate" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeitemfrombackpack" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="breakout" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="gethitpointdamage" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="assigntoairport" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfonth1b" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfontheighth2" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setwantedrpmrtd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removecuratorcameraarea" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="forcefollowroad" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="TASK" Name="setsimpletaskdestination" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="BOOL" Name="||" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="BOOL" Name="||" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="find" RArgType="ANY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="find" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="commandsuppressivefire" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="settriggertype" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="camsetbank" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setunitrank" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="BOOL" Name="and" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="BOOL" Name="and" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="SWITCH" Name=":" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="==" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="==" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="==" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="==" RArgType="GROUP"/>
+	<SqfDefinition Kind="Binary" LArgType="SIDE" Name="==" RArgType="SIDE"/>
+	<SqfDefinition Kind="Binary" LArgType="TEXT" Name="==" RArgType="TEXT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONFIG" Name="==" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="==" RArgType="DISPLAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="==" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="==" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Binary" LArgType="NetObject" Name="==" RArgType="NetObject"/>
+	<SqfDefinition Kind="Binary" LArgType="TASK" Name="==" RArgType="TASK"/>
+	<SqfDefinition Kind="Binary" LArgType="LOCATION" Name="==" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="hcselectgroup" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="findemptypositionready" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfontheighth3" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetautoscrollspeed" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvtext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enableautotrimrtd" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="setrainbow" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="selectweaponturret" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="disableuavconnectability" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enableropeattach" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="targetsquery" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="leavevehicle" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="leavevehicle" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lookatpos" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="setmarkerdirlocal" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeprimaryweaponitem" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="STRING" Name="servercommand" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="unassignitem" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setammocargo" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="kbadddatabase" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfontheighth4" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetscale" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsettextcolorsecondary" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbsetselectcolorright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setenginerpmrtd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enableuavconnectability" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="enablevehiclecargo" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addaction" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="addweaponcargoglobal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="settriggerarea" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeownedmine" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="BOOL" Name="or" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="BOOL" Name="or" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="&lt;" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="addgroupicon" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="glanceat" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfonth3b" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfontheighth5" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbdata" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="tvcount" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removecuratoreditingarea" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="triggerdynamicsimulation" RArgType="BOOL"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="selectleader" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="additemcargo" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="camsetrelpos" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="nearsupplies" RArgType="SCALAR,ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setfuel" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="vehiclechat" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="remotecontrol" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetfontheighth6" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY,OBJECT" Name="dofsm" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="lbdelete" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Binary" LArgType="TEAM_MEMBER" Name="removeteammember" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menusetcheck" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="TASK" Name="setsimpletaskcustomdata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR,NaN" Name="&gt;" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="removeeventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="setwaypointspeed" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setparticleclass" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="selecteditorobject" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="GROUP" Name="copywaypoints" RArgType="GROUP"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="settriggertimeout" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CODE" Name="else" RArgType="CODE"/>
+	<SqfDefinition Kind="Binary" LArgType="ANY" Name="isequaltypeany" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="sethitpointdamage" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="ctrlsetforegroundcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="DISPLAY" Name="displayremovealleventhandlers" RArgType="STRING"/>
+	<SqfDefinition Kind="Binary" LArgType="SCALAR" Name="radiochanneladd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setobjectmaterial" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="CONTROL" Name="menuexpand" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="setposaslw" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="ARRAY" Name="vectordotproduct" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Binary" LArgType="OBJECT" Name="turretowner" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="showradio" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="vectorup" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lnbsetcurselrow" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="animationnames" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="currentzeroing" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="isonroad" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="triggerarea" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="get3dengrid" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="settrafficspeed" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="supportinfo" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="menucollapse" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="taskdescription" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="isautohoveron" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlangle" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="menusetdata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="moonphase" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="onplayerdisconnected" RArgType="STRING,CODE"/>
+	<SqfDefinition Kind="Unary" Name="isshowing3dicons" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="lbsetcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getallhitpointsdamage" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbsetcolorright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="triggertext" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getfatigue" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlshown" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="eyedirection" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlmodel" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="tvtext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="ropeunwind" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="fillweaponsfrompool" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="hcselected" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="asltoagl" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="isobjectrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="enabletraffic" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="roledescription" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="simpletasks" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getammocargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="flagowner" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="deletegroup" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="isclass" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="tvdata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getenginetargetrpmrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="waypointattachedvehicle" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="speed" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="menusetvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="reloadenabled" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="rating" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="hideobject" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="useaiopermapobstructiontest" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="primaryweapon" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="addtoremainscollector" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="uisleep" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="ctrlmodelscale" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="curatorcameraareaceiling" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="removevest" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="gearslotdata" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="formationposition" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="gettrimoffsetrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getmissionconfigvalue" RArgType="ARRAY,STRING"/>
+	<SqfDefinition Kind="Unary" Name="simulcloudocclusion" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="movetofailed" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="playmission" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="rankid" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="showgps" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="synchronizedtriggers" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="removeallitemswithmagazines" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="setaperturenew" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="simulinclouds" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="menuurl" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="isarray" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="leaderboardsrequestuploadscorekeepbest" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="removebackpackglobal" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="exportjipmessages" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="ctrlhtmlloaded" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="getmarkercolor" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="markeralpha" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="face" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbsetselectcolorright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getvehiclecargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="deletelocation" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="ceil" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="waypointvisible" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="enablesatnormalondetail" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="getposatl" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="objectcurators" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="activatekey" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="disableremotesensors" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="attackenabled" RArgType="OBJECT,GROUP"/>
+	<SqfDefinition Kind="Unary" Name="curatoreditingarea" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="playmusic" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="playmusic" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="assignedteam" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="vectordirvisual" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lnbsetvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="triggeractivated" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="set3denmissionattributes" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="unassignvehicle" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="boundingbox" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ppeffectcreate" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="movetime" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="waypointspeed" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="tvpictureright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="if" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="ctrltext" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="ctrltext" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="ctrlclassname" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="actionname" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="animationstate" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="markertype" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="menuchecked" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lineintersectsobjs" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="weaponcargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="buttonaction" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="buttonaction" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="set3deniconsvisible" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="hcshowbar" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="drop" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="isturnedout" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="addweaponpool" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="camtarget" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="setwinddir" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="reverse" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getcameraviewdirection" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="set3denattributes" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="slidersetrange" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="textlogformat" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="deletemarkerlocal" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="lnbsettext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="exp" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="waypointstatements" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="scudstate" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="sliderrange" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="sliderrange" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="isautotrimonrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="boundingboxreal" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="terrainintersect" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="ropedestroy" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="tvsetpictureright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="createteam" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="floor" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="lnbsettextright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="param" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lbsetpicturecolordisabled" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="setcamshakeparams" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lognetwork" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="abs" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="debriefingtext" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="lnbsortbyvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="istouchingground" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="taskmarkeroffset" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="aisfinishheal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="tvsetpicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="vest" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="headgear" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lnbsetdata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="fuel" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="agltoasl" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="weaponsitemscargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="linearconversion" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="removemissioneventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="damage" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getmodelinfo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="str" RArgType="ANY"/>
+	<SqfDefinition Kind="Unary" Name="tostring" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="dogetout" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getbleedingremaining" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="squadparams" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="groupfromnetid" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="leader" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="leader" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="leader" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Unary" Name="settrafficdistance" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="currentthrowable" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="enableengineartillery" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="terrainintersectasl" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="debuglog" RArgType="ANY"/>
+	<SqfDefinition Kind="Unary" Name="lnbsetpicturecolorselectedright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lnbaddarray" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="savevar" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="onbriefingteamswitch" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="lbsetvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="edit3denmissionattributes" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="uniformitems" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getcustomaimcoef" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ingameuiseteventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="leaderboardrequestrowsfriends" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="showcommandingmenu" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="unitrecoilcoefficient" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="unassigncurator" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="actionkeysnames" RArgType="ARRAY,STRING"/>
+	<SqfDefinition Kind="Unary" Name="objectparent" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="clearmagazinecargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="hostmission" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="canmove" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getstatvalue" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="tvsettext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="positioncameratoworld" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getwingsorientationrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="isstaminaenabled" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="weaponsitems" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="vectornormalized" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="unitbackpack" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="finite" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="lnbtext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="teamname" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Unary" Name="pickweaponpool" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="surfaceiswater" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getslingload" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="reload" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="tvsetdata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="allvariables" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="allvariables" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Unary" Name="allvariables" RArgType="NAMESPACE"/>
+	<SqfDefinition Kind="Unary" Name="allvariables" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="allvariables" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="allvariables" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="allvariables" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="setterraingrid" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="speaker" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbsettooltip" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="weapons" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="selectededitorobjects" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="removeall3deneventhandlers" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="leaderboardsrequestuploadscore" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lnbdata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="unitisuav" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbadd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lnbclear" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="lnbclear" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="assignedtarget" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="cameraeffectenablehud" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="execfsm" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="attachedto" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="showuavfeed" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="querymagazinepool" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="effectivecommander" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="sizeof" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="landresult" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="cbchecked" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="onhcgroupselectionchanged" RArgType="STRING,CODE"/>
+	<SqfDefinition Kind="Unary" Name="ctrlscale" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="asin" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="lbtext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="clearweaponcargoglobal" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="assigneddriver" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="allcontrols" RArgType="DISPLAY"/>
+	<SqfDefinition Kind="Unary" Name="taskresult" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="lbpicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="do3denaction" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="numbertodate" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="leaderboardstate" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="tvsetpicturecolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="secondaryweaponmagazine" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="setaperture" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="showpad" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="ctrlidc" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="getdir" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="uniformcontainer" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbsortbyvalue" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="isplayer" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="buldozer_enableroaddiag" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="campreloaded" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="local" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="local" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="drawicon3d" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="surfacetype" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lbdata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lbdelete" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="boundingcenter" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="enablediaglegend" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="ctrlidd" RArgType="DISPLAY"/>
+	<SqfDefinition Kind="Unary" Name="fleeing" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getgroupiconparams" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="cutobj" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="iscopilotenabled" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="uniform" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="delete3denentities" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="commandgetout" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="wfsidetext" RArgType="SIDE"/>
+	<SqfDefinition Kind="Unary" Name="wfsidetext" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="wfsidetext" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="tvexpandall" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="tvexpandall" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="velocitymodelspace" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getallownedmines" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="onpreloadstarted" RArgType="STRING,CODE"/>
+	<SqfDefinition Kind="Unary" Name="modparams" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="flagtexture" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getfuelcargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="groupid" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="rotorsrpmrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="waypointloiterradius" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="size" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="captivenum" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="waypointtimeout" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="tvsort" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="selectionnames" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbselection" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="position" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="position" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="canunloadincombat" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="attachedobjects" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="netid" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="netid" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="waypointcompletionradius" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="removeallassigneditems" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ropeunwound" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="waypointposition" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="isdlcavailable" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="waypointtype" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="addswitchableunit" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="closeoverlay" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="tvexpand" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getartilleryammo" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="tvadd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="owner" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="progressloadingscreen" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="estimatedtimeleft" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="driver" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="displayparent" RArgType="DISPLAY"/>
+	<SqfDefinition Kind="Unary" Name="sleep" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="create3denentity" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="primaryweaponmagazine" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlparentcontrolsgroup" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="actionkeysimages" RArgType="ARRAY,STRING"/>
+	<SqfDefinition Kind="Unary" Name="enablesentences" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="sin" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="while" RArgType="CODE"/>
+	<SqfDefinition Kind="Unary" Name="try" RArgType="CODE"/>
+	<SqfDefinition Kind="Unary" Name="curatoreditableobjects" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="entities" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="entities" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="tvcount" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="setgroupiconsselectable" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="showwarrant" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="assigneditems" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="copytoclipboard" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="!" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="groupselectedunits" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="titlefadeout" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="atltoasl" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="loaduniform" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="someammo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="toarray" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="setwind" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="groupowner" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="isweaponrested" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="isaimprecisionenabled" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="isagent" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Unary" Name="commander" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="markerpos" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="leaderboardinit" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="taskcustomdata" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="lnbdeletecolumn" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="incapacitatedstate" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="saveoverlay" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="magazinesallturrets" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="collectivertd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="tvdelete" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="format" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="taskcompleted" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="playsound3d" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getanimaimprecision" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="execvm" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="waypointformation" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="cantriggerdynamicsimulation" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="get3denconnections" RArgType="ANY"/>
+	<SqfDefinition Kind="Unary" Name="ongroupiconoverenter" RArgType="STRING,CODE"/>
+	<SqfDefinition Kind="Unary" Name="backpackmagazines" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="cutrsc" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="comment" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="weaponlowered" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="handshit" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="selectbestplaces" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="removeallcuratorcameraareas" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="taskparent" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="triggertype" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="hidebody" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getpilotcameratarget" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="menuenabled" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="showchat" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="case" RArgType="ANY"/>
+	<SqfDefinition Kind="Unary" Name="scoreside" RArgType="SIDE"/>
+	<SqfDefinition Kind="Unary" Name="behaviour" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getmagazinecargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="nearestterrainobjects" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lifestate" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="issprintallowed" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="classname" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="difficultyoption" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="getfieldmanualstartpage" RArgType="DISPLAY"/>
+	<SqfDefinition Kind="Unary" Name="islocalized" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="triggertimeout" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="remoteexec" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="units" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="units" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="removeallcontainers" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="hcleader" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="systemchat" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="detectedmines" RArgType="SIDE"/>
+	<SqfDefinition Kind="Unary" Name="getobjecttype" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ropeattachedto" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="diag_codeperformance" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="inputaction" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="oncommandmodechanged" RArgType="STRING,CODE"/>
+	<SqfDefinition Kind="Unary" Name="movetocompleted" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="requiredversion" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="lnbaddrow" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="+" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="+" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="textlog" RArgType="ANY"/>
+	<SqfDefinition Kind="Unary" Name="openyoutubevideo" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="combatmode" RArgType="OBJECT,GROUP"/>
+	<SqfDefinition Kind="Unary" Name="ppeffectdestroy" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="ppeffectdestroy" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="add3deneventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="canstand" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="vectormagnitude" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="rotorsforcesrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="count" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="count" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="count" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="-" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="formationleader" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="radiochannelcreate" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="enginestorquertd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="isengineon" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="add3denconnection" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="for" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="for" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="collapseobjecttree" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="waypointhouseposition" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getplayerscores" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="enableradio" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="scriptdone" RArgType="SCRIPT"/>
+	<SqfDefinition Kind="Unary" Name="skill" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="settimemultiplier" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="waypointtimeoutcurrent" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="magazinecargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ropecut" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="creatediarylink" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="backpack" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlmapanimcommit" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="mapanimadd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="surfacenormal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lineintersectswith" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="hcremoveallgroups" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="waituntil" RArgType="CODE"/>
+	<SqfDefinition Kind="Unary" Name="getposworld" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="toupper" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="showwatch" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="configsourcemodlist" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="createtrigger" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getstamina" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="waypointshow" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="ctrltype" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="getmass" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="weaponstate" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbpictureright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="load" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="loadabs" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="removeswitchableunit" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="inheritsfrom" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="lnbsort" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="islighton" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="simulationenabled" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="currentmagazinedetail" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="onmapsingleclick" RArgType="STRING,CODE"/>
+	<SqfDefinition Kind="Unary" Name="screenshot" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="unitaimpositionvisual" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="actionids" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="everybackpack" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="asltoatl" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="sethudmovementlevels" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="set3denmodelsvisible" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="currentmuzzle" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlautoscrollspeed" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="currentweaponmode" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getwingspositionrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="waypointloitertype" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="name" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="name" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="onbriefinggroup" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="locationposition" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="importance" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="captive" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="isweapondeployed" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="menushortcut" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="assert" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="keyimage" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="removeallweapons" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="titleobj" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lbsort" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="lbsort" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="vehiclevarname" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="triggertimeoutcurrent" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlmodeldirandup" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="assignedgunner" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="setmouseposition" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="terminate" RArgType="SCRIPT"/>
+	<SqfDefinition Kind="Unary" Name="soldiermagazines" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getmarkerpos" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="endmission" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="leaderboardrequestrowsglobal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="magazinesammo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="removeuniform" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="faction" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrltextsecondary" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="clear3deninventory" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lnbpictureright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="servercommandavailable" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="geteditormode" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="removeallprimaryweaponitems" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="menuhover" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="menuhover" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="verifysignature" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="group" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="allturrets" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="allturrets" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="restarteditorcamera" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="camcommitted" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="tvtooltip" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="startloadingscreen" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="ctrlsettext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="enabledynamicsimulation" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="currenttask" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="flagside" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="isinremainscollector" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="nearestobject" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="magazinesammocargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="setplayable" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="unlockachievement" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="lbsettext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="isautonomous" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="additempool" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getmissionlayerentities" RArgType="SCALAR,STRING"/>
+	<SqfDefinition Kind="Unary" Name="lnbdeleterow" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="throw" RArgType="ANY"/>
+	<SqfDefinition Kind="Unary" Name="dissolveteam" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="publicvariableserver" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="handgunmagazine" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getoxygenremaining" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="progressposition" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="tvvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="vehicle" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="buldozer_loadnewroads" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="removeallactions" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="vectormagnitudesqr" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getnumber" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="servercommand" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="attachedobject" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="everycontainer" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlautoscrollrewind" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="stopenginertd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="preprocessfilelinenumbers" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="gunner" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbsetdata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="isvehiclecargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="agent" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Unary" Name="openmap" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="openmap" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="playsound" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="playsound" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="dostop" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="oneachframe" RArgType="STRING,CODE"/>
+	<SqfDefinition Kind="Unary" Name="lightdetachobject" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getpersonuseddlcs" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getgroupicons" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="getwppos" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="setsimulweatherlayers" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="getdescription" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ropeendposition" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="text" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="text" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="items" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="showcinemaborder" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="ctrlautoscrolldelay" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="onpreloadfinished" RArgType="STRING,CODE"/>
+	<SqfDefinition Kind="Unary" Name="nearestlocation" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getrepaircargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="titlersc" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="setcurrentchannel" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="lbsetpictureright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="menusize" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="pitch" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="onbriefingplan" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="formattext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="camerainterest" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="removeheadgear" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="side" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="side" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="side" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="completedfsm" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="playableslotsnumber" RArgType="SIDE"/>
+	<SqfDefinition Kind="Unary" Name="servercommandexecutable" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="enablesaving" RArgType="BOOL,ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="remove3denconnection" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="queryitemspool" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="isformationleader" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="numberofenginesrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="velocity" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="setplayerrespawntime" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="preloadsound" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="getallsoundcontrollers" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="setviewdistance" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="rad" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="getmarkertype" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="magazinesdetail" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="markersize" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="ctrlshow" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="waypointattachedobject" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="ishidden" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="preloadtitleobj" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="tvcollapseall" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="tvcollapseall" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="ctrlparent" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="diag_dynamicsimulationend" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="registeredtasks" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Unary" Name="deg" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="forceatpositionrtd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="actionkeysnamesarray" RArgType="ARRAY,STRING"/>
+	<SqfDefinition Kind="Unary" Name="titlecut" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="configsourceaddonlist" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="menuaction" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="disableuserinput" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="set3denlinesvisible" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="aimpos" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="cancelsimpletaskdestination" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="clearweaponcargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="enableenvironment" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="markercolor" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="createsimpleobject" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="airportside" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="assignedvehiclerole" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lnbgetcolumnsposition" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="lnbgetcolumnsposition" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="enableteamswitch" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="waypointforcebehaviour" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="precision" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ropes" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="settrafficdensity" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="call" RArgType="CODE"/>
+	<SqfDefinition Kind="Unary" Name="createsoundsource" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="backpackcontainer" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="vectorupvisual" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="istext" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="leaderboardrequestrowsglobalarounduser" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="vectordir" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="clearbackpackcargoglobal" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getdlcusagetime" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="members" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Unary" Name="worldtoscreen" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="teamtype" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Unary" Name="removeallhandgunitems" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="private" RArgType="ARRAY,STRING"/>
+	<SqfDefinition Kind="Unary" Name="curatoreditingareatype" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="magazinesdetailbackpack" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="with" RArgType="NAMESPACE"/>
+	<SqfDefinition Kind="Unary" Name="ctrlmapscale" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="createdialog" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="currentwaypoint" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="createmarker" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="magazinesammofull" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="hint" RArgType="STRING,TEXT"/>
+	<SqfDefinition Kind="Unary" Name="putweaponpool" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getobjectdlc" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="enabledebriefingstats" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="goto" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="deletewaypoint" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="setshadowdistance" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="tvsortbyvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lockidentity" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="typeof" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="score" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbsetpicturecolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="nextmenuitemindex" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="lasertarget" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="unitready" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="showmap" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="deletemarker" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="isautostartupenabledrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="allmissionobjects" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="getcenterofmass" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="stance" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="curatorpoints" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbtextright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="alive" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getterrainheightasl" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="crew" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="triggerattachedvehicle" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="rank" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getrotorbrakertd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="itemswithmagazines" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="selectmax" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="selectmin" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="isbleeding" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="isrealtime" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="ctrlactivate" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="acos" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="processdiarylink" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="lbcolorright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="menupicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="namesound" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="isnil" RArgType="STRING,CODE"/>
+	<SqfDefinition Kind="Unary" Name="locked" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlenable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getdlcassetsusagebyname" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="clearbackpackcargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="cuttext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="formationdirection" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="creategroup" RArgType="SIDE"/>
+	<SqfDefinition Kind="Unary" Name="preloadtitlersc" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getweaponcargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="isabletobreathe" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getassignedcuratorunit" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlcommitted" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="get3denentity" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="ctrlmapanimdone" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="setgroupiconsvisible" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="gearslotammocount" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="enginespowerrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="markerbrush" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="sethorizonparallaxcoef" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="echo" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="dynamicsimulationenabled" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="dynamicsimulationenabled" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="hcallgroups" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="setcamshakedefparams" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="diag_log" RArgType="ANY"/>
+	<SqfDefinition Kind="Unary" Name="screentoworld" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="default" RArgType="CODE"/>
+	<SqfDefinition Kind="Unary" Name="menuenable" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="currentcommand" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="sliderposition" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="sliderposition" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="unitpos" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="finddisplay" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="itemcargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="secondaryweaponitems" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="menuvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="createmarkerlocal" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="round" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="deleteidentity" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="getaimingcoef" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="breakout" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="ropeattachedobjects" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbsetselectcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="mineactive" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="enablestressdamage" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="mapcenteroncamera" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="lbsetpicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="handgunweapon" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="activateaddons" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="addmagazinepool" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="synchronizedwaypoints" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="synchronizedwaypoints" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="vehiclecargoenabled" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="save3deninventory" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="compilefinal" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="cos" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="taskhint" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="moveout" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="setstatvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="deleteteam" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Unary" Name="get3denactionstate" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="createagent" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="importallgroups" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="assignedvehicle" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="expecteddestination" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="goggles" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="removeallcuratoraddons" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="random" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="random" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="objectfromnetid" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="ctrlchecked" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="tvsettooltip" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="isburning" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getobjectmaterials" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getplayeruid" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="binocular" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getweaponsway" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="collect3denhistory" RArgType="CODE"/>
+	<SqfDefinition Kind="Unary" Name="handgunitems" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="removeallcuratoreditingareas" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="skiptime" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="getpos" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getpos" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="curatorcameraarea" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="enableaudiofeature" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="publicvariable" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="create3dencomposition" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="showscoretable" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="backpackcargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getobjecttextures" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="vestmagazines" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="curatoraddons" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="secondaryweapon" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="atan" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="get3denlayerentities" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="nearestobjects" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getposvisual" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="deletecollection" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="triggerstatements" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="switch" RArgType="ANY"/>
+	<SqfDefinition Kind="Unary" Name="priority" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="menusetpicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="setlocalwindparams" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lbvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="createcenter" RArgType="SIDE"/>
+	<SqfDefinition Kind="Unary" Name="menuexpand" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getposaslw" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="atg" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="lineintersectssurfaces" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="ongroupiconoverleave" RArgType="STRING,CODE"/>
+	<SqfDefinition Kind="Unary" Name="camdestroy" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="curatorwaypointcost" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="slidersetposition" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="ismarkedforcollection" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getassignedcuratorlogic" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="triggeractivation" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrldelete" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="parsetext" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="teammember" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="actionkeys" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="waypointbehaviour" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="preloadcamera" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="parsenumber" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="parsenumber" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="deletecenter" RArgType="SIDE"/>
+	<SqfDefinition Kind="Unary" Name="remoteexeccall" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="setstaminascheme" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="rectangular" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="move3dencamera" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="addmusiceventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="resetsubgroupdirection" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lognetworkterminate" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="channelenabled" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="lnbsetpictureright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="cleargroupicons" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="taskdestination" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="taskalwaysvisible" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="vestitems" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="log" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="switchcamera" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ppeffectcommitted" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="ppeffectcommitted" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="buttonsetaction" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="menudelete" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="fromeditor" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Unary" Name="waypointsenableduav" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="tvcollapse" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lnbcolorright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="airdensityrtd" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="keyname" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="closedialog" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="lnbsetcolumnspos" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="commandstop" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="scriptname" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="list" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="hintc" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="tan" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="detach" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="needreload" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="waypointdescription" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="image" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="dynamicsimulationdistancemult" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="tvsetcursel" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="tvclear" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="tvclear" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="isnull" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="isnull" RArgType="GROUP"/>
+	<SqfDefinition Kind="Unary" Name="isnull" RArgType="SCRIPT"/>
+	<SqfDefinition Kind="Unary" Name="isnull" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="isnull" RArgType="DISPLAY"/>
+	<SqfDefinition Kind="Unary" Name="isnull" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="isnull" RArgType="NetObject"/>
+	<SqfDefinition Kind="Unary" Name="isnull" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="isnull" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="setacctime" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="remove3denlayer" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="removebackpack" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="hideobjectglobal" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lnbcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lnbcurselrow" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="lnbcurselrow" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="getbackpackcargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="typename" RArgType="ANY"/>
+	<SqfDefinition Kind="Unary" Name="getshotparents" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="curatorregisteredobjects" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlenabled" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="ctrlenabled" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="removeallmusiceventhandlers" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="playersnumber" RArgType="SIDE"/>
+	<SqfDefinition Kind="Unary" Name="onplayerconnected" RArgType="STRING,CODE"/>
+	<SqfDefinition Kind="Unary" Name="menutext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lnbaddcolumn" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="menushortcuttext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="mapgridposition" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ropeattachenabled" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="firstbackpack" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lnbsetpicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getitemcargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="tvsetvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="removemusiceventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="gettext" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="getburningvalue" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="formation" RArgType="OBJECT,GROUP"/>
+	<SqfDefinition Kind="Unary" Name="formation" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Unary" Name="simulclouddensity" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="tolower" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="localize" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="loadbackpack" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="unassignteam" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="removeallownedmines" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="menudata" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="ropelength" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getanimspeedcoef" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="fullcrew" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="fullcrew" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="createvehicle" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="formationmembers" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="addcamshake" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="markertext" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="getcontainermaxload" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="type" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="type" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="lnbsetpicturecolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="visibleposition" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getpilotcameradirection" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="speedmode" RArgType="OBJECT,GROUP"/>
+	<SqfDefinition Kind="Unary" Name="vestcontainer" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="currenttasks" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Unary" Name="markerdir" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="showhud" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="showhud" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getposasl" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="showcuratorcompass" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="forcemap" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="inflamed" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="loadfile" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="waypoints" RArgType="OBJECT,GROUP"/>
+	<SqfDefinition Kind="Unary" Name="scopename" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="menusetaction" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="weaponinertia" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="haspilotcamera" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="isforcedwalk" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="currentvisionmode" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="enablecaustics" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="selectrandom" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="deactivatekey" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="setdate" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="direction" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="direction" RArgType="LOCATION"/>
+	<SqfDefinition Kind="Unary" Name="dynamicsimulationdistance" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="ppeffectenabled" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="getdlcs" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="getsuppression" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbsetpicturecolorselected" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="settrafficgap" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="camusenvg" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="resources" RArgType="TEAM_MEMBER"/>
+	<SqfDefinition Kind="Unary" Name="getarray" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="hintsilent" RArgType="STRING,TEXT"/>
+	<SqfDefinition Kind="Unary" Name="assignedcommander" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="taskchildren" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="updateobjecttree" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="showcompass" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="isnumber" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="lnbpicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="waypointname" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="deletesite" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="nearestbuilding" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="nearestbuilding" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="addforcegeneratorrtd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="forcegeneratorrtd" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="getposatlvisual" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getallenvsoundcontrollers" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="clearitemcargoglobal" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getmissionconfig" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="sqrt" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="ctrltextheight" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="removegoggles" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="showsubtitles" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="getplayerchannel" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="menuadd" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="clearitemcargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="sendudpmessage" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="checkaifeature" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="uavcontrol" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="iswalking" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="compile" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="tasktype" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="flag" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="composetext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="formleader" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="stopped" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="clearallitemsfrombackpack" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="leaderboardgetrows" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="nearestlocations" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="addmissioneventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="ongroupiconclick" RArgType="STRING,CODE"/>
+	<SqfDefinition Kind="Unary" Name="hmd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="setobjectviewdistance" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="setobjectviewdistance" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="remove3deneventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="waypointscript" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lnbtextright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="magazinesdetailuniform" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="tvsetpicturerightcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="hintcadet" RArgType="STRING,TEXT"/>
+	<SqfDefinition Kind="Unary" Name="set3dengrid" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="roadsconnectedto" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbcursel" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="lbcursel" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="canfire" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="creategeardialog" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="slidersetspeed" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="configproperties" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="sendaumessage" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="iskeyactive" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="isobjecthidden" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="configsourcemod" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="lnbvalue" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="tvpicture" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="underwater" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="showwaypoints" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="sliderspeed" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="sliderspeed" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="confighierarchy" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="setmusiceventhandler" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="unitaimposition" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lnbsize" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="lnbsize" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="ropecreate" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="deletestatus" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="lnbsetpicturecolorselected" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="morale" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlfade" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="selectplayer" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="menusetcheck" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="createlocation" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="menuclear" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="menuclear" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="failmission" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="lnbsetcolorright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="preprocessfile" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="setcompassoscillation" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="iscollisionlighton" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="removeallmissioneventhandlers" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="ctrlvisible" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="formationtask" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ismanualfire" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getpilotcamerarotation" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="opendlcpage" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="ln" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="wingsforcesrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="setdefaultcamera" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="removefromremainscollector" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="playscriptedmission" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lnbsetcolor" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="deletevehicle" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="onteamswitch" RArgType="STRING,CODE"/>
+	<SqfDefinition Kind="Unary" Name="lineintersects" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="isuavconnected" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlposition" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="lbsize" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="lbsize" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="getunitloadout" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getunitloadout" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="getunitloadout" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="roadat" RArgType="ARRAY,OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="createguardedpoint" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="commitoverlay" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="params" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="currentweapon" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="getdirvisual" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlmapmouseover" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="drawline3d" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="ctrlmapanimclear" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="leaderboarddeinit" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="clearoverlay" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="enginesrpmrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="datetonumber" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="setsystemofunits" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="breakto" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="difficultyenabled" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="clearmagazinecargoglobal" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="synchronizedobjects" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="tg" RArgType="SCALAR,NaN"/>
+	<SqfDefinition Kind="Unary" Name="useaisteeringcomponent" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="getdammage" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="lbsetcursel" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="setarmorypoints" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="weightrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="loadvest" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="gearidcammocount" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="nearestlocationwithdubbing" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="createmine" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="lnbsetpicturecolorright" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getmarkersize" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="getposaslvisual" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="eyepos" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="removeallitems" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="createvehiclecrew" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="uniformmagazines" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="enablecamshake" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="tvcursel" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="tvcursel" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="setdetailmapblendpars" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="onbriefingnotes" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="markershape" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="backpackitems" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="magazines" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="waypointcombatmode" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="enginesisonrtd" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="queryweaponpool" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="didjipowner" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="primaryweaponitems" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="visiblepositionasl" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="set3denselected" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="get3denselected" RArgType="STRING"/>
+	<SqfDefinition Kind="Unary" Name="lightison" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="assignedcargo" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="currentmagazine" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="taskstate" RArgType="TASK"/>
+	<SqfDefinition Kind="Unary" Name="magazinesdetailvest" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="not" RArgType="BOOL"/>
+	<SqfDefinition Kind="Unary" Name="lbclear" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="lbclear" RArgType="SCALAR"/>
+	<SqfDefinition Kind="Unary" Name="getpilotcameraposition" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="forcerespawn" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="titletext" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="getconnecteduav" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="geteditorcamera" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="configname" RArgType="CONFIG"/>
+	<SqfDefinition Kind="Unary" Name="menusort" RArgType="ARRAY"/>
+	<SqfDefinition Kind="Unary" Name="get3denentityid" RArgType="ANY"/>
+	<SqfDefinition Kind="Unary" Name="lockeddriver" RArgType="OBJECT"/>
+	<SqfDefinition Kind="Unary" Name="ctrlsetfocus" RArgType="CONTROL"/>
+	<SqfDefinition Kind="Unary" Name="unitaddons" RArgType="STRING"/>
+	<SqfDefinition Kind="Nular" Name="sideenemy"/>
+	<SqfDefinition Kind="Nular" Name="safezonex"/>
+	<SqfDefinition Kind="Nular" Name="clearmagazinepool"/>
+	<SqfDefinition Kind="Nular" Name="pixelh"/>
+	<SqfDefinition Kind="Nular" Name="slingloadassistantshown"/>
+	<SqfDefinition Kind="Nular" Name="windstr"/>
+	<SqfDefinition Kind="Nular" Name="isinstructorfigureenabled"/>
+	<SqfDefinition Kind="Nular" Name="safezoney"/>
+	<SqfDefinition Kind="Nular" Name="getclientstatenumber"/>
+	<SqfDefinition Kind="Nular" Name="getclientstate"/>
+	<SqfDefinition Kind="Nular" Name="date"/>
+	<SqfDefinition Kind="Nular" Name="getelevationoffset"/>
+	<SqfDefinition Kind="Nular" Name="current3denoperation"/>
+	<SqfDefinition Kind="Nular" Name="getterraingrid"/>
+	<SqfDefinition Kind="Nular" Name="player"/>
+	<SqfDefinition Kind="Nular" Name="exit"/>
+	<SqfDefinition Kind="Nular" Name="mapanimclear"/>
+	<SqfDefinition Kind="Nular" Name="halt"/>
+	<SqfDefinition Kind="Nular" Name="missiondifficulty"/>
+	<SqfDefinition Kind="Nular" Name="nextweatherchange"/>
+	<SqfDefinition Kind="Nular" Name="allsites"/>
+	<SqfDefinition Kind="Nular" Name="teamswitchenabled"/>
+	<SqfDefinition Kind="Nular" Name="blufor"/>
+	<SqfDefinition Kind="Nular" Name="visiblescoretable"/>
+	<SqfDefinition Kind="Nular" Name="is3denmultiplayer"/>
+	<SqfDefinition Kind="Nular" Name="worldname"/>
+	<SqfDefinition Kind="Nular" Name="ismultiplayersolo"/>
+	<SqfDefinition Kind="Nular" Name="isremoteexecuted"/>
+	<SqfDefinition Kind="Nular" Name="curatorcamera"/>
+	<SqfDefinition Kind="Nular" Name="displaynull"/>
+	<SqfDefinition Kind="Nular" Name="resistance"/>
+	<SqfDefinition Kind="Nular" Name="diag_frameno"/>
+	<SqfDefinition Kind="Nular" Name="currentnamespace"/>
+	<SqfDefinition Kind="Nular" Name="armorypoints"/>
+	<SqfDefinition Kind="Nular" Name="pixelgrid"/>
+	<SqfDefinition Kind="Nular" Name="configfile"/>
+	<SqfDefinition Kind="Nular" Name="controlnull"/>
+	<SqfDefinition Kind="Nular" Name="markasfinishedonsteam"/>
+	<SqfDefinition Kind="Nular" Name="visiblewatch"/>
+	<SqfDefinition Kind="Nular" Name="estimatedendservertime"/>
+	<SqfDefinition Kind="Nular" Name="diag_activemissionfsms"/>
+	<SqfDefinition Kind="Nular" Name="hudmovementlevels"/>
+	<SqfDefinition Kind="Nular" Name="sidelogic"/>
+	<SqfDefinition Kind="Nular" Name="opfor"/>
+	<SqfDefinition Kind="Nular" Name="rainbow"/>
+	<SqfDefinition Kind="Nular" Name="cansuspend"/>
+	<SqfDefinition Kind="Nular" Name="servertime"/>
+	<SqfDefinition Kind="Nular" Name="teams"/>
+	<SqfDefinition Kind="Nular" Name="all3denentities"/>
+	<SqfDefinition Kind="Nular" Name="librarycredits"/>
+	<SqfDefinition Kind="Nular" Name="shownwarrant"/>
+	<SqfDefinition Kind="Nular" Name="allmines"/>
+	<SqfDefinition Kind="Nular" Name="getshadowdistance"/>
+	<SqfDefinition Kind="Nular" Name="alldisplays"/>
+	<SqfDefinition Kind="Nular" Name="isautotest"/>
+	<SqfDefinition Kind="Nular" Name="viewdistance"/>
+	<SqfDefinition Kind="Nular" Name="sideambientlife"/>
+	<SqfDefinition Kind="Nular" Name="allmapmarkers"/>
+	<SqfDefinition Kind="Nular" Name="worldsize"/>
+	<SqfDefinition Kind="Nular" Name="rain"/>
+	<SqfDefinition Kind="Nular" Name="didjip"/>
+	<SqfDefinition Kind="Nular" Name="missionstart"/>
+	<SqfDefinition Kind="Nular" Name="airdensitycurvertd"/>
+	<SqfDefinition Kind="Nular" Name="sunormoon"/>
+	<SqfDefinition Kind="Nular" Name="false"/>
+	<SqfDefinition Kind="Nular" Name="safezonewabs"/>
+	<SqfDefinition Kind="Nular" Name="profilename"/>
+	<SqfDefinition Kind="Nular" Name="difficultyenabledrtd"/>
+	<SqfDefinition Kind="Nular" Name="savegame"/>
+	<SqfDefinition Kind="Nular" Name="hasinterface"/>
+	<SqfDefinition Kind="Nular" Name="clearitempool"/>
+	<SqfDefinition Kind="Nular" Name="runinitscript"/>
+	<SqfDefinition Kind="Nular" Name="getartillerycomputersettings"/>
+	<SqfDefinition Kind="Nular" Name="visiblemap"/>
+	<SqfDefinition Kind="Nular" Name="forceweatherchange"/>
+	<SqfDefinition Kind="Nular" Name="shownchat"/>
+	<SqfDefinition Kind="Nular" Name="mapanimdone"/>
+	<SqfDefinition Kind="Nular" Name="resetcamshake"/>
+	<SqfDefinition Kind="Nular" Name="showncompass"/>
+	<SqfDefinition Kind="Nular" Name="winddir"/>
+	<SqfDefinition Kind="Nular" Name="pixelgridbase"/>
+	<SqfDefinition Kind="Nular" Name="currentchannel"/>
+	<SqfDefinition Kind="Nular" Name="ispipenabled"/>
+	<SqfDefinition Kind="Nular" Name="gettotaldlcusagetime"/>
+	<SqfDefinition Kind="Nular" Name="get3denlinesvisible"/>
+	<SqfDefinition Kind="Nular" Name="sidefriendly"/>
+	<SqfDefinition Kind="Nular" Name="endloadingscreen"/>
+	<SqfDefinition Kind="Nular" Name="profilenamesteam"/>
+	<SqfDefinition Kind="Nular" Name="playableunits"/>
+	<SqfDefinition Kind="Nular" Name="cheatsenabled"/>
+	<SqfDefinition Kind="Nular" Name="opencuratorinterface"/>
+	<SqfDefinition Kind="Nular" Name="gusts"/>
+	<SqfDefinition Kind="Nular" Name="missionconfigfile"/>
+	<SqfDefinition Kind="Nular" Name="overcastforecast"/>
+	<SqfDefinition Kind="Nular" Name="commandingmenu"/>
+	<SqfDefinition Kind="Nular" Name="distributionregion"/>
+	<SqfDefinition Kind="Nular" Name="windrtd"/>
+	<SqfDefinition Kind="Nular" Name="allcurators"/>
+	<SqfDefinition Kind="Nular" Name="benchmark"/>
+	<SqfDefinition Kind="Nular" Name="getmissiondlcs"/>
+	<SqfDefinition Kind="Nular" Name="istuthintsenabled"/>
+	<SqfDefinition Kind="Nular" Name="shownartillerycomputer"/>
+	<SqfDefinition Kind="Nular" Name="scriptnull"/>
+	<SqfDefinition Kind="Nular" Name="isfilepatchingenabled"/>
+	<SqfDefinition Kind="Nular" Name="missionname"/>
+	<SqfDefinition Kind="Nular" Name="nil"/>
+	<SqfDefinition Kind="Nular" Name="clearweaponpool"/>
+	<SqfDefinition Kind="Nular" Name="true"/>
+	<SqfDefinition Kind="Nular" Name="issteammission"/>
+	<SqfDefinition Kind="Nular" Name="linebreak"/>
+	<SqfDefinition Kind="Nular" Name="language"/>
+	<SqfDefinition Kind="Nular" Name="diag_fps"/>
+	<SqfDefinition Kind="Nular" Name="acctime"/>
+	<SqfDefinition Kind="Nular" Name="enableenddialog"/>
+	<SqfDefinition Kind="Nular" Name="safezoneh"/>
+	<SqfDefinition Kind="Nular" Name="allunitsuav"/>
+	<SqfDefinition Kind="Nular" Name="shownradio"/>
+	<SqfDefinition Kind="Nular" Name="allplayers"/>
+	<SqfDefinition Kind="Nular" Name="clearforcesrtd"/>
+	<SqfDefinition Kind="Nular" Name="clearradio"/>
+	<SqfDefinition Kind="Nular" Name="disabledebriefingstats"/>
+	<SqfDefinition Kind="Nular" Name="logentities"/>
+	<SqfDefinition Kind="Nular" Name="pixelw"/>
+	<SqfDefinition Kind="Nular" Name="visiblecompass"/>
+	<SqfDefinition Kind="Nular" Name="locationnull"/>
+	<SqfDefinition Kind="Nular" Name="shownwatch"/>
+	<SqfDefinition Kind="Nular" Name="playerside"/>
+	<SqfDefinition Kind="Nular" Name="lightnings"/>
+	<SqfDefinition Kind="Nular" Name="simulweathersync"/>
+	<SqfDefinition Kind="Nular" Name="shownmap"/>
+	<SqfDefinition Kind="Nular" Name="shownpad"/>
+	<SqfDefinition Kind="Nular" Name="independent"/>
+	<SqfDefinition Kind="Nular" Name="campaignconfigfile"/>
+	<SqfDefinition Kind="Nular" Name="clientowner"/>
+	<SqfDefinition Kind="Nular" Name="getobjectviewdistance"/>
+	<SqfDefinition Kind="Nular" Name="overcast"/>
+	<SqfDefinition Kind="Nular" Name="safezonexabs"/>
+	<SqfDefinition Kind="Nular" Name="forceend"/>
+	<SqfDefinition Kind="Nular" Name="diag_activesqfscripts"/>
+	<SqfDefinition Kind="Nular" Name="objnull"/>
+	<SqfDefinition Kind="Nular" Name="selectnoplayer"/>
+	<SqfDefinition Kind="Nular" Name="getdlcassetsusage"/>
+	<SqfDefinition Kind="Nular" Name="diag_activesqsscripts"/>
+	<SqfDefinition Kind="Nular" Name="wind"/>
+	<SqfDefinition Kind="Nular" Name="servername"/>
+	<SqfDefinition Kind="Nular" Name="freelook"/>
+	<SqfDefinition Kind="Nular" Name="sideempty"/>
+	<SqfDefinition Kind="Nular" Name="humidity"/>
+	<SqfDefinition Kind="Nular" Name="hcshownbar"/>
+	<SqfDefinition Kind="Nular" Name="diag_ticktime"/>
+	<SqfDefinition Kind="Nular" Name="visiblegps"/>
+	<SqfDefinition Kind="Nular" Name="pi"/>
+	<SqfDefinition Kind="Nular" Name="shownuavfeed"/>
+	<SqfDefinition Kind="Nular" Name="ismultiplayer"/>
+	<SqfDefinition Kind="Nular" Name="productversion"/>
+	<SqfDefinition Kind="Nular" Name="missionnamespace"/>
+	<SqfDefinition Kind="Nular" Name="isdedicated"/>
+	<SqfDefinition Kind="Nular" Name="pixelgridnouiscale"/>
+	<SqfDefinition Kind="Nular" Name="alldeadmen"/>
+	<SqfDefinition Kind="Nular" Name="diag_fpsmin"/>
+	<SqfDefinition Kind="Nular" Name="showncuratorcompass"/>
+	<SqfDefinition Kind="Nular" Name="saveprofilenamespace"/>
+	<SqfDefinition Kind="Nular" Name="finishmissioninit"/>
+	<SqfDefinition Kind="Nular" Name="fog"/>
+	<SqfDefinition Kind="Nular" Name="buldozer_isenabledroaddiag"/>
+	<SqfDefinition Kind="Nular" Name="userinputdisabled"/>
+	<SqfDefinition Kind="Nular" Name="netobjnull"/>
+	<SqfDefinition Kind="Nular" Name="loadgame"/>
+	<SqfDefinition Kind="Nular" Name="forcedmap"/>
+	<SqfDefinition Kind="Nular" Name="cameraview"/>
+	<SqfDefinition Kind="Nular" Name="moonintensity"/>
+	<SqfDefinition Kind="Nular" Name="dynamicsimulationenabled"/>
+	<SqfDefinition Kind="Nular" Name="isserver"/>
+	<SqfDefinition Kind="Nular" Name="reversedmousey"/>
+	<SqfDefinition Kind="Nular" Name="librarydisclaimers"/>
+	<SqfDefinition Kind="Nular" Name="getremotesensorsdisabled"/>
+	<SqfDefinition Kind="Nular" Name="tasknull"/>
+	<SqfDefinition Kind="Nular" Name="get3dencamera"/>
+	<SqfDefinition Kind="Nular" Name="profilenamespace"/>
+	<SqfDefinition Kind="Nular" Name="cadetmode"/>
+	<SqfDefinition Kind="Nular" Name="cameraon"/>
+	<SqfDefinition Kind="Nular" Name="allgroups"/>
+	<SqfDefinition Kind="Nular" Name="agents"/>
+	<SqfDefinition Kind="Nular" Name="briefingname"/>
+	<SqfDefinition Kind="Nular" Name="shownscoretable"/>
+	<SqfDefinition Kind="Nular" Name="copyfromclipboard"/>
+	<SqfDefinition Kind="Nular" Name="cursorobject"/>
+	<SqfDefinition Kind="Nular" Name="east"/>
+	<SqfDefinition Kind="Nular" Name="teamswitch"/>
+	<SqfDefinition Kind="Nular" Name="diag_activescripts"/>
+	<SqfDefinition Kind="Nular" Name="isstressdamageenabled"/>
+	<SqfDefinition Kind="Nular" Name="fogparams"/>
+	<SqfDefinition Kind="Nular" Name="time"/>
+	<SqfDefinition Kind="Nular" Name="shownhud"/>
+	<SqfDefinition Kind="Nular" Name="switchableunits"/>
+	<SqfDefinition Kind="Nular" Name="playerrespawntime"/>
+	<SqfDefinition Kind="Nular" Name="groupiconsvisible"/>
+	<SqfDefinition Kind="Nular" Name="initambientlife"/>
+	<SqfDefinition Kind="Nular" Name="allcutlayers"/>
+	<SqfDefinition Kind="Nular" Name="curatormouseover"/>
+	<SqfDefinition Kind="Nular" Name="get3denmouseover"/>
+	<SqfDefinition Kind="Nular" Name="civilian"/>
+	<SqfDefinition Kind="Nular" Name="missionversion"/>
+	<SqfDefinition Kind="Nular" Name="activatedaddons"/>
+	<SqfDefinition Kind="Nular" Name="showngps"/>
+	<SqfDefinition Kind="Nular" Name="cursortarget"/>
+	<SqfDefinition Kind="Nular" Name="sideunknown"/>
+	<SqfDefinition Kind="Nular" Name="difficulty"/>
+	<SqfDefinition Kind="Nular" Name="fogforecast"/>
+	<SqfDefinition Kind="Nular" Name="savejoysticks"/>
+	<SqfDefinition Kind="Nular" Name="buldozer_reloadopermap"/>
+	<SqfDefinition Kind="Nular" Name="getmissionlayers"/>
+	<SqfDefinition Kind="Nular" Name="is3den"/>
+	<SqfDefinition Kind="Nular" Name="dialog"/>
+	<SqfDefinition Kind="Nular" Name="systemofunits"/>
+	<SqfDefinition Kind="Nular" Name="radiovolume"/>
+	<SqfDefinition Kind="Nular" Name="savingenabled"/>
+	<SqfDefinition Kind="Nular" Name="particlesquality"/>
+	<SqfDefinition Kind="Nular" Name="west"/>
+	<SqfDefinition Kind="Nular" Name="mapanimcommit"/>
+	<SqfDefinition Kind="Nular" Name="vehicles"/>
+	<SqfDefinition Kind="Nular" Name="curatorselected"/>
+	<SqfDefinition Kind="Nular" Name="parsingnamespace"/>
+	<SqfDefinition Kind="Nular" Name="musicvolume"/>
+	<SqfDefinition Kind="Nular" Name="waves"/>
+	<SqfDefinition Kind="Nular" Name="disableserialization"/>
+	<SqfDefinition Kind="Nular" Name="daytime"/>
+	<SqfDefinition Kind="Nular" Name="grpnull"/>
+	<SqfDefinition Kind="Nular" Name="teammembernull"/>
+	<SqfDefinition Kind="Nular" Name="soundvolume"/>
+	<SqfDefinition Kind="Nular" Name="alldead"/>
+	<SqfDefinition Kind="Nular" Name="getresolution"/>
+	<SqfDefinition Kind="Nular" Name="timemultiplier"/>
+	<SqfDefinition Kind="Nular" Name="safezonew"/>
+	<SqfDefinition Kind="Nular" Name="allunits"/>
+	<SqfDefinition Kind="Nular" Name="getmouseposition"/>
+	<SqfDefinition Kind="Nular" Name="groupiconselectable"/>
+	<SqfDefinition Kind="Nular" Name="uinamespace"/>
+	<SqfDefinition Kind="Nular" Name="get3deniconsvisible"/>
+	<SqfDefinition Kind="Nular" Name="isstreamfriendlyuienabled"/>
+	<SqfDefinition Kind="Nular" Name="confignull"/>
+</ArrayOfSqfDefinition>

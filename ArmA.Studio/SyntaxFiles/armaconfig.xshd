@@ -1,0 +1,30 @@
+﻿<!-- https://github.com/icsharpcode/AvalonEdit/blob/master/ICSharpCode.AvalonEdit/Highlighting/Resources/ModeV2.xsd -->
+<SyntaxDefinition name="SQF">
+	<Digits name="Digits" bold="false" italic="false" color="Chocolate"/>
+	<RuleSets>
+		<RuleSet ignorecase="true">
+			<Delimiters>&amp;&lt;&gt;~!@$%^*()-+=|\#/{}[]:;"' , .?</Delimiters>
+			<Span color="Crimson" name="stringNormal">
+				<Begin>"</Begin>
+				<End>"</End>
+			</Span>
+			<Span color="Crimson" name="stringSingle">
+				<Begin>'</Begin>
+				<End>'</End>
+			</Span>
+			<Span color="Gray" name="PreProcessor" stopateol="true">
+				<Begin>#</Begin>
+			</Span>
+			<Span color="Darkgreen" name="LineComment" stopateol="true">
+				<Begin>//</Begin>
+			</Span>
+			<Span color="Darkgreen" name="MultiLineComment">
+				<Begin>/\*</Begin>
+				<End>\*/</End>
+			</Span>
+			<KeyWords color="Blue" bold="true" name="ControlStructures">
+				<Key word="class"/>
+			</KeyWords>
+		</RuleSet>
+	</RuleSets>
+</SyntaxDefinition>

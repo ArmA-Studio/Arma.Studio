@@ -1,0 +1,381 @@
+﻿<Application x:Class="ArmA.Studio.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ArmA.Studio"
+             xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
+             xmlns:conv="clr-namespace:ArmA.Studio.UI.Converters"
+             xmlns:convm="clr-namespace:ArmA.Studio.UI.Converters.Multi"
+             xmlns:dlg="clr-namespace:ArmA.Studio.Dialogs"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:p="clr-namespace:ArmA.Studio.Properties"
+             xmlns:ae="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
+             xmlns:att="clr-namespace:ArmA.Studio.UI.Attached"
+             Startup="Application_Startup"
+             
+             DispatcherUnhandledException="Application_DispatcherUnhandledException"
+             Exit="Application_Exit" ShutdownMode="OnExplicitShutdown">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Name="Converters">
+                    <conv:PathExtensionConverter x:Key="PathExtensionConverter"/>
+                    <conv:EqualityConverter x:Key="EqualityConverter"/>
+                    <conv:BoolInvertConverter x:Key="BoolInvertConverter"/>
+                    <conv:IsNullConverter x:Key="IsNullConverter"/>
+                    <conv:IsStringNullConverter x:Key="IsStringNullConverter"/>
+                    <conv:NullToDependencyPropertyUnsetConverter x:Key="NullToDependencyPropertyUnsetConverter"/>
+                    <conv:CountEnumerableConverter x:Key="CountEnumerableConverter"/>
+
+                    <convm:CollectionContainsConverter x:Key="CollectionContainsConverter"/>
+                    <convm:AllTrueMultiConverter x:Key="AllTrueMultiConverter"/>
+                    <convm:AllFalseMultiConverter x:Key="AllFalseMultiConverter"/>
+                    <convm:BoolOrMultiConverter x:Key="BoolOrMultiConverter"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Name="Colors">
+                    <Color x:Key="C_LightBlue">#007ACC</Color>
+                    <Color x:Key="C_LightRed">#FF3F46</Color>
+                    <Color x:Key="C_Gray">#2D2D30</Color>
+                    <Color x:Key="C_DarkGray">#252526</Color>
+                    <Color x:Key="C_LightGray">#3F3F46</Color>
+                    <Color x:Key="C_LighterGray">#3F3F46</Color>
+                </ResourceDictionary>
+                <ResourceDictionary x:Name="Brushes">
+                    <SolidColorBrush x:Key="SCB_NoticeBackground" Color="{StaticResource C_LightBlue}"/>
+                    <SolidColorBrush x:Key="SCB_NoticeBackgroundError" Color="{StaticResource C_LightRed}"/>
+                    <SolidColorBrush x:Key="SCB_DefaultBackground" Color="{StaticResource C_Gray}"/>
+                    <SolidColorBrush x:Key="SCB_AltBackground" Color="{StaticResource C_DarkGray}"/>
+                    <SolidColorBrush x:Key="SCB_DefaultBorder" Color="{StaticResource C_LightGray}"/>
+                    <SolidColorBrush x:Key="SCB_HighlightBackground" Color="{StaticResource C_LighterGray}"/>
+                    <SolidColorBrush x:Key="SCB_DefaultTextColor" Color="#B2FFFFFF"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Name="PathData">
+                    <PathGeometry x:Key="Refresh">M 311.00,225.08 C 311.00,225.08 301.00,225.08 301.00,225.08 301.00,225.08 283.00,224.00 283.00,224.00 283.00,224.00 264.00,225.00 264.00,225.00 252.24,225.14 240.53,227.50 229.00,229.58 202.76,234.31 179.84,240.89 157.00,255.23 143.04,263.99 128.16,277.72 117.17,290.00 100.68,308.41 87.15,333.59 79.35,357.00 79.35,357.00 72.91,381.89 72.91,381.89 71.41,384.26 69.63,385.27 67.00,386.06 62.58,387.38 54.01,386.68 51.14,382.61 49.21,379.87 48.90,373.44 48.42,370.00 47.06,360.14 45.89,346.89 46.00,337.00 46.00,337.00 46.91,327.00 46.91,327.00 46.91,327.00 48.28,307.00 48.28,307.00 54.06,260.67 73.44,216.18 104.29,181.00 126.08,156.14 158.20,132.83 187.00,116.50 220.13,97.72 255.16,80.98 292.00,70.85 292.00,70.85 314.00,65.00 314.00,65.00 316.74,64.43 322.53,63.45 324.40,61.44 326.33,59.38 325.99,55.65 326.00,53.00 326.00,53.00 326.00,28.00 326.00,28.00 326.18,13.06 335.96,-0.66 352.00,0.04 365.51,0.63 389.44,19.20 401.00,27.28 401.00,27.28 483.00,83.00 483.00,83.00 500.17,94.45 512.30,101.24 519.17,122.00 520.76,126.84 522.20,134.93 521.91,140.00 521.20,152.50 517.61,165.06 509.52,174.83 504.32,181.12 484.56,194.97 477.00,200.42 477.00,200.42 439.00,228.52 439.00,228.52 439.00,228.52 405.00,253.42 405.00,253.42 405.00,253.42 375.00,275.50 375.00,275.50 368.24,280.15 362.57,284.38 354.00,284.91 350.62,285.11 348.20,284.68 345.00,283.64 339.90,281.99 334.81,279.53 331.70,274.98 327.75,269.21 327.27,258.84 326.96,252.00 326.96,252.00 326.04,244.00 326.04,244.00 326.04,244.00 326.04,227.00 326.04,227.00 326.04,227.00 311.00,225.08 311.00,225.08 Z M 325.00,401.00 C 325.00,401.00 342.00,402.00 342.00,402.00 342.00,402.00 352.00,401.04 352.00,401.04 352.00,401.04 362.00,401.04 362.00,401.04 373.76,400.86 385.47,398.50 397.00,396.42 421.96,391.92 444.05,385.79 466.00,372.55 481.71,363.07 495.64,350.55 507.93,337.00 524.93,318.26 538.67,292.96 546.65,269.00 548.53,263.34 550.99,246.58 553.70,243.23 555.20,241.36 556.76,240.68 559.00,240.06 563.55,238.81 571.89,239.17 574.86,243.39 576.79,246.13 577.10,252.56 577.58,256.00 579.16,267.50 580.13,279.39 580.00,291.00 580.00,291.00 579.09,301.00 579.09,301.00 579.09,301.00 576.56,328.00 576.56,328.00 569.82,369.95 550.62,411.92 522.71,444.00 500.87,469.10 466.25,494.59 437.00,510.69 401.90,530.01 371.74,544.37 333.00,555.43 333.00,555.43 312.00,561.01 312.00,561.01 309.53,561.56 303.24,562.87 301.60,564.58 299.67,566.59 300.01,570.39 300.00,573.00 300.00,573.00 300.00,598.00 300.00,598.00 299.82,612.94 290.04,626.66 274.00,625.96 266.08,625.62 258.53,621.19 252.00,617.05 252.00,617.05 225.00,598.71 225.00,598.71 225.00,598.71 197.00,579.81 197.00,579.81 197.00,579.81 139.00,540.19 139.00,540.19 133.75,536.62 127.75,533.02 123.00,528.82 111.84,518.95 103.10,501.17 104.18,486.00 105.07,473.56 108.38,460.96 116.48,451.17 121.77,444.77 142.23,430.53 150.00,424.85 150.00,424.85 188.00,396.74 188.00,396.74 188.00,396.74 221.00,372.58 221.00,372.58 221.00,372.58 251.00,350.50 251.00,350.50 257.76,345.85 263.43,341.62 272.00,341.09 275.38,340.89 277.80,341.32 281.00,342.36 286.10,344.01 291.19,346.47 294.30,351.02 298.17,356.67 298.74,366.33 299.04,373.00 299.04,373.00 299.98,382.00 299.98,382.00 299.98,382.00 299.98,399.00 299.98,399.00 299.98,399.00 325.00,401.00 325.00,401.00 Z</PathGeometry>
+                    <PathGeometry x:Key="PlusSign">M 336.00,140.00 C 336.00,140.00 336.00,291.00 336.00,291.00 336.00,291.00 487.00,291.00 487.00,291.00 487.00,291.00 487.00,335.00 487.00,335.00 487.00,335.00 336.00,335.00 336.00,335.00 336.00,335.00 336.00,486.00 336.00,486.00 336.00,486.00 290.00,486.00 290.00,486.00 290.00,486.00 290.00,335.00 290.00,335.00 290.00,335.00 139.00,335.00 139.00,335.00 139.00,335.00 139.00,291.00 139.00,291.00 139.00,291.00 290.00,291.00 290.00,291.00 290.00,291.00 290.00,140.00 290.00,140.00 290.00,140.00 336.00,140.00 336.00,140.00 Z</PathGeometry>
+                    <PathGeometry x:Key="SearchL">M 260.00,89.21 C 269.22,89.11 282.03,91.75 291.00,94.12 337.53,106.39 374.88,138.06 394.69,182.00 404.97,204.81 408.29,228.23 408.00,253.00 407.78,271.11 402.21,291.32 395.40,308.00 395.40,308.00 387.38,325.00 387.38,325.00 387.12,326.71 387.50,327.57 388.42,329.00 390.85,332.77 401.21,341.74 405.00,345.17 405.00,345.17 425.00,364.17 425.00,364.17 425.00,364.17 439.00,377.96 439.00,377.96 439.00,377.96 459.00,396.96 459.00,396.96 459.00,396.96 492.00,428.00 492.00,428.00 499.01,435.00 515.36,448.93 519.87,456.00 524.62,463.44 526.10,472.36 526.00,481.00 525.73,503.96 505.82,522.20 483.00,521.25 462.87,520.42 456.39,511.08 443.00,498.01 443.00,498.01 427.00,483.00 427.00,483.00 427.00,483.00 412.00,468.96 412.00,468.96 412.00,468.96 371.00,429.96 371.00,429.96 371.00,429.96 327.00,388.25 327.00,388.25 321.97,384.51 316.01,389.24 311.00,391.19 298.39,396.09 286.43,399.62 273.00,401.57 238.13,406.63 201.38,399.53 171.00,381.55 155.67,372.48 141.90,360.61 130.44,347.00 78.24,285.00 82.45,192.74 139.04,135.01 165.73,107.79 198.00,94.79 235.00,89.21 235.00,89.21 260.00,89.21 260.00,89.21 Z M 231.00,137.46 C 216.07,140.11 199.32,147.12 187.00,155.91 132.71,194.64 124.75,273.82 171.04,322.00 192.26,344.09 218.07,353.69 248.00,355.82 251.42,356.06 252.84,355.47 256.00,355.00 256.00,355.00 264.00,355.00 264.00,355.00 272.00,354.06 283.58,351.06 291.00,347.99 311.65,339.43 328.62,326.60 341.25,308.00 365.63,272.11 366.73,223.66 343.41,187.00 338.57,179.40 332.69,171.60 325.96,165.58 314.85,155.63 302.99,147.96 289.00,142.68 273.86,136.98 257.13,134.78 241.00,136.28 241.00,136.28 231.00,137.46 231.00,137.46 Z</PathGeometry>
+                    <PathGeometry x:Key="SearchR">M 383.00,89.21 C 399.60,89.03 419.68,94.35 435.00,100.60 453.56,108.18 470.41,119.34 485.00,133.09 485.00,133.09 494.00,143.00 494.00,143.00 533.23,188.53 543.22,252.70 519.57,308.00 508.58,333.72 491.20,355.21 469.00,372.12 446.19,389.49 410.89,402.95 382.00,403.00 360.24,403.03 348.08,402.02 327.00,395.57 327.00,395.57 310.00,389.14 310.00,389.14 307.79,388.16 304.42,386.13 302.00,386.66 299.39,387.22 288.52,397.56 286.00,400.01 286.00,400.01 195.00,487.00 195.00,487.00 195.00,487.00 182.00,499.00 182.00,499.00 169.05,511.80 162.44,520.45 143.00,521.25 117.15,522.32 99.70,501.89 100.00,477.00 100.28,454.00 119.32,442.66 134.00,428.00 134.00,428.00 167.00,396.96 167.00,396.96 167.00,396.96 187.00,377.96 187.00,377.96 187.00,377.96 201.00,364.17 201.00,364.17 201.00,364.17 221.00,345.17 221.00,345.17 224.79,341.74 235.15,332.77 237.58,329.00 239.92,325.37 238.07,323.34 236.31,320.00 236.31,320.00 229.00,304.00 229.00,304.00 220.12,281.73 217.73,262.76 218.00,239.00 218.11,230.11 220.46,216.72 222.63,208.00 233.20,165.50 260.49,129.46 299.00,108.31 320.04,96.76 336.68,92.95 360.00,89.21 360.00,89.21 383.00,89.21 383.00,89.21 Z M 345.00,139.91 C 328.27,144.70 309.40,155.73 297.28,168.17 248.78,217.94 257.15,300.46 316.00,338.30 335.39,350.77 352.53,354.22 375.00,355.82 378.42,356.06 379.84,355.47 383.00,355.17 398.26,353.69 407.94,352.16 422.00,345.24 435.72,338.50 447.58,330.65 457.71,319.00 497.34,273.45 493.82,204.68 448.99,163.95 439.59,155.42 426.88,147.61 415.00,143.06 399.55,137.15 381.48,134.75 365.00,136.28 357.47,137.37 352.56,137.75 345.00,139.91 Z</PathGeometry>
+                </ResourceDictionary>
+                <ResourceDictionary x:Name="Licenses">
+                    <x:Array Type="dlg:License" x:Key="Licenses">
+                        <dlg:License Title="AvalonEdit">
+                            <dlg:License.Value>
+                                <sys:String xml:space="preserve">Copyright &lt;2016&gt; &lt;Daniel Grunwald&gt;
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</sys:String>
+                            </dlg:License.Value>
+                        </dlg:License>
+                        <dlg:License Title="Extended WPF Toolkit™ Community Edition">
+                            <dlg:License.Value>
+                                <sys:String xml:space="preserve">Microsoft Public License (Ms-PL)
+
+This license governs use of the accompanying software. If you use the software, you accept this license. If you do not accept the license, do not use the software.
+
+1. Definitions
+
+The terms "reproduce," "reproduction," "derivative works," and "distribution" have the same meaning here as under U.S. copyright law.
+
+A "contribution" is the original software, or any additions or changes to the software.
+
+A "contributor" is any person that distributes its contribution under this license.
+
+"Licensed patents" are a contributor's patent claims that read directly on its contribution.
+
+2. Grant of Rights
+
+(A) Copyright Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free copyright license to reproduce its contribution, prepare derivative works of its contribution, and distribute its contribution or any derivative works that you create.
+
+(B) Patent Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free license under its licensed patents to make, have made, use, sell, offer for sale, import, and/or otherwise dispose of its contribution in the software or derivative works of the contribution in the software.
+
+3. Conditions and Limitations
+
+(A) No Trademark License- This license does not grant you rights to use any contributors' name, logo, or trademarks.
+
+(B) If you bring a patent claim against any contributor over patents that you claim are infringed by the software, your patent license from such contributor to the software ends automatically.
+
+(C) If you distribute any portion of the software, you must retain all copyright, patent, trademark, and attribution notices that are present in the software.
+
+(D) If you distribute any portion of the software in source code form, you may do so only under this license by including a complete copy of this license with your distribution. If you distribute any portion of the software in compiled or object code form, you may only do so under a license that complies with this license.
+
+(E) The software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions. You may have additional consumer rights under your local laws which this license cannot change. To the extent permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular purpose and non-infringement.</sys:String>
+                            </dlg:License.Value>
+                        </dlg:License>
+                        <dlg:License Title="INI-Parser">
+                            <dlg:License.Value>
+                                <sys:String xml:space="preserve">The MIT License (MIT)
+
+Copyright (c) 2008 Ricardo Amores Hernández
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</sys:String>
+                            </dlg:License.Value>
+                        </dlg:License>
+                        <dlg:License Title="NLog">
+                            <dlg:License.Value>
+                                <sys:String xml:space="preserve">Copyright (c) 2004-2016 Jaroslaw Kowalski &lt;jaak@jkowalski.net&gt;, Kim Christensen, Julian Verdurmen
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without 
+modification, are permitted provided that the following conditions 
+are met:
+
+* Redistributions of source code must retain the above copyright notice, 
+  this list of conditions and the following disclaimer. 
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution. 
+
+* Neither the name of Jaroslaw Kowalski nor the names of its 
+  contributors may be used to endorse or promote products derived from this
+  software without specific prior written permission. 
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+THE POSSIBILITY OF SUCH DAMAGE.</sys:String>
+                            </dlg:License.Value>
+                        </dlg:License>
+                        <dlg:License Title="VS2015 Image Library">
+                            <dlg:License.Value>
+                                <sys:String xml:space="preserve">MICROSOFT SOFTWARE LICENSE TERMS
+MICROSOFT VISUAL STUDIO 2015 IMAGE LIBRARY
+These license terms are an agreement between Microsoft Corporation (or based on where you live, one of its affiliates) and you. They apply to the software named above. The terms also apply to any Microsoft services or updates for the software, except to the extent those have different terms.
+IF YOU COMPLY WITH THESE LICENSE TERMS, YOU HAVE THE RIGHTS BELOW.
+1.	INSTALLATION AND USE RIGHTS. 
+a.	One user may use copies of the software to develop and test their applications.
+b.	Backup copy.  You may make one backup copy of the software, for reinstalling the software.
+2.	DISTRIBUTABLE CODE. The software contains code that you are permitted to distribute (“Distributable Code”) in applications you develop as described in this Section.  (For this Section the term “distribution” also means deployment of your applications for third parties to access over the Internet.)
+a.	Right to Use and Distribute.
+•	Images.  You may copy, distribute, and deploy the images in the Image Library in applications that you develop with the Visual Studio Family of products.
+•	Third Party Distribution. You may permit distributors of your applications to copy and distribute the Distributable Code as part of those applications.
+b.	Distribution Requirements. For any Distributable Code you distribute, you must
+•	add significant primary functionality to it in your applications;
+•	require distributors and external end users to agree to terms that protect the Distributable Code at least as much as this agreement; and,
+•	indemnify, defend, and hold harmless Microsoft from any claims, including attorneys’ fees, related to the distribution or use of your applications, except to the extent that any claim is based solely on the Distributable Code.
+c.	Distribution Restrictions. You may not use Microsoft’s trademarks in your applications’ names or branding in a way that suggests your applications come from or are endorsed by Microsoft; or modify or distribute the source code of any Distributable Code so that any part of it becomes subject to an Excluded License. An Excluded License is one that requires, as a condition of use, modification or distribution, that (i) the code be disclosed or distributed in source code form; or (ii) others have the right to modify it.
+3.	DATA.  The software may collect information about you and your use of the software, and send that to Microsoft. Microsoft may use this information to provide services and improve our products and services.  You may opt-out of many of these scenarios, but not all, as described in the product documentation.  There are also some features in the software that may enable you to collect data from users of your applications. If you use these features to enable data collection in your applications, you must comply with applicable law, including providing appropriate notices to users of your applications. You can learn more about data collection and use in the help documentation and the privacy statement at http://go.microsoft.com/fwlink/?LinkId=528096&amp;clcid=0x409. Your use of the software operates as your consent to these practices.
+4.	TERMS FOR SPECIFIC COMPONENTS.
+a.	Build Server.  The software may contain some Build Server components listed in BuildServer.TXT files, and/or any files listed on the BuildeServer list located following this Microsoft Software License Terms.  You may copy and install those items, if included in the software, onto your build machines.  You and others in your organization may use these items on your build machines solely for the purpose of compiling, building, verifying and archiving your applications or running quality or performance tests as part of the build process.  
+b.	Microsoft Platforms.  The software may include components from Microsoft Windows; Microsoft Windows Server; Microsoft SQL Server; Microsoft Exchange; Microsoft Office; and Microsoft SharePoint. These components are governed by separate agreements and their own product support policies, as described in the license terms found in the installation directory for that component or in the “Licenses” folder accompanying the software.
+c.	Third Party Components.  The software may include third party components with separate legal notices or governed by other agreements, as may be described in the ThirdPartyNotices file accompanying the software. Even if such components are governed by other agreements, the disclaimers and the limitations on and exclusions of damages below also apply.  
+d.	Package Managers.  The software may include package managers, like Nuget, that give you the option to download other Microsoft and third party software packages to use with your application. Those packages are under their own licenses, and not this agreement. Microsoft does not distribute, license or provide any warranties for any of the third party packages.
+5.	SCOPE OF LICENSE. The software is licensed, not sold. This agreement only gives you some rights to use the software. Microsoft reserves all other rights. Unless applicable law gives you more rights despite this limitation, you may use the software only as expressly permitted in this agreement. In doing so, you must comply with any technical limitations in the software that only allow you to use it in certain ways. You may not
+•	work around any technical limitations in the software;
+•	reverse engineer, decompile or disassemble the software, except and only to the extent that applicable law expressly permits, despite this limitation;
+•	remove, minimize, block or modify any notices of Microsoft or its suppliers in the software; 
+•	use the software in any way that is against the law; or
+•	share, publish or lend the software, or provide the software as a stand-alone hosted as solution for others to use, or transfer the software or this agreement to any third party.
+6.	EXPORT RESTRICTIONS. Microsoft software, online services, professional services and related technology are subject to U.S. export jurisdiction. You must comply with all applicable international and national laws, including the U.S. Export Administration Regulations, the International Traffic in Arms Regulations, Office of Foreign Assets Control sanctions programs, and end-user, end use and destination restrictions by the U.S. and other governments related to Microsoft products, services and technologies. For additional information, see www.microsoft.com/exporting. 
+7.	SUPPORT SERVICES. Because this software is “as is,” we may not provide support services for it.
+8.	ENTIRE AGREEMENT. This agreement, and the terms for supplements, updates, Internet-based services and support services that you use, are the entire agreement for the software and support services.
+9.	APPLICABLE LAW. If you acquired the software in the United States, Washington law applies to interpretation of and claims for breach of this agreement, and the laws of the state where you live apply to all other claims. If you acquired the software in any other country, its laws apply.
+10.	LEGAL EFFECT. This agreement describes certain legal rights. You may have other rights under the laws of your state or country. This agreement does not change your rights under the laws of your state or country if the laws of your state or country do not permit it to do so.  Without limitation of the foregoing, for Australia, YOU HAVE STATUTORY GUARANTEES UNDER THE AUSTRALIAN CONSUMER LAW AND NOTHING IN THESE TERMS IS INTENDED TO AFFECT THOSE RIGHTS
+11.	DISCLAIMER OF WARRANTY. THE SOFTWARE IS LICENSED “AS-IS.” YOU BEAR THE RISK OF USING IT. MICROSOFT GIVES NO EXPRESS WARRANTIES, GUARANTEES OR CONDITIONS. TO THE EXTENT PERMITTED UNDER YOUR LOCAL LAWS, MICROSOFT EXCLUDES THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+12.	LIMITATION ON AND EXCLUSION OF DAMAGES. YOU CAN RECOVER FROM MICROSOFT AND ITS SUPPLIERS ONLY DIRECT DAMAGES UP TO U.S. $5.00. YOU CANNOT RECOVER ANY OTHER DAMAGES, INCLUDING CONSEQUENTIAL, LOST PROFITS, SPECIAL, INDIRECT OR INCIDENTAL DAMAGES.
+This limitation applies to (a) anything related to the software, services, content (including code) on third party Internet sites, or third party applications; and (b) claims for breach of contract, breach of warranty, guarantee or condition, strict liability, negligence, or other tort to the extent permitted by applicable law.
+It also applies even if Microsoft knew or should have known about the possibility of the damages. The above limitation or exclusion may not apply to you because your country may not allow the exclusion or limitation of incidental, consequential or other damages.
+Please note: As this software is distributed in Quebec, Canada, some of the clauses in this agreement are provided below in French.
+Remarque : Ce logiciel étant distribué au Québec, Canada, certaines des clauses dans ce contrat sont fournies ci-dessous en français.
+EXONÉRATION DE GARANTIE. Le logiciel visé par une licence est offert « tel quel ». Toute utilisation de ce logiciel est à votre seule risque et péril. Microsoft n’accorde aucune autre garantie expresse. Vous pouvez bénéficier de droits additionnels en vertu du droit local sur la protection des consommateurs, que ce contrat ne peut modifier. La ou elles sont permises par le droit locale, les garanties implicites de qualité marchande, d’adéquation à un usage particulier et d’absence de contrefaçon sont exclues.
+LIMITATION DES DOMMAGES-INTÉRÊTS ET EXCLUSION DE RESPONSABILITÉ POUR LES DOMMAGES. Vous pouvez obtenir de Microsoft et de ses fournisseurs une indemnisation en cas de dommages directs uniquement à hauteur de 5,00 $ US. Vous ne pouvez prétendre à aucune indemnisation pour les autres dommages, y compris les dommages spéciaux, indirects ou accessoires et pertes de bénéfices.
+Cette limitation concerne:
+•    	tout ce qui est relié au logiciel, aux services ou au contenu (y compris le code) figurant sur des sites Internet tiers ou dans des programmes tiers ; et
+•     les réclamations au titre de violation de contrat ou de garantie, ou au titre de responsabilité stricte, de négligence ou d’une autre faute dans la limite autorisée par la loi en vigueur.
+Elle s’applique également, même si Microsoft connaissait ou devrait connaître l’éventualité d’un tel dommage. Si votre pays n’autorise pas l’exclusion ou la limitation de responsabilité pour les dommages indirects, accessoires ou de quelque nature que ce soit, il se peut que la limitation ou l’exclusion ci-dessus ne s’appliquera pas à votre égard.
+EFFET JURIDIQUE. Le présent contrat décrit certains droits juridiques. Vous pourriez avoir d’autres droits prévus par les lois de votre pays. Le présent contrat ne modifie pas les droits que vous confèrent les lois de votre pays si celles-ci ne le permettent pas.</sys:String>
+                            </dlg:License.Value>
+                        </dlg:License>
+                        <dlg:License Title="antlr4cs">
+                            <dlg:License.Value>
+                                <sys:String xml:space="preserve">[The "BSD license"]
+Copyright (c) 2013 Sam Harwell
+Copyright (c) 2013 Terence Parr
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</sys:String>
+                            </dlg:License.Value>
+                        </dlg:License>
+                    </x:Array>
+                </ResourceDictionary>
+                <ResourceDictionary x:Name="GlobalStyles">
+                    <Style TargetType="ae:TextEditor">
+                        <Setter Property="FontFamily" Value="Consolas"/>
+                    </Style>
+                    <Style x:Key="DialogWindow" TargetType="{x:Type Window}">
+                        <Setter Property="SnapsToDevicePixels" Value="true" />
+                        <Setter Property="Width" Value="512"/>
+                        <Setter Property="Height" Value="384"/>
+                        <Setter Property="MinWidth" Value="512"/>
+                        <Setter Property="MinHeight" Value="200"/>
+                        <Setter Property="att:DialogResultAttached.DialogResult" Value="{Binding DialogResult}"/>
+                        <Setter Property="Icon" Value="Resources/Logo.ico"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Window}">
+                                    <Grid >
+                                        <Grid.Background>
+                                            <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
+                                        </Grid.Background>
+                                        <AdornerDecorator>
+                                            <Grid Grid.Column="1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="70"/>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="40"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock Grid.Column="0" VerticalAlignment="Center" FontSize="26" FontWeight="SemiBold" Margin="8 0" Text="{Binding WindowHeader, FallbackValue=WindowHeader}" TextWrapping="Wrap"/>
+                                                    <Image Grid.Column="1" Margin="8 0" Source="/ArmA.Studio;component/Resources/Logo.ico" Width="64" Height="64"/>
+                                                </Grid>
+                                                <Border Grid.Row="1" BorderThickness="0 1" Padding="16">
+                                                    <Border.BorderBrush>
+                                                        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveCaptionColorKey}}"/>
+                                                    </Border.BorderBrush>
+                                                    <Border.Background>
+                                                        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.MenuColorKey}}"/>
+                                                    </Border.Background>
+                                                    <ContentPresenter/>
+                                                </Border>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" Margin="8">
+                                                    <Button Padding="8 0" Margin="2 0" MinWidth="100" Command="{Binding CmdOKButtonPressed}" IsEnabled="{Binding OKButtonEnabled}">
+                                                        <TextBlock Text="{Binding OKButtonText, FallbackValue=OKButtonText}"/>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Grid>
+                                        </AdornerDecorator>
+                                        <ResizeGrip x:Name="WindowResizeGrip" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed" IsTabStop="false" />
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
+                                            <Setter TargetName="WindowResizeGrip" Property="Visibility" Value="Visible" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <Style x:Key="ToolToggleButton" TargetType="ToggleButton">
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Padding" Value="2"/>
+                    </Style>
+                    <Style x:Key="HorizontalSeparator" TargetType="Separator">
+                        <Setter Property="Margin" Value="4 0"/>
+                        <Setter Property="LayoutTransform">
+                            <Setter.Value>
+                                <TransformGroup>
+                                    <TransformGroup.Children>
+                                        <TransformCollection>
+                                            <RotateTransform Angle="90"/>
+                                        </TransformCollection>
+                                    </TransformGroup.Children>
+                                </TransformGroup>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ResourceDictionary>
+                <ResourceDictionary x:Name="FileTypes">
+                    <x:Array Type="dlg:FileType" x:Key="FileTypes">
+                        <dlg:FileType Image="/ArmA.Studio;component/Resources/FileTypes/SQF_16x.png" FileTypeName="SQF" Extension="sqf">
+                            <dlg:FileType.DefaultContent>
+                                <sys:String xml:space="preserve">/*
+ * @Author: 
+ * 
+ * @Description: 
+ * 
+ * @Arguments: -/-
+ * @Return: -/-
+ */
+params [];</sys:String>
+                            </dlg:FileType.DefaultContent>
+                        </dlg:FileType>
+                        <dlg:FileType Image="/ArmA.Studio;component/Resources/FileTypes/ConfigurationFile_16x.png" FileTypeName="Config" Extension="cpp">
+                            <dlg:FileType.DefaultContent>
+                                <sys:String xml:space="preserve">/*
+ * @Author: 
+ * 
+ * @Purpose: 
+ *
+ */</sys:String>
+                            </dlg:FileType.DefaultContent>
+                        </dlg:FileType>
+                        <dlg:FileType Image="/ArmA.Studio;component/Resources/FileTypes/ConfigurationFile_16x.png" FileTypeName="Addon MainConfig" Extension="cpp" StaticFileName="config.cpp">
+                            <dlg:FileType.DefaultContent>
+                                <sys:String xml:space="preserve">class CfgPatches
+{
+    class TAG_ModName
+    {
+        units[] = {};
+        weapons[] = {};
+        requiredVersion = 1.68;
+        requiredAddons[] = {};
+        author = "";
+        mail = "";
+        url = "";
+    };
+};</sys:String>
+                            </dlg:FileType.DefaultContent>
+                        </dlg:FileType>
+                        <dlg:FileType Image="/ArmA.Studio;component/Resources/FileTypes/ConfigurationFile_16x.png" FileTypeName="Mission MainConfig" Extension="ext" StaticFileName="description.ext">
+                            <dlg:FileType.DefaultContent>
+                                <sys:String xml:space="preserve">//ToDo: Fill</sys:String>
+                            </dlg:FileType.DefaultContent>
+                        </dlg:FileType>
+                    </x:Array>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

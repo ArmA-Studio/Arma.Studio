@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px"
+	 height="16px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+<style type="text/css">
+	.icon-canvas-transparent{opacity:0;fill:#F6F6F6;}
+	.icon-vs-out{fill:#F6F6F6;}
+	.icon-vs-bg{fill:#424242;}
+	.icon-vs-action-blue{fill:#00539C;}
+</style>
+<g id="canvas">
+	<path class="icon-canvas-transparent" d="M16,16H0L0,0h16V16z"/>
+</g>
+<g id="outline">
+	<g>
+		<polygon class="icon-vs-out" points="10,7.414 12,9.414 12,4.586 8,0.586 4,4.586 4,9.414 6,7.414 6,10 8,10 10,10 		
+			"/>
+		<circle class="icon-vs-out" cx="8" cy="13" r="3"/>
+	</g>
+</g>
+<g id="iconBg">
+	<path class="icon-vs-bg" d="M8,11c1.104,0,2,0.896,2,2c0,1.104-0.896,2-2,2s-2-0.896-2-2C6,11.896,6.896,11,8,11z"/>
+</g>
+<g id="colorAction">
+	<path class="icon-vs-action-blue" d="M11,5v2L9,5v4H7V5L5,7V5l3-3L11,5z"/>
+</g>
+</svg>
