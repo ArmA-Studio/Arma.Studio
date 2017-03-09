@@ -89,10 +89,14 @@ namespace ArmA.Studio
         public ICommand CmdQuit { get; private set; }
         public ICommand CmdSave { get; private set; }
         public ICommand CmdSaveAll { get; private set; }
+        public ICommand CmdActiveContentChanged { get; private set; }
 
         public string WorkingDir { get; private set; }
 
         private DockingManager MWDockingManager;
+
+        public DocumentBase CurrentDocument { get { return this._CurrentDocument; } set { this._CurrentDocument = value; this.RaisePropertyChanged(); } }
+        private DocumentBase _CurrentDocument;
 
         public DocumentBase GetDocumentOfSolutionFileBase(SolutionUtil.SolutionFileBase sfb)
         {
@@ -179,6 +183,11 @@ namespace ArmA.Studio
                     }
                 }
                 this.SaveSolution();
+            });
+            this.CmdActiveContentChanged = new RelayCommand((p) =>
+            {
+                var dm = p as DockingManager;
+                this.CurrentDocument = dm.ActiveContent as DocumentBase;
             });
 
             const double DEF_WIN_HEIGHT = 512;

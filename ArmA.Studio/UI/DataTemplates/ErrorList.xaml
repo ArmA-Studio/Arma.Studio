@@ -102,6 +102,24 @@
             </ToggleButton>
         </StackPanel>
         <ListView Grid.Row="1" ItemsSource="{Binding ListView}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="0 4">
+                                    <GridViewRowPresenter/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="LightBlue"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     <GridViewColumn>
@@ -131,7 +149,7 @@
                     <GridViewColumn Header="{x:Static p:Localization.Line}" DisplayMemberBinding="{Binding Line}"/>
                     <GridViewColumn Header="{x:Static p:Localization.Column}" DisplayMemberBinding="{Binding LineOffset}"/>
                     <GridViewColumn Header="{x:Static p:Localization.Description}" DisplayMemberBinding="{Binding Message}"/>
-                    <GridViewColumn Header="{x:Static p:Localization.File}" DisplayMemberBinding="{Binding FileName}"/>
+                    <GridViewColumn Header="{x:Static p:Localization.File}" DisplayMemberBinding="{Binding FileName}" Width="512"/>
                 </GridView>
             </ListView.View>
         </ListView>

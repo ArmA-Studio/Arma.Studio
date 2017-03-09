@@ -8,6 +8,7 @@
         xmlns:ads="clr-namespace:Xceed.Wpf.AvalonDock.Themes;assembly=Xceed.Wpf.AvalonDock.Themes.ArmAStudio"
         xmlns:dt="clr-namespace:ArmA.Studio.UI.DataTemplates"
         xmlns:ev="clr-namespace:ArmA.Studio.UI.Attached.Eventing"
+        xmlns:att="clr-namespace:ArmA.Studio.UI.Attached"
         xmlns:win="clr-namespace:System.Windows;assembly=PresentationCore"
         xmlns:p="clr-namespace:ArmA.Studio.Properties"
         mc:Ignorable="d"
@@ -139,11 +140,37 @@
                 </Button>
             </ToolBar>
         </ToolBarTray>
+        <Grid DockPanel.Dock="Bottom" Background="LightBlue" Height="23">
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="16 0"/>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Grid.Column="0" Visibility="{Binding CurrentDocument.Line, Converter={StaticResource AlwaysVisibleConverter}, FallbackValue=Hidden}">
+                    <TextBlock.Text>
+                        <Binding Path="CurrentDocument.Line" Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}Ln {0}" FallbackValue="Ln NA"/>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock Grid.Column="0" Visibility="{Binding CurrentDocument.Column, Converter={StaticResource AlwaysVisibleConverter}, FallbackValue=Hidden}">
+                    <TextBlock.Text>
+                        <Binding Path="CurrentDocument.Column" Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}Col {0}" FallbackValue="Col NA"/>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
         <ad:DockingManager
             ev:Initialized.Command="{Binding CmdDockingManagerInitialized}"
             ev:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
             AnchorablesSource="{Binding PanelsDisplayed}"
-            DocumentsSource="{Binding DocumentsDisplayed}">
+            att:ActiveContentChangedAttached.Command="{Binding CmdActiveContentChanged}"
+            DocumentsSource="{Binding DocumentsDisplayed}"
+            Margin="4">
             <ad:DockingManager.LayoutUpdateStrategy>
                 <local:LayoutUpdateStrategy/>
             </ad:DockingManager.LayoutUpdateStrategy>

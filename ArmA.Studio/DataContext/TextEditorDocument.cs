@@ -51,6 +51,12 @@ namespace ArmA.Studio.DataContext
         public string IntelliSenseCurrentWord { get { return this._IntelliSenseCurrentWord; } set { this._IntelliSenseCurrentWord = value; this.RaisePropertyChanged(); } }
         private string _IntelliSenseCurrentWord;
 
+
+        public int Line { get { return this._Line; } set { this._Line = value; this.RaisePropertyChanged(); } }
+        private int _Line;
+        public int Column { get { return this._Column; } set { this._Column = value; this.RaisePropertyChanged(); } }
+        private int _Column;
+
         public ICommand CmdTextChanged { get; private set; }
         public ICommand CmdKeyDown { get; private set; }
         public ICommand CmdTextEditorInitialized { get; private set; }
@@ -85,6 +91,7 @@ namespace ArmA.Studio.DataContext
                 ;
                 this.Editor.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(this.Editor));
                 this.Editor.TextArea.TextView.BackgroundRenderers.Add(this.SyntaxErrorRenderer);
+                this.Editor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
             });
             this.CmdIntelliSensePopupInitialized = new UI.Commands.RelayCommand((p) => this.IntelliSensePopup = p as Popup);
             this.CmdEditorPreviewMouseDown = new UI.Commands.RelayCommand((p) => this.IntelliSensePopup.IsOpen = false);
@@ -92,6 +99,11 @@ namespace ArmA.Studio.DataContext
             this._Document.TextChanged += Document_TextChanged;
         }
 
+        private void Caret_PositionChanged(object sender, EventArgs e)
+        {
+            this.Line = this.Editor.TextArea.Caret.Line;
+            this.Column = this.Editor.TextArea.Caret.Column;
+        }
 
         private void Editor_MouseHover(object sender, MouseEventArgs e)
         {

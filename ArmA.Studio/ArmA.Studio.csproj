@@ -128,7 +128,10 @@
     <Compile Include="UI\Attached\Eventing\PreviewKeyDown.cs" />
     <Compile Include="UI\Attached\Eventing\PreviewMouseDown.cs" />
     <Compile Include="UI\Attached\Eventing\MouseDown.cs" />
+    <Compile Include="UI\Attached\ActiveContentChangedAttached.cs" />
     <Compile Include="UI\Converters\CountEnumerableConverter.cs" />
+    <Compile Include="UI\Converters\AlwaysVisibleConverter.cs" />
+    <Compile Include="UI\Converters\StringFormatConverter.cs" />
     <Compile Include="UI\Converters\NullToDependencyPropertyUnsetConverter.cs" />
     <Compile Include="UI\Converters\Multi\BoolOrMultiConverter.cs" />
     <Compile Include="UI\Converters\Multi\CollectionContainsConverter.cs" />
