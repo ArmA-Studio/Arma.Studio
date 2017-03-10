@@ -70,6 +70,24 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string BreakpointEnabled {
+            get {
+                return ResourceManager.GetString("BreakpointEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Label.
+        /// </summary>
+        public static string BreakpointLabel {
+            get {
+                return ResourceManager.GetString("BreakpointLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The changes you made require a restart.
         ///Do you want to restart now?.
         /// </summary>
@@ -103,6 +121,15 @@ namespace ArmA.Studio.Properties {
         public static string Column {
             get {
                 return ResourceManager.GetString("Column", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Condition.
+        /// </summary>
+        public static string Condition {
+            get {
+                return ResourceManager.GetString("Condition", resourceCulture);
             }
         }
         

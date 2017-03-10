@@ -69,7 +69,7 @@ namespace ArmA.Studio.UI
             foreach (var line in view.VisualLines)
             {
                 var lineNumber = this.GetLineNumber(line);
-                if (this.SolutionFileRef.BreakPoints.Contains(lineNumber))
+                if (this.SolutionFileRef.GetFirstBreakpoint(lineNumber) != null)
                 {
                     var lineTop = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextTop) - view.VerticalOffset;
                     var LineBot = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextBottom) - view.VerticalOffset;
@@ -92,13 +92,14 @@ namespace ArmA.Studio.UI
                 var lineNumber = this.GetLineNumber(this.GetLineFromPoint(view, e.GetPosition(this)));
                 if (pos.Y >= line.VisualTop && pos.Y <= line.VisualTop + line.Height)
                 {
-                    if(this.SolutionFileRef.BreakPoints.Contains(lineNumber))
+                    var bp = this.SolutionFileRef.GetFirstBreakpoint(lineNumber);
+                    if (bp != null)
                     {
-                        this.SolutionFileRef.BreakPoints.Remove(lineNumber);
+                        this.SolutionFileRef.RemoveBreakpoint(bp);
                     }
                     else
                     {
-                        this.SolutionFileRef.BreakPoints.Add(lineNumber);
+                        this.SolutionFileRef.AddBreakpoint(lineNumber, 0);
                     }
                     this.InvalidateVisual();
                     this.TextView.InvalidateVisual();
@@ -123,9 +124,9 @@ namespace ArmA.Studio.UI
             textView.EnsureVisualLines();
             var color = new SolidColorBrush(ConfigHost.Coloring.BreakPoint.TextHighlightColor);
             color.Freeze();
-            foreach (var lNum in this.SolutionFileRef.BreakPoints)
+            foreach (var bp in this.SolutionFileRef.BreakPoints)
             {
-                var line = this.Document.GetLineByNumber(lNum);
+                var line = this.Document.GetLineByNumber(bp.Line);
                 var segment = new TextSegment { StartOffset = line.Offset, EndOffset = line.EndOffset };
                 foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))
                 {

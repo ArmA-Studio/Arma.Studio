@@ -14,6 +14,8 @@ using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using ArmA.Studio.UI.Commands;
 using Utility.Collections;
+using ArmA.Studio.DataContext.BreakpointsPaneUtil;
+using System.Collections.ObjectModel;
 
 namespace ArmA.Studio.DataContext
 {
@@ -23,9 +25,12 @@ namespace ArmA.Studio.DataContext
 
         public ICommand CmdEntryOnDoubleClick { get; private set; }
 
+        public ObservableCollection<Breakpoint> Breakpoints { get { return this._Breakpoints; } set { this._Breakpoints = value; this.RaisePropertyChanged(); } }
+        private ObservableCollection<Breakpoint> _Breakpoints;
+
         public BreakpointsPane()
         {
-
+            this._Breakpoints = new ObservableCollection<Breakpoint>();
         }
     }
 }

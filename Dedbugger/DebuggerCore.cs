@@ -33,7 +33,8 @@ namespace Dedbugger
                 this.Pipe.Dispose();
             }
 
-            this.Pipe = new NamedPipeClientStream("\\\\.\\pipe\\ArmaDebugEnginePipeIface");
+            this.Pipe = new NamedPipeClientStream(".", @".\pipe\ArmaDebugEnginePipeIface", PipeDirection.InOut, PipeOptions.WriteThrough);
+            this.Pipe.ReadMode = PipeTransmissionMode.Message;
             try
             {
                 this.Pipe.Connect(1000);
@@ -59,28 +60,22 @@ namespace Dedbugger
             this.Detach();
         }
 
+        public void SetBreakpoint(Breakpoint b, bool flag)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateBreakpoint(Breakpoint b)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ClearBreakpoints()
         {
             throw new NotImplementedException();
         }
 
-
-        public Callstack GetCallstack()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Variable GetVariableByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Variable> GetVariables()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetBreakpoint(Breakpoint b, bool flag)
+        public Variable GetVariableByName(string name, string scope = "missionnamespace")
         {
             throw new NotImplementedException();
         }
@@ -90,7 +85,22 @@ namespace Dedbugger
             throw new NotImplementedException();
         }
 
-        public void UpdateBreakpoint(Breakpoint b)
+        public IEnumerable<Variable> GetVariables()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Callstack GetCallstack()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Perform(EOperation stepInto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetLastError()
         {
             throw new NotImplementedException();
         }

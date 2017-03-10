@@ -34,34 +34,18 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn>
+                    <GridViewColumn Header="{x:Static p:Localization.BreakpointEnabled}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Height="16">
-                                    <Image.Style>
-                                        <Style TargetType="Image">
-                                            <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/StatusInformation/StatusInformation.ico"/>
-                                            <Setter Property="ToolTip" Value="{x:Static p:Localization.Info}"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Severity}" Value="{x:Static local:ESeverity.Error}">
-                                                    <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/StatusCriticalError/StatusCriticalError.ico"/>
-                                                    <Setter Property="ToolTip" Value="{x:Static p:Localization.Error}"/>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding Severity}" Value="{x:Static local:ESeverity.Warning}">
-                                                    <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/StatusWarning/StatusWarning.ico"/>
-                                                    <Setter Property="ToolTip" Value="{x:Static p:Localization.Warning}"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Image.Style>
-                                </Image>
+                                <CheckBox IsChecked="{Binding IsEnabled}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="{x:Static p:Localization.Line}" DisplayMemberBinding="{Binding Line}"/>
                     <GridViewColumn Header="{x:Static p:Localization.Column}" DisplayMemberBinding="{Binding LineOffset}"/>
-                    <GridViewColumn Header="{x:Static p:Localization.Description}" DisplayMemberBinding="{Binding Message}"/>
-                    <GridViewColumn Header="{x:Static p:Localization.File}" DisplayMemberBinding="{Binding FileName}" Width="512"/>
+                    <GridViewColumn Header="{x:Static p:Localization.File}" DisplayMemberBinding="{Binding FileReference.FileName}" Width="512"/>
+                    <GridViewColumn Header="{x:Static p:Localization.BreakpointLabel}" DisplayMemberBinding="{Binding Label}"/>
+                    <GridViewColumn Header="{x:Static p:Localization.Condition}" DisplayMemberBinding="{Binding Condition}"/>
                 </GridView>
             </ListView.View>
         </ListView>

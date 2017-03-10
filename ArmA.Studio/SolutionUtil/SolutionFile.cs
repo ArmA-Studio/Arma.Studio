@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml.Serialization;
+using ArmA.Studio.DataContext.BreakpointsPaneUtil;
 using Utility.Collections;
 
 namespace ArmA.Studio.SolutionUtil
@@ -24,14 +25,89 @@ namespace ArmA.Studio.SolutionUtil
             return null;
         }
 
+
+        [XmlIgnore]
+        public string FileContent
+        {
+            get
+            {
+                using (var reader = new System.IO.StreamReader(this.FullPath))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+        }
+
         [XmlArray("breakpoints")]
         [XmlArrayItem("breakpoint")]
-        public ObservableSortedCollection<int> BreakPoints { get { return this._BreakPoints; } set { this._BreakPoints = value; this.RaisePropertyChanged(); } }
-        private ObservableSortedCollection<int> _BreakPoints;
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        //ToDo: Register breakpoint in BreakpointsPane when set is callen
+        public List<Breakpoint> BreakPoints { get { return this._BreakPoints; } set { this._BreakPoints = value; foreach (var bp in value) bp.FileReference = this; } }
+        private List<Breakpoint> _BreakPoints;
 
         public SolutionFile()
         {
-            this._BreakPoints = new ObservableSortedCollection<int>();
+            this._BreakPoints = new List<Breakpoint>();
+        }
+
+        //ToDo: Register breakpoint in BreakpointsPane
+        public void AddBreakpoint(Breakpoint b)
+        {
+            if (!this.BreakPoints.Contains(b))
+            {
+                this.BreakPoints.Add(b);
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+        }
+        public void RemoveBreakpoint(Breakpoint b)
+        {
+            if (this.BreakPoints.Contains(b))
+            {
+                this.BreakPoints.Remove(b);
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+        }
+        public void AddBreakpoint(int line, int col)
+        {
+            var b = new Breakpoint() { FileReference = this, Line = line, LineOffset = col };
+            if (!this.BreakPoints.Contains(b))
+            {
+                this.BreakPoints.Add(b);
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+        }
+        public void RemoveBreakpoint(int line, int col)
+        {
+            var b = new Breakpoint() { FileReference = this, Line = line, LineOffset = col };
+            if (this.BreakPoints.Contains(b))
+            {
+                this.BreakPoints.Remove(b);
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+        }
+        public Breakpoint GetBreakpoint(int line, int col)
+        {
+            return this.BreakPoints.FirstOrDefault((b) => b.Line == line && b.LineOffset == col);
+        }
+        public Breakpoint GetFirstBreakpoint(int line)
+        {
+            return this.BreakPoints.FirstOrDefault((b) => b.Line == line);
+        }
+        public List<Breakpoint> GetBreakpoints(int line)
+        {
+            return this.BreakPoints.FindAll((b) => b.Line == line);
         }
     }
 }

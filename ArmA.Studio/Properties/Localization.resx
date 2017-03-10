@@ -120,6 +120,12 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="BreakpointEnabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="BreakpointLabel" xml:space="preserve">
+    <value>Label</value>
+  </data>
   <data name="ChangesRequireRestart_Body" xml:space="preserve">
     <value>The changes you made require a restart.
 Do you want to restart now?</value>
@@ -132,6 +138,9 @@ Do you want to restart now?</value>
   </data>
   <data name="Column" xml:space="preserve">
     <value>Column</value>
+  </data>
+  <data name="Condition" xml:space="preserve">
+    <value>Condition</value>
   </data>
   <data name="ConfigEntrySelectorDialog_Header" xml:space="preserve">
     <value>Please choose the UI-Main config entry</value>

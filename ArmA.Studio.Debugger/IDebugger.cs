@@ -20,7 +20,7 @@ namespace ArmA.Studio.Debugger
         bool Attach();
         void Detach();
 
-        Variable GetVariableByName(string name);
+        Variable GetVariableByName(string name, string scope = "missionnamespace");
         Variable SetVariable(Variable v);
         IEnumerable<Variable> GetVariables();
 

@@ -21,6 +21,51 @@ namespace ArmA.Studio.SolutionUtil
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
 
 
+        [XmlIgnore]
+        public string ArmAPath
+        {
+            get
+            {
+                if (this is SolutionFile)
+                {
+                    if ((this as SolutionFile).FileName == "$PBOPREFIX$")
+                    {
+                        return (this as SolutionFile).FileContent;
+                    }
+                    else
+                    {
+                        var parent = this.Parent;
+                        if (parent == null)
+                        {
+                            return string.Empty;
+                        }
+                        else
+                        {
+                            return Path.Combine(parent.ArmAPath, this.FileName);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach(var it in this.Children)
+                    {
+                        if (it is SolutionFile && (it as SolutionFile).FileName == "$PBOPREFIX$")
+                        {
+                            return (this as SolutionFile).FileContent;
+                        }
+                    }
+                    var parent = this.Parent;
+                    if (parent == null)
+                    {
+                        return string.Empty;
+                    }
+                    else
+                    {
+                        return Path.Combine(parent.ArmAPath, this.FileName);
+                    }
+                }
+            }
+        }
 
         [XmlIgnore]
         public string RelativePath
