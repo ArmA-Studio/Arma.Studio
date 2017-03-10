@@ -30,6 +30,7 @@ namespace ArmA.Studio
         public static string ExecutablePath { get { return Path.GetDirectoryName(ExecutableFile); } }
         public static string ExecutableFile { get { return Assembly.GetExecutingAssembly().GetName().CodeBase.Substring("file:///".Length); } }
         public static string SyntaxFilesPath { get { return Path.Combine(ExecutablePath, "SyntaxFiles"); } }
+        public static string DebuggerPath { get { return Path.Combine(ExecutablePath, "Debugger"); } }
         public static string ConfigPath { get { return Path.Combine(ApplicationDataPath, "Configuration"); } }
         public static string FileTemplatePath { get { return Path.Combine(ApplicationDataPath, "Templates"); } }
         public static string TempPath { get { return Path.Combine(Path.GetTempPath(), @"ArmA.Studio"); } }
@@ -106,7 +107,7 @@ namespace ArmA.Studio
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
 #if DEBUG
-            Debugger.Break();
+            System.Diagnostics.Debugger.Break();
 #endif
         }
 

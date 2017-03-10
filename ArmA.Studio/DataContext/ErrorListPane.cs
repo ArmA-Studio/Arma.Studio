@@ -53,7 +53,7 @@ namespace ArmA.Studio.DataContext
         public ListCollectionView ListView { get { return this._ListView; } set { this._ListView = value; value.Filter = new Predicate<object>(ListViewFilter); this.RaisePropertyChanged(); } }
         private ListCollectionView _ListView;
 
-        public ICommand CmdOnDoubleClick { get; private set; }
+        public ICommand CmdEntryOnDoubleClick { get; private set; }
 
         public ErrorListPane()
         {
@@ -63,7 +63,7 @@ namespace ArmA.Studio.DataContext
             this._IsErrorsDisplayed = ConfigHost.App.ErrorList_IsErrorsDisplayed;
             this._IsWarningsDisplayed = ConfigHost.App.ErrorList_IsWarningsDisplayed;
             this._IsInfosDisplayed = ConfigHost.App.ErrorList_IsInfosDisplayed;
-            this.CmdOnDoubleClick = new RelayCommand(Cmd_OnDoubleClick);
+            this.CmdEntryOnDoubleClick = new RelayCommand(Cmd_EntryOnDoubleClick);
             Instance = this;
         }
 
@@ -116,9 +116,15 @@ namespace ArmA.Studio.DataContext
                     (this.IsInfosDisplayed ? true : li.Severity != ESeverity.Info);
         }
 
-        private void Cmd_OnDoubleClick(object param)
+        private void Cmd_EntryOnDoubleClick(object param)
         {
-
+            var li = param as TextEditorUtil.LinterInfo;
+            if (li == null)
+            {
+                System.Diagnostics.Debugger.Break();
+                return;
+            }
+            Workspace.CurrentWorkspace.OpenOrFocusDocument(li.FilePath);
         }
     }
 }

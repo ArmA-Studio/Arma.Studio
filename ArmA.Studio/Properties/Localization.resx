@@ -145,6 +145,26 @@ Do you want to restart now?</value>
   <data name="CreateNewFileDialog_Title" xml:space="preserve">
     <value>Create New File</value>
   </data>
+  <data name="DebuggerContext_AttachFailed_Body" xml:space="preserve">
+    <value>Attaching the debugger failed.
+{0}</value>
+  </data>
+  <data name="DebuggerContext_AttachFailed_Title" xml:space="preserve">
+    <value>Debugger Attach Failed</value>
+  </data>
+  <data name="DebuggerContext_NoDebuggerAvailable_Body" xml:space="preserve">
+    <value>Debugging features are not functional as no debugger was found.</value>
+  </data>
+  <data name="DebuggerContext_NoDebuggerAvailable_Title" xml:space="preserve">
+    <value>No Debugging Available</value>
+  </data>
+  <data name="DebuggerContext_OperationFailed_Body" xml:space="preserve">
+    <value>The operation {0} failed to execute.
+{1}</value>
+  </data>
+  <data name="DebuggerContext_OperationFailed_Title" xml:space="preserve">
+    <value>Debugger Operation Failed</value>
+  </data>
   <data name="Debugger_Continue" xml:space="preserve">
     <value>Continue</value>
   </data>
@@ -281,6 +301,9 @@ Current progress will be lost.</value>
   </data>
   <data name="Output_ClearAllToolTip" xml:space="preserve">
     <value>Clear All</value>
+  </data>
+  <data name="PanelDisplayName_Breakpoints" xml:space="preserve">
+    <value>Breakpoints</value>
   </data>
   <data name="PanelDisplayName_ErrorList" xml:space="preserve">
     <value>Error List</value>

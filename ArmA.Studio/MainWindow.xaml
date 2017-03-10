@@ -57,15 +57,6 @@
                     <Style TargetType="MenuItem">
                         <Setter Property="Command" Value="{Binding DataContext.CmdDisplayPanel, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"/>
                         <Setter Property="CommandParameter" Value="{Binding}"/>
-                        <Setter Property="IsCheckable" Value="True"/>
-                        <Setter Property="IsChecked">
-                            <Setter.Value>
-                                <MultiBinding Converter="{StaticResource CollectionContainsConverter}" Mode="OneWay">
-                                    <Binding Path="DataContext.PanelsDisplayed" Mode="OneWay" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}"/>
-                                    <Binding Mode="OneWay"/>
-                                </MultiBinding>
-                            </Setter.Value>
-                        </Setter>
                         <Setter Property="Header" Value="{Binding Title}"/>
                     </Style>
                 </MenuItem.ItemContainerStyle>

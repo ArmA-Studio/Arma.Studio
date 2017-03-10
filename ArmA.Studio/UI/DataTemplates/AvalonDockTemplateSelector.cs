@@ -16,6 +16,8 @@ namespace ArmA.Studio.UI.DataTemplates
         public static DataTemplate DocumentBase { get; private set; }
         public static DataTemplate OutputPane { get; private set; }
         public static DataTemplate ErrorListPane { get; private set; }
+        public static DataTemplate BreakpointsPane { get; private set; }
+
         static AvalonDockTemplateSelector()
         {
             var ass = System.Reflection.Assembly.GetExecutingAssembly();
@@ -58,6 +60,9 @@ namespace ArmA.Studio.UI.DataTemplates
                     case "ArmA.Studio.UI.DataTemplates.ErrorList.xaml":
                         ErrorListPane = template;
                         break;
+                    case "ArmA.Studio.UI.DataTemplates.Breakpoints.xaml":
+                        BreakpointsPane = template;
+                        break;
                 }
             }
         }
@@ -68,12 +73,16 @@ namespace ArmA.Studio.UI.DataTemplates
                 return SolutionExplorerPane;
             if (item is DataContext.PropertiesPane)
                 return PropertiesPane;
-            if (item is DocumentBase)
-                return DocumentBase;
             if (item is DataContext.OutputPane)
                 return OutputPane;
             if (item is DataContext.ErrorListPane)
                 return ErrorListPane;
+            if (item is DataContext.BreakpointsPane)
+                return BreakpointsPane;
+
+
+            if (item is DocumentBase)
+                return DocumentBase;
 
             return base.SelectTemplate(item, container);
         }

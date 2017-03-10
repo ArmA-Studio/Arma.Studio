@@ -111,8 +111,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataContext\ObservableList.cs" />
     <Compile Include="DataContext\ErrorListPane.cs" />
+    <Compile Include="DataContext\BreakpointsPane.cs" />
     <Compile Include="DataContext\OutputPane.cs" />
     <Compile Include="DataContext\TextEditorUtil\IntelliSenseEntry.cs" />
     <Compile Include="ESeverity.cs" />
@@ -124,6 +124,7 @@
     </Compile>
     <Compile Include="Dialogs\PropertiesDialogDataContext.cs" />
     <Compile Include="IniHelper.cs" />
+    <Compile Include="LintScheduler.cs" />
     <Compile Include="LoggerTargets\SubscribableTarget.cs" />
     <Compile Include="UI\Attached\Eventing\PreviewKeyDown.cs" />
     <Compile Include="UI\Attached\Eventing\PreviewMouseDown.cs" />
@@ -1606,6 +1607,9 @@
     <EmbeddedResource Include="UI\DataTemplates\ErrorList.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\DataTemplates\Breakpoints.xaml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -2019,6 +2023,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ArmA.Studio.Debugger\ArmA.Studio.Debugger.csproj">
+      <Project>{ec8d472e-f967-475d-8fbb-fc9b2db56467}</Project>
+      <Name>ArmA.Studio.Debugger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ArmAClassParser\ArmAClassParser.csproj">
       <Project>{2e1b48ad-1de2-457e-ae85-8230969296bf}</Project>
       <Name>ArmAClassParser</Name>

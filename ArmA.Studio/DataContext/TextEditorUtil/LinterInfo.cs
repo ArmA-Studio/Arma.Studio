@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using ICSharpCode.AvalonEdit.Document;
 
 namespace ArmA.Studio.DataContext.TextEditorUtil
@@ -8,7 +9,8 @@ namespace ArmA.Studio.DataContext.TextEditorUtil
         public int Line { get; set; }
         public int LineOffset { get; set; }
         public ESeverity Severity { get; set; }
-        public string FileName { get; set; }
+        public string FileName { get { return Path.GetFileName(this.FilePath); } }
+        public string FilePath { get; set; }
         public int EndOffset { get { return this.StartOffset + Length; } }
         public int Offset { get { return this.StartOffset; } }
 

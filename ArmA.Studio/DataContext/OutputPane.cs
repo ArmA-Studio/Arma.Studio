@@ -19,12 +19,36 @@ namespace ArmA.Studio.DataContext
 {
     public class OutputPane : PanelBase
     {
+        private static OutputPane Instance;
         private static readonly TextDocument NullDocument = new TextDocument();
+        private static Dictionary<string, TextDocument> DocumentDictionary { get; set; }
+        private static void Logger_OnLog(object sender, LoggerTargets.SubscribableTarget.OnLogEventArgs e)
+        {
+            App.Current.Dispatcher.InvokeAsync(() =>
+            {
+                if (!DocumentDictionary.ContainsKey(e.Logger))
+                {
+                    DocumentDictionary.Add(e.Logger, new TextDocument());
+                    Instance?.AvailableTargets.Add(e.Logger);
+                    if (Instance != null && Instance.SelectedTarget == null)
+                    {
+                        Instance.SelectedTarget = e.Logger;
+                    }
+                }
+                var doc = DocumentDictionary[e.Logger];
+                doc.Insert(doc.TextLength, string.Concat(e.Severity, ": ", e.Message, "\r\n"));
+            });
+        }
+        static OutputPane()
+        {
+            DocumentDictionary = new Dictionary<string, TextDocument>();
+            App.SubscribableLoggerTarget.OnLog += Logger_OnLog;
+        }
+
         public override string Title { get { return Properties.Localization.PanelDisplayName_Output; } }
 
         public ICommand CmdClearOutputWindow { get; private set; }
 
-        private Dictionary<string, TextDocument> DocumentDictionary { get; set; }
 
         public TextDocument Document { get { return this.SelectedTarget == null ? NullDocument : DocumentDictionary[this.SelectedTarget as string]; } }
 
@@ -36,29 +60,10 @@ namespace ArmA.Studio.DataContext
 
         public OutputPane()
         {
-            this.DocumentDictionary = new Dictionary<string, TextDocument>();
-            this._AvailableTargets = new ObservableSortedCollection<string>();
+            this._AvailableTargets = new ObservableSortedCollection<string>(DocumentDictionary.Keys);
             this.CmdClearOutputWindow = new RelayCommand((p) => this.Document.Text = string.Empty);
-
-            App.SubscribableLoggerTarget.OnLog += Logger_OnLog;
+            Instance = this;
         }
 
-        private void Logger_OnLog(object sender, LoggerTargets.SubscribableTarget.OnLogEventArgs e)
-        {
-            App.Current.Dispatcher.InvokeAsync(() =>
-            {
-                if (!this.DocumentDictionary.ContainsKey(e.Logger))
-                {
-                    this.DocumentDictionary.Add(e.Logger, new TextDocument());
-                    AvailableTargets.Add(e.Logger);
-                    if(this.SelectedTarget == null)
-                    {
-                        this.SelectedTarget = e.Logger;
-                    }
-                }
-                var doc = this.DocumentDictionary[e.Logger];
-                doc.Insert(doc.TextLength, string.Concat(e.Severity, ": ", e.Message, "\r\n"));
-            });
-        }
     }
 }

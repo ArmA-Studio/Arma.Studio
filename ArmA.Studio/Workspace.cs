@@ -112,10 +112,10 @@ namespace ArmA.Studio
 
         public Workspace(string path)
         {
-            this._DebugContext = new DebuggerContext();
             this.WorkingDir = path;
             this._PanelsAvailable = new ObservableCollection<PanelBase>(FindAllAnchorablePanelsInAssembly());
             this.PanelsDisplayed = new ObservableCollection<PanelBase>();
+            this._DebugContext = new DebuggerContext();
             this._DocumentsDisplayed = new ObservableCollection<DocumentBase>();
             this._DocumentsAvailable = new ObservableCollection<DocumentBase>(FindAllDocumentsInAssembly());
             this.CmdDisplayPanel = new RelayCommand((p) =>

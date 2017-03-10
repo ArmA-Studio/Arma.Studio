@@ -64,7 +64,7 @@ namespace ArmA.Studio.DataContext
                             Severity = ESeverity.Error,
                             Line = line,
                             LineOffset = charPositionInLine,
-                            FileName = Path.GetFileName(this.FilePath)
+                            FilePath = this.FilePath
                         });
                         break;
                     case "unaryexpression":
@@ -76,7 +76,7 @@ namespace ArmA.Studio.DataContext
                             Severity = ESeverity.Error,
                             Line = line,
                             LineOffset = charPositionInLine,
-                            FileName = Path.GetFileName(this.FilePath)
+                            FilePath = this.FilePath
                         });
                         break;
                     case "nularexpression":
@@ -88,7 +88,7 @@ namespace ArmA.Studio.DataContext
                             Severity = ESeverity.Error,
                             Line = line,
                             LineOffset = charPositionInLine,
-                            FileName = Path.GetFileName(this.FilePath)
+                            FilePath = this.FilePath
                         });
                         break;
                     default:
@@ -100,7 +100,7 @@ namespace ArmA.Studio.DataContext
                             Severity = ESeverity.Error,
                             Line = line,
                             LineOffset = charPositionInLine,
-                            FileName = Path.GetFileName(this.FilePath)
+                            FilePath = this.FilePath
                         });
                         break;
                 }

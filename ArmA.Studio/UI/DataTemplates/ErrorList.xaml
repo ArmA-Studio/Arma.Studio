@@ -20,7 +20,7 @@
                 <Style BasedOn="{StaticResource ToolToggleButton}" TargetType="ToggleButton"/>
                 <Style BasedOn="{StaticResource HorizontalSeparator}" TargetType="Separator"/>
             </StackPanel.Resources>
-            <ToggleButton Command="{Binding CmdClearOutputWindow}" IsChecked="{Binding IsErrorsDisplayed}">
+            <ToggleButton IsChecked="{Binding IsErrorsDisplayed}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -47,7 +47,7 @@
                 </Grid>
             </ToggleButton>
             <Separator/>
-            <ToggleButton Command="{Binding CmdClearOutputWindow}" IsChecked="{Binding IsWarningsDisplayed, FallbackValue=true}">
+            <ToggleButton IsChecked="{Binding IsWarningsDisplayed, FallbackValue=true}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -74,7 +74,7 @@
                 </Grid>
             </ToggleButton>
             <Separator/>
-            <ToggleButton Command="{Binding CmdClearOutputWindow}" IsChecked="{Binding IsInfosDisplayed}">
+            <ToggleButton IsChecked="{Binding IsInfosDisplayed}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -113,6 +113,8 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
+                    <Setter Property="ev:MouseDoubleClick.Command" Value="{Binding DataContext.CmdEntryOnDoubleClick, RelativeSource={RelativeSource AncestorType=ListView, Mode=FindAncestor}}"/>
+                    <Setter Property="ev:MouseDoubleClick.CommandParameter" Value="{Binding}"/>
                     <Style.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="LightBlue"/>

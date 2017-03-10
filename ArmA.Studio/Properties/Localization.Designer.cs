@@ -206,6 +206,62 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Attaching the debugger failed.
+        ///{0}.
+        /// </summary>
+        public static string DebuggerContext_AttachFailed_Body {
+            get {
+                return ResourceManager.GetString("DebuggerContext_AttachFailed_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debugger Attach Failed.
+        /// </summary>
+        public static string DebuggerContext_AttachFailed_Title {
+            get {
+                return ResourceManager.GetString("DebuggerContext_AttachFailed_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debugging features are not functional as no debugger was found..
+        /// </summary>
+        public static string DebuggerContext_NoDebuggerAvailable_Body {
+            get {
+                return ResourceManager.GetString("DebuggerContext_NoDebuggerAvailable_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Debugging Available.
+        /// </summary>
+        public static string DebuggerContext_NoDebuggerAvailable_Title {
+            get {
+                return ResourceManager.GetString("DebuggerContext_NoDebuggerAvailable_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The operation {0} failed to execute.
+        ///{1}.
+        /// </summary>
+        public static string DebuggerContext_OperationFailed_Body {
+            get {
+                return ResourceManager.GetString("DebuggerContext_OperationFailed_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Debugger Operation Failed.
+        /// </summary>
+        public static string DebuggerContext_OperationFailed_Title {
+            get {
+                return ResourceManager.GetString("DebuggerContext_OperationFailed_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -540,6 +596,15 @@ namespace ArmA.Studio.Properties {
         public static string Output_ClearAllToolTip {
             get {
                 return ResourceManager.GetString("Output_ClearAllToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Breakpoints.
+        /// </summary>
+        public static string PanelDisplayName_Breakpoints {
+            get {
+                return ResourceManager.GetString("PanelDisplayName_Breakpoints", resourceCulture);
             }
         }
         

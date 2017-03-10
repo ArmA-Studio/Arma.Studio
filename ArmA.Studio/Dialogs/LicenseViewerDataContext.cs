@@ -19,13 +19,13 @@ namespace ArmA.Studio.Dialogs
         public ObservableCollection<License> Licenses { get; set; }
         public ICommand CmdOKButtonPressed { get; private set; }
         public bool? DialogResult { get { return this._DialogResult; } set { this._DialogResult = value; this.RaisePropertyChanged(); } }
+        private bool? _DialogResult;
 
 
         public string WindowHeader { get { return Properties.Localization.LicenseViewer_Header; } }
         public string OKButtonText { get { return Properties.Localization.OK; } }
         public bool OKButtonEnabled { get { return true; } }
 
-        private bool? _DialogResult;
         public LicenseViewerDataContext()
         {
             this.CmdOKButtonPressed = new UI.Commands.RelayCommand(Cmd_OKButtonPressed);
