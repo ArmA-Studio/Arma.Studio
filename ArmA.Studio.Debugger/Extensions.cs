@@ -9,9 +9,13 @@ namespace ArmA.Studio.Debugger
     public static class Extensions
     {
         #region IDebugger
-        public static async Task SetBreakpointAsync(this IDebugger dbgr, Breakpoint b, bool flag)
+        public static async Task AddBreakpointAsync(this IDebugger dbgr, Breakpoint b)
         {
-            await Task.Run(() => dbgr.SetBreakpoint(b, flag));
+            await Task.Run(() => dbgr.AddBreakpoint(b));
+        }
+        public static async Task RemoveBreakpointAsync(this IDebugger dbgr, Breakpoint b)
+        {
+            await Task.Run(() => dbgr.RemoveBreakpoint(b));
         }
         public static async Task UpdateBreakpointAsync(this IDebugger dbgr, Breakpoint b)
         {

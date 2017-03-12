@@ -11,9 +11,11 @@ namespace ArmA.Studio.Debugger
         event EventHandler<OnHaltEventArgs> OnHalt;
         event EventHandler<OnExceptionEventArgs> OnException;
         event EventHandler<OnErrorEventArgs> OnError;
-        event EventHandler<OnConnectionLostEventArgs> OnConnectionClosed;
+        event EventHandler<OnConnectionClosedEventArgs> OnConnectionClosed;
+        event EventHandler<OnContinueEventArgs> OnContinue;
 
-        void SetBreakpoint(Breakpoint b, bool flag);
+        void AddBreakpoint(Breakpoint b);
+        void RemoveBreakpoint(Breakpoint b);
         void UpdateBreakpoint(Breakpoint b);
         void ClearBreakpoints();
 

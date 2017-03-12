@@ -141,6 +141,23 @@ namespace ArmA.Studio
                     set { Instance.ColoringIni.SetValue(nameof(EditorUnderlining), nameof(InfoColor), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
                 }
             }
+
+            public static class ExecutionMarker
+            {
+                public static readonly Color MainColor_Default = Color.FromArgb(255, 255, 255, 0);
+                public static Color MainColor
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(ExecutionMarker), nameof(MainColor))); }
+                    set { Instance.ColoringIni.SetValue(nameof(ExecutionMarker), nameof(MainColor), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color BorderColor_Default = Color.FromArgb(255, 255, 255, 255);
+                public static Color BorderColor
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(ExecutionMarker), nameof(BorderColor))); }
+                    set { Instance.ColoringIni.SetValue(nameof(ExecutionMarker), nameof(BorderColor), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+            }
             
             public static class SelectedLine
             {
@@ -166,6 +183,13 @@ namespace ArmA.Studio
                 {
                     get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(BreakPoint), nameof(MainColor))); }
                     set { Instance.ColoringIni.SetValue(nameof(BreakPoint), nameof(MainColor), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color MainColorInactive_Default = Color.FromArgb(255, 128, 0, 0);
+                public static Color MainColorInactive
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(BreakPoint), nameof(MainColorInactive))); }
+                    set { Instance.ColoringIni.SetValue(nameof(BreakPoint), nameof(MainColorInactive), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
                 }
 
                 public static readonly Color BorderColor_Default = Color.FromArgb(255, 255, 255, 255);

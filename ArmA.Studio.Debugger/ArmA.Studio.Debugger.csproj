@@ -45,8 +45,9 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="EOperation.cs" />
     <Compile Include="IDebugger.cs" />
-    <Compile Include="OnBreakpointEventArgs.cs" />
-    <Compile Include="OnConnectionLostEventArgs.cs" />
+    <Compile Include="OnContinueEventArgs.cs" />
+    <Compile Include="OnHaltEventArgs.cs" />
+    <Compile Include="OnConnectionClosedEventArgs.cs" />
     <Compile Include="OnErrorEventArgs.cs" />
     <Compile Include="OnExceptionEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

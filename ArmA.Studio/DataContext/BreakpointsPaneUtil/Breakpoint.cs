@@ -12,7 +12,7 @@ namespace ArmA.Studio.DataContext.BreakpointsPaneUtil
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
 
-        public bool IsEnabled { get { return this._IsEnabled; } set { this._IsEnabled = value; this.RaisePropertyChanged(); } }
+        public bool IsEnabled { get { return this._IsEnabled; } set { this._IsEnabled = value; this.FileReference?.RedrawEditor(); this.RaisePropertyChanged(); } }
         private bool _IsEnabled;
 
         public int Line { get { return this._Line; } set { this._Line = value; this.RaisePropertyChanged(); } }
@@ -33,11 +33,11 @@ namespace ArmA.Studio.DataContext.BreakpointsPaneUtil
 
         public Breakpoint()
         {
-            this.IsEnabled = false;
-            this.Line = -1;
-            this.LineOffset = -1;
-            this.Condition = string.Empty;
-            this.Label = string.Empty;
+            this._IsEnabled = true;
+            this._Line = -1;
+            this._LineOffset = -1;
+            this._Condition = string.Empty;
+            this._Label = string.Empty;
             this._FileReference = new WeakReference<SolutionUtil.SolutionFile>(null);
         }
 

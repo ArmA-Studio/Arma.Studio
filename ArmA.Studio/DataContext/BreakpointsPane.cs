@@ -21,16 +21,21 @@ namespace ArmA.Studio.DataContext
 {
     public class BreakpointsPane : PanelBase
     {
+        public static ObservableCollection<Breakpoint> Breakpoints { get; private set; }
+        static BreakpointsPane()
+        {
+            Breakpoints = new ObservableCollection<Breakpoint>();
+        }
+
+        public object XAMLBreakpointsReference { get { return Breakpoints; } }
+
         public override string Title { get { return Properties.Localization.PanelDisplayName_Breakpoints; } }
 
         public ICommand CmdEntryOnDoubleClick { get; private set; }
 
-        public ObservableCollection<Breakpoint> Breakpoints { get { return this._Breakpoints; } set { this._Breakpoints = value; this.RaisePropertyChanged(); } }
-        private ObservableCollection<Breakpoint> _Breakpoints;
-
         public BreakpointsPane()
         {
-            this._Breakpoints = new ObservableCollection<Breakpoint>();
+            
         }
     }
 }

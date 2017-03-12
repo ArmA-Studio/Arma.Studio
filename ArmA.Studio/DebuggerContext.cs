@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ArmA.Studio.SolutionUtil;
 
 namespace ArmA.Studio
 {
@@ -31,6 +32,9 @@ namespace ArmA.Studio
         public ICommand CmdStepInto { get; private set; }
         public ICommand CmdStepOver { get; private set; }
         public ICommand CmdStepOut { get; private set; }
+        public DocumentBase CurrentDocument { get; internal set; }
+        public int CurrentLine { get; internal set; }
+        public int CurrentColumn { get; private set; }
 
         public DebuggerContext()
         {
@@ -50,6 +54,7 @@ namespace ArmA.Studio
                 this.DebuggerInstance.OnConnectionClosed += DebuggerInstance_OnConnectionClosed;
                 this.DebuggerInstance.OnError += DebuggerInstance_OnError;
                 this.DebuggerInstance.OnException += DebuggerInstance_OnException;
+                this.DebuggerInstance.OnContinue += DebuggerInstance_OnContinue;
                 this.CmdRunDebuggerClick = new UI.Commands.RelayCommand((p) =>
                 {
                     if (!this.IsDebuggerAttached)
@@ -82,6 +87,45 @@ namespace ArmA.Studio
                 this.CmdStepInto = new UI.Commands.RelayCommand((p) => ExecuteOperation(Debugger.EOperation.StepInto));
                 this.CmdStepOver = new UI.Commands.RelayCommand((p) => ExecuteOperation(Debugger.EOperation.StepOver));
                 this.CmdStepOut = new UI.Commands.RelayCommand((p) => ExecuteOperation(Debugger.EOperation.StepOut));
+
+                DataContext.BreakpointsPane.Breakpoints.CollectionChanged += Breakpoints_CollectionChanged;
+            }
+        }
+
+        private void Breakpoints_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if(!this.IsDebuggerAttached)
+            {
+                return;
+            }
+            switch (e.Action)
+            {
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+                    foreach (DataContext.BreakpointsPaneUtil.Breakpoint it in e.NewItems)
+                        this.DebuggerInstance.AddBreakpoint(it);
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+                    foreach (DataContext.BreakpointsPaneUtil.Breakpoint it in e.OldItems)
+                        this.DebuggerInstance.RemoveBreakpoint(it);
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Replace:
+                    foreach (DataContext.BreakpointsPaneUtil.Breakpoint it in e.OldItems)
+                        this.DebuggerInstance.AddBreakpoint(it);
+                    foreach (DataContext.BreakpointsPaneUtil.Breakpoint it in e.NewItems)
+                        this.DebuggerInstance.AddBreakpoint(it);
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
+                    this.DebuggerInstance.ClearBreakpoints();
+                    this.AddAllBreakpointsToDebugger();
+                    break;
+            }
+        }
+
+        private void AddAllBreakpointsToDebugger()
+        {
+            foreach(var it in DataContext.BreakpointsPane.Breakpoints)
+            {
+                this.DebuggerInstance.AddBreakpoint(it);
             }
         }
 
@@ -111,7 +155,7 @@ namespace ArmA.Studio
             System.Diagnostics.Debugger.Break();
         }
 
-        private void DebuggerInstance_OnConnectionClosed(object sender, Debugger.OnConnectionLostEventArgs e)
+        private void DebuggerInstance_OnConnectionClosed(object sender, Debugger.OnConnectionClosedEventArgs e)
         {
             Logger.Log(NLog.LogLevel.Info, "Debugger got detached.");
             this.IsDebuggerAttached = false;
@@ -121,7 +165,40 @@ namespace ArmA.Studio
         {
             Logger.Log(NLog.LogLevel.Info, "Execution was halted.");
             this.IsPaused = true;
+            this.CurrentLine = e.Line;
+            this.CurrentColumn = e.Col;
+            App.Current.MainWindow.Activate();
+            SolutionFile sf = null;
+            if (!SolutionFileBase.WalkThrough(Workspace.CurrentWorkspace.CurrentSolution.FilesCollection, (sfb) =>
+             {
+                 var f = sfb as SolutionFile;
+                 if (f != null && f.ArmAPath == e.DocumentPath)
+                 {
+                     sf = f;
+                     return true;
+                 }
+                 return false;
+             }))
+            {
+                Logger.Log(NLog.LogLevel.Info, string.Format("Could not locate document {0}.", e.DocumentPath));
+                return;
+            }
+            Workspace.CurrentWorkspace.OpenOrFocusDocument(sf);
+            var doc = Workspace.CurrentWorkspace.GetDocumentOfSolutionFileBase(sf) as DataContext.TextEditorDocument;
+            if (doc == null)
+            {
+                Logger.Log(NLog.LogLevel.Info, string.Format("Document {0} is no TextEditorDocument?", sf.RelativePath));
+                return;
+            }
+            //ToDo: Remove when document gets closed
+            this.CurrentDocument = doc;
         }
+
+        private void DebuggerInstance_OnContinue(object sender, Debugger.OnContinueEventArgs e)
+        {
+            Logger.Log(NLog.LogLevel.Info, "Execution was continued.");
+        }
+
         /// <summary>
         /// Finds first instance of any debugger in DebuggerPath
         /// </summary>
@@ -150,6 +227,11 @@ namespace ArmA.Studio
             }
             Logger.Log(NLog.LogLevel.Error, "No debugger found!");
             return null;
+        }
+
+        public void UpdateBreakpoint(DataContext.BreakpointsPaneUtil.Breakpoint bp)
+        {
+            this.DebuggerInstance?.UpdateBreakpoint(bp);
         }
     }
 }

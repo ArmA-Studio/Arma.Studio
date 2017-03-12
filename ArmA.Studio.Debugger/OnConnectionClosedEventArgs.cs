@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArmA.Studio.Debugger
 {
-    public class OnConnectionLostEventArgs : EventArgs
+    public class OnConnectionClosedEventArgs : EventArgs
     {
     }
 }

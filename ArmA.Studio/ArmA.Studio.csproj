@@ -131,6 +131,7 @@
     <Compile Include="UI\Attached\Eventing\PreviewMouseDown.cs" />
     <Compile Include="UI\Attached\Eventing\MouseDown.cs" />
     <Compile Include="UI\Attached\ActiveContentChangedAttached.cs" />
+    <Compile Include="UI\RuntimeExecutionMargin.cs" />
     <Compile Include="UI\Converters\CountEnumerableConverter.cs" />
     <Compile Include="UI\Converters\AlwaysVisibleConverter.cs" />
     <Compile Include="UI\Converters\StringFormatConverter.cs" />

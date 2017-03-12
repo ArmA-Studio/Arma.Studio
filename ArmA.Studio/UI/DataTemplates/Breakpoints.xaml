@@ -11,7 +11,7 @@
       xmlns:p="clr-namespace:ArmA.Studio.Properties;assembly=ArmA.Studio"
       xmlns:SolutionUtil="clr-namespace:ArmA.Studio.SolutionUtil;assembly=ArmA.Studio">
     <Grid>
-        <ListView Grid.Row="1" ItemsSource="{Binding Breakpoints}">
+        <ListView Grid.Row="1" ItemsSource="{Binding XAMLBreakpointsReference}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Template">

@@ -269,7 +269,10 @@ namespace ArmA.Studio
                 layoutSerializer.Serialize(writer);
             }
         }
-
+        public void OpenOrFocusDocument(SolutionUtil.SolutionFile sf)
+        {
+            this.OpenOrFocusDocument(sf.FullPath);
+        }
         public void OpenOrFocusDocument(string path)
         {
             path = path.Trim('/', '\\');

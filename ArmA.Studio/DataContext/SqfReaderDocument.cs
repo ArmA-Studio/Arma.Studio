@@ -32,6 +32,7 @@ namespace ArmA.Studio.DataContext
             this.BreakPointMargin = new BreakPointMargin(sf);
             this.Editor.TextArea.TextView.BackgroundRenderers.Add(this.BreakPointMargin);
             this.Editor.TextArea.LeftMargins.Insert(0, BreakPointMargin);
+            this.Editor.TextArea.LeftMargins.Insert(1, new RuntimeExecutionMargin());
         }
         protected override IEnumerable<LinterInfo> GetLinterInformations(MemoryStream memstream)
         {

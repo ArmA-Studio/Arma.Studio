@@ -62,23 +62,26 @@ namespace ArmA.Studio.UI
             if (view == null || !view.VisualLinesValid)
                 return;
             drawingContext.DrawRectangle(Brushes.LightGray, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
-            var color = new SolidColorBrush(ConfigHost.Coloring.BreakPoint.MainColor);
-            color.Freeze();
+            var colorActive = new SolidColorBrush(ConfigHost.Coloring.BreakPoint.MainColor);
+            colorActive.Freeze();
+            var colorInactive = new SolidColorBrush(ConfigHost.Coloring.BreakPoint.MainColorInactive);
+            colorInactive.Freeze();
             var pen = new Pen(new SolidColorBrush(ConfigHost.Coloring.BreakPoint.BorderColor), 1);
             pen.Freeze();
             foreach (var line in view.VisualLines)
             {
                 var lineNumber = this.GetLineNumber(line);
-                if (this.SolutionFileRef.GetFirstBreakpoint(lineNumber) != null)
+                var bp = this.SolutionFileRef.GetFirstBreakpoint(lineNumber);
+                if (bp != null)
                 {
                     var lineTop = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextTop) - view.VerticalOffset;
-                    var LineBot = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextBottom) - view.VerticalOffset;
+                    var lineBot = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextBottom) - view.VerticalOffset;
                     //drawingContext.DrawRoundedRectangle(color, pen, new Rect((18 - 12) / 2, lineTop, 12, 12), 5, 5);
                     const double rectSize = 10;
-                    drawingContext.DrawRectangle(color, pen, new Rect((18 - rectSize) / 2, lineTop + (18 - rectSize) / 4, rectSize, rectSize));
+                    drawingContext.DrawRectangle(bp.IsEnabled ? colorActive : colorInactive, pen, new Rect((18 - rectSize) / 2, lineTop + (18 - rectSize) / 4, rectSize, rectSize));
                 }
             }
-            
+
         }
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
@@ -95,7 +98,7 @@ namespace ArmA.Studio.UI
                     var bp = this.SolutionFileRef.GetFirstBreakpoint(lineNumber);
                     if (bp != null)
                     {
-                        this.SolutionFileRef.RemoveBreakpoint(bp);
+                        this.SolutionFileRef.BreakPoints.Remove(bp);
                     }
                     else
                     {

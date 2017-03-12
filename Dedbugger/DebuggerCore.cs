@@ -11,9 +11,10 @@ namespace Dedbugger
     public class DebuggerCore : IDebugger
     {
         public event EventHandler<OnHaltEventArgs> OnHalt;
-        public event EventHandler<OnConnectionLostEventArgs> OnConnectionClosed;
+        public event EventHandler<OnConnectionClosedEventArgs> OnConnectionClosed;
         public event EventHandler<OnErrorEventArgs> OnError;
         public event EventHandler<OnExceptionEventArgs> OnException;
+        public event EventHandler<OnContinueEventArgs> OnContinue;
 
         private NamedPipeClientStream Pipe;
 
@@ -50,7 +51,7 @@ namespace Dedbugger
         {
             if (this.Pipe == null)
                 return;
-            this.OnConnectionClosed?.Invoke(this, new OnConnectionLostEventArgs());
+            this.OnConnectionClosed?.Invoke(this, new OnConnectionClosedEventArgs());
             this.Pipe.Close();
             this.Pipe.Dispose();
             this.Pipe = null;
@@ -60,7 +61,7 @@ namespace Dedbugger
             this.Detach();
         }
 
-        public void SetBreakpoint(Breakpoint b, bool flag)
+        public void AddBreakpoint(Breakpoint b, bool flag)
         {
             throw new NotImplementedException();
         }
@@ -101,6 +102,16 @@ namespace Dedbugger
         }
 
         public string GetLastError()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddBreakpoint(Breakpoint b)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveBreakpoint(Breakpoint b)
         {
             throw new NotImplementedException();
         }
