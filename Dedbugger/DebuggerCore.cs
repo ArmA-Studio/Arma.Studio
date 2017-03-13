@@ -25,6 +25,13 @@ namespace Dedbugger
         {
             Halt = 1
         }
+        public enum EVariableNamespace
+        {
+            Callstack = 1,
+            LocalEvaluator = 2,
+            MissionNamespace = 4,
+            UINamespace = 8
+        }
         public event EventHandler<OnHaltEventArgs> OnHalt;
         public event EventHandler<OnConnectionClosedEventArgs> OnConnectionClosed;
         public event EventHandler<OnErrorEventArgs> OnError;
@@ -203,8 +210,15 @@ namespace Dedbugger
             }
         }
 
-        public Variable GetVariableByName(string name, string scope = "missionnamespace")
+        public Variable GetVariableByName(string name, EVariableNamespace scope = EVariableNamespace.MissionNamespace)
         {
+            var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
+            command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.GetVariable);
+            var data = command.GetValue_Object()["data"];
+            data.GetValue_Object()["name"] = new asapJson.JsonNode(name);
+            data.GetValue_Object()["scope"] = new asapJson.JsonNode((int)scope);
+            this.WriteMessage(command);
+            //have to wait for response now.
             throw new NotImplementedException();
         }
 
