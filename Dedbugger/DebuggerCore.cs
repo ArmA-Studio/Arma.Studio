@@ -15,7 +15,11 @@ namespace Dedbugger
         public enum ESendCommands
         {
             AddBreakpoint = 1,
-            RemoveBreakpoint = 2
+            RemoveBreakpoint = 2,
+            ContinueExecution = 3,
+            TriggerMonitorDump = 4,
+            SetEngineHookEnabled = 5,
+            GetVariable = 6
         }
         public enum ERecvCommands
         {
@@ -57,6 +61,7 @@ namespace Dedbugger
             {
                 this.Pipe.Connect(1000);
                 this.Pipe.ReadMode = PipeTransmissionMode.Message;
+                this.Pipe.TransmissionMode = PipeTransmissionMode.Message;
                 this.PipeReadThread = new Thread(Thread_ReadPipeMessage);
                 this.PipeReadThread.Start();
             }
