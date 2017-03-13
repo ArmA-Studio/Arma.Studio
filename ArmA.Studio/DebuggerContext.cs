@@ -46,7 +46,7 @@ namespace ArmA.Studio
             this.DebuggerInstance = GetDebuggerInstance();
             if (this.DebuggerInstance == null)
             {
-                MessageBox.Show(Properties.Localization.DebuggerContext_NoDebuggerAvailable_Body, Properties.Localization.DebuggerContext_NoDebuggerAvailable_Title, MessageBoxButton.OK, MessageBoxImage.Information);
+                this.CmdRunDebuggerClick = new UI.Commands.RelayCommand((p) => MessageBox.Show(Properties.Localization.DebuggerContext_NoDebuggerAvailable_Body, Properties.Localization.DebuggerContext_NoDebuggerAvailable_Title, MessageBoxButton.OK, MessageBoxImage.Information));
             }
             else
             {
@@ -55,12 +55,12 @@ namespace ArmA.Studio
                 this.DebuggerInstance.OnError += DebuggerInstance_OnError;
                 this.DebuggerInstance.OnException += DebuggerInstance_OnException;
                 this.DebuggerInstance.OnContinue += DebuggerInstance_OnContinue;
-                this.CmdRunDebuggerClick = new UI.Commands.RelayCommand((p) =>
+                this.CmdRunDebuggerClick = new UI.Commands.RelayCommandAsync(async (p) =>
                 {
                     if (!this.IsDebuggerAttached)
                     {
                         Logger.Log(NLog.LogLevel.Info, "Attaching debugger...");
-                        this.IsDebuggerAttached = this.DebuggerInstance.Attach();
+                        this.IsDebuggerAttached = await Task.Run(() => this.DebuggerInstance.Attach());
                         if (this.IsDebuggerAttached)
                         {
                             Logger.Log(NLog.LogLevel.Info, "Debugger got attached.");
@@ -78,10 +78,10 @@ namespace ArmA.Studio
                         ExecuteOperation(Debugger.EOperation.Continue);
                     }
                 });
-                this.CmdStopDebugger = new UI.Commands.RelayCommand((p) =>
+                this.CmdStopDebugger = new UI.Commands.RelayCommandAsync(async (p) =>
                 {
                     Logger.Log(NLog.LogLevel.Info, "Detaching debugger...");
-                    this.DebuggerInstance.Detach();
+                    await Task.Run(() => this.DebuggerInstance.Detach());
                 });
                 this.CmdPauseDebugger = new UI.Commands.RelayCommand((p) => ExecuteOperation(Debugger.EOperation.Pause));
                 this.CmdStepInto = new UI.Commands.RelayCommand((p) => ExecuteOperation(Debugger.EOperation.StepInto));
@@ -149,10 +149,7 @@ namespace ArmA.Studio
 
         private void DebuggerInstance_OnError(object sender, Debugger.OnErrorEventArgs e)
         {
-            Logger.Log(NLog.LogLevel.Info, "OnError got raised.");
-            //ToDo: Do something
-            MessageBox.Show("DebuggerInstance_OnException");
-            System.Diagnostics.Debugger.Break();
+            Logger.Log(NLog.LogLevel.Info, string.Format("Error was catched: {0}", e.Message));
         }
 
         private void DebuggerInstance_OnConnectionClosed(object sender, Debugger.OnConnectionClosedEventArgs e)
@@ -197,6 +194,7 @@ namespace ArmA.Studio
         private void DebuggerInstance_OnContinue(object sender, Debugger.OnContinueEventArgs e)
         {
             Logger.Log(NLog.LogLevel.Info, "Execution was continued.");
+            this.IsPaused = false;
         }
 
         /// <summary>
@@ -232,6 +230,11 @@ namespace ArmA.Studio
         public void UpdateBreakpoint(DataContext.BreakpointsPaneUtil.Breakpoint bp)
         {
             this.DebuggerInstance?.UpdateBreakpoint(bp);
+        }
+
+        internal void Close()
+        {
+            this.DebuggerInstance?.Dispose();
         }
     }
 }

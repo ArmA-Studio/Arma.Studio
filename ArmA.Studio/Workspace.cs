@@ -292,6 +292,8 @@ namespace ArmA.Studio
             }
 
             var instance = this.GetNewDocument(path);
+            if (instance == null)
+                return;
             this.DocumentsDisplayed.Add(instance);
             instance.IsSelected = true;
         }
@@ -405,6 +407,7 @@ namespace ArmA.Studio
 
         private void Close()
         {
+            this.DebugContext.Close();
             //Save Layout GUIDs of the panels
             foreach (var panel in PanelsAvailable)
             {

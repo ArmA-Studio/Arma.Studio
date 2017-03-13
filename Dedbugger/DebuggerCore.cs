@@ -5,11 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO.Pipes;
 using ArmA.Studio.Debugger;
+using System.Threading;
 
 namespace Dedbugger
 {
     public class DebuggerCore : IDebugger
     {
+        private static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        public enum ESendCommands
+        {
+            AddBreakpoint = 1,
+            RemoveBreakpoint = 2
+        }
+        public enum ERecvCommands
+        {
+            Halt = 1
+        }
         public event EventHandler<OnHaltEventArgs> OnHalt;
         public event EventHandler<OnConnectionClosedEventArgs> OnConnectionClosed;
         public event EventHandler<OnErrorEventArgs> OnError;
@@ -17,6 +28,11 @@ namespace Dedbugger
         public event EventHandler<OnContinueEventArgs> OnContinue;
 
         private NamedPipeClientStream Pipe;
+        private List<Breakpoint> Breakpoints;
+
+        public Thread PipeReadThread { get; private set; }
+        public System.Collections.Concurrent.ConcurrentBag<asapJson.JsonNode> Messages;
+        public string LastError { get; private set; }
 
         public DebuggerCore()
         {
@@ -25,7 +41,7 @@ namespace Dedbugger
 
         public bool Attach()
         {
-            if(this.Pipe != null || this.Pipe.IsConnected)
+            if(this.Pipe != null && this.Pipe.IsConnected)
             {
                 throw new InvalidOperationException();
             }
@@ -33,15 +49,20 @@ namespace Dedbugger
             {
                 this.Pipe.Dispose();
             }
-
-            this.Pipe = new NamedPipeClientStream(".", @".\pipe\ArmaDebugEnginePipeIface", PipeDirection.InOut, PipeOptions.WriteThrough);
-            this.Pipe.ReadMode = PipeTransmissionMode.Message;
+            
+            this.Pipe = new NamedPipeClientStream(".", @"ArmaDebugEnginePipeIface", PipeDirection.InOut, PipeOptions.Asynchronous, System.Security.Principal.TokenImpersonationLevel.None, System.IO.HandleInheritability.None);
+            
+            this.Breakpoints = new List<Breakpoint>();
             try
             {
                 this.Pipe.Connect(1000);
+                this.Pipe.ReadMode = PipeTransmissionMode.Message;
+                this.PipeReadThread = new Thread(Thread_ReadPipeMessage);
+                this.PipeReadThread.Start();
             }
-            catch(TimeoutException ex)
+            catch (TimeoutException ex)
             {
+                this.LastError = ex.Message;
                 this.Pipe = null;
                 return false;
             }
@@ -53,27 +74,128 @@ namespace Dedbugger
                 return;
             this.OnConnectionClosed?.Invoke(this, new OnConnectionClosedEventArgs());
             this.Pipe.Close();
+            if (this.PipeReadThread.IsAlive)
+            {
+                this.PipeReadThread.Join(1000);
+                if (this.PipeReadThread.IsAlive)
+                    this.PipeReadThread.Abort();
+            }
             this.Pipe.Dispose();
             this.Pipe = null;
+
         }
         public void Dispose()
         {
             this.Detach();
         }
 
-        public void AddBreakpoint(Breakpoint b, bool flag)
+        private void Thread_ReadPipeMessage()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var buffer = new byte[2048];
+                while (this.Pipe.IsConnected)
+                {
+                    var builder = new StringBuilder();
+                    do
+                    {
+                        var ammount = this.Pipe.Read(buffer, 0, buffer.Length);
+                        for (int i = 0; i < ammount; i++)
+                        {
+                            builder.Append((char)buffer[i]);
+                        }
+                    } while (!this.Pipe.IsMessageComplete);
+                    var node = new asapJson.JsonNode(builder.ToString(), true);
+                    Logger.Log(NLog.LogLevel.Info, string.Format("RECV {0}", node.ToString()));
+                    if (node.GetValue_Object().ContainsKey("exception"))
+                    {
+                        this.OnError?.Invoke(this, new OnErrorEventArgs() { Message = node.GetValue_Object()["exception"].GetValue_String() });
+                    }
+                    else
+                    {
+                        switch ((int)node.GetValue_Object()["command"].GetValue_Number())
+                        {
+                            case (int)ERecvCommands.Halt:
+                                {
+                                    var callstack = node.GetValue_Object()["callstack"];
+                                    var lastInstruction = callstack.GetValue_Array().Last((subnode) => subnode.GetValue_Object()["type"].GetValue_String() == "class CallStackItemData").GetValue_Object()["lastInstruction"];
+                                    var fileOffsetNode = lastInstruction.GetValue_Object()["fileOffset"];
+                                    var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
+                                    var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
+                                    this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = lastInstruction.GetValue_Object()["filename"].GetValue_String(), Col = col, Line = line });
+                                }
+                                break;
+                            default:
+                                this.Messages.Add(node);
+                                break;
+                        }
+                    }
+                    Thread.Sleep(10);
+                }
+            }
+            catch (ObjectDisposedException) { }
+        }
+
+        public asapJson.JsonNode ReadMessage(Func<asapJson.JsonNode, bool> cond)
+        {
+            while(true)
+            {
+                SpinWait.SpinUntil(() => this.Messages.Count > 0);
+                foreach(var msg in this.Messages)
+                {
+                    if (cond.Invoke(msg))
+                        return msg;
+                }
+            }
+        }
+        public void WriteMessage(asapJson.JsonNode node)
+        {
+            var str = node.ToString();
+            Logger.Log(NLog.LogLevel.Info, string.Format("SEND {0}", str));
+            var bytes = ASCIIEncoding.Unicode.GetBytes(str);
+            this.Pipe.Write(bytes, 0, bytes.Length);
+        }
+
+        
+        public void AddBreakpoint(Breakpoint b)
+        {
+            this.Breakpoints.Add(b);
+            {
+                var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
+                command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.AddBreakpoint);
+                command.GetValue_Object()["data"] = b.Serialize();
+                this.WriteMessage(command);
+            }
+        }
+
+        public void RemoveBreakpoint(Breakpoint b)
+        {
+            this.Breakpoints.Remove(b);
+            {
+                var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
+                command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.RemoveBreakpoint);
+                command.GetValue_Object()["data"] = b.Serialize();
+                this.WriteMessage(command);
+            }
         }
 
         public void UpdateBreakpoint(Breakpoint b)
         {
-            throw new NotImplementedException();
+            {
+                var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
+                command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.AddBreakpoint);
+                command.GetValue_Object()["data"] = b.Serialize();
+                this.WriteMessage(command);
+            }
         }
 
         public void ClearBreakpoints()
         {
-            throw new NotImplementedException();
+            var tmp = this.Breakpoints.ToList();
+            foreach (var it in tmp)
+            {
+                this.RemoveBreakpoint(it);
+            }
         }
 
         public Variable GetVariableByName(string name, string scope = "missionnamespace")
@@ -103,17 +225,9 @@ namespace Dedbugger
 
         public string GetLastError()
         {
-            throw new NotImplementedException();
-        }
-
-        public void AddBreakpoint(Breakpoint b)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveBreakpoint(Breakpoint b)
-        {
-            throw new NotImplementedException();
+            var str = this.LastError;
+            this.LastError = string.Empty;
+            return str;
         }
     }
 }

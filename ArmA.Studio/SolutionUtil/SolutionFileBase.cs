@@ -51,7 +51,7 @@ namespace ArmA.Studio.SolutionUtil
                     {
                         if (it is SolutionFile && (it as SolutionFile).FileName == "$PBOPREFIX$")
                         {
-                            return (this as SolutionFile).FileContent;
+                            return (it as SolutionFile).FileContent;
                         }
                     }
                     var parent = this.Parent;

@@ -43,7 +43,7 @@ namespace ArmA.Studio.DataContext.BreakpointsPaneUtil
 
         public static implicit operator Debugger.Breakpoint(Breakpoint bp)
         {
-            return new Debugger.Breakpoint() { };
+            return new Debugger.Breakpoint() { ArmAPath = bp.FileReference.ArmAPath, Line = bp.Line };
         }
     }
 }

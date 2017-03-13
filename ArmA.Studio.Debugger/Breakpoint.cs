@@ -8,5 +8,7 @@ namespace ArmA.Studio.Debugger
 {
     public class Breakpoint
     {
+        public string ArmAPath;
+        public int Line;
     }
 }

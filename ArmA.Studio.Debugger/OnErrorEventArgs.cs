@@ -10,5 +10,6 @@ namespace ArmA.Studio.Debugger
 {
     public class OnErrorEventArgs : EventArgs
     {
+        public string Message { get; set; }
     }
 }

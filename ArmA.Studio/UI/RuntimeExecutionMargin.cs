@@ -25,24 +25,22 @@ namespace ArmA.Studio.UI
             var view = this.TextView;
             if (view == null || !view.VisualLinesValid)
                 return;
-            //if (!Workspace.CurrentWorkspace.DebugContext.IsDebuggerAttached)
-            //    return;
-            //if (!Workspace.CurrentWorkspace.DebugContext.IsPaused)
-            //    return;
-            //if (Workspace.CurrentWorkspace.CurrentDocument != Workspace.CurrentWorkspace.DebugContext.CurrentDocument)
-            //    return;
+            if (!Workspace.CurrentWorkspace.DebugContext.IsDebuggerAttached)
+                return;
+            if (!Workspace.CurrentWorkspace.DebugContext.IsPaused)
+                return;
+            if (Workspace.CurrentWorkspace.CurrentDocument != Workspace.CurrentWorkspace.DebugContext.CurrentDocument)
+                return;
             var color = new SolidColorBrush(ConfigHost.Coloring.ExecutionMarker.MainColor);
             color.Freeze();
             var pen = new Pen(new SolidColorBrush(ConfigHost.Coloring.ExecutionMarker.BorderColor), 2);
             pen.Freeze();
 
-            //var line = view.GetVisualLine(Workspace.CurrentWorkspace.DebugContext.CurrentLine);
-            var line = view.GetVisualLine(2);
+            var line = view.GetVisualLine(Workspace.CurrentWorkspace.DebugContext.CurrentLine);
             if (line == null)
                 return;
             var lineTop = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextTop) - view.VerticalOffset;
             var lineBot = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextBottom) - view.VerticalOffset;
-            //drawingContext.DrawRoundedRectangle(color, pen, new Rect((18 - 12) / 2, lineTop, 12, 12), 5, 5);
             var geo = new StreamGeometry();
             using (var context = geo.Open())
             {

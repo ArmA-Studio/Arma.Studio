@@ -71,9 +71,9 @@ namespace ArmA.Studio.SolutionUtil
 
         private void BreakPoints_OnUpdating(object sender, Tuple<Breakpoint, Breakpoint> e)
         {
+            DataContext.BreakpointsPane.Breakpoints.Remove(e.Item1);
             e.Item1.PropertyChanged -= BreakPointsChild_PropertyChanged;
             e.Item1.FileReference = null;
-            DataContext.BreakpointsPane.Breakpoints.Remove(e.Item1);
             e.Item2.FileReference = this;
             e.Item2.PropertyChanged += BreakPointsChild_PropertyChanged;
             DataContext.BreakpointsPane.Breakpoints.Add(e.Item2);
@@ -81,9 +81,9 @@ namespace ArmA.Studio.SolutionUtil
 
         private void BreakPoints_OnRemoving(object sender, Breakpoint e)
         {
+            DataContext.BreakpointsPane.Breakpoints.Remove(e);
             e.PropertyChanged -= BreakPointsChild_PropertyChanged;
             e.FileReference = null;
-            DataContext.BreakpointsPane.Breakpoints.Remove(e);
         }
 
         private void BreakPoints_OnAdding(object sender, Breakpoint e)
