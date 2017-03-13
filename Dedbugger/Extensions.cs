@@ -28,8 +28,8 @@ namespace Dedbugger
         {
             var data = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
             var action = data.GetValue_Object()["action"] = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-            action.GetValue_Object()["code"] = new asapJson.JsonNode(string.Empty);
-            action.GetValue_Object()["basePath"] = new asapJson.JsonNode(string.Empty);
+            action.GetValue_Object()["code"] = new asapJson.JsonNode();
+            action.GetValue_Object()["basePath"] = new asapJson.JsonNode();
             action.GetValue_Object()["type"] = new asapJson.JsonNode(2); //https://github.com/dedmen/ArmaDebugEngine/blob/master/BIDebugEngine/BIDebugEngine/breakPoint.h#L82
             data.GetValue_Object()["condition"] = new asapJson.JsonNode();
             data.GetValue_Object()["filename"] = new asapJson.JsonNode(b.ArmAPath);
