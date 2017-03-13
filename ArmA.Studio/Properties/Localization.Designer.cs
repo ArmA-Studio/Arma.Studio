@@ -116,6 +116,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Code Snippet.
+        /// </summary>
+        public static string CodeSnippet {
+            get {
+                return ResourceManager.GetString("CodeSnippet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Column.
         /// </summary>
         public static string Column {
@@ -632,6 +641,15 @@ namespace ArmA.Studio.Properties {
         public static string PanelDisplayName_Breakpoints {
             get {
                 return ResourceManager.GetString("PanelDisplayName_Breakpoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Callstack.
+        /// </summary>
+        public static string PanelDisplayName_CallStack {
+            get {
+                return ResourceManager.GetString("PanelDisplayName_CallStack", resourceCulture);
             }
         }
         

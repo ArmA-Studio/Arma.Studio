@@ -9,7 +9,8 @@
       xmlns:ae="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
       xmlns:ev="clr-namespace:ArmA.Studio.UI.Attached.Eventing;assembly=ArmA.Studio"
       xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
-      xmlns:SolutionUtil="clr-namespace:ArmA.Studio.SolutionUtil;assembly=ArmA.Studio">
+      xmlns:SolutionUtil="clr-namespace:ArmA.Studio.SolutionUtil;assembly=ArmA.Studio"
+      DataType="{x:Type dc:TextEditorDocument}">
     <Grid>
         <Popup PlacementTarget="{Binding ElementName=TextEditor}" ev:Initialized.Command="{Binding CmdIntelliSensePopupInitialized}" ev:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
             <Grid Background="White">

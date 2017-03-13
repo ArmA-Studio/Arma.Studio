@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ArmA.Studio.Debugger;
 using ArmA.Studio.SolutionUtil;
 
 namespace ArmA.Studio
@@ -35,6 +36,7 @@ namespace ArmA.Studio
         public DocumentBase CurrentDocument { get; internal set; }
         public int CurrentLine { get; internal set; }
         public int CurrentColumn { get; private set; }
+        public IEnumerable<CallstackItem> CallStack { get; private set; }
 
         public DebuggerContext()
         {
@@ -176,6 +178,7 @@ namespace ArmA.Studio
                 this.IsPaused = true;
                 this.CurrentLine = e.Line;
                 this.CurrentColumn = e.Col;
+                this.CallStack = this.DebuggerInstance.GetCallstack();
 
                 App.Current.MainWindow.Activate();
                 SolutionFile sf = null;

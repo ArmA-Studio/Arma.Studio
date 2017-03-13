@@ -115,6 +115,7 @@
     <Compile Include="DataContext\ErrorListPane.cs" />
     <Compile Include="DataContext\BreakpointsPane.cs" />
     <Compile Include="DataContext\OutputPane.cs" />
+    <Compile Include="DataContext\CallStackPane.cs" />
     <Compile Include="DataContext\TextEditorUtil\IntelliSenseEntry.cs" />
     <Compile Include="ESeverity.cs" />
     <Compile Include="DataContext\TextEditorUtil\LinterInfo.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="UI\Attached\Eventing\PreviewMouseDown.cs" />
     <Compile Include="UI\Attached\Eventing\MouseDown.cs" />
     <Compile Include="UI\Attached\ActiveContentChangedAttached.cs" />
+    <Compile Include="UI\GenericDataTemplateSelector.cs" />
     <Compile Include="UI\RuntimeExecutionMargin.cs" />
     <Compile Include="UI\Converters\CountEnumerableConverter.cs" />
     <Compile Include="UI\Converters\AlwaysVisibleConverter.cs" />
@@ -206,7 +208,6 @@
     <Compile Include="UI\Converters\PathExtensionConverter.cs" />
     <Compile Include="UI\CustomBinding.cs" />
     <Compile Include="UI\DataTemplates\AvalonDockStyleSelector.cs" />
-    <Compile Include="UI\DataTemplates\AvalonDockTemplateSelector.cs" />
     <EmbeddedResource Include="UI\DataTemplates\TextEditorDocumentTemplate.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1610,6 +1611,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\DataTemplates\Breakpoints.xaml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DataTemplates\CallStack.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

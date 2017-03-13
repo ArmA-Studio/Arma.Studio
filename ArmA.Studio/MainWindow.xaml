@@ -77,10 +77,10 @@
                 </Style>
             </ToolBarTray.Resources>
             <ToolBar x:Name="ToolBar_FileIO">
-                <Button IsEnabled="{Binding IsDebuggerAttached}" Command="{Binding CmdSave}">
+                <Button Command="{Binding CmdSave}">
                     <Image Source="/ArmA.Studio;component/Resources/Pictograms/Save/Save.ico"/>
                 </Button>
-                <Button IsEnabled="{Binding IsDebuggerAttached}" Command="{Binding CmdSaveAll}">
+                <Button Command="{Binding CmdSaveAll}">
                     <Image Source="/ArmA.Studio;component/Resources/Pictograms/SaveAll/SaveAll.ico"/>
                 </Button>
             </ToolBar>
@@ -161,16 +161,17 @@
             AnchorablesSource="{Binding PanelsDisplayed}"
             att:ActiveContentChangedAttached.Command="{Binding CmdActiveContentChanged}"
             DocumentsSource="{Binding DocumentsDisplayed}"
-            Margin="4">
+            Margin="4"
+            LayoutItemTemplateSelector="{Binding PaneDataTemplateSelector}">
             <ad:DockingManager.LayoutUpdateStrategy>
                 <local:LayoutUpdateStrategy/>
             </ad:DockingManager.LayoutUpdateStrategy>
             <!--<ad:DockingManager.Theme>
                 <ads:ArmAStudioTheme/>
-            </ad:DockingManager.Theme>-->
+            </ad:DockingManager.Theme>
             <ad:DockingManager.LayoutItemTemplateSelector>
                 <dt:AvalonDockTemplateSelector/>
-            </ad:DockingManager.LayoutItemTemplateSelector>
+            </ad:DockingManager.LayoutItemTemplateSelector>-->
             <ad:DockingManager.LayoutItemContainerStyleSelector>
                 <dt:AvalonDockStyleSelector>
                     <dt:AvalonDockStyleSelector.DocumentBaseStyle>

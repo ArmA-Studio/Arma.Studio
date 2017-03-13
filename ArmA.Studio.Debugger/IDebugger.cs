@@ -27,7 +27,7 @@ namespace ArmA.Studio.Debugger
         Variable SetVariable(Variable v);
         IEnumerable<Variable> GetVariables();
 
-        Callstack GetCallstack();
+        IEnumerable<CallstackItem> GetCallstack();
         bool Perform(EOperation stepInto);
         string GetLastError();
     }

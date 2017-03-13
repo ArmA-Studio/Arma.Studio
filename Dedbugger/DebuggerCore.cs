@@ -33,6 +33,7 @@ namespace Dedbugger
 
         private NamedPipeClientStream Pipe;
         private List<Breakpoint> Breakpoints;
+        private asapJson.JsonNode LastCallstack;
 
         public Thread PipeReadThread { get; private set; }
         public System.Collections.Concurrent.ConcurrentBag<asapJson.JsonNode> Messages;
@@ -121,7 +122,7 @@ namespace Dedbugger
                         {
                             case (int)ERecvCommands.Halt:
                                 {
-                                    var callstack = node.GetValue_Object()["callstack"];
+                                    var callstack = this.LastCallstack = node.GetValue_Object()["callstack"];
                                     var instruction = node.GetValue_Object()["instruction"];
                                     var fileOffsetNode = instruction.GetValue_Object()["fileOffset"];
                                     var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
@@ -224,9 +225,16 @@ namespace Dedbugger
             throw new NotImplementedException();
         }
 
-        public Callstack GetCallstack()
+        public IEnumerable<CallstackItem> GetCallstack()
         {
-            throw new NotImplementedException();
+            foreach (var node in this.LastCallstack.GetValue_Array())
+            {
+                var line = (int)node.GetValue_Object()["lastInstruction"].GetValue_Object()["fileOffset"].GetValue_Array()[0].GetValue_Number();
+                var col = (int)node.GetValue_Object()["lastInstruction"].GetValue_Object()["fileOffset"].GetValue_Array()[2].GetValue_Number();
+                var sample = node.GetValue_Object()["contentSample"].GetValue_String();
+                var file = node.GetValue_Object()["lastInstruction"].GetValue_Object()["filename"].GetValue_String();
+                yield return new CallstackItem() { FileName = file, Column = col, ContentSample = sample, Line = line };
+            }
         }
 
         public bool Perform(EOperation stepInto)

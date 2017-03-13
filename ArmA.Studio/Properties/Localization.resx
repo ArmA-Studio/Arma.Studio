@@ -136,6 +136,9 @@ Do you want to restart now?</value>
   <data name="Choose" xml:space="preserve">
     <value>Choose</value>
   </data>
+  <data name="CodeSnippet" xml:space="preserve">
+    <value>Code Snippet</value>
+  </data>
   <data name="Column" xml:space="preserve">
     <value>Column</value>
   </data>
@@ -313,6 +316,9 @@ Current progress will be lost.</value>
   </data>
   <data name="PanelDisplayName_Breakpoints" xml:space="preserve">
     <value>Breakpoints</value>
+  </data>
+  <data name="PanelDisplayName_CallStack" xml:space="preserve">
+    <value>Callstack</value>
   </data>
   <data name="PanelDisplayName_ErrorList" xml:space="preserve">
     <value>Error List</value>

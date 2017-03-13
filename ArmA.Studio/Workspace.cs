@@ -98,6 +98,8 @@ namespace ArmA.Studio
         public DocumentBase CurrentDocument { get { return this._CurrentDocument; } set { this._CurrentDocument = value; this.RaisePropertyChanged(); } }
         private DocumentBase _CurrentDocument;
 
+        public UI.GenericDataTemplateSelector PaneDataTemplateSelector { get; private set; }
+
         public DocumentBase GetDocumentOfSolutionFileBase(SolutionUtil.SolutionFileBase sfb)
         {
             foreach (var it in this.DocumentsDisplayed)
@@ -112,6 +114,7 @@ namespace ArmA.Studio
 
         public Workspace(string path)
         {
+            this.PaneDataTemplateSelector = new UI.GenericDataTemplateSelector(Assembly.GetExecutingAssembly(), (s) => s.StartsWith("ArmA.Studio.UI.DataTemplates."));
             this.WorkingDir = path;
             this._PanelsAvailable = new ObservableCollection<PanelBase>(FindAllAnchorablePanelsInAssembly());
             this.PanelsDisplayed = new ObservableCollection<PanelBase>();

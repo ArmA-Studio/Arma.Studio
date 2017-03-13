@@ -9,7 +9,8 @@
       xmlns:ae="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
       xmlns:ev="clr-namespace:ArmA.Studio.UI.Attached.Eventing;assembly=ArmA.Studio"
       xmlns:p="clr-namespace:ArmA.Studio.Properties;assembly=ArmA.Studio"
-      xmlns:SolutionUtil="clr-namespace:ArmA.Studio.SolutionUtil;assembly=ArmA.Studio">
+      xmlns:SolutionUtil="clr-namespace:ArmA.Studio.SolutionUtil;assembly=ArmA.Studio"
+      DataType="{x:Type dc:OutputPane}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
