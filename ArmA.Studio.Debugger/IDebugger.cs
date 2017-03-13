@@ -6,13 +6,6 @@ using System.Threading.Tasks;
 
 namespace ArmA.Studio.Debugger
 {
-    public enum EVariableNamespace
-    {
-        Callstack = 1,
-        LocalEvaluator = 2,
-        MissionNamespace = 4,
-        UINamespace = 8
-    }
 
     public interface IDebugger :  IDisposable
     {

@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Breakpoint.cs" />
     <Compile Include="Callstack.cs" />
+    <Compile Include="EVariableNamespace.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="EOperation.cs" />
     <Compile Include="IDebugger.cs" />
