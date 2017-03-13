@@ -149,7 +149,7 @@ namespace ArmA.Studio
 
         private void DebuggerInstance_OnError(object sender, Debugger.OnErrorEventArgs e)
         {
-            Logger.Log(NLog.LogLevel.Info, string.Format("Error was catched: {0}", e.Message));
+            Logger.Log(NLog.LogLevel.Info, string.Format("Error was caught: {0}", e.Message));
         }
 
         private void DebuggerInstance_OnConnectionClosed(object sender, Debugger.OnConnectionClosedEventArgs e)

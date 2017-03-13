@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace ArmA.Studio.Debugger
 {
+    public enum EVariableNamespace
+    {
+        Callstack = 1,
+        LocalEvaluator = 2,
+        MissionNamespace = 4,
+        UINamespace = 8
+    }
+
     public interface IDebugger :  IDisposable
     {
         event EventHandler<OnHaltEventArgs> OnHalt;
@@ -22,7 +30,7 @@ namespace ArmA.Studio.Debugger
         bool Attach();
         void Detach();
 
-        Variable GetVariableByName(string name, string scope = "missionnamespace");
+        Variable GetVariableByName(string name, EVariableNamespace scope = EVariableNamespace.MissionNamespace);
         Variable SetVariable(Variable v);
         IEnumerable<Variable> GetVariables();
 

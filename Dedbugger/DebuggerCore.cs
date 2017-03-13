@@ -15,7 +15,11 @@ namespace Dedbugger
         public enum ESendCommands
         {
             AddBreakpoint = 1,
-            RemoveBreakpoint = 2
+            RemoveBreakpoint = 2,
+            ContinueExecution = 3,
+            TriggerMonitorDump = 4,
+            SetEngineHookEnabled = 5,
+            GetVariable = 6
         }
         public enum ERecvCommands
         {
@@ -152,7 +156,7 @@ namespace Dedbugger
         {
             var str = node.ToString();
             Logger.Log(NLog.LogLevel.Info, string.Format("SEND {0}", str));
-            var bytes = ASCIIEncoding.Unicode.GetBytes(str);
+            var bytes = ASCIIEncoding.UTF8.GetBytes(str);
             this.Pipe.Write(bytes, 0, bytes.Length);
         }
 
@@ -198,8 +202,15 @@ namespace Dedbugger
             }
         }
 
-        public Variable GetVariableByName(string name, string scope = "missionnamespace")
+        public Variable GetVariableByName(string name, EVariableNamespace scope = EVariableNamespace.MissionNamespace)
         {
+            var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
+            command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.GetVariable);
+            var data = command.GetValue_Object()["data"];
+            data.GetValue_Object()["name"] = new asapJson.JsonNode(name);
+            data.GetValue_Object()["scope"] = new asapJson.JsonNode((int)scope);
+            this.WriteMessage(command);
+            //have to wait for response now.
             throw new NotImplementedException();
         }
 
