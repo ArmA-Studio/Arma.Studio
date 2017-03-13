@@ -37,7 +37,7 @@ namespace ArmA.Studio.DataContext
         public bool IsInfosDisplayed { get { return this._IsInfosDisplayed; } set { ConfigHost.App.ErrorList_IsInfosDisplayed = this._IsInfosDisplayed = value; this.ListView.Refresh(); this.RaisePropertyChanged(); } }
         private bool _IsInfosDisplayed;
 
-        public string FileFilter { get { return this._FileFilter; } set { if (this._FileFilter.Equals(value)) return; this._FileFilter = value; this.UpdateListView(); this.RaisePropertyChanged(); } }
+        public string FileFilter { get { return this._FileFilter; } set { if (this._FileFilter.Equals(value, StringComparison.CurrentCultureIgnoreCase)) return; this._FileFilter = value; this.UpdateListView(); this.RaisePropertyChanged(); } }
         private string _FileFilter;
 
         public int CurrentErrorCount { get { return this._CurrentErrorCount; } set { this._CurrentErrorCount = value; this.RaisePropertyChanged(); } }

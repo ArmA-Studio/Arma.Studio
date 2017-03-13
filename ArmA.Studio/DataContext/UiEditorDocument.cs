@@ -63,7 +63,7 @@ namespace ArmA.Studio.DataContext
                         var txt = new TextRange(this.VirtualConfigDocument.ContentStart, this.VirtualConfigDocument.ContentEnd).Text;
                         this.VirtualConfigDocument = null;
                         this.ConfigTreeRoot = null;
-                        if (this.Document.Text.Equals(txt))
+                        if (this.Document.Text.Equals(txt, StringComparison.CurrentCultureIgnoreCase))
                             return;
                         this.Document.Text = txt;
                     }

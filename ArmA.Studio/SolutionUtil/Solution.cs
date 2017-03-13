@@ -279,7 +279,7 @@ namespace ArmA.Studio.SolutionUtil
             {
                 SolutionFileBase.WalkThrough(this.FilesCollection, (it) =>
                 {
-                    if (it.RelativePath.Equals(parent))
+                    if (it.RelativePath.Equals(parent, StringComparison.CurrentCultureIgnoreCase))
                     {
                         sfbCollectionOwner = it;
                         sfbCollection = it.Children;
@@ -295,7 +295,7 @@ namespace ArmA.Studio.SolutionUtil
             }
             foreach (var it in sfbCollection)
             {
-                if (it.FileName.Equals(filename))
+                if (it.FileName.Equals(filename, StringComparison.CurrentCultureIgnoreCase))
                 {
                     return it;
                 }
