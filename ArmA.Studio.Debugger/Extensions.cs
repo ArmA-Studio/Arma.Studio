@@ -45,7 +45,7 @@ namespace ArmA.Studio.Debugger
         {
             return await Task.Run(() => dbgr.GetVariables());
         }
-        public static async Task<Callstack> GetCallstackAsync(this IDebugger dbgr)
+        public static async Task<IEnumerable<CallstackItem>> GetCallstackAsync(this IDebugger dbgr)
         {
             return await Task.Run(() => dbgr.GetCallstack());
         }
