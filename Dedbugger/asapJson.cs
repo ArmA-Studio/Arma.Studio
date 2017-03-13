@@ -805,6 +805,9 @@ namespace asapJson
                                     case '\t':
                                         sb.Append("\\t");
                                         break;
+                                    case '\\':
+                                        sb.Append("\\\\");
+                                        break;
 
                                 }
                             }
