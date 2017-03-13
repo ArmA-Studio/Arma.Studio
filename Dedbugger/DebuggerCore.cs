@@ -237,9 +237,21 @@ namespace Dedbugger
             }
         }
 
-        public bool Perform(EOperation stepInto)
+        public bool Perform(EOperation op)
         {
-            throw new NotImplementedException();
+            switch (op)
+            {
+                case EOperation.Continue:
+                    {
+                        var node = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
+                        node.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.ContinueExecution);
+                        this.WriteMessage(node);
+                        return true;
+                    }
+                default:
+                    this.LastError = "Not Implemented";
+                    return false;
+            }
         }
 
         public string GetLastError()
