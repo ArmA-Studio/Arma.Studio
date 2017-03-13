@@ -64,6 +64,7 @@ namespace ArmA.Studio
                         if (this.IsDebuggerAttached)
                         {
                             Logger.Log(NLog.LogLevel.Info, "Debugger got attached.");
+                            this.AddAllBreakpointsToDebugger();
                         }
                         else
                         {
@@ -72,7 +73,7 @@ namespace ArmA.Studio
                             MessageBox.Show(string.Format(Properties.Localization.DebuggerContext_AttachFailed_Body, reason), Properties.Localization.DebuggerContext_AttachFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                     }
-                    else if(this.IsPaused)
+                    else if (this.IsPaused)
                     {
                         this.IsPaused = false;
                         ExecuteOperation(Debugger.EOperation.Continue);
@@ -94,7 +95,7 @@ namespace ArmA.Studio
 
         private void Breakpoints_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if(!this.IsDebuggerAttached)
+            if (!this.IsDebuggerAttached)
             {
                 return;
             }
@@ -123,7 +124,7 @@ namespace ArmA.Studio
 
         private void AddAllBreakpointsToDebugger()
         {
-            foreach(var it in DataContext.BreakpointsPane.Breakpoints)
+            foreach (var it in DataContext.BreakpointsPane.Breakpoints)
             {
                 this.DebuggerInstance.AddBreakpoint(it);
             }
@@ -141,60 +142,76 @@ namespace ArmA.Studio
 
         private void DebuggerInstance_OnException(object sender, Debugger.OnExceptionEventArgs e)
         {
-            Logger.Log(NLog.LogLevel.Info, "OnException got raised.");
-            //ToDo: Do something
-            MessageBox.Show("DebuggerInstance_OnException");
-            System.Diagnostics.Debugger.Break();
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                Logger.Log(NLog.LogLevel.Info, "OnException got raised.");
+                //ToDo: Do something
+                MessageBox.Show("DebuggerInstance_OnException");
+                System.Diagnostics.Debugger.Break();
+            }, System.Windows.Threading.DispatcherPriority.Send);
         }
 
         private void DebuggerInstance_OnError(object sender, Debugger.OnErrorEventArgs e)
         {
+            App.Current.Dispatcher.Invoke(() =>
+        {
             Logger.Log(NLog.LogLevel.Info, string.Format("Error was caught: {0}", e.Message));
+        }, System.Windows.Threading.DispatcherPriority.Send);
         }
 
         private void DebuggerInstance_OnConnectionClosed(object sender, Debugger.OnConnectionClosedEventArgs e)
         {
-            Logger.Log(NLog.LogLevel.Info, "Debugger got detached.");
-            this.IsDebuggerAttached = false;
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                Logger.Log(NLog.LogLevel.Info, "Debugger got detached.");
+                this.IsDebuggerAttached = false;
+            }, System.Windows.Threading.DispatcherPriority.Send);
         }
 
         private void DebuggerInstance_OnHalt(object sender, Debugger.OnHaltEventArgs e)
         {
-            Logger.Log(NLog.LogLevel.Info, "Execution was halted.");
-            this.IsPaused = true;
-            this.CurrentLine = e.Line;
-            this.CurrentColumn = e.Col;
-            App.Current.MainWindow.Activate();
-            SolutionFile sf = null;
-            if (!SolutionFileBase.WalkThrough(Workspace.CurrentWorkspace.CurrentSolution.FilesCollection, (sfb) =>
-             {
-                 var f = sfb as SolutionFile;
-                 if (f != null && f.ArmAPath == e.DocumentPath)
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                Logger.Log(NLog.LogLevel.Info, "Execution was halted.");
+                this.IsPaused = true;
+                this.CurrentLine = e.Line;
+                this.CurrentColumn = e.Col;
+
+                App.Current.MainWindow.Activate();
+                SolutionFile sf = null;
+                if (!SolutionFileBase.WalkThrough(Workspace.CurrentWorkspace.CurrentSolution.FilesCollection, (sfb) =>
                  {
-                     sf = f;
-                     return true;
-                 }
-                 return false;
-             }))
-            {
-                Logger.Log(NLog.LogLevel.Info, string.Format("Could not locate document {0}.", e.DocumentPath));
-                return;
-            }
-            Workspace.CurrentWorkspace.OpenOrFocusDocument(sf);
-            var doc = Workspace.CurrentWorkspace.GetDocumentOfSolutionFileBase(sf) as DataContext.TextEditorDocument;
-            if (doc == null)
-            {
-                Logger.Log(NLog.LogLevel.Info, string.Format("Document {0} is no TextEditorDocument?", sf.RelativePath));
-                return;
-            }
-            //ToDo: Remove when document gets closed
-            this.CurrentDocument = doc;
+                     var f = sfb as SolutionFile;
+                     if (f != null && f.ArmAPath == e.DocumentPath)
+                     {
+                         sf = f;
+                         return true;
+                     }
+                     return false;
+                 }))
+                {
+                    Logger.Log(NLog.LogLevel.Info, string.Format("Could not locate document {0}.", e.DocumentPath));
+                    return;
+                }
+                Workspace.CurrentWorkspace.OpenOrFocusDocument(sf);
+                var doc = Workspace.CurrentWorkspace.GetDocumentOfSolutionFileBase(sf) as DataContext.TextEditorDocument;
+                if (doc == null)
+                {
+                    Logger.Log(NLog.LogLevel.Info, string.Format("Document {0} is no TextEditorDocument?", sf.RelativePath));
+                    return;
+                }
+                //ToDo: Remove when document gets closed
+                this.CurrentDocument = doc;
+            }, System.Windows.Threading.DispatcherPriority.Send);
         }
 
         private void DebuggerInstance_OnContinue(object sender, Debugger.OnContinueEventArgs e)
         {
-            Logger.Log(NLog.LogLevel.Info, "Execution was continued.");
-            this.IsPaused = false;
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                Logger.Log(NLog.LogLevel.Info, "Execution was continued.");
+                this.IsPaused = false;
+            }, System.Windows.Threading.DispatcherPriority.Send);
         }
 
         /// <summary>
@@ -205,7 +222,7 @@ namespace ArmA.Studio
         {
             Logger.Log(NLog.LogLevel.Info, "Trying to find debugger...");
             var path = App.DebuggerPath;
-            if(!Directory.Exists(path))
+            if (!Directory.Exists(path))
             {
                 Logger.Log(NLog.LogLevel.Error, string.Format("Directory '{0}' is not existing, cannot continue debugger dll search.", path));
                 return null;
@@ -214,9 +231,9 @@ namespace ArmA.Studio
             {
                 var ass = System.Reflection.Assembly.LoadFile(file);
                 var assTypes = ass.GetTypes();
-                foreach(var type in assTypes)
+                foreach (var type in assTypes)
                 {
-                    if(typeof(Debugger.IDebugger).IsAssignableFrom(type))
+                    if (typeof(Debugger.IDebugger).IsAssignableFrom(type))
                     {
                         Logger.Log(NLog.LogLevel.Info, string.Format("Using '{0}' as debugger.", file));
                         return Activator.CreateInstance(type) as Debugger.IDebugger;
