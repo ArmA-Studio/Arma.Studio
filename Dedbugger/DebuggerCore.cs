@@ -25,13 +25,6 @@ namespace Dedbugger
         {
             Halt = 1
         }
-        public enum EVariableNamespace
-        {
-            Callstack = 1,
-            LocalEvaluator = 2,
-            MissionNamespace = 4,
-            UINamespace = 8
-        }
         public event EventHandler<OnHaltEventArgs> OnHalt;
         public event EventHandler<OnConnectionClosedEventArgs> OnConnectionClosed;
         public event EventHandler<OnErrorEventArgs> OnError;
@@ -68,7 +61,6 @@ namespace Dedbugger
             {
                 this.Pipe.Connect(1000);
                 this.Pipe.ReadMode = PipeTransmissionMode.Message;
-                this.Pipe.TransmissionMode = PipeTransmissionMode.Message;
                 this.PipeReadThread = new Thread(Thread_ReadPipeMessage);
                 this.PipeReadThread.Start();
             }
@@ -164,7 +156,7 @@ namespace Dedbugger
         {
             var str = node.ToString();
             Logger.Log(NLog.LogLevel.Info, string.Format("SEND {0}", str));
-            var bytes = ASCIIEncoding.Unicode.GetBytes(str);
+            var bytes = ASCIIEncoding.UTF8.GetBytes(str);
             this.Pipe.Write(bytes, 0, bytes.Length);
         }
 
