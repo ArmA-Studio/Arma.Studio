@@ -808,7 +808,6 @@ namespace asapJson
                                     case '\\':
                                         sb.Append("\\\\");
                                         break;
-
                                 }
                             }
                             else

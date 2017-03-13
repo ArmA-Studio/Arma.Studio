@@ -122,11 +122,11 @@ namespace Dedbugger
                             case (int)ERecvCommands.Halt:
                                 {
                                     var callstack = node.GetValue_Object()["callstack"];
-                                    var lastInstruction = callstack.GetValue_Array().Last((subnode) => subnode.GetValue_Object()["type"].GetValue_String() == "class CallStackItemData").GetValue_Object()["lastInstruction"];
-                                    var fileOffsetNode = lastInstruction.GetValue_Object()["fileOffset"];
+                                    var instruction = node.GetValue_Object()["instruction"];
+                                    var fileOffsetNode = instruction.GetValue_Object()["fileOffset"];
                                     var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
                                     var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
-                                    this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = lastInstruction.GetValue_Object()["filename"].GetValue_String(), Col = col, Line = line });
+                                    this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = instruction.GetValue_Object()["filename"].GetValue_String(), Col = col, Line = line });
                                 }
                                 break;
                             default:
