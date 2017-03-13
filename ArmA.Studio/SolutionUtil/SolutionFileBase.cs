@@ -17,7 +17,7 @@ namespace ArmA.Studio.SolutionUtil
 {   
     public abstract class SolutionFileBase : UI.ViewModel.IPropertyDatatemplateProvider, IComparable
     {
-        public const string PBOPREFIX = "$PBOPREFIX";
+        public const string PBOPREFIX = "$PBOPREFIX$";
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }

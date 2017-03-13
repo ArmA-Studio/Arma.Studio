@@ -11,7 +11,7 @@
       xmlns:p="clr-namespace:ArmA.Studio.Properties;assembly=ArmA.Studio"
       xmlns:SolutionUtil="clr-namespace:ArmA.Studio.SolutionUtil;assembly=ArmA.Studio"
       DataType="{x:Type dc:CallStackPane}">
-    <ListView ItemsSource="{Binding Source={x:Static local:Workspace.CurrentWorkspace}, Path=DebugContext.CallStack}">
+    <ListView ItemsSource="{Binding CallStack}" DataContext="{Binding DataContext.DebugContext, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}">
         <ListView.ItemContainerStyle>
             <Style TargetType="ListViewItem">
                 <Setter Property="Template">
@@ -35,9 +35,9 @@
         <ListView.View>
             <GridView>
                 <GridViewColumn Header="{x:Static p:Localization.Line}" DisplayMemberBinding="{Binding Line}"/>
-                <GridViewColumn Header="{x:Static p:Localization.Column}" DisplayMemberBinding="{Binding Col}"/>
-                <GridViewColumn Header="{x:Static p:Localization.File}" DisplayMemberBinding="{Binding File}"/>
-                <GridViewColumn Header="{x:Static p:Localization.CodeSnippet}" DisplayMemberBinding="{Binding Snippet}"/>
+                <GridViewColumn Header="{x:Static p:Localization.Column}" DisplayMemberBinding="{Binding Column}"/>
+                <GridViewColumn Header="{x:Static p:Localization.File}" DisplayMemberBinding="{Binding FileName}"/>
+                <GridViewColumn Header="{x:Static p:Localization.CodeSnippet}" DisplayMemberBinding="{Binding ContentSample, Converter={StaticResource StringRemoveNewLineConverter}}"/>
             </GridView>
         </ListView.View>
     </ListView>

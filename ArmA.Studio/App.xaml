@@ -27,6 +27,7 @@
                     <conv:CountEnumerableConverter x:Key="CountEnumerableConverter"/>
                     <conv:StringFormatConverter x:Key="StringFormatConverter"/>
                     <conv:AlwaysVisibleConverter x:Key="AlwaysVisibleConverter"/>
+                    <conv:StringRemoveNewLineConverter x:Key="StringRemoveNewLineConverter"/>
 
                     <convm:CollectionContainsConverter x:Key="CollectionContainsConverter"/>
                     <convm:AllTrueMultiConverter x:Key="AllTrueMultiConverter"/>

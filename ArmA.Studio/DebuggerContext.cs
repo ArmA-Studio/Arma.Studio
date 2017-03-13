@@ -14,6 +14,7 @@ namespace ArmA.Studio
 {
     public class DebuggerContext : INotifyPropertyChanged
     {
+        public static DebuggerContext Instance { get; private set; }
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -25,7 +26,10 @@ namespace ArmA.Studio
         public bool IsPaused { get { return this._IsPaused; } set { this._IsPaused = value; this.RaisePropertyChanged(); } }
         private bool _IsPaused;
 
-        private readonly Debugger.IDebugger DebuggerInstance;
+        public IEnumerable<CallstackItem> CallStack { get { return this._CallStack; } set { this._CallStack = value; this.RaisePropertyChanged(); } }
+        private IEnumerable<CallstackItem> _CallStack;
+
+        private readonly IDebugger DebuggerInstance;
 
         public ICommand CmdRunDebuggerClick { get; private set; }
         public ICommand CmdPauseDebugger { get; private set; }
@@ -36,10 +40,12 @@ namespace ArmA.Studio
         public DocumentBase CurrentDocument { get; internal set; }
         public int CurrentLine { get; internal set; }
         public int CurrentColumn { get; private set; }
-        public IEnumerable<CallstackItem> CallStack { get; private set; }
+
+        private SolutionFile LastSF = null;
 
         public DebuggerContext()
         {
+            Instance = this;
             this._IsDebuggerAttached = false;
             this._IsPaused = false;
 
@@ -185,9 +191,9 @@ namespace ArmA.Studio
                 if (!SolutionFileBase.WalkThrough(Workspace.CurrentWorkspace.CurrentSolution.FilesCollection, (sfb) =>
                  {
                      var f = sfb as SolutionFile;
-                     if (f != null && f.ArmAPath == e.DocumentPath)
+                     if (f != null && f.ArmAPath.Equals(e.DocumentPath, StringComparison.InvariantCultureIgnoreCase))
                      {
-                         sf = f;
+                         LastSF = sf = f;
                          return true;
                      }
                      return false;
@@ -198,6 +204,7 @@ namespace ArmA.Studio
                 }
                 Workspace.CurrentWorkspace.OpenOrFocusDocument(sf);
                 var doc = Workspace.CurrentWorkspace.GetDocumentOfSolutionFileBase(sf) as DataContext.TextEditorDocument;
+                sf.RedrawEditor();
                 if (doc == null)
                 {
                     Logger.Log(NLog.LogLevel.Info, string.Format("Document {0} is no TextEditorDocument?", sf.RelativePath));
@@ -214,6 +221,7 @@ namespace ArmA.Studio
             {
                 Logger.Log(NLog.LogLevel.Info, "Execution was continued.");
                 this.IsPaused = false;
+                LastSF?.RedrawEditor();
             }, System.Windows.Threading.DispatcherPriority.Send);
         }
 
@@ -221,7 +229,7 @@ namespace ArmA.Studio
         /// Finds first instance of any debugger in DebuggerPath
         /// </summary>
         /// <returns>Instance of the debugger or null.</returns>
-        private static Debugger.IDebugger GetDebuggerInstance()
+        private static IDebugger GetDebuggerInstance()
         {
             Logger.Log(NLog.LogLevel.Info, "Trying to find debugger...");
             var path = App.DebuggerPath;

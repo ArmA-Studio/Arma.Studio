@@ -75,7 +75,7 @@ namespace ArmA.Studio.SolutionUtil
         }
         public void ReScan()
         {
-            foreach (var file in Directory.EnumerateFiles(this.curWorkspace.WorkingDir, "*.*", SearchOption.AllDirectories).Pick((it) => FileFilter.Contains(Path.GetExtension(it))))
+            foreach (var file in Directory.EnumerateFiles(this.curWorkspace.WorkingDir, "*.*", SearchOption.AllDirectories).Pick((it) => FileFilter.Contains(Path.GetExtension(it)) || Path.GetFileName(it).Equals(SolutionFileBase.PBOPREFIX, StringComparison.InvariantCultureIgnoreCase)))
             {
                 this.GetOrCreateFileReference(file);
             }

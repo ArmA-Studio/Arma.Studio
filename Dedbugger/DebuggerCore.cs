@@ -77,6 +77,7 @@ namespace Dedbugger
         {
             if (this.Pipe == null)
                 return;
+            this.ClearBreakpoints();
             this.OnConnectionClosed?.Invoke(this, new OnConnectionClosedEventArgs());
             this.Pipe.Close();
             if (this.PipeReadThread.IsAlive)
@@ -110,29 +111,32 @@ namespace Dedbugger
                             builder.Append((char)buffer[i]);
                         }
                     } while (!this.Pipe.IsMessageComplete);
-                    var node = new asapJson.JsonNode(builder.ToString(), true);
-                    Logger.Log(NLog.LogLevel.Info, string.Format("RECV {0}", node.ToString()));
-                    if (node.GetValue_Object().ContainsKey("exception"))
+                    if (builder.Length > 0)
                     {
-                        this.OnError?.Invoke(this, new OnErrorEventArgs() { Message = node.GetValue_Object()["exception"].GetValue_String() });
-                    }
-                    else
-                    {
-                        switch ((int)node.GetValue_Object()["command"].GetValue_Number())
+                        var node = new asapJson.JsonNode(builder.ToString(), true);
+                        Logger.Log(NLog.LogLevel.Info, string.Format("RECV {0}", node.ToString()));
+                        if (node.GetValue_Object().ContainsKey("exception"))
                         {
-                            case (int)ERecvCommands.Halt:
-                                {
-                                    var callstack = this.LastCallstack = node.GetValue_Object()["callstack"];
-                                    var instruction = node.GetValue_Object()["instruction"];
-                                    var fileOffsetNode = instruction.GetValue_Object()["fileOffset"];
-                                    var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
-                                    var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
-                                    this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = instruction.GetValue_Object()["filename"].GetValue_String(), Col = col, Line = line });
-                                }
-                                break;
-                            default:
-                                this.Messages.Add(node);
-                                break;
+                            this.OnError?.Invoke(this, new OnErrorEventArgs() { Message = node.GetValue_Object()["exception"].GetValue_String() });
+                        }
+                        else
+                        {
+                            switch ((int)node.GetValue_Object()["command"].GetValue_Number())
+                            {
+                                case (int)ERecvCommands.Halt:
+                                    {
+                                        var callstack = this.LastCallstack = node.GetValue_Object()["callstack"];
+                                        var instruction = node.GetValue_Object()["instruction"];
+                                        var fileOffsetNode = instruction.GetValue_Object()["fileOffset"];
+                                        var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
+                                        var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
+                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = instruction.GetValue_Object()["filename"].GetValue_String(), Col = col, Line = line });
+                                    }
+                                    break;
+                                default:
+                                    this.Messages.Add(node);
+                                    break;
+                            }
                         }
                     }
                     Thread.Sleep(10);

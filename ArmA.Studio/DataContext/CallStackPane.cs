@@ -22,13 +22,10 @@ namespace ArmA.Studio.DataContext
 
         public ICommand CmdEntryOnDoubleClick { get { return new RelayCommand((p) => { MessageBox.Show("To be implemented"); }); } }
 
+        
+
         public CallStackPane()
         {
-        }
-
-        private void DebugContext_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            throw new NotImplementedException();
         }
     }
 }
