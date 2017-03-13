@@ -125,7 +125,7 @@ namespace ArmA.Studio
                     var pb = p as PanelBase;
                     if (this.PanelsDisplayed.Contains(p))
                     {
-                        pb.CurrentVisibility = pb.CurrentVisibility == System.Windows.Visibility.Visible ? System.Windows.Visibility.Hidden : System.Windows.Visibility.Visible;
+                        pb.CurrentVisibility = pb.CurrentVisibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
                     }
                     else
                     {

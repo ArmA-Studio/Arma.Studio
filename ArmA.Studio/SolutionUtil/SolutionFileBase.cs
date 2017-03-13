@@ -17,6 +17,8 @@ namespace ArmA.Studio.SolutionUtil
 {   
     public abstract class SolutionFileBase : UI.ViewModel.IPropertyDatatemplateProvider, IComparable
     {
+        public const string PBOPREFIX = "$PBOPREFIX";
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
 
@@ -28,7 +30,7 @@ namespace ArmA.Studio.SolutionUtil
             {
                 if (this is SolutionFile)
                 {
-                    if ((this as SolutionFile).FileName == "$PBOPREFIX$")
+                    if ((this as SolutionFile).FileName.Equals(PBOPREFIX, StringComparison.InvariantCultureIgnoreCase))
                     {
                         return (this as SolutionFile).FileContent;
                     }
@@ -49,7 +51,7 @@ namespace ArmA.Studio.SolutionUtil
                 {
                     foreach(var it in this.Children)
                     {
-                        if (it is SolutionFile && (it as SolutionFile).FileName == "$PBOPREFIX$")
+                        if (it is SolutionFile && (it as SolutionFile).FileName.Equals(PBOPREFIX, StringComparison.InvariantCultureIgnoreCase))
                         {
                             return (it as SolutionFile).FileContent;
                         }
