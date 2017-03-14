@@ -24,6 +24,7 @@ namespace ArmA.Studio.Debugger
         void Detach();
 
         Variable GetVariableByName(string name, EVariableNamespace scope = EVariableNamespace.MissionNamespace);
+        IEnumerable<Variable> GetVariablesByName(IEnumerable<string> names, EVariableNamespace scope = EVariableNamespace.MissionNamespace);
         Variable SetVariable(Variable v);
         IEnumerable<Variable> GetVariables();
 
