@@ -32,7 +32,7 @@ namespace ArmA.Studio.SolutionUtil
                 {
                     if ((this as SolutionFile).FileName.Equals(PBOPREFIX, StringComparison.InvariantCultureIgnoreCase))
                     {
-                        return (this as SolutionFile).FileContent;
+                        return (this as SolutionFile).FileContent.Trim();
                     }
                     else
                     {
@@ -53,7 +53,7 @@ namespace ArmA.Studio.SolutionUtil
                     {
                         if (it is SolutionFile && (it as SolutionFile).FileName.Equals(PBOPREFIX, StringComparison.InvariantCultureIgnoreCase))
                         {
-                            return (it as SolutionFile).FileContent;
+                            return (it as SolutionFile).FileContent.Trim();
                         }
                     }
                     var parent = this.Parent;

@@ -23,7 +23,15 @@ namespace Dedbugger
         }
         public enum ERecvCommands
         {
-            Halt = 1
+            Halt = 1,
+            ContinueExecution = 2
+        }
+        public enum EStepType
+        {
+            Continue = 0,
+            StepInto = 1,
+            StepOver = 2,
+            StepOut = 3,
         }
         public event EventHandler<OnHaltEventArgs> OnHalt;
         public event EventHandler<OnConnectionClosedEventArgs> OnConnectionClosed;
@@ -133,6 +141,13 @@ namespace Dedbugger
                                         this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = instruction.GetValue_Object()["filename"].GetValue_String(), Col = col, Line = line });
                                     }
                                     break;
+                                case (int)ERecvCommands.ContinueExecution:
+                                    {
+                                        this.OnContinue?.Invoke(this, new OnContinueEventArgs() { });
+                                    }
+                                    break;
+
+
                                 default:
                                     this.Messages.Add(node);
                                     break;
@@ -233,6 +248,8 @@ namespace Dedbugger
         {
             foreach (var node in this.LastCallstack.GetValue_Array())
             {
+                if (!node.GetValue_Object().ContainsKey("lastInstruction")) //Not every callstackItem has instructions
+                    continue;
                 var line = (int)node.GetValue_Object()["lastInstruction"].GetValue_Object()["fileOffset"].GetValue_Array()[0].GetValue_Number();
                 var col = (int)node.GetValue_Object()["lastInstruction"].GetValue_Object()["fileOffset"].GetValue_Array()[2].GetValue_Number();
                 var sample = node.GetValue_Object()["contentSample"].GetValue_String();
@@ -249,6 +266,31 @@ namespace Dedbugger
                     {
                         var node = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
                         node.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.ContinueExecution);
+                        node.GetValue_Object()["data"] = new asapJson.JsonNode((int)EStepType.Continue);
+                        this.WriteMessage(node);
+                        return true;
+                    }
+                case EOperation.StepInto:
+                    {
+                        var node = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
+                        node.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.ContinueExecution);
+                        node.GetValue_Object()["data"] = new asapJson.JsonNode((int)EStepType.StepInto);
+                        this.WriteMessage(node);
+                        return true;
+                    }
+                case EOperation.StepOver:
+                    {
+                        var node = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
+                        node.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.ContinueExecution);
+                        node.GetValue_Object()["data"] = new asapJson.JsonNode((int)EStepType.StepOver);
+                        this.WriteMessage(node);
+                        return true;
+                    }
+                case EOperation.StepOut:
+                    {
+                        var node = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
+                        node.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.ContinueExecution);
+                        node.GetValue_Object()["data"] = new asapJson.JsonNode((int)EStepType.StepOut);
                         this.WriteMessage(node);
                         return true;
                     }
