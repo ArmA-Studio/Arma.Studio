@@ -95,7 +95,14 @@ namespace ArmA.Studio
                 this.CmdPauseDebugger = new UI.Commands.RelayCommand((p) => ExecuteOperation(Debugger.EOperation.Pause));
                 this.CmdStepInto = new UI.Commands.RelayCommand((p) => ExecuteOperation(Debugger.EOperation.StepInto));
                 this.CmdStepOver = new UI.Commands.RelayCommand((p) => ExecuteOperation(Debugger.EOperation.StepOver));
-                this.CmdStepOut = new UI.Commands.RelayCommand((p) => ExecuteOperation(Debugger.EOperation.StepOut));
+                this.CmdStepOut = new UI.Commands.RelayCommand((p) =>
+                {
+                    if (this.CallStack.Count() == 1) //Stepping out of the Last item in the Stack is equal to Continue
+                        ExecuteOperation(Debugger.EOperation.Continue);
+                    else
+                        ExecuteOperation(Debugger.EOperation.StepOut);
+                    
+                });
 
                 DataContext.BreakpointsPane.Breakpoints.CollectionChanged += Breakpoints_CollectionChanged;
             }
@@ -221,6 +228,7 @@ namespace ArmA.Studio
             {
                 Logger.Log(NLog.LogLevel.Info, "Execution was continued.");
                 this.IsPaused = false;
+                this.CallStack = Enumerable.Empty<CallstackItem>();
                 LastSF?.RedrawEditor();
             }, System.Windows.Threading.DispatcherPriority.Send);
         }

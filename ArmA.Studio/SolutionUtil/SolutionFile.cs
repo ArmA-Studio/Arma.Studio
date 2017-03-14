@@ -23,7 +23,7 @@ namespace ArmA.Studio.SolutionUtil
             var ted = Workspace.CurrentWorkspace.GetDocumentOfSolutionFileBase(this) as DataContext.TextEditorDocument;
             if (ted != null)
             {
-                ted.Editor.TextArea.LeftMargins.All((it) => { it.InvalidateVisual(); return true; });
+                ted.Editor?.TextArea.LeftMargins.All((it) => { it.InvalidateVisual(); return true; });
             }
         }
 
