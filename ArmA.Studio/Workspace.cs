@@ -406,6 +406,28 @@ namespace ArmA.Studio
                 this.WindowTop = d;
             }
             this.WindowCurrentState = ConfigHost.App.WindowCurrentState;
+
+            var sqfLintFileList = new List<SolutionUtil.SolutionFile>();
+            SolutionUtil.SolutionFileBase.WalkThrough(this.CurrentSolution.FilesCollection, (sfb) =>
+            {
+                var sf = sfb as SolutionUtil.SolutionFile;
+                if(sf != null && Path.GetExtension(sf.FileName).Equals(".sqf", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    sqfLintFileList.Add(sf);
+                }
+                return false;
+            });
+            Task.Run(() => {
+                foreach(var sf in sqfLintFileList)
+                {
+                    if (!File.Exists(sf.FullPath))
+                        continue;
+                    using (var stream = File.OpenRead(sf.FullPath))
+                    {
+                        DataContext.ErrorListPane.Instance.LinterDictionary[sf.FullPath] = Linting.SQF_GetLinterInfo(stream, sf.FullPath);
+                    }
+                }
+            });
         }
 
         private void Close()

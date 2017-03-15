@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="Dialogs\PropertiesDialogDataContext.cs" />
     <Compile Include="IniHelper.cs" />
+    <Compile Include="Linting.cs" />
     <Compile Include="LintScheduler.cs" />
     <Compile Include="LoggerTargets\SubscribableTarget.cs" />
     <Compile Include="UI\Attached\Eventing\PreviewKeyDown.cs" />

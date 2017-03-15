@@ -46,6 +46,5 @@ namespace ArmA.Studio.Dialogs
         public string Extension { get; set; }
         public string StaticFileName { get; set; }
         public string Content { get; set; }
-
     }
 }
