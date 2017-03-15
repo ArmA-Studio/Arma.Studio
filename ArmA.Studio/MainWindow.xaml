@@ -20,7 +20,7 @@
         Left="{Binding WindowLeft, Mode=TwoWay}"
         DataContext="{x:Static local:Workspace.CurrentWorkspace}"
         Icon="Resources/Logo.ico"
-        ev:Closing.Command="{Binding CmdMainWindowClosing}">
+        ev:Closing.Command="{Binding CmdMainWindowClosing}" UseLayoutRounding="True">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{x:Static p:Localization.MenuItem_File}">
