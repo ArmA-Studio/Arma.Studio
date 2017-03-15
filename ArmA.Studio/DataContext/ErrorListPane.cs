@@ -27,6 +27,7 @@ namespace ArmA.Studio.DataContext
 
 
         public override string Title { get { return Properties.Localization.PanelDisplayName_ErrorList; } }
+        public override string Icon { get { return @"Resources\Pictograms\BuildErrorList\BuildErrorList_16x.png"; } }
 
         public bool IsErrorsDisplayed { get { return this._IsErrorsDisplayed; } set { ConfigHost.App.ErrorList_IsErrorsDisplayed = this._IsErrorsDisplayed = value; this.ListView.Refresh(); this.RaisePropertyChanged(); } }
         private bool _IsErrorsDisplayed;

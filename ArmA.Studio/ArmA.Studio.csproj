@@ -266,6 +266,38 @@
     <EmbeddedResource Include="UI\DataTemplates\Output.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Page Include="Resources\Pictograms\BuildErrorList\BuildErrorList_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\BuildErrorList\BuildErrorList_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\CallStackWindow\CallStackWindow_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Pictograms\Output\Monaco_OutputCommandToggled_28x_32x.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1695,6 +1727,15 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Resources\Pictograms\BuildErrorList\BuildErrorList_16x.ai" />
+    <None Include="Resources\Pictograms\BuildErrorList\BuildErrorList_32x.ai" />
+    <None Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_16x.ai" />
+    <None Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_256x.ai" />
+    <None Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_32x.ai" />
+    <None Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_48x.ai" />
+    <None Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_64x.ai" />
+    <None Include="Resources\Pictograms\CallStackWindow\CallStackWindow_16x.ai" />
+    <None Include="Resources\Pictograms\CallStackWindow\VSO_CallStackWindow_16x.ai" />
     <None Include="Resources\Pictograms\Output\Monaco_OutputCommandToggled_28x_32x.ai" />
     <None Include="Resources\Pictograms\Output\Monaco_OutputCommand_28x_32x.ai" />
     <None Include="Resources\Pictograms\Output\Output_12x.ai" />
@@ -2067,6 +2108,26 @@
     <Resource Include="Resources\Pictograms\Output\Output.ico" />
     <Resource Include="Resources\Pictograms\Output\Output_12x.png" />
     <Resource Include="Resources\Pictograms\Output\Output_16x.png" />
+    <Resource Include="Resources\Pictograms\BuildErrorList\BuildErrorList_16x.png" />
+    <Content Include="Resources\Pictograms\BuildErrorList\BuildErrorList_16x.svg" />
+    <Resource Include="Resources\Pictograms\BuildErrorList\BuildErrorList_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\BuildErrorList\BuildErrorList_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\BuildErrorList\BuildErrorList_32x.gif" />
+    <Resource Include="Resources\Pictograms\BuildErrorList\BuildErrorList_32x.png" />
+    <Resource Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse.ico" />
+    <Resource Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_16x.png" />
+    <Resource Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_256x.png" />
+    <Resource Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_32x.png" />
+    <Resource Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_48x.png" />
+    <Resource Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_64x.png" />
+    <Resource Include="Resources\Pictograms\CallStackWindow\CallStackWindow_16x.png" />
+    <Content Include="Resources\Pictograms\CallStackWindow\CallStackWindow_16x.svg" />
+    <Resource Include="Resources\Pictograms\CallStackWindow\CallStackWindow_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\CallStackWindow\CallStackWindow_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\CallStackWindow\VSO_CallStackWindow_16x.png" />
+    <Content Include="Resources\Pictograms\CallStackWindow\VSO_CallStackWindow_16x.svg" />
     <Content Include="Resources\Pictograms\Output\Output_16x.svg" />
     <Resource Include="Resources\Pictograms\Output\Output_16xMD.png" />
     <Resource Include="Resources\Pictograms\Output\Output_16xSM.png" />
@@ -2746,6 +2807,7 @@
     <Resource Include="Resources\Pictograms\Save\VSO_Save_whiteNoHalo_16x.png" />
     <Content Include="Resources\Pictograms\Save\VSO_Save_whiteNoHalo_16x.svg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
