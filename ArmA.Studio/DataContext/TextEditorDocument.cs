@@ -48,8 +48,6 @@ namespace ArmA.Studio.DataContext
 
         public bool CmdKeyDownHandledValue { get { return this._CmdKeyDownHandledValue; } set { this._CmdKeyDownHandledValue = value; this.RaisePropertyChanged(); } }
         private bool _CmdKeyDownHandledValue;
-        public string IntelliSenseCurrentWord { get { return this._IntelliSenseCurrentWord; } set { this._IntelliSenseCurrentWord = value; this.RaisePropertyChanged(); } }
-        private string _IntelliSenseCurrentWord;
 
 
         public int Line { get { return this._Line; } set { this._Line = value; this.RaisePropertyChanged(); } }
@@ -69,6 +67,8 @@ namespace ArmA.Studio.DataContext
         public IEnumerable<LinterInfo> LinterInfos { get; private set; }
         public IList<IntelliSenseEntry> IntelliSenseEntries { get { return this._IntelliSenseEntries; } set { this._IntelliSenseEntries = value; this.RaisePropertyChanged(); } }
         public IList<IntelliSenseEntry> _IntelliSenseEntries;
+        public IntelliSenseEntry IntelliSenseEntrySelected { get { return this._IntelliSenseEntrySelected; } set { this._IntelliSenseEntrySelected = value; this.RaisePropertyChanged(); } }
+        public IntelliSenseEntry _IntelliSenseEntrySelected;
 
         private ToolTip EditorTooltip;
         private Popup IntelliSensePopup;
@@ -92,6 +92,7 @@ namespace ArmA.Studio.DataContext
                 this.Editor.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(this.Editor));
                 this.Editor.TextArea.TextView.BackgroundRenderers.Add(this.SyntaxErrorRenderer);
                 this.Editor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
+                this.Editor.TextArea.PreviewKeyDown += TextArea_PreviewKeyDown;
             });
             this.CmdIntelliSensePopupInitialized = new UI.Commands.RelayCommand((p) => this.IntelliSensePopup = p as Popup);
             this.CmdEditorPreviewMouseDown = new UI.Commands.RelayCommand((p) => this.IntelliSensePopup.IsOpen = false);
@@ -99,6 +100,37 @@ namespace ArmA.Studio.DataContext
             this._Document.TextChanged += Document_TextChanged;
         }
 
+        private void TextArea_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+            if (this.IntelliSensePopup.IsOpen)
+            {
+                if (Keyboard.IsKeyDown(Key.Tab) || Keyboard.IsKeyDown(Key.Enter))
+                {
+                    this.Editor.Document.Insert(this.Editor.CaretOffset, this.IntelliSenseEntrySelected.ContentToFinish);
+                    this.IntelliSensePopup.IsOpen = false;
+                }
+                else if (Keyboard.IsKeyDown(Key.Up))
+                {
+                    var index = this.IntelliSenseEntries.IndexOf(this.IntelliSenseEntrySelected) - 1;
+                    this.IntelliSenseEntrySelected = this.IntelliSenseEntries.ElementAt(index < 0 ? 0 : index);
+                }
+                else if (Keyboard.IsKeyDown(Key.Down))
+                {
+                    var index = this.IntelliSenseEntries.IndexOf(this.IntelliSenseEntrySelected) + 1;
+                    this.IntelliSenseEntrySelected = this.IntelliSenseEntries.ElementAt(index >= this.IntelliSenseEntries.Count ? this.IntelliSenseEntries.Count - 1 : index);
+                }
+                else
+                {
+                    this.IntelliSensePopup.IsOpen = false;
+                    e.Handled = false;
+                }
+            }
+            else
+            {
+                e.Handled = false;
+            }
+        }
 
         private void Caret_PositionChanged(object sender, EventArgs e)
         {
@@ -192,7 +224,18 @@ namespace ArmA.Studio.DataContext
                     App.Current.Dispatcher.Invoke(() => this.ExecuteLinter());
                 });
             }
-            this.ShowIntelliSense();
+
+            if (this.Editor != null)
+            {
+                if (this.Editor.Document.GetWordAround(this.Editor.CaretOffset - 1).Length >= 3)
+                {
+                    this.ShowIntelliSense();
+                }
+                else
+                {
+                    this.IntelliSensePopup.IsOpen = false;
+                }
+            }
         }
 
 
@@ -200,21 +243,13 @@ namespace ArmA.Studio.DataContext
         {
             if (this.Editor == null)
                 return;
-            string curWord = string.Empty;
-            for (var i = this.Editor.CaretOffset - 1; i >= 0; i--)
-            {
-                var c = this.Document.GetCharAt(i);
-                if (char.IsWhiteSpace(c))
-                {
-                    curWord = this.Document.GetText(i + 1, this.Editor.CaretOffset - i - 1);
-                    break;
-                }
-            }
+            string curWord = this.Editor.Document.GetWordAround(this.Editor.CaretOffset - 1);
             this.IntelliSenseEntries = this.GetIntelliSenseEntries(this.Document, curWord, this.Editor.CaretOffset);
+            this.IntelliSenseEntrySelected = this.IntelliSenseEntries.FirstOrDefault();
             if (this.IntelliSenseEntries.Count > 0)
             {
-                this.IntelliSenseCurrentWord = curWord;
                 this.IntelliSensePopup.DataContext = this;
+
                 var pos = this.Editor.TextArea.TextView.GetVisualPosition(this.Editor.TextArea.Caret.Position, ICSharpCode.AvalonEdit.Rendering.VisualYPosition.TextBottom);
                 this.IntelliSensePopup.HorizontalOffset = pos.X + this.Editor.TextArea.LeftMargins.Sum((it) => it.RenderSize.Width) + 6;
                 this.IntelliSensePopup.VerticalOffset = pos.Y - this.Editor.ActualHeight;
@@ -287,19 +322,15 @@ namespace ArmA.Studio.DataContext
         protected virtual void OnTextEditorSet() { }
         protected virtual void OnKeyDown(object param)
         {
-            this.CmdKeyDownHandledValue = true;
             if (Keyboard.IsKeyDown(Key.S) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
             {
+                this.CmdKeyDownHandledValue = true;
                 this.SaveDocument(this.FilePath);
             }
             else if (Keyboard.IsKeyDown(Key.Space) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
             {
+                this.CmdKeyDownHandledValue = true;
                 this.ShowIntelliSense();
-            }
-            else
-            {
-                this.IntelliSensePopup.IsOpen = false;
-                this.CmdKeyDownHandledValue = false;
             }
         }
         protected virtual IEnumerable<LinterInfo> GetLinterInformations(MemoryStream memstream)

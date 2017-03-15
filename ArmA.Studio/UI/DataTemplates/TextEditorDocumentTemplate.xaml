@@ -10,6 +10,7 @@
       xmlns:ev="clr-namespace:ArmA.Studio.UI.Attached.Eventing;assembly=ArmA.Studio"
       xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
       xmlns:SolutionUtil="clr-namespace:ArmA.Studio.SolutionUtil;assembly=ArmA.Studio"
+      xmlns:ctrl="clr-namespace:ArmA.Studio.UI.Controls;assembly=ArmA.Studio"
       DataType="{x:Type dc:TextEditorDocument}">
     <Grid>
         <Popup PlacementTarget="{Binding ElementName=TextEditor}" ev:Initialized.Command="{Binding CmdIntelliSensePopupInitialized}" ev:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
@@ -18,9 +19,9 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="{Binding IntelliSenseCurrentWord}" Margin="4"/>
-                <ListView Grid.Row="1" MaxHeight="256" MinWidth="80" ItemsSource="{Binding IntelliSenseEntries}">
-                    <ListView.ItemTemplate>
+                <TextBlock Grid.Row="0" Text="{Binding IntelliSenseEntrySelected.Text}" Margin="4"/>
+                <ctrl:ListView_ScrollSelectionChanged Grid.Row="1" MaxHeight="256" MinWidth="80" ItemsSource="{Binding IntelliSenseEntries}" SelectedItem="{Binding IntelliSenseEntrySelected}">
+                    <ctrl:ListView_ScrollSelectionChanged.ItemTemplate>
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -31,8 +32,8 @@
                                 <TextBlock Grid.Column="1" Text="{Binding Text}"/>
                             </Grid>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </ctrl:ListView_ScrollSelectionChanged.ItemTemplate>
+                </ctrl:ListView_ScrollSelectionChanged>
             </Grid>
         </Popup>
         <ae:TextEditor x:Name="TextEditor" Document="{Binding Document}" SyntaxHighlighting="{Binding SyntaxDefinition}" ev:TextChanged.Command="{Binding CmdTextChanged}" ev:KeyDown.Command="{Binding CmdKeyDown}" ev:KeyDown.KeyDownHandled="{Binding CmdKeyDownHandledValue}" ShowLineNumbers="True" FontFamily="Consolas" ev:Initialized.Command="{Binding CmdTextEditorInitialized}" ev:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}" ev:PreviewMouseDown.Command="{Binding CmdEditorPreviewMouseDown}"></ae:TextEditor>

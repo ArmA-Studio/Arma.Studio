@@ -14,6 +14,7 @@ using ArmA.Studio.DataContext.TextEditorUtil;
 using ArmA.Studio.Debugger;
 using ArmA.Studio.UI;
 using ArmA.Studio.UI.Commands;
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using RealVirtuality.SQF.Parser;
 
@@ -130,6 +131,23 @@ namespace ArmA.Studio.DataContext
             {
                 SqfVariableViewPopup.IsOpen = false;
             }
+        }
+        protected override IList<IntelliSenseEntry> GetIntelliSenseEntries(TextDocument currentDocument, string currentWord, int caretOffset)
+        {
+            var sqfSelection = from def in ConfigHost.Instance.SqfDefinitions where def.Name.StartsWith(currentWord) select def.Name;
+            var curDocIdents = from str in currentDocument.AllIdents() where str.StartsWith(currentWord) select str;
+            var list = new List<IntelliSenseEntry>();
+            foreach (var s in sqfSelection)
+            {
+                list.Add(new IntelliSenseEntry() { Text = s, ContentToFinish = s.Remove(0, currentWord.Length) });
+            }
+            foreach (var s in curDocIdents)
+            {
+                if (sqfSelection.Contains(s))
+                    continue;
+                list.Add(new IntelliSenseEntry() { Text = s, ContentToFinish = s.Remove(0, currentWord.Length) });
+            }
+            return list;
         }
     }
 }

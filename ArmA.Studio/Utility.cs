@@ -35,5 +35,38 @@ namespace ArmA.Studio
             }
             return doc.GetText(start, end - start);
         }
+        public static IEnumerable<string> AllIdents(this ICSharpCode.AvalonEdit.Document.TextDocument doc, int minLength = 2)
+        {
+            var builder = new StringBuilder();
+            bool isString = false;
+            char stringchar = '\0';
+            for(int i = 0; i < doc.TextLength; i++)
+            {
+                var c = doc.GetCharAt(i);
+                if(isString)
+                {
+                    if (c == stringchar)
+                        isString = false;
+                }
+                else if ((builder.Length == 0 ? char.IsLetter(c) : char.IsLetterOrDigit(c)) || c == '_')
+                {
+                    builder.Append(c);
+                }
+                else if(c == '"' || c == '\'')
+                {
+                    stringchar = c;
+                    isString = true;
+                }
+                else
+                {
+                    if (builder.Length >= minLength)
+                    {
+                        yield return builder.ToString();
+                    }
+                    builder.Clear();
+                }
+            }
+        }
+
     }
 }
