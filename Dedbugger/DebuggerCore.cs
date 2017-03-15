@@ -257,15 +257,39 @@ namespace Dedbugger
                 var name = variable.GetValue_Object()["name"].GetValue_String();
                 var type = variable.GetValue_Object()["type"].GetValue_String();
                 var value = "";
-                if (type != "void")
+                if (type == "void")
                 {
-                    value = variable.GetValue_Object()["value"].GetValue_String();
+                        yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.Parse(type) };
+                }
+                else if (type == "array")
+                {
+                    //ToDo: handle multi-dimensional arrays
+                    var valueArray = variable.GetValue_Object()["value"];
+                    value = "[";
+                    if (valueArray.GetValueType() == JsonNode.EJType.Array) //Might be null if EMPTY
+                    foreach (var val in valueArray.GetValue_Array())
+                    {
+                        if (val.GetValue_Object()["type"].GetValue_String() == "array") //Small workaround to allow 2D arrays
+                        {
+                            value += "[arrayPlaceholder]";
+                        }
+                        else
+                        {
+                             value += val.GetValue_Object()["value"].GetValue_String();
+                        }
+                        
+                        value += ",";
+                    }
+                    value += "]";
+
                     var ns = (EVariableNamespace)variable.GetValue_Object()["ns"].GetValue_Number();//Namespace the variable comes from
                     yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.Parse(type), Namespace = ns };
                 }
                 else
                 {
-                    yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.Parse(type) };
+                    value = variable.GetValue_Object()["value"].GetValue_String();
+                    var ns = (EVariableNamespace)variable.GetValue_Object()["ns"].GetValue_Number();//Namespace the variable comes from
+                    yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.Parse(type), Namespace = ns };
                 }
             }
         }
