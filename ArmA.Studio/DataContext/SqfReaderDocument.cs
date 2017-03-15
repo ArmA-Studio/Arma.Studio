@@ -48,7 +48,7 @@ namespace ArmA.Studio.DataContext
                     var variable = this.InternalVariable;
                     variable.Value = value;
                     //ToDo: Check if proper async maybe is required due to UI lag
-                    Workspace.CurrentWorkspace.DebugContext.SetVariable(variable).Wait();
+                    Workspace.CurrentWorkspace.DebugContext.SetVariable(variable);
                     this.InternalVariable = variable;
                 }
             }
@@ -82,7 +82,7 @@ namespace ArmA.Studio.DataContext
         {
             return Linting.SQF_GetLinterInfo(memstream, this.FilePath);
         }
-        protected override bool OnHoverText(int textOffset, Point p)
+        protected override async Task<bool> OnHoverText(int textOffset, Point p)
         {
             if (!Workspace.CurrentWorkspace.DebugContext.IsDebuggerAttached)
                 return false;
@@ -98,14 +98,11 @@ namespace ArmA.Studio.DataContext
                     return false;
                 if (!ConfigHost.Instance.SqfDefinitions.All((it) => it.Name != varname))
                     return false;
-                //ToDo: Check if proper async maybe is required due to UI lag
-                var resultTask = Workspace.CurrentWorkspace.DebugContext.GetVariables(EVariableNamespace.All, varname);
-                resultTask.Wait();
-                var enumerable = resultTask.Result as IList<Variable> ?? resultTask.Result.ToList();
-                if (!enumerable.Any())
+                var result = await Workspace.CurrentWorkspace.DebugContext.GetVariables(EVariableNamespace.All, varname);
+                if (!result.Any())
                     return false;
                 var container = SqfVariableViewPopup.DataContext as VariableContainer;
-                container.InternalVariable = enumerable.First();
+                container.InternalVariable = result.First();
                 container.EditMode = false;
                 SqfVariableViewPopup.PlacementTarget = this.Editor;
                 SqfVariableViewPopup.HorizontalOffset = p.X + 10;

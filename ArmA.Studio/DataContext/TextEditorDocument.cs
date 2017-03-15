@@ -113,14 +113,14 @@ namespace ArmA.Studio.DataContext
             this.OnMouseMove(textViewPos.HasValue ? this.Document.GetOffset(textViewPos.Value.Location) : -1, pos);
         }
 
-        private void Editor_MouseHover(object sender, MouseEventArgs e)
+        private async void Editor_MouseHover(object sender, MouseEventArgs e)
         {
             var pos = e.GetPosition(this.Editor);
             var textViewPos = this.Editor.GetPositionFromPoint(pos);
             if (textViewPos.HasValue)
             {
                 var textOffset = this.Document.GetOffset(textViewPos.Value.Location);
-                if (this.OnHoverText(textOffset, pos) || this.LinterInfos == null)
+                if (await this.OnHoverText(textOffset, pos) || this.LinterInfos == null)
                     return;
                 foreach(var info in this.LinterInfos)
                 {
@@ -317,7 +317,7 @@ namespace ArmA.Studio.DataContext
         /// <param name="textOffset">offset where the user is hovering.</param>
         /// <param name="p">Point where the mouse is relative to <paramref name="placementTarget"/></param>
         /// <returns><see cref="true"/> if the document has handled the hover, false if it did not.</returns>
-        protected virtual bool OnHoverText(int textOffset, Point p) { return false; }
+        protected virtual async Task<bool> OnHoverText(int textOffset, Point p) { return false; }
         protected virtual void OnMouseMove(int textOffset, Point p) { }
         protected virtual void OnHoverTextStop() { }
     }
