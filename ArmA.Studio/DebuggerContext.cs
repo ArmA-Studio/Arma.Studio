@@ -84,7 +84,7 @@ namespace ArmA.Studio
                     else if (this.IsPaused)
                     {
                         this.IsPaused = false;
-                        ExecuteOperation(Debugger.EOperation.Continue);
+                        await ExecuteOperation(Debugger.EOperation.Continue);
                     }
                 });
                 this.CmdStopDebugger = new UI.Commands.RelayCommandAsync(async (p) =>
@@ -92,10 +92,10 @@ namespace ArmA.Studio
                     Logger.Log(NLog.LogLevel.Info, "Detaching debugger...");
                     await Task.Run(() => this.DebuggerInstance.Detach());
                 });
-                this.CmdPauseDebugger = new UI.Commands.RelayCommand((p) => ExecuteOperation(Debugger.EOperation.Pause));
-                this.CmdStepInto = new UI.Commands.RelayCommand((p) => ExecuteOperation(Debugger.EOperation.StepInto));
-                this.CmdStepOver = new UI.Commands.RelayCommand((p) => ExecuteOperation(Debugger.EOperation.StepOver));
-                this.CmdStepOut = new UI.Commands.RelayCommand((p) => ExecuteOperation(Debugger.EOperation.StepOut));
+                this.CmdPauseDebugger = new UI.Commands.RelayCommandAsync((p) => ExecuteOperation(EOperation.Pause));
+                this.CmdStepInto = new UI.Commands.RelayCommandAsync((p) => ExecuteOperation(EOperation.StepInto));
+                this.CmdStepOver = new UI.Commands.RelayCommandAsync((p) => ExecuteOperation(EOperation.StepOver));
+                this.CmdStepOut = new UI.Commands.RelayCommandAsync((p) => ExecuteOperation(EOperation.StepOut));
 
                 DataContext.BreakpointsPane.Breakpoints.CollectionChanged += Breakpoints_CollectionChanged;
             }
