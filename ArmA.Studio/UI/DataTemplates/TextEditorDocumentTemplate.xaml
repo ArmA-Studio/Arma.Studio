@@ -13,7 +13,7 @@
       xmlns:ctrl="clr-namespace:ArmA.Studio.UI.Controls;assembly=ArmA.Studio"
       DataType="{x:Type dc:TextEditorDocument}">
     <Grid>
-        <Popup PlacementTarget="{Binding ElementName=TextEditor}" ev:Initialized.Command="{Binding CmdIntelliSensePopupInitialized}" ev:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
+        <Popup ev:Initialized.Command="{Binding CmdIntelliSensePopupInitialized}" ev:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
             <Grid Background="White">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

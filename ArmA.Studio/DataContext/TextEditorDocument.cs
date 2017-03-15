@@ -79,6 +79,7 @@ namespace ArmA.Studio.DataContext
 
         public TextEditorDocument()
         {
+
             this.EditorTooltip = new ToolTip();
             this.SyntaxErrorRenderer = new UI.UnderlineBackgroundRenderer();
             this.CmdTextChanged = new UI.Commands.RelayCommand(OnTextChanged);
@@ -94,10 +95,14 @@ namespace ArmA.Studio.DataContext
                 this.Editor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
                 this.Editor.TextArea.PreviewKeyDown += TextArea_PreviewKeyDown;
             });
-            this.CmdIntelliSensePopupInitialized = new UI.Commands.RelayCommand((p) => this.IntelliSensePopup = p as Popup);
+            this.CmdIntelliSensePopupInitialized = new UI.Commands.RelayCommand((p) =>
+            {
+                this.IntelliSensePopup = p as Popup;
+            });
             this.CmdEditorPreviewMouseDown = new UI.Commands.RelayCommand((p) => this.IntelliSensePopup.IsOpen = false);
             this._Document = new TextDocument();
             this._Document.TextChanged += Document_TextChanged;
+            
         }
 
         private void TextArea_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -251,8 +256,10 @@ namespace ArmA.Studio.DataContext
                 this.IntelliSensePopup.DataContext = this;
 
                 var pos = this.Editor.TextArea.TextView.GetVisualPosition(this.Editor.TextArea.Caret.Position, ICSharpCode.AvalonEdit.Rendering.VisualYPosition.TextBottom);
-                this.IntelliSensePopup.HorizontalOffset = pos.X + this.Editor.TextArea.LeftMargins.Sum((it) => it.RenderSize.Width) + 6;
-                this.IntelliSensePopup.VerticalOffset = pos.Y - this.Editor.ActualHeight;
+                this.IntelliSensePopup.PlacementTarget = this.Editor;
+                this.IntelliSensePopup.Placement = PlacementMode.Relative;
+                this.IntelliSensePopup.HorizontalOffset = pos.X + 10+18*2;
+                this.IntelliSensePopup.VerticalOffset = pos.Y;
                 this.IntelliSensePopup.IsOpen = true;
             }
         }
