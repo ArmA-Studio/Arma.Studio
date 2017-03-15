@@ -53,10 +53,10 @@ namespace asapJson
             Type = EJType.Object;
             value = (object)input;
         }
-        public JsonNode(List<JsonNode> input)
+        public JsonNode(IEnumerable<JsonNode> input)
         {
             Type = EJType.Array;
-            value = (object)input;
+            value = input.ToList();
         }
         public JsonNode(string input, bool isJson = false)
         {

@@ -23,10 +23,8 @@ namespace ArmA.Studio.Debugger
         bool Attach();
         void Detach();
 
-        Variable GetVariableByName(string name, EVariableNamespace scope = EVariableNamespace.MissionNamespace);
-        IEnumerable<Variable> GetVariablesByName(IEnumerable<string> names, EVariableNamespace scope = EVariableNamespace.MissionNamespace);
-        Variable SetVariable(Variable v);
-        IEnumerable<Variable> GetVariables();
+        IEnumerable<Variable> GetVariables(EVariableNamespace scope = EVariableNamespace.All, params string[] names);
+        void SetVariable(Variable v);
 
         IEnumerable<CallstackItem> GetCallstack();
         bool Perform(EOperation op);

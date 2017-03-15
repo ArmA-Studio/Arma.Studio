@@ -47,6 +47,8 @@ namespace ArmA.Studio.DataContext
 
         public override string Title { get { return Properties.Localization.PanelDisplayName_Output; } }
 
+        public override string Icon { get { return @"Resources\Pictograms\Output\Output.ico"; } }
+
         public ICommand CmdClearOutputWindow { get; private set; }
 
 

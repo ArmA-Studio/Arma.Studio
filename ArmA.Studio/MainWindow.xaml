@@ -55,9 +55,13 @@
             <MenuItem Header="{x:Static p:Localization.MenuItem_Panels}" ItemsSource="{Binding PanelsAvailable}">
                 <MenuItem.ItemContainerStyle>
                     <Style TargetType="MenuItem">
+                        <Style.Resources>
+                            <Image x:Key="DefImage" Source="{Binding Icon}" x:Shared="false"/>
+                        </Style.Resources>
                         <Setter Property="Command" Value="{Binding DataContext.CmdDisplayPanel, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"/>
                         <Setter Property="CommandParameter" Value="{Binding}"/>
                         <Setter Property="Header" Value="{Binding Title}"/>
+                        <Setter Property="Icon" Value="{StaticResource DefImage}"/>
                     </Style>
                 </MenuItem.ItemContainerStyle>
             </MenuItem>
@@ -194,10 +198,23 @@
                             <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}"/>
                             <Setter Property="IsActive" Value="{Binding Model.IsActive, Mode=TwoWay}"/>
                             <Setter Property="Visibility" Value="{Binding Model.CurrentVisibility, Mode=TwoWay}"/>
+                            <Setter Property="IconSource" Value="{Binding Model.Icon}"/>
                         </Style>
                     </dt:AvalonDockStyleSelector.PanelBaseStyle>
                 </dt:AvalonDockStyleSelector>
             </ad:DockingManager.LayoutItemContainerStyleSelector>
+            <ad:DockingManager.AnchorableHeaderTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="{Binding IconSource}" Height="16" MaxWidth="16" VerticalAlignment="Center" Margin="0 0 4 0"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Title}"/>
+                    </Grid>
+                </DataTemplate>
+            </ad:DockingManager.AnchorableHeaderTemplate>
             <ad:LayoutRoot>
             </ad:LayoutRoot>
         </ad:DockingManager>

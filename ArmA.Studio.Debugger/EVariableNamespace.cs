@@ -9,6 +9,7 @@ namespace ArmA.Studio.Debugger
     [Flags]
     public enum EVariableNamespace
     {
+        All = Callstack | LocalEvaluator | MissionNamespace | UiNamespace | ProfileNamespace | ParsingNamespace,
         Callstack = 1,
         LocalEvaluator = 2,
         MissionNamespace = 4,

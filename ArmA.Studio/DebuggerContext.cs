@@ -145,16 +145,7 @@ namespace ArmA.Studio
             }
         }
 
-        public void ExecuteOperation(Debugger.EOperation operation)
-        {
-            Logger.Log(NLog.LogLevel.Info, string.Format("Executing '{0}' on debugger", Enum.GetName(typeof(Debugger.EOperation), operation)));
-            if (!this.DebuggerInstance.Perform(operation))
-            {
-                var reason = this.DebuggerInstance.GetLastError();
-                MessageBox.Show(string.Format(Properties.Localization.DebuggerContext_OperationFailed_Body, Enum.GetName(typeof(Debugger.EOperation), operation), reason), Properties.Localization.DebuggerContext_OperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-
+        #region Event subscription methods
         private void DebuggerInstance_OnException(object sender, Debugger.OnExceptionEventArgs e)
         {
             App.Current.Dispatcher.Invoke(() =>
@@ -232,7 +223,7 @@ namespace ArmA.Studio
                 LastSF?.RedrawEditor();
             }, System.Windows.Threading.DispatcherPriority.Send);
         }
-
+        #endregion
         /// <summary>
         /// Finds first instance of any debugger in DebuggerPath
         /// </summary>
@@ -252,7 +243,7 @@ namespace ArmA.Studio
                 var assTypes = ass.GetTypes();
                 foreach (var type in assTypes)
                 {
-                    if (typeof(Debugger.IDebugger).IsAssignableFrom(type))
+                    if (typeof(IDebugger).IsAssignableFrom(type))
                     {
                         Logger.Log(NLog.LogLevel.Info, string.Format("Using '{0}' as debugger.", file));
                         return Activator.CreateInstance(type) as Debugger.IDebugger;
@@ -263,10 +254,36 @@ namespace ArmA.Studio
             return null;
         }
 
-        public void UpdateBreakpoint(DataContext.BreakpointsPaneUtil.Breakpoint bp)
+        public async Task UpdateBreakpoint(DataContext.BreakpointsPaneUtil.Breakpoint bp)
         {
-            this.DebuggerInstance?.UpdateBreakpoint(bp);
+            if (!this.IsDebuggerAttached)
+                return;
+            await this.DebuggerInstance?.UpdateBreakpointAsync(bp);
         }
+
+        public async Task ExecuteOperation(EOperation operation)
+        {
+            Logger.Log(NLog.LogLevel.Info, string.Format("Executing '{0}' on debugger", Enum.GetName(typeof(EOperation), operation)));
+            if (!await this.DebuggerInstance.PerformAsync(operation))
+            {
+                var reason = this.DebuggerInstance.GetLastError();
+                MessageBox.Show(string.Format(Properties.Localization.DebuggerContext_OperationFailed_Body, Enum.GetName(typeof(EOperation), operation), reason), Properties.Localization.DebuggerContext_OperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+        public async Task<IEnumerable<Variable>> GetVariables(EVariableNamespace scope = EVariableNamespace.All, params string[] names)
+        {
+            if (!this.IsDebuggerAttached)
+                return new Variable[0];
+            return await this.DebuggerInstance.GetVariablesAsync(scope, names);
+        }
+
+        public async Task SetVariable(Variable variable)
+        {
+            if (!this.IsDebuggerAttached)
+                return;
+            await this.DebuggerInstance.SetVariableAsync(variable);
+        }
+
 
         internal void Close()
         {

@@ -116,7 +116,7 @@ namespace ArmA.Studio
             if (e.ApplicationExitCode == (int)ExitCodes.ConfigError)
                 return;
             Workspace.CurrentWorkspace = null;
-            if(e.ApplicationExitCode == (int)ExitCodes.Restart)
+            if (e.ApplicationExitCode == (int)ExitCodes.Restart)
             {
                 Process.Start(ExecutableFile);
             }
@@ -126,6 +126,35 @@ namespace ArmA.Studio
         public static void Shutdown(ExitCodes code)
         {
             App.Current.Shutdown((int)code);
+        }
+
+        public static Stream GetStreamFromEmbeddedResource(string path)
+        {
+            var ass = Assembly.GetExecutingAssembly();
+            var resNames = from name in ass.GetManifestResourceNames() where name.Equals(path) select name;
+            foreach (var res in resNames)
+            {
+                return ass.GetManifestResourceStream(res);
+            }
+            throw new FileNotFoundException();
+        }
+        public static object GetXamlObjectFromEmbeddedResource(string path)
+        {
+            using (var stream = GetStreamFromEmbeddedResource(path))
+            {
+                try
+                {
+                    return System.Windows.Markup.XamlReader.Load(stream);
+                }
+                catch (FileNotFoundException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Unknown", ex);
+                }
+            }
         }
     }
 }

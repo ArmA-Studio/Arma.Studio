@@ -11,6 +11,7 @@ namespace ArmA.Studio.Debugger
         public string Name;
         public string Value;
         public ValueType VariableType;
+        public EVariableNamespace Namespace;
     }
 
 }

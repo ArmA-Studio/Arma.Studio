@@ -223,52 +223,19 @@ namespace Dedbugger
             }
         }
 
-        public Variable GetVariableByName(string name, EVariableNamespace scope = EVariableNamespace.MissionNamespace)
+        public IEnumerable<Variable> GetVariables(EVariableNamespace scope, params string[] names)
         {
             var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
             command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.GetVariable);
             var data = command.GetValue_Object()["data"];
-            data.GetValue_Object()["name"] = new asapJson.JsonNode(new List<asapJson.JsonNode> { new asapJson.JsonNode(name) });
+            data.GetValue_Object()["name"] = new asapJson.JsonNode(names.Select(name => new asapJson.JsonNode(name)));
             data.GetValue_Object()["scope"] = new asapJson.JsonNode((int)scope);
             this.WriteMessage(command);
-            //have to wait for response now.
-            throw new NotImplementedException();
+            
 
-
-            //have to wait for response now. which will be command 3
-
-            throw new NotImplementedException();
-            //command should be the returned packet
-            var variables = command.GetValue_Object()["data"];
-            foreach (var variable in variables.GetValue_Array())
-            {
-                var varName = variable.GetValue_Object()["name"].GetValue_String();
-                var type = variable.GetValue_Object()["type"].GetValue_String();
-                var value = "";
-                if (type != "void")
-                {
-                    value = variable.GetValue_Object()["value"].GetValue_String();
-                    var ns = (EVariableNamespace)variable.GetValue_Object()["ns"].GetValue_Number();//Namespace the variable comes from
-                }
-                return new Variable() { Name = varName, Value = value, VariableType = Variable.ValueType.Parse(type) };
-            }
-        }
-
-        public IEnumerable<Variable> GetVariablesByName(IEnumerable<string> names, EVariableNamespace scope = EVariableNamespace.MissionNamespace)
-        {
-
-            var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-            command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.GetVariable);
-            var data = command.GetValue_Object()["data"];
-            data.GetValue_Object()["name"] = new asapJson.JsonNode(new List<asapJson.JsonNode>(names.Select(name => new asapJson.JsonNode(name))));
-            data.GetValue_Object()["scope"] = new asapJson.JsonNode((int)scope);
-            this.WriteMessage(command);
-
-            //have to wait for response now. which will be command 3
-
-            throw new NotImplementedException();
-            //command should be the returned packet
-            var variables = command.GetValue_Object()["data"];
+            var response = this.ReadMessage((node) => (int)(node.GetValue_Object()["command"].GetValue_Number()) == (int)ERecvCommands.VariablesList);
+            
+            var variables = response.GetValue_Object()["data"];
             foreach (var variable in variables.GetValue_Array())
             {
                 var name = variable.GetValue_Object()["name"].GetValue_String();
@@ -278,17 +245,16 @@ namespace Dedbugger
                 {
                     value = variable.GetValue_Object()["value"].GetValue_String();
                     var ns = (EVariableNamespace)variable.GetValue_Object()["ns"].GetValue_Number();//Namespace the variable comes from
+                    yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.Parse(type), Namespace = ns };
                 }
-                yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.Parse(type)};
+                else
+                {
+                    yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.Parse(type) };
+                }
             }
         }
 
-        public Variable SetVariable(Variable v)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Variable> GetVariables()
+        public void SetVariable(Variable v)
         {
             throw new NotImplementedException();
         }

@@ -45,6 +45,7 @@ namespace ArmA.Studio.UI.Attached
             var tb = sender as TextBox;
             if (tb == null)
                 return;
+            tb.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
             if (e.Key == GetKey(tb))
             {
                 Keyboard.ClearFocus();

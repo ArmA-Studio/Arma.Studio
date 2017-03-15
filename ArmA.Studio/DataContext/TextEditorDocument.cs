@@ -88,7 +88,7 @@ namespace ArmA.Studio.DataContext
                 this.Editor = p as ICSharpCode.AvalonEdit.TextEditor;
                 this.Editor.MouseHover += Editor_MouseHover;
                 this.Editor.MouseHoverStopped += Editor_MouseHoverStopped;
-                ;
+                this.Editor.MouseMove += Editor_MouseMove;
                 this.Editor.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(this.Editor));
                 this.Editor.TextArea.TextView.BackgroundRenderers.Add(this.SyntaxErrorRenderer);
                 this.Editor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
@@ -99,10 +99,18 @@ namespace ArmA.Studio.DataContext
             this._Document.TextChanged += Document_TextChanged;
         }
 
+
         private void Caret_PositionChanged(object sender, EventArgs e)
         {
             this.Line = this.Editor.TextArea.Caret.Line;
             this.Column = this.Editor.TextArea.Caret.Column;
+        }
+
+        private void Editor_MouseMove(object sender, MouseEventArgs e)
+        {
+            var pos = e.GetPosition(this.Editor);
+            var textViewPos = this.Editor.GetPositionFromPoint(pos);
+            this.OnMouseMove(textViewPos.HasValue ? this.Document.GetOffset(textViewPos.Value.Location) : -1, pos);
         }
 
         private void Editor_MouseHover(object sender, MouseEventArgs e)
@@ -112,7 +120,7 @@ namespace ArmA.Studio.DataContext
             if (textViewPos.HasValue)
             {
                 var textOffset = this.Document.GetOffset(textViewPos.Value.Location);
-                if (this.LinterInfos == null)
+                if (this.OnHoverText(textOffset, pos) || this.LinterInfos == null)
                     return;
                 foreach(var info in this.LinterInfos)
                 {
@@ -129,6 +137,7 @@ namespace ArmA.Studio.DataContext
         private void Editor_MouseHoverStopped(object sender, MouseEventArgs e)
         {
             this.EditorTooltip.IsOpen = false;
+            this.OnHoverTextStop();
         }
         //ToDo: Fix error offset moving
         private void ExecuteLinter()
@@ -301,5 +310,15 @@ namespace ArmA.Studio.DataContext
         {
             return new IntelliSenseEntry[0];
         }
+
+        /// <summary>
+        /// Callen when user hovers above text.
+        /// </summary>
+        /// <param name="textOffset">offset where the user is hovering.</param>
+        /// <param name="p">Point where the mouse is relative to <paramref name="placementTarget"/></param>
+        /// <returns><see cref="true"/> if the document has handled the hover, false if it did not.</returns>
+        protected virtual bool OnHoverText(int textOffset, Point p) { return false; }
+        protected virtual void OnMouseMove(int textOffset, Point p) { }
+        protected virtual void OnHoverTextStop() { }
     }
 }

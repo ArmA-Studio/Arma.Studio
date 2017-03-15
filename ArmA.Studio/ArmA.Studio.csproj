@@ -216,6 +216,7 @@
     <Compile Include="UI\ViewModel\IPropertyDataTemplateProvider.cs" />
     <Compile Include="UI\ViewModel\IUserInteractable.cs" />
     <Compile Include="UI\ViewModel\IViewModel.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="Workspace.cs" />
     <Page Include="Dialogs\ConfigEntrySelectorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -264,6 +265,46 @@
     <EmbeddedResource Include="UI\DataTemplates\Output.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Page Include="Resources\Pictograms\Output\Monaco_OutputCommandToggled_28x_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Output\Monaco_OutputCommand_28x_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Output\Output_12x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Output\Output_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Output\Output_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Output\Output_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Output\Output_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Output\Output_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Output\Output_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Output\Output_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Pictograms\XMLFile\XMLFile_16x.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1617,6 +1658,9 @@
     <EmbeddedResource Include="UI\DataTemplates\CallStack.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\SqfVariableViewPopup.xaml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -1650,6 +1694,16 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Resources\Pictograms\Output\Monaco_OutputCommandToggled_28x_32x.ai" />
+    <None Include="Resources\Pictograms\Output\Monaco_OutputCommand_28x_32x.ai" />
+    <None Include="Resources\Pictograms\Output\Output_12x.ai" />
+    <None Include="Resources\Pictograms\Output\Output_16x.ai" />
+    <None Include="Resources\Pictograms\Output\Output_16xMD.ai" />
+    <None Include="Resources\Pictograms\Output\Output_16xSM.ai" />
+    <None Include="Resources\Pictograms\Output\Output_256x.ai" />
+    <None Include="Resources\Pictograms\Output\Output_32x.ai" />
+    <None Include="Resources\Pictograms\Output\Output_48x.ai" />
+    <None Include="Resources\Pictograms\Output\Output_64x.ai" />
     <None Include="Resources\Pictograms\XMLFile\XMLFile_16x.ai" />
     <None Include="Resources\Pictograms\XMLFile\XMLFile_256x.ai" />
     <None Include="Resources\Pictograms\XMLFile\XMLFile_32x.ai" />
@@ -2007,6 +2061,20 @@
     <None Include="Resources\Pictograms\SwitchSourceOrTarget\VSO_SwitchSourceOrTarget_16x.ai" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile.ico" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_16x.png" />
+    <Resource Include="Resources\Pictograms\Output\Monaco_OutputCommandToggled_28x_32x.png" />
+    <Resource Include="Resources\Pictograms\Output\Monaco_OutputCommand_28x_32x.png" />
+    <Resource Include="Resources\Pictograms\Output\Output.ico" />
+    <Resource Include="Resources\Pictograms\Output\Output_12x.png" />
+    <Resource Include="Resources\Pictograms\Output\Output_16x.png" />
+    <Content Include="Resources\Pictograms\Output\Output_16x.svg" />
+    <Resource Include="Resources\Pictograms\Output\Output_16xMD.png" />
+    <Resource Include="Resources\Pictograms\Output\Output_16xSM.png" />
+    <Resource Include="Resources\Pictograms\Output\Output_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Output\Output_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\Output\Output_256x.png" />
+    <Resource Include="Resources\Pictograms\Output\Output_32x.png" />
+    <Resource Include="Resources\Pictograms\Output\Output_48x.png" />
+    <Resource Include="Resources\Pictograms\Output\Output_64x.png" />
     <Content Include="Resources\Pictograms\XMLFile\XMLFile_16x.svg" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_16x_24.bmp" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_16x_32.bmp" />

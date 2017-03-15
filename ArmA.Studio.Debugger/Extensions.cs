@@ -25,6 +25,7 @@ namespace ArmA.Studio.Debugger
         {
             await Task.Run(() => dbgr.ClearBreakpoints());
         }
+
         public static async Task<bool> AttachAsync(this IDebugger dbgr)
         {
             return await Task.Run(() => dbgr.Attach());
@@ -33,21 +34,24 @@ namespace ArmA.Studio.Debugger
         {
             await Task.Run(() => dbgr.Detach());
         }
-        public static async Task<Variable> GetVariableByNameAsync(this IDebugger dbgr, string name)
+
+        public static async Task<IEnumerable<Variable>> GetVariablesAsync(this IDebugger dbgr, EVariableNamespace scope = EVariableNamespace.All, params string[] names)
         {
-            return await Task.Run(() => dbgr.GetVariableByName(name));
+            return await Task.Run(() => dbgr.GetVariables(scope, names));
         }
-        public static async Task<Variable> SetVariableAsync(this IDebugger dbgr, Variable v)
+        public static async Task SetVariableAsync(this IDebugger dbgr, Variable v)
         {
-            return await Task.Run(() => dbgr.SetVariable(v));
+            await Task.Run(() => dbgr.SetVariable(v));
         }
-        public static async Task<IEnumerable<Variable>> GetVariablesAsync(this IDebugger dbgr)
-        {
-            return await Task.Run(() => dbgr.GetVariables());
-        }
+
         public static async Task<IEnumerable<CallstackItem>> GetCallstackAsync(this IDebugger dbgr)
         {
             return await Task.Run(() => dbgr.GetCallstack());
+        }
+
+        public static async Task<bool> PerformAsync(this IDebugger dbgr, EOperation op)
+        {
+            return await Task.Run(() => dbgr.Perform(op));
         }
         #endregion
     }
