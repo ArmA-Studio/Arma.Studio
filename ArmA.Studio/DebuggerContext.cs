@@ -267,7 +267,7 @@ namespace ArmA.Studio
         {
             if (!this.IsDebuggerAttached)
                 return new Variable[0];
-            return await this.DebuggerInstance.GetVariablesAsync(scope, names).ConfigureAwait(false);
+            return await this.DebuggerInstance.GetVariablesAsync(scope, names);
         }
 
         public async Task SetVariable(Variable variable)

@@ -37,7 +37,7 @@ namespace ArmA.Studio.Debugger
 
         public static async Task<IEnumerable<Variable>> GetVariablesAsync(this IDebugger dbgr, EVariableNamespace scope = EVariableNamespace.All, params string[] names)
         {
-            return await Task.Run(() => dbgr.GetVariables(scope, names)).ConfigureAwait(false);
+            return await Task.Run(() => dbgr.GetVariables(scope, names));
         }
         public static async Task SetVariableAsync(this IDebugger dbgr, Variable v)
         {

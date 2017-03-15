@@ -99,8 +99,9 @@ namespace ArmA.Studio.DataContext
                 if (!ConfigHost.Instance.SqfDefinitions.All((it) => it.Name != varname))
                     return false;
                 //ToDo: Check if proper async maybe is required due to UI lag
-                var result = Workspace.CurrentWorkspace.DebugContext.GetVariables(EVariableNamespace.All, varname).Result;
-                var enumerable = result as IList<Variable> ?? result.ToList();
+                var resultTask = Workspace.CurrentWorkspace.DebugContext.GetVariables(EVariableNamespace.All, varname);
+                resultTask.Wait();
+                var enumerable = resultTask.Result as IList<Variable> ?? resultTask.Result.ToList();
                 if (!enumerable.Any())
                     return false;
                 var container = SqfVariableViewPopup.DataContext as VariableContainer;
