@@ -41,12 +41,12 @@ Source: "..\{#MyAppName}\bin\Release\{#MyAppName}.exe.config"; DestDir: "{app}";
 Source: "..\{#MyAppName}\bin\Release\*.dll"; DestDir: "{app}"; Flags: ignoreversion    
 Source: "..\{#MyAppName}\bin\Release\SqfDefinition.xml"; DestDir: "{app}"; Flags: ignoreversion           
 Source: "..\{#MyAppName}\bin\Release\SyntaxFiles\*"; DestDir: "{app}\SyntaxFiles\"; Flags: ignoreversion recursesubdirs
-Source: "..\{#MyAppName}\bin\Release\Debugger\*"; DestDir: "{app}\Debugger\"; Flags: ignoreversion recursesubdirs
+Source: "..\{#MyAppName}\bin\Release\Debugger\*"; DestDir: "{app}\Debugger\"; Flags: ignoreversion recursesubdirs       
 Source: "..\{#MyAppName}\bin\Release\*.resources.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [UninstallDelete]
-Type: filesandordirs; Name: "{userappdata}\ArmA-UI-Editor\"
+Type: filesandordirs; Name: "{userappdata}\ArmA.Studio\"
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
