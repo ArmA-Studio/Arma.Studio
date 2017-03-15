@@ -237,6 +237,11 @@ namespace asapJson
             }
         }
 
+        public EJType GetValueType()
+        {
+            return this.Type;
+        }
+
         public List<JsonNode> GetValue_Array()
         {
             if (this.Type == EJType.Array)

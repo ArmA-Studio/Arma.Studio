@@ -100,10 +100,11 @@ namespace ArmA.Studio.DataContext
                     return false;
                 //ToDo: Check if proper async maybe is required due to UI lag
                 var result = Workspace.CurrentWorkspace.DebugContext.GetVariables(EVariableNamespace.All, varname).Result;
-                if (result.Count() < 1)
+                var enumerable = result as IList<Variable> ?? result.ToList();
+                if (!enumerable.Any())
                     return false;
                 var container = SqfVariableViewPopup.DataContext as VariableContainer;
-                container.InternalVariable = result.First();
+                container.InternalVariable = enumerable.First();
                 container.EditMode = false;
                 SqfVariableViewPopup.PlacementTarget = this.Editor;
                 SqfVariableViewPopup.HorizontalOffset = p.X + 10;

@@ -25,7 +25,7 @@ namespace ArmA.Studio
                 }
             }
             //find end
-            for (end = offset; end < doc.TextLength; end++)
+            for (end = start; end < doc.TextLength; end++)
             {
                 var c = doc.GetCharAt(end);
                 if (!char.IsLetterOrDigit(c) && c != '_')

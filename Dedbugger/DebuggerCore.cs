@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using System.IO.Pipes;
 using ArmA.Studio.Debugger;
 using System.Threading;
+using asapJson;
 
 namespace Dedbugger
 {
@@ -50,6 +52,7 @@ namespace Dedbugger
 
         public DebuggerCore()
         {
+            Messages = new ConcurrentBag<JsonNode>();
             this.Pipe = null;
         }
 
@@ -166,11 +169,23 @@ namespace Dedbugger
             while(true)
             {
                 SpinWait.SpinUntil(() => this.Messages.Count > 0);
-                foreach(var msg in this.Messages)
+                var temp = new List<asapJson.JsonNode>();
+                asapJson.JsonNode y = null;
+                while (!this.Messages.IsEmpty) //Would be more efficient to use a ConcurrentSet
                 {
-                    if (cond.Invoke(msg))
-                        return msg;
+                    this.Messages.TryTake(out y);
+                    if (cond.Invoke(y))
+                    {
+                        break;
+                    }
+                    temp.Add(y);
                 }
+                foreach (var item in temp)
+                {
+                    this.Messages.Add(item); //Add back Items that didn't match
+                }
+                if (y != null)
+                    return y;
             }
         }
         public void WriteMessage(asapJson.JsonNode node)
@@ -227,7 +242,7 @@ namespace Dedbugger
         {
             var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
             command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.GetVariable);
-            var data = command.GetValue_Object()["data"];
+            var data = command.GetValue_Object()["data"] = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
             data.GetValue_Object()["name"] = new asapJson.JsonNode(names.Select(name => new asapJson.JsonNode(name)));
             data.GetValue_Object()["scope"] = new asapJson.JsonNode((int)scope);
             this.WriteMessage(command);
@@ -236,6 +251,7 @@ namespace Dedbugger
             var response = this.ReadMessage((node) => (int)(node.GetValue_Object()["command"].GetValue_Number()) == (int)ERecvCommands.VariablesList);
             
             var variables = response.GetValue_Object()["data"];
+            if (variables.GetValueType() == JsonNode.EJType.Array) //Might be null if no variables found
             foreach (var variable in variables.GetValue_Array())
             {
                 var name = variable.GetValue_Object()["name"].GetValue_String();
