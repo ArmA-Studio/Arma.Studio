@@ -65,7 +65,8 @@ namespace ArmA.Studio
         private UpdateHelper.DownloadInfo DownloadInfo;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var updateTask = Task.Run(() => {
+#if !DEBUG
+            Task.Run(() => {
                 DownloadInfo = UpdateHelper.GetDownloadInfo().Result;
                 if(DownloadInfo.available)
                 {
@@ -84,6 +85,7 @@ namespace ArmA.Studio
                     });
                 }
             });
+#endif
             this.CreateUserDirectories();
             try
             {
