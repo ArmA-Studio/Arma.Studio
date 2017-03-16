@@ -59,6 +59,10 @@
       <HintPath>..\packages\ini-parser.3.4.0\lib\net20\INIFileParser.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.4.3\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
@@ -117,6 +121,10 @@
     <Compile Include="DataContext\OutputPane.cs" />
     <Compile Include="DataContext\CallStackPane.cs" />
     <Compile Include="DataContext\TextEditorUtil\IntelliSenseEntry.cs" />
+    <Compile Include="Dialogs\CreateNewFileDialogDataContext.cs" />
+    <Compile Include="Dialogs\DownloadDialog.xaml.cs">
+      <DependentUpon>DownloadDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ESeverity.cs" />
     <Compile Include="DataContext\TextEditorUtil\LinterInfo.cs" />
     <Compile Include="DebuggerContext.cs" />
@@ -158,7 +166,7 @@
     <Compile Include="Dialogs\CreateNewFileDialog.xaml.cs">
       <DependentUpon>CreateNewFileDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\CreateNewFileDialogDataContext.cs" />
+    <Compile Include="Dialogs\DownloadDialogDataContext.cs" />
     <Compile Include="Dialogs\WorkspaceSelectorDialog.xaml.cs">
       <DependentUpon>WorkspaceSelectorDialog.xaml</DependentUpon>
     </Compile>
@@ -218,6 +226,7 @@
     <Compile Include="UI\ViewModel\IPropertyDataTemplateProvider.cs" />
     <Compile Include="UI\ViewModel\IUserInteractable.cs" />
     <Compile Include="UI\ViewModel\IViewModel.cs" />
+    <Compile Include="UpdateHelper.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Workspace.cs" />
     <Page Include="Dialogs\ConfigEntrySelectorDialog.xaml">
@@ -227,6 +236,10 @@
     <Page Include="Dialogs\CreateNewFileDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DownloadDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\PropertiesDialog.xaml">
       <SubType>Designer</SubType>

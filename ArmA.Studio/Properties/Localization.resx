@@ -211,6 +211,9 @@ Do you want to save before close?</value>
   <data name="DocumentBase_CloseSaveConfirmation_Caption" xml:space="preserve">
     <value>Unsaved Data</value>
   </data>
+  <data name="DownloadingX" xml:space="preserve">
+    <value>Downloading {0}</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -234,6 +237,9 @@ Do you want to save before close?</value>
   </data>
   <data name="Infos" xml:space="preserve">
     <value>Messages</value>
+  </data>
+  <data name="InstallUpdate" xml:space="preserve">
+    <value>Install Update</value>
   </data>
   <data name="LicenseViewer_Header" xml:space="preserve">
     <value>Licenses</value>
@@ -340,6 +346,16 @@ Current progress will be lost.</value>
   </data>
   <data name="ShowOutputFromSource" xml:space="preserve">
     <value>Show output from:</value>
+  </data>
+  <data name="SoftwareUpdateAvailable_Body" xml:space="preserve">
+    <value>There is a new update available for ArmA.Studio.
+Current Version: {0}
+New Version {1}
+
+Do you want to update now?</value>
+  </data>
+  <data name="SoftwareUpdateAvailable_Title" xml:space="preserve">
+    <value>Software update {0} Available</value>
   </data>
   <data name="SolutionFile_NameContainsInvalidFiles" xml:space="preserve">
     <value>Provided value contains invalid characters</value>

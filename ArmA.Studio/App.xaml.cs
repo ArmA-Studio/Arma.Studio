@@ -25,7 +25,8 @@ namespace ArmA.Studio
             ConfigError = -2,
             NoWorkspaceSelected = -1,
             OK = 0,
-            Restart = 1
+            Restart = 1,
+            Updating = 2
         }
         public static string ExecutablePath { get { return Path.GetDirectoryName(ExecutableFile); } }
         public static string ExecutableFile { get { return Assembly.GetExecutingAssembly().GetName().CodeBase.Substring("file:///".Length); } }
@@ -36,6 +37,7 @@ namespace ArmA.Studio
         public static string TempPath { get { return Path.Combine(Path.GetTempPath(), @"ArmA.Studio"); } }
         public static string CommonApplicationDataPath { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @"ArmA.Studio"); } }
         public static string ApplicationDataPath { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ArmA.Studio"); } }
+        public static Version CurrentVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
         public static SubscribableTarget SubscribableLoggerTarget { get; private set; }
         private void SetupNLog()
@@ -60,9 +62,28 @@ namespace ArmA.Studio
                 Directory.CreateDirectory(FileTemplatePath);
             }
         }
-
+        private UpdateHelper.DownloadInfo DownloadInfo;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            var updateTask = Task.Run(() => {
+                DownloadInfo = UpdateHelper.GetDownloadInfo().Result;
+                if(DownloadInfo.available)
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        var msgboxresult = MessageBox.Show(
+                              string.Format(Studio.Properties.Localization.SoftwareUpdateAvailable_Body, CurrentVersion, DownloadInfo.version),
+                              string.Format(Studio.Properties.Localization.SoftwareUpdateAvailable_Title, DownloadInfo.version),
+                              MessageBoxButton.YesNo,
+                              MessageBoxImage.Information
+                        );
+                        if (msgboxresult == MessageBoxResult.Yes)
+                        {
+                            App.Shutdown(ExitCodes.Updating);
+                        }
+                    });
+                }
+            });
             this.CreateUserDirectories();
             try
             {
@@ -125,6 +146,12 @@ namespace ArmA.Studio
 
         public static void Shutdown(ExitCodes code)
         {
+            if (code == ExitCodes.Updating)
+            {
+                var dlgdc = new Dialogs.DownloadDialogDataContext((App.Current as App).DownloadInfo);
+                var dlg = new Dialogs.DownloadDialog(dlgdc);
+                dlg.ShowDialog();
+            }
             App.Current.Shutdown((int)code);
         }
 

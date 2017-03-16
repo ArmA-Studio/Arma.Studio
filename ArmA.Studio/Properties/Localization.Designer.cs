@@ -335,6 +335,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading {0}.
+        /// </summary>
+        public static string DownloadingX {
+            get {
+                return ResourceManager.GetString("DownloadingX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -403,6 +412,15 @@ namespace ArmA.Studio.Properties {
         public static string Infos {
             get {
                 return ResourceManager.GetString("Infos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install Update.
+        /// </summary>
+        public static string InstallUpdate {
+            get {
+                return ResourceManager.GetString("InstallUpdate", resourceCulture);
             }
         }
         
@@ -713,6 +731,28 @@ namespace ArmA.Studio.Properties {
         public static string ShowOutputFromSource {
             get {
                 return ResourceManager.GetString("ShowOutputFromSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is a new update available for ArmA.Studio.
+        ///Current Version: {0}
+        ///New Version {1}
+        ///
+        ///Do you want to update now?.
+        /// </summary>
+        public static string SoftwareUpdateAvailable_Body {
+            get {
+                return ResourceManager.GetString("SoftwareUpdateAvailable_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Software update {0} Available.
+        /// </summary>
+        public static string SoftwareUpdateAvailable_Title {
+            get {
+                return ResourceManager.GetString("SoftwareUpdateAvailable_Title", resourceCulture);
             }
         }
         
