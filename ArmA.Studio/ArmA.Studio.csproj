@@ -2174,6 +2174,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ArmA.Studio.Data\ArmA.Studio.Data.csproj">
+      <Project>{dc5bb018-6ca3-4f0a-864a-425cef2f454b}</Project>
+      <Name>ArmA.Studio.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ArmA.Studio.Debugger\ArmA.Studio.Debugger.csproj">
       <Project>{ec8d472e-f967-475d-8fbb-fc9b2db56467}</Project>
       <Name>ArmA.Studio.Debugger</Name>

@@ -15,6 +15,9 @@ namespace ArmA.Studio.Dialogs
         public bool? DialogResult { get { return this._DialogResult; } set { this._DialogResult = value; this.RaisePropertyChanged(); } }
         private bool? _DialogResult;
 
+        public string SearchText { get { return this._SearchText; } set { this._SearchText = value; this.RaisePropertyChanged(); } }
+        private string _SearchText;
+
         public string WindowHeader { get { return Properties.Localization.LicenseViewer_Header; } }
 
         public string OKButtonText { get { return Properties.Localization.OK; } }
@@ -26,7 +29,6 @@ namespace ArmA.Studio.Dialogs
         public PropertiesDialogDataContext()
         {
             this.CmdOKButtonPressed = new UI.Commands.RelayCommand(Cmd_OKButtonPressed);
-            throw new NotImplementedException();
             //ToDo: Implement Properties (automated, requires class Attribute for section, property attribute for "header" and optional conversion)
         }
         public void Cmd_OKButtonPressed(object param)

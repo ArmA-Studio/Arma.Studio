@@ -15,6 +15,8 @@ namespace ArmA.Studio.UI
 {
     public class BreakPointMargin : AbstractMargin, IBackgroundRenderer
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         private SolutionUtil.SolutionFile SolutionFileRef;
         public BreakPointMargin(SolutionUtil.SolutionFile sf)
         {
@@ -127,14 +129,25 @@ namespace ArmA.Studio.UI
             textView.EnsureVisualLines();
             var color = new SolidColorBrush(ConfigHost.Coloring.BreakPoint.TextHighlightColor);
             color.Freeze();
+            var invalidBps = new List<DataContext.BreakpointsPaneUtil.Breakpoint>();
             foreach (var bp in this.SolutionFileRef.BreakPoints)
             {
+                if (bp.Line < 0)
+                {
+                    Logger.Log(NLog.LogLevel.Warn, $"Removed invalid breakpoint in file '{this.SolutionFileRef.FileName}'.");
+                    invalidBps.Add(bp);
+                    continue;
+                }
                 var line = this.Document.GetLineByNumber(bp.Line);
                 var segment = new TextSegment { StartOffset = line.Offset, EndOffset = line.EndOffset };
                 foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))
                 {
                     drawingContext.DrawRectangle(color, null, new Rect(rect.Location, new Size(textView.ActualWidth, rect.Height)));
                 }
+            }
+            foreach (var bp in invalidBps)
+            {
+                this.SolutionFileRef.BreakPoints.Remove(bp);
             }
         }
         

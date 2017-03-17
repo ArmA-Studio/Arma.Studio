@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ArmA.Studio.Dialogs"
         mc:Ignorable="d"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="PropertiesDialog" Style="{StaticResource DialogWindow}">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -13,11 +14,63 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <ListBox x:Name="lbTitles" Grid.Column="0" ItemsSource="{Binding AvailableProperties}"/>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <xctk:WatermarkTextBox Padding="4 1" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Text="{Binding SearchText}">
+                <xctk:WatermarkTextBox.Watermark>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Search" VerticalAlignment="Center"/>
+                        <Path Grid.Column="1" Data="{StaticResource SearchR}" Height="11" Stretch="Uniform" Fill="Black" Opacity="0.4"/>
+                    </Grid>
+                </xctk:WatermarkTextBox.Watermark>
+            </xctk:WatermarkTextBox>
+            <ListBox Grid.Row="2" ItemsSource="{Binding AvailableCategories}" SelectedItem="{Binding SelectedCategory}"/>
+        </Grid>
         <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"/>
-        <ContentPresenter>
-            
-        </ContentPresenter>
-        <TextBox Grid.Column="2" HorizontalScrollBarVisibility="Hidden" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" IsReadOnly="True" Text="{Binding SelectedValue, ElementName=lbTitles}"/>
+        <ListView Grid.Column="2" SelectedItem="{Binding SelectedCategory}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentControl Content="{Binding Value}">
+                                    <ContentControl.Style>
+                                        <Style TargetType="ContentControl">
+                                            <Setter Property="ContentTemplate">
+                                                <Setter.Value>
+                                                    <DataTemplate>
+                                                        <TextBox Text="{Binding}"/>
+                                                    </DataTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding EditTemplate}" Value="Color">
+                                                    <Setter Property="ContentTemplate">
+                                                        <Setter.Value>
+                                                            <DataTemplate>
+                                                                <xctk:ColorPicker ColorMode="ColorCanvas" SelectedColor="{Binding}"/>
+                                                            </DataTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ContentControl.Style>
+                                </ContentControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
