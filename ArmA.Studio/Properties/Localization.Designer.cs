@@ -125,6 +125,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Coloring.
+        /// </summary>
+        public static string ColoringProperties {
+            get {
+                return ResourceManager.GetString("ColoringProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Column.
         /// </summary>
         public static string Column {

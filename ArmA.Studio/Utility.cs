@@ -68,5 +68,44 @@ namespace ArmA.Studio
             }
         }
 
+        public static bool Contains(this string s, string cont, bool ignoreCasing)
+        {
+            if (cont.Length == 0)
+                return true;
+            int contIndex = 0;
+            if (ignoreCasing)
+            {
+                foreach (var c in s)
+                {
+                    if (char.ToUpper(c) == char.ToUpper(cont[contIndex]))
+                    {
+                        contIndex++;
+                        if (contIndex >= cont.Length)
+                            return true;
+                    }
+                    else
+                    {
+                        contIndex = 0;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var c in s)
+                {
+                    if (c == cont[contIndex])
+                    {
+                        contIndex++;
+                        if (contIndex >= cont.Length)
+                            return true;
+                    }
+                    else
+                    {
+                        contIndex = 0;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }

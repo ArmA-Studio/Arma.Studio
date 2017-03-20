@@ -125,6 +125,7 @@
     <Compile Include="Dialogs\DownloadDialog.xaml.cs">
       <DependentUpon>DownloadDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\PropertiesDialogUtil\ColorConfigEntry.cs" />
     <Compile Include="ESeverity.cs" />
     <Compile Include="DataContext\TextEditorUtil\LinterInfo.cs" />
     <Compile Include="DebuggerContext.cs" />

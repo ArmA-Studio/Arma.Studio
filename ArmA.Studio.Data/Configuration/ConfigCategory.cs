@@ -13,6 +13,10 @@ namespace ArmA.Studio.Data.Configuration
         public ConfigEntry this[int index] { get { return this.InnerList[index]; } set { this.InnerList[index] = value; } }
         public int Count { get { return this.Count; } }
         public bool IsReadOnly { get { return this.IsReadOnly; } }
+
+        public string Name { get; private set; }
+        public string ImageSource { get; private set; }
+
         public void Add(ConfigEntry item) => this.InnerList.Add(item);
         public void Clear() => this.InnerList.Clear();
         public bool Contains(ConfigEntry item) => this.InnerList.Contains(item);
@@ -27,12 +31,22 @@ namespace ArmA.Studio.Data.Configuration
 
         private readonly List<ConfigEntry> InnerList;
 
-        public ConfigCategory()
+        public ConfigCategory(string name)
         {
+            this.Name = name;
+            this.ImageSource = string.Empty;
             this.InnerList = new List<ConfigEntry>();
         }
-        public ConfigCategory(IEnumerable<ConfigEntry> collection)
+        public ConfigCategory(string name, string imageSource)
         {
+            this.Name = name;
+            this.ImageSource = imageSource;
+            this.InnerList = new List<ConfigEntry>();
+        }
+        public ConfigCategory(string name, string imageSource, IEnumerable<ConfigEntry> collection)
+        {
+            this.Name = name;
+            this.ImageSource = imageSource;
             this.InnerList = new List<ConfigEntry>(collection);
         }
 

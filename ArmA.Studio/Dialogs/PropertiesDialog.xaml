@@ -20,7 +20,7 @@
                 <RowDefinition Height="2"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <xctk:WatermarkTextBox Padding="4 1" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Text="{Binding SearchText}">
+            <xctk:WatermarkTextBox Padding="4 1" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
                 <xctk:WatermarkTextBox.Watermark>
                     <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
@@ -32,23 +32,36 @@
                     </Grid>
                 </xctk:WatermarkTextBox.Watermark>
             </xctk:WatermarkTextBox>
-            <ListBox Grid.Row="2" ItemsSource="{Binding AvailableCategories}" SelectedItem="{Binding SelectedCategory}"/>
+            <ListBox Grid.Row="2" ItemsSource="{Binding AvailableCategories}" SelectedItem="{Binding SelectedCategory}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="32">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="{Binding ImageSource}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="6 0" VerticalAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
         <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"/>
-        <ListView Grid.Column="2" SelectedItem="{Binding SelectedCategory}">
+        <ListView Grid.Column="2" ItemsSource="{Binding SelectedCategory}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ContentControl Content="{Binding Value}">
+                                <ContentControl Content="{Binding}">
                                     <ContentControl.Style>
                                         <Style TargetType="ContentControl">
                                             <Setter Property="ContentTemplate">
                                                 <Setter.Value>
                                                     <DataTemplate>
-                                                        <TextBox Text="{Binding}"/>
+                                                        <TextBox Text="{Binding Value}"/>
                                                     </DataTemplate>
                                                 </Setter.Value>
                                             </Setter>
@@ -57,7 +70,7 @@
                                                     <Setter Property="ContentTemplate">
                                                         <Setter.Value>
                                                             <DataTemplate>
-                                                                <xctk:ColorPicker ColorMode="ColorCanvas" SelectedColor="{Binding}"/>
+                                                                <xctk:ColorPicker ColorMode="ColorCanvas" SelectedColor="{Binding Value}" HorizontalAlignment="Stretch"/>
                                                             </DataTemplate>
                                                         </Setter.Value>
                                                     </Setter>
