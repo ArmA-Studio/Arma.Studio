@@ -66,7 +66,7 @@ namespace ArmA.Studio.Data.Configuration
             var entry = obj as ConfigEntry;
             if (entry == null)
                 return base.Equals(obj);
-            return entry == this;
+            return entry.Name.Equals(this.Name, StringComparison.InvariantCultureIgnoreCase);
         }
 
         public virtual void OnValueChanged(object oldValue, object newValue) { }

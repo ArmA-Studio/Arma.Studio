@@ -8,6 +8,7 @@ using System.IO.Pipes;
 using ArmA.Studio.Debugger;
 using System.Threading;
 using asapJson;
+using ArmA.Studio.Data.Configuration;
 
 namespace Dedbugger
 {
@@ -44,10 +45,10 @@ namespace Dedbugger
 
         private NamedPipeClientStream Pipe;
         private List<Breakpoint> Breakpoints;
-        private asapJson.JsonNode LastCallstack;
+        private JsonNode LastCallstack;
 
         public Thread PipeReadThread { get; private set; }
-        public System.Collections.Concurrent.ConcurrentBag<asapJson.JsonNode> Messages;
+        public ConcurrentBag<asapJson.JsonNode> Messages;
         public string LastError { get; private set; }
 
         public DebuggerCore()
@@ -360,6 +361,11 @@ namespace Dedbugger
             var str = this.LastError;
             this.LastError = string.Empty;
             return str;
+        }
+
+        public IEnumerable<ConfigCategory> GetConfigurationOptions()
+        {
+            yield return new ConfigCategory("Dedbugger", @"/ArmA.Studio;component/Resources/Pictograms/Run/Run.ico");
         }
     }
 }

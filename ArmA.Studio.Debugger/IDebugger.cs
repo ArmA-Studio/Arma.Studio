@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArmA.Studio.Data.Configuration;
 
 namespace ArmA.Studio.Debugger
 {
@@ -29,5 +30,6 @@ namespace ArmA.Studio.Debugger
         IEnumerable<CallstackItem> GetCallstack();
         bool Perform(EOperation op);
         string GetLastError();
+        IEnumerable<ConfigCategory> GetConfigurationOptions();
     }
 }

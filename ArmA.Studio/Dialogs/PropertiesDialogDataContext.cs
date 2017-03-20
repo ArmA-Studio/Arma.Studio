@@ -23,7 +23,7 @@ namespace ArmA.Studio.Dialogs
         public string SearchText { get { return this._SearchText; } set { this._SearchText = value; this.AvailableCategories.Refresh(); this.RaisePropertyChanged(); } }
         private string _SearchText;
 
-        public string WindowHeader { get { return Properties.Localization.LicenseViewer_Header; } }
+        public string WindowHeader { get { return Properties.Localization.PropertiesDialog_Header; } }
 
         public string OKButtonText { get { return Properties.Localization.OK; } }
 
@@ -35,7 +35,7 @@ namespace ArmA.Studio.Dialogs
 
         public ObservableCollection<ConfigCategory> Categories { get; private set; }
 
-        public ConfigCategory SelectedCategory { get { return this._SelectedCategory; } set { this._SelectedCategory = value; this.AvailableCategories.Refresh(); this.RaisePropertyChanged(); } }
+        public ConfigCategory SelectedCategory { get { return this._SelectedCategory; } set { if (this._SelectedCategory == value) return; this._SelectedCategory = value; this.AvailableCategories.Refresh(); this.RaisePropertyChanged(); } }
         private ConfigCategory _SelectedCategory;
         
         public PropertiesDialogDataContext()
@@ -45,6 +45,24 @@ namespace ArmA.Studio.Dialogs
             this._SelectedCategory = this.Categories.First();
             this.AvailableCategories = CollectionViewSource.GetDefaultView(this.Categories);
             this.AvailableCategories.Filter = new Predicate<object>(AvailableCategories_Filter);
+            var debuggerCategories = Workspace.CurrentWorkspace.DebugContext.GetPropertyCategories();
+            foreach(var it in debuggerCategories)
+            {
+                bool flag = false;
+                foreach(var it2 in this.Categories)
+                {
+                    if(it.Name.Equals(it2.Name, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        it2.Add(it);
+                        flag = true;
+                        break;
+                    }
+                }
+                if(!flag)
+                {
+                    this.Categories.Add(it);
+                }
+            }
         }
 
         private bool AvailableCategories_Filter(object obj)
@@ -62,7 +80,7 @@ namespace ArmA.Studio.Dialogs
 
         private IEnumerable<ConfigCategory> GetCategories()
         {
-            yield return new ConfigCategory(Properties.Localization.ColoringProperties, @"Resource\ColorPalette\ColorPalette_26x.png", GetColorConfigEntries());
+            yield return new ConfigCategory(Properties.Localization.ColoringProperties, @"/ArmA.Studio;component/Resources/Pictograms/ColorPalette/ColorPalette_26x.png", GetColorConfigEntries());
         }
 
         private IEnumerable<ConfigEntry> GetColorConfigEntries()

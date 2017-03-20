@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ArmA.Studio.Dialogs"
+        xmlns:p="clr-namespace:ArmA.Studio.Properties"
         mc:Ignorable="d"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="PropertiesDialog" Style="{StaticResource DialogWindow}">
+        Title="{x:Static p:Localization.PropertiesDialog_Title}" Style="{StaticResource DialogWindow}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -40,7 +41,7 @@
                                 <ColumnDefinition Width="32"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="{Binding ImageSource}" VerticalAlignment="Center"/>
+                            <Image Grid.Column="0" Source="{Binding ImageSource}" VerticalAlignment="Center" Height="32"/>
                             <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="6 0" VerticalAlignment="Center"/>
                         </Grid>
                     </DataTemplate>
@@ -49,13 +50,19 @@
         </Grid>
         <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"/>
         <ListView Grid.Column="2" ItemsSource="{Binding SelectedCategory}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ContentControl Content="{Binding}">
+                                <ContentControl Content="{Binding}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                     <ContentControl.Style>
                                         <Style TargetType="ContentControl">
                                             <Setter Property="ContentTemplate">
