@@ -115,6 +115,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataContext\VariablesViewPane.cs" />
     <Compile Include="DataContext\BreakpointsPaneUtil\Breakpoint.cs" />
     <Compile Include="DataContext\ErrorListPane.cs" />
     <Compile Include="DataContext\BreakpointsPane.cs" />
@@ -1708,6 +1709,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SqfVariableViewPopup.xaml">
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DataTemplates\VariablesView.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

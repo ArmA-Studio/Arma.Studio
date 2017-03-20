@@ -717,6 +717,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Variables View.
+        /// </summary>
+        public static string PanelDisplayName_VariablesView {
+            get {
+                return ResourceManager.GetString("PanelDisplayName_VariablesView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rename.
         /// </summary>
         public static string Rename {
@@ -771,6 +780,24 @@ namespace ArmA.Studio.Properties {
         public static string SolutionFile_NameContainsInvalidFiles {
             get {
                 return ResourceManager.GetString("SolutionFile_NameContainsInvalidFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string VariableName {
+            get {
+                return ResourceManager.GetString("VariableName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        public static string VariableValue {
+            get {
+                return ResourceManager.GetString("VariableValue", resourceCulture);
             }
         }
         

@@ -341,6 +341,9 @@ Current progress will be lost.</value>
   <data name="PanelDisplayName_Solution" xml:space="preserve">
     <value>Solution Explorer</value>
   </data>
+  <data name="PanelDisplayName_VariablesView" xml:space="preserve">
+    <value>Variables View</value>
+  </data>
   <data name="Rename" xml:space="preserve">
     <value>Rename</value>
   </data>
@@ -362,6 +365,12 @@ Do you want to update now?</value>
   </data>
   <data name="SolutionFile_NameContainsInvalidFiles" xml:space="preserve">
     <value>Provided value contains invalid characters</value>
+  </data>
+  <data name="VariableName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="VariableValue" xml:space="preserve">
+    <value>Value</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Warning</value>
