@@ -60,7 +60,7 @@ INLINECOMMENT: '//' .*? '\n' -> skip;
 BLOCKCOMMENT: '/*' .*? '*/' -> skip;
 PREPROCESSOR: '#' .*? '\n' -> skip;
 STRING: '"' ( ANY | '""' )*? '"' | '\'' ( ANY | '\'\'' )*? '\'';
-NUMBER: ('0x' | '$') HEXADIGIT+ |  '-'? DIGIT+ ( '.' DIGIT+ )?;
+NUMBER: ('0x' | '$') HEXADIGIT+ | DIGIT+ ( '.' DIGIT+ )?;
 IDENTIFIER: (LETTER | '_') (LETTER | DIGIT | '_')*;
 OPERATOR: '||' | '&&' | '==' | '>=' | '<=' | '>' | '<' | '!=' | '*' | '/' | '>>' | '+' | '-' | ':';
 NEGATION: '!';
