@@ -17,18 +17,23 @@ namespace Dedbugger
         private static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         public enum ESendCommands
         {
-            AddBreakpoint = 1,
-            RemoveBreakpoint = 2,
-            ContinueExecution = 3,
-            TriggerMonitorDump = 4,
-            SetEngineHookEnabled = 5,
-            GetVariable = 6
+            GetVersionInfo = 1,
+            AddBreakpoint = 2,
+            RemoveBreakpoint = 3,
+            ContinueExecution = 4,
+            TriggerMonitorDump = 5,
+            SetEngineHookEnabled = 6,
+            GetVariable = 7
         }
         public enum ERecvCommands
         {
-            Halt = 1,
-            ContinueExecution = 2,
-            VariablesList = 3
+            VersionInfo = 1,
+            HaltBreakpoint = 2,
+            HaltStep = 3,
+            HaltError = 4,
+            HaltPlaceholder = 5,
+            ContinueExecution = 6,
+            VariablesList = 7
         }
         public enum EStepType
         {
@@ -45,7 +50,8 @@ namespace Dedbugger
 
         private NamedPipeClientStream Pipe;
         private List<Breakpoint> Breakpoints;
-        private JsonNode LastCallstack;
+        private asapJson.JsonNode LastCallstack;
+        private const int MinimalDebuggerBuild = 22;
 
         public Thread PipeReadThread { get; private set; }
         public ConcurrentBag<asapJson.JsonNode> Messages;
@@ -82,6 +88,29 @@ namespace Dedbugger
             {
                 this.LastError = ex.Message;
                 this.Pipe = null;
+                return false;
+            }
+
+            var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
+            command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.GetVersionInfo);
+            this.WriteMessage(command);
+            var response = this.ReadMessage((node) => (int)(node.GetValue_Object()["command"].GetValue_Number()) == (int)ERecvCommands.VersionInfo);
+
+            if (response.GetValue_Object()["gameType"].GetValueType() == JsonNode.EJType.String) //Might be null if init failed or attached too soon
+            { 
+                var gameType = response.GetValue_Object()["gameType"].GetValue_String();
+            }
+            if (response.GetValue_Object()["gameVersion"].GetValueType() == JsonNode.EJType.String) //Might be null if init failed or attached too soon
+            {
+                var gameVersion = response.GetValue_Object()["gameVersion"].GetValue_String();
+            }
+            var arch = response.GetValue_Object()["arch"].GetValue_String();
+            var build = response.GetValue_Object()["build"].GetValue_Number();
+            var version = response.GetValue_Object()["version"].GetValue_String();
+            if (build < MinimalDebuggerBuild)
+            {
+                this.LastError = "Unsupported Debugger build: " + build +" \nMinimal build required: "+MinimalDebuggerBuild;
+                Detach();
                 return false;
             }
             return true;
@@ -134,9 +163,10 @@ namespace Dedbugger
                         }
                         else
                         {
-                            switch ((int)node.GetValue_Object()["command"].GetValue_Number())
+                            switch ((ERecvCommands)node.GetValue_Object()["command"].GetValue_Number())
                             {
-                                case (int)ERecvCommands.Halt:
+                                case ERecvCommands.HaltBreakpoint:
+                                case ERecvCommands.HaltStep:
                                     {
                                         var callstack = this.LastCallstack = node.GetValue_Object()["callstack"];
                                         var instruction = node.GetValue_Object()["instruction"];
@@ -146,13 +176,23 @@ namespace Dedbugger
                                         this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = instruction.GetValue_Object()["filename"].GetValue_String(), Col = col, Line = line });
                                     }
                                     break;
-                                case (int)ERecvCommands.ContinueExecution:
+                                case ERecvCommands.HaltError:
+                                    {
+                                        var callstack = this.LastCallstack = node.GetValue_Object()["callstack"];
+                                        var error = node.GetValue_Object()["error"];
+                                        var fileOffsetNode = error.GetValue_Object()["fileOffset"];
+                                        var errorMessage = error.GetValue_Object()["message"];//ToDo: display to user
+                                        var fileContent = error.GetValue_Object()["content"];//File content in case we don't have that file
+                                        var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
+                                        var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
+                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = error.GetValue_Object()["filename"].GetValue_String(), Col = col, Line = line });
+                                    }
+                                    break;
+                                case ERecvCommands.ContinueExecution:
                                     {
                                         this.OnContinue?.Invoke(this, new OnContinueEventArgs() { });
                                     }
                                     break;
-
-
                                 default:
                                     this.Messages.Add(node);
                                     break;
