@@ -33,7 +33,7 @@ namespace ArmA.Studio.UI
                 return;
             var color = new SolidColorBrush(ConfigHost.Coloring.ExecutionMarker.MainColor);
             color.Freeze();
-            var pen = new Pen(new SolidColorBrush(ConfigHost.Coloring.ExecutionMarker.BorderColor), 2);
+            var pen = new Pen(new SolidColorBrush(ConfigHost.Coloring.ExecutionMarker.BorderColor), 1);
             pen.Freeze();
 
             var line = view.GetVisualLine(Workspace.CurrentWorkspace.DebugContext.CurrentLine);
@@ -44,18 +44,18 @@ namespace ArmA.Studio.UI
             var geo = new StreamGeometry();
             using (var context = geo.Open())
             {
-                context.BeginFigure(new Point(3, 5), true, true);
-                context.LineTo(new Point(6, 5), false, false);
-                context.LineTo(new Point(6, 2), false, false);
-                context.LineTo(new Point(10, 6.5), false, false);
-                context.LineTo(new Point(6, 11), false, false);
-                context.LineTo(new Point(6, 8), false, false);
-                context.LineTo(new Point(3, 8), false, false);
+                context.BeginFigure(new Point(2, 5), true, true);
+                context.LineTo(new Point(6, 5), true, false);
+                context.LineTo(new Point(6, 2), true, false);
+                context.LineTo(new Point(10, 6.5), true, false);
+                context.LineTo(new Point(6, 11), true, false);
+                context.LineTo(new Point(6, 8), true, false);
+                context.LineTo(new Point(2, 8), true, false);
             }
             var transgroup = new TransformGroup();
             Transform t;
 
-            t = new TranslateTransform(-16, lineTop);
+            t = new TranslateTransform(-14, lineTop - 1);
             t.Freeze();
             transgroup.Children.Add(t);
 
