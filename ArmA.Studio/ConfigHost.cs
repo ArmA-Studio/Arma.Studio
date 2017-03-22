@@ -144,14 +144,14 @@ namespace ArmA.Studio
 
             public static class ExecutionMarker
             {
-                public static readonly Color MainColor_Default = Color.FromArgb(255, 255, 255, 0);
+                public static readonly Color MainColor_Default = Color.FromArgb(255, 255, 216, 0);
                 public static Color MainColor
                 {
                     get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(ExecutionMarker), nameof(MainColor))); }
                     set { Instance.ColoringIni.SetValue(nameof(ExecutionMarker), nameof(MainColor), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
                 }
 
-                public static readonly Color BorderColor_Default = Color.FromArgb(255, 255, 255, 255);
+                public static readonly Color BorderColor_Default = Color.FromArgb(255, 0, 0, 0);
                 public static Color BorderColor
                 {
                     get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(ExecutionMarker), nameof(BorderColor))); }

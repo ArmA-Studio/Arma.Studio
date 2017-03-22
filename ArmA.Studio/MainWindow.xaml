@@ -127,10 +127,10 @@
                 <Button IsEnabled="{Binding IsDebuggerAttached}" ToolTip="{x:Static p:Localization.Debugger_StepInto_Tooltip}" Command="{Binding CmdStepInto}">
                     <Image Source="/ArmA.Studio;component/Resources/Pictograms/StepIn/StepIn_16x.png"/>
                 </Button>
-                <Button IsEnabled="{Binding IsDebuggerAttached}" ToolTip="{x:Static p:Localization.Debugger_StepOver_Tooltip}" Command="{Binding CmdStepOver}">
+                <Button IsEnabled="{Binding IsPaused}" ToolTip="{x:Static p:Localization.Debugger_StepOver_Tooltip}" Command="{Binding CmdStepOver}">
                     <Image Source="/ArmA.Studio;component/Resources/Pictograms/StepOver/StepOver_16x.png"/>
                 </Button>
-                <Button IsEnabled="{Binding IsDebuggerAttached}" ToolTip="{x:Static p:Localization.Debugger_StepOut_Tooltip}" Command="{Binding CmdStepOut}">
+                <Button IsEnabled="{Binding IsPaused}" ToolTip="{x:Static p:Localization.Debugger_StepOut_Tooltip}" Command="{Binding CmdStepOut}">
                     <Image Source="/ArmA.Studio;component/Resources/Pictograms/StepOut/StepOut_16x.png"/>
                 </Button>
             </ToolBar>
