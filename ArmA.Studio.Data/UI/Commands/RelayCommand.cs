@@ -23,7 +23,7 @@ SOFTWARE.
 */
 using System;
 using System.Windows.Input;
-namespace ArmA.Studio.UI.Commands
+namespace ArmA.Studio.Data.UI.Commands
 {
     public class RelayCommand : ICommand
     {
@@ -62,14 +62,9 @@ namespace ArmA.Studio.UI.Commands
                 this.CanExecuteChangedInternal -= value;
             }
         }
-        public bool CanExecute(object parameter)
-        {
-            return this.canExecute != null && this.canExecute(parameter);
-        }
-        public void Execute(object parameter)
-        {
-            this.execute(parameter);
-        }
+        public bool CanExecute(object parameter) => this.canExecute != null && this.canExecute(parameter);
+        public void Execute(object parameter) => this.execute(parameter);
+        private static bool DefaultCanExecute(object parameter) => true;
 
         public void OnCanExecuteChanged()
         {
@@ -78,10 +73,6 @@ namespace ArmA.Studio.UI.Commands
             {
                 handler.Invoke(this, EventArgs.Empty);
             }
-        }
-        private static bool DefaultCanExecute(object parameter)
-        {
-            return true;
         }
     }
 }

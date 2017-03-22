@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace ArmA.Studio
+namespace ArmA.Studio.Data.UI
 {
     public abstract class DockableBase : INotifyPropertyChanged, IComparable
     {

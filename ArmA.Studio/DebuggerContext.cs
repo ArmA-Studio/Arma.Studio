@@ -29,7 +29,7 @@ namespace ArmA.Studio
         public IEnumerable<CallstackItem> CallStack { get { return this._CallStack; } set { this._CallStack = value; this.RaisePropertyChanged(); } }
         private IEnumerable<CallstackItem> _CallStack;
 
-        private readonly IDebugger DebuggerInstance;
+        private readonly IDebuggerPlugin DebuggerInstance;
 
         public ICommand CmdRunDebuggerClick { get; private set; }
         public ICommand CmdPauseDebugger { get; private set; }
@@ -226,7 +226,7 @@ namespace ArmA.Studio
         /// Finds first instance of any debugger in DebuggerPath
         /// </summary>
         /// <returns>Instance of the debugger or null.</returns>
-        private static IDebugger GetDebuggerInstance()
+        private static IDebuggerPlugin GetDebuggerInstance()
         {
             Logger.Log(NLog.LogLevel.Info, "Trying to find debugger...");
             var path = App.DebuggerPath;
@@ -241,10 +241,10 @@ namespace ArmA.Studio
                 var assTypes = ass.GetTypes();
                 foreach (var type in assTypes)
                 {
-                    if (typeof(IDebugger).IsAssignableFrom(type))
+                    if (typeof(IDebuggerPlugin).IsAssignableFrom(type))
                     {
                         Logger.Log(NLog.LogLevel.Info, string.Format("Using '{0}' as debugger.", file));
-                        return Activator.CreateInstance(type) as Debugger.IDebugger;
+                        return Activator.CreateInstance(type) as Debugger.IDebuggerPlugin;
                     }
                 }
             }

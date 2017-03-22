@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ArmA.Studio.Data.Configuration;
+using ArmA.Studio.Debugger;
 
-namespace ArmA.Studio.Debugger
+namespace ArmA.Studio.Plugin
 {
-
-    public interface IDebugger :  IDisposable
+    public interface IDebuggerPlugin : IPlugin, IDisposable
     {
         event EventHandler<OnHaltEventArgs> OnHalt;
         event EventHandler<OnExceptionEventArgs> OnException;
@@ -30,6 +30,5 @@ namespace ArmA.Studio.Debugger
         IEnumerable<CallstackItem> GetCallstack();
         bool Perform(EOperation op);
         string GetLastError();
-        IEnumerable<ConfigCategory> GetConfigurationOptions();
     }
 }

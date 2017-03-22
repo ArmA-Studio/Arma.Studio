@@ -9,7 +9,7 @@ using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Markup;
 
-namespace ArmA.Studio
+namespace ArmA.Studio.Data.UI
 {
     public abstract class DocumentBase : DockableBase
     {
@@ -38,7 +38,7 @@ namespace ArmA.Studio
         public abstract string FilePath { get; }
         public abstract DataTemplate Template { get; }
         public abstract string[] SupportedFileExtensions { get; }
-        public ICommand CmdClosing { get { return new UI.Commands.RelayCommand(OnClosing); } }
+        public ICommand CmdClosing { get { return new Commands.RelayCommand(OnClosing); } }
         public bool HasChanges { get; protected set; }
 
         protected virtual void OnClosing(object param)

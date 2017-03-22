@@ -12,7 +12,7 @@ using ArmA.Studio.Data.Configuration;
 
 namespace Dedbugger
 {
-    public class DebuggerCore : IDebugger
+    public class DebuggerCore : IDebuggerPlugin
     {
         private static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         public enum ESendCommands

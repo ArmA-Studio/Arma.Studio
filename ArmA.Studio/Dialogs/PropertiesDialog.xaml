@@ -36,12 +36,12 @@
             <ListBox Grid.Row="2" ItemsSource="{Binding AvailableCategories}" SelectedItem="{Binding SelectedCategory}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Height="32">
+                        <Grid Height="26">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="26"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="{Binding ImageSource}" VerticalAlignment="Center" Height="32"/>
+                            <Image Grid.Column="0" Source="{Binding ImageSource}" VerticalAlignment="Center" Height="26"/>
                             <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="6 0" VerticalAlignment="Center"/>
                         </Grid>
                     </DataTemplate>

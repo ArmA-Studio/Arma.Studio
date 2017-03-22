@@ -12,6 +12,7 @@ using System.Xml;
 using NLog;
 using ArmA.Studio.LoggerTargets;
 using NLog.Config;
+using ArmA.Studio.Plugin;
 
 namespace ArmA.Studio
 {
@@ -31,7 +32,7 @@ namespace ArmA.Studio
         public static string ExecutablePath { get { return Path.GetDirectoryName(ExecutableFile); } }
         public static string ExecutableFile { get { return Assembly.GetExecutingAssembly().GetName().CodeBase.Substring("file:///".Length); } }
         public static string SyntaxFilesPath { get { return Path.Combine(ExecutablePath, "SyntaxFiles"); } }
-        public static string DebuggerPath { get { return Path.Combine(ExecutablePath, "Debugger"); } }
+        public static string PluginsPath { get { return Path.Combine(ExecutablePath, "Plugins"); } }
         public static string ConfigPath { get { return Path.Combine(ApplicationDataPath, "Configuration"); } }
         public static string FileTemplatePath { get { return Path.Combine(ApplicationDataPath, "Templates"); } }
         public static string TempPath { get { return Path.Combine(Path.GetTempPath(), @"ArmA.Studio"); } }
@@ -40,6 +41,9 @@ namespace ArmA.Studio
         public static Version CurrentVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
         public static SubscribableTarget SubscribableLoggerTarget { get; private set; }
+        public static IEnumerable<IPlugin> Plugins { get; set; }
+        internal UpdateHelper.DownloadInfo UpdateDownloadInfo;
+
         private void SetupNLog()
         {
             //this.TraceListenerInstance = new TraceListener();
@@ -62,7 +66,6 @@ namespace ArmA.Studio
                 Directory.CreateDirectory(FileTemplatePath);
             }
         }
-        private UpdateHelper.DownloadInfo DownloadInfo;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
 #if !DEBUG
@@ -150,7 +153,7 @@ namespace ArmA.Studio
         {
             if (code == ExitCodes.Updating)
             {
-                var dlgdc = new Dialogs.DownloadDialogDataContext((App.Current as App).DownloadInfo);
+                var dlgdc = new Dialogs.DownloadDialogDataContext((App.Current as App).UpdateDownloadInfo);
                 var dlg = new Dialogs.DownloadDialog(dlgdc);
                 dlg.ShowDialog();
             }

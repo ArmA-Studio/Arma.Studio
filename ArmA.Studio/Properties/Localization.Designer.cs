@@ -802,6 +802,42 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Checking for plugin&lt;{0}&gt; update.
+        /// </summary>
+        public static string Splash_CheckingForPluginXUpdate {
+            get {
+                return ResourceManager.GetString("Splash_CheckingForPluginXUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checking for tool updates.
+        /// </summary>
+        public static string Splash_CheckingForToolUpdates {
+            get {
+                return ResourceManager.GetString("Splash_CheckingForToolUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Plugins.
+        /// </summary>
+        public static string Splash_LoadingPlugins {
+            get {
+                return ResourceManager.GetString("Splash_LoadingPlugins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update available.
+        /// </summary>
+        public static string Splash_UpdateAvailable {
+            get {
+                return ResourceManager.GetString("Splash_UpdateAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string VariableName {

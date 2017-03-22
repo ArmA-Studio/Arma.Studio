@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Media;
 
 
-namespace ArmA.Studio
+namespace ArmA.Studio.Data.UI
 {
     public abstract class PanelBase : DockableBase
     {

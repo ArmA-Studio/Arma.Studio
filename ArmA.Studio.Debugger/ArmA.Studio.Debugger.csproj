@@ -43,9 +43,7 @@
     <Compile Include="Breakpoint.cs" />
     <Compile Include="CallstackItem.cs" />
     <Compile Include="EVariableNamespace.cs" />
-    <Compile Include="Extensions.cs" />
     <Compile Include="EOperation.cs" />
-    <Compile Include="IDebugger.cs" />
     <Compile Include="OnContinueEventArgs.cs" />
     <Compile Include="OnHaltEventArgs.cs" />
     <Compile Include="OnConnectionClosedEventArgs.cs" />
@@ -54,12 +52,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Variable.ValueType.cs" />
     <Compile Include="Variable.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ArmA.Studio.Data\ArmA.Studio.Data.csproj">
-      <Project>{dc5bb018-6ca3-4f0a-864a-425cef2f454b}</Project>
-      <Name>ArmA.Studio.Data</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

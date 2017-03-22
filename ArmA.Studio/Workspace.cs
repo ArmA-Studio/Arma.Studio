@@ -15,6 +15,8 @@ using Utility;
 using Utility.Collections;
 using Xceed.Wpf.AvalonDock.Layout;
 using RealVirtuality.SQF;
+using ArmA.Studio.Data.UI;
+using ArmA.Studio.Data.UI.Commands;
 
 namespace ArmA.Studio
 {
@@ -43,8 +45,7 @@ namespace ArmA.Studio
 
 
 
-        public static Workspace CurrentWorkspace { get { return _CurrentWorkspace; } set { if (_CurrentWorkspace != null) _CurrentWorkspace.Close(); _CurrentWorkspace = value; value?.Open(); } }
-        private static Workspace _CurrentWorkspace;
+        public static Workspace CurrentWorkspace { get; private set; }
 
         public DebuggerContext DebugContext { get { return this._DebugContext; } set { this._DebugContext = value; this.RaisePropertyChanged(); } }
         private DebuggerContext _DebugContext;
@@ -80,16 +81,77 @@ namespace ArmA.Studio
         public ObservableCollection<DocumentBase> DocumentsAvailable { get { return this._DocumentsAvailable; } set { this._DocumentsAvailable = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<DocumentBase> _DocumentsAvailable;
 
-        public ICommand CmdDisplayPanel { get; private set; }
-        public ICommand CmdDisplayLicensesDialog { get; private set; }
-        public ICommand CmdDockingManagerInitialized { get; private set; }
-        public ICommand CmdMainWindowClosing { get; private set; }
-        public ICommand CmdSwitchWorkspace { get; private set; }
-        public ICommand CmdShowProperties { get; private set; }
-        public ICommand CmdQuit { get; private set; }
-        public ICommand CmdSave { get; private set; }
-        public ICommand CmdSaveAll { get; private set; }
-        public ICommand CmdActiveContentChanged { get; private set; }
+        public ICommand CmdDisplayPanel => new RelayCommand((p) =>
+        {
+            if (p is PanelBase)
+            {
+                var pb = p as PanelBase;
+                if (this.PanelsDisplayed.Contains(p))
+                {
+                    pb.CurrentVisibility = pb.CurrentVisibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
+                }
+                else
+                {
+                    this.PanelsDisplayed.Add(pb);
+                }
+            }
+        });
+        public ICommand CmdDisplayLicensesDialog => new RelayCommand((p) =>
+        {
+            var dlg = new Dialogs.LicenseViewer();
+            var dlgResult = dlg.ShowDialog();
+        });
+        public ICommand CmdDockingManagerInitialized => new RelayCommand((p) => this.DockingMangerInitialized(p as DockingManager));
+        public ICommand CmdMainWindowClosing => new RelayCommand((p) =>
+        {
+            SaveLayout(this.MWDockingManager, Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
+            App.Current.Shutdown((int)App.ExitCodes.OK);
+        });
+        public ICommand CmdSwitchWorkspace => new RelayCommand((p) => { if (App.SwitchWorkspace()) App.Shutdown(App.ExitCodes.Restart); });
+        public ICommand CmdShowProperties => new RelayCommand((p) =>
+        {
+            var dlgDc = new Dialogs.PropertiesDialogDataContext();
+            var dlg = new Dialogs.PropertiesDialog(dlgDc);
+            dlg.ShowDialog();
+            if (dlgDc.RestartRequired)
+            {
+                var msgResult = MessageBox.Show(Properties.Localization.ChangesRequireRestart_Body, Properties.Localization.ChangesRequireRestart_Title, MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (msgResult == MessageBoxResult.Yes)
+                {
+                    App.Shutdown(App.ExitCodes.Restart);
+                }
+            }
+        });
+        public ICommand CmdQuit => new RelayCommand((p) => { App.Shutdown(App.ExitCodes.OK); });
+        public ICommand CmdSave => new RelayCommand((p) =>
+        {
+            foreach (var doc in this.DocumentsDisplayed)
+            {
+                if (doc.IsSelected)
+                {
+                    if (!doc.HasChanges)
+                        break;
+                    doc.SaveDocument(doc.FilePath);
+                    break;
+                }
+            }
+        });
+        public ICommand CmdSaveAll => new RelayCommand((p) =>
+        {
+            foreach (var doc in this.DocumentsDisplayed)
+            {
+                if (doc.HasChanges)
+                {
+                    doc.SaveDocument(doc.FilePath);
+                }
+            }
+            this.SaveSolution();
+        });
+        public ICommand CmdActiveContentChanged => new RelayCommand((p) =>
+        {
+            var dm = p as DockingManager;
+            this.CurrentDocument = dm.ActiveContent as DocumentBase;
+        });
 
         public string WorkingDir { get; private set; }
 
@@ -121,77 +183,6 @@ namespace ArmA.Studio
             this._DebugContext = new DebuggerContext();
             this._DocumentsDisplayed = new ObservableCollection<DocumentBase>();
             this._DocumentsAvailable = new ObservableCollection<DocumentBase>(FindAllDocumentsInAssembly());
-            this.CmdDisplayPanel = new RelayCommand((p) =>
-            {
-                if (p is PanelBase)
-                {
-                    var pb = p as PanelBase;
-                    if (this.PanelsDisplayed.Contains(p))
-                    {
-                        pb.CurrentVisibility = pb.CurrentVisibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
-                    }
-                    else
-                    {
-                        this.PanelsDisplayed.Add(pb);
-                    }
-                }
-            });
-            this.CmdDisplayLicensesDialog = new RelayCommand((p) =>
-            {
-                var dlg = new Dialogs.LicenseViewer();
-                var dlgResult = dlg.ShowDialog();
-            });
-            this.CmdDockingManagerInitialized = new RelayCommand((p) => this.DockingMangerInitialized(p as DockingManager));
-            this.CmdMainWindowClosing = new RelayCommand((p) =>
-            {
-                SaveLayout(this.MWDockingManager, Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
-                App.Current.Shutdown((int)App.ExitCodes.OK);
-            });
-            this.CmdSwitchWorkspace = new RelayCommand((p) => { if (App.SwitchWorkspace()) App.Shutdown(App.ExitCodes.Restart); });
-            this.CmdShowProperties = new RelayCommand((p) =>
-            {
-                var dlgDc = new Dialogs.PropertiesDialogDataContext();
-                var dlg = new Dialogs.PropertiesDialog(dlgDc);
-                dlg.ShowDialog();
-                if (dlgDc.RestartRequired)
-                {
-                    var msgResult = MessageBox.Show(Properties.Localization.ChangesRequireRestart_Body, Properties.Localization.ChangesRequireRestart_Title, MessageBoxButton.YesNo, MessageBoxImage.Information);
-                    if (msgResult == MessageBoxResult.Yes)
-                    {
-                        App.Shutdown(App.ExitCodes.Restart);
-                    }
-                }
-            });
-            this.CmdQuit = new RelayCommand((p) => { App.Shutdown(App.ExitCodes.OK); });
-            this.CmdSave = new RelayCommand((p) =>
-            {
-                foreach (var doc in this.DocumentsDisplayed)
-                {
-                    if (doc.IsSelected)
-                    {
-                        if (!doc.HasChanges)
-                            break;
-                        doc.SaveDocument(doc.FilePath);
-                        break;
-                    }
-                }
-            });
-            this.CmdSaveAll = new RelayCommand((p) =>
-            {
-                foreach (var doc in this.DocumentsDisplayed)
-                {
-                    if (doc.HasChanges)
-                    {
-                        doc.SaveDocument(doc.FilePath);
-                    }
-                }
-                this.SaveSolution();
-            });
-            this.CmdActiveContentChanged = new RelayCommand((p) =>
-            {
-                var dm = p as DockingManager;
-                this.CurrentDocument = dm.ActiveContent as DocumentBase;
-            });
 
             const double DEF_WIN_HEIGHT = 512;
             const double DEF_WIN_WIDTH = 1024;
@@ -208,14 +199,9 @@ namespace ArmA.Studio
                 this._WindowTop = 0;
             }
             this._WindowCurrentState = WindowState.Normal;
-
-            
         }
 
-        private void PanelsDisplayed_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            RaisePropertyChanged("PanelsDisplayed");
-        }
+        private void PanelsDisplayed_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => RaisePropertyChanged("PanelsDisplayed");
 
         private static void LoadLayout(DockingManager dm, string v)
         {
@@ -272,10 +258,7 @@ namespace ArmA.Studio
                 layoutSerializer.Serialize(writer);
             }
         }
-        public void OpenOrFocusDocument(SolutionUtil.SolutionFile sf)
-        {
-            this.OpenOrFocusDocument(sf.FullPath);
-        }
+        public void OpenOrFocusDocument(SolutionUtil.SolutionFile sf) => this.OpenOrFocusDocument(sf.FullPath);
         public void OpenOrFocusDocument(string path)
         {
             path = path.Trim('/', '\\');

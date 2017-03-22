@@ -59,12 +59,12 @@
       <HintPath>..\packages\ini-parser.3.4.0\lib\net20\INIFileParser.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.3\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.4.4\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -139,6 +139,10 @@
     <Compile Include="Linting.cs" />
     <Compile Include="LintScheduler.cs" />
     <Compile Include="LoggerTargets\SubscribableTarget.cs" />
+    <Compile Include="SplashScreen.xaml.cs">
+      <DependentUpon>SplashScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SplashScreenDataContext.cs" />
     <Compile Include="UI\Attached\Eventing\PreviewKeyDown.cs" />
     <Compile Include="UI\Attached\Eventing\PreviewMouseDown.cs" />
     <Compile Include="UI\Attached\Eventing\MouseDown.cs" />
@@ -179,10 +183,7 @@
       <DependentUpon>LicenseViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\LicenseViewerDataContext.cs" />
-    <Compile Include="DockableBase.cs" />
-    <Compile Include="DocumentBase.cs" />
     <Compile Include="LayoutUpdateStrategy.cs" />
-    <Compile Include="PanelBase.cs" />
     <Compile Include="SolutionUtil\Solution.cs" />
     <Compile Include="SolutionUtil\SolutionFile.cs" />
     <Compile Include="SolutionUtil\SolutionFileBase.cs" />
@@ -210,8 +211,6 @@
     <Compile Include="UI\Attached\SelectAllOnFocusAttached.cs" />
     <Compile Include="UI\Attached\TextboxInputTypeAttached.cs" />
     <Compile Include="UI\BreakPointMargin.cs" />
-    <Compile Include="UI\Commands\RelayCommand.cs" />
-    <Compile Include="UI\Commands\RelayCommandAsync.cs" />
     <Compile Include="UI\Converters\BoolInvertConverter.cs" />
     <Compile Include="UI\Converters\IsStringNullConverter.cs" />
     <Compile Include="UI\Converters\IsNullConverter.cs" />
@@ -1714,6 +1713,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Page Include="SplashScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -2164,6 +2167,7 @@
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_32x.png" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_48x.png" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_64x.png" />
+    <Resource Include="Resources\SplashBack.png" />
     <Content Include="SqfDefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2187,6 +2191,10 @@
     <ProjectReference Include="..\ArmA.Studio.Debugger\ArmA.Studio.Debugger.csproj">
       <Project>{ec8d472e-f967-475d-8fbb-fc9b2db56467}</Project>
       <Name>ArmA.Studio.Debugger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ArmA.Studio.Plugin\ArmA.Studio.Plugin.csproj">
+      <Project>{C5BD46BE-607F-41D5-8C6A-F2EEF8706E24}</Project>
+      <Name>ArmA.Studio.Plugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\ArmAClassParser\ArmAClassParser.csproj">
       <Project>{2e1b48ad-1de2-457e-ae85-8230969296bf}</Project>

@@ -372,6 +372,18 @@ Do you want to update now?</value>
   <data name="SolutionFile_NameContainsInvalidFiles" xml:space="preserve">
     <value>Provided value contains invalid characters</value>
   </data>
+  <data name="Splash_CheckingForPluginXUpdate" xml:space="preserve">
+    <value>Checking for plugin&lt;{0}&gt; update</value>
+  </data>
+  <data name="Splash_CheckingForToolUpdates" xml:space="preserve">
+    <value>Checking for tool updates</value>
+  </data>
+  <data name="Splash_LoadingPlugins" xml:space="preserve">
+    <value>Loading Plugins</value>
+  </data>
+  <data name="Splash_UpdateAvailable" xml:space="preserve">
+    <value>Update available</value>
+  </data>
   <data name="VariableName" xml:space="preserve">
     <value>Name</value>
   </data>
