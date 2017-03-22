@@ -110,7 +110,6 @@ namespace ArmA.Studio
             }
             workspace = ConfigHost.App.WorkspacePath;
             Workspace.CurrentWorkspace = new Workspace(workspace);
-            throw new Exception();
             var mwnd = new MainWindow();
             mwnd.Show();
         }
