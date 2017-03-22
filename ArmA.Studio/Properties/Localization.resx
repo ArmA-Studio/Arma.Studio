@@ -353,6 +353,12 @@ Current progress will be lost.</value>
   <data name="Rename" xml:space="preserve">
     <value>Rename</value>
   </data>
+  <data name="ReportDialog_Header" xml:space="preserve">
+    <value>Please tell us what happened</value>
+  </data>
+  <data name="ReportDialog_Title" xml:space="preserve">
+    <value>Error Report Dialog</value>
+  </data>
   <data name="RescanWorkspace" xml:space="preserve">
     <value>Rescan Workspace</value>
   </data>
