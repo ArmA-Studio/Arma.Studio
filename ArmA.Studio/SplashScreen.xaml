@@ -5,7 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ArmA.Studio"
         mc:Ignorable="d"
-        Height="256" Width="512" d:DataContext="{x:Type local:SplashScreenDataContext}">
+        Height="256"
+        Width="512"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        SnapsToDevicePixels="True"
+        Icon="Resources/Logo.ico"
+        Title="ArmA.Studio"
+        UseLayoutRounding="True"
+        d:DataContext="{x:Type local:SplashScreenDataContext}"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

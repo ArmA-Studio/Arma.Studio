@@ -344,6 +344,15 @@ Current progress will be lost.</value>
   <data name="PanelDisplayName_VariablesView" xml:space="preserve">
     <value>Variables View</value>
   </data>
+  <data name="PluginUpdateAvailable_Body" xml:space="preserve">
+    <value>One or more plugins have updates available to download. Do you want to update now?</value>
+  </data>
+  <data name="PluginUpdateAvailable_Title" xml:space="preserve">
+    <value>Plugin updates available</value>
+  </data>
+  <data name="PluginUpdater_Title" xml:space="preserve">
+    <value>Plugin Updater</value>
+  </data>
   <data name="PropertiesDialog_Header" xml:space="preserve">
     <value>Properties</value>
   </data>
@@ -371,6 +380,9 @@ Do you want to update now?</value>
   </data>
   <data name="SolutionFile_NameContainsInvalidFiles" xml:space="preserve">
     <value>Provided value contains invalid characters</value>
+  </data>
+  <data name="Splash_ApplyingPossiblyAvailablePluginUpdates" xml:space="preserve">
+    <value>Applying available plugin updates</value>
   </data>
   <data name="Splash_CheckingForPluginXUpdate" xml:space="preserve">
     <value>Checking for plugin&lt;{0}&gt; update</value>

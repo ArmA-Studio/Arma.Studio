@@ -35,7 +35,7 @@ namespace ArmA.Studio
 
         public SplashScreenDataContext()
         {
-            
+
         }
 
         private void RunSplash()
@@ -43,33 +43,63 @@ namespace ArmA.Studio
             var setIndeterminate = new Action<bool>((v) => App.Current.Dispatcher.Invoke(() => this.ProgressIndeterminate = v));
             var setDisplayText = new Action<string>((v) => App.Current.Dispatcher.Invoke(() => this.ProgressText = v));
             var setProgress = new Action<double>((v) => App.Current.Dispatcher.Invoke(() => this.ProgressValue = v));
+            var reset = new Action(() => App.Current.Dispatcher.Invoke(() =>
+            {
+                this.ProgressIndeterminate = false;
+                this.ProgressText = string.Empty;
+                this.ProgressValue = 0;
+            }));
 
-            Splash_LoadPlugins(setIndeterminate, setDisplayText, setProgress);
-            Splash_CheckUpdate(setIndeterminate, setDisplayText, setProgress);
+            if (!Splash_LoadPlugins(setIndeterminate, setDisplayText, setProgress))
+                return;
+            reset();
+            if (!Splash_CheckUpdate(setIndeterminate, setDisplayText, setProgress))
+                return;
+            reset();
+            if (!Splash_Workspace(setIndeterminate, setDisplayText, setProgress))
+                return;
+            reset();
         }
 
-        private static void Splash_LoadPlugins(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress)
+        private static bool Splash_Workspace(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress)
         {
+            throw new NotImplementedException();
+            return true;
+        }
+
+        private static bool Splash_LoadPlugins(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress)
+        {
+            SetDisplayText(Properties.Localization.Splash_ApplyingPossiblyAvailablePluginUpdates);
+            foreach(var fileName in Directory.EnumerateFiles(App.PluginsPath, string.Concat("*.dll", App.CONST_UPDATESUFFIX)))
+            {
+                var fileNameWithoutSuffix = fileName.Remove(fileName.LastIndexOf(App.CONST_UPDATESUFFIX));
+                Logger.Info($"Applying update for {Path.GetFileName(fileNameWithoutSuffix)}...");
+                File.Delete(fileNameWithoutSuffix);
+                File.Move(fileName, fileNameWithoutSuffix);
+            }
+
+            SetDisplayText(Properties.Localization.Splash_LoadingPlugins);
             var pManager = new PluginManager<IPlugin>();
             var plugins = Directory.EnumerateFiles(App.PluginsPath, "*.dll");
             pManager.LoadPlugins(plugins, new Progress<double>((d) =>
             {
                 SetProgress(d);
-                SetDisplayText(Properties.Localization.Splash_LoadingPlugins);
             }), (ex) =>
             {
                 Logger.Error(ex, "Error while loading plugin.");
                 return true;
             });
             Logger.Info($"Loaded {pManager.Plugins.Count()} plugins:");
-            foreach(var p in pManager.Plugins)
+            foreach (var p in pManager.Plugins)
             {
                 Logger.Info($"\t- {p.Name} <{p.GetType().AssemblyQualifiedName}>");
             }
             App.Plugins = pManager.Plugins;
+            return true;
         }
-        private static void Splash_CheckUpdate(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress)
+        private static bool Splash_CheckUpdate(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress)
         {
+            var doShutdown = false;
             SetIndeterminate(true);
             SetDisplayText(Properties.Localization.Splash_CheckingForToolUpdates);
             SetProgress(1);
@@ -93,6 +123,7 @@ namespace ArmA.Studio
                     {
                         Logger.Info("Applying update.");
                         App.Shutdown(App.ExitCodes.Updating);
+                        doShutdown = true;
                     }
                     else
                     {
@@ -108,23 +139,57 @@ namespace ArmA.Studio
             var updatingPlugins = from plugin in App.Plugins where plugin is IUpdatingPlugin select plugin as IUpdatingPlugin;
             if (updatingPlugins.Any())
             {
+                var list = new List<IUpdatingPlugin>();
                 Logger.Info("Checking for plugin updates.");
                 foreach (var p in updatingPlugins)
                 {
-                    Logger.Info($"Checking plugin {p.Name} for updates.");
+                    Logger.Info($"Checking plugin {p.Name} for updates...");
                     SetDisplayText(string.Format(Properties.Localization.Splash_CheckingForPluginXUpdate, p.Name));
                     bool result = p.CheckUpdateAvailable();
-                    if(result)
+                    if (result)
                     {
-                        Logger.Info($"Plugin.");
+                        Logger.Info($"{p.Name} has an update available.");
+                        list.Add(p);
                     }
                     else
                     {
-
+                        Logger.Info($"{p.Name} has no update.");
                     }
                 }
+                if (list.Any())
+                {
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        var msgboxresult = MessageBox.Show(
+                              string.Format(Properties.Localization.SoftwareUpdateAvailable_Body, App.CurrentVersion, (App.Current as App).UpdateDownloadInfo.version),
+                              string.Format(Properties.Localization.SoftwareUpdateAvailable_Title, (App.Current as App).UpdateDownloadInfo.version),
+                              MessageBoxButton.YesNo,
+                              MessageBoxImage.Information
+                        );
+                        if (msgboxresult == MessageBoxResult.Yes)
+                        {
+                            Logger.Info("Applying plugin updates.");
+                            var dlgdc = new Dialogs.DownloadPluginUpdateDialogDataContext(list);
+                            var dlg = new Dialogs.DownloadPluginUpdateDialog(dlgdc);
+                            var dlgResult = dlg.ShowDialog();
+                            if (dlgResult.HasValue && dlgResult.Value)
+                            {
+                                doShutdown = true;
+                                App.Shutdown(App.ExitCodes.RestartPluginUpdate);
+                            }
+                            else
+                            {
+                                Logger.Info("Ignoring plugin updates.");
+                            }
+                        }
+                        else
+                        {
+                            Logger.Info("Ignoring plugin updates.");
+                        }
+                    });
+                }
             }
-            SetIndeterminate(false);
+            return doShutdown;
         }
     }
 }

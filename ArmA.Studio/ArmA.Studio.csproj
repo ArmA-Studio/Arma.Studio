@@ -123,9 +123,13 @@
     <Compile Include="DataContext\CallStackPane.cs" />
     <Compile Include="DataContext\TextEditorUtil\IntelliSenseEntry.cs" />
     <Compile Include="Dialogs\CreateNewFileDialogDataContext.cs" />
-    <Compile Include="Dialogs\DownloadDialog.xaml.cs">
-      <DependentUpon>DownloadDialog.xaml</DependentUpon>
+    <Compile Include="Dialogs\DownloadPluginUpdateDialog.xaml.cs">
+      <DependentUpon>DownloadPluginUpdateDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\DownloadToolUpdateDialog.xaml.cs">
+      <DependentUpon>DownloadToolUpdateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DownloadPluginUpdateDialogDataContext.cs" />
     <Compile Include="Dialogs\PropertiesDialogUtil\ColorConfigEntry.cs" />
     <Compile Include="ESeverity.cs" />
     <Compile Include="DataContext\TextEditorUtil\LinterInfo.cs" />
@@ -172,7 +176,7 @@
     <Compile Include="Dialogs\CreateNewFileDialog.xaml.cs">
       <DependentUpon>CreateNewFileDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\DownloadDialogDataContext.cs" />
+    <Compile Include="Dialogs\DownloadToolUpdateDialogDataContext.cs" />
     <Compile Include="Dialogs\WorkspaceSelectorDialog.xaml.cs">
       <DependentUpon>WorkspaceSelectorDialog.xaml</DependentUpon>
     </Compile>
@@ -238,7 +242,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\DownloadDialog.xaml">
+    <Page Include="Dialogs\DownloadPluginUpdateDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DownloadToolUpdateDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

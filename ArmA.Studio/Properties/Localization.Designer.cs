@@ -726,6 +726,33 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One or more plugins have updates available to download. Do you want to update now?.
+        /// </summary>
+        public static string PluginUpdateAvailable_Body {
+            get {
+                return ResourceManager.GetString("PluginUpdateAvailable_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin updates available.
+        /// </summary>
+        public static string PluginUpdateAvailable_Title {
+            get {
+                return ResourceManager.GetString("PluginUpdateAvailable_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin Updater.
+        /// </summary>
+        public static string PluginUpdater_Title {
+            get {
+                return ResourceManager.GetString("PluginUpdater_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Properties.
         /// </summary>
         public static string PropertiesDialog_Header {
@@ -798,6 +825,15 @@ namespace ArmA.Studio.Properties {
         public static string SolutionFile_NameContainsInvalidFiles {
             get {
                 return ResourceManager.GetString("SolutionFile_NameContainsInvalidFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Applying available plugin updates.
+        /// </summary>
+        public static string Splash_ApplyingPossiblyAvailablePluginUpdates {
+            get {
+                return ResourceManager.GetString("Splash_ApplyingPossiblyAvailablePluginUpdates", resourceCulture);
             }
         }
         

@@ -9,17 +9,18 @@ using System.Windows.Input;
 using System.Windows;
 using System.ComponentModel;
 using System.Diagnostics;
+using ArmA.Studio.Data.UI.Commands;
 
 namespace ArmA.Studio.Dialogs
 {
-    public class DownloadDialogDataContext : INotifyPropertyChanged, IDialogContext
+    public class DownloadToolUpdateDialogDataContext : INotifyPropertyChanged, IDialogContext
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
 
         public ICommand CmdOKButtonPressed { get { return this._CmdOKButtonPressed; } set { this._CmdOKButtonPressed = value; this.RaisePropertyChanged(); } }
         private ICommand _CmdOKButtonPressed;
-        public ICommand CmdInitialized { get { return new UI.Commands.RelayCommandAsync((p) => this.Window_Initialized()); } }
+        public ICommand CmdInitialized { get { return new RelayCommandAsync((p) => this.Window_Initialized()); } }
 
         public bool? DialogResult { get { return this._DialogResult; } set { this._DialogResult = value; this.RaisePropertyChanged(); } }
         private bool? _DialogResult;
@@ -42,7 +43,7 @@ namespace ArmA.Studio.Dialogs
 
         private readonly UpdateHelper.DownloadInfo DownloadInfo;
 
-        public DownloadDialogDataContext(UpdateHelper.DownloadInfo info)
+        public DownloadToolUpdateDialogDataContext(UpdateHelper.DownloadInfo info)
         {
             this.DownloadInfo = info;
             this._OKButtonEnabled = false;
@@ -56,7 +57,7 @@ namespace ArmA.Studio.Dialogs
                 this.FileSize = t.Item2;
                 this.ProgressValue = (((double)t.Item1) / t.Item2);
             }));
-            this.CmdOKButtonPressed = new UI.Commands.RelayCommand((p) =>
+            this.CmdOKButtonPressed = new RelayCommand((p) =>
             {
                 var process = new Process();
                 process.StartInfo.FileName = file;

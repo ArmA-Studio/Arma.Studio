@@ -21,13 +21,16 @@ namespace ArmA.Studio
     /// </summary>
     public partial class App : Application
     {
+        public const string CONST_UPDATESUFFIX = ".update";
+
         public enum ExitCodes
         {
             ConfigError = -2,
             NoWorkspaceSelected = -1,
             OK = 0,
             Restart = 1,
-            Updating = 2
+            Updating = 2,
+            RestartPluginUpdate = 3
         }
         public static string ExecutablePath { get { return Path.GetDirectoryName(ExecutableFile); } }
         public static string ExecutableFile { get { return Assembly.GetExecutingAssembly().GetName().CodeBase.Substring("file:///".Length); } }
@@ -142,7 +145,7 @@ namespace ArmA.Studio
             if (e.ApplicationExitCode == (int)ExitCodes.ConfigError)
                 return;
             Workspace.CurrentWorkspace = null;
-            if (e.ApplicationExitCode == (int)ExitCodes.Restart)
+            if (e.ApplicationExitCode == (int)ExitCodes.Restart || e.ApplicationExitCode == (int)ExitCodes.RestartPluginUpdate)
             {
                 Process.Start(ExecutableFile);
             }

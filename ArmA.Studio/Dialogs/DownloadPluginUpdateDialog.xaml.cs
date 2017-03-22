@@ -17,9 +17,9 @@ namespace ArmA.Studio.Dialogs
     /// <summary>
     /// Interaction logic for DownloadDialog.xaml
     /// </summary>
-    public partial class DownloadDialog : Window
+    public partial class DownloadPluginUpdateDialog : Window
     {
-        public DownloadDialog(DownloadDialogDataContext dc)
+        public DownloadPluginUpdateDialog(DownloadPluginUpdateDialogDataContext dc)
         {
             this.DataContext = dc;
             InitializeComponent();
