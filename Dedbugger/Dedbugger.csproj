@@ -68,8 +68,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>if not exist $(SolutionDir)ArmA.Studio\$(OutDir)Debugger mkdir $(SolutionDir)ArmA.Studio\$(OutDir)Debugger
-xcopy /Y "$(TargetName).*" "$(SolutionDir)ArmA.Studio\$(OutDir)Debugger"</PostBuildEvent>
+    <PostBuildEvent>if not exist "$(SolutionDir)ArmA.Studio\$(OutDir)Debugger" mkdir ""$(SolutionDir)ArmA.Studio\$(OutDir)Debugger"" xcopy /Y "$(TargetName).*" "$(SolutionDir)ArmA.Studio\$(OutDir)Debugger"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
