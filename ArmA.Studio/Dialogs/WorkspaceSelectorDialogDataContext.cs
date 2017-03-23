@@ -35,12 +35,14 @@ namespace ArmA.Studio.Dialogs
         {
             this.CmdBrowse = new UI.Commands.RelayCommand(Cmd_Browse);
             this.CmdOKButtonPressed = new UI.Commands.RelayCommand((p) => this.DialogResult = true);
+            this.CurrentPath = string.Empty;
         }
         public void Cmd_Browse(object param)
         {
             var fbdlg = new FolderBrowserDialog();
             fbdlg.ShowNewFolderButton = true;
             fbdlg.Description = Properties.Localization.WorkspaceSelectorDialog_Description;
+            fbdlg.SelectedPath = this.CurrentPath;
             if (!string.IsNullOrWhiteSpace(this.CurrentPath))
             {
                 fbdlg.SelectedPath = CurrentPath;

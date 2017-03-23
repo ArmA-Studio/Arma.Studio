@@ -53,7 +53,7 @@ namespace ArmA.Studio
             public static string WorkspacePath
             {
                 get { return Instance.AppIni.GetValueOrNull(nameof(App), nameof(Workspace)); }
-                set { Instance.AppIni.SetValue(nameof(App), nameof(Workspace), value); Instance.Save(EIniSelector.App); }
+                set { if (WorkspacePath.Equals(value)) return; Instance.AppIni.SetValue(nameof(App), nameof(Workspace), value); Instance.Save(EIniSelector.App); }
             }
 
             public static bool ErrorList_IsErrorsDisplayed

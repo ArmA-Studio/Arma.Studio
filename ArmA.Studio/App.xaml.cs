@@ -119,7 +119,11 @@ namespace ArmA.Studio
             mwnd.Show();
         }
 
-        public static bool SwitchWorkspace()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static string DisplayWorkspaceSelectorDialog()
         {
             var dlgDc = new Dialogs.WorkspaceSelectorDialogDataContext();
             var dlg = new Dialogs.WorkspaceSelectorDialog(dlgDc);

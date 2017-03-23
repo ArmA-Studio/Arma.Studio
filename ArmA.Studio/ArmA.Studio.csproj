@@ -131,6 +131,7 @@
     </Compile>
     <Compile Include="Dialogs\DownloadPluginUpdateDialogDataContext.cs" />
     <Compile Include="Dialogs\PropertiesDialogUtil\ColorConfigEntry.cs" />
+    <Compile Include="Dialogs\WorkspaceSelectorDialog.cs" />
     <Compile Include="ESeverity.cs" />
     <Compile Include="DataContext\TextEditorUtil\LinterInfo.cs" />
     <Compile Include="DebuggerContext.cs" />

@@ -38,6 +38,7 @@ namespace ArmA.Studio
 
         }
 
+        private async Task RunSplashAsync() => await Task.Run(() => this.RunSplash());
         private void RunSplash()
         {
             var setIndeterminate = new Action<bool>((v) => App.Current.Dispatcher.Invoke(() => this.ProgressIndeterminate = v));
@@ -56,15 +57,53 @@ namespace ArmA.Studio
             if (!Splash_CheckUpdate(setIndeterminate, setDisplayText, setProgress))
                 return;
             reset();
+
+            foreach(var splashActivityPlugin in from plugin in App.Plugins where plugin is ISplashActivityPlugin select plugin as ISplashActivityPlugin)
+            {
+                reset();
+                bool terminate;
+                splashActivityPlugin.PerformSplashActivity(App.Current.Dispatcher, setIndeterminate, setDisplayText, setProgress, out terminate);
+                if (terminate)
+                    return;
+            }
+            reset();
+
             if (!Splash_Workspace(setIndeterminate, setDisplayText, setProgress))
                 return;
-            reset();
         }
 
-        private static bool Splash_Workspace(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress)
+        private static bool Splash_Workspace(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress, out Workspace w)
         {
-            throw new NotImplementedException();
-            return true;
+            w = null;
+            SetIndeterminate(true);
+            string workspace;
+
+            #region set/get workspace path
+            SetDisplayText(Properties.Localization.Splash_SettingWorkspace);
+            workspace = string.IsNullOrWhiteSpace(ConfigHost.App.WorkspacePath) ? Dialogs.WorkspaceSelectorDialog.GetWorkspacePath(string.Empty) : ConfigHost.App.WorkspacePath;
+            if (string.IsNullOrWhiteSpace(workspace))
+            {
+                App.Current.Dispatcher.Invoke(() =>
+                MessageBox.Show(Properties.Localization.WorkspaceSelectorDialog_NoWorkspaceSelected, Studio.Properties.Localization.Whoops, MessageBoxButton.OK, MessageBoxImage.Error));
+                return true;
+            }
+            else
+            {
+                ConfigHost.App.WorkspacePath = workspace;
+            }
+            #endregion
+
+            w = new Workspace(workspace);
+
+            #region Prepare Solution file
+            SetDisplayText(Properties.Localization.Splash_SearchingSolutionFile);
+
+            #endregion
+
+            SetIndeterminate(false);
+
+            
+            return false;
         }
 
         private static bool Splash_LoadPlugins(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress)

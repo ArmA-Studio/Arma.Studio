@@ -393,6 +393,12 @@ Do you want to update now?</value>
   <data name="Splash_LoadingPlugins" xml:space="preserve">
     <value>Loading Plugins</value>
   </data>
+  <data name="Splash_SearchingSolutionFile" xml:space="preserve">
+    <value>Searching Solution File</value>
+  </data>
+  <data name="Splash_SettingWorkspace" xml:space="preserve">
+    <value>Setting Worksapce</value>
+  </data>
   <data name="Splash_UpdateAvailable" xml:space="preserve">
     <value>Update available</value>
   </data>

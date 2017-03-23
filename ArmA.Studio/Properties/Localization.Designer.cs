@@ -865,6 +865,24 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Searching Solution File.
+        /// </summary>
+        public static string Splash_SearchingSolutionFile {
+            get {
+                return ResourceManager.GetString("Splash_SearchingSolutionFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting Worksapce.
+        /// </summary>
+        public static string Splash_SettingWorkspace {
+            get {
+                return ResourceManager.GetString("Splash_SettingWorkspace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update available.
         /// </summary>
         public static string Splash_UpdateAvailable {
