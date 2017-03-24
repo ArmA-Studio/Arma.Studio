@@ -295,7 +295,7 @@ namespace ArmA.Studio
                     switch (pair.Key)
                     {
                         case EIniSelector.App:
-                            parser.WriteFile(Path.Combine(Studio.App.ConfigPath, "App.ini"), this.AppIni);
+                            parser.WriteFile(Path.Combine(Studio.App.ConfigPath, "App.ini"), this.AppIni, Encoding.UTF8);
                             break;
                         case EIniSelector.Coloring:
                             parser.WriteFile(Path.Combine(Studio.App.ConfigPath, "Coloring.ini"), this.ColoringIni);
