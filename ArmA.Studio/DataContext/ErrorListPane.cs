@@ -15,7 +15,7 @@ using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using Utility.Collections;
-
+using ArmA.Studio.SolutionUtil;
 
 namespace ArmA.Studio.DataContext
 {
@@ -126,6 +126,21 @@ namespace ArmA.Studio.DataContext
                 return;
             }
             Workspace.CurrentWorkspace.OpenOrFocusDocument(li.FilePath);
+
+            SolutionFileBase.WalkThrough(Workspace.CurrentWorkspace.CurrentSolution.FilesCollection, (sfb) => {
+                var f = sfb as SolutionFile;
+                if (f != null && f.ArmAPath.Contains(li.FileName)) {
+                    var doc = Workspace.CurrentWorkspace.GetDocumentOfSolutionFileBase(f) as TextEditorDocument;
+                    if (doc != null && doc.Editor != null) {
+                        doc.Editor.TextArea.Caret.Line = li.Line;
+                        doc.Editor.TextArea.Caret.Column = li.LineOffset;
+                        doc.Editor.ScrollToLine(li.Line);
+                        doc.Editor.TextArea.Caret.Show();
+                    }
+                    return true;
+                }
+                return false;
+            });
         }
     }
 }
