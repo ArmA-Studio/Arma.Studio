@@ -115,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dialogs\ReportDialog.xaml.cs">
+      <DependentUpon>ReportDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ReportDialogDataContext.cs" />
     <Compile Include="DataContext\VariablesViewPane.cs" />
     <Compile Include="DataContext\BreakpointsPaneUtil\Breakpoint.cs" />
     <Compile Include="DataContext\ErrorListPane.cs" />

@@ -31,9 +31,11 @@ namespace Dedbugger
             HaltBreakpoint = 2,
             HaltStep = 3,
             HaltError = 4,
-            HaltPlaceholder = 5,
-            ContinueExecution = 6,
-            VariablesList = 7
+            HaltScriptAssert = 5,
+            HaltScriptHalt = 6,
+            HaltPlaceholder = 7,
+            ContinueExecution = 8,
+            VariablesList = 9
         }
         public enum EStepType
         {
@@ -51,7 +53,7 @@ namespace Dedbugger
         private NamedPipeClientStream Pipe;
         private List<Breakpoint> Breakpoints;
         private asapJson.JsonNode LastCallstack;
-        private const int MinimalDebuggerBuild = 22;
+        private const int MinimalDebuggerBuild = 23;
 
         public Thread PipeReadThread { get; private set; }
         public ConcurrentBag<asapJson.JsonNode> Messages;
@@ -188,6 +190,18 @@ namespace Dedbugger
                                         this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = error.GetValue_Object()["filename"].GetValue_String(), Col = col, Line = line });
                                     }
                                     break;
+                                case ERecvCommands.HaltScriptAssert:
+                                case ERecvCommands.HaltScriptHalt:
+                                    {
+                                        var callstack = this.LastCallstack = node.GetValue_Object()["callstack"];
+                                        var error = node.GetValue_Object()["halt"];
+                                        var fileOffsetNode = error.GetValue_Object()["fileOffset"];
+                                        var fileContent = error.GetValue_Object()["content"];//File content in case we don't have that file
+                                        var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
+                                        var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
+                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = error.GetValue_Object()["filename"].GetValue_String(), Col = col, Line = line });
+                                    }
+                                    break;
                                 case ERecvCommands.ContinueExecution:
                                     {
                                         this.OnContinue?.Invoke(this, new OnContinueEventArgs() { });
@@ -279,6 +293,27 @@ namespace Dedbugger
             }
         }
 
+        private static string VariableArrayToString(JsonNode jsonNode)
+        {
+            var value = "[";
+            if (jsonNode.GetValueType() == JsonNode.EJType.Array) //Might be null if EMPTY
+                foreach (var val in jsonNode.GetValue_Array())
+                {
+                    if (val.GetValue_Object()["type"].GetValue_String() == "array") //Small workaround to allow 2D arrays
+                    {
+                        value += VariableArrayToString(val.GetValue_Object()["value"]);
+                    }
+                    else
+                    {
+                        value += val.GetValue_Object()["value"].GetValue_String();
+                    }
+                    value += ",";
+                }
+            value = value.TrimEnd(',');
+            value += "]";
+            return value;
+        }
+
         public IEnumerable<Variable> GetVariables(EVariableNamespace scope, params string[] names)
         {
             var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
@@ -298,39 +333,25 @@ namespace Dedbugger
                 var name = variable.GetValue_Object()["name"].GetValue_String();
                 var type = variable.GetValue_Object()["type"].GetValue_String();
                 var value = "";
-                if (type == "void")
+                switch (type)
                 {
-                        yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.Parse(type) };
-                }
-                else if (type == "array")
-                {
-                    //ToDo: handle multi-dimensional arrays
-                    var valueArray = variable.GetValue_Object()["value"];
-                    value = "[";
-                    if (valueArray.GetValueType() == JsonNode.EJType.Array) //Might be null if EMPTY
-                    foreach (var val in valueArray.GetValue_Array())
-                    {
-                        if (val.GetValue_Object()["type"].GetValue_String() == "array") //Small workaround to allow 2D arrays
+                    case "void":
+                        yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.ANY };
+                        break;
+                    case "array":
                         {
-                            value += "[arrayPlaceholder]";
+                            value = VariableArrayToString(variable.GetValue_Object()["value"]);
+                            var ns = (EVariableNamespace)variable.GetValue_Object()["ns"].GetValue_Number();//Namespace the variable comes from
+                            yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.ARRAY, Namespace = ns };
                         }
-                        else
+                        break;
+                    default:
                         {
-                             value += val.GetValue_Object()["value"].GetValue_String();
+                            value = variable.GetValue_Object()["value"].GetValue_String();
+                            var ns = (EVariableNamespace)variable.GetValue_Object()["ns"].GetValue_Number();//Namespace the variable comes from
+                            yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.Parse(type), Namespace = ns };
                         }
-                        
-                        value += ",";
-                    }
-                    value += "]";
-
-                    var ns = (EVariableNamespace)variable.GetValue_Object()["ns"].GetValue_Number();//Namespace the variable comes from
-                    yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.Parse(type), Namespace = ns };
-                }
-                else
-                {
-                    value = variable.GetValue_Object()["value"].GetValue_String();
-                    var ns = (EVariableNamespace)variable.GetValue_Object()["ns"].GetValue_Number();//Namespace the variable comes from
-                    yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.Parse(type), Namespace = ns };
+                        break;
                 }
             }
         }

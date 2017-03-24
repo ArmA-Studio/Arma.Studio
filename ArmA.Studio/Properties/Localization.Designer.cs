@@ -780,6 +780,24 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please tell us what happened.
+        /// </summary>
+        public static string ReportDialog_Header {
+            get {
+                return ResourceManager.GetString("ReportDialog_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error Report Dialog.
+        /// </summary>
+        public static string ReportDialog_Title {
+            get {
+                return ResourceManager.GetString("ReportDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rescan Workspace.
         /// </summary>
         public static string RescanWorkspace {

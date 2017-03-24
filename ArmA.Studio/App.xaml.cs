@@ -13,6 +13,7 @@ using NLog;
 using ArmA.Studio.LoggerTargets;
 using NLog.Config;
 using ArmA.Studio.Plugin;
+using System.Text;
 
 namespace ArmA.Studio
 {
@@ -147,6 +148,8 @@ namespace ArmA.Studio
         {
 #if DEBUG
             System.Diagnostics.Debugger.Break();
+#else
+            GetCrashReport(e.Exception);
 #endif
         }
 
@@ -199,6 +202,80 @@ namespace ArmA.Studio
                 {
                     throw new Exception("Unknown", ex);
                 }
+            }
+        }
+
+        private static void GetCrashReport(Exception ex)
+        {
+            using (var memStream = new MemoryStream())
+            {
+                using (var writer = new XmlTextWriter(new StreamWriter(memStream)))
+                {
+                    writer.Formatting = Formatting.Indented;
+
+                    writer.WriteStartDocument();
+                    writer.WriteStartElement("root");
+                    #region <version>
+                    writer.WriteStartElement("version");
+                    writer.WriteString(App.CurrentVersion.ToString());
+                    writer.WriteEndElement();
+
+                    #endregion
+                    #region <report>
+                    {
+                        writer.WriteStartElement("report");
+
+                        var dlgdc = new Dialogs.ReportDialogDataContext();
+                        var dlg = new Dialogs.ReportDialog(dlgdc);
+                        var dlgresult = dlg.ShowDialog();
+                        if (dlgresult.HasValue && dlgresult.Value)
+                        {
+                            writer.WriteCData(dlgdc.ReportText);
+                        }
+                        writer.WriteEndElement();
+                    }
+                    #endregion
+                    #region <stacktrace>
+                    writer.WriteStartElement("stacktrace");
+                    var builder = new StringBuilder();
+                    int tabCount = 0;
+                    var tmpEx = ex;
+                    while (tmpEx != null)
+                    {
+                        builder.AppendLine(tmpEx.Message);
+                        builder.AppendLine(tmpEx.StackTrace.Replace("\r\n", string.Concat("\r\n", new string('\t', tabCount))));
+                        tmpEx = tmpEx.InnerException;
+                        tabCount++;
+                    }
+                    writer.WriteCData(builder.ToString());
+                    writer.WriteEndElement();
+                    #endregion
+                    #region <trace>
+                    writer.WriteStartElement("trace");
+                    //ToDo: Add trace listening
+                    //foreach (var it in this.TraceListenerInstance.StringQueue)
+                    //{
+                    //    writer.WriteStartElement("log");
+                    //    writer.WriteString(it.Replace("\r", ""));
+                    //    writer.WriteEndElement();
+                    //}
+                    writer.WriteEndElement();
+                    #endregion
+
+                    writer.WriteEndElement();
+                    writer.WriteEndDocument();
+                    writer.Flush();
+                }
+
+                memStream.Seek(0, SeekOrigin.Begin);
+                using (var client = new System.Net.Http.HttpClient())
+                {
+                    var content = new System.Net.Http.FormUrlEncodedContent(new[] { new KeyValuePair<string, string>("content", new StreamReader(memStream).ReadToEnd()) });
+                    using (var response = client.PostAsync("http://x39.io/api.php?action=report&project=ArmA.Studio", content).Result)
+                    { }
+                }
+
+                Workspace.CurrentWorkspace.CmdSaveAll.Execute(null);
             }
         }
     }
