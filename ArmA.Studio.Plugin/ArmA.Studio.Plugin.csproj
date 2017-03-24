@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.cs" />
+    <Compile Include="IDocumentProviderPlugin.cs" />
     <Compile Include="ISplashActivityPlugin.cs" />
     <Compile Include="IUpdatingPlugin.cs" />
     <Compile Include="IDebuggerPlugin.cs" />

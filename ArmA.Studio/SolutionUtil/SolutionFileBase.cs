@@ -86,7 +86,7 @@ namespace ArmA.Studio.SolutionUtil
             }
         }
         [XmlIgnore]
-        public string FullPath { get { return Path.Combine(Workspace.CurrentWorkspace.WorkingDir, RelativePath); } }
+        public string FullPath { get { return Path.Combine(WorkspaceOld.CurrentWorkspace.WorkingDir, RelativePath); } }
 
         [XmlIgnore]
         public SolutionFileBase Parent
@@ -179,7 +179,7 @@ namespace ArmA.Studio.SolutionUtil
 
         [XmlIgnore]
         ///FUCK CONTEXTMENUS! ... workaround for lack of double-relativesource-binding
-        public Solution __Sol { get { return Workspace.CurrentWorkspace.CurrentSolution; } }
+        public Solution __Sol { get { return WorkspaceOld.CurrentWorkspace.CurrentSolution; } }
 
         [XmlIgnore]
         public ICommand CmdTextBoxLostKeyboardFocus { get { return new UI.Commands.RelayCommand((o) => this.IsInRenameMode = false); } }
@@ -210,7 +210,7 @@ namespace ArmA.Studio.SolutionUtil
             var sfb = param as SolutionFileBase;
             if (sfb != null)
             {
-                Workspace.CurrentWorkspace.OpenOrFocusDocument(sfb.RelativePath);
+                WorkspaceOld.CurrentWorkspace.OpenOrFocusDocument(sfb.RelativePath);
 
             }
         }
@@ -237,11 +237,11 @@ namespace ArmA.Studio.SolutionUtil
                     File.Delete(this.FullPath);
                 }
                 this.Parent.Children.Remove(this);
-                foreach(var doc in Workspace.CurrentWorkspace.DocumentsDisplayed)
+                foreach(var doc in WorkspaceOld.CurrentWorkspace.DocumentsDisplayed)
                 {
                     if(doc.FilePath == this.FullPath)
                     {
-                        Workspace.CurrentWorkspace.DocumentsDisplayed.Remove(doc);
+                        WorkspaceOld.CurrentWorkspace.DocumentsDisplayed.Remove(doc);
                         break;
                     }
                 }
@@ -271,16 +271,16 @@ namespace ArmA.Studio.SolutionUtil
                 }
                 else
                 {
-                    var docBase = Workspace.CurrentWorkspace.GetDocumentOfSolutionFileBase(this);
+                    var docBase = WorkspaceOld.CurrentWorkspace.GetDocumentOfSolutionFileBase(this);
                     if (docBase != null)
                     {
                         docBase.SaveDocument(docBase.FilePath);
-                        Workspace.CurrentWorkspace.DocumentsDisplayed.Remove(docBase);
+                        WorkspaceOld.CurrentWorkspace.DocumentsDisplayed.Remove(docBase);
                     }
                     File.Move(fPath, Path.Combine(Path.GetDirectoryName(fPath), newFileName));
                     if (docBase != null)
                     {
-                        Workspace.CurrentWorkspace.OpenOrFocusDocument(Path.Combine(Path.GetDirectoryName(fPath), newFileName));
+                        WorkspaceOld.CurrentWorkspace.OpenOrFocusDocument(Path.Combine(Path.GetDirectoryName(fPath), newFileName));
                     }
                 }
             }
@@ -295,11 +295,11 @@ namespace ArmA.Studio.SolutionUtil
                 return;
             try
             {
-                var docBase = Workspace.CurrentWorkspace.GetDocumentOfSolutionFileBase(this);
+                var docBase = WorkspaceOld.CurrentWorkspace.GetDocumentOfSolutionFileBase(this);
                 docBase.SaveDocument(docBase.FilePath);
-                Workspace.CurrentWorkspace.DocumentsDisplayed.Remove(docBase);
+                WorkspaceOld.CurrentWorkspace.DocumentsDisplayed.Remove(docBase);
                 File.Move(this.FullPath, Path.Combine(newParentFolder, FileName));
-                Workspace.CurrentWorkspace.OpenOrFocusDocument(Path.Combine(newParentFolder, FileName));
+                WorkspaceOld.CurrentWorkspace.OpenOrFocusDocument(Path.Combine(newParentFolder, FileName));
             }
             catch (Exception ex)
             {

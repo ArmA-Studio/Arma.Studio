@@ -45,11 +45,16 @@
   <ItemGroup>
     <Compile Include="Configuration\ConfigCategory.cs" />
     <Compile Include="Configuration\ConfigEntry.cs" />
+    <Compile Include="EProjectType.cs" />
+    <Compile Include="ProjectFileFolder.cs" />
+    <Compile Include="Project.cs" />
     <Compile Include="Properties\Localization.Designer.cs">
       <DependentUpon>Localization.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="FileType.cs" />
+    <Compile Include="Solution.cs" />
     <Compile Include="UI\Commands\RelayCommand.cs" />
     <Compile Include="UI\Commands\RelayCommandAsync.cs" />
     <Compile Include="UI\DockableBase.cs" />
@@ -66,6 +71,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Lint\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{e95cb476-aa64-429d-9349-64290b8164bb}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

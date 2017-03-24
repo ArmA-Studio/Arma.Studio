@@ -20,7 +20,7 @@ namespace ArmA.Studio.SolutionUtil
 
         internal void RedrawEditor()
         {
-            var ted = Workspace.CurrentWorkspace.GetDocumentOfSolutionFileBase(this) as DataContext.TextEditorDocument;
+            var ted = WorkspaceOld.CurrentWorkspace.GetDocumentOfSolutionFileBase(this) as DataContext.TextEditorDocument;
             if (ted != null)
             {
                 ted.Editor?.TextArea.LeftMargins.All((it) => { it.InvalidateVisual(); return true; });
@@ -95,7 +95,7 @@ namespace ArmA.Studio.SolutionUtil
 
         private void BreakPointsChild_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            Workspace.CurrentWorkspace.DebugContext.UpdateBreakpoint(sender as Breakpoint);
+            WorkspaceOld.CurrentWorkspace.DebugContext.UpdateBreakpoint(sender as Breakpoint);
         }
 
         public void AddBreakpoint(int line, int col)

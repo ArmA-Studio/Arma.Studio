@@ -27,9 +27,9 @@ namespace ArmA.Studio.UI.Attached
 
         private void AssociatedObject_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Workspace.CurrentWorkspace == null)
+            if (WorkspaceOld.CurrentWorkspace == null)
                 return;
-            Workspace.CurrentWorkspace.CurrentSelectedProperty = (sender as Selector).SelectedItem as ViewModel.IPropertyDatatemplateProvider;
+            WorkspaceOld.CurrentWorkspace.CurrentSelectedProperty = (sender as Selector).SelectedItem as ViewModel.IPropertyDatatemplateProvider;
         }
     }
 }

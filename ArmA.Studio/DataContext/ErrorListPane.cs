@@ -125,7 +125,7 @@ namespace ArmA.Studio.DataContext
                 System.Diagnostics.Debugger.Break();
                 return;
             }
-            Workspace.CurrentWorkspace.OpenOrFocusDocument(li.FilePath);
+            WorkspaceOld.CurrentWorkspace.OpenOrFocusDocument(li.FilePath);
         }
     }
 }

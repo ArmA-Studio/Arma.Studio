@@ -54,13 +54,13 @@ namespace ArmA.Studio.SolutionUtil
         [XmlIgnore]
         public FileSystemWatcher FSWatcher { get; private set; }
 
-        private Workspace curWorkspace;
+        private WorkspaceOld curWorkspace;
 
         public Solution()
         {
             this.FilesCollection = new ObservableSortedCollection<SolutionFileBase>();
         }
-        public void Prepare(Workspace workspace)
+        public void Prepare(WorkspaceOld workspace)
         {
             if (this.curWorkspace == workspace)
                 return;
@@ -121,7 +121,7 @@ namespace ArmA.Studio.SolutionUtil
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format(Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                App.ShowOperationFailedMessageBox(ex);
             }
         }
         public void AddExistingItem(object param)

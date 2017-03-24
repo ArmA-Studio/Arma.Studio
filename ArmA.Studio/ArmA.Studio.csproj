@@ -235,6 +235,7 @@
     <Compile Include="UpdateHelper.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Workspace.cs" />
+    <Compile Include="WorkspaceOld.cs" />
     <Page Include="Dialogs\ConfigEntrySelectorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

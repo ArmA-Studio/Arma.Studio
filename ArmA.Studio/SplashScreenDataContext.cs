@@ -77,32 +77,78 @@ namespace ArmA.Studio
             w = null;
             SetIndeterminate(true);
             string workspace;
+            string solutionPath = string.Empty;
 
             #region set/get workspace path
             SetDisplayText(Properties.Localization.Splash_SettingWorkspace);
+            Logger.Info("Trying to receive workspace...");
             workspace = string.IsNullOrWhiteSpace(ConfigHost.App.WorkspacePath) ? Dialogs.WorkspaceSelectorDialog.GetWorkspacePath(string.Empty) : ConfigHost.App.WorkspacePath;
             if (string.IsNullOrWhiteSpace(workspace))
             {
+                Logger.Info("No workspace set, exiting");
                 App.Current.Dispatcher.Invoke(() =>
                 MessageBox.Show(Properties.Localization.WorkspaceSelectorDialog_NoWorkspaceSelected, Studio.Properties.Localization.Whoops, MessageBoxButton.OK, MessageBoxImage.Error));
                 return true;
             }
             else
             {
+                Logger.Info($"Selected workspace: {workspace}");
                 ConfigHost.App.WorkspacePath = workspace;
+            }
+            if (!Directory.Exists(workspace))
+            {
+                Logger.Info($"Creating Directory for workspace ...");
+                Directory.CreateDirectory(workspace);
             }
             #endregion
 
-            w = new Workspace(workspace);
+            w = new Workspace();
+            w.PathUri = new Uri(workspace, UriKind.Absolute);
 
-            #region Prepare Solution file
+            #region Prepare Solution
+            Logger.Info("Searching solution file in workspace");
             SetDisplayText(Properties.Localization.Splash_SearchingSolutionFile);
+            foreach (var file in Directory.EnumerateFiles(workspace, string.Concat('*', App.CONST_SOLUTIONEXTENSION)))
+            {
+                solutionPath = file;
+                break;
+            }
+
+
+            SetDisplayText(Properties.Localization.Splash_PreparingSolution);
+            try
+            {
+                if (string.IsNullOrWhiteSpace(solutionPath))
+                {
+                    solutionPath = Path.Combine(workspace, string.Concat("solution", App.CONST_SOLUTIONEXTENSION));
+                    Logger.Info($"No solution file found, creating new at '{solutionPath}'");
+                    w.Solution = new Data.Solution();
+                    using (var stream = File.OpenWrite(solutionPath))
+                    {
+                        Data.Solution.Serialize(w.Solution, stream);
+                    }
+                }
+                else
+                {
+                    Logger.Info($"Solution file found: {solutionPath}");
+                    using (var stream = File.OpenRead(solutionPath))
+                    {
+                        w.Solution = Data.Solution.Deserialize(stream, new Uri(solutionPath, UriKind.Absolute));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Exception while trying to get Solution");
+                MessageBox.Show(string.Format(Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                return true;
+            }
 
             #endregion
 
             SetIndeterminate(false);
 
-            
+
             return false;
         }
 

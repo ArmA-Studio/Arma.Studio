@@ -45,7 +45,7 @@ namespace ArmA.Studio.Dialogs
             this._SelectedCategory = this.Categories.First();
             this.AvailableCategories = CollectionViewSource.GetDefaultView(this.Categories);
             this.AvailableCategories.Filter = new Predicate<object>(AvailableCategories_Filter);
-            var debuggerCategories = Workspace.CurrentWorkspace.DebugContext.GetPropertyCategories();
+            var debuggerCategories = WorkspaceOld.CurrentWorkspace.DebugContext.GetPropertyCategories();
             foreach(var it in debuggerCategories)
             {
                 bool flag = false;

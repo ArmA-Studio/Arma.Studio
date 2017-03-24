@@ -9,6 +9,6 @@
       xmlns:SolutionUtil="clr-namespace:ArmA.Studio.SolutionUtil;assembly=ArmA.Studio"
       DataType="{x:Type dc:PropertiesPane}">
     <Grid>
-        <ContentControl DataContext="{x:Static local:Workspace.CurrentWorkspace}" ContentTemplate="{Binding CurrentSelectedPropertyTemplate}" Content="{Binding CurrentSelectedProperty}"/>
+        <ContentControl DataContext="{x:Static local:WorkspaceOld.CurrentWorkspace}" ContentTemplate="{Binding CurrentSelectedPropertyTemplate}" Content="{Binding CurrentSelectedProperty}"/>
     </Grid>
 </DataTemplate>

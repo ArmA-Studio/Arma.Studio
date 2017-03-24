@@ -281,7 +281,7 @@ namespace ArmA.Studio.DataContext
         }
         public override void OpenDocument(string path)
         {
-            this.SFBRef = Workspace.CurrentWorkspace.CurrentSolution.GetOrCreateFileReference(path);
+            this.SFBRef = WorkspaceOld.CurrentWorkspace.CurrentSolution.GetOrCreateFileReference(path);
             this.SetFilePath(path);
             if(!File.Exists(path))
             {

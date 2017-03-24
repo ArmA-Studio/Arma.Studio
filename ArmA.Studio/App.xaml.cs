@@ -22,6 +22,7 @@ namespace ArmA.Studio
     public partial class App : Application
     {
         public const string CONST_UPDATESUFFIX = ".update";
+        public const string CONST_SOLUTIONEXTENSION = ".assln";
 
         public enum ExitCodes
         {
@@ -114,9 +115,14 @@ namespace ArmA.Studio
                 return;
             }
             workspace = ConfigHost.App.WorkspacePath;
-            Workspace.CurrentWorkspace = new Workspace(workspace);
+            WorkspaceOld.CurrentWorkspace = new WorkspaceOld(workspace);
             var mwnd = new MainWindow();
             mwnd.Show();
+        }
+
+        internal static void ShowOperationFailedMessageBox(Exception ex)
+        {
+            MessageBox.Show(string.Format(Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         /// <summary>
@@ -148,7 +154,7 @@ namespace ArmA.Studio
         {
             if (e.ApplicationExitCode == (int)ExitCodes.ConfigError)
                 return;
-            Workspace.CurrentWorkspace = null;
+            WorkspaceOld.CurrentWorkspace = null;
             if (e.ApplicationExitCode == (int)ExitCodes.Restart || e.ApplicationExitCode == (int)ExitCodes.RestartPluginUpdate)
             {
                 Process.Start(ExecutableFile);

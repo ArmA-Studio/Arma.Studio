@@ -49,7 +49,7 @@ namespace ArmA.Studio.DataContext
                     var variable = this.InternalVariable;
                     variable.Value = value;
                     //ToDo: Check if proper async maybe is required due to UI lag
-                    Workspace.CurrentWorkspace.DebugContext.SetVariable(variable);
+                    WorkspaceOld.CurrentWorkspace.DebugContext.SetVariable(variable);
                     this.InternalVariable = variable;
                 }
             }
@@ -73,7 +73,7 @@ namespace ArmA.Studio.DataContext
 
         protected override void OnTextEditorSet()
         {
-            var sf = Workspace.CurrentWorkspace.CurrentSolution.GetOrCreateFileReference(this.FilePath) as SolutionUtil.SolutionFile;
+            var sf = WorkspaceOld.CurrentWorkspace.CurrentSolution.GetOrCreateFileReference(this.FilePath) as SolutionUtil.SolutionFile;
             this.BreakPointMargin = new BreakPointMargin(sf);
             this.Editor.TextArea.TextView.BackgroundRenderers.Add(this.BreakPointMargin);
             this.Editor.TextArea.LeftMargins.Insert(0, BreakPointMargin);
@@ -85,9 +85,9 @@ namespace ArmA.Studio.DataContext
         }
         protected override async Task<bool> OnHoverText(int textOffset, Point p)
         {
-            if (!Workspace.CurrentWorkspace.DebugContext.IsDebuggerAttached)
+            if (!WorkspaceOld.CurrentWorkspace.DebugContext.IsDebuggerAttached)
                 return false;
-            if (!Workspace.CurrentWorkspace.DebugContext.IsPaused)
+            if (!WorkspaceOld.CurrentWorkspace.DebugContext.IsPaused)
                 return false;
             var child = SqfVariableViewPopup.Child as FrameworkElement;
             if (child == null)
@@ -99,7 +99,7 @@ namespace ArmA.Studio.DataContext
                     return false;
                 if (!ConfigHost.Instance.SqfDefinitions.All((it) => it.Name != varname))
                     return false;
-                var result = await Workspace.CurrentWorkspace.DebugContext.GetVariables(EVariableNamespace.All, varname);
+                var result = await WorkspaceOld.CurrentWorkspace.DebugContext.GetVariables(EVariableNamespace.All, varname);
                 if (!result.Any())
                     return false;
                 var container = SqfVariableViewPopup.DataContext as VariableContainer;

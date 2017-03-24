@@ -37,7 +37,7 @@ namespace ArmA.Studio.DataContext
 
             public async void UpdateValue()
             {
-                var vars = await Workspace.CurrentWorkspace.DebugContext.GetVariables(Debugger.EVariableNamespace.All, this.Name);
+                var vars = await WorkspaceOld.CurrentWorkspace.DebugContext.GetVariables(Debugger.EVariableNamespace.All, this.Name);
                 if (vars.Any())
                     this.Value = vars.First().Value;
                 else
@@ -67,8 +67,8 @@ namespace ArmA.Studio.DataContext
             Variables = new ObservableCollection<VariableViewContainer>();
             Task.Run(() =>
             {
-                System.Threading.SpinWait.SpinUntil(() => Workspace.CurrentWorkspace != null);
-                Workspace.CurrentWorkspace.DebugContext.PropertyChanged += DebugContext_PropertyChanged;
+                System.Threading.SpinWait.SpinUntil(() => WorkspaceOld.CurrentWorkspace != null);
+                WorkspaceOld.CurrentWorkspace.DebugContext.PropertyChanged += DebugContext_PropertyChanged;
             });
         }
 
@@ -77,7 +77,7 @@ namespace ArmA.Studio.DataContext
             switch (e.PropertyName)
             {
                 case nameof(DebuggerContext.IsPaused):
-                    if(Workspace.CurrentWorkspace.DebugContext.IsPaused)
+                    if(WorkspaceOld.CurrentWorkspace.DebugContext.IsPaused)
                     {
                         foreach(var it in this.Variables)
                         {
@@ -93,7 +93,7 @@ namespace ArmA.Studio.DataContext
                     }
                     break;
                 case nameof(DebuggerContext.IsDebuggerAttached):
-                    if (!Workspace.CurrentWorkspace.DebugContext.IsDebuggerAttached)
+                    if (!WorkspaceOld.CurrentWorkspace.DebugContext.IsDebuggerAttached)
                     {
                         foreach (var it in this.Variables)
                         {

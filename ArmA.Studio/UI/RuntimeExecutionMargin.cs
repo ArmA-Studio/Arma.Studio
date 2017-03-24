@@ -25,18 +25,18 @@ namespace ArmA.Studio.UI
             var view = this.TextView;
             if (view == null || !view.VisualLinesValid)
                 return;
-            if (!Workspace.CurrentWorkspace.DebugContext.IsDebuggerAttached)
+            if (!WorkspaceOld.CurrentWorkspace.DebugContext.IsDebuggerAttached)
                 return;
-            if (!Workspace.CurrentWorkspace.DebugContext.IsPaused)
+            if (!WorkspaceOld.CurrentWorkspace.DebugContext.IsPaused)
                 return;
-            if (Workspace.CurrentWorkspace.CurrentDocument != Workspace.CurrentWorkspace.DebugContext.CurrentDocument)
+            if (WorkspaceOld.CurrentWorkspace.CurrentDocument != WorkspaceOld.CurrentWorkspace.DebugContext.CurrentDocument)
                 return;
             var color = new SolidColorBrush(ConfigHost.Coloring.ExecutionMarker.MainColor);
             color.Freeze();
             var pen = new Pen(new SolidColorBrush(ConfigHost.Coloring.ExecutionMarker.BorderColor), 2);
             pen.Freeze();
 
-            var line = view.GetVisualLine(Workspace.CurrentWorkspace.DebugContext.CurrentLine);
+            var line = view.GetVisualLine(WorkspaceOld.CurrentWorkspace.DebugContext.CurrentLine);
             if (line == null)
                 return;
             var lineTop = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextTop) - view.VerticalOffset;

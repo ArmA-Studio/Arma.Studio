@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using ArmA.Studio.UI.Commands;
 using System.Reflection;
 using Xceed.Wpf.AvalonDock;
 using Utility;
@@ -17,15 +16,28 @@ using Xceed.Wpf.AvalonDock.Layout;
 using RealVirtuality.SQF;
 using ArmA.Studio.Data.UI;
 using ArmA.Studio.Data.UI.Commands;
+using ArmA.Studio.Data;
 
 namespace ArmA.Studio
 {
     public sealed class Workspace : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
         public const string CONST_DOCKING_MANAGER_LAYOUT_NAME = "docklayout.xml";
 
+        public enum ECreateDocumentModes
+        {
+            CreateTemporary,
+            AddFileReferenceOrTemporary,
+            AddOrCreateFileReference,
+            AddFileReferenceOrNull
+        }
+
+        public static Workspace Instance { get; private set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
+
+        #region Bindable window properties
         public double WindowWidth { get { return this._WindowWidth; } set { this._WindowWidth = value; ConfigHost.App.WindowWidth = value;  this.RaisePropertyChanged(); } }
         private double _WindowWidth;
 
@@ -40,59 +52,20 @@ namespace ArmA.Studio
 
         public WindowState WindowCurrentState { get { return this._WindowCurrentState; } set { this._WindowCurrentState = value; ConfigHost.App.WindowCurrentState = value; this.RaisePropertyChanged(); } }
         private WindowState _WindowCurrentState;
-
-
-
-
-
-        public static Workspace CurrentWorkspace { get; private set; }
-
-        public DebuggerContext DebugContext { get { return this._DebugContext; } set { this._DebugContext = value; this.RaisePropertyChanged(); } }
-        private DebuggerContext _DebugContext;
-
-        public SolutionUtil.Solution CurrentSolution { get { return this._CurrentSolution; } set { this._CurrentSolution = value; this.RaisePropertyChanged(); } }
-        private SolutionUtil.Solution _CurrentSolution;
-        public UI.ViewModel.IPropertyDatatemplateProvider CurrentSelectedProperty { get { return this._CurrentSelectedProperty; } set { this._CurrentSelectedProperty = value; this.RaisePropertyChanged(); } }
-        public DataTemplate CurrentSelectedPropertyTemplate { get { return this._CurrentSelectedProperty?.PropertiesTemplate; } }
-        private UI.ViewModel.IPropertyDatatemplateProvider _CurrentSelectedProperty;
-
-        public ObservableCollection<PanelBase> PanelsDisplayed
-        {
-            get { return this._PanelsDisplayed; }
-            set
-            {
-                if(this._PanelsDisplayed != null)
-                    this._PanelsDisplayed.CollectionChanged -= PanelsDisplayed_CollectionChanged;
-                this._PanelsDisplayed = value;
-                this.RaisePropertyChanged();
-                this.RaisePropertyChanged("CurrentSelectedPropertyTemplate");
-
-                this._PanelsDisplayed.CollectionChanged += PanelsDisplayed_CollectionChanged;
-            }
-        }
-        private ObservableCollection<PanelBase> _PanelsDisplayed;
-
-        public ObservableCollection<PanelBase> PanelsAvailable { get { return this._PanelsAvailable; } set { this._PanelsAvailable = value; this.RaisePropertyChanged(); } }
-        private ObservableCollection<PanelBase> _PanelsAvailable;
-
-        public ObservableCollection<DocumentBase> DocumentsDisplayed { get { return this._DocumentsDisplayed; } set { this._DocumentsDisplayed = value; this.RaisePropertyChanged(); } }
-        private ObservableCollection<DocumentBase> _DocumentsDisplayed;
-
-        public ObservableCollection<DocumentBase> DocumentsAvailable { get { return this._DocumentsAvailable; } set { this._DocumentsAvailable = value; this.RaisePropertyChanged(); } }
-        private ObservableCollection<DocumentBase> _DocumentsAvailable;
-
+        #endregion
+        #region Commands
         public ICommand CmdDisplayPanel => new RelayCommand((p) =>
         {
             if (p is PanelBase)
             {
                 var pb = p as PanelBase;
-                if (this.PanelsDisplayed.Contains(p))
+                if (this.AvalonDockPanels.Contains(p))
                 {
                     pb.CurrentVisibility = pb.CurrentVisibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
                 }
                 else
                 {
-                    this.PanelsDisplayed.Add(pb);
+                    this.AvalonDockPanels.Add(pb);
                 }
             }
         });
@@ -101,13 +74,21 @@ namespace ArmA.Studio
             var dlg = new Dialogs.LicenseViewer();
             var dlgResult = dlg.ShowDialog();
         });
-        public ICommand CmdDockingManagerInitialized => new RelayCommand((p) => this.DockingMangerInitialized(p as DockingManager));
+        public ICommand CmdDockingManagerInitialized => new RelayCommand((p) => this.OnAvalonDockingManagerInitialized(p as DockingManager));
+        
         public ICommand CmdMainWindowClosing => new RelayCommand((p) =>
         {
-            SaveLayout(this.MWDockingManager, Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
+            SaveLayout(this.AvalonDockDockingManager, System.IO.Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
             App.Current.Shutdown((int)App.ExitCodes.OK);
         });
-        public ICommand CmdSwitchWorkspace => new RelayCommand((p) => { if (App.SwitchWorkspace()) App.Shutdown(App.ExitCodes.Restart); });
+        public ICommand CmdSwitchWorkspace => new RelayCommand((p) =>
+        {
+            var newWorkspace = Dialogs.WorkspaceSelectorDialog.GetWorkspacePath(this.PathUri.AbsolutePath);
+            if(!string.IsNullOrWhiteSpace(newWorkspace))
+            {
+                App.Shutdown(App.ExitCodes.Restart);
+            }
+        });
         public ICommand CmdShowProperties => new RelayCommand((p) =>
         {
             var dlgDc = new Dialogs.PropertiesDialogDataContext();
@@ -125,83 +106,76 @@ namespace ArmA.Studio
         public ICommand CmdQuit => new RelayCommand((p) => { App.Shutdown(App.ExitCodes.OK); });
         public ICommand CmdSave => new RelayCommand((p) =>
         {
-            foreach (var doc in this.DocumentsDisplayed)
+            var doc = this.GetCurrentDocument();
+            if(doc != null && doc.HasChanges)
             {
-                if (doc.IsSelected)
-                {
-                    if (!doc.HasChanges)
-                        break;
-                    doc.SaveDocument(doc.FilePath);
-                    break;
-                }
+                doc.SaveDocument(doc.FilePath);
             }
         });
         public ICommand CmdSaveAll => new RelayCommand((p) =>
         {
-            foreach (var doc in this.DocumentsDisplayed)
+            try
             {
-                if (doc.HasChanges)
+                foreach (var doc in this.AvalonDockDocuments)
                 {
-                    doc.SaveDocument(doc.FilePath);
+                    if (doc.HasChanges)
+                    {
+                        doc.SaveDocument(doc.FilePath);
+                    }
                 }
+                using (var stream = File.OpenWrite(this.Solution.FileUri.AbsolutePath))
+                {
+                    Solution.Serialize(this.Solution, stream);
+                }
+                ConfigHost.Instance.ExecSave();
             }
-            this.SaveSolution();
+            catch (Exception ex)
+            {
+                App.ShowOperationFailedMessageBox(ex);
+            }
         });
         public ICommand CmdActiveContentChanged => new RelayCommand((p) =>
         {
             var dm = p as DockingManager;
-            this.CurrentDocument = dm.ActiveContent as DocumentBase;
+            this.CurrentContent = dm.ActiveContent as DockableBase;
         });
-
-        public string WorkingDir { get; private set; }
-
-        private DockingManager MWDockingManager;
-
-        public DocumentBase CurrentDocument { get { return this._CurrentDocument; } set { this._CurrentDocument = value; this.RaisePropertyChanged(); } }
-        private DocumentBase _CurrentDocument;
-
-        public UI.GenericDataTemplateSelector PaneDataTemplateSelector { get; private set; }
-
-        public DocumentBase GetDocumentOfSolutionFileBase(SolutionUtil.SolutionFileBase sfb)
+        #endregion
+        #region Bindable Properties
+        public ObservableCollection<PanelBase> AvailablePanels
         {
-            foreach (var it in this.DocumentsDisplayed)
-            {
-                if (it.FilePath == sfb.FullPath)
-                {
-                    return it;
-                }
-            }
-            return null;
+            get { return this._AvailablePanels; }
+            set { this._AvailablePanels = value; this.RaisePropertyChanged(); }
+        }
+        private ObservableCollection<PanelBase> _AvailablePanels;
+
+        public ObservableCollection<DocumentBase> AvailableDocuments
+        {
+            get { return this._AvailableDocuments; }
+            set { this._AvailableDocuments = value; this.RaisePropertyChanged(); }
+        }
+        private ObservableCollection<DocumentBase> _AvailableDocuments;
+
+        public DockableBase CurrentContent
+        {
+            get { return this._CurrentContent; }
+            set { if (this._CurrentContent == value) return; this._CurrentContent = value; this.RaisePropertyChanged(); }
+        }
+        private DockableBase _CurrentContent;
+        #endregion
+        #region AvalonDock Layout handling
+        public ObservableCollection<PanelBase> AvalonDockPanels { get { return this._AvalonDockPanels; } set { this._AvalonDockPanels = value; this.RaisePropertyChanged(); } }
+        private ObservableCollection<PanelBase> _AvalonDockPanels;
+
+        public ObservableCollection<DocumentBase> AvalonDockDocuments { get { return this._AvalonDockDocuments; } set { this._AvalonDockDocuments = value; this.RaisePropertyChanged(); } }
+        private ObservableCollection<DocumentBase> _AvalonDockDocuments;
+
+        private DockingManager AvalonDockDockingManager;
+
+        private void OnAvalonDockingManagerInitialized(DockingManager dockingManager)
+        {
+            this.AvalonDockDockingManager = dockingManager;
         }
 
-        public Workspace(string path)
-        {
-            this.PaneDataTemplateSelector = new UI.GenericDataTemplateSelector(Assembly.GetExecutingAssembly(), (s) => s.StartsWith("ArmA.Studio.UI.DataTemplates."));
-            this.WorkingDir = path;
-            this._PanelsAvailable = new ObservableCollection<PanelBase>(FindAllAnchorablePanelsInAssembly());
-            this.PanelsDisplayed = new ObservableCollection<PanelBase>();
-            this._DebugContext = new DebuggerContext();
-            this._DocumentsDisplayed = new ObservableCollection<DocumentBase>();
-            this._DocumentsAvailable = new ObservableCollection<DocumentBase>(FindAllDocumentsInAssembly());
-
-            const double DEF_WIN_HEIGHT = 512;
-            const double DEF_WIN_WIDTH = 1024;
-            this._WindowHeight = DEF_WIN_HEIGHT;
-            this._WindowWidth = DEF_WIN_WIDTH;
-            this._WindowLeft = (SystemParameters.PrimaryScreenWidth - DEF_WIN_WIDTH) / 2;
-            if (this._WindowLeft < 0)
-            {
-                this._WindowLeft = 0;
-            }
-            this._WindowTop = (SystemParameters.PrimaryScreenHeight - DEF_WIN_HEIGHT) / 2;
-            if (this._WindowTop < 0)
-            {
-                this._WindowTop = 0;
-            }
-            this._WindowCurrentState = WindowState.Normal;
-        }
-
-        private void PanelsDisplayed_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => RaisePropertyChanged("PanelsDisplayed");
 
         private static void LoadLayout(DockingManager dm, string v)
         {
@@ -228,20 +202,25 @@ namespace ArmA.Studio
         {
             if (e.Model is LayoutAnchorable)
             {
-                foreach (var panel in CurrentWorkspace.PanelsAvailable)
+                foreach (var panel in Instance.AvailablePanels)
                 {
                     if (panel.ContentId != e.Model.ContentId)
                         continue;
                     e.Content = panel;
-                    CurrentWorkspace.PanelsDisplayed.Add(panel);
+                    Instance.AvalonDockPanels.Add(panel);
                     break;
                 }
             }
-            else if(e.Model is LayoutDocument)
+            else if (e.Model is LayoutDocument)
             {
-                var doc = CurrentWorkspace.GetNewDocument(e.Model.ContentId);
+                var doc = Instance.CreateDocument(new Uri(e.Model.ContentId, UriKind.RelativeOrAbsolute), ECreateDocumentModes.AddFileReferenceOrNull);
+                if(doc == null)
+                {
+                    e.Cancel = true;
+                    return;
+                }
                 e.Content = doc;
-                CurrentWorkspace.DocumentsDisplayed.Add(doc);
+                Instance.AvalonDockDocuments.Add(doc);
             }
         }
 
@@ -258,209 +237,32 @@ namespace ArmA.Studio
                 layoutSerializer.Serialize(writer);
             }
         }
-        public void OpenOrFocusDocument(SolutionUtil.SolutionFile sf) => this.OpenOrFocusDocument(sf.FullPath);
-        public void OpenOrFocusDocument(string path)
-        {
-            path = path.Trim('/', '\\');
-            if (Path.IsPathRooted(path))
-            {
-                path = path.Substring(this.WorkingDir.Length + 1);
-            }
-            var fullPath = Path.Combine(this.WorkingDir, path);
-            //Check if document is already open and select instead of open
-            foreach (var doc in DocumentsDisplayed)
-            {
-                if(doc.FilePath == fullPath)
-                {
-                    doc.IsSelected = true;
-                    return;
-                }
-            }
 
-            var instance = this.GetNewDocument(path);
-            if (instance == null)
-                return;
-            this.DocumentsDisplayed.Add(instance);
-            instance.IsSelected = true;
-        }
-        public DocumentBase GetNewDocument(string path)
+        #endregion
+
+        public Uri PathUri { get; internal set; }
+        public Solution Solution { get; internal set; }
+
+
+
+        public DocumentBase CreateDocument(Uri path, ECreateDocumentModes mode)
         {
-            path = path.Trim('/', '\\');
-            if (Path.IsPathRooted(path))
+            throw new NotImplementedException();
+        }
+        public DocumentBase GetCurrentDocument()
+        {
+            if (this.CurrentContent is DocumentBase)
+                return this.CurrentContent as DocumentBase;
+
+            foreach (var doc in this.AvalonDockDocuments)
             {
-                path = path.Substring(this.WorkingDir.Length + 1);
-            }
-            var fullPath = Path.Combine(this.WorkingDir, path);
-            Type docType = null;
-            var fExt = Path.GetExtension(path);
-            foreach (var doc in DocumentsAvailable)
-            {
-                if (doc.SupportedFileExtensions.Contains(fExt))
+                if (doc.IsSelected)
                 {
-                    docType = doc.GetType();
+                    return doc;
                 }
             }
-            if (docType == null)
-            {
-                //ToDo: Let user decide how to open this document
-                MessageBox.Show("No matching editor context found. Selecting is not yet implemented.");
-                return null;
-            }
-            var instance = Activator.CreateInstance(docType) as DocumentBase;
-            instance.OpenDocument(fullPath);
-            return instance;
+            return null;
         }
 
-        private void DockingMangerInitialized(DockingManager dm)
-        {
-            if (dm == null)
-                return;
-            this.MWDockingManager = dm;
-            LoadLayout(dm, Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
-        }
-
-        private void Open()
-        {
-            var solutionFile = Directory.Exists(this.WorkingDir) ? Directory.EnumerateFiles(this.WorkingDir, "*.assln").FirstOrDefault() : string.Empty;
-            if (!string.IsNullOrWhiteSpace(solutionFile))
-            {
-                try
-                {
-                    this.CurrentSolution = solutionFile.XmlDeserialize<SolutionUtil.Solution>();
-                    this.CurrentSolution.RestoreFromXml();
-                    this.CurrentSolution.Prepare(this);
-                }
-                catch (Exception ex)
-                {
-                    while (ex.InnerException != null)
-                        ex = ex.InnerException;
-                    MessageBox.Show(string.Format(Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
-                    this.CurrentSolution = new SolutionUtil.Solution();
-                    this.CurrentSolution.Prepare(this);
-                    this.CurrentSolution.ReScan();
-                }
-            }
-            else
-            {
-                //Create new solution as no existing is present
-                this.CurrentSolution = new SolutionUtil.Solution();
-                this.CurrentSolution.Prepare(this);
-                this.CurrentSolution.ReScan();
-            }
-            this.PanelsAvailable.Add(this.CurrentSolution);
-
-            foreach (var panel in this.PanelsAvailable)
-            {
-                var iniName = panel.GetType().Name;
-                if (ConfigHost.Instance.LayoutIni.Sections.ContainsSection(iniName))
-                {
-                    var section = ConfigHost.Instance.LayoutIni[iniName];
-                    if (section.ContainsKey("ContentId"))
-                    {
-                        panel.ContentId = section["ContentId"];
-                    }
-                    if (section.ContainsKey("IsSelected"))
-                    {
-                        bool isSelectedFlag;
-                        bool.TryParse(section["IsSelected"], out isSelectedFlag);
-                        panel.IsSelected = isSelectedFlag;
-                    }
-                }
-            }
-            double d;
-            d = ConfigHost.App.WindowWidth;
-            if(d >= 0)
-            {
-                this.WindowWidth = d;
-            }
-            d = ConfigHost.App.WindowHeight;
-            if (d >= 0)
-            {
-                this.WindowHeight = d;
-            }
-            d = ConfigHost.App.WindowLeft;
-            if (d >= 0)
-            {
-                this.WindowLeft = d;
-            }
-            d = ConfigHost.App.WindowTop;
-            if (d >= 0)
-            {
-                this.WindowTop = d;
-            }
-            this.WindowCurrentState = ConfigHost.App.WindowCurrentState;
-
-            var sqfLintFileList = new List<SolutionUtil.SolutionFile>();
-            SolutionUtil.SolutionFileBase.WalkThrough(this.CurrentSolution.FilesCollection, (sfb) =>
-            {
-                var sf = sfb as SolutionUtil.SolutionFile;
-                if(sf != null && Path.GetExtension(sf.FileName).Equals(".sqf", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    sqfLintFileList.Add(sf);
-                }
-                return false;
-            });
-            Task.Run(() => {
-                foreach(var sf in sqfLintFileList)
-                {
-                    if (!File.Exists(sf.FullPath))
-                        continue;
-                    using (var stream = File.OpenRead(sf.FullPath))
-                    {
-                        DataContext.ErrorListPane.Instance.LinterDictionary[sf.FullPath] = Linting.SQF_GetLinterInfo(stream, sf.FullPath);
-                    }
-                }
-            });
-        }
-
-        private void Close()
-        {
-            this.DebugContext.Close();
-            //Save Layout GUIDs of the panels
-            foreach (var panel in PanelsAvailable)
-            {
-                var iniName = panel.GetType().Name;
-                if (!ConfigHost.Instance.LayoutIni.Sections.ContainsSection(iniName))
-                    ConfigHost.Instance.LayoutIni.Sections.AddSection(iniName);
-                var section = ConfigHost.Instance.LayoutIni[iniName];
-                section["ContentId"] = panel.ContentId;
-                section["IsSelected"] = panel.IsSelected.ToString();
-            }
-            this.SaveSolution();
-        }
-
-        public void SaveSolution()
-        {
-            var solutionFile = Directory.EnumerateFiles(this.WorkingDir, "*.assln").FirstOrDefault();
-            this.CurrentSolution.XmlSerialize(Path.Combine(this.WorkingDir, solutionFile == null ? string.Concat(Path.GetFileName(this.WorkingDir), ".assln") : solutionFile));
-        }
-
-        private static IEnumerable<PanelBase> FindAllAnchorablePanelsInAssembly()
-        {
-            var list = new List<PanelBase>();
-            foreach (var t in Assembly.GetExecutingAssembly().DefinedTypes)
-            {
-                if (!t.IsEquivalentTo(typeof(PanelBase)) && typeof(PanelBase).IsAssignableFrom(t))
-                {
-                    var instance = Activator.CreateInstance(t, true) as PanelBase;
-                    if (instance.AutoAddPanel)
-                        list.Add(instance);
-                }
-            }
-            return list;
-        }
-        private static IEnumerable<DocumentBase> FindAllDocumentsInAssembly()
-        {
-            var list = new List<DocumentBase>();
-            foreach (var t in Assembly.GetExecutingAssembly().DefinedTypes)
-            {
-                if (!t.IsEquivalentTo(typeof(DocumentBase)) && typeof(DocumentBase).IsAssignableFrom(t))
-                {
-                    var instance = Activator.CreateInstance(t) as DocumentBase;
-                    list.Add(instance);
-                }
-            }
-            return list;
-        }
     }
 }

@@ -184,7 +184,7 @@ namespace ArmA.Studio
 
                 App.Current.MainWindow.Activate();
                 SolutionFile sf = null;
-                if (!SolutionFileBase.WalkThrough(Workspace.CurrentWorkspace.CurrentSolution.FilesCollection, (sfb) =>
+                if (!SolutionFileBase.WalkThrough(WorkspaceOld.CurrentWorkspace.CurrentSolution.FilesCollection, (sfb) =>
                  {
                      var f = sfb as SolutionFile;
                      if (f != null && f.ArmAPath.Equals(e.DocumentPath, StringComparison.InvariantCultureIgnoreCase))
@@ -198,8 +198,8 @@ namespace ArmA.Studio
                     Logger.Log(NLog.LogLevel.Info, string.Format("Could not locate document {0}.", e.DocumentPath));
                     return;
                 }
-                Workspace.CurrentWorkspace.OpenOrFocusDocument(sf);
-                var doc = Workspace.CurrentWorkspace.GetDocumentOfSolutionFileBase(sf) as DataContext.TextEditorDocument;
+                WorkspaceOld.CurrentWorkspace.OpenOrFocusDocument(sf);
+                var doc = WorkspaceOld.CurrentWorkspace.GetDocumentOfSolutionFileBase(sf) as DataContext.TextEditorDocument;
                 sf.RedrawEditor();
                 if (doc == null)
                 {

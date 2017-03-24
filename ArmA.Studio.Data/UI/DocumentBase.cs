@@ -13,6 +13,7 @@ namespace ArmA.Studio.Data.UI
 {
     public abstract class DocumentBase : DockableBase
     {
+        public event EventHandler OnDocumentClosing;
         protected static DataTemplate GetDataTemplateFromAssemblyRes(string path)
         {
             var ass = System.Reflection.Assembly.GetExecutingAssembly();
@@ -37,11 +38,7 @@ namespace ArmA.Studio.Data.UI
         public override string ContentId { get { return this.FilePath; } set { throw new NotImplementedException(); } }
         public abstract string FilePath { get; }
         public abstract DataTemplate Template { get; }
-        public abstract string[] SupportedFileExtensions { get; }
-        public ICommand CmdClosing { get { return new Commands.RelayCommand(OnClosing); } }
-        public bool HasChanges { get; protected set; }
-
-        protected virtual void OnClosing(object param)
+        public ICommand CmdClosing => new Commands.RelayCommand((p) =>
         {
             if (HasChanges)
             {
@@ -55,14 +52,19 @@ namespace ArmA.Studio.Data.UI
                         return;
                 }
             }
-            try
-            {
-                Workspace.CurrentWorkspace.DocumentsDisplayed.Remove(this);
-            }
-            catch (NullReferenceException) { } //AvalonDock NRE catch as avalondock handles background docs invalidly
-        }
+            this.OnDocumentClosing?.Invoke(this, new EventArgs());
+        });
+        public bool HasChanges { get; protected set; }
+
+        public ProjectFileFolder.File FileReference { get { ProjectFileFolder.File v; this.WeakFileReference.TryGetTarget(out v); return v; } set { this.WeakFileReference.SetTarget(value); } }
+        private WeakReference<ProjectFileFolder.File> WeakFileReference;
         public abstract void SaveDocument(string path);
         public abstract void OpenDocument(string path);
         public abstract void ReloadDocument();
+
+        public DocumentBase(ProjectFileFolder.File fileRef)
+        {
+            this.WeakFileReference = new WeakReference<ProjectFileFolder.File>(fileRef);
+        }
     }
 }
