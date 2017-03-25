@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using ArmA.Studio.Plugin;
 using IniParser;
 using IniParser.Model;
 using IniParser.Parser;
@@ -209,6 +210,15 @@ namespace ArmA.Studio
 
 
         }
+
+        public void PreparePlugin(IStorageAccessPlugin sap)
+        {
+            if (this.Plugins.Contains(sap))
+                return;
+            this.Plugins.Add(sap);
+            sap.ProjectStorage = new 
+        }
+
         public static ConfigHost Instance { get; private set; }
         static ConfigHost()
         {
@@ -220,12 +230,14 @@ namespace ArmA.Studio
         public IniData AppIni { get; private set; }
         public IniData ColoringIni { get; private set; }
         public IEnumerable<RealVirtuality.SQF.SqfDefinition> SqfDefinitions { get; private set; }
+        public List<IStorageAccessPlugin> Plugins { get; private set; }
 
         private Dictionary<EIniSelector, bool> SaveTriggers;
 
 
         public ConfigHost()
         {
+            this.Plugins = new List<IStorageAccessPlugin>();
             this.SaveTriggers = new Dictionary<EIniSelector, bool>();
             string fPath;
             fPath = Path.Combine(Studio.App.ConfigPath, "Layout.ini");

@@ -123,7 +123,7 @@ namespace ArmA.Studio
 
         internal static void ShowOperationFailedMessageBox(Exception ex)
         {
-            MessageBox.Show(string.Format(Studio.Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Studio.Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+            App.Current.Dispatcher.Invoke(() => MessageBox.Show(string.Format(Studio.Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Studio.Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

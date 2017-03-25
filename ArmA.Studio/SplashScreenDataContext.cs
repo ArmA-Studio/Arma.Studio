@@ -178,6 +178,19 @@ namespace ArmA.Studio
             foreach (var p in pManager.Plugins)
             {
                 Logger.Info($"\t- {p.Name} <{p.GetType().AssemblyQualifiedName}>");
+                if (p is IAccessCallsPlugin)
+                {
+                    var acp = p as IAccessCallsPlugin;
+                    acp.GetAllPlugins = () => App.Plugins;
+                    acp.GetCurrentDocument = () => Workspace.Instance?.GetCurrentDocument();
+                    acp.GetSolution = () => Workspace.Instance?.Solution;
+                    acp.ShowOperationFailed = (ex) => App.ShowOperationFailedMessageBox(ex);
+                }
+                else if(p is IStorageAccessPlugin)
+                {
+                    var sap = p as IStorageAccessPlugin;
+                    ConfigHost.Instance.PreparePlugin(sap);
+                }
             }
             App.Plugins = pManager.Plugins;
             return true;
