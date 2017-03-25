@@ -123,25 +123,7 @@ namespace ArmA.Studio
 
         internal static void ShowOperationFailedMessageBox(Exception ex)
         {
-            MessageBox.Show(string.Format(Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static string DisplayWorkspaceSelectorDialog()
-        {
-            var dlgDc = new Dialogs.WorkspaceSelectorDialogDataContext();
-            var dlg = new Dialogs.WorkspaceSelectorDialog(dlgDc);
-            var dlgResult = dlg.ShowDialog();
-            if (!dlgResult.HasValue || !dlgResult.Value)
-            {
-                return false;
-            }
-            var workspace = dlgDc.CurrentPath;
-            ConfigHost.App.WorkspacePath = workspace;
-            return true;
+            MessageBox.Show(string.Format(Studio.Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Studio.Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
@@ -203,6 +185,10 @@ namespace ArmA.Studio
                     throw new Exception("Unknown", ex);
                 }
             }
+        }
+        public static IEnumerable<T> GetPlugins<T>() where T : Plugin.IPlugin
+        {
+            return from plugin in App.Plugins where plugin is T select (T)plugin;
         }
 
         private static void GetCrashReport(Exception ex)

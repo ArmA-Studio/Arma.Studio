@@ -25,6 +25,10 @@ namespace ArmA.Studio.Data
         public ObservableSortedCollection<ProjectFileFolder> Children { get; private set; }
 
         public Solution OwningSolution { get { Solution v; this.WeakOwningSolution.TryGetTarget(out v); return v; } set { this.WeakOwningSolution.SetTarget(value); } }
+
+        public object ArmAPath { get; internal set; }
+        public object FilePath { get; internal set; }
+
         private WeakReference<Solution> WeakOwningSolution;
 
         public Project()
@@ -48,6 +52,11 @@ namespace ArmA.Studio.Data
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator().Cast();
+        }
+
+        public ProjectFileFolder FindFileFolder(Uri uri)
+        {
+            throw new NotImplementedException();
         }
     }
 }

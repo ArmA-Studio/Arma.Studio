@@ -163,9 +163,9 @@
         <ad:DockingManager
             ev:Initialized.Command="{Binding CmdDockingManagerInitialized}"
             ev:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-            AnchorablesSource="{Binding PanelsDisplayed}"
             att:ActiveContentChangedAttached.Command="{Binding CmdActiveContentChanged}"
-            DocumentsSource="{Binding DocumentsDisplayed}"
+            AnchorablesSource="{Binding AvalonDockPanels}"
+            DocumentsSource="{Binding AvalonDockDocuments}"
             Margin="4"
             LayoutItemTemplateSelector="{Binding PaneDataTemplateSelector}">
             <ad:DockingManager.LayoutUpdateStrategy>

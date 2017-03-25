@@ -23,7 +23,20 @@ namespace ArmA.Studio.Data
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
 
-        public string Name { get { return this._Name; } set { if (this._Name == value) return; this._Name = value; RaisePropertyChanged(); } }
+        public string Name
+        {
+            get { return this._Name; }
+            set
+            {
+                if (this._Name == value)
+                    return;
+                this._Name = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(ArmAPath));
+                RaisePropertyChanged(nameof(FileUri));
+                RaisePropertyChanged(nameof(FilePath));
+            }
+        }
         private string _Name;
 
         public ObservableSortedCollection<ProjectFileFolder> Children { get; private set; }
@@ -36,6 +49,42 @@ namespace ArmA.Studio.Data
 
         public ProjectFileFolder Parent { get { ProjectFileFolder v; this.WeakParent.TryGetTarget(out v); return v; } set { this.WeakParent.SetTarget(value); } }
         private WeakReference<ProjectFileFolder> WeakParent;
+
+        public string ArmAPath
+        {
+            get
+            {
+                if(this.Parent != null)
+                {
+                    return string.Concat(this.Parent.ArmAPath, '\\', this.Name);
+                }
+                else
+                {
+                    return string.Concat(this.OwningProject.ArmAPath, '\\', this.Name);
+                }
+            }
+        }
+        public Uri FileUri
+        {
+            get
+            {
+                return new Uri(this.FilePath);
+            }
+        }
+        public string FilePath
+        {
+            get
+            {
+                if (this.Parent != null)
+                {
+                    return string.Concat(this.Parent.FilePath, '\\', this.Name);
+                }
+                else
+                {
+                    return string.Concat(this.OwningProject.FilePath, '\\', this.Name);
+                }
+            }
+        }
 
         public ProjectFileFolder()
         {

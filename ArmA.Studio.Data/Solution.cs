@@ -63,5 +63,16 @@ namespace ArmA.Studio.Data
             throw new NotImplementedException();
         }
         #endregion
+
+        public ProjectFileFolder FindFileFolder(Uri uri)
+        {
+            foreach(var proj in this.Projects)
+            {
+                var ff = proj.FindFileFolder(uri);
+                if (ff != null)
+                    return ff;
+            }
+            return null;
+        }
     }
 }

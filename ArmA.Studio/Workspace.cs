@@ -75,7 +75,6 @@ namespace ArmA.Studio
             var dlgResult = dlg.ShowDialog();
         });
         public ICommand CmdDockingManagerInitialized => new RelayCommand((p) => this.OnAvalonDockingManagerInitialized(p as DockingManager));
-        
         public ICommand CmdMainWindowClosing => new RelayCommand((p) =>
         {
             SaveLayout(this.AvalonDockDockingManager, System.IO.Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
@@ -248,6 +247,13 @@ namespace ArmA.Studio
         public DocumentBase CreateDocument(Uri path, ECreateDocumentModes mode)
         {
             throw new NotImplementedException();
+        }
+        private DocumentBase CreateNewDocument(Uri path)
+        {
+            foreach(var p in App.GetPlugins<Plugin.IDocumentProviderPlugin>())
+            {
+                
+            }
         }
         public DocumentBase GetCurrentDocument()
         {
