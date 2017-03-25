@@ -86,7 +86,14 @@ namespace ArmA.Studio.SolutionUtil
             }
         }
         [XmlIgnore]
-        public string FullPath { get { return Path.Combine(Workspace.CurrentWorkspace.WorkingDir, RelativePath); } }
+        public string FullPath {
+            get {
+                if (Workspace.CurrentWorkspace != null) {
+                    return Path.Combine(Workspace.CurrentWorkspace.WorkingDir, RelativePath);
+                }
+                return String.Empty;
+            }
+        }
 
         [XmlIgnore]
         public SolutionFileBase Parent
