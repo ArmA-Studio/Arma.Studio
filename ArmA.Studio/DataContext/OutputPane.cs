@@ -24,6 +24,7 @@ namespace ArmA.Studio.DataContext
         private static Dictionary<string, TextDocument> DocumentDictionary { get; set; }
         private static void Logger_OnLog(object sender, LoggerTargets.SubscribableTarget.OnLogEventArgs e)
         {
+            if (App.Current == null) { return; }
             App.Current.Dispatcher.InvokeAsync(() =>
             {
                 if (!DocumentDictionary.ContainsKey(e.Logger))

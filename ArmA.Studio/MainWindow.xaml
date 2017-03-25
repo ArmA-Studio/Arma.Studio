@@ -12,7 +12,7 @@
         xmlns:win="clr-namespace:System.Windows;assembly=PresentationCore"
         xmlns:p="clr-namespace:ArmA.Studio.Properties"
         mc:Ignorable="d"
-        Title="ArmA.Studio"
+        Title="{Binding CurrentWorkspace.WorkingDir, StringFormat=ArmA.Studio - {0}}"
         Height="{Binding WindowHeight, Mode=TwoWay}"
         Width="{Binding WindowWidth, Mode=TwoWay}"
         WindowState="{Binding WindowCurrentState, Mode=TwoWay}"

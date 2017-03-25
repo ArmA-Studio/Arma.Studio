@@ -46,21 +46,23 @@ namespace ArmA.Studio.Dialogs
             this.AvailableCategories = CollectionViewSource.GetDefaultView(this.Categories);
             this.AvailableCategories.Filter = new Predicate<object>(AvailableCategories_Filter);
             var debuggerCategories = Workspace.CurrentWorkspace.DebugContext.GetPropertyCategories();
-            foreach(var it in debuggerCategories)
-            {
-                bool flag = false;
-                foreach(var it2 in this.Categories)
+            if (debuggerCategories != null) {
+                foreach (var it in debuggerCategories)
                 {
-                    if(it.Name.Equals(it2.Name, StringComparison.InvariantCultureIgnoreCase))
+                    bool flag = false;
+                    foreach (var it2 in this.Categories)
                     {
-                        it2.Add(it);
-                        flag = true;
-                        break;
+                        if (it.Name.Equals(it2.Name, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            it2.Add(it);
+                            flag = true;
+                            break;
+                        }
                     }
-                }
-                if(!flag)
-                {
-                    this.Categories.Add(it);
+                    if (!flag)
+                    {
+                        this.Categories.Add(it);
+                    }
                 }
             }
         }
