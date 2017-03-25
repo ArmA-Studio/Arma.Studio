@@ -338,11 +338,11 @@ namespace ArmA.Studio.SolutionUtil
         {
             if ((obj is SolutionFolder) && !(this is SolutionFolder))
             {
-                return -1;
+                return 1;
             }
             else if (!(obj is SolutionFolder) && (this is SolutionFolder))
             {
-                return 1;
+                return -1;
             }
             else if (obj is SolutionFileBase)
             {

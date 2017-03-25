@@ -42,7 +42,7 @@ namespace Utility.Collections
                 {
                     var it1 = (T)this.InnerList[i1];
                     var compRes = it0.CompareTo(it1);
-                    if (compRes < 0)
+                    if (compRes > 0)
                     {
                         hasChange = true;
                         this.InnerList[i0] = it1;
