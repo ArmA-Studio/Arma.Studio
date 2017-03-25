@@ -448,8 +448,10 @@ namespace ArmA.Studio
 
         public void SaveSolution()
         {
-            var solutionFile = Directory.EnumerateFiles(this.WorkingDir, "*.assln").FirstOrDefault();
-            this.CurrentSolution.XmlSerialize(Path.Combine(this.WorkingDir, solutionFile == null ? string.Concat(Path.GetFileName(this.WorkingDir), ".assln") : solutionFile));
+            if (Directory.Exists(this.WorkingDir)) {
+                var solutionFile = Directory.EnumerateFiles(this.WorkingDir, "*.assln").FirstOrDefault();
+                this.CurrentSolution.XmlSerialize(Path.Combine(this.WorkingDir, solutionFile == null ? string.Concat(Path.GetFileName(this.WorkingDir), ".assln") : solutionFile));
+            }
         }
 
         private static IEnumerable<PanelBase> FindAllAnchorablePanelsInAssembly()
