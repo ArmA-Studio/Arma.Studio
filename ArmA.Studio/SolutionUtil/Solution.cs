@@ -70,14 +70,20 @@ namespace ArmA.Studio.SolutionUtil
             this.CmdContextMenu_Add_ExistingItem = new UI.Commands.RelayCommand(this.AddExistingItem);
             this.CmdContextMenu_Add_NewFolder = new UI.Commands.RelayCommand(this.AddNewFolder);
             this.curWorkspace = workspace;
-            this.FSWatcher = new FileSystemWatcher(this.curWorkspace.WorkingDir);
+            if (Directory.Exists(this.curWorkspace.WorkingDir)) {
+                this.FSWatcher = new FileSystemWatcher(this.curWorkspace.WorkingDir);
+            } else {
+                this.FSWatcher = new FileSystemWatcher();
+            }
             this.FSWatcher.Changed += FSWatcher_Changed;
         }
         public void ReScan()
         {
-            foreach (var file in Directory.EnumerateFiles(this.curWorkspace.WorkingDir, "*.*", SearchOption.AllDirectories).Pick((it) => FileFilter.Contains(Path.GetExtension(it)) || Path.GetFileName(it).Equals(SolutionFileBase.PBOPREFIX, StringComparison.InvariantCultureIgnoreCase)))
-            {
-                this.GetOrCreateFileReference(file);
+            if (Directory.Exists(this.curWorkspace.WorkingDir)) {
+                foreach (var file in Directory.EnumerateFiles(this.curWorkspace.WorkingDir, "*.*", SearchOption.AllDirectories).Pick((it) => FileFilter.Contains(Path.GetExtension(it)) || Path.GetFileName(it).Equals(SolutionFileBase.PBOPREFIX, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    this.GetOrCreateFileReference(file);
+                }
             }
         }
         public void CreateNewItem(object param)

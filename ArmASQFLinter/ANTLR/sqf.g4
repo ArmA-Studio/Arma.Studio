@@ -98,7 +98,7 @@ primaryexpression:
                  |   variable
                  ;
 nularexpression: { this.NularDefinitions.ContainsName(_input.Lt(1).Text) }? IDENTIFIER;
-unaryexpression: { this.UnaryDefinitions.ContainsName(_input.Lt(1).Text) }? (IDENTIFIER | NEGATION) primaryexpression;
+unaryexpression: { this.UnaryDefinitions.ContainsName(_input.Lt(1).Text) || _input.Lt(1).Text == "=" }? (IDENTIFIER | NEGATION | OPERATOR) primaryexpression;
 roundbrackets:	ROUNDOPEN binaryexpression ROUNDCLOSE;
 array:			EDGYOPEN ( binaryexpression ( ',' binaryexpression )* )? EDGYCLOSE;
 variable:		IDENTIFIER;

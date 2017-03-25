@@ -103,7 +103,7 @@ namespace ArmA.Studio
 
         public IEnumerable<Data.Configuration.ConfigCategory> GetPropertyCategories()
         {
-            return this.DebuggerInstance.GetConfigurationOptions();
+            return this.DebuggerInstance?.GetConfigurationOptions();
         }
 
         private void Breakpoints_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

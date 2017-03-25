@@ -284,7 +284,7 @@ namespace RealVirtuality.SQF.ANTLR
         public void ExitUnaryexpression([NotNull] sqfParser.UnaryexpressionContext context)
         {
             var node = this.ExitGeneric<SqfUnaryExpression>(context);
-            node.Operator = (context.IDENTIFIER()??context.NEGATION()).GetText();
+            node.Operator = (context.IDENTIFIER()??context.NEGATION()??context.OPERATOR()).GetText();
             try
             {
                 node.Expression = node.Children[0];

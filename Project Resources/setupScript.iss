@@ -2,9 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ArmA.Studio"
-#define MyAppVersion "0.1.6290.31151"
+#define MyAppVersion "0.1.6293.24366"
 #define MyAppPublisher "X39"
-#define MyAppURL "http://x39.io/projects?project=ArmA.Studio"
+#define MyAppURL "https://x39.io/projects?project=ArmA.Studio"
 #define MyAppExeName "ArmA.Studio.exe"
 
 [Setup]

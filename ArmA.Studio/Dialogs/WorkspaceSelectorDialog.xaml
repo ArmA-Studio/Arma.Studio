@@ -7,7 +7,7 @@
         xmlns:p="clr-namespace:ArmA.Studio.Properties"
         xmlns:att="clr-namespace:ArmA.Studio.UI.Attached"
         mc:Ignorable="d"
-        Title="{x:Static p:Localization.WorkspaceSelectorDialog_Title}" Height="200" Style="{StaticResource DialogWindow}">
+        Title="{x:Static p:Localization.WorkspaceSelectorDialog_Title}" Height="210" Style="{StaticResource DialogWindow}">
     <Grid VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

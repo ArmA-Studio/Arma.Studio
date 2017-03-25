@@ -86,7 +86,14 @@ namespace ArmA.Studio.SolutionUtil
             }
         }
         [XmlIgnore]
-        public string FullPath { get { return Path.Combine(WorkspaceOld.CurrentWorkspace.WorkingDir, RelativePath); } }
+        public string FullPath {
+            get {
+                if (Workspace.CurrentWorkspace != null) {
+                    return Path.Combine(Workspace.CurrentWorkspace.WorkingDir, RelativePath);
+                }
+                return String.Empty;
+            }
+        }
 
         [XmlIgnore]
         public SolutionFileBase Parent
@@ -331,11 +338,11 @@ namespace ArmA.Studio.SolutionUtil
         {
             if ((obj is SolutionFolder) && !(this is SolutionFolder))
             {
-                return -1;
+                return 1;
             }
             else if (!(obj is SolutionFolder) && (this is SolutionFolder))
             {
-                return 1;
+                return -1;
             }
             else if (obj is SolutionFileBase)
             {
