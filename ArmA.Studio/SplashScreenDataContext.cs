@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -68,8 +69,13 @@ namespace ArmA.Studio
             }
             reset();
 
-            if (!Splash_Workspace(setIndeterminate, setDisplayText, setProgress))
+            Workspace w;
+            if (!Splash_Workspace(setIndeterminate, setDisplayText, setProgress, out w))
                 return;
+
+
+            var mainWindow = new MainWindow();
+            mainWindow.ShowDialog();
         }
 
         private static bool Splash_Workspace(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress, out Workspace w)
@@ -102,7 +108,25 @@ namespace ArmA.Studio
             }
             #endregion
 
-            w = new Workspace();
+            var dataTemplateSelector = new UI.GenericDataTemplateSelector();
+            w = new Workspace(dataTemplateSelector);
+            dataTemplateSelector.AddAllDataTemplatesInAssembly(Assembly.GetExecutingAssembly(), (s) => s.StartsWith("ArmA.Studio.UI.DataTemplates."));
+            foreach (var dt in App.GetPlugins<IDocumentProviderPlugin>().SelectMany((p) => p.DocumentDataTemplates))
+            {
+                dataTemplateSelector.AddDataTemplate(dt);
+            }
+            foreach (var p in App.GetPlugins<IPaneProviderPlugin>())
+            {
+                foreach(var dt in p.PaneDataTemplates)
+                {
+                    dataTemplateSelector.AddDataTemplate(dt);
+                }
+                foreach(var paneType in p.PaneDataContextTypes)
+                {
+                    var pane = Activator.CreateInstance(paneType) as Data.UI.PanelBase;
+                    w.AvailablePanels.Add(pane);
+                }
+            }
             w.PathUri = new Uri(workspace, UriKind.Absolute);
 
             #region Prepare Solution

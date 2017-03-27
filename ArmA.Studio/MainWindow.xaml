@@ -18,7 +18,7 @@
         WindowState="{Binding WindowCurrentState, Mode=TwoWay}"
         Top="{Binding WindowTop, Mode=TwoWay}"
         Left="{Binding WindowLeft, Mode=TwoWay}"
-        DataContext="{x:Static local:WorkspaceOld.CurrentWorkspace}"
+        DataContext="{x:Static local:Workspace.Instance}"
         Icon="Resources/Logo.ico"
         ev:Closing.Command="{Binding CmdMainWindowClosing}" UseLayoutRounding="True">
     <DockPanel>
@@ -167,7 +167,7 @@
             AnchorablesSource="{Binding AvalonDockPanels}"
             DocumentsSource="{Binding AvalonDockDocuments}"
             Margin="4"
-            LayoutItemTemplateSelector="{Binding PaneDataTemplateSelector}">
+            LayoutItemTemplateSelector="{Binding LayoutItemTemplateSelector}">
             <ad:DockingManager.LayoutUpdateStrategy>
                 <local:LayoutUpdateStrategy/>
             </ad:DockingManager.LayoutUpdateStrategy>

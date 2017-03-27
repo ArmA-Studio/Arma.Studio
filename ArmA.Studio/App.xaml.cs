@@ -24,6 +24,8 @@ namespace ArmA.Studio
     {
         public const string CONST_UPDATESUFFIX = ".update";
         public const string CONST_SOLUTIONEXTENSION = ".assln";
+        public const string CONST_CONFIGURATION = "Configuration";
+
 
         public enum ExitCodes
         {
@@ -38,7 +40,7 @@ namespace ArmA.Studio
         public static string ExecutableFile { get { return Assembly.GetExecutingAssembly().GetName().CodeBase.Substring("file:///".Length); } }
         public static string SyntaxFilesPath { get { return Path.Combine(ExecutablePath, "SyntaxFiles"); } }
         public static string PluginsPath { get { return Path.Combine(ExecutablePath, "Plugins"); } }
-        public static string ConfigPath { get { return Path.Combine(ApplicationDataPath, "Configuration"); } }
+        public static string ConfigPath { get { return Path.Combine(ApplicationDataPath, CONST_CONFIGURATION); } }
         public static string FileTemplatePath { get { return Path.Combine(ApplicationDataPath, "Templates"); } }
         public static string TempPath { get { return Path.Combine(Path.GetTempPath(), @"ArmA.Studio"); } }
         public static string CommonApplicationDataPath { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @"ArmA.Studio"); } }

@@ -115,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dialogs\DocumentSelectorDialog.xaml.cs">
+      <DependentUpon>DocumentSelectorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DocumentSelectorDialogDataContext.cs" />
     <Compile Include="Dialogs\ReportDialog.xaml.cs">
       <DependentUpon>ReportDialog.xaml</DependentUpon>
     </Compile>
@@ -187,7 +191,6 @@
     </Compile>
     <Compile Include="Dialogs\ConfigEntrySelectorDialogDataContext.cs" />
     <Compile Include="Dialogs\WorkspaceSelectorDialogDataContext.cs" />
-    <Compile Include="Dialogs\License.cs" />
     <Compile Include="Dialogs\LicenseViewer.xaml.cs">
       <DependentUpon>LicenseViewer.xaml</DependentUpon>
     </Compile>
@@ -239,8 +242,11 @@
     <Compile Include="UpdateHelper.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Workspace.cs" />
-    <Compile Include="WorkspaceOld.cs" />
     <Page Include="Dialogs\ConfigEntrySelectorDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DocumentSelectorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

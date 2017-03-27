@@ -34,6 +34,7 @@
       <HintPath>..\packages\ini-parser.3.4.0\lib\net20\INIFileParser.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,7 +48,9 @@
   <ItemGroup>
     <Compile Include="Extensions.cs" />
     <Compile Include="IAccessCallsPlugin.cs" />
+    <Compile Include="IPaneProviderPlugin.cs" />
     <Compile Include="IDocumentProviderPlugin.cs" />
+    <Compile Include="ILicenseProviderPlugin.cs" />
     <Compile Include="ISplashActivityPlugin.cs" />
     <Compile Include="IUpdatingPlugin.cs" />
     <Compile Include="IDebuggerPlugin.cs" />

@@ -10,34 +10,29 @@ using Utility.Collections;
 
 namespace ArmA.Studio.Data
 {
-    public abstract class ProjectFileFolder : IComparable, INotifyPropertyChanged, IEnumerable<ProjectFileFolder>
+    public class ProjectFileFolder : IComparable, INotifyPropertyChanged
     {
-        public class File : ProjectFileFolder
-        {
-
-        }
-        public class Folder : ProjectFileFolder
-        {
-
-        }
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
 
-        public string Name
+        public string ProjectRelativePath
         {
-            get { return this._Name; }
+            get { return this._ProjectRelativePath; }
             set
             {
-                if (this._Name == value)
+                if (this._ProjectRelativePath == value)
                     return;
-                this._Name = value;
+                this._ProjectRelativePath = value;
                 RaisePropertyChanged();
                 RaisePropertyChanged(nameof(ArmAPath));
-                RaisePropertyChanged(nameof(FileUri));
                 RaisePropertyChanged(nameof(FilePath));
+                RaisePropertyChanged(nameof(FileUri));
             }
         }
-        private string _Name;
+        private string _ProjectRelativePath;
+        public string ArmAPath { get { return string.Concat(this.OwningProject.ArmAPath, '\\', this.ProjectRelativePath); } }
+        public string FilePath { get { return string.Concat(this.OwningProject.FilePath, '\\', this.ProjectRelativePath); } }
+        public Uri FileUri { get { return new Uri(this.FilePath); } }
 
         public ObservableSortedCollection<ProjectFileFolder> Children { get; private set; }
 
@@ -47,68 +42,30 @@ namespace ArmA.Studio.Data
         public Project OwningProject { get { Project v; this.WeakOwningProject.TryGetTarget(out v); return v; } set { this.WeakOwningProject.SetTarget(value); } }
         private WeakReference<Project> WeakOwningProject;
 
-        public ProjectFileFolder Parent { get { ProjectFileFolder v; this.WeakParent.TryGetTarget(out v); return v; } set { this.WeakParent.SetTarget(value); } }
-        private WeakReference<ProjectFileFolder> WeakParent;
 
-        public string ArmAPath
-        {
-            get
-            {
-                if(this.Parent != null)
-                {
-                    return string.Concat(this.Parent.ArmAPath, '\\', this.Name);
-                }
-                else
-                {
-                    return string.Concat(this.OwningProject.ArmAPath, '\\', this.Name);
-                }
-            }
-        }
-        public Uri FileUri
-        {
-            get
-            {
-                return new Uri(this.FilePath);
-            }
-        }
-        public string FilePath
-        {
-            get
-            {
-                if (this.Parent != null)
-                {
-                    return string.Concat(this.Parent.FilePath, '\\', this.Name);
-                }
-                else
-                {
-                    return string.Concat(this.OwningProject.FilePath, '\\', this.Name);
-                }
-            }
-        }
+        public bool IsFolder { get { return this._IsFolder; } set { if (this._IsFolder == value) return; this._IsFolder = value; this.RaisePropertyChanged(); } }
+        private bool _IsFolder;
 
-        public ProjectFileFolder()
+        private ProjectFileFolder() : this(string.Empty) { }
+        public ProjectFileFolder(string projectRelativePath)
         {
             this.Children = new ObservableSortedCollection<ProjectFileFolder>();
             this.WeakOwningSolution = new WeakReference<Solution>(null);
             this.WeakOwningProject = new WeakReference<Project>(null);
-            this.WeakParent = new WeakReference<ProjectFileFolder>(null);
-            this.Name = string.Empty;
+            this.ProjectRelativePath = projectRelativePath;
         }
 
 
         public int CompareTo(object obj)
         {
-            return this.Name.CompareTo(obj);
-        }
-
-        public IEnumerator<ProjectFileFolder> GetEnumerator()
-        {
-            return this.Children.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator().Cast();
+            if(obj is ProjectFileFolder)
+            {
+                if (this.IsFolder && !(obj as ProjectFileFolder).IsFolder)
+                    return 1;
+                else if (!this.IsFolder && (obj as ProjectFileFolder).IsFolder)
+                    return -1; 
+            }
+            return this.ProjectRelativePath.CompareTo(obj);
         }
     }
 }

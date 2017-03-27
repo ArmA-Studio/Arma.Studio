@@ -216,7 +216,11 @@ namespace ArmA.Studio
             if (this.Plugins.Contains(sap))
                 return;
             this.Plugins.Add(sap);
-            sap.ProjectStorage = new 
+            var projectConfig = GetProjectStoragePath(sap);
+            var toolConfig = GetToolStoragePath(sap);
+            var parser = new FileIniDataParser();
+            sap.ProjectStorage = File.Exists(projectConfig) ? parser.ReadFile(projectConfig, Encoding.UTF8) : new IniData();
+            sap.ToolStorage = File.Exists(toolConfig) ? parser.ReadFile(toolConfig, Encoding.UTF8) : new IniData();
         }
 
         public static ConfigHost Instance { get; private set; }
@@ -239,46 +243,20 @@ namespace ArmA.Studio
         {
             this.Plugins = new List<IStorageAccessPlugin>();
             this.SaveTriggers = new Dictionary<EIniSelector, bool>();
+            var parser = new FileIniDataParser();
             string fPath;
+
             fPath = Path.Combine(Studio.App.ConfigPath, "Layout.ini");
-            if (File.Exists(fPath))
-            {
-                var parser = new FileIniDataParser();
-                this.LayoutIni = parser.ReadFile(fPath);
-            }
-            else
-            {
-                this.LayoutIni = new IniData();
-            }
+            this.LayoutIni = File.Exists(fPath) ? parser.ReadFile(fPath, Encoding.UTF8) : new IniData();
+
             fPath = Path.Combine(Studio.App.ConfigPath, "App.ini");
-            if (File.Exists(fPath))
-            {
-                var parser = new FileIniDataParser();
-                this.AppIni = parser.ReadFile(fPath);
-            }
-            else
-            {
-                this.AppIni = new IniData();
-            }
+            this.AppIni = File.Exists(fPath) ? parser.ReadFile(fPath, Encoding.UTF8) : new IniData();
+
             fPath = Path.Combine(Studio.App.ConfigPath, "Coloring.ini");
-            if (File.Exists(fPath))
-            {
-                var parser = new FileIniDataParser();
-                this.ColoringIni = parser.ReadFile(fPath);
-            }
-            else
-            {
-                this.ColoringIni = new IniData();
-            }
+            this.ColoringIni = File.Exists(fPath) ? parser.ReadFile(fPath, Encoding.UTF8) : new IniData();
+
             fPath = Path.Combine(Studio.App.ExecutablePath, "SqfDefinition.xml");
-            if (File.Exists(fPath))
-            {
-                this.SqfDefinitions = fPath.XmlDeserialize<List<RealVirtuality.SQF.SqfDefinition>>();
-            }
-            else
-            {
-                this.SqfDefinitions = new List<RealVirtuality.SQF.SqfDefinition>();
-            }
+            this.SqfDefinitions = File.Exists(fPath) ? fPath.XmlDeserialize<List<RealVirtuality.SQF.SqfDefinition>>() : new List<RealVirtuality.SQF.SqfDefinition>();
         }
         public void SaveAll()
         {
@@ -287,6 +265,15 @@ namespace ArmA.Studio
                 this.Save(sel);
             }
             this.ExecSave();
+        }
+
+        public static string GetToolStoragePath(IStorageAccessPlugin p)
+        {
+            return Path.Combine(Studio.App.ConfigPath, string.Concat(p.GetType().FullName, ".plugin.ini"));
+        }
+        public static string GetProjectStoragePath(IStorageAccessPlugin p)
+        {
+            return Path.Combine(Workspace.Instance.ConfigPath, string.Concat(p.GetType().FullName, ".plugin.ini"));
         }
 
         public void Save(EIniSelector selector)
@@ -310,12 +297,23 @@ namespace ArmA.Studio
                             parser.WriteFile(Path.Combine(Studio.App.ConfigPath, "App.ini"), this.AppIni, Encoding.UTF8);
                             break;
                         case EIniSelector.Coloring:
-                            parser.WriteFile(Path.Combine(Studio.App.ConfigPath, "Coloring.ini"), this.ColoringIni);
+                            parser.WriteFile(Path.Combine(Studio.App.ConfigPath, "Coloring.ini"), this.ColoringIni, Encoding.UTF8);
                             break;
                         case EIniSelector.Layout:
-                            parser.WriteFile(Path.Combine(Studio.App.ConfigPath, "Layout.ini"), this.LayoutIni);
+                            parser.WriteFile(Path.Combine(Studio.App.ConfigPath, "Layout.ini"), this.LayoutIni, Encoding.UTF8);
                             break;
                     }
+                }
+            }
+            foreach(var p in this.Plugins)
+            {
+                if(p.ProjectStorageHasChanges)
+                {
+                    parser.WriteFile(GetProjectStoragePath(p), p.ProjectStorage, Encoding.UTF8);
+                }
+                if(p.ToolStorageHasChanges)
+                {
+                    parser.WriteFile(GetToolStoragePath(p), p.ToolStorage, Encoding.UTF8);
                 }
             }
         }

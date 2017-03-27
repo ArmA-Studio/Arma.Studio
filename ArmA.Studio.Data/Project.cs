@@ -26,8 +26,27 @@ namespace ArmA.Studio.Data
 
         public Solution OwningSolution { get { Solution v; this.WeakOwningSolution.TryGetTarget(out v); return v; } set { this.WeakOwningSolution.SetTarget(value); } }
 
-        public object ArmAPath { get; internal set; }
-        public object FilePath { get; internal set; }
+        public string ProjectPath
+        {
+            get { return this._ProjectPath; }
+            set
+            {
+                if (this._ProjectPath == value)
+                    return;
+                this._ProjectPath = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(ArmAPath));
+                RaisePropertyChanged(nameof(FilePath));
+                RaisePropertyChanged(nameof(FileUri));
+            }
+        }
+        private string _ProjectPath;
+
+        public string ArmAPath { get { return this._ArmAPath; } set { if (this._ArmAPath == value) return; this._ArmAPath = value; RaisePropertyChanged(); } }
+        private string _ArmAPath;
+        public string FilePath { get { return this._FilePath; } set { if (this._FilePath == value) return; this._FilePath = value; RaisePropertyChanged(); } }
+        private string _FilePath;
+        public Uri FileUri { get { return new Uri(this.FilePath); } }
 
         private WeakReference<Solution> WeakOwningSolution;
 
@@ -56,7 +75,43 @@ namespace ArmA.Studio.Data
 
         public ProjectFileFolder FindFileFolder(Uri uri)
         {
-            throw new NotImplementedException();
+            var res = FindFileFolderOrNull(uri);
+            if (res == null)
+                throw new KeyNotFoundException();
+            return res;
+        }
+        public ProjectFileFolder FindFileFolderOrNull(Uri uri)
+        {
+            foreach (var it in this)
+            {
+                if(it.FileUri.Equals(uri))
+                {
+                    return it;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Receives or creates a <see cref="ProjectFileFolder"/> inside of this <see cref="Project"/>.
+        /// </summary>
+        /// <param name="path">Path to the FileFolder.</param>
+        /// <returns>reference to a <see cref="ProjectFileFolder"/>.</returns>
+        /// <exception cref="ArgumentException">Will be thrown when the provided <see cref="Uri"/> is not leading to this <see cref="Project"/>.</exception>
+        public ProjectFileFolder GetOrCreateFileFolder(Uri path)
+        {
+            if (this.FileUri.IsBaseOf(path))
+                throw new ArgumentException("Basepath missmatch", nameof(path));
+            foreach(var pff in this)
+            {
+                if (pff.FileUri.Equals(path))
+                    return pff;
+            }
+            var tmp = new ProjectFileFolder(Uri.UnescapeDataString(this.FileUri.MakeRelativeUri(path).ToString()));
+            this.Children.Add(tmp);
+            tmp.OwningProject = this;
+            tmp.OwningSolution = this.OwningSolution;
+            return tmp;
         }
     }
 }

@@ -13,6 +13,24 @@ namespace ArmA.Studio.Data.UI
 {
     public abstract class DocumentBase : DockableBase
     {
+        public sealed class DocumentDescribor
+        {
+            public Uri IconSource { get; private set; }
+            public string Name { get; private set; }
+            public IEnumerable<FileType> SupportedFileTypes { get; private set; }
+
+            public DocumentDescribor(IEnumerable<FileType> supportedFileTypes, string name) : this(supportedFileTypes, name, null as Uri) { }
+            public DocumentDescribor(IEnumerable<FileType> supportedFileTypes, string name, string iconSource) : this(supportedFileTypes, name, new Uri(iconSource, UriKind.RelativeOrAbsolute)) { }
+            public DocumentDescribor(IEnumerable<FileType> supportedFileTypes, string name, Uri iconSource)
+            {
+                this.SupportedFileTypes = supportedFileTypes;
+                this.Name = name;
+                this.IconSource = iconSource;
+            }
+        }
+
+
+
         public event EventHandler OnDocumentClosing;
         protected static DataTemplate GetDataTemplateFromAssemblyRes(string path)
         {
@@ -56,15 +74,19 @@ namespace ArmA.Studio.Data.UI
         });
         public bool HasChanges { get; protected set; }
 
-        public ProjectFileFolder.File FileReference { get { ProjectFileFolder.File v; this.WeakFileReference.TryGetTarget(out v); return v; } set { this.WeakFileReference.SetTarget(value); } }
-        private WeakReference<ProjectFileFolder.File> WeakFileReference;
+        public ProjectFileFolder FileReference { get { ProjectFileFolder v; this.WeakFileReference.TryGetTarget(out v); return v; } set { this.WeakFileReference.SetTarget(value); } }
+        private WeakReference<ProjectFileFolder> WeakFileReference;
+
+        public bool IsTemporary { get { return this._IsTemporary; } set { if (this._IsTemporary == value) return; this._IsTemporary = value; RaisePropertyChanged(); } }
+        private bool _IsTemporary;
+
         public abstract void SaveDocument(string path);
         public abstract void OpenDocument(string path);
         public abstract void ReloadDocument();
 
-        public DocumentBase(ProjectFileFolder.File fileRef)
+        public DocumentBase(ProjectFileFolder fileRef)
         {
-            this.WeakFileReference = new WeakReference<ProjectFileFolder.File>(fileRef);
+            this.WeakFileReference = new WeakReference<ProjectFileFolder>(fileRef);
         }
     }
 }

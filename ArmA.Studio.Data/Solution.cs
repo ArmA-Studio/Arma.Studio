@@ -36,15 +36,11 @@ namespace ArmA.Studio.Data
             foreach (var proj in this.Projects)
             {
                 proj.OwningSolution = this;
-                proj.ForEachNested((pff) =>
+                foreach(var pff in proj)
                 {
                     pff.OwningSolution = this;
                     pff.OwningProject = proj;
-                    foreach (var child in pff)
-                    {
-                        child.Parent = pff;
-                    }
-                });
+                }
             }
         }
 

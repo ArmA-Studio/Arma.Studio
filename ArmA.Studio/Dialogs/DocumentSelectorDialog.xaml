@@ -1,0 +1,26 @@
+﻿<Window x:Class="ArmA.Studio.Dialogs.DocumentSelectorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ArmA.Studio.Properties"
+        xmlns:local="clr-namespace:ArmA.Studio.Dialogs"
+        xmlns:att="clr-namespace:ArmA.Studio.UI.Attached"
+        xmlns:ev="clr-namespace:ArmA.Studio.UI.Attached.Eventing"
+        mc:Ignorable="d"
+        Title="{x:Static p:Localization.CreateNewFileDialog_Title}" Style="{StaticResource DialogWindow}">
+    <ListView Grid.Row="0" VerticalAlignment="Stretch" Margin="0 0 0 8" ItemsSource="{Binding FileTypeCollection}" SelectedItem="{Binding SelectedItem}">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <Grid Height="22">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="{Binding IconSource}" Margin="0 0 4 0"/>
+                    <TextBlock Grid.Column="1" Text="{Binding Name}"/>
+                </Grid>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</Window>

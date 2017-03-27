@@ -37,8 +37,8 @@ namespace ArmA.Studio
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
 
-        #region Bindable window properties
-        public double WindowWidth { get { return this._WindowWidth; } set { this._WindowWidth = value; ConfigHost.App.WindowWidth = value;  this.RaisePropertyChanged(); } }
+        #region Updating window properties
+        public double WindowWidth { get { return this._WindowWidth; } set { this._WindowWidth = value; ConfigHost.App.WindowWidth = value; this.RaisePropertyChanged(); } }
         private double _WindowWidth;
 
         public double WindowHeight { get { return this._WindowHeight; } set { this._WindowHeight = value; ConfigHost.App.WindowHeight = value; this.RaisePropertyChanged(); } }
@@ -83,7 +83,7 @@ namespace ArmA.Studio
         public ICommand CmdSwitchWorkspace => new RelayCommand((p) =>
         {
             var newWorkspace = Dialogs.WorkspaceSelectorDialog.GetWorkspacePath(this.PathUri.AbsolutePath);
-            if(!string.IsNullOrWhiteSpace(newWorkspace))
+            if (!string.IsNullOrWhiteSpace(newWorkspace))
             {
                 App.Shutdown(App.ExitCodes.Restart);
             }
@@ -106,7 +106,7 @@ namespace ArmA.Studio
         public ICommand CmdSave => new RelayCommand((p) =>
         {
             var doc = this.GetCurrentDocument();
-            if(doc != null && doc.HasChanges)
+            if (doc != null && doc.HasChanges)
             {
                 doc.SaveDocument(doc.FilePath);
             }
@@ -139,20 +139,13 @@ namespace ArmA.Studio
             this.CurrentContent = dm.ActiveContent as DockableBase;
         });
         #endregion
-        #region Bindable Properties
+        #region Updating Properties
         public ObservableCollection<PanelBase> AvailablePanels
         {
             get { return this._AvailablePanels; }
             set { this._AvailablePanels = value; this.RaisePropertyChanged(); }
         }
         private ObservableCollection<PanelBase> _AvailablePanels;
-
-        public ObservableCollection<DocumentBase> AvailableDocuments
-        {
-            get { return this._AvailableDocuments; }
-            set { this._AvailableDocuments = value; this.RaisePropertyChanged(); }
-        }
-        private ObservableCollection<DocumentBase> _AvailableDocuments;
 
         public DockableBase CurrentContent
         {
@@ -213,7 +206,7 @@ namespace ArmA.Studio
             else if (e.Model is LayoutDocument)
             {
                 var doc = Instance.CreateDocument(new Uri(e.Model.ContentId, UriKind.RelativeOrAbsolute), ECreateDocumentModes.AddFileReferenceOrNull);
-                if(doc == null)
+                if (doc == null)
                 {
                     e.Cancel = true;
                     return;
@@ -241,20 +234,183 @@ namespace ArmA.Studio
 
         public Uri PathUri { get; internal set; }
         public Solution Solution { get; internal set; }
+        public string ConfigPath { get { return Path.Combine(PathUri.AbsolutePath, App.CONST_CONFIGURATION); } }
+        public UI.GenericDataTemplateSelector LayoutItemTemplateSelector { get; private set; }
 
-
-
-        public DocumentBase CreateDocument(Uri path, ECreateDocumentModes mode)
+        public Workspace(UI.GenericDataTemplateSelector layoutItemTemplateSelector)
         {
-            throw new NotImplementedException();
-        }
-        private DocumentBase CreateNewDocument(Uri path)
-        {
-            foreach(var p in App.GetPlugins<Plugin.IDocumentProviderPlugin>())
+            this.LayoutItemTemplateSelector = layoutItemTemplateSelector;
+            this.AvailablePanels = new ObservableCollection<PanelBase>();
+            this.AvalonDockDocuments = new ObservableCollection<DocumentBase>();
+            this.AvalonDockPanels = new ObservableCollection<PanelBase>();
+
+            foreach (var t in Assembly.GetExecutingAssembly().DefinedTypes)
             {
-                
+                if (typeof(PanelBase).IsAssignableFrom(t))
+                {
+                    var instance = Activator.CreateInstance(t, true) as PanelBase;
+                    this.AvailablePanels.Add(instance);
+                }
             }
         }
+
+        public ProjectFileFolder GetProjectFileFolderReference(Uri path)
+        {
+            foreach (var p in this.Solution.Projects)
+            {
+                if (!p.FileUri.IsBaseOf(path))
+                    continue;
+                foreach (var pff in p)
+                {
+                    if (pff.FileUri.Equals(path))
+                    {
+                        return pff;
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="DocumentBase"/>.
+        /// Could return null if creation of the <see cref="DocumentBase"/> fails.
+        /// </summary>
+        /// <param name="path">Path to the file.</param>
+        /// <param name="mode">file creation mode which determines some parameters for the file.</param>
+        /// <returns></returns>
+        /// <exception cref="KeyNotFoundException">If <see cref="ECreateDocumentModes.AddOrCreateFileReference"/> fails to find a project at the URI.</exception>
+        public DocumentBase CreateDocument(Uri path, ECreateDocumentModes mode)
+        {
+            DocumentBase doc;
+            try
+            {
+                doc = this.CreateNewDocument(path);
+            }
+            catch (KeyNotFoundException)
+            {
+                return null;
+            }
+            var reference = this.GetProjectFileFolderReference(path);
+            switch (mode)
+            {
+                case ECreateDocumentModes.AddFileReferenceOrNull:
+                    {
+                        if (reference == null)
+                            return null;
+                        doc.FileReference = reference;
+                        return doc;
+                    }
+
+                case ECreateDocumentModes.AddFileReferenceOrTemporary:
+                    {
+                        if (reference == null)
+                        {
+                            doc.IsTemporary = true;
+                        }
+                        else
+                        {
+                            doc.FileReference = reference;
+                        }
+                        return doc;
+                    }
+
+                case ECreateDocumentModes.AddOrCreateFileReference:
+                    {
+                        if (reference == null)
+                        {
+                            foreach (var p in this.Solution.Projects)
+                            {
+                                if (p.FileUri.IsBaseOf(path))
+                                {
+                                    var pff = p.GetOrCreateFileFolder(path);
+                                    doc.FileReference = pff;
+                                    return doc;
+                                }
+                            }
+                            throw new KeyNotFoundException(nameof(ECreateDocumentModes.AddOrCreateFileReference));
+                        }
+                        else
+                        {
+                            doc.FileReference = reference;
+                        }
+                        return doc;
+                    }
+
+                case ECreateDocumentModes.CreateTemporary:
+                    {
+                        return doc;
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+        public void DisplayDocument(DocumentBase doc)
+        {
+            if (!this.AvalonDockDocuments.Contains(doc))
+            {
+                this.AvalonDockDocuments.Add(doc);
+            }
+        }
+
+        /// <summary>
+        /// Creates a new document with provided describor.
+        /// If <see cref="Uri"/> is not found, the User will be prompted to select a <see cref="DocumentBase.DocumentDescribor"/>.
+        /// In case he aborts, exception will be thrown.
+        /// Should be executed on dialog thread.
+        /// </summary>
+        /// <param name="path">Path to a document.</param>
+        /// <returns>new <see cref="DocumentBase"/> instance.</returns>
+        /// <exception cref="KeyNotFoundException">Thrown when <see cref="Uri"/> is not found and user aborted the selection dialog.</exception>
+        private DocumentBase CreateNewDocument(Uri path)
+        {
+            Plugin.IDocumentProviderPlugin provider = null;
+            FileType fileType = null;
+            foreach (var p in App.GetPlugins<Plugin.IDocumentProviderPlugin>())
+            {
+                fileType = p.FileTypes.FirstOrDefault((ft) => ft.IsFileType(path));
+                if (fileType != null)
+                {
+                    provider = p;
+                    break;
+                }
+            }
+            if (provider == null)
+            {
+                var dlgdc = new Dialogs.DocumentSelectorDialogDataContext();
+                var dlg = new Dialogs.DocumentSelectorDialog(dlgdc);
+                var dlgResult = dlg.ShowDialog();
+                if (dlgResult.HasValue && dlgResult.Value)
+                {
+                    return this.CreateNewDocument(dlgdc.SelectedItem as DocumentBase.DocumentDescribor);
+                }
+                throw new KeyNotFoundException();
+            }
+            else
+            {
+                return provider.CreateDocument(fileType);
+            }
+        }
+        /// <summary>
+        /// Creates a new document with provided describor.
+        /// If describor is not found in any document providers, exception will be thrown.
+        /// </summary>
+        /// <param name="describor">Describor of some <see cref="DocumentBase"/>.</param>
+        /// <returns>new <see cref="DocumentBase"/> instance.</returns>
+        /// <exception cref="KeyNotFoundException">Thrown when <see cref="DocumentBase.DocumentDescribor"/> is not found in any DocumentProvider</exception>
+        private DocumentBase CreateNewDocument(DocumentBase.DocumentDescribor describor)
+        {
+            foreach (var p in App.GetPlugins<Plugin.IDocumentProviderPlugin>())
+            {
+                if (p.Documents.Contains(describor))
+                {
+                    return p.CreateDocument(describor);
+                }
+            }
+
+            throw new KeyNotFoundException();
+        }
+
         public DocumentBase GetCurrentDocument()
         {
             if (this.CurrentContent is DocumentBase)

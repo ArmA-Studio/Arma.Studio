@@ -10,9 +10,9 @@ namespace ArmA.Studio.Plugin
 {
     public interface IStorageAccessPlugin : IPlugin
     {
-        IniData ProjectStorage { set; }
+        IniData ProjectStorage { get; set; }
         bool ProjectStorageHasChanges { get; }
-        IniData ToolStorage { set; }
+        IniData ToolStorage { get; set; }
         bool ToolStorageHasChanges { get; }
     }
 }
