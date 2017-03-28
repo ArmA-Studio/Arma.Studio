@@ -38,17 +38,21 @@ namespace ArmA.Studio.Dialogs
         }
         public void Cmd_Browse(object param)
         {
-            var fbdlg = new FolderBrowserDialog();
-            fbdlg.ShowNewFolderButton = true;
-            fbdlg.Description = Properties.Localization.WorkspaceSelectorDialog_Description;
+
+            var cofd = new Microsoft.WindowsAPICodePack.Dialogs.CommonOpenFileDialog()
+            {
+                IsFolderPicker = true,
+                Multiselect = false,
+                Title = Properties.Localization.WorkspaceSelectorDialog_Description
+            };
             if (!string.IsNullOrWhiteSpace(this.CurrentPath))
             {
-                fbdlg.SelectedPath = CurrentPath;
+                cofd.InitialDirectory = CurrentPath;
             }
-            var dlgResult = fbdlg.ShowDialog();
-            if(dlgResult == System.Windows.Forms.DialogResult.OK)
+            var dlgResult = cofd.ShowDialog();
+            if(dlgResult == Microsoft.WindowsAPICodePack.Dialogs.CommonFileDialogResult.Ok)
             {
-                this.CurrentPath = fbdlg.SelectedPath;
+                this.CurrentPath = cofd.FileName;
             }
         }
     }
