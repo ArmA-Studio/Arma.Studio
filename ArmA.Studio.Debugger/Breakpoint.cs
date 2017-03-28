@@ -10,5 +10,6 @@ namespace ArmA.Studio.Debugger
     {
         public string ArmAPath;
         public int Line;
+        
     }
 }

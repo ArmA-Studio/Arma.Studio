@@ -235,7 +235,6 @@ namespace ArmA.Studio
         public IniData ColoringIni { get; private set; }
         public IEnumerable<RealVirtuality.SQF.SqfDefinition> SqfDefinitions { get; private set; }
         public List<IStorageAccessPlugin> Plugins { get; private set; }
-
         private Dictionary<EIniSelector, bool> SaveTriggers;
 
 

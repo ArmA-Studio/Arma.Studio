@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BreakpointInfo.cs" />
     <Compile Include="Configuration\ConfigCategory.cs" />
     <Compile Include="Configuration\ConfigEntry.cs" />
     <Compile Include="EProjectType.cs" />

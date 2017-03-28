@@ -115,6 +115,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BreakpointManager.cs" />
     <Compile Include="Dialogs\DocumentSelectorDialog.xaml.cs">
       <DependentUpon>DocumentSelectorDialog.xaml</DependentUpon>
     </Compile>

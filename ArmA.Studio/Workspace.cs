@@ -234,6 +234,7 @@ namespace ArmA.Studio
 
         public Uri PathUri { get; internal set; }
         public Solution Solution { get; internal set; }
+        public BreakpointManager BreakpointManager { get; internal set; }
         public string ConfigPath { get { return Path.Combine(PathUri.AbsolutePath, App.CONST_CONFIGURATION); } }
         public UI.GenericDataTemplateSelector LayoutItemTemplateSelector { get; private set; }
 

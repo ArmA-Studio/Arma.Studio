@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ArmA.Studio"
+        xmlns:p="clr-namespace:ArmA.Studio.Properties"
         mc:Ignorable="d"
         Height="256"
         Width="512"
@@ -45,8 +46,9 @@
                     </Grid>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                    <TextBlock Text="Communitymade Tool" Foreground="White" FontSize="8" TextAlignment="Right"/>
-                    <TextBlock Text="Image © Bohemia Interactive" Foreground="White" FontSize="8" TextAlignment="Right"/>
+                    <TextBlock Text="{x:Static p:Localization.CommunityMadeUtility}" Foreground="White" FontSize="8" TextAlignment="Right"/>
+                    <TextBlock Text="{x:Static p:Localization.NotAffiliatedWithBohemiaInteractive}" Foreground="White" FontSize="8" TextAlignment="Right"/>
+                    <TextBlock Text="{x:Static p:Localization.ImageCopyRightBohemiaInteractive}" Foreground="White" FontSize="8" TextAlignment="Right"/>
                 </StackPanel>
             </Grid>
         </Grid>

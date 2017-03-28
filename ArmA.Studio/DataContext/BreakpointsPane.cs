@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using ArmA.Studio.DataContext.BreakpointsPaneUtil;
 using System.Collections.ObjectModel;
+using ArmA.Studio.Data.UI;
 
 namespace ArmA.Studio.DataContext
 {

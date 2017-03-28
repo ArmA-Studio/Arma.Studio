@@ -143,6 +143,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Community made utility.
+        /// </summary>
+        public static string CommunityMadeUtility {
+            get {
+                return ResourceManager.GetString("CommunityMadeUtility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Condition.
         /// </summary>
         public static string Condition {
@@ -407,6 +416,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Image © Bohemia Interactive.
+        /// </summary>
+        public static string ImageCopyRightBohemiaInteractive {
+            get {
+                return ResourceManager.GetString("ImageCopyRightBohemiaInteractive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Message.
         /// </summary>
         public static string Info {
@@ -632,6 +650,15 @@ namespace ArmA.Studio.Properties {
         public static string NoConfigPresent_Title {
             get {
                 return ResourceManager.GetString("NoConfigPresent_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not affiliated with Bohemia Interactive.
+        /// </summary>
+        public static string NotAffiliatedWithBohemiaInteractive {
+            get {
+                return ResourceManager.GetString("NotAffiliatedWithBohemiaInteractive", resourceCulture);
             }
         }
         
