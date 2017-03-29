@@ -79,7 +79,16 @@ namespace ArmA.Studio
         public ICommand CmdDockingManagerInitialized => new RelayCommand((p) => this.OnAvalonDockingManagerInitialized(p as DockingManager));
         public ICommand CmdMainWindowClosing => new RelayCommand((p) =>
         {
-            SaveLayout(this.AvalonDockDockingManager, System.IO.Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
+            SaveLayout(this.AvalonDockDockingManager, Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
+            foreach (var panel in this.AvailablePanels)
+            {
+                var iniName = panel.GetType().FullName;
+                if (!ConfigHost.Instance.LayoutIni.Sections.ContainsSection(iniName))
+                    ConfigHost.Instance.LayoutIni.Sections.AddSection(iniName);
+                var section = ConfigHost.Instance.LayoutIni[iniName];
+                section["ContentId"] = panel.ContentId;
+                section["IsSelected"] = panel.IsSelected.ToString();
+            }
             App.Current.Shutdown((int)App.ExitCodes.OK);
         });
         public ICommand CmdSwitchWorkspace => new RelayCommand((p) =>
@@ -104,7 +113,7 @@ namespace ArmA.Studio
                 }
             }
         });
-        public ICommand CmdQuit => new RelayCommand((p) => { App.Shutdown(App.ExitCodes.OK); });
+        public ICommand CmdQuit => new RelayCommand((p) => { App.Current.MainWindow.Close(); });
         public ICommand CmdSave => new RelayCommand((p) =>
         {
             var doc = this.GetCurrentDocument();
@@ -176,6 +185,26 @@ namespace ArmA.Studio
         private void OnAvalonDockingManagerInitialized(DockingManager dockingManager)
         {
             this.AvalonDockDockingManager = dockingManager;
+
+            foreach (var panel in this.AvailablePanels)
+            {
+                var iniName = panel.GetType().FullName;
+                if (ConfigHost.Instance.LayoutIni.Sections.ContainsSection(iniName))
+                {
+                    var section = ConfigHost.Instance.LayoutIni[iniName];
+                    if (section.ContainsKey("ContentId"))
+                    {
+                        panel.ContentId = section["ContentId"];
+                    }
+                    if (section.ContainsKey("IsSelected"))
+                    {
+                        bool isSelectedFlag;
+                        bool.TryParse(section["IsSelected"], out isSelectedFlag);
+                        panel.IsSelected = isSelectedFlag;
+                    }
+                }
+            }
+
             Workspace.LoadLayout(dockingManager, Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
         }
 
@@ -268,6 +297,7 @@ namespace ArmA.Studio
                     this.AvailablePanels.Add(instance);
                 }
             }
+
 
             const double DEF_WIN_HEIGHT = 512;
             const double DEF_WIN_WIDTH = 1024;
