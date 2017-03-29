@@ -17,6 +17,8 @@ using RealVirtuality.SQF;
 using ArmA.Studio.Data.UI;
 using ArmA.Studio.Data.UI.Commands;
 using ArmA.Studio.Data;
+using ArmA.Studio.Plugin;
+using ArmA.Studio.UI.ViewModel;
 
 namespace ArmA.Studio
 {
@@ -108,7 +110,7 @@ namespace ArmA.Studio
             var doc = this.GetCurrentDocument();
             if (doc != null && doc.HasChanges)
             {
-                doc.SaveDocument(doc.FilePath);
+                doc.SaveDocument();
             }
         });
         public ICommand CmdSaveAll => new RelayCommand((p) =>
@@ -119,7 +121,7 @@ namespace ArmA.Studio
                 {
                     if (doc.HasChanges)
                     {
-                        doc.SaveDocument(doc.FilePath);
+                        doc.SaveDocument();
                     }
                 }
                 using (var stream = File.OpenWrite(this.Solution.FileUri.AbsolutePath))
@@ -145,6 +147,12 @@ namespace ArmA.Studio
             get { return this._AvailablePanels; }
             set { this._AvailablePanels = value; this.RaisePropertyChanged(); }
         }
+
+        internal void Unload()
+        {
+            throw new NotImplementedException();
+        }
+
         private ObservableCollection<PanelBase> _AvailablePanels;
 
         public DockableBase CurrentContent
@@ -153,6 +161,13 @@ namespace ArmA.Studio
             set { if (this._CurrentContent == value) return; this._CurrentContent = value; this.RaisePropertyChanged(); }
         }
         private DockableBase _CurrentContent;
+
+        public IPropertyDatatemplateProvider SelectedProperty
+        {
+            get { return this._SelectedProperty; }
+            set { if (this._SelectedProperty == value) return; this._SelectedProperty = value; this.RaisePropertyChanged(); }
+        }
+        private IPropertyDatatemplateProvider _SelectedProperty;
         #endregion
         #region AvalonDock Layout handling
         public ObservableCollection<PanelBase> AvalonDockPanels { get { return this._AvalonDockPanels; } set { this._AvalonDockPanels = value; this.RaisePropertyChanged(); } }
@@ -237,13 +252,17 @@ namespace ArmA.Studio
         public BreakpointManager BreakpointManager { get; internal set; }
         public string ConfigPath { get { return Path.Combine(PathUri.AbsolutePath, App.CONST_CONFIGURATION); } }
         public UI.GenericDataTemplateSelector LayoutItemTemplateSelector { get; private set; }
+        public DebuggerContext DebugContext { get; internal set; }
 
         public Workspace(UI.GenericDataTemplateSelector layoutItemTemplateSelector)
         {
+            Instance = this;
             this.LayoutItemTemplateSelector = layoutItemTemplateSelector;
             this.AvailablePanels = new ObservableCollection<PanelBase>();
             this.AvalonDockDocuments = new ObservableCollection<DocumentBase>();
             this.AvalonDockPanels = new ObservableCollection<PanelBase>();
+
+            this.DebugContext = new DebuggerContext();
 
             foreach (var t in Assembly.GetExecutingAssembly().DefinedTypes)
             {
@@ -270,6 +289,36 @@ namespace ArmA.Studio
                 }
             }
             return null;
+        }
+
+
+        /// <summary>
+        /// Focuses an existing document or creates a new one if non is yet existing.
+        /// </summary>
+        /// <param name="fileReference">reference to the file used.</param>
+        /// <returns>The document created/focused.</returns>
+        public DocumentBase CreateOrFocusDocument(ProjectFileFolder fileReference) => this.CreateOrFocusDocument(fileReference.FileUri);
+        /// <summary>
+        /// Focuses an existing document or creates a new one if non is yet existing.
+        /// </summary>
+        /// <param name="filePath">Path to the file to open.</param>
+        /// <returns>The document created/focused.</returns>
+        public DocumentBase CreateOrFocusDocument(string filePath) => this.CreateOrFocusDocument(new Uri(filePath, UriKind.RelativeOrAbsolute));
+        /// <summary>
+        /// Focuses an existing document or creates a new one if non is yet existing.
+        /// </summary>
+        /// <param name="path">Path to the file to open.</param>
+        /// <returns>The document created/focused.</returns>
+        public DocumentBase CreateOrFocusDocument(Uri path)
+        {
+            foreach (var doc in this.AvalonDockDocuments)
+            {
+                if (doc.FileReference.FileUri.Equals(path))
+                {
+                    return doc;
+                }
+            }
+            return this.CreateDocument(path, ECreateDocumentModes.AddFileReferenceOrTemporary);
         }
 
         /// <summary>
@@ -339,6 +388,7 @@ namespace ArmA.Studio
 
                 case ECreateDocumentModes.CreateTemporary:
                     {
+                        doc.IsTemporary = true;
                         return doc;
                     }
 
@@ -346,12 +396,46 @@ namespace ArmA.Studio
                     throw new NotImplementedException();
             }
         }
+
+        public DocumentBase CreateTemporaryDocument(string content, string extension) => this.CreateTemporaryDocument(content, this.GetFileTypeFromExtension(extension));
+        public DocumentBase CreateTemporaryDocument(string content, FileType fileType)
+        {
+            var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(fileType);
+            if(doc is TextEditorBaseDataContext)
+            {
+                (doc as TextEditorBaseDataContext).SetTextAsync(content);
+            }
+            else
+            {
+                throw new Exception("Cannot set text in non-TextEditorBaseDataContext classes");
+            }
+            doc.IsTemporary = true;
+            return doc;
+        }
+
+        /// <summary>
+        /// Returns the corresponding <see cref="FileType"/> for given file extension.
+        /// extension has to be prefixed by a dot.
+        /// </summary>
+        /// <param name="ext">File extension prefixed by dot.</param>
+        /// <returns>The corresponding <see cref="FileType"/> or null.</returns>
+        public FileType GetFileTypeFromExtension(string ext)
+        {
+            return App.GetPlugins<IDocumentProviderPlugin>().FirstOrDefault((prov) => prov.FileTypes.Any((ft) => ft.IsFileTypeCondition(ext)))?.FileTypes.First((ft) => ft.IsFileTypeCondition(ext));
+        }
+
+        /// <summary>
+        /// Adds provided <see cref="DocumentBase"/> to the displayed documents.
+        /// If already added, <see cref="DocumentBase"/> will be focused.
+        /// </summary>
+        /// <param name="doc">The document to focus/display</param>
         public void DisplayDocument(DocumentBase doc)
         {
-            if (!this.AvalonDockDocuments.Contains(doc))
+            if (this.AvalonDockDocuments.Contains(doc))
             {
                 this.AvalonDockDocuments.Add(doc);
             }
+            doc.IsActive = true;
         }
 
         /// <summary>
@@ -360,38 +444,65 @@ namespace ArmA.Studio
         /// In case he aborts, exception will be thrown.
         /// Should be executed on dialog thread.
         /// </summary>
-        /// <param name="path">Path to a document.</param>
+        /// <param name="path">Path to the document.</param>
         /// <returns>new <see cref="DocumentBase"/> instance.</returns>
-        /// <exception cref="KeyNotFoundException">Thrown when <see cref="Uri"/> is not found and user aborted the selection dialog.</exception>
         private DocumentBase CreateNewDocument(Uri path)
         {
-            Plugin.IDocumentProviderPlugin provider = null;
-            FileType fileType = null;
-            foreach (var p in App.GetPlugins<Plugin.IDocumentProviderPlugin>())
+            var fileType = GetFileType(path);
+            if (fileType == null)
             {
-                fileType = p.FileTypes.FirstOrDefault((ft) => ft.IsFileType(path));
+                var describor = this.GetDocumentDescriborByPrompt();
+                return App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(describor);
+            }
+            else
+            {
+                return App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(fileType);
+            }
+        }
+
+        
+        /// <summary>
+        /// Tries to find a <see cref="FileType"/> from provided path.
+        /// If <see cref="Uri"/> is not found, null will be returned.
+        /// </summary>
+        /// <param name="path">Path to the document.</param>
+        /// <returns>Correct <see cref="FileType"/> or null.</returns>
+        public FileType GetFileType(Uri path)
+        {
+            foreach (var p in App.GetPlugins<IDocumentProviderPlugin>())
+            {
+                var fileType = p.FileTypes.FirstOrDefault((ft) => ft.IsFileType(path));
                 if (fileType != null)
                 {
-                    provider = p;
-                    break;
+                    return fileType;
                 }
             }
-            if (provider == null)
+            return null;
+        }
+        /// <summary>
+        /// User will be prompted to select a <see cref="DocumentBase.DocumentDescribor"/>.
+        /// In case he aborts, exception will be thrown.
+        /// </summary>
+        /// <returns>The <see cref="DocumentBase.DocumentDescribor"/> the user selected.</returns>
+        /// <exception cref="KeyNotFoundException">Thrown when user aborted the selection dialog.</exception>
+        public DocumentBase.DocumentDescribor GetDocumentDescriborByPrompt()
+        {
+            DocumentBase.DocumentDescribor descr = null;
+            App.Current.Dispatcher.Invoke(() =>
             {
                 var dlgdc = new Dialogs.DocumentSelectorDialogDataContext();
                 var dlg = new Dialogs.DocumentSelectorDialog(dlgdc);
                 var dlgResult = dlg.ShowDialog();
                 if (dlgResult.HasValue && dlgResult.Value)
                 {
-                    return this.CreateNewDocument(dlgdc.SelectedItem as DocumentBase.DocumentDescribor);
+                    descr = dlgdc.SelectedItem as DocumentBase.DocumentDescribor;
                 }
-                throw new KeyNotFoundException();
-            }
-            else
-            {
-                return provider.CreateDocument(fileType);
-            }
+            });
+            if (descr != null)
+                return descr;
+            throw new KeyNotFoundException();
         }
+
         /// <summary>
         /// Creates a new document with provided describor.
         /// If describor is not found in any document providers, exception will be thrown.
@@ -401,7 +512,7 @@ namespace ArmA.Studio
         /// <exception cref="KeyNotFoundException">Thrown when <see cref="DocumentBase.DocumentDescribor"/> is not found in any DocumentProvider</exception>
         private DocumentBase CreateNewDocument(DocumentBase.DocumentDescribor describor)
         {
-            foreach (var p in App.GetPlugins<Plugin.IDocumentProviderPlugin>())
+            foreach (var p in App.GetPlugins<IDocumentProviderPlugin>())
             {
                 if (p.Documents.Contains(describor))
                 {

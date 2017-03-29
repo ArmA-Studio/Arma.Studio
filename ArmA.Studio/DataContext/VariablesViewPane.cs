@@ -1,22 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows.Documents;
-using System.Xml;
-using ICSharpCode.AvalonEdit.Document;
-using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using ArmA.Studio.UI.Commands;
-using Utility.Collections;
-using ArmA.Studio.DataContext.BreakpointsPaneUtil;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using ArmA.Studio.Data.UI;
+using ArmA.Studio.Data.UI.Commands;
 
 namespace ArmA.Studio.DataContext
 {
@@ -37,7 +25,7 @@ namespace ArmA.Studio.DataContext
 
             public async void UpdateValue()
             {
-                var vars = await WorkspaceOld.CurrentWorkspace.DebugContext.GetVariables(Debugger.EVariableNamespace.All, this.Name);
+                var vars = await Workspace.Instance.DebugContext.GetVariablesAsync(Debugger.EVariableNamespace.All, this.Name);
                 if (vars.Any())
                     this.Value = vars.First().Value;
                 else
@@ -67,8 +55,8 @@ namespace ArmA.Studio.DataContext
             Variables = new ObservableCollection<VariableViewContainer>();
             Task.Run(() =>
             {
-                System.Threading.SpinWait.SpinUntil(() => WorkspaceOld.CurrentWorkspace != null);
-                WorkspaceOld.CurrentWorkspace.DebugContext.PropertyChanged += DebugContext_PropertyChanged;
+                System.Threading.SpinWait.SpinUntil(() => Workspace.Instance != null);
+                Workspace.Instance.DebugContext.PropertyChanged += DebugContext_PropertyChanged;
             });
         }
 
@@ -77,7 +65,7 @@ namespace ArmA.Studio.DataContext
             switch (e.PropertyName)
             {
                 case nameof(DebuggerContext.IsPaused):
-                    if(WorkspaceOld.CurrentWorkspace.DebugContext.IsPaused)
+                    if(Workspace.Instance.DebugContext.IsPaused)
                     {
                         foreach(var it in this.Variables)
                         {
@@ -93,7 +81,7 @@ namespace ArmA.Studio.DataContext
                     }
                     break;
                 case nameof(DebuggerContext.IsDebuggerAttached):
-                    if (!WorkspaceOld.CurrentWorkspace.DebugContext.IsDebuggerAttached)
+                    if (!Workspace.Instance.DebugContext.IsDebuggerAttached)
                     {
                         foreach (var it in this.Variables)
                         {

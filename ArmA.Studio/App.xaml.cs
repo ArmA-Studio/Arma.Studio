@@ -22,6 +22,7 @@ namespace ArmA.Studio
     /// </summary>
     public partial class App : Application
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         public const string CONST_UPDATESUFFIX = ".update";
         public const string CONST_SOLUTIONEXTENSION = ".assln";
         public const string CONST_CONFIGURATION = "Configuration";
@@ -67,14 +68,25 @@ namespace ArmA.Studio
             if (!Directory.Exists(ConfigPath))
             {
                 Directory.CreateDirectory(ConfigPath);
+                Logger.Info($"Creating new directory at {ConfigPath}.");
             }
             if (!Directory.Exists(FileTemplatePath))
             {
                 Directory.CreateDirectory(FileTemplatePath);
+                Logger.Info($"Creating new directory at {FileTemplatePath}.");
+            }
+            if (!Directory.Exists(PluginsPath))
+            {
+                Directory.CreateDirectory(PluginsPath);
+                Logger.Info($"Creating new directory at {PluginsPath}.");
             }
         }
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            this.SetupNLog();
+            DataContext.OutputPane.Initialize();
+            this.CreateUserDirectories();
+
 #if !DEBUG
             Task.Run(() => {
                 DownloadInfo = UpdateHelper.GetDownloadInfo().Result;
@@ -96,8 +108,7 @@ namespace ArmA.Studio
                 }
             });
 #endif
-            
-            this.CreateUserDirectories();
+
             try
             {
                 //Invoke getter, will never be null
@@ -110,18 +121,9 @@ namespace ArmA.Studio
                 App.Shutdown(ExitCodes.ConfigError);
                 return;
             }
-            this.SetupNLog();
-            var workspace = ConfigHost.App.WorkspacePath;
-            if (string.IsNullOrWhiteSpace(workspace) && !SwitchWorkspace())
-            {
-                MessageBox.Show(Studio.Properties.Localization.WorkspaceSelectorDialog_NoWorkspaceSelected, Studio.Properties.Localization.Whoops, MessageBoxButton.OK, MessageBoxImage.Error);
-                this.Shutdown((int)ExitCodes.NoWorkspaceSelected);
-                return;
-            }
-            workspace = ConfigHost.App.WorkspacePath;
-            WorkspaceOld.CurrentWorkspace = new WorkspaceOld(workspace);
-            var mwnd = new MainWindow();
-            mwnd.Show();
+            var dc = new SplashScreenDataContext();
+            var dlg = new SplashScreen(dc);
+            dlg.Show();
         }
 
         internal static void ShowOperationFailedMessageBox(Exception ex)
@@ -142,23 +144,26 @@ namespace ArmA.Studio
         {
             if (e.ApplicationExitCode == (int)ExitCodes.ConfigError)
                 return;
-            WorkspaceOld.CurrentWorkspace = null;
+            Workspace.Instance.Unload();
+            ConfigHost.Instance.ExecSave();
             if (e.ApplicationExitCode == (int)ExitCodes.Restart || e.ApplicationExitCode == (int)ExitCodes.RestartPluginUpdate)
             {
                 Process.Start(ExecutableFile);
             }
-            ConfigHost.Instance.ExecSave();
         }
 
         public static void Shutdown(ExitCodes code)
         {
-            if (code == ExitCodes.Updating)
+            App.Current.Dispatcher.Invoke(() =>
             {
-                var dlgdc = new Dialogs.DownloadDialogDataContext((App.Current as App).UpdateDownloadInfo);
-                var dlg = new Dialogs.DownloadDialog(dlgdc);
-                dlg.ShowDialog();
-            }
-            App.Current.Shutdown((int)code);
+                if (code == ExitCodes.Updating)
+                {
+                    var dlgdc = new Dialogs.DownloadToolUpdateDialogDataContext((App.Current as App).UpdateDownloadInfo);
+                    var dlg = new Dialogs.DownloadToolUpdateDialog(dlgdc);
+                    dlg.ShowDialog();
+                }
+                App.Current.Shutdown((int)code);
+            });
         }
 
         public static Stream GetStreamFromEmbeddedResource(string path)
@@ -264,7 +269,7 @@ namespace ArmA.Studio
                     { }
                 }
 
-                Workspace.CurrentWorkspace?.CmdSaveAll.Execute(null);
+                Workspace.Instance?.CmdSaveAll.Execute(null);
             }
         }
     }

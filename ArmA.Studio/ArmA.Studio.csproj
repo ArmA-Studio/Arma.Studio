@@ -128,6 +128,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BreakpointManager.cs" />
+    <Compile Include="DataContext\SolutionPane.cs" />
     <Compile Include="Dialogs\DocumentSelectorDialog.xaml.cs">
       <DependentUpon>DocumentSelectorDialog.xaml</DependentUpon>
     </Compile>
@@ -137,12 +138,10 @@
     </Compile>
     <Compile Include="Dialogs\ReportDialogDataContext.cs" />
     <Compile Include="DataContext\VariablesViewPane.cs" />
-    <Compile Include="DataContext\BreakpointsPaneUtil\Breakpoint.cs" />
     <Compile Include="DataContext\ErrorListPane.cs" />
     <Compile Include="DataContext\BreakpointsPane.cs" />
     <Compile Include="DataContext\OutputPane.cs" />
     <Compile Include="DataContext\CallStackPane.cs" />
-    <Compile Include="DataContext\TextEditorUtil\IntelliSenseEntry.cs" />
     <Compile Include="Dialogs\CreateNewFileDialogDataContext.cs" />
     <Compile Include="Dialogs\DownloadPluginUpdateDialog.xaml.cs">
       <DependentUpon>DownloadPluginUpdateDialog.xaml</DependentUpon>
@@ -153,8 +152,6 @@
     <Compile Include="Dialogs\DownloadPluginUpdateDialogDataContext.cs" />
     <Compile Include="Dialogs\PropertiesDialogUtil\ColorConfigEntry.cs" />
     <Compile Include="Dialogs\WorkspaceSelectorDialog.cs" />
-    <Compile Include="ESeverity.cs" />
-    <Compile Include="DataContext\TextEditorUtil\LinterInfo.cs" />
     <Compile Include="DebuggerContext.cs" />
     <Compile Include="Dialogs\IDialogContext.cs" />
     <Compile Include="Dialogs\PropertiesDialog.xaml.cs">
@@ -169,9 +166,6 @@
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="SplashScreenDataContext.cs" />
-    <Compile Include="UI\Attached\Eventing\PreviewKeyDown.cs" />
-    <Compile Include="UI\Attached\Eventing\PreviewMouseDown.cs" />
-    <Compile Include="UI\Attached\Eventing\MouseDown.cs" />
     <Compile Include="UI\Attached\ActiveContentChangedAttached.cs" />
     <Compile Include="UI\Controls\ListView_ScrollSelectionChanged.cs" />
     <Compile Include="UI\Converters\StringRemoveNewLineConverter.cs" />
@@ -187,14 +181,9 @@
     <Compile Include="UI\LineHighlighterBackgroundRenderer.cs" />
     <Compile Include="ConfigHost.cs" />
     <Compile Include="DataContext\PropertiesPane.cs" />
-    <Compile Include="DataContext\ConfigEditorDocument.cs" />
-    <Compile Include="DataContext\UiEditorDocument.cs" />
-    <Compile Include="DataContext\SqfReaderDocument.cs" />
-    <Compile Include="DataContext\TextEditorDocument.cs" />
     <Compile Include="Dialogs\ConfigEntrySelectorDialog.xaml.cs">
       <DependentUpon>ConfigEntrySelectorDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\FileType.cs" />
     <Compile Include="Dialogs\CreateNewFileDialog.xaml.cs">
       <DependentUpon>CreateNewFileDialog.xaml</DependentUpon>
     </Compile>
@@ -209,27 +198,12 @@
     </Compile>
     <Compile Include="Dialogs\LicenseViewerDataContext.cs" />
     <Compile Include="LayoutUpdateStrategy.cs" />
-    <Compile Include="SolutionUtil\Solution.cs" />
-    <Compile Include="SolutionUtil\SolutionFile.cs" />
-    <Compile Include="SolutionUtil\SolutionFileBase.cs" />
     <Compile Include="Properties\Localization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Localization.resx</DependentUpon>
     </Compile>
-    <Compile Include="SolutionUtil\SolutionFolder.cs" />
     <Compile Include="UI\Attached\ChangePropertiesViewCurrentAttached.cs" />
-    <Compile Include="UI\Attached\Eventing\Closing.cs" />
-    <Compile Include="UI\Attached\Eventing\LostKeyboardFocus.cs" />
-    <Compile Include="UI\Attached\Eventing\ContextMenuOpening.cs" />
-    <Compile Include="UI\Attached\Eventing\MouseRightButtonDown.cs" />
-    <Compile Include="UI\Attached\Eventing\MouseLeftButtonDown.cs" />
-    <Compile Include="UI\Attached\Eventing\LostFocus.cs" />
-    <Compile Include="UI\Attached\Eventing\Unloaded.cs" />
-    <Compile Include="UI\Attached\Eventing\KeyDown.cs" />
-    <Compile Include="UI\Attached\Eventing\Initialized.cs" />
-    <Compile Include="UI\Attached\Eventing\TextChanged.cs" />
-    <Compile Include="UI\Attached\Eventing\MouseDoubleClick.cs" />
     <Compile Include="UI\Attached\DialogResultAttached.cs" />
     <Compile Include="UI\Attached\LooseFocusOnKeyAttached.cs" />
     <Compile Include="UI\Attached\SelectFileNameOnFocusAttached.cs" />
@@ -245,9 +219,6 @@
     <Compile Include="UI\Converters\PathExtensionConverter.cs" />
     <Compile Include="UI\CustomBinding.cs" />
     <Compile Include="UI\DataTemplates\AvalonDockStyleSelector.cs" />
-    <EmbeddedResource Include="UI\DataTemplates\TextEditorDocumentTemplate.xaml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <Compile Include="UI\UserInteractionEventArgs.cs" />
     <Compile Include="UI\ViewModel\IPropertyDataTemplateProvider.cs" />
     <Compile Include="UI\ViewModel\IUserInteractable.cs" />
@@ -278,6 +249,10 @@
     <Page Include="Dialogs\PropertiesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ReportDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\WorkspaceSelectorDialog.xaml">
       <SubType>Designer</SubType>

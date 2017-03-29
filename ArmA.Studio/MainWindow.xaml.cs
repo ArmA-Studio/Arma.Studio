@@ -22,7 +22,7 @@ namespace ArmA.Studio
     {
         public MainWindow()
         {
-            this.DataContext = WorkspaceOld.CurrentWorkspace;
+            this.DataContext = Workspace.Instance;
             InitializeComponent();
         }
     }

@@ -43,6 +43,7 @@
     <Compile Include="Collections\EventedCollection.cs" />
     <Compile Include="Collections\ObservableDictionary.cs" />
     <Compile Include="Collections\ObservableSortedCollection.cs" />
+    <Compile Include="StructExtensionMethods.cs" />
     <Compile Include="ICollectionExtensionMethods.cs" />
     <Compile Include="IEnumerableExtensionMethods.cs" />
     <Compile Include="ObjectExtensionMethods.cs" />

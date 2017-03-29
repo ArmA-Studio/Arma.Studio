@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Utility;
-using System.Windows.Input;
-using System.Windows;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using System.Windows.Input;
+using ArmA.Studio.Data;
 using ArmA.Studio.Data.UI.Commands;
 
 namespace ArmA.Studio.Dialogs
@@ -38,8 +33,6 @@ namespace ArmA.Studio.Dialogs
         public bool OKButtonEnabled { get { return this._OKButtonEnabled; } set { this._OKButtonEnabled = value; this.RaisePropertyChanged(); } }
         private bool _OKButtonEnabled;
 
-        public string FinalName { get { return string.IsNullOrWhiteSpace(((FileType)this.SelectedItem).StaticFileName) ? this.SelectedName : ((FileType)this.SelectedItem).StaticFileName; } }
-
         public DocumentSelectorDialogDataContext()
         {
             this.FileTypeCollection = new ObservableCollection<Data.UI.DocumentBase.DocumentDescribor>(App.GetPlugins<Plugin.IDocumentProviderPlugin>().SelectMany((it) => it.Documents));
@@ -49,7 +42,7 @@ namespace ArmA.Studio.Dialogs
 
         private void UpdateOkButtonEnabled()
         {
-            this.OKButtonEnabled = this.SelectedItem != null && !(string.IsNullOrWhiteSpace(this.SelectedName) && string.IsNullOrWhiteSpace(((FileType)this.SelectedItem).StaticFileName));
+            this.OKButtonEnabled = this.SelectedItem != null;
         }
 
     }

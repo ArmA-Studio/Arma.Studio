@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ArmA.Studio"
         xmlns:p="clr-namespace:ArmA.Studio.Properties"
+        xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data"
         mc:Ignorable="d"
         Height="256"
         Width="512"
@@ -15,6 +16,9 @@
         Title="ArmA.Studio"
         UseLayoutRounding="True"
         d:DataContext="{x:Type local:SplashScreenDataContext}"
+        ev:Loaded.Command="{Binding CmdLoaded}"
+        ev:Loaded.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+        WindowStartupLocation="CenterScreen"
         >
     <Grid>
         <Grid.RowDefinitions>
@@ -30,25 +34,35 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="1">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect ShadowDepth="2" BlurRadius="5" Color="Gray"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Grid.Resources>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Margin="5">
-                    <TextBlock Text="ArmA.Studio" Foreground="White" FontSize="32" FontWeight="Bold"/>
+                    <TextBlock Text="ArmA.Studio" FontSize="32" FontWeight="Bold"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Version" Foreground="White" FontSize="18" FontWeight="Bold" Margin="0 0 12 0"/>
-                        <TextBlock Grid.Column="1" Text="{Binding CurrentVersion, FallbackValue=X.X.X}" Foreground="White" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock Grid.Column="0" Text="Version" FontSize="18" FontWeight="Bold" Margin="0 0 12 0"/>
+                        <TextBlock Grid.Column="1" Text="{Binding CurrentVersion, FallbackValue=X.X.X}" FontSize="18" FontWeight="Bold"/>
                     </Grid>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                    <TextBlock Text="{x:Static p:Localization.CommunityMadeUtility}" Foreground="White" FontSize="8" TextAlignment="Right"/>
-                    <TextBlock Text="{x:Static p:Localization.NotAffiliatedWithBohemiaInteractive}" Foreground="White" FontSize="8" TextAlignment="Right"/>
-                    <TextBlock Text="{x:Static p:Localization.ImageCopyRightBohemiaInteractive}" Foreground="White" FontSize="8" TextAlignment="Right"/>
+                    <TextBlock Text="{x:Static p:Localization.CommunityMadeUtility}" FontSize="8" TextAlignment="Right"/>
+                    <TextBlock Text="{x:Static p:Localization.NotAffiliatedWithBohemiaInteractive}" FontSize="8" TextAlignment="Right"/>
+                    <TextBlock Text="{x:Static p:Localization.ImageCopyRightBohemiaInteractive}" FontSize="8" TextAlignment="Right"/>
                 </StackPanel>
             </Grid>
         </Grid>

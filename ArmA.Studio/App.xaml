@@ -268,10 +268,10 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</sys:String>
-                            </dlg:License.Value>
-                        </dlg:License>
-                        <dlg:License Title="Microsoft.WindowsAPICodePack-Core">
-                            <dlg:License.Value>
+                                </data:LicenseInfo.Content>
+                        </data:LicenseInfo>
+                                <data:LicenseInfo Target="Microsoft.WindowsAPICodePack-Core">
+                            <data:LicenseInfo.Content>
                                 <sys:String xml:space="preserve">License: Custom License
 MICROSOFT SOFTWARE LICENSE TERMS
 MICROSOFT WINDOWS API CODE PACK FOR MICROSOFT .NET FRAMEWORK
@@ -325,8 +325,8 @@ Cette limitation concerne :
 • les réclamations au titre de violation de contrat ou de garantie, ou au titre de responsabilité stricte, de négligence ou d’une autre faute dans la limite autorisée par la loi en vigueur.
 Elle s’applique également, même si Microsoft connaissait ou devrait connaître l’éventualité d’un tel dommage. Si votre pays n’autorise pas l’exclusion ou la limitation de responsabilité pour les dommages indirects, accessoires ou de quelque nature que ce soit, il se peut que la limitation ou l’exclusion ci-dessus ne s’appliquera pas à votre égard.
 EFFET JURIDIQUE. Le présent contrat décrit certains droits juridiques. Vous pourriez avoir d’autres droits prévus par les lois de votre pays. Le présent contrat ne modifie pas les droits que vous confèrent les lois de votre pays si celles-ci ne le permettent pas.</sys:String>
-                            </dlg:License.Value>
-                        </dlg:License>
+                            </data:LicenseInfo.Content>
+                        </data:LicenseInfo>
                     </x:Array>
                 </ResourceDictionary>
                 <ResourceDictionary x:Name="GlobalStyles">
@@ -428,55 +428,6 @@ EFFET JURIDIQUE. Le présent contrat décrit certains droits juridiques. Vous po
                             </Setter.Value>
                         </Setter>
                     </Style>
-                </ResourceDictionary>
-                <ResourceDictionary x:Name="FileTypes">
-                    <x:Array Type="dlg:FileType" x:Key="FileTypes">
-                        <dlg:FileType Image="/ArmA.Studio;component/Resources/FileTypes/SQF_16x.png" FileTypeName="SQF" Extension="sqf">
-                            <dlg:FileType.DefaultContent>
-                                <sys:String xml:space="preserve">/*
- * @Author: 
- * 
- * @Description: 
- * 
- * @Arguments: -/-
- * @Return: -/-
- */
-params [];</sys:String>
-                            </dlg:FileType.DefaultContent>
-                        </dlg:FileType>
-                        <dlg:FileType Image="/ArmA.Studio;component/Resources/FileTypes/ConfigurationFile_16x.png" FileTypeName="Config" Extension="cpp">
-                            <dlg:FileType.DefaultContent>
-                                <sys:String xml:space="preserve">/*
- * @Author: 
- * 
- * @Purpose: 
- *
- */</sys:String>
-                            </dlg:FileType.DefaultContent>
-                        </dlg:FileType>
-                        <dlg:FileType Image="/ArmA.Studio;component/Resources/FileTypes/ConfigurationFile_16x.png" FileTypeName="Addon MainConfig" Extension="cpp" StaticFileName="config.cpp">
-                            <dlg:FileType.DefaultContent>
-                                <sys:String xml:space="preserve">class CfgPatches
-{
-    class TAG_ModName
-    {
-        units[] = {};
-        weapons[] = {};
-        requiredVersion = 1.68;
-        requiredAddons[] = {};
-        author = "";
-        mail = "";
-        url = "";
-    };
-};</sys:String>
-                            </dlg:FileType.DefaultContent>
-                        </dlg:FileType>
-                        <dlg:FileType Image="/ArmA.Studio;component/Resources/FileTypes/ConfigurationFile_16x.png" FileTypeName="Mission MainConfig" Extension="ext" StaticFileName="description.ext">
-                            <dlg:FileType.DefaultContent>
-                                <sys:String xml:space="preserve">//ToDo: Fill</sys:String>
-                            </dlg:FileType.DefaultContent>
-                        </dlg:FileType>
-                    </x:Array>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

@@ -1,7 +1,4 @@
-﻿using System;
-using ICSharpCode.AvalonEdit.Document;
-
-namespace ArmA.Studio
+﻿namespace ArmA.Studio.Data
 {
     public enum ESeverity
     {

@@ -7,32 +7,32 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ArmA.Studio.UI.Attached.Eventing
+namespace ArmA.Studio.Data.UI.Eventing
 {
-    public class PreviewMouseDown
+    public class MouseRightButtonDown
     {
         public static DependencyProperty CommandProperty =
             DependencyProperty.RegisterAttached("Command",
             typeof(ICommand),
-            typeof(PreviewMouseDown),
+            typeof(MouseRightButtonDown),
             new UIPropertyMetadata(CommandChanged));
 
         public static DependencyProperty CommandParameterProperty =
             DependencyProperty.RegisterAttached("CommandParameter",
                                                 typeof(object),
-                                                typeof(PreviewMouseDown),
+                                                typeof(MouseRightButtonDown),
                                                 new UIPropertyMetadata(null));
 
-        public static void SetCommand(UIElement target, ICommand value)
+        public static void SetCommand(DependencyObject target, ICommand value)
         {
             target.SetValue(CommandProperty, value);
         }
 
-        public static void SetCommandParameter(UIElement target, object value)
+        public static void SetCommandParameter(DependencyObject target, object value)
         {
             target.SetValue(CommandParameterProperty, value);
         }
-        public static object GetCommandParameter(UIElement target)
+        public static object GetCommandParameter(DependencyObject target)
         {
             return target.GetValue(CommandParameterProperty);
         }
@@ -40,8 +40,8 @@ namespace ArmA.Studio.UI.Attached.Eventing
         private static void CommandChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             var type = target.GetType();
-            var ev = type.GetEvent("PreviewMouseDown");
-            var method = typeof(PreviewMouseDown).GetMethod("OnPreviewMouseDown");
+            var ev = type.GetEvent("MouseRightButtonDown");
+            var method = typeof(MouseRightButtonDown).GetMethod("OnMouseRightButtonDown");
 
             if ((e.NewValue != null) && (e.OldValue == null))
             {
@@ -53,9 +53,9 @@ namespace ArmA.Studio.UI.Attached.Eventing
             }
         }
 
-        public static void OnPreviewMouseDown(object sender, EventArgs e)
+        public static void OnMouseRightButtonDown(object sender, EventArgs e)
         {
-            var control = sender as UIElement;
+            var control = sender as FrameworkElement;
             var command = (ICommand)control.GetValue(CommandProperty);
             var commandParameter = control.GetValue(CommandParameterProperty);
             command.Execute(commandParameter);

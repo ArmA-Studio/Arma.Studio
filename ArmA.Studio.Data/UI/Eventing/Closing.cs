@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ArmA.Studio.UI.Attached.Eventing
+namespace ArmA.Studio.Data.UI.Eventing
 {
     public class Closing
     {

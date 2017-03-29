@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Utility;
-using System.Windows.Input;
-using System.Windows;
 using System.ComponentModel;
-using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using ArmA.Studio.Data.UI.Commands;
 using ArmA.Studio.Plugin;
-using System.IO;
 
 namespace ArmA.Studio.Dialogs
 {

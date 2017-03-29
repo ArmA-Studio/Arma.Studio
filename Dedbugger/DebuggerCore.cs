@@ -175,7 +175,7 @@ namespace Dedbugger
                                         var fileOffsetNode = instruction.GetValue_Object()["fileOffset"];
                                         var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
                                         var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
-                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = instruction.GetValue_Object()["filename"].GetValue_String(), Col = col, Line = line });
+                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = instruction.GetValue_Object()["filename"].GetValue_String(), Column = col, Line = line });
                                     }
                                     break;
                                 case ERecvCommands.HaltError:
@@ -187,7 +187,7 @@ namespace Dedbugger
                                         var fileContent = error.GetValue_Object()["content"];//File content in case we don't have that file
                                         var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
                                         var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
-                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = error.GetValue_Object()["filename"].GetValue_String(), Col = col, Line = line });
+                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = error.GetValue_Object()["filename"].GetValue_String(), Column = col, Line = line });
                                     }
                                     break;
                                 case ERecvCommands.HaltScriptAssert:
@@ -199,7 +199,7 @@ namespace Dedbugger
                                         var fileContent = error.GetValue_Object()["content"];//File content in case we don't have that file
                                         var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
                                         var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
-                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = error.GetValue_Object()["filename"].GetValue_String(), Col = col, Line = line });
+                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = error.GetValue_Object()["filename"].GetValue_String(), Column = col, Line = line });
                                     }
                                     break;
                                 case ERecvCommands.ContinueExecution:

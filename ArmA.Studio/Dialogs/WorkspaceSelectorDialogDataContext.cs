@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows.Input;
-using System.Windows.Forms;
-using System.ComponentModel;
+using ArmA.Studio.Data.UI.Commands;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace ArmA.Studio.Dialogs
 {
@@ -18,8 +13,8 @@ namespace ArmA.Studio.Dialogs
         public string CurrentPath { get { return this._CurrentPath; } set { this._CurrentPath = value; this.OKButtonEnabled = !string.IsNullOrWhiteSpace(value); this.RaisePropertyChanged(); } }
         private string _CurrentPath;
 
-        public ICommand CmdBrowse { get; private set; }
-        public ICommand CmdOKButtonPressed { get; private set; }
+        public ICommand CmdBrowse => new RelayCommand(Cmd_Browse);
+        public ICommand CmdOKButtonPressed => new RelayCommand((p) => this.DialogResult = true);
 
         public bool? DialogResult { get { return this._DialogResult; } set { this._DialogResult = value; this.RaisePropertyChanged(); } }
         private bool? _DialogResult;
@@ -33,14 +28,11 @@ namespace ArmA.Studio.Dialogs
 
         public WorkspaceSelectorDialogDataContext()
         {
-            this.CmdBrowse = new UI.Commands.RelayCommand(Cmd_Browse);
-            this.CmdOKButtonPressed = new UI.Commands.RelayCommand((p) => this.DialogResult = true);
             this.CurrentPath = string.Empty;
         }
         public void Cmd_Browse(object param)
         {
-
-            var cofd = new Microsoft.WindowsAPICodePack.Dialogs.CommonOpenFileDialog()
+            var cofd = new CommonOpenFileDialog()
             {
                 IsFolderPicker = true,
                 Multiselect = false,

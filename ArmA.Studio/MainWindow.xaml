@@ -7,12 +7,12 @@
         xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:ads="clr-namespace:Xceed.Wpf.AvalonDock.Themes;assembly=Xceed.Wpf.AvalonDock.Themes.ArmAStudio"
         xmlns:dt="clr-namespace:ArmA.Studio.UI.DataTemplates"
-        xmlns:ev="clr-namespace:ArmA.Studio.UI.Attached.Eventing"
+        xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data"
         xmlns:att="clr-namespace:ArmA.Studio.UI.Attached"
         xmlns:win="clr-namespace:System.Windows;assembly=PresentationCore"
         xmlns:p="clr-namespace:ArmA.Studio.Properties"
         mc:Ignorable="d"
-        Title="{Binding CurrentWorkspace.WorkingDir, StringFormat=ArmA.Studio - {0}}"
+        Title="{Binding PathUri, StringFormat=ArmA.Studio - {0}}"
         Height="{Binding WindowHeight, Mode=TwoWay}"
         Width="{Binding WindowWidth, Mode=TwoWay}"
         WindowState="{Binding WindowCurrentState, Mode=TwoWay}"
@@ -52,7 +52,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="{x:Static p:Localization.MenuItem_Panels}" ItemsSource="{Binding PanelsAvailable}">
+            <MenuItem Header="{x:Static p:Localization.MenuItem_Panels}" ItemsSource="{Binding AvailablePanels}">
                 <MenuItem.ItemContainerStyle>
                     <Style TargetType="MenuItem">
                         <Style.Resources>
@@ -148,14 +148,14 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Grid.Column="0" Visibility="{Binding CurrentDocument.Line, Converter={StaticResource AlwaysVisibleConverter}, FallbackValue=Hidden}">
+                <TextBlock Grid.Column="0" Visibility="{Binding CurrentContent.Line, Converter={StaticResource AlwaysVisibleConverter}, FallbackValue=Hidden}">
                     <TextBlock.Text>
-                        <Binding Path="CurrentDocument.Line" Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}Ln {0}" FallbackValue="Ln NA"/>
+                        <Binding Path="CurrentContent.Line" Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}Ln {0}" FallbackValue="Ln NA"/>
                     </TextBlock.Text>
                 </TextBlock>
-                <TextBlock Grid.Column="0" Visibility="{Binding CurrentDocument.Column, Converter={StaticResource AlwaysVisibleConverter}, FallbackValue=Hidden}">
+                <TextBlock Grid.Column="0" Visibility="{Binding CurrentContent.Column, Converter={StaticResource AlwaysVisibleConverter}, FallbackValue=Hidden}">
                     <TextBlock.Text>
-                        <Binding Path="CurrentDocument.Column" Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}Col {0}" FallbackValue="Col NA"/>
+                        <Binding Path="CurrentContent.Column" Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}Col {0}" FallbackValue="Col NA"/>
                     </TextBlock.Text>
                 </TextBlock>
             </StackPanel>

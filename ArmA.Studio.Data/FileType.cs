@@ -21,6 +21,9 @@ namespace ArmA.Studio.Data
         public Func<string, bool> IsFileTypeCondition { get; private set; }
         public string DefaultExtension { get; private set; }
 
+        public string StaticFileName { get; set; }
+        public bool HasStaticFileName => !string.IsNullOrWhiteSpace(this.StaticFileName);
+
         /// <summary>
         /// Checks if provided file is valid to be used with this FileType.
         /// </summary>
@@ -88,6 +91,7 @@ namespace ArmA.Studio.Data
             this.Description = description;
             this.IsFileTypeCondition = isFileTypeCondition;
             this.FileTemplate = string.Empty;
+            this.StaticFileName = string.Empty;
         }
         //Serialization constructor
         private FileType() { }

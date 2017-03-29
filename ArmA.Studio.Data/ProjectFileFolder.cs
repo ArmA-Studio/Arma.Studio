@@ -26,12 +26,14 @@ namespace ArmA.Studio.Data
                 RaisePropertyChanged();
                 RaisePropertyChanged(nameof(ArmAPath));
                 RaisePropertyChanged(nameof(FilePath));
+                RaisePropertyChanged(nameof(FileName));
                 RaisePropertyChanged(nameof(FileUri));
             }
         }
         private string _ProjectRelativePath;
         public string ArmAPath { get { return string.Concat(this.OwningProject.ArmAPath, '\\', this.ProjectRelativePath); } }
         public string FilePath { get { return string.Concat(this.OwningProject.FilePath, '\\', this.ProjectRelativePath); } }
+        public string FileName { get { return System.IO.Path.GetFileName(this.ProjectRelativePath); } }
         public Uri FileUri { get { return new Uri(this.FilePath); } }
 
         public ObservableSortedCollection<ProjectFileFolder> Children { get; private set; }

@@ -7,20 +7,20 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ArmA.Studio.UI.Attached.Eventing
+namespace ArmA.Studio.Data.UI.Eventing
 {
-    public class TextChanged
+    public class Unloaded
     {
         public static DependencyProperty CommandProperty =
             DependencyProperty.RegisterAttached("Command",
             typeof(ICommand),
-            typeof(TextChanged),
+            typeof(Unloaded),
             new UIPropertyMetadata(CommandChanged));
 
         public static DependencyProperty CommandParameterProperty =
             DependencyProperty.RegisterAttached("CommandParameter",
                                                 typeof(object),
-                                                typeof(TextChanged),
+                                                typeof(Unloaded),
                                                 new UIPropertyMetadata(null));
 
         public static void SetCommand(DependencyObject target, ICommand value)
@@ -40,8 +40,8 @@ namespace ArmA.Studio.UI.Attached.Eventing
         private static void CommandChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             var type = target.GetType();
-            var ev = type.GetEvent("TextChanged");
-            var method = typeof(TextChanged).GetMethod("OnTextChanged");
+            var ev = type.GetEvent("Unloaded");
+            var method = typeof(Unloaded).GetMethod("OnUnloaded");
 
             if ((e.NewValue != null) && (e.OldValue == null))
             {
@@ -53,7 +53,7 @@ namespace ArmA.Studio.UI.Attached.Eventing
             }
         }
 
-        public static void OnTextChanged(object sender, EventArgs e)
+        public static void OnUnloaded(object sender, EventArgs e)
         {
             var control = sender as FrameworkElement;
             var command = (ICommand)control.GetValue(CommandProperty);

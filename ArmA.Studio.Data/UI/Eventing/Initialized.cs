@@ -7,27 +7,21 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ArmA.Studio.UI.Attached.Eventing
+namespace ArmA.Studio.Data.UI.Eventing
 {
-    public class KeyDown
+    public class Initialized
     {
         public static DependencyProperty CommandProperty =
             DependencyProperty.RegisterAttached("Command",
             typeof(ICommand),
-            typeof(KeyDown),
+            typeof(Initialized),
             new UIPropertyMetadata(CommandChanged));
 
         public static DependencyProperty CommandParameterProperty =
             DependencyProperty.RegisterAttached("CommandParameter",
                                                 typeof(object),
-                                                typeof(KeyDown),
+                                                typeof(Initialized),
                                                 new UIPropertyMetadata(null));
-
-        public static DependencyProperty KeyDownHandledProperty =
-            DependencyProperty.RegisterAttached("KeyDownHandled",
-                                                typeof(bool),
-                                                typeof(KeyDown),
-                                                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static void SetCommand(DependencyObject target, ICommand value)
         {
@@ -42,20 +36,12 @@ namespace ArmA.Studio.UI.Attached.Eventing
         {
             return target.GetValue(CommandParameterProperty);
         }
-        public static void SetKeyDownHandled(DependencyObject target, bool value)
-        {
-            target.SetValue(KeyDownHandledProperty, value);
-        }
-        public static bool GetKeyDownHandled(DependencyObject target)
-        {
-            return (bool)target.GetValue(KeyDownHandledProperty);
-        }
 
         private static void CommandChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             var type = target.GetType();
-            var ev = type.GetEvent("KeyDown");
-            var method = typeof(KeyDown).GetMethod("OnKeyDown");
+            var ev = type.GetEvent("Initialized");
+            var method = typeof(Initialized).GetMethod("OnInitialized");
 
             if ((e.NewValue != null) && (e.OldValue == null))
             {
@@ -67,14 +53,12 @@ namespace ArmA.Studio.UI.Attached.Eventing
             }
         }
 
-        public static void OnKeyDown(object sender, KeyEventArgs e)
+        public static void OnInitialized(object sender, EventArgs e)
         {
             var control = sender as FrameworkElement;
             var command = (ICommand)control.GetValue(CommandProperty);
             var commandParameter = control.GetValue(CommandParameterProperty);
             command.Execute(commandParameter);
-            e.Handled = GetKeyDownHandled(control);
-            SetKeyDownHandled(control, false);
         }
     }
 

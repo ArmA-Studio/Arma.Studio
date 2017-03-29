@@ -32,9 +32,9 @@ namespace ArmA.Studio.Data.UI
 
 
         public event EventHandler OnDocumentClosing;
-        protected static DataTemplate GetDataTemplateFromAssemblyRes(string path)
+        protected static DataTemplate GetDataTemplateFromAssemblyRes(string path) => GetDataTemplateFromAssemblyRes(path, System.Reflection.Assembly.GetCallingAssembly());
+        protected static DataTemplate GetDataTemplateFromAssemblyRes(string path, System.Reflection.Assembly ass)
         {
-            var ass = System.Reflection.Assembly.GetExecutingAssembly();
             using (var stream = ass.GetManifestResourceStream(path))
             {
                 try
@@ -53,8 +53,7 @@ namespace ArmA.Studio.Data.UI
             }
         }
 
-        public override string ContentId { get { return this.FilePath; } set { throw new NotImplementedException(); } }
-        public abstract string FilePath { get; }
+        public override string ContentId { get { return this.FileReference.FilePath; } set { throw new NotImplementedException(); } }
         public abstract DataTemplate Template { get; }
         public ICommand CmdClosing => new Commands.RelayCommand((p) =>
         {
@@ -64,7 +63,7 @@ namespace ArmA.Studio.Data.UI
                 switch (msgResult)
                 {
                     case MessageBoxResult.Yes:
-                        SaveDocument(FilePath);
+                        SaveDocument(this.FileReference.FilePath);
                         break;
                     case MessageBoxResult.Cancel:
                         return;
@@ -72,7 +71,7 @@ namespace ArmA.Studio.Data.UI
             }
             this.OnDocumentClosing?.Invoke(this, new EventArgs());
         });
-        public bool HasChanges { get; protected set; }
+        public abstract bool HasChanges { get; }
 
         public ProjectFileFolder FileReference { get { ProjectFileFolder v; this.WeakFileReference.TryGetTarget(out v); return v; } set { this.WeakFileReference.SetTarget(value); } }
         private WeakReference<ProjectFileFolder> WeakFileReference;
@@ -80,13 +79,15 @@ namespace ArmA.Studio.Data.UI
         public bool IsTemporary { get { return this._IsTemporary; } set { if (this._IsTemporary == value) return; this._IsTemporary = value; RaisePropertyChanged(); } }
         private bool _IsTemporary;
 
+        public abstract void SaveDocument();
         public abstract void SaveDocument(string path);
-        public abstract void OpenDocument(string path);
-        public abstract void ReloadDocument();
+        public abstract void LoadDocument();
 
         public DocumentBase(ProjectFileFolder fileRef)
         {
             this.WeakFileReference = new WeakReference<ProjectFileFolder>(fileRef);
         }
+
+        public abstract void RefreshVisuals();
     }
 }

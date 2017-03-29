@@ -5,9 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
       xmlns:local="clr-namespace:ArmA.Studio;assembly=ArmA.Studio"
-      xmlns:dc="clr-namespace:ArmA.Studio.DataContext;assembly=ArmA.Studio"
-      xmlns:SolutionUtil="clr-namespace:ArmA.Studio.SolutionUtil;assembly=ArmA.Studio"
-      DataType="{x:Type local:DocumentBase}">
+      xmlns:ui="clr-namespace:ArmA.Studio.Data.UI;assembly=ArmA.Studio.Data"
+      DataType="{x:Type ui:DocumentBase}">
     <Grid>
         <ContentControl ContentTemplate="{Binding Template}" Content="{Binding}"/>
     </Grid>

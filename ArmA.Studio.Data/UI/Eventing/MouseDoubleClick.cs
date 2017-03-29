@@ -7,20 +7,20 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ArmA.Studio.UI.Attached.Eventing
+namespace ArmA.Studio.Data.UI.Eventing
 {
-    public class Initialized
+    public class MouseDoubleClick
     {
         public static DependencyProperty CommandProperty =
             DependencyProperty.RegisterAttached("Command",
             typeof(ICommand),
-            typeof(Initialized),
+            typeof(MouseDoubleClick),
             new UIPropertyMetadata(CommandChanged));
 
         public static DependencyProperty CommandParameterProperty =
             DependencyProperty.RegisterAttached("CommandParameter",
                                                 typeof(object),
-                                                typeof(Initialized),
+                                                typeof(MouseDoubleClick),
                                                 new UIPropertyMetadata(null));
 
         public static void SetCommand(DependencyObject target, ICommand value)
@@ -39,21 +39,21 @@ namespace ArmA.Studio.UI.Attached.Eventing
 
         private static void CommandChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
-            var type = target.GetType();
-            var ev = type.GetEvent("Initialized");
-            var method = typeof(Initialized).GetMethod("OnInitialized");
-
-            if ((e.NewValue != null) && (e.OldValue == null))
+            Control control = target as Control;
+            if (control != null)
             {
-                ev.AddEventHandler(target, Delegate.CreateDelegate(ev.EventHandlerType, method));
-            }
-            else if ((e.NewValue == null) && (e.OldValue != null))
-            {
-                ev.RemoveEventHandler(target, Delegate.CreateDelegate(ev.EventHandlerType, method));
+                if ((e.NewValue != null) && (e.OldValue == null))
+                {
+                    control.MouseDoubleClick += OnMouseDoubleClick;
+                }
+                else if ((e.NewValue == null) && (e.OldValue != null))
+                {
+                    control.MouseDoubleClick -= OnMouseDoubleClick;
+                }
             }
         }
 
-        public static void OnInitialized(object sender, EventArgs e)
+        private static void OnMouseDoubleClick(object sender, EventArgs e)
         {
             var control = sender as FrameworkElement;
             var command = (ICommand)control.GetValue(CommandProperty);

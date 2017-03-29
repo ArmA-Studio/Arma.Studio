@@ -7,21 +7,27 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ArmA.Studio.UI.Attached.Eventing
+namespace ArmA.Studio.Data.UI.Eventing
 {
-    public class MouseRightButtonDown
+    public class PreviewKeyDown
     {
         public static DependencyProperty CommandProperty =
             DependencyProperty.RegisterAttached("Command",
             typeof(ICommand),
-            typeof(MouseRightButtonDown),
+            typeof(PreviewKeyDown),
             new UIPropertyMetadata(CommandChanged));
 
         public static DependencyProperty CommandParameterProperty =
             DependencyProperty.RegisterAttached("CommandParameter",
                                                 typeof(object),
-                                                typeof(MouseRightButtonDown),
+                                                typeof(PreviewKeyDown),
                                                 new UIPropertyMetadata(null));
+
+        public static DependencyProperty PreviewKeyDownHandledProperty =
+            DependencyProperty.RegisterAttached("PreviewKeyDownHandled",
+                                                typeof(bool),
+                                                typeof(PreviewKeyDown),
+                                                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static void SetCommand(DependencyObject target, ICommand value)
         {
@@ -36,12 +42,20 @@ namespace ArmA.Studio.UI.Attached.Eventing
         {
             return target.GetValue(CommandParameterProperty);
         }
+        public static void SetPreviewKeyDownHandled(DependencyObject target, bool value)
+        {
+            target.SetValue(PreviewKeyDownHandledProperty, value);
+        }
+        public static bool GetPreviewKeyDownHandled(DependencyObject target)
+        {
+            return (bool)target.GetValue(PreviewKeyDownHandledProperty);
+        }
 
         private static void CommandChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             var type = target.GetType();
-            var ev = type.GetEvent("MouseRightButtonDown");
-            var method = typeof(MouseRightButtonDown).GetMethod("OnMouseRightButtonDown");
+            var ev = type.GetEvent("KeyDown");
+            var method = typeof(PreviewKeyDown).GetMethod("OnPreviewKeyDown");
 
             if ((e.NewValue != null) && (e.OldValue == null))
             {
@@ -53,12 +67,14 @@ namespace ArmA.Studio.UI.Attached.Eventing
             }
         }
 
-        public static void OnMouseRightButtonDown(object sender, EventArgs e)
+        public static void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             var control = sender as FrameworkElement;
             var command = (ICommand)control.GetValue(CommandProperty);
             var commandParameter = control.GetValue(CommandParameterProperty);
             command.Execute(commandParameter);
+            e.Handled = GetPreviewKeyDownHandled(control);
+            SetPreviewKeyDownHandled(control, false);
         }
     }
 

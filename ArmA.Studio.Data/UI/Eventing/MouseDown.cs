@@ -7,33 +7,32 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ArmA.Studio.UI.Attached.Eventing
+namespace ArmA.Studio.Data.UI.Eventing
 {
-    public class LostKeyboardFocus
+    public class MouseDown
     {
         public static DependencyProperty CommandProperty =
             DependencyProperty.RegisterAttached("Command",
             typeof(ICommand),
-            typeof(LostKeyboardFocus),
+            typeof(MouseDown),
             new UIPropertyMetadata(CommandChanged));
 
         public static DependencyProperty CommandParameterProperty =
             DependencyProperty.RegisterAttached("CommandParameter",
                                                 typeof(object),
-                                                typeof(LostKeyboardFocus),
+                                                typeof(MouseDown),
                                                 new UIPropertyMetadata(null));
 
-        public static void SetCommand(DependencyObject target, ICommand value)
+        public static void SetCommand(Window target, ICommand value)
         {
             target.SetValue(CommandProperty, value);
-            
         }
 
-        public static void SetCommandParameter(DependencyObject target, object value)
+        public static void SetCommandParameter(Window target, object value)
         {
             target.SetValue(CommandParameterProperty, value);
         }
-        public static object GetCommandParameter(DependencyObject target)
+        public static object GetCommandParameter(Window target)
         {
             return target.GetValue(CommandParameterProperty);
         }
@@ -41,8 +40,8 @@ namespace ArmA.Studio.UI.Attached.Eventing
         private static void CommandChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             var type = target.GetType();
-            var ev = type.GetEvent("LostKeyboardFocus");
-            var method = typeof(LostKeyboardFocus).GetMethod("OnLostKeyboardFocus");
+            var ev = type.GetEvent("MouseDown");
+            var method = typeof(MouseDown).GetMethod("OnMouseDown");
 
             if ((e.NewValue != null) && (e.OldValue == null))
             {
@@ -54,9 +53,9 @@ namespace ArmA.Studio.UI.Attached.Eventing
             }
         }
 
-        public static void OnLostKeyboardFocus(object sender, EventArgs e)
+        public static void OnMouseDown(object sender, EventArgs e)
         {
-            var control = sender as DependencyObject;
+            var control = sender as UIElement;
             var command = (ICommand)control.GetValue(CommandProperty);
             var commandParameter = control.GetValue(CommandParameterProperty);
             command.Execute(commandParameter);

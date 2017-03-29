@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArmA.Studio.Data.UI;
 
 namespace ArmA.Studio
 {
@@ -106,6 +107,22 @@ namespace ArmA.Studio
                 }
             }
             return false;
+        }
+
+
+        public static void Close(this DocumentBase doc)
+        {
+            if (Workspace.Instance.AvalonDockDocuments.Contains(doc))
+            {
+                Workspace.Instance.AvalonDockDocuments.Remove(doc);
+            }
+        }
+        public static void Close(this PanelBase panel)
+        {
+            if (Workspace.Instance.AvalonDockPanels.Contains(panel))
+            {
+                Workspace.Instance.AvalonDockPanels.Remove(panel);
+            }
         }
     }
 }

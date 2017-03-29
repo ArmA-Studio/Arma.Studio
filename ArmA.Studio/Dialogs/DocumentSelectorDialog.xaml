@@ -6,7 +6,6 @@
         xmlns:p="clr-namespace:ArmA.Studio.Properties"
         xmlns:local="clr-namespace:ArmA.Studio.Dialogs"
         xmlns:att="clr-namespace:ArmA.Studio.UI.Attached"
-        xmlns:ev="clr-namespace:ArmA.Studio.UI.Attached.Eventing"
         mc:Ignorable="d"
         Title="{x:Static p:Localization.CreateNewFileDialog_Title}" Style="{StaticResource DialogWindow}">
     <ListView Grid.Row="0" VerticalAlignment="Stretch" Margin="0 0 0 8" ItemsSource="{Binding FileTypeCollection}" SelectedItem="{Binding SelectedItem}">

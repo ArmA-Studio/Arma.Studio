@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Utility;
-using System.Windows.Input;
-using System.Windows;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using System.Windows.Input;
+using ArmA.Studio.Data;
+using ArmA.Studio.Data.UI.Commands;
 
 namespace ArmA.Studio.Dialogs
 {
@@ -16,8 +12,8 @@ namespace ArmA.Studio.Dialogs
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
 
-        public ICommand CmdOKButtonPressed { get { return new UI.Commands.RelayCommand((p) => this.DialogResult = true); } }
-        public ICommand CmdPreviewKeyDown { get { return new UI.Commands.RelayCommand((p) => { if(this.OKButtonEnabled && Keyboard.IsKeyDown(Key.Enter)) this.DialogResult = true; }); } }
+        public ICommand CmdOKButtonPressed { get { return new RelayCommand((p) => this.DialogResult = true); } }
+        public ICommand CmdPreviewKeyDown { get { return new RelayCommand((p) => { if(this.OKButtonEnabled && Keyboard.IsKeyDown(Key.Enter)) this.DialogResult = true; }); } }
 
         public bool? DialogResult { get { return this._DialogResult; } set { this._DialogResult = value; this.RaisePropertyChanged(); } }
         private bool? _DialogResult;
@@ -37,18 +33,18 @@ namespace ArmA.Studio.Dialogs
         public bool OKButtonEnabled { get { return this._OKButtonEnabled; } set { this._OKButtonEnabled = value; this.RaisePropertyChanged(); } }
         private bool _OKButtonEnabled;
 
-        public string FinalName { get { return string.IsNullOrWhiteSpace(((FileType)this.SelectedItem).StaticFileName) ? this.SelectedName : ((FileType)this.SelectedItem).StaticFileName; } }
+        public string FinalName { get { return (this.SelectedItem as FileType).HasStaticFileName ? (this.SelectedItem as FileType).StaticFileName : this.SelectedName; } }
 
         public CreateNewFileDialogDataContext()
         {
-            this.FileTypeCollection = new ObservableCollection<FileType>(FileType.CurrentFileTypes);
+            this.FileTypeCollection = new ObservableCollection<FileType>(App.GetPlugins<Plugin.IDocumentProviderPlugin>().SelectMany((p) => p.FileTypes));
             this.SelectedItem = this.FileTypeCollection.First();
             this.UpdateOkButtonEnabled();
         }
 
         private void UpdateOkButtonEnabled()
         {
-            this.OKButtonEnabled = this.SelectedItem != null && !(string.IsNullOrWhiteSpace(this.SelectedName) && string.IsNullOrWhiteSpace(((FileType)this.SelectedItem).StaticFileName));
+            this.OKButtonEnabled = this.SelectedItem != null && (!string.IsNullOrWhiteSpace(this.SelectedName) || (this.SelectedItem as FileType).HasStaticFileName);
         }
 
     }

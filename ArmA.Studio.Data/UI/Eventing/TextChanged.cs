@@ -7,20 +7,20 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ArmA.Studio.UI.Attached.Eventing
+namespace ArmA.Studio.Data.UI.Eventing
 {
-    public class ContextMenuOpening
+    public class TextChanged
     {
         public static DependencyProperty CommandProperty =
             DependencyProperty.RegisterAttached("Command",
             typeof(ICommand),
-            typeof(ContextMenuOpening),
+            typeof(TextChanged),
             new UIPropertyMetadata(CommandChanged));
 
         public static DependencyProperty CommandParameterProperty =
             DependencyProperty.RegisterAttached("CommandParameter",
                                                 typeof(object),
-                                                typeof(ContextMenuOpening),
+                                                typeof(TextChanged),
                                                 new UIPropertyMetadata(null));
 
         public static void SetCommand(DependencyObject target, ICommand value)
@@ -40,8 +40,8 @@ namespace ArmA.Studio.UI.Attached.Eventing
         private static void CommandChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
             var type = target.GetType();
-            var ev = type.GetEvent("ContextMenuOpening");
-            var method = typeof(ContextMenuOpening).GetMethod("OnContextMenuOpening");
+            var ev = type.GetEvent("TextChanged");
+            var method = typeof(TextChanged).GetMethod("OnTextChanged");
 
             if ((e.NewValue != null) && (e.OldValue == null))
             {
@@ -53,19 +53,13 @@ namespace ArmA.Studio.UI.Attached.Eventing
             }
         }
 
-        public static void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
+        public static void OnTextChanged(object sender, EventArgs e)
         {
             var control = sender as FrameworkElement;
-            if (control.ContextMenu != null)
-            {
-                var command = (ICommand)control.GetValue(CommandProperty);
-                var commandParameter = control.GetValue(CommandParameterProperty);
-                command.Execute(commandParameter);
-                control.ContextMenu.DataContext = control.DataContext;
-                control.ContextMenu.IsOpen = true;
-                e.Handled = true;
-            }
+            var command = (ICommand)control.GetValue(CommandProperty);
+            var commandParameter = control.GetValue(CommandParameterProperty);
+            command.Execute(commandParameter);
         }
-
     }
+
 }

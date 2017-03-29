@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using ArmA.Studio.Data.UI.Commands;
 using ArmA.Studio.Plugin;
 
@@ -22,7 +23,7 @@ namespace ArmA.Studio
         #region BindableProperties
         public Version CurrentVersion { get { return App.CurrentVersion; } }
 
-        public ICommand CmdInitialized => new RelayCommand((p) => Task.Run(() => RunSplash()));
+        public ICommand CmdLoaded => new RelayCommand((p) => Task.Run(() => RunSplash(p as Window)));
 
         public double ProgressValue { get { return this._ProgressValue; } set { if (this._ProgressValue == value) return; this._ProgressValue = value; RaisePropertyChanged(); } }
         private double _ProgressValue;
@@ -39,8 +40,8 @@ namespace ArmA.Studio
 
         }
 
-        private async Task RunSplashAsync() => await Task.Run(() => this.RunSplash());
-        private void RunSplash()
+        private async Task RunSplashAsync(Window wind) => await Task.Run(() => this.RunSplash(wind));
+        private void RunSplash(Window wind)
         {
             var setIndeterminate = new Action<bool>((v) => App.Current.Dispatcher.Invoke(() => this.ProgressIndeterminate = v));
             var setDisplayText = new Action<string>((v) => App.Current.Dispatcher.Invoke(() => this.ProgressText = v));
@@ -52,10 +53,10 @@ namespace ArmA.Studio
                 this.ProgressValue = 0;
             }));
 
-            if (!Splash_LoadPlugins(setIndeterminate, setDisplayText, setProgress))
+            if (Splash_LoadPlugins(setIndeterminate, setDisplayText, setProgress))
                 return;
             reset();
-            if (!Splash_CheckUpdate(setIndeterminate, setDisplayText, setProgress))
+            if (Splash_CheckUpdate(setIndeterminate, setDisplayText, setProgress))
                 return;
             reset();
 
@@ -70,12 +71,16 @@ namespace ArmA.Studio
             reset();
 
             Workspace w;
-            if (!Splash_Workspace(setIndeterminate, setDisplayText, setProgress, out w))
+            if (Splash_Workspace(setIndeterminate, setDisplayText, setProgress, out w))
                 return;
 
 
-            var mainWindow = new MainWindow();
-            mainWindow.ShowDialog();
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                var mainWindow = new MainWindow();
+                mainWindow.Show();
+                wind.Close();
+            });
         }
 
         private static bool Splash_Workspace(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress, out Workspace w)
@@ -164,7 +169,8 @@ namespace ArmA.Studio
             catch (Exception ex)
             {
                 Logger.Error(ex, "Exception while trying to get Solution");
-                MessageBox.Show(string.Format(Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                App.ShowOperationFailedMessageBox(ex);
+                App.Shutdown(App.ExitCodes.ConfigError);
                 return true;
             }
 
@@ -189,6 +195,7 @@ namespace ArmA.Studio
 
             SetDisplayText(Properties.Localization.Splash_LoadingPlugins);
             var pManager = new PluginManager<IPlugin>();
+            
             var plugins = Directory.EnumerateFiles(App.PluginsPath, "*.dll");
             pManager.LoadPlugins(plugins, new Progress<double>((d) =>
             {
@@ -217,7 +224,7 @@ namespace ArmA.Studio
                 }
             }
             App.Plugins = pManager.Plugins;
-            return true;
+            return false;
         }
         private static bool Splash_CheckUpdate(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress)
         {
@@ -226,7 +233,7 @@ namespace ArmA.Studio
             SetDisplayText(Properties.Localization.Splash_CheckingForToolUpdates);
             SetProgress(1);
             Logger.Info("Checking for tool updates...");
-#if DEBUG
+#if !DEBUG
             (App.Current as App).UpdateDownloadInfo = UpdateHelper.GetDownloadInfo().Result;
             if ((App.Current as App).UpdateDownloadInfo.available)
             {

@@ -8,7 +8,8 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 using ArmA.Studio.DataContext;
-using ArmA.Studio.DataContext.TextEditorUtil;
+using ArmA.Studio.Data.Lint;
+using ArmA.Studio.Data;
 
 namespace ArmA.Studio.UI
 {
@@ -20,7 +21,7 @@ namespace ArmA.Studio.UI
         }
         public KnownLayer Layer { get { return KnownLayer.Selection; } }
 
-        public IEnumerable<LinterInfo> SyntaxErrors { get; internal set; }
+        public IEnumerable<LintInfo> SyntaxErrors { get; internal set; }
         public int SyntaxErrors_TextLength { get; internal set; }
 
         private IEnumerable<Point> GetPoints(Rect rect, double offset, int count)

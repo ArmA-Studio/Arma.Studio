@@ -12,7 +12,25 @@ namespace ArmA.Studio
 {
     public sealed class BreakpointManager : IEnumerable<BreakpointInfo>
     {
-        public event EventHandler OnBreakPointsChanged;
+        public sealed class BreakPointsChangedEventArgs
+        {
+            public enum EMode
+            {
+                Add,
+                Remove,
+                Update,
+                DrasticChange
+            }
+            public readonly EMode Mode;
+            public readonly BreakpointInfo Breakpoint;
+            public BreakPointsChangedEventArgs(EMode mode, BreakpointInfo bp)
+            {
+                this.Mode = mode;
+                this.Breakpoint = bp;
+            }
+        }
+
+        public event EventHandler<BreakPointsChangedEventArgs> OnBreakPointsChanged;
 
         private Dictionary<ProjectFileFolder, List<BreakpointInfo>> BreakPointDictionary;
 
@@ -32,6 +50,7 @@ namespace ArmA.Studio
             bpi.FileFolder = pff;
             var bpiList = this.BreakPointDictionary[pff];
             var index = bpiList.FindIndex((item) => item.Line == bpi.Line);
+            var isUpdate = false;
             if (index == -1)
             {
                 bpiList.Add(bpi);
@@ -39,8 +58,9 @@ namespace ArmA.Studio
             else
             {
                 bpiList[index] = bpi;
+                isUpdate = true;
             }
-            this.OnBreakPointsChanged?.Invoke(this, new EventArgs());
+            this.OnBreakPointsChanged?.Invoke(this, new BreakPointsChangedEventArgs(isUpdate ? BreakPointsChangedEventArgs.EMode.Update : BreakPointsChangedEventArgs.EMode.Add, bpi));
             return bpi;
         }
         public BreakpointInfo GetBreakpoint(ProjectFileFolder pff, int line)
@@ -63,8 +83,9 @@ namespace ArmA.Studio
             var index = bpiList.FindIndex((item) => item.Line == line);
             if (index == -1)
             {
+                var bpi = bpiList[index];
                 bpiList.RemoveAt(index);
-                this.OnBreakPointsChanged?.Invoke(this, new EventArgs());
+                this.OnBreakPointsChanged?.Invoke(this, new BreakPointsChangedEventArgs(BreakPointsChangedEventArgs.EMode.Remove, bpi));
             }
         }
 
@@ -118,7 +139,7 @@ namespace ArmA.Studio
                 catch { }
             }
 
-            this.OnBreakPointsChanged?.Invoke(this, new EventArgs());
+            this.OnBreakPointsChanged?.Invoke(this, new BreakPointsChangedEventArgs(BreakPointsChangedEventArgs.EMode.DrasticChange, default(BreakpointInfo)));
         }
         public void SaveBreakpoints(System.IO.Stream stream)
         {
