@@ -13,6 +13,79 @@ namespace ArmA.Studio.Data
 {
     public class Solution : IXmlSerializable
     {
+        public static class XmlHelper
+        {
+            public static void Serialize_Project(XmlWriter writer, Project p)
+            {
+                writer.WriteStartElement(nameof(Project));
+
+
+                writer.WriteAttributeString(nameof(Project.ArmAPath), p.ArmAPath);
+                writer.WriteAttributeString(nameof(Project.Name), p.Name);
+                writer.WriteAttributeString(nameof(Project.FilePath), p.FilePath);
+                writer.WriteAttributeString(nameof(Project.ProjectType), Enum.GetName(typeof(EProjectType), p.ProjectType));
+
+                foreach(var pff in p)
+                {
+                    Serialize_ProjectFileFolder(writer, pff);
+                }
+
+
+                writer.WriteEndElement();
+            }
+            public static Project Deserialize_Project(XmlReader reader)
+            {
+                if (reader.Name != nameof(Project))
+                    throw new XmlException($"Invalid {nameof(Project)}");
+
+
+                var p = new Project();
+
+                p.ArmAPath = reader.GetAttribute(nameof(Project.ArmAPath));
+                p.Name = reader.GetAttribute(nameof(Project.Name));
+                p.FilePath = reader.GetAttribute(nameof(Project.FilePath));
+                EProjectType tmp;
+                if (!Enum.TryParse(reader.GetAttribute(nameof(Project.ProjectType)), out tmp))
+                    throw new XmlException($"Invalid {nameof(Project.ProjectType)}");
+                p.ProjectType = tmp;
+
+                reader.ReadStartElement(nameof(Project));
+                while (reader.Name == nameof(ProjectFileFolder))
+                {
+                    p.Children.Add(Deserialize_ProjectFileFolder(reader));
+                }
+                reader.ReadEndElement();
+                return p;
+            }
+
+            public static void Serialize_ProjectFileFolder(XmlWriter writer, ProjectFileFolder pff)
+            {
+                writer.WriteStartElement(nameof(ProjectFileFolder));
+                
+                writer.WriteAttributeString(nameof(ProjectFileFolder.ProjectRelativePath), pff.ProjectRelativePath);
+                writer.WriteAttributeString(nameof(ProjectFileFolder.IsFolder), pff.IsFolder.ToString());
+
+                writer.WriteEndElement();
+            }
+            public static ProjectFileFolder Deserialize_ProjectFileFolder(XmlReader reader)
+            {
+                if (reader.Name != nameof(ProjectFileFolder) || !reader.IsEmptyElement)
+                    throw new XmlException($"Invalid {nameof(ProjectFileFolder)}");
+
+
+                var pff = new ProjectFileFolder();
+
+                pff.ProjectRelativePath = reader.GetAttribute(nameof(ProjectFileFolder.ProjectRelativePath));
+                bool flag;
+                if (!bool.TryParse(reader.GetAttribute(nameof(ProjectFileFolder.IsFolder)), out flag))
+                    throw new XmlException($"Invalid {nameof(Project.ProjectType)}");
+                pff.IsFolder = flag;
+
+                reader.ReadStartElement(nameof(ProjectFileFolder));
+                return pff;
+            }
+        }
+
         public ObservableSortedCollection<Project> Projects { get; private set; }
         public Uri FileUri { get; set; }
 
@@ -49,19 +122,31 @@ namespace ArmA.Studio.Data
             }
         }
 
-        public XmlSchema GetSchema()
+        XmlSchema IXmlSerializable.GetSchema()
         {
             return null;
         }
 
-        public void ReadXml(XmlReader reader)
+        void IXmlSerializable.ReadXml(XmlReader reader)
         {
-            //throw new NotImplementedException();
+            reader.ReadStartElement(nameof(Solution));
+
+            while (reader.Name == nameof(Project))
+            {
+                this.Projects.Add(XmlHelper.Deserialize_Project(reader));
+            }
+
+            reader.ReadEndElement();
         }
 
-        public void WriteXml(XmlWriter writer)
+        void IXmlSerializable.WriteXml(XmlWriter writer)
         {
-            //throw new NotImplementedException();
+            writer.WriteStartElement(nameof(Solution));
+            foreach(var p in this.Projects)
+            {
+                XmlHelper.Serialize_Project(writer, p);
+            }
+            writer.WriteEndElement();
         }
         #endregion
 

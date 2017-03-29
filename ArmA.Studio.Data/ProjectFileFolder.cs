@@ -48,7 +48,7 @@ namespace ArmA.Studio.Data
         public bool IsFolder { get { return this._IsFolder; } set { if (this._IsFolder == value) return; this._IsFolder = value; this.RaisePropertyChanged(); } }
         private bool _IsFolder;
 
-        private ProjectFileFolder() : this(string.Empty) { }
+        internal ProjectFileFolder() : this(string.Empty) { }
         public ProjectFileFolder(string projectRelativePath)
         {
             this.Children = new ObservableSortedCollection<ProjectFileFolder>();
@@ -60,12 +60,14 @@ namespace ArmA.Studio.Data
 
         public int CompareTo(object obj)
         {
-            if(obj is ProjectFileFolder)
+            if (obj is ProjectFileFolder)
             {
                 if (this.IsFolder && !(obj as ProjectFileFolder).IsFolder)
                     return 1;
                 else if (!this.IsFolder && (obj as ProjectFileFolder).IsFolder)
-                    return -1; 
+                    return -1;
+                else
+                    return this.ProjectRelativePath.CompareTo((obj as ProjectFileFolder).ProjectRelativePath);
             }
             return this.ProjectRelativePath.CompareTo(obj);
         }

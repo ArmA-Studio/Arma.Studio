@@ -26,26 +26,23 @@ namespace ArmA.Studio.Data
 
         public Solution OwningSolution { get { Solution v; this.WeakOwningSolution.TryGetTarget(out v); return v; } set { this.WeakOwningSolution.SetTarget(value); } }
 
-        public string ProjectPath
+        public string FilePath
         {
-            get { return this._ProjectPath; }
+            get { return this._FilePath; }
             set
             {
-                if (this._ProjectPath == value)
+                if (this._FilePath == value)
                     return;
-                this._ProjectPath = value;
+                this._FilePath = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged(nameof(ArmAPath));
                 RaisePropertyChanged(nameof(FilePath));
                 RaisePropertyChanged(nameof(FileUri));
             }
         }
-        private string _ProjectPath;
+        private string _FilePath;
 
         public string ArmAPath { get { return this._ArmAPath; } set { if (this._ArmAPath == value) return; this._ArmAPath = value; RaisePropertyChanged(); } }
         private string _ArmAPath;
-        public string FilePath { get { return this._FilePath; } set { if (this._FilePath == value) return; this._FilePath = value; RaisePropertyChanged(); } }
-        private string _FilePath;
         public Uri FileUri { get { return new Uri(this.FilePath); } }
 
         private WeakReference<Solution> WeakOwningSolution;
@@ -60,6 +57,10 @@ namespace ArmA.Studio.Data
 
         public int CompareTo(object obj)
         {
+            if(obj is Project)
+            {
+                return this.Name.CompareTo((obj as Project).Name);
+            }
             return this.Name.CompareTo(obj);
         }
 
