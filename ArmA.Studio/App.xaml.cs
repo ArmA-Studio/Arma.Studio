@@ -138,13 +138,13 @@ namespace ArmA.Studio
 #else
             SendExceptionReport(e.Exception);
 #endif
+            e.Handled = true;
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             if (e.ApplicationExitCode == (int)ExitCodes.ConfigError)
                 return;
-            Workspace.Instance.Unload();
             ConfigHost.Instance.ExecSave();
             if (e.ApplicationExitCode == (int)ExitCodes.Restart || e.ApplicationExitCode == (int)ExitCodes.RestartPluginUpdate)
             {

@@ -148,11 +148,6 @@ namespace ArmA.Studio
             set { this._AvailablePanels = value; this.RaisePropertyChanged(); }
         }
 
-        internal void Unload()
-        {
-            throw new NotImplementedException();
-        }
-
         private ObservableCollection<PanelBase> _AvailablePanels;
 
         public DockableBase CurrentContent
@@ -181,6 +176,7 @@ namespace ArmA.Studio
         private void OnAvalonDockingManagerInitialized(DockingManager dockingManager)
         {
             this.AvalonDockDockingManager = dockingManager;
+            Workspace.LoadLayout(dockingManager, Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
         }
 
 
@@ -272,6 +268,22 @@ namespace ArmA.Studio
                     this.AvailablePanels.Add(instance);
                 }
             }
+
+            const double DEF_WIN_HEIGHT = 512;
+            const double DEF_WIN_WIDTH = 1024;
+            this._WindowHeight = DEF_WIN_HEIGHT;
+            this._WindowWidth = DEF_WIN_WIDTH;
+            this._WindowLeft = (SystemParameters.PrimaryScreenWidth - DEF_WIN_WIDTH) / 2;
+            if (this._WindowLeft < 0)
+            {
+                this._WindowLeft = 0;
+            }
+            this._WindowTop = (SystemParameters.PrimaryScreenHeight - DEF_WIN_HEIGHT) / 2;
+            if (this._WindowTop < 0)
+            {
+                this._WindowTop = 0;
+            }
+            this._WindowCurrentState = WindowState.Normal;
         }
 
         public ProjectFileFolder GetProjectFileFolderReference(Uri path)

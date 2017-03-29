@@ -23,7 +23,7 @@ namespace ArmA.Studio
         #region BindableProperties
         public Version CurrentVersion { get { return App.CurrentVersion; } }
 
-        public ICommand CmdLoaded => new RelayCommand((p) => Task.Run(() => RunSplash(p as Window)));
+        public ICommand CmdLoaded => new RelayCommandAsync((p) => RunSplashAsync(p as Window));
 
         public double ProgressValue { get { return this._ProgressValue; } set { if (this._ProgressValue == value) return; this._ProgressValue = value; RaisePropertyChanged(); } }
         private double _ProgressValue;

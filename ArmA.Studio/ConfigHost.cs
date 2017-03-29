@@ -28,27 +28,27 @@ namespace ArmA.Studio
             public static WindowState WindowCurrentState
             {
                 get { WindowState state; if (Enum.TryParse(Instance.AppIni.GetValueOrNull(nameof(MainWindow), nameof(MainWindow.WindowState)), out state)) return state; return WindowState.Normal; }
-                set { Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.WindowState), value.ToString()); Instance.Save(EIniSelector.App); }
+                set { if (WindowCurrentState == value) return; Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.WindowState), value.ToString()); Instance.Save(EIniSelector.App); }
             }
             public static double WindowHeight
             {
                 get { double d; if (double.TryParse(Instance.AppIni.GetValueOrNull(nameof(MainWindow), nameof(MainWindow.Height)), out d)) return d; return -1; }
-                set { Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Height), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+                set { if (WindowHeight == value) return; Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Height), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
             }
             public static double WindowWidth
             {
                 get { double d; if (double.TryParse(Instance.AppIni.GetValueOrNull(nameof(MainWindow), nameof(MainWindow.Width)), out d)) return d; return -1;  }
-                set { Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Width), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+                set { if (WindowWidth == value) return; Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Width), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
             }
             public static double WindowTop
             {
                 get { double d; if (double.TryParse(Instance.AppIni.GetValueOrNull(nameof(MainWindow), nameof(MainWindow.Top)), out d)) return d; return -1; }
-                set { Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Top), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+                set { if (WindowTop == value) return; Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Top), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
             }
             public static double WindowLeft
             {
                 get { double d; if (double.TryParse(Instance.AppIni.GetValueOrNull(nameof(MainWindow), nameof(MainWindow.Left)), out d)) return d; return -1;  }
-                set { Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Left), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+                set { if (WindowLeft == value) return; Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Left), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
             }
 
             public static string WorkspacePath

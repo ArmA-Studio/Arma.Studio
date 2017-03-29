@@ -9,7 +9,7 @@
     xmlns:ae="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
     xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data"
     xmlns:p="clr-namespace:ArmA.Studio.Properties;assembly=ArmA.Studio"
-    xmlns:SolutionUtil="clr-namespace:ArmA.Studio.SolutionUtil;assembly=ArmA.Studio"
+    xmlns:data="clr-namespace:ArmA.Studio.Data;assembly=ArmA.Studio.Data"
     DataType="{x:Type dc:ErrorListPane}">
     <Grid>
         <Grid.RowDefinitions>
@@ -134,11 +134,11 @@
                                             <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/StatusInformation/StatusInformation.ico"/>
                                             <Setter Property="ToolTip" Value="{x:Static p:Localization.Info}"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Severity}" Value="{x:Static local:ESeverity.Error}">
+                                                <DataTrigger Binding="{Binding Severity}" Value="{x:Static data:ESeverity.Error}">
                                                     <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/StatusCriticalError/StatusCriticalError.ico"/>
                                                     <Setter Property="ToolTip" Value="{x:Static p:Localization.Error}"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Severity}" Value="{x:Static local:ESeverity.Warning}">
+                                                <DataTrigger Binding="{Binding Severity}" Value="{x:Static data:ESeverity.Warning}">
                                                     <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/StatusWarning/StatusWarning.ico"/>
                                                     <Setter Property="ToolTip" Value="{x:Static p:Localization.Warning}"/>
                                                 </DataTrigger>
