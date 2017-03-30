@@ -20,6 +20,7 @@ namespace ArmA.Studio.Data
             get { return this._ProjectRelativePath; }
             set
             {
+                value = value.Replace('\\', '/');
                 if (this._ProjectRelativePath == value)
                     return;
                 this._ProjectRelativePath = value;
@@ -27,6 +28,7 @@ namespace ArmA.Studio.Data
                 RaisePropertyChanged(nameof(ArmAPath));
                 RaisePropertyChanged(nameof(FilePath));
                 RaisePropertyChanged(nameof(FileName));
+                RaisePropertyChanged(nameof(FileExtension));
                 RaisePropertyChanged(nameof(FileUri));
             }
         }
@@ -34,6 +36,8 @@ namespace ArmA.Studio.Data
         public string ArmAPath { get { return string.Concat(this.OwningProject.ArmAPath, '\\', this.ProjectRelativePath); } }
         public string FilePath { get { return string.Concat(this.OwningProject.FilePath, '\\', this.ProjectRelativePath); } }
         public string FileName { get { return System.IO.Path.GetFileName(this.ProjectRelativePath); } }
+        public string FileExtension { get { return System.IO.Path.GetExtension(this.ProjectRelativePath); } }
+
         public Uri FileUri { get { return new Uri(this.FilePath); } }
 
         public ObservableSortedCollection<ProjectFileFolder> Children { get; private set; }

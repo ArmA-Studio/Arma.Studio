@@ -129,6 +129,8 @@
     </ApplicationDefinition>
     <Compile Include="BreakpointManager.cs" />
     <Compile Include="DataContext\SolutionPane.cs" />
+    <Compile Include="DataContext\SolutionPaneUtil\ProjectFileFolderModelView.cs" />
+    <Compile Include="DataContext\SolutionPaneUtil\ProjectModelView.cs" />
     <Compile Include="Dialogs\DocumentSelectorDialog.xaml.cs">
       <DependentUpon>DocumentSelectorDialog.xaml</DependentUpon>
     </Compile>

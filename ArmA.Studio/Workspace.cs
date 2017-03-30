@@ -89,6 +89,8 @@ namespace ArmA.Studio
                 section["ContentId"] = panel.ContentId;
                 section["IsSelected"] = panel.IsSelected.ToString();
             }
+            this.CmdSaveAll.Execute(null);
+
             App.Current.Shutdown((int)App.ExitCodes.OK);
         });
         public ICommand CmdSwitchWorkspace => new RelayCommand((p) =>

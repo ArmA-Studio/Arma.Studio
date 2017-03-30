@@ -141,12 +141,10 @@ namespace ArmA.Studio.Data
 
         void IXmlSerializable.WriteXml(XmlWriter writer)
         {
-            writer.WriteStartElement(nameof(Solution));
             foreach(var p in this.Projects)
             {
                 XmlHelper.Serialize_Project(writer, p);
             }
-            writer.WriteEndElement();
         }
         #endregion
 
