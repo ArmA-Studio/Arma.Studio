@@ -1,0 +1,75 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ import namespace="System" #>
+<#@ output extension=".cs" #>
+<#
+	Type[] types = new []
+	{
+		typeof(byte),
+		typeof(sbyte),
+		typeof(short),
+		typeof(int),
+		typeof(long),
+		typeof(ushort),
+		typeof(uint),
+		typeof(ulong),
+		typeof(decimal),
+		typeof(double),
+		typeof(float)
+	};
+#>
+
+//ToDo: Fix floating point number TextBox input
+
+using System;
+using System.Reflection;
+using System.Windows;
+using System.Linq;
+namespace ArmA.Studio.Data.Configuration
+{
+<# foreach (var type in types) { #>
+    public class <#= type.Name #>Item : PropertyItem
+    {
+        private readonly static DataTemplate ThisDataTemplate = LoadFromEmbeddedResource<DataTemplate>(typeof(<#= type.Name #>Item).Assembly, "ArmA.Studio.Data.Configuration.NumericItem.xaml");
+		private readonly Func<<#= type.Name #>, bool> IsValidFunction;
+
+        public <#= type.Name #>Item(string name, string path, object propertyOwner) : this(name, string.Empty, propertyOwner.GetType().GetProperty(path), propertyOwner, (v) => true) { }
+        public <#= type.Name #>Item(string name, string path, object propertyOwner, Func<<#= type.Name #>, bool> isValid) : this(name, string.Empty, propertyOwner.GetType().GetProperty(path), propertyOwner, isValid) { }
+        public <#= type.Name #>Item(string name, PropertyInfo property, object propertyOwner) : this(name, string.Empty, property, propertyOwner, (v) => true) { }
+        public <#= type.Name #>Item(string name, PropertyInfo property, object propertyOwner, Func<<#= type.Name #>, bool> isValid) : this(name, string.Empty, property, propertyOwner, isValid) { }
+		public <#= type.Name #>Item(string name, string icon, string path, object propertyOwner) : this(name, icon, propertyOwner.GetType().GetProperty(path), propertyOwner, (v) => true) { }
+		public <#= type.Name #>Item(string name, string icon, PropertyInfo property, object propertyOwner, Func<<#= type.Name #>, bool> isValid) : base(ThisDataTemplate, property, propertyOwner)
+        {
+            this.ImageSource = icon;
+            this.Name = name;
+			this.IsValidFunction = isValid;
+        }
+		
+		public override bool IsValidValue(object value)
+		{
+            if (value is <#= type.Name #> && this.IsValidFunction((<#= type.Name #>)value))
+                return true;
+            if (this.CanConvert(value) && this.IsValidFunction.Invoke((<#= type.Name #>)this.DoConversion(value)))
+				return true;
+            return false;
+		}
+
+        protected override bool CanConvert(object value)
+        {
+            if (value is <#= type.Name #>)
+                return true;
+            if (value is string)
+            {
+                <#= type.Name #> v;
+                return <#= type.Name #>.TryParse(value as string, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out v);
+            }
+            return false;
+        }
+        protected override object DoConversion(object value)
+        {
+            if (value is <#= type.Name #>)
+                return value;
+            return <#= type.Name #>.Parse(value as string, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
+        }
+    }
+<# } #>
+}

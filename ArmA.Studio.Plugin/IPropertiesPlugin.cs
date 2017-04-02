@@ -9,6 +9,6 @@ namespace ArmA.Studio.Plugin
 {
     public interface IPropertiesPlugin : IPlugin
     {
-        IEnumerable<ConfigCategory> GetCategories();
+        IEnumerable<Category> GetCategories();
     }
 }

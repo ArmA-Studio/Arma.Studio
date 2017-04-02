@@ -7,7 +7,7 @@
         xmlns:p="clr-namespace:ArmA.Studio.Properties"
         xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data"
         mc:Ignorable="d"
-        Height="256"
+        Height="239"
         Width="512"
         ResizeMode="NoResize"
         WindowStyle="None"
@@ -20,15 +20,12 @@
         ev:Loaded.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
         WindowStartupLocation="CenterScreen"
         >
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="18"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.Background>
-                <ImageBrush ImageSource="pack://application:,,,/Resources/SplashBack.png"/>
-            </Grid.Background>
+    <Canvas>
+        <Canvas.Background>
+            <ImageBrush ImageSource="Resources/SplashScreen.png"/>
+        </Canvas.Background>
+
+        <Grid Width="512" Height="239">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -37,38 +34,28 @@
                 <Grid.Resources>
                     <Style TargetType="TextBlock">
                         <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="Effect">
-                            <Setter.Value>
-                                <DropShadowEffect ShadowDepth="2" BlurRadius="5" Color="Gray"/>
-                            </Setter.Value>
-                        </Setter>
                     </Style>
                 </Grid.Resources>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Margin="5">
-                    <TextBlock Text="ArmA.Studio" FontSize="32" FontWeight="Bold"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Version" FontSize="18" FontWeight="Bold" Margin="0 0 12 0"/>
-                        <TextBlock Grid.Column="1" Text="{Binding CurrentVersion, FallbackValue=X.X.X}" FontSize="18" FontWeight="Bold"/>
-                    </Grid>
-                </StackPanel>
+                <Grid Grid.Column="0" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Version" FontSize="8" Margin="0 0 3 0" FontFamily="Calibri"/>
+                    <TextBlock Grid.Column="1" Text="{Binding CurrentVersion, FallbackValue=X.X.X}" FontSize="8" FontFamily="Calibri"/>
+                </Grid>
+                <!-- temporary commented out due to image containing the hint
                 <StackPanel Grid.Column="1" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                    <TextBlock Text="{x:Static p:Localization.CommunityMadeUtility}" FontSize="8" TextAlignment="Right"/>
-                    <TextBlock Text="{x:Static p:Localization.NotAffiliatedWithBohemiaInteractive}" FontSize="8" TextAlignment="Right"/>
-                    <TextBlock Text="{x:Static p:Localization.ImageCopyRightBohemiaInteractive}" FontSize="8" TextAlignment="Right"/>
-                </StackPanel>
+                    <TextBlock Text="{x:Static p:Localization.CommunityMadeUtility}" FontSize="8" TextAlignment="Right" FontFamily="Calibri"/>
+                    <TextBlock Text="{x:Static p:Localization.NotAffiliatedWithBohemiaInteractive}" FontSize="8" TextAlignment="Right" FontFamily="Calibri"/>
+                </StackPanel> -->
             </Grid>
         </Grid>
-        <Grid Grid.Row="1">
-            <ProgressBar Grid.Row="1" Minimum="0" Maximum="1" Background="Gray" Value="{Binding ProgressValue, FallbackValue=0.5}" IsIndeterminate="{Binding ProgressIndeterminate, FallbackValue=False}" BorderThickness="0"/>
-            <TextBlock HorizontalAlignment="Center" Foreground="White" Text="{Binding ProgressText, FallbackValue=Doing Something}"/>
-        </Grid>
-    </Grid>
+        <ProgressBar Minimum="0" Maximum="1" Background="#FF862D2D" Value="{Binding ProgressValue, FallbackValue=0.5}" IsIndeterminate="{Binding ProgressIndeterminate, FallbackValue=False}" BorderThickness="0" Width="512" Height="3" Canvas.Top="171" Foreground="Red"/>
+        <TextBlock HorizontalAlignment="Center" Foreground="White" Text="{Binding ProgressText, FallbackValue=Doing Something}" Canvas.Left="35" Canvas.Top="170" VerticalAlignment="Top"/>
+    </Canvas>
 </Window>

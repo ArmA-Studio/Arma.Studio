@@ -416,15 +416,6 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image © Bohemia Interactive.
-        /// </summary>
-        public static string ImageCopyRightBohemiaInteractive {
-            get {
-                return ResourceManager.GetString("ImageCopyRightBohemiaInteractive", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Message.
         /// </summary>
         public static string Info {

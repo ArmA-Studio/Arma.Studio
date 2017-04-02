@@ -129,6 +129,8 @@ namespace ArmA.Studio.Data
 
         void IXmlSerializable.ReadXml(XmlReader reader)
         {
+            if (reader.IsEmptyElement)
+                return;
             reader.ReadStartElement(nameof(Solution));
 
             while (reader.Name == nameof(Project))

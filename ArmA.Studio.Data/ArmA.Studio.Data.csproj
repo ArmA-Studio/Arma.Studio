@@ -49,8 +49,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BreakpointInfo.cs" />
-    <Compile Include="Configuration\ConfigCategory.cs" />
-    <Compile Include="Configuration\ConfigEntry.cs" />
+    <Compile Include="Configuration\BoolItem.cs" />
+    <Compile Include="Configuration\Category.cs" />
+    <Compile Include="Configuration\ComboBoxItem.cs" />
+    <Compile Include="Configuration\ConfigurationBaseClass.cs" />
+    <Compile Include="Configuration\Item.cs" />
+    <Compile Include="Configuration\NumericItem.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NumericItem.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Configuration\PropertyItem.cs" />
+    <Compile Include="Configuration\StringItem.cs" />
+    <Compile Include="Configuration\SubCategory.cs" />
     <Compile Include="EProjectType.cs" />
     <Compile Include="LicenseInfo.cs" />
     <Compile Include="Lint\LintInfo.cs" />
@@ -96,7 +107,24 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="Configuration\BoolItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Configuration\ComboBoxItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Configuration\NumericItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Configuration\StringItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utility\Utility.csproj">
       <Project>{e95cb476-aa64-429d-9349-64290b8164bb}</Project>
@@ -110,6 +138,15 @@
     <EmbeddedResource Include="UI\TextEditorBaseDataTemplate.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Configuration\NumericItem.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>NumericItem.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

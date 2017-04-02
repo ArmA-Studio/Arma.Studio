@@ -24,7 +24,7 @@ namespace ArmA.Studio
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         public const string CONST_UPDATESUFFIX = ".update";
-        public const string CONST_SOLUTIONEXTENSION = ".assln";
+        public const string CONST_SOLUTIONEXTENSION = ".asln";
         public const string CONST_CONFIGURATION = "Configuration";
 
 

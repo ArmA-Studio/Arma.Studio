@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Input;
 using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Xml;
+using ArmA.Studio.Data;
+using ArmA.Studio.Data.UI;
+using ArmA.Studio.Data.UI.Commands;
+using ArmA.Studio.DataContext.SolutionPaneUtil;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using Utility.Collections;
-using ArmA.Studio.Data.UI;
-using ArmA.Studio.Data.UI.Commands;
-using ArmA.Studio.DataContext.SolutionPaneUtil;
-using ArmA.Studio.Data;
-using System.Threading;
 
 namespace ArmA.Studio.DataContext
 {

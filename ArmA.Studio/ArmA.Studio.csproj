@@ -152,7 +152,7 @@
       <DependentUpon>DownloadToolUpdateDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\DownloadPluginUpdateDialogDataContext.cs" />
-    <Compile Include="Dialogs\PropertiesDialogUtil\ColorConfigEntry.cs" />
+    <Compile Include="Dialogs\PropertiesDialogUtil\ColorConfigItem.cs" />
     <Compile Include="Dialogs\WorkspaceSelectorDialog.cs" />
     <Compile Include="DebuggerContext.cs" />
     <Compile Include="Dialogs\IDialogContext.cs" />
@@ -252,6 +252,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <EmbeddedResource Include="Dialogs\PropertiesDialogUtil\ColorConfigItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Page Include="Dialogs\ReportDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -2178,6 +2182,7 @@
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_48x.png" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_64x.png" />
     <Resource Include="Resources\SplashBack.png" />
+    <Resource Include="Resources\SplashScreen.png" />
     <Content Include="SqfDefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
