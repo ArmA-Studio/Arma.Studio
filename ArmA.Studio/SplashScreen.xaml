@@ -48,11 +48,10 @@
                     <TextBlock Grid.Column="0" Text="Version" FontSize="8" Margin="0 0 3 0" FontFamily="Calibri"/>
                     <TextBlock Grid.Column="1" Text="{Binding CurrentVersion, FallbackValue=X.X.X}" FontSize="8" FontFamily="Calibri"/>
                 </Grid>
-                <!-- temporary commented out due to image containing the hint
                 <StackPanel Grid.Column="1" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                     <TextBlock Text="{x:Static p:Localization.CommunityMadeUtility}" FontSize="8" TextAlignment="Right" FontFamily="Calibri"/>
                     <TextBlock Text="{x:Static p:Localization.NotAffiliatedWithBohemiaInteractive}" FontSize="8" TextAlignment="Right" FontFamily="Calibri"/>
-                </StackPanel> -->
+                </StackPanel>
             </Grid>
         </Grid>
         <ProgressBar Minimum="0" Maximum="1" Background="#FF862D2D" Value="{Binding ProgressValue, FallbackValue=0.5}" IsIndeterminate="{Binding ProgressIndeterminate, FallbackValue=False}" BorderThickness="0" Width="512" Height="3" Canvas.Top="171" Foreground="Red"/>
