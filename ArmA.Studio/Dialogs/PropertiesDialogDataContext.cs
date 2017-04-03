@@ -36,6 +36,7 @@ namespace ArmA.Studio.Dialogs
 
         public PropertiesDialogDataContext()
         {
+
             this.Categories = new ObservableCollection<Category>(this.GetCategories());
             this._SelectedCategory = this.Categories.FirstOrDefault();
         }
@@ -43,8 +44,11 @@ namespace ArmA.Studio.Dialogs
         private IEnumerable<Category> GetCategories()
         {
             var list = new List<Category>(App.GetPlugins<Plugin.IPropertiesPlugin>().SelectMany((p) => p.GetCategories()));
+
+            list.Add(new Category(this.GetGeneralSubCategories()) { Name = Properties.Localization.GeneralProperties });
             list.Add(new Category(this.GetColorSubCategories()) { Name = Properties.Localization.ColoringProperties, ImageSource = @"/ArmA.Studio;component/Resources/Pictograms/ColorPalette/ColorPalette_26x.png" });
-            return list;
+
+            return Category.Merge(list);
         }
         private IEnumerable<SubCategory> GetColorSubCategories()
         {
@@ -59,6 +63,21 @@ namespace ArmA.Studio.Dialogs
             {
                 yield return new ColorConfigItem(prop.Name, prop);
             }
+        }
+
+        private IEnumerable<SubCategory> GetGeneralSubCategories()
+        {
+            yield return new SubCategory(new Item[]
+            {
+                new BoolItem(Properties.Localization.Property_General_Updating_EnableAutoToolUpdateAtStart, typeof(ConfigHost.App).GetProperty(nameof(ConfigHost.App.EnableAutoToolUpdates)), null),
+                new BoolItem(Properties.Localization.Property_General_Updating_EnableAutoPluginsUpdateAtStart, typeof(ConfigHost.App).GetProperty(nameof(ConfigHost.App.EnableAutoPluginsUpdate)), null)
+            })
+            { Name = Properties.Localization.Property_General_Updating, ImageSource = @"/ArmA.Studio;component/Resources/Logo.ico" };
+            yield return new SubCategory(new Item[]
+            {
+                new BoolItem(Properties.Localization.Property_General_ErrorReporting_AutoReportException, typeof(ConfigHost.App).GetProperty(nameof(ConfigHost.App.AutoReportException)), null)
+            })
+            { Name = Properties.Localization.Property_General_ErrorReporting, ImageSource = @"/ArmA.Studio;component/Resources/Logo.ico" };
         }
     }
 }

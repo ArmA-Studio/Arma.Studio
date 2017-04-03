@@ -416,6 +416,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string GeneralProperties {
+            get {
+                return ResourceManager.GetString("GeneralProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Message.
         /// </summary>
         public static string Info {
@@ -785,6 +794,51 @@ namespace ArmA.Studio.Properties {
         public static string PropertiesDialog_Title {
             get {
                 return ResourceManager.GetString("PropertiesDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error Reporting.
+        /// </summary>
+        public static string Property_General_ErrorReporting {
+            get {
+                return ResourceManager.GetString("Property_General_ErrorReporting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto-Report Exceptions.
+        /// </summary>
+        public static string Property_General_ErrorReporting_AutoReportException {
+            get {
+                return ResourceManager.GetString("Property_General_ErrorReporting_AutoReportException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating.
+        /// </summary>
+        public static string Property_General_Updating {
+            get {
+                return ResourceManager.GetString("Property_General_Updating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Auto-Plugin-Update at start.
+        /// </summary>
+        public static string Property_General_Updating_EnableAutoPluginsUpdateAtStart {
+            get {
+                return ResourceManager.GetString("Property_General_Updating_EnableAutoPluginsUpdateAtStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Auto-Tool-Update at start.
+        /// </summary>
+        public static string Property_General_Updating_EnableAutoToolUpdateAtStart {
+            get {
+                return ResourceManager.GetString("Property_General_Updating_EnableAutoToolUpdateAtStart", resourceCulture);
             }
         }
         

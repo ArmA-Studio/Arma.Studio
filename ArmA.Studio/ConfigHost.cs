@@ -72,6 +72,22 @@ namespace ArmA.Studio
                 get { bool val; if (bool.TryParse(Instance.AppIni.GetValueOrNull(nameof(DataContext.ErrorListPane), nameof(DataContext.ErrorListPane.IsInfosDisplayed)), out val)) return val; return true; }
                 set { Instance.AppIni.SetValue(nameof(DataContext.ErrorListPane), nameof(DataContext.ErrorListPane.IsInfosDisplayed), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
             }
+
+            public static bool EnableAutoToolUpdates
+            {
+                get { bool val; if (bool.TryParse(Instance.AppIni.GetValueOrNull(nameof(App), nameof(EnableAutoToolUpdates)), out val)) return val; return true; }
+                set { Instance.AppIni.SetValue(nameof(App), nameof(EnableAutoToolUpdates), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+            }
+            public static bool EnableAutoPluginsUpdate
+            {
+                get { bool val; if (bool.TryParse(Instance.AppIni.GetValueOrNull(nameof(App), nameof(EnableAutoPluginsUpdate)), out val)) return val; return true; }
+                set { Instance.AppIni.SetValue(nameof(App), nameof(EnableAutoPluginsUpdate), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+            }
+            public static bool AutoReportException
+            {
+                get { bool val; if (bool.TryParse(Instance.AppIni.GetValueOrNull(nameof(App), nameof(AutoReportException)), out val)) return val; return true; }
+                set { Instance.AppIni.SetValue(nameof(App), nameof(AutoReportException), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+            }
         }
         public static class Coloring
         {

@@ -30,5 +30,32 @@ namespace ArmA.Studio.Data.Configuration
         {
             this.InnerList = items;
         }
+
+        public void AddRange(IEnumerable<SubCategory> range)
+        {
+            foreach (var it in range)
+                this.InnerList.Add(it);
+        }
+
+        public static IEnumerable<Category> Merge(IEnumerable<Category> cats)
+        {
+            var list = cats.ToList();
+            for (var i = 0; i < list.Count; i++)
+            {
+                var lCat = list[i];
+                for (var j = i + 1; j < list.Count; j++)
+                {
+                    var rCat = list[j];
+
+                    if (lCat.Name.Equals(rCat.Name))
+                    {
+                        lCat.AddRange(rCat);
+                        list.RemoveAt(j);
+                        j--;
+                    }
+                }
+            }
+            return list;
+        }
     }
 }

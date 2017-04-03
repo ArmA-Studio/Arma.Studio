@@ -2181,7 +2181,6 @@
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_32x.png" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_48x.png" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_64x.png" />
-    <Resource Include="Resources\SplashBack.png" />
     <Resource Include="Resources\SplashScreen.png" />
     <Content Include="SqfDefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

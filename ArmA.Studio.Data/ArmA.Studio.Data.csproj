@@ -108,22 +108,22 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Configuration\BoolItem.xaml">
+    <EmbeddedResource Include="Configuration\BoolItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Configuration\ComboBoxItem.xaml">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuration\ComboBoxItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Configuration\NumericItem.xaml">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuration\NumericItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Configuration\StringItem.xaml">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuration\StringItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utility\Utility.csproj">

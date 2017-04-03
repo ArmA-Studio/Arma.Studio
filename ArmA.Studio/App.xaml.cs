@@ -86,29 +86,7 @@ namespace ArmA.Studio
             this.SetupNLog();
             DataContext.OutputPane.Initialize();
             this.CreateUserDirectories();
-
-#if !DEBUG
-            Task.Run(() => {
-                DownloadInfo = UpdateHelper.GetDownloadInfo().Result;
-                if(DownloadInfo.available)
-                {
-                    Dispatcher.Invoke(() =>
-                    {
-                        var msgboxresult = MessageBox.Show(
-                              string.Format(Studio.Properties.Localization.SoftwareUpdateAvailable_Body, CurrentVersion, DownloadInfo.version),
-                              string.Format(Studio.Properties.Localization.SoftwareUpdateAvailable_Title, DownloadInfo.version),
-                              MessageBoxButton.YesNo,
-                              MessageBoxImage.Information
-                        );
-                        if (msgboxresult == MessageBoxResult.Yes)
-                        {
-                            App.Shutdown(ExitCodes.Updating);
-                        }
-                    });
-                }
-            });
-#endif
-
+            
             try
             {
                 //Invoke getter, will never be null
@@ -201,6 +179,8 @@ namespace ArmA.Studio
 
         private static void SendExceptionReport(Exception ex)
         {
+            if (!ConfigHost.App.AutoReportException)
+                return;
             using (var memStream = new MemoryStream())
             {
                 var writer = new XmlTextWriter(new StreamWriter(memStream));

@@ -233,6 +233,9 @@ namespace ArmA.Studio
             SetDisplayText(Properties.Localization.Splash_CheckingForToolUpdates);
             SetProgress(1);
             Logger.Info("Checking for tool updates...");
+            if (ConfigHost.App.EnableAutoToolUpdates)
+            {
+
 #if !DEBUG
             (App.Current as App).UpdateDownloadInfo = UpdateHelper.GetDownloadInfo().Result;
             if ((App.Current as App).UpdateDownloadInfo.available)
@@ -265,58 +268,63 @@ namespace ArmA.Studio
                 Logger.Info("No update available.");
             }
 #endif
-            var updatingPlugins = from plugin in App.Plugins where plugin is IUpdatingPlugin select plugin as IUpdatingPlugin;
-            if (updatingPlugins.Any())
+            }
+            if (ConfigHost.App.EnableAutoPluginsUpdate)
             {
-                var list = new List<IUpdatingPlugin>();
-                Logger.Info("Checking for plugin updates.");
-                foreach (var p in updatingPlugins)
+                var updatingPlugins = from plugin in App.Plugins where plugin is IUpdatingPlugin select plugin as IUpdatingPlugin;
+                if (updatingPlugins.Any())
                 {
-                    Logger.Info($"Checking plugin {p.Name} for updates...");
-                    SetDisplayText(string.Format(Properties.Localization.Splash_CheckingForPluginXUpdate, p.Name));
-                    bool result = p.CheckUpdateAvailable();
-                    if (result)
+                    var list = new List<IUpdatingPlugin>();
+                    Logger.Info("Checking for plugin updates.");
+                    foreach (var p in updatingPlugins)
                     {
-                        Logger.Info($"{p.Name} has an update available.");
-                        list.Add(p);
-                    }
-                    else
-                    {
-                        Logger.Info($"{p.Name} has no update.");
-                    }
-                }
-                if (list.Any())
-                {
-                    App.Current.Dispatcher.Invoke(() =>
-                    {
-                        var msgboxresult = MessageBox.Show(
-                              string.Format(Properties.Localization.SoftwareUpdateAvailable_Body, App.CurrentVersion, (App.Current as App).UpdateDownloadInfo.version),
-                              string.Format(Properties.Localization.SoftwareUpdateAvailable_Title, (App.Current as App).UpdateDownloadInfo.version),
-                              MessageBoxButton.YesNo,
-                              MessageBoxImage.Information
-                        );
-                        if (msgboxresult == MessageBoxResult.Yes)
+                        Logger.Info($"Checking plugin {p.Name} for updates...");
+                        SetDisplayText(string.Format(Properties.Localization.Splash_CheckingForPluginXUpdate, p.Name));
+                        bool result = p.CheckUpdateAvailable();
+                        if (result)
                         {
-                            Logger.Info("Applying plugin updates.");
-                            var dlgdc = new Dialogs.DownloadPluginUpdateDialogDataContext(list);
-                            var dlg = new Dialogs.DownloadPluginUpdateDialog(dlgdc);
-                            var dlgResult = dlg.ShowDialog();
-                            if (dlgResult.HasValue && dlgResult.Value)
+                            Logger.Info($"{p.Name} has an update available.");
+                            list.Add(p);
+                        }
+                        else
+                        {
+                            Logger.Info($"{p.Name} has no update.");
+                        }
+                    }
+                    if (list.Any())
+                    {
+                        App.Current.Dispatcher.Invoke(() =>
+                        {
+                            var msgboxresult = MessageBox.Show(
+                                  string.Format(Properties.Localization.SoftwareUpdateAvailable_Body, App.CurrentVersion, (App.Current as App).UpdateDownloadInfo.version),
+                                  string.Format(Properties.Localization.SoftwareUpdateAvailable_Title, (App.Current as App).UpdateDownloadInfo.version),
+                                  MessageBoxButton.YesNo,
+                                  MessageBoxImage.Information
+                            );
+                            if (msgboxresult == MessageBoxResult.Yes)
                             {
-                                doShutdown = true;
-                                App.Shutdown(App.ExitCodes.RestartPluginUpdate);
+                                Logger.Info("Applying plugin updates.");
+                                var dlgdc = new Dialogs.DownloadPluginUpdateDialogDataContext(list);
+                                var dlg = new Dialogs.DownloadPluginUpdateDialog(dlgdc);
+                                var dlgResult = dlg.ShowDialog();
+                                if (dlgResult.HasValue && dlgResult.Value)
+                                {
+                                    doShutdown = true;
+                                    App.Shutdown(App.ExitCodes.RestartPluginUpdate);
+                                }
+                                else
+                                {
+                                    Logger.Info("Ignoring plugin updates.");
+                                }
                             }
                             else
                             {
                                 Logger.Info("Ignoring plugin updates.");
                             }
-                        }
-                        else
-                        {
-                            Logger.Info("Ignoring plugin updates.");
-                        }
-                    });
+                        });
+                    }
                 }
+
             }
             return doShutdown;
         }
