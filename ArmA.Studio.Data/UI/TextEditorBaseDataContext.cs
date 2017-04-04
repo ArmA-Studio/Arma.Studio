@@ -75,7 +75,7 @@ namespace ArmA.Studio.Data.UI
         public override bool HasChanges { get { if (this.EditorInstance == null) return false; return this.EditorInstance.Document.UndoStack.IsOriginalFile; } }
         public override string Title => this.HasChanges ? string.Concat(this.FileReference.FileName, '*') : this.FileReference.FileName;
 
-        public TextEditorBaseDataContext(ProjectFileFolder fileRef) : base(fileRef)
+        public TextEditorBaseDataContext(ProjectFile fileRef) : base(fileRef)
         {
             this.UsedFontFamily = new FontFamily("Consolas");
             this.ShowLineNumbers = false;

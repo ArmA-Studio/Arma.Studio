@@ -19,8 +19,8 @@ namespace ArmA.Studio.UI
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-        private ProjectFileFolder FileFolderRef;
-        public BreakPointMargin(ProjectFileFolder pff)
+        private ProjectFile FileFolderRef;
+        public BreakPointMargin(ProjectFile pff)
         {
             this.FileFolderRef = pff;
         }

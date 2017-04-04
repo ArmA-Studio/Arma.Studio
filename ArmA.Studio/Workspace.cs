@@ -18,7 +18,6 @@ using ArmA.Studio.Data.UI;
 using ArmA.Studio.Data.UI.Commands;
 using ArmA.Studio.Data;
 using ArmA.Studio.Plugin;
-using ArmA.Studio.UI.ViewModel;
 
 namespace ArmA.Studio
 {
@@ -135,7 +134,7 @@ namespace ArmA.Studio
                         doc.SaveDocument();
                     }
                 }
-                using (var stream = File.OpenWrite(this.Solution.FileUri.AbsolutePath))
+                using (var stream = File.Open(this.Solution.FileUri.AbsolutePath, FileMode.Create))
                 {
                     Solution.Serialize(this.Solution, stream);
                 }
@@ -167,13 +166,6 @@ namespace ArmA.Studio
             set { if (this._CurrentContent == value) return; this._CurrentContent = value; this.RaisePropertyChanged(); }
         }
         private DockableBase _CurrentContent;
-
-        public IPropertyDatatemplateProvider SelectedProperty
-        {
-            get { return this._SelectedProperty; }
-            set { if (this._SelectedProperty == value) return; this._SelectedProperty = value; this.RaisePropertyChanged(); }
-        }
-        private IPropertyDatatemplateProvider _SelectedProperty;
         #endregion
         #region AvalonDock Layout handling
         public ObservableCollection<PanelBase> AvalonDockPanels { get { return this._AvalonDockPanels; } set { this._AvalonDockPanels = value; this.RaisePropertyChanged(); } }
@@ -318,7 +310,7 @@ namespace ArmA.Studio
             this._WindowCurrentState = WindowState.Normal;
         }
 
-        public ProjectFileFolder GetProjectFileFolderReference(Uri path)
+        public ProjectFile GetProjectFileFolderReference(Uri path)
         {
             foreach (var p in this.Solution.Projects)
             {
@@ -341,7 +333,7 @@ namespace ArmA.Studio
         /// </summary>
         /// <param name="fileReference">reference to the file used.</param>
         /// <returns>The document created/focused.</returns>
-        public DocumentBase CreateOrFocusDocument(ProjectFileFolder fileReference) => this.CreateOrFocusDocument(fileReference.FileUri);
+        public DocumentBase CreateOrFocusDocument(ProjectFile fileReference) => this.CreateOrFocusDocument(fileReference.FileUri);
         /// <summary>
         /// Focuses an existing document or creates a new one if non is yet existing.
         /// </summary>

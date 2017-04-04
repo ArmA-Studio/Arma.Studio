@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,40 +49,41 @@ namespace ArmA.Studio.Data
                 if (!Enum.TryParse(reader.GetAttribute(nameof(Project.ProjectType)), out tmp))
                     throw new XmlException($"Invalid {nameof(Project.ProjectType)}");
                 p.ProjectType = tmp;
-
-                reader.ReadStartElement(nameof(Project));
-                while (reader.Name == nameof(ProjectFileFolder))
+                if (reader.IsEmptyElement)
                 {
-                    p.Children.Add(Deserialize_ProjectFileFolder(reader));
+                    reader.ReadStartElement(nameof(Project));
                 }
-                reader.ReadEndElement();
+                else
+                {
+                    reader.ReadStartElement(nameof(Project));
+                    while (reader.Name == nameof(ProjectFile))
+                    {
+                        p.Children.Add(Deserialize_ProjectFileFolder(reader));
+                    }
+                    reader.ReadEndElement();
+                }
                 return p;
             }
 
-            public static void Serialize_ProjectFileFolder(XmlWriter writer, ProjectFileFolder pff)
+            public static void Serialize_ProjectFileFolder(XmlWriter writer, ProjectFile pff)
             {
-                writer.WriteStartElement(nameof(ProjectFileFolder));
+                writer.WriteStartElement(nameof(ProjectFile));
                 
-                writer.WriteAttributeString(nameof(ProjectFileFolder.ProjectRelativePath), pff.ProjectRelativePath);
-                writer.WriteAttributeString(nameof(ProjectFileFolder.IsFolder), pff.IsFolder.ToString());
+                writer.WriteAttributeString(nameof(ProjectFile.ProjectRelativePath), pff.ProjectRelativePath);
 
                 writer.WriteEndElement();
             }
-            public static ProjectFileFolder Deserialize_ProjectFileFolder(XmlReader reader)
+            public static ProjectFile Deserialize_ProjectFileFolder(XmlReader reader)
             {
-                if (reader.Name != nameof(ProjectFileFolder) || !reader.IsEmptyElement)
-                    throw new XmlException($"Invalid {nameof(ProjectFileFolder)}");
+                if (reader.Name != nameof(ProjectFile) || !reader.IsEmptyElement)
+                    throw new XmlException($"Invalid {nameof(ProjectFile)}");
 
 
-                var pff = new ProjectFileFolder();
+                var pff = new ProjectFile();
 
-                pff.ProjectRelativePath = reader.GetAttribute(nameof(ProjectFileFolder.ProjectRelativePath));
-                bool flag;
-                if (!bool.TryParse(reader.GetAttribute(nameof(ProjectFileFolder.IsFolder)), out flag))
-                    throw new XmlException($"Invalid {nameof(Project.ProjectType)}");
-                pff.IsFolder = flag;
+                pff.ProjectRelativePath = reader.GetAttribute(nameof(ProjectFile.ProjectRelativePath));
 
-                reader.ReadStartElement(nameof(ProjectFileFolder));
+                reader.ReadStartElement(nameof(ProjectFile));
                 return pff;
             }
         }
@@ -150,7 +152,7 @@ namespace ArmA.Studio.Data
         }
         #endregion
 
-        public ProjectFileFolder FindFileFolder(Uri uri)
+        public ProjectFile FindFileFolder(Uri uri)
         {
             foreach (var proj in this.Projects)
             {
@@ -162,12 +164,12 @@ namespace ArmA.Studio.Data
         }
 
         /// <summary>
-        /// Tries to find a <see cref="ProjectFileFolder"/> for provided ArmA-Path.
+        /// Tries to find a <see cref="ProjectFile"/> for provided ArmA-Path.
         /// will return null object if nothing was found.
         /// </summary>
-        /// <param name="armaPath">ArmA Path of the <see cref="ProjectFileFolder"/> to find.</param>
-        /// <returns>The correct <see cref="ProjectFileFolder"/> instance or null if no corresponding file was found.</returns>
-        public ProjectFileFolder GetProjectFileFolderFromArmAPath(string armaPath)
+        /// <param name="armaPath">ArmA Path of the <see cref="ProjectFile"/> to find.</param>
+        /// <returns>The correct <see cref="ProjectFile"/> instance or null if no corresponding file was found.</returns>
+        public ProjectFile GetProjectFileFolderFromArmAPath(string armaPath)
         {
             foreach (var project in this.Projects)
             {
@@ -184,6 +186,17 @@ namespace ArmA.Studio.Data
                 }
             }
             return null;
+        }
+
+        public void AddProject(string projectName, EProjectType type) => this.AddProject(projectName, type, Path.Combine(this.FileUri.AbsolutePath, projectName));
+        public void AddProject(string projectName, EProjectType type, string path)
+        {
+            var project = new Project() { Name = projectName, ProjectType = type, FilePath = path, OwningSolution = this };
+            if (Directory.Exists(path))
+            {
+                project.Scan();
+            }
+            this.Projects.Add(project);
         }
     }
 }

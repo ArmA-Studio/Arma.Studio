@@ -19,7 +19,7 @@ namespace ArmA.Studio.Data.Lint
         public int StartOffset { get; set; }
         public string Message { get; set; }
 
-        public ProjectFileFolder FileReference { get; private set; }
+        public ProjectFile FileReference { get; private set; }
         public string FileName => this.FileReference.FileName;
         public string FilePath => this.FileReference.FilePath;
 
@@ -28,7 +28,7 @@ namespace ArmA.Studio.Data.Lint
             return new TextSegment() { StartOffset = sErr.StartOffset, Length = sErr.Length, EndOffset = sErr.EndOffset };
         }
 
-        public LintInfo(ProjectFileFolder pff)
+        public LintInfo(ProjectFile pff)
         {
             this.FileReference = pff;
         }

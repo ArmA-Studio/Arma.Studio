@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using Utility.Collections;
 
 namespace ArmA.Studio.Data
 {
-    public class ProjectFileFolder : IComparable, INotifyPropertyChanged
+    public class ProjectFile : IComparable, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
@@ -35,12 +36,20 @@ namespace ArmA.Studio.Data
         private string _ProjectRelativePath;
         public string ArmAPath { get { return string.Concat(this.OwningProject.ArmAPath, '\\', this.ProjectRelativePath); } }
         public string FilePath { get { return string.Concat(this.OwningProject.FilePath, '\\', this.ProjectRelativePath); } }
-        public string FileName { get { return System.IO.Path.GetFileName(this.ProjectRelativePath); } }
-        public string FileExtension { get { return System.IO.Path.GetExtension(this.ProjectRelativePath); } }
+        public string FileName
+        {
+            get { return Path.GetFileName(this.ProjectRelativePath); }
+            set
+            {
+                var newFilePath = Path.Combine(Path.GetDirectoryName(this.FilePath), value);
+                var newRelativePath = Path.Combine(Path.GetDirectoryName(this.ProjectRelativePath), value);
+                File.Move(this.FilePath, newFilePath);
+                this.ProjectRelativePath = newRelativePath;
+            }
+        }
+        public string FileExtension { get { return Path.GetExtension(this.ProjectRelativePath); } }
 
         public Uri FileUri { get { return new Uri(this.FilePath); } }
-
-        public ObservableSortedCollection<ProjectFileFolder> Children { get; private set; }
 
         public Solution OwningSolution { get { Solution v; this.WeakOwningSolution.TryGetTarget(out v); return v; } set { this.WeakOwningSolution.SetTarget(value); } }
         private WeakReference<Solution> WeakOwningSolution;
@@ -48,14 +57,9 @@ namespace ArmA.Studio.Data
         public Project OwningProject { get { Project v; this.WeakOwningProject.TryGetTarget(out v); return v; } set { this.WeakOwningProject.SetTarget(value); } }
         private WeakReference<Project> WeakOwningProject;
 
-
-        public bool IsFolder { get { return this._IsFolder; } set { if (this._IsFolder == value) return; this._IsFolder = value; this.RaisePropertyChanged(); } }
-        private bool _IsFolder;
-
-        internal ProjectFileFolder() : this(string.Empty) { }
-        public ProjectFileFolder(string projectRelativePath)
+        internal ProjectFile() : this(string.Empty) { }
+        public ProjectFile(string projectRelativePath)
         {
-            this.Children = new ObservableSortedCollection<ProjectFileFolder>();
             this.WeakOwningSolution = new WeakReference<Solution>(null);
             this.WeakOwningProject = new WeakReference<Project>(null);
             this.ProjectRelativePath = projectRelativePath;
@@ -64,14 +68,9 @@ namespace ArmA.Studio.Data
 
         public int CompareTo(object obj)
         {
-            if (obj is ProjectFileFolder)
+            if (obj is ProjectFile)
             {
-                if (this.IsFolder && !(obj as ProjectFileFolder).IsFolder)
-                    return 1;
-                else if (!this.IsFolder && (obj as ProjectFileFolder).IsFolder)
-                    return -1;
-                else
-                    return this.ProjectRelativePath.CompareTo((obj as ProjectFileFolder).ProjectRelativePath);
+                return this.ProjectRelativePath.CompareTo((obj as ProjectFile).ProjectRelativePath);
             }
             return this.ProjectRelativePath.CompareTo(obj);
         }

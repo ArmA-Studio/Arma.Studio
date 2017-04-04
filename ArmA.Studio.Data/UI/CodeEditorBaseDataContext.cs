@@ -16,7 +16,7 @@ namespace ArmA.Studio.Data.UI
 {
     public abstract class CodeEditorBaseDataContext : TextEditorBaseDataContext
     {
-        public CodeEditorBaseDataContext(ProjectFileFolder fileRef) : base(fileRef)
+        public CodeEditorBaseDataContext(ProjectFile fileRef) : base(fileRef)
         {
         }
     }

@@ -32,20 +32,20 @@ namespace ArmA.Studio
 
         public event EventHandler<BreakPointsChangedEventArgs> OnBreakPointsChanged;
 
-        private Dictionary<ProjectFileFolder, List<BreakpointInfo>> BreakPointDictionary;
+        private Dictionary<ProjectFile, List<BreakpointInfo>> BreakPointDictionary;
 
         public BreakpointManager()
         {
-            this.BreakPointDictionary = new Dictionary<ProjectFileFolder, List<BreakpointInfo>>();
+            this.BreakPointDictionary = new Dictionary<ProjectFile, List<BreakpointInfo>>();
         }
 
-        public IEnumerable<BreakpointInfo> this[ProjectFileFolder pff]
+        public IEnumerable<BreakpointInfo> this[ProjectFile pff]
         {
             get { return this.BreakPointDictionary[pff]; }
         }
 
-        public BreakpointInfo SetBreakpoint(ProjectFileFolder pff, int line) => this.SetBreakpoint(pff, new BreakpointInfo() { FileFolder = pff, IsEnabled = true, Line = line, SqfCondition = null});
-        public BreakpointInfo SetBreakpoint(ProjectFileFolder pff, BreakpointInfo bpi)
+        public BreakpointInfo SetBreakpoint(ProjectFile pff, int line) => this.SetBreakpoint(pff, new BreakpointInfo() { FileFolder = pff, IsEnabled = true, Line = line, SqfCondition = null});
+        public BreakpointInfo SetBreakpoint(ProjectFile pff, BreakpointInfo bpi)
         {
             bpi.FileFolder = pff;
             var bpiList = this.BreakPointDictionary[pff];
@@ -63,7 +63,7 @@ namespace ArmA.Studio
             this.OnBreakPointsChanged?.Invoke(this, new BreakPointsChangedEventArgs(isUpdate ? BreakPointsChangedEventArgs.EMode.Update : BreakPointsChangedEventArgs.EMode.Add, bpi));
             return bpi;
         }
-        public BreakpointInfo GetBreakpoint(ProjectFileFolder pff, int line)
+        public BreakpointInfo GetBreakpoint(ProjectFile pff, int line)
         {
             var bpiList = this.BreakPointDictionary[pff];
             var index = bpiList.FindIndex((item) => item.Line == line);
@@ -76,8 +76,8 @@ namespace ArmA.Studio
                 return bpiList[index];
             }
         }
-        public void RemoveBreakpoint(ProjectFileFolder pff, BreakpointInfo bpi) => this.RemoveBreakpoint(pff, bpi.Line);
-        public void RemoveBreakpoint(ProjectFileFolder pff, int line)
+        public void RemoveBreakpoint(ProjectFile pff, BreakpointInfo bpi) => this.RemoveBreakpoint(pff, bpi.Line);
+        public void RemoveBreakpoint(ProjectFile pff, int line)
         {
             var bpiList = this.BreakPointDictionary[pff];
             var index = bpiList.FindIndex((item) => item.Line == line);
@@ -102,7 +102,7 @@ namespace ArmA.Studio
         public void LoadBreakpoints(System.IO.Stream stream)
         {
             var reader = XmlReader.Create(stream);
-            ProjectFileFolder currentFile = null;
+            ProjectFile currentFile = null;
             while (reader.Read())
             {
                 try

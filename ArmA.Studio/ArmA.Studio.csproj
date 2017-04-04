@@ -129,8 +129,13 @@
     </ApplicationDefinition>
     <Compile Include="BreakpointManager.cs" />
     <Compile Include="DataContext\SolutionPane.cs" />
-    <Compile Include="DataContext\SolutionPaneUtil\ProjectFileFolderModelView.cs" />
+    <Compile Include="DataContext\SolutionPaneUtil\ProjectFileModelView.cs" />
+    <Compile Include="DataContext\SolutionPaneUtil\ProjectFolderModelView.cs" />
     <Compile Include="DataContext\SolutionPaneUtil\ProjectModelView.cs" />
+    <Compile Include="Dialogs\CreateNewProjectDialog.xaml.cs">
+      <DependentUpon>CreateNewProjectDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\CreateNewProjectDialogDataContext.cs" />
     <Compile Include="Dialogs\DocumentSelectorDialog.xaml.cs">
       <DependentUpon>DocumentSelectorDialog.xaml</DependentUpon>
     </Compile>
@@ -170,6 +175,7 @@
     <Compile Include="SplashScreenDataContext.cs" />
     <Compile Include="UI\Attached\ActiveContentChangedAttached.cs" />
     <Compile Include="UI\Controls\ListView_ScrollSelectionChanged.cs" />
+    <Compile Include="UI\Converters\SolutionExplorerItemVisibilityConverter.cs" />
     <Compile Include="UI\Converters\StringRemoveNewLineConverter.cs" />
     <Compile Include="UI\GenericDataTemplateSelector.cs" />
     <Compile Include="UI\RuntimeExecutionMargin.cs" />
@@ -205,7 +211,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Localization.resx</DependentUpon>
     </Compile>
-    <Compile Include="UI\Attached\ChangePropertiesViewCurrentAttached.cs" />
     <Compile Include="UI\Attached\DialogResultAttached.cs" />
     <Compile Include="UI\Attached\LooseFocusOnKeyAttached.cs" />
     <Compile Include="UI\Attached\SelectFileNameOnFocusAttached.cs" />
@@ -222,13 +227,14 @@
     <Compile Include="UI\CustomBinding.cs" />
     <Compile Include="UI\DataTemplates\AvalonDockStyleSelector.cs" />
     <Compile Include="UI\UserInteractionEventArgs.cs" />
-    <Compile Include="UI\ViewModel\IPropertyDataTemplateProvider.cs" />
-    <Compile Include="UI\ViewModel\IUserInteractable.cs" />
-    <Compile Include="UI\ViewModel\IViewModel.cs" />
     <Compile Include="UpdateHelper.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Workspace.cs" />
     <Page Include="Dialogs\ConfigEntrySelectorDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\CreateNewProjectDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -2182,6 +2188,7 @@
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_48x.png" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_64x.png" />
     <Resource Include="Resources\SplashScreen.png" />
+    <Resource Include="Resources\Project.png" />
     <Content Include="SqfDefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

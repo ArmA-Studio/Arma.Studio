@@ -34,10 +34,15 @@
       <HintPath>..\packages\AvalonEdit.5.0.3\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.5\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -65,7 +70,7 @@
     <Compile Include="EProjectType.cs" />
     <Compile Include="LicenseInfo.cs" />
     <Compile Include="Lint\LintInfo.cs" />
-    <Compile Include="ProjectFileFolder.cs" />
+    <Compile Include="ProjectFile.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\Localization.Designer.cs">
       <DependentUpon>Localization.resx</DependentUpon>
@@ -75,6 +80,8 @@
     <Compile Include="FileType.cs" />
     <Compile Include="ESeverity.cs" />
     <Compile Include="Solution.cs" />
+    <Compile Include="UI\Behaviors\PropertyPaneSelectionBehavior.cs" />
+    <Compile Include="UI\Behaviors\PropertyPaneSelectionStatic.cs" />
     <Compile Include="UI\Commands\RelayCommand.cs" />
     <Compile Include="UI\Commands\RelayCommandAsync.cs" />
     <Compile Include="UI\DockableBase.cs" />
@@ -94,6 +101,7 @@
     <Compile Include="UI\Eventing\TextChanged.cs" />
     <Compile Include="UI\Eventing\Loaded.cs" />
     <Compile Include="UI\Eventing\Unloaded.cs" />
+    <Compile Include="UI\IPropertyPaneProvider.cs" />
     <Compile Include="UI\OnCaretChangedEventArgs.cs" />
     <Compile Include="UI\PanelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

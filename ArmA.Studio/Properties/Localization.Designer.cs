@@ -70,6 +70,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Existing Project.
+        /// </summary>
+        public static string AddExistingProject {
+            get {
+                return ResourceManager.GetString("AddExistingProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enabled.
         /// </summary>
         public static string BreakpointEnabled {
@@ -193,6 +202,33 @@ namespace ArmA.Studio.Properties {
         public static string CreateNewFileDialog_Title {
             get {
                 return ResourceManager.GetString("CreateNewFileDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Project.
+        /// </summary>
+        public static string CreateNewProjectDialog_Header {
+            get {
+                return ResourceManager.GetString("CreateNewProjectDialog_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Project.
+        /// </summary>
+        public static string CreateNewProjectDialog_Title {
+            get {
+                return ResourceManager.GetString("CreateNewProjectDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Project.
+        /// </summary>
+        public static string CreateProject {
+            get {
+                return ResourceManager.GetString("CreateProject", resourceCulture);
             }
         }
         
@@ -618,6 +654,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Folder.
         /// </summary>
         public static string NewFolder {
@@ -776,6 +821,24 @@ namespace ArmA.Studio.Properties {
         public static string PluginUpdater_Title {
             get {
                 return ResourceManager.GetString("PluginUpdater_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ArmA Path.
+        /// </summary>
+        public static string Prop_ArmAPath {
+            get {
+                return ResourceManager.GetString("Prop_ArmAPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project Type.
+        /// </summary>
+        public static string Prop_ProjectType {
+            get {
+                return ResourceManager.GetString("Prop_ProjectType", resourceCulture);
             }
         }
         

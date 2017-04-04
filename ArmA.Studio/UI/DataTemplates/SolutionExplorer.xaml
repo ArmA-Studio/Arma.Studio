@@ -11,10 +11,30 @@
     xmlns:inpt="clr-namespace:System.Windows.Input;assembly=System"
     xmlns:dc="clr-namespace:ArmA.Studio.DataContext;assembly=ArmA.Studio"
     xmlns:util="clr-namespace:ArmA.Studio.DataContext.SolutionPaneUtil;assembly=ArmA.Studio"
+    xmlns:ascv="clr-namespace:ArmA.Studio.UI.Converters;assembly=ArmA.Studio"
+    xmlns:bhvr="clr-namespace:ArmA.Studio.Data.UI.Behaviors;assembly=ArmA.Studio.Data"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     mc:Ignorable="d" DataType="{x:Type dc:SolutionPane}">
-    <TreeView x:Name="SolutionExplorerTreeView" ItemsSource="{Binding ProjectModels}">
+    <DataTemplate.Resources>
+        <ascv:SolutionExplorerItemVisibilityConverter x:Key="SolutionExplorerItemVisibilityConverter"/>
+    </DataTemplate.Resources>
+    <TreeView ItemsSource="{Binding ProjectModels}">
+        <i:Interaction.Behaviors>
+            <bhvr:PropertyPaneSelectionBehavior/>
+        </i:Interaction.Behaviors>
         <TreeView.ContextMenu>
             <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                <MenuItem Header="{x:Static p:Localization.CreateProject}" Command="{Binding CmdCreateProject}">
+                    <MenuItem.Icon>
+                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/NewItem/NewItem_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static p:Localization.AddExistingProject}" Command="{Binding CmdAddProject}">
+                    <MenuItem.Icon>
+                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/AddItem/AddItem_16x.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!--
                 <MenuItem Header="{x:Static p:Localization.Add}">
                     <MenuItem Header="{x:Static p:Localization.NewItem}" Command="{Binding CmdContextMenu_Add_NewItem}" CommandParameter="/">
                         <MenuItem.Icon>
@@ -31,7 +51,7 @@
                             <Image Source="/ArmA.Studio;component/Resources/Pictograms/NewFolder_16x.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                </MenuItem>
+                </MenuItem>-->
             </ContextMenu>
         </TreeView.ContextMenu>
         <TreeView.ItemContainerStyle>
@@ -43,12 +63,136 @@
             </Style>
         </TreeView.ItemContainerStyle>
         <TreeView.Resources>
-            <HierarchicalDataTemplate DataType="{x:Type util:ProjectModelView}" ItemsSource="{Binding Children}">
-                <TextBlock Text="{Binding Ref.Name}"/>
+            <HierarchicalDataTemplate DataType="{x:Type util:ProjectModelView}" ItemsSource="{Binding}">
+                <Grid ev:ContextMenuOpening.Command="{Binding CmdContextMenuOpening}" ev:ContextMenuOpening.CommandParameter="{Binding}">
+                    <Grid.ContextMenu>
+                        <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                            <MenuItem Header="{x:Static p:Localization.Add}">
+                                <MenuItem Header="{x:Static p:Localization.NewItem}" Command="{Binding CmdContextMenu_Add_NewItem}" CommandParameter="/">
+                                    <MenuItem.Icon>
+                                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/NewItem/NewItem_16x.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static p:Localization.ExistingItem}" Command="{Binding CmdContextMenu_Add_ExistingItem}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/AddItem/AddItem_16x.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static p:Localization.NewFolder}" Command="{Binding CmdContextMenu_Add_NewFolder}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/NewFolder_16x.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="4"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Height="16" Width="16" Source="/ArmA.Studio;component/Resources/Project.png" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}, ConverterParameter=True}"/>
+                    <TextBlock Grid.Column="2" Text="{Binding Ref.Name}" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}, ConverterParameter=True}"/>
+                    <TextBox Grid.ColumnSpan="3" Text="{Binding Ref.Name}" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}}" att:LooseFocusOnKeyAttached.Key="Return" att:SelectFileNameOnFocusAttached.Attach="True" Height="16" Margin="4 0" Padding="0" BorderThickness="0"/>
+                </Grid>
             </HierarchicalDataTemplate>
-            <HierarchicalDataTemplate DataType="{x:Type util:ProjectFileFolderModelView}" ItemsSource="{Binding Children}">
-                <TextBlock Text="{Binding Name}"/>
+            <HierarchicalDataTemplate DataType="{x:Type util:ProjectFolderModelView}" ItemsSource="{Binding}">
+                <Grid ev:ContextMenuOpening.Command="{Binding CmdContextMenuOpening}" ev:ContextMenuOpening.CommandParameter="{Binding}">
+                    <Grid.ContextMenu>
+                        <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                            <MenuItem Header="{x:Static p:Localization.Add}">
+                                <MenuItem Header="{x:Static p:Localization.NewItem}" Command="{Binding CmdContextMenu_Add_NewItem}" CommandParameter="/">
+                                    <MenuItem.Icon>
+                                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/NewItem/NewItem_16x.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static p:Localization.ExistingItem}" Command="{Binding CmdContextMenu_Add_ExistingItem}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/AddItem/AddItem_16x.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static p:Localization.NewFolder}" Command="{Binding CmdContextMenu_Add_NewFolder}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/NewFolder_16x.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="4"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Height="16" Width="16" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}, ConverterParameter=True}">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="/ArmA.Studio;component/Resources/FileTypes/Folder_16x.png"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsExpaned}" Value="True">
+                                        <Setter Property="Source" Value="/ArmA.Studio;component/Resources/FileTypes/FolderExpanded_16x.png"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                    <TextBlock Grid.Column="2" Text="{Binding Name}" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}, ConverterParameter=True}"/>
+                    <TextBox Grid.ColumnSpan="3" Text="{Binding Name}" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}}" att:LooseFocusOnKeyAttached.Key="Return" att:SelectFileNameOnFocusAttached.Attach="True" Height="16" Margin="4 0" Padding="0" BorderThickness="0"/>
+                </Grid>
             </HierarchicalDataTemplate>
+            <DataTemplate DataType="{x:Type util:ProjectFileModelView}">
+                <Grid ev:ContextMenuOpening.Command="{Binding CmdContextMenuOpening}" ev:ContextMenuOpening.CommandParameter="{Binding}">
+                    <Grid.ContextMenu>
+                        <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                            <MenuItem Header="{x:Static p:Localization.Add}">
+                                <MenuItem Header="{x:Static p:Localization.NewItem}" Command="{Binding CmdContextMenu_Add_NewItem}" CommandParameter="/">
+                                    <MenuItem.Icon>
+                                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/NewItem/NewItem_16x.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static p:Localization.ExistingItem}" Command="{Binding CmdContextMenu_Add_ExistingItem}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/AddItem/AddItem_16x.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static p:Localization.NewFolder}" Command="{Binding CmdContextMenu_Add_NewFolder}">
+                                    <MenuItem.Icon>
+                                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/NewFolder_16x.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="4"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Height="16" Width="16" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}, ConverterParameter=True}">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Setter Property="Source" Value="/ArmA.Studio;component/Resources/FileTypes/Document_16x.png"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Ref.FileExtension}" Value=".sqf">
+                                        <Setter Property="Source" Value="/ArmA.Studio;component/Resources/FileTypes/SQF_16x.png"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Ref.FileExtension}" Value=".cpp">
+                                        <Setter Property="Source" Value="/ArmA.Studio;component/Resources/FileTypes/ConfigurationFile_16x.png"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Ref.FileExtension}" Value=".ext">
+                                        <Setter Property="Source" Value="/ArmA.Studio;component/Resources/FileTypes/ConfigurationFile_16x.png"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Ref.FileExtension}" Value=".hpp">
+                                        <Setter Property="Source" Value="/ArmA.Studio;component/Resources/FileTypes/HeaderFile_16x.png"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                    <TextBlock Grid.Column="2" Text="{Binding Ref.FileName}" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}, ConverterParameter=True}"/>
+                    <TextBox Grid.ColumnSpan="3" Text="{Binding Ref.FileName}" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}}" att:LooseFocusOnKeyAttached.Key="Return" att:SelectFileNameOnFocusAttached.Attach="True" Height="16" Margin="4 0" Padding="0" BorderThickness="0"/>
+                </Grid>
+            </DataTemplate>
         </TreeView.Resources>
     </TreeView>
 </DataTemplate>

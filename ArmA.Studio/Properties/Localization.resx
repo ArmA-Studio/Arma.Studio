@@ -163,6 +163,15 @@ Do you want to restart now?</value>
   <data name="CreateNewFileDialog_Title" xml:space="preserve">
     <value>Create New File</value>
   </data>
+  <data name="CreateNewProjectDialog_Header" xml:space="preserve">
+    <value>Create Project</value>
+  </data>
+  <data name="CreateNewProjectDialog_Title" xml:space="preserve">
+    <value>Create New Project</value>
+  </data>
+  <data name="CreateProject" xml:space="preserve">
+    <value>Create Project</value>
+  </data>
   <data name="DebuggerContext_AttachFailed_Body" xml:space="preserve">
     <value>Attaching the debugger failed.
 {0}</value>
@@ -308,6 +317,9 @@ Current progress will be lost.</value>
   <data name="MessageBoxOperationFailed_Title" xml:space="preserve">
     <value>Operation Failed</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="NewFolder" xml:space="preserve">
     <value>New Folder</value>
   </data>
@@ -382,6 +394,12 @@ Current progress will be lost.</value>
   </data>
   <data name="Property_General_Updating_EnableAutoToolUpdateAtStart" xml:space="preserve">
     <value>Enable Auto-Tool-Update at start</value>
+  </data>
+  <data name="Prop_ArmAPath" xml:space="preserve">
+    <value>ArmA Path</value>
+  </data>
+  <data name="Prop_ProjectType" xml:space="preserve">
+    <value>Project Type</value>
   </data>
   <data name="Rename" xml:space="preserve">
     <value>Rename</value>
@@ -474,5 +492,8 @@ Do you want to update now?</value>
   </data>
   <data name="XSHD_Loading_Error_Title" xml:space="preserve">
     <value>XSHD Syntax file loading failed.</value>
+  </data>
+  <data name="AddExistingProject" xml:space="preserve">
+    <value>Add Existing Project</value>
   </data>
 </root>

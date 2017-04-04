@@ -9,7 +9,7 @@ namespace ArmA.Studio.Data
     public struct BreakpointInfo
     {
         public int Line { get; set; }
-        public ProjectFileFolder FileFolder { get; set; }
+        public ProjectFile FileFolder { get; set; }
 
         public string SqfCondition { get; set; }
         public bool IsEnabled { get; set; }

@@ -73,8 +73,8 @@ namespace ArmA.Studio.Data.UI
         });
         public abstract bool HasChanges { get; }
 
-        public ProjectFileFolder FileReference { get { ProjectFileFolder v; this.WeakFileReference.TryGetTarget(out v); return v; } set { this.WeakFileReference.SetTarget(value); } }
-        private WeakReference<ProjectFileFolder> WeakFileReference;
+        public ProjectFile FileReference { get { ProjectFile v; this.WeakFileReference.TryGetTarget(out v); return v; } set { this.WeakFileReference.SetTarget(value); } }
+        private WeakReference<ProjectFile> WeakFileReference;
 
         public bool IsTemporary { get { return this._IsTemporary; } set { if (this._IsTemporary == value) return; this._IsTemporary = value; RaisePropertyChanged(); } }
         private bool _IsTemporary;
@@ -83,9 +83,9 @@ namespace ArmA.Studio.Data.UI
         public abstract void SaveDocument(string path);
         public abstract void LoadDocument();
 
-        public DocumentBase(ProjectFileFolder fileRef)
+        public DocumentBase(ProjectFile fileRef)
         {
-            this.WeakFileReference = new WeakReference<ProjectFileFolder>(fileRef);
+            this.WeakFileReference = new WeakReference<ProjectFile>(fileRef);
         }
 
         public abstract void RefreshVisuals();

@@ -60,7 +60,7 @@ namespace ArmA.Studio
                 return;
             reset();
 
-            foreach(var splashActivityPlugin in from plugin in App.Plugins where plugin is ISplashActivityPlugin select plugin as ISplashActivityPlugin)
+            foreach (var splashActivityPlugin in from plugin in App.Plugins where plugin is ISplashActivityPlugin select plugin as ISplashActivityPlugin)
             {
                 reset();
                 bool terminate;
@@ -122,11 +122,11 @@ namespace ArmA.Studio
             }
             foreach (var p in App.GetPlugins<IPaneProviderPlugin>())
             {
-                foreach(var dt in p.PaneDataTemplates)
+                foreach (var dt in p.PaneDataTemplates)
                 {
                     dataTemplateSelector.AddDataTemplate(dt);
                 }
-                foreach(var paneType in p.PaneDataContextTypes)
+                foreach (var paneType in p.PaneDataContextTypes)
                 {
                     var pane = Activator.CreateInstance(paneType) as Data.UI.PanelBase;
                     w.AvailablePanels.Add(pane);
@@ -152,7 +152,7 @@ namespace ArmA.Studio
                     solutionPath = Path.Combine(workspace, string.Concat("solution", App.CONST_SOLUTIONEXTENSION));
                     Logger.Info($"No solution file found, creating new at '{solutionPath}'");
                     w.Solution = new Data.Solution();
-                    using (var stream = File.OpenWrite(solutionPath))
+                    using (var stream = File.Open(solutionPath, FileMode.Create))
                     {
                         Data.Solution.Serialize(w.Solution, stream);
                     }
@@ -185,7 +185,7 @@ namespace ArmA.Studio
         private static bool Splash_LoadPlugins(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress)
         {
             SetDisplayText(Properties.Localization.Splash_ApplyingPossiblyAvailablePluginUpdates);
-            foreach(var fileName in Directory.EnumerateFiles(App.PluginsPath, string.Concat("*.dll", App.CONST_UPDATESUFFIX)))
+            foreach (var fileName in Directory.EnumerateFiles(App.PluginsPath, string.Concat("*.dll", App.CONST_UPDATESUFFIX)))
             {
                 var fileNameWithoutSuffix = fileName.Remove(fileName.LastIndexOf(App.CONST_UPDATESUFFIX));
                 Logger.Info($"Applying update for {Path.GetFileName(fileNameWithoutSuffix)}...");
@@ -195,7 +195,7 @@ namespace ArmA.Studio
 
             SetDisplayText(Properties.Localization.Splash_LoadingPlugins);
             var pManager = new PluginManager<IPlugin>();
-            
+
             var plugins = Directory.EnumerateFiles(App.PluginsPath, "*.dll");
             pManager.LoadPlugins(plugins, new Progress<double>((d) =>
             {
@@ -217,10 +217,16 @@ namespace ArmA.Studio
                     acp.GetSolution = () => Workspace.Instance?.Solution;
                     acp.ShowOperationFailed = (ex) => App.ShowOperationFailedMessageBox(ex);
                 }
-                else if(p is IStorageAccessPlugin)
+                else if (p is IStorageAccessPlugin)
                 {
                     var sap = p as IStorageAccessPlugin;
                     ConfigHost.Instance.PreparePlugin(sap);
+                }
+                else if (p is IDocumentProviderPlugin)
+                {
+                    var dpp = p as IDocumentProviderPlugin;
+                    var extensions = dpp.FileTypes.Select((ft) => ft.DefaultExtension);
+                    Data.Project.ValidFileExtensions.AddRange(extensions);
                 }
             }
             App.Plugins = pManager.Plugins;
@@ -235,39 +241,36 @@ namespace ArmA.Studio
             Logger.Info("Checking for tool updates...");
             if (ConfigHost.App.EnableAutoToolUpdates)
             {
-
-#if !DEBUG
-            (App.Current as App).UpdateDownloadInfo = UpdateHelper.GetDownloadInfo().Result;
-            if ((App.Current as App).UpdateDownloadInfo.available)
-            {
-                SetIndeterminate(false);
-                SetDisplayText(Properties.Localization.Splash_UpdateAvailable);
-                Logger.Info($"Update {(App.Current as App).UpdateDownloadInfo.version} is available.");
-                App.Current.Dispatcher.Invoke(() =>
+                (App.Current as App).UpdateDownloadInfo = UpdateHelper.GetDownloadInfo().Result;
+                if ((App.Current as App).UpdateDownloadInfo.available)
                 {
-                    var msgboxresult = MessageBox.Show(
-                          string.Format(Properties.Localization.SoftwareUpdateAvailable_Body, App.CurrentVersion, (App.Current as App).UpdateDownloadInfo.version),
-                          string.Format(Properties.Localization.SoftwareUpdateAvailable_Title, (App.Current as App).UpdateDownloadInfo.version),
-                          MessageBoxButton.YesNo,
-                          MessageBoxImage.Information
-                    );
-                    if (msgboxresult == MessageBoxResult.Yes)
+                    SetIndeterminate(false);
+                    SetDisplayText(Properties.Localization.Splash_UpdateAvailable);
+                    Logger.Info($"Update {(App.Current as App).UpdateDownloadInfo.version} is available.");
+                    App.Current.Dispatcher.Invoke(() =>
                     {
-                        Logger.Info("Applying update.");
-                        App.Shutdown(App.ExitCodes.Updating);
-                        doShutdown = true;
-                    }
-                    else
-                    {
-                        Logger.Info("Ignoring update.");
-                    }
-                });
-            }
-            else
-            {
-                Logger.Info("No update available.");
-            }
-#endif
+                        var msgboxresult = MessageBox.Show(
+                              string.Format(Properties.Localization.SoftwareUpdateAvailable_Body, App.CurrentVersion, (App.Current as App).UpdateDownloadInfo.version),
+                              string.Format(Properties.Localization.SoftwareUpdateAvailable_Title, (App.Current as App).UpdateDownloadInfo.version),
+                              MessageBoxButton.YesNo,
+                              MessageBoxImage.Information
+                        );
+                        if (msgboxresult == MessageBoxResult.Yes)
+                        {
+                            Logger.Info("Applying update.");
+                            App.Shutdown(App.ExitCodes.Updating);
+                            doShutdown = true;
+                        }
+                        else
+                        {
+                            Logger.Info("Ignoring update.");
+                        }
+                    });
+                }
+                else
+                {
+                    Logger.Info("No update available.");
+                }
             }
             if (ConfigHost.App.EnableAutoPluginsUpdate)
             {

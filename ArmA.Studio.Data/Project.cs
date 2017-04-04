@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,15 @@ using Utility.Collections;
 
 namespace ArmA.Studio.Data
 {
-    public class Project : IComparable, INotifyPropertyChanged, IEnumerable<ProjectFileFolder>
+    public class Project : IComparable, INotifyPropertyChanged, IEnumerable<ProjectFile>
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
+#if DEBUG
+        public static readonly List<string> ValidFileExtensions = new List<string>(new [] { ".sqf", ".cpp", ".ext", ".hpp" });
+#else
+        public static readonly List<string> ValidFileExtensions = new List<string>();
+#endif
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
@@ -22,7 +30,7 @@ namespace ArmA.Studio.Data
         public EProjectType ProjectType { get { return this._ProjectType; } set { if (this._ProjectType == value) return; this._ProjectType = value; RaisePropertyChanged(); } }
         private EProjectType _ProjectType;
 
-        public ObservableSortedCollection<ProjectFileFolder> Children { get; private set; }
+        public ObservableSortedCollection<ProjectFile> Children { get; private set; }
 
         public Solution OwningSolution { get { Solution v; this.WeakOwningSolution.TryGetTarget(out v); return v; } set { this.WeakOwningSolution.SetTarget(value); } }
 
@@ -49,22 +57,22 @@ namespace ArmA.Studio.Data
 
         public Project()
         {
-            this.Children = new ObservableSortedCollection<ProjectFileFolder>();
+            this.Children = new ObservableSortedCollection<ProjectFile>();
             this.WeakOwningSolution = new WeakReference<Solution>(null);
             this.Name = string.Empty;
         }
-        
+
 
         public int CompareTo(object obj)
         {
-            if(obj is Project)
+            if (obj is Project)
             {
                 return this.Name.CompareTo((obj as Project).Name);
             }
             return this.Name.CompareTo(obj);
         }
 
-        public IEnumerator<ProjectFileFolder> GetEnumerator()
+        public IEnumerator<ProjectFile> GetEnumerator()
         {
             return this.Children.GetEnumerator();
         }
@@ -74,18 +82,18 @@ namespace ArmA.Studio.Data
             return this.GetEnumerator().Cast();
         }
 
-        public ProjectFileFolder FindFileFolder(Uri uri)
+        public ProjectFile FindFileFolder(Uri uri)
         {
             var res = FindFileFolderOrNull(uri);
             if (res == null)
                 throw new KeyNotFoundException();
             return res;
         }
-        public ProjectFileFolder FindFileFolderOrNull(Uri uri)
+        public ProjectFile FindFileFolderOrNull(Uri uri)
         {
             foreach (var it in this)
             {
-                if(it.FileUri.Equals(uri))
+                if (it.FileUri.Equals(uri))
                 {
                     return it;
                 }
@@ -94,25 +102,61 @@ namespace ArmA.Studio.Data
         }
 
         /// <summary>
-        /// Receives or creates a <see cref="ProjectFileFolder"/> inside of this <see cref="Project"/>.
+        /// Receives or creates a <see cref="ProjectFile"/> inside of this <see cref="Project"/>.
         /// </summary>
         /// <param name="path">Path to the FileFolder.</param>
-        /// <returns>reference to a <see cref="ProjectFileFolder"/>.</returns>
+        /// <returns>reference to a <see cref="ProjectFile"/>.</returns>
         /// <exception cref="ArgumentException">Will be thrown when the provided <see cref="Uri"/> is not leading to this <see cref="Project"/>.</exception>
-        public ProjectFileFolder GetOrCreateFileFolder(Uri path)
+        public ProjectFile GetOrCreateFileFolder(Uri path)
         {
             if (this.FileUri.IsBaseOf(path))
                 throw new ArgumentException("Basepath missmatch", nameof(path));
-            foreach(var pff in this)
+            foreach (var pff in this)
             {
                 if (pff.FileUri.Equals(path))
                     return pff;
             }
-            var tmp = new ProjectFileFolder(Uri.UnescapeDataString(this.FileUri.MakeRelativeUri(path).ToString()));
+            var tmp = new ProjectFile(Uri.UnescapeDataString(this.FileUri.MakeRelativeUri(path).ToString()));
             this.Children.Add(tmp);
             tmp.OwningProject = this;
             tmp.OwningSolution = this.OwningSolution;
             return tmp;
+        }
+
+        internal void Scan()
+        {
+            Logger.Info($"Scanning for project related files in '{this.FilePath}'...");
+            var origPathDepth = this.FilePath.Count((c) => Path.DirectorySeparatorChar == c || Path.AltDirectorySeparatorChar == c);
+
+            foreach (var fpath in Directory.EnumerateFiles(this.FilePath, "*", SearchOption.AllDirectories))
+            {
+                var fname = Path.GetFileName(fpath);
+                var ext = Path.GetExtension(fpath);
+                var depth = fpath.Count((c) => Path.DirectorySeparatorChar == c || Path.AltDirectorySeparatorChar == c);
+                if (depth - origPathDepth == 1 && fname.Equals("$PBOPREFIX$"))
+                {
+                    Logger.Info($"\tLocated ArmAPath at '{fpath.Remove(0, this.FilePath.Length)}'.");
+                    using (var reader = new StreamReader(fpath))
+                    {
+                        this.ArmAPath = reader.ReadToEnd();
+                    }
+                }
+                else if (ValidFileExtensions.Any((s) => s.Equals(ext, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    this.AddFile(fpath.Remove(0, this.FilePath.Length));
+                    Logger.Info($"\tAdded '{fpath.Remove(0, this.FilePath.Length)}' to project.");
+                }
+            }
+        }
+
+        public void AddFile(string projectRelativePath)
+        {
+            this.Children.Add(new ProjectFile(projectRelativePath) { OwningProject = this, OwningSolution = this.OwningSolution });
+        }
+
+        public override string ToString()
+        {
+            return $"Project '{this.Name}'";
         }
     }
 }
