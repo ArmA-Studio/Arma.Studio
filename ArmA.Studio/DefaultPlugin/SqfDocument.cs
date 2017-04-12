@@ -33,11 +33,10 @@ namespace ArmA.Studio.DefaultPlugin
         public IEnumerable<LintInfo> LinterInfo { get; set; }
 
 
-        public void DoLinting(Stream stream, ProjectFile f)
+        public void LintWriteCache(Stream stream, ProjectFile f)
         {
             var lintHelper = new SqfLintHelper();
-            lintHelper.DoLinting(stream, f);
-            this.LinterInfo = lintHelper.LinterInfo;
+            this.LinterInfo = lintHelper.Lint(stream, f);
         }
 
         public void Display(TextEditor editorInstance, Point pos)
@@ -64,6 +63,12 @@ namespace ArmA.Studio.DefaultPlugin
             this.EditorInstance.TextArea.TextView.BackgroundRenderers.Add(bpm);
             this.EditorInstance.TextArea.LeftMargins.Insert(0, bpm);
             this.EditorInstance.TextArea.LeftMargins.Insert(1, new RuntimeExecutionMargin());
+        }
+
+        public IEnumerable<LintInfo> Lint(Stream stream, ProjectFile f)
+        {
+            var lintHelper = new SqfLintHelper();
+            return lintHelper.Lint(stream, f);
         }
     }
 }

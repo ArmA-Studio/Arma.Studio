@@ -363,11 +363,13 @@ namespace ArmA.Studio
             {
                 if (doc.FileReference.FileUri.Equals(path))
                 {
+                    doc.IsSelected = true;
                     return doc;
                 }
             }
             var tmp = this.CreateDocument(path, ECreateDocumentModes.AddFileReferenceOrTemporary);
             this.AvalonDockDocuments.Add(tmp);
+            tmp.IsSelected = true;
             return tmp;
         }
 
@@ -494,41 +496,6 @@ namespace ArmA.Studio
             doc.IsActive = true;
         }
 
-        /// <summary>
-        /// Creates a new document with provided describor.
-        /// If <see cref="Uri"/> is not found, the User will be prompted to select a <see cref="DocumentBase.DocumentDescribor"/>.
-        /// In case he aborts, exception will be thrown.
-        /// Should be executed on dialog thread.
-        /// </summary>
-        /// <param name="path">Path to the document.</param>
-        /// <returns>new <see cref="DocumentBase"/> instance.</returns>
-        private DocumentBase CreateNewDocument(Uri path)
-        {
-            var fileType = GetFileType(path);
-            if (fileType == null)
-            {
-                var describor = this.GetDocumentDescriborByPrompt();
-                var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(describor);
-                doc.KeyManager = this.KeyManager;
-                doc.OnDocumentClosing += Document_OnDocumentClosing;
-                return doc;
-            }
-            else
-            {
-                var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(fileType);
-                doc.KeyManager = this.KeyManager;
-                doc.OnDocumentClosing += Document_OnDocumentClosing;
-                return doc;
-            }
-        }
-
-        private void Document_OnDocumentClosing(object sender, EventArgs e)
-        {
-            var doc = sender as DocumentBase;
-            doc.OnDocumentClosing -= Document_OnDocumentClosing;
-            if(this.AvalonDockDocuments.Contains(doc))
-                this.AvalonDockDocuments.Remove(doc);
-        }
 
 
         /// <summary>
@@ -589,11 +556,76 @@ namespace ArmA.Studio
                     var doc = p.CreateDocument(describor);
                     doc.KeyManager = this.KeyManager;
                     doc.OnDocumentClosing += Document_OnDocumentClosing;
+                    if(doc is CodeEditorBaseDataContext)
+                    {
+                        (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += Workspace_OnLintingInfoUpdated;
+                    }
                     return doc;
                 }
             }
 
             throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Creates a new document with provided describor.
+        /// If <see cref="Uri"/> is not found, the User will be prompted to select a <see cref="DocumentBase.DocumentDescribor"/>.
+        /// In case he aborts, exception will be thrown.
+        /// Should be executed on dialog thread.
+        /// </summary>
+        /// <param name="path">Path to the document.</param>
+        /// <returns>new <see cref="DocumentBase"/> instance.</returns>
+        private DocumentBase CreateNewDocument(Uri path)
+        {
+            var fileType = GetFileType(path);
+            if (fileType == null)
+            {
+                var describor = this.GetDocumentDescriborByPrompt();
+                var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(describor);
+                doc.KeyManager = this.KeyManager;
+                doc.OnDocumentClosing += Document_OnDocumentClosing;
+                if (doc is CodeEditorBaseDataContext)
+                {
+                    (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += Workspace_OnLintingInfoUpdated;
+                }
+                return doc;
+            }
+            else
+            {
+                var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(fileType);
+                doc.KeyManager = this.KeyManager;
+                doc.OnDocumentClosing += Document_OnDocumentClosing;
+                if (doc is CodeEditorBaseDataContext)
+                {
+                    (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += Workspace_OnLintingInfoUpdated;
+                }
+                return doc;
+            }
+        }
+
+        private void Document_OnDocumentClosing(object sender, EventArgs e)
+        {
+            var doc = sender as DocumentBase;
+            doc.OnDocumentClosing -= Document_OnDocumentClosing;
+            if (doc is CodeEditorBaseDataContext)
+            {
+                (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated -= Workspace_OnLintingInfoUpdated;
+            }
+            if (this.AvalonDockDocuments.Contains(doc))
+            {
+                try
+                {
+                    this.AvalonDockDocuments.Remove(doc);
+                }
+                catch (NullReferenceException) { } //AvalonDock ...
+            }
+        }
+        private void Workspace_OnLintingInfoUpdated(object sender, EventArgs e)
+        {
+            var editor = sender as CodeEditorBaseDataContext;
+            if (editor == null || editor.FileReference == null)
+                return;
+            DataContext.ErrorListPane.Instance.LinterDictionary[editor.FileReference.FilePath] = editor.Linter.LinterInfo;
         }
 
         public DocumentBase GetCurrentDocument()

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using ArmA.Studio.Data.Lint;
 using Utility;
 using Utility.Collections;
 
@@ -23,6 +24,8 @@ namespace ArmA.Studio.Data
 
         public string StaticFileName { get; set; }
         public bool HasStaticFileName => !string.IsNullOrWhiteSpace(this.StaticFileName);
+
+        public ILinterHost Linter { get; set; }
 
         /// <summary>
         /// Checks if provided file is valid to be used with this FileType.

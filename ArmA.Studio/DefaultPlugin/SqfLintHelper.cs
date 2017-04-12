@@ -13,9 +13,9 @@ namespace ArmA.Studio.DefaultPlugin
     {
         public IEnumerable<LintInfo> LinterInfo { get; set; }
 
-        public void DoLinting(Stream stream, ProjectFile file) => this.LinterInfo = GetLintInfo(stream, file);
+        public void LintWriteCache(Stream stream, ProjectFile file) => this.LinterInfo = Lint(stream, file);
 
-        public IEnumerable<LintInfo> GetLintInfo(Stream stream, ProjectFile file)
+        public IEnumerable<LintInfo> Lint(Stream stream, ProjectFile file)
         {
             var inputStream = new Antlr4.Runtime.AntlrInputStream(stream);
             var lexer = new RealVirtuality.SQF.ANTLR.Parser.sqfLexer(inputStream);

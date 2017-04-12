@@ -1018,6 +1018,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Doing Initial Lint {0}/{1} &apos;{2}&apos;.
+        /// </summary>
+        public static string Splash_DoingInitialLint {
+            get {
+                return ResourceManager.GetString("Splash_DoingInitialLint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading Breakpoints.
         /// </summary>
         public static string Splash_LoadingBreakpointInformations {

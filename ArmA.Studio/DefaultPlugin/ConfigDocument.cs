@@ -31,9 +31,16 @@ namespace ArmA.Studio.DefaultPlugin
 
         public IEnumerable<LintInfo> LinterInfo { get; set; }
 
-        public void DoLinting(Stream reader, ProjectFile pfile)
+        public IEnumerable<LintInfo> Lint(Stream stream, ProjectFile f)
         {
-            throw new NotImplementedException();
+            var lintHelper = new ConfigLintHelper();
+            return lintHelper.Lint(stream, f);
+        }
+
+        public void LintWriteCache(Stream stream, ProjectFile f)
+        {
+            var lintHelper = new ConfigLintHelper();
+            this.LinterInfo = lintHelper.Lint(stream, f);
         }
     }
 }

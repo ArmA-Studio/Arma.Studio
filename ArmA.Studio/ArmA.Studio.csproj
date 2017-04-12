@@ -137,6 +137,7 @@
     <Compile Include="DefaultPlugin\PluginMain.cs" />
     <Compile Include="DefaultPlugin\ConfigDocument.cs" />
     <Compile Include="DefaultPlugin\SqfDocument.cs" />
+    <Compile Include="DefaultPlugin\ConfigLintHelper.cs" />
     <Compile Include="DefaultPlugin\SqfLintHelper.cs" />
     <Compile Include="Dialogs\CreateNewProjectDialog.xaml.cs">
       <DependentUpon>CreateNewProjectDialog.xaml</DependentUpon>

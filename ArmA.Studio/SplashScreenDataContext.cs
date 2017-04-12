@@ -73,7 +73,11 @@ namespace ArmA.Studio
             Workspace w;
             if (Splash_Workspace(setIndeterminate, setDisplayText, setProgress, out w))
                 return;
+            reset();
 
+            if (Splash_DoInitialLint(setIndeterminate, setDisplayText, setProgress))
+                return;
+            reset();
 
             App.Current.Dispatcher.Invoke(() =>
             {
@@ -198,7 +202,6 @@ namespace ArmA.Studio
 
             return false;
         }
-
         private static bool Splash_LoadPlugins(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress)
         {
             SetDisplayText(Properties.Localization.Splash_ApplyingPossiblyAvailablePluginUpdates);
@@ -345,6 +348,27 @@ namespace ArmA.Studio
                     }
                 }
 
+            }
+            return doShutdown;
+        }
+        private static bool Splash_DoInitialLint(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress)
+        {
+            var doShutdown = false;
+            var files = Workspace.Instance.Solution.Projects.SelectMany((p) => p);
+            double count = files.Count();
+            var index = 0;
+            foreach (var it in files)
+            {
+                index++;
+                SetDisplayText(string.Format(Properties.Localization.Splash_DoingInitialLint, index, (int)count, it.FileName));
+                SetProgress(index / count);
+                var fileType = Workspace.Instance.GetFileType(it.FileUri);
+                if (fileType == null || fileType.Linter == null)
+                    continue;
+                using (var stream = File.OpenRead(it.FilePath))
+                {
+                    DataContext.ErrorListPane.Instance.LinterDictionary[it.FilePath] = fileType.Linter.Lint(stream, it);
+                }
             }
             return doShutdown;
         }

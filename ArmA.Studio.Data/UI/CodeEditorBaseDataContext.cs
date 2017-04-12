@@ -40,6 +40,7 @@ namespace ArmA.Studio.Data.UI
         {
             base.OnEditorInitialized(editor);
             editor.Document.TextChanged += OnTextChanged;
+            this.ExecuteLinter();
         }
 
 
@@ -69,7 +70,7 @@ namespace ArmA.Studio.Data.UI
             {
                 using (memstream)
                 {
-                    this.Linter.DoLinting(memstream, this.FileReference);
+                    this.Linter.LintWriteCache(memstream, this.FileReference);
                     this.OnLintingInfoUpdated?.Invoke(this, new EventArgs());
                     this.RefreshVisuals();
                     Application.Current.Dispatcher.Invoke(() => this.EditorInstance.TextArea.InvalidateVisual());
