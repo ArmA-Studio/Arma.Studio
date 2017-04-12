@@ -1018,6 +1018,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading Breakpoints.
+        /// </summary>
+        public static string Splash_LoadingBreakpointInformations {
+            get {
+                return ResourceManager.GetString("Splash_LoadingBreakpointInformations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading Plugins.
         /// </summary>
         public static string Splash_LoadingPlugins {

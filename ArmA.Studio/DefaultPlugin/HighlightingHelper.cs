@@ -19,7 +19,7 @@ namespace ArmA.Studio.DefaultPlugin
                 {
                     writer.WriteStartElement("Digits");
                     writer.WriteAttributeString("name", "Digits");
-                    writer.WriteAttributeString("color", "Chocolate");
+                    writer.WriteAttributeString("color", ConfigHost.Coloring.SyntaxHighlightingSqf.Digits.ToString());
                     writer.WriteEndElement();
 
                     writer.WriteStartElement("RuleSets");
@@ -28,15 +28,15 @@ namespace ArmA.Studio.DefaultPlugin
                     {
                         writer.WriteElementString("Delimiters", @"&><~!@$%^*()-+=|\#/{}[]:;""' , .?");
 
-                        writer.XshdSpan("stringNormal", ConfigHost.Coloring.SyntaxHighlighting.StringNormal.ToString(), "\"", "\"");
-                        writer.XshdSpan("stringSingle", ConfigHost.Coloring.SyntaxHighlighting.StringSingle.ToString(), "'", "'");
-                        writer.XshdSpan("PreProcessor", ConfigHost.Coloring.SyntaxHighlighting.PreProcessor.ToString(), "#");
-                        writer.XshdSpan("LineComment", ConfigHost.Coloring.SyntaxHighlighting.LineComment.ToString(), "//");
-                        writer.XshdSpan("MultiLineComment", ConfigHost.Coloring.SyntaxHighlighting.MultiLineComment.ToString(), "/*", "*/");
+                        writer.XshdSpan("stringNormal", ConfigHost.Coloring.SyntaxHighlightingSqf.StringNormal.ToString(), "\"", "\"");
+                        writer.XshdSpan("stringSingle", ConfigHost.Coloring.SyntaxHighlightingSqf.StringSingle.ToString(), "'", "'");
+                        writer.XshdSpan("PreProcessor", ConfigHost.Coloring.SyntaxHighlightingSqf.PreProcessor.ToString(), "#");
+                        writer.XshdSpan("LineComment", ConfigHost.Coloring.SyntaxHighlightingSqf.LineComment.ToString(), "//");
+                        writer.XshdSpan("MultiLineComment", ConfigHost.Coloring.SyntaxHighlightingSqf.MultiLineComment.ToString(), "/*", "*/");
 
-                        writer.XshdKeywords(from def in ConfigHost.Instance.SqfDefinitions where def.Kind == RealVirtuality.SQF.SqfDefinition.EKind.Binary select def.Name, "Binary", ConfigHost.Coloring.SyntaxHighlighting.BinaryCommands.ToString(), false);
-                        writer.XshdKeywords(from def in ConfigHost.Instance.SqfDefinitions where def.Kind == RealVirtuality.SQF.SqfDefinition.EKind.Unary select def.Name, "Unary", ConfigHost.Coloring.SyntaxHighlighting.UnaryCommands.ToString(), false);
-                        writer.XshdKeywords(from def in ConfigHost.Instance.SqfDefinitions where def.Kind == RealVirtuality.SQF.SqfDefinition.EKind.Nular select def.Name, "Nular", ConfigHost.Coloring.SyntaxHighlighting.NullarCommands.ToString(), true);
+                        writer.XshdKeywords(from def in ConfigHost.Instance.SqfDefinitions where def.Kind == RealVirtuality.SQF.SqfDefinition.EKind.Binary select def.Name, "Binary", ConfigHost.Coloring.SyntaxHighlightingSqf.BinaryCommands.ToString(), false);
+                        writer.XshdKeywords(from def in ConfigHost.Instance.SqfDefinitions where def.Kind == RealVirtuality.SQF.SqfDefinition.EKind.Unary select def.Name, "Unary", ConfigHost.Coloring.SyntaxHighlightingSqf.UnaryCommands.ToString(), false);
+                        writer.XshdKeywords(from def in ConfigHost.Instance.SqfDefinitions where def.Kind == RealVirtuality.SQF.SqfDefinition.EKind.Nular select def.Name, "Nular", ConfigHost.Coloring.SyntaxHighlightingSqf.NullarCommands.ToString(), true);
                     }
                     writer.WriteEndElement();
                     writer.WriteEndElement();
@@ -55,7 +55,7 @@ namespace ArmA.Studio.DefaultPlugin
                 {
                     writer.WriteStartElement("Digits");
                     writer.WriteAttributeString("name", "Digits");
-                    writer.WriteAttributeString("color", "Chocolate");
+                    writer.WriteAttributeString("color", ConfigHost.Coloring.SyntaxHighlightingConfig.Digits.ToString());
                     writer.WriteEndElement();
 
                     writer.WriteStartElement("RuleSets");
@@ -64,13 +64,14 @@ namespace ArmA.Studio.DefaultPlugin
                     {
                         writer.WriteElementString("Delimiters", @"&><~!@$%^*()-+=|\#/{}[]:;""' , .?");
 
-                        writer.XshdSpan("stringNormal", "Crimson", "\"", "\"");
-                        writer.XshdSpan("stringSingle", "Crimson", "'", "'");
-                        writer.XshdSpan("PreProcessor", "Gray", "#");
-                        writer.XshdSpan("LineComment", "Darkgreen", "//");
-                        writer.XshdSpan("MultiLineComment", "Darkgreen", "/*", "*/");
+                        writer.XshdSpan("stringNormal", ConfigHost.Coloring.SyntaxHighlightingConfig.StringNormal.ToString(), "\"", "\"");
+                        writer.XshdSpan("stringSingle", ConfigHost.Coloring.SyntaxHighlightingConfig.StringSingle.ToString(), "'", "'");
+                        writer.XshdSpan("PreProcessor", ConfigHost.Coloring.SyntaxHighlightingConfig.PreProcessor.ToString(), "#");
+                        writer.XshdSpan("LineComment", ConfigHost.Coloring.SyntaxHighlightingConfig.LineComment.ToString(), "//");
+                        writer.XshdSpan("MultiLineComment", ConfigHost.Coloring.SyntaxHighlightingConfig.MultiLineComment.ToString(), "/*", "*/");
 
-                        writer.XshdKeywords("ControlStructure", "Blue", true, "class");
+
+                        writer.XshdKeywords("ControlStructure", ConfigHost.Coloring.SyntaxHighlightingConfig.Keywords.ToString(), true, "class");
                     }
                     writer.WriteEndElement();
                     writer.WriteEndElement();

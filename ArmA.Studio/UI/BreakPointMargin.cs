@@ -102,7 +102,7 @@ namespace ArmA.Studio.UI
             var bp = Workspace.Instance.BreakpointManager.GetBreakpoint(this.FileFolderRef, lineNumber);
             if (bp.IsDefault())
             {
-                Workspace.Instance.BreakpointManager.SetBreakpoint(this.FileFolderRef, new BreakpointInfo() { Line = lineNumber, IsEnabled = true, FileFolder = this.FileFolderRef, SqfCondition = string.Empty });
+                Workspace.Instance.BreakpointManager.SetBreakpoint(this.FileFolderRef, new BreakpointInfo() { Line = lineNumber, IsEnabled = true, FileRef = this.FileFolderRef, SqfCondition = string.Empty });
             }
             else
             {
@@ -130,6 +130,8 @@ namespace ArmA.Studio.UI
             color.Freeze();
             foreach (var bp in Workspace.Instance.BreakpointManager[this.FileFolderRef])
             {
+                if (!bp.IsEnabled)
+                    continue;
                 var line = this.Document.GetLineByNumber(bp.Line);
                 var segment = new TextSegment { StartOffset = line.Offset, EndOffset = line.EndOffset };
                 foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))

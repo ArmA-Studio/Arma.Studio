@@ -224,69 +224,120 @@ namespace ArmA.Studio
                 }
             }
 
-            public static class SyntaxHighlighting
+            public static class SyntaxHighlightingSqf
             {
                 public static readonly Color Digits_Default = Colors.Chocolate;
                 public static Color Digits
                 {
-                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlighting), nameof(Digits))); }
-                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlighting), nameof(Digits), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(Digits))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(Digits), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
                 }
 
                 public static readonly Color StringNormal_Default = Colors.Crimson;
                 public static Color StringNormal
                 {
-                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlighting), nameof(StringNormal))); }
-                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlighting), nameof(StringNormal), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(StringNormal))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(StringNormal), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
                 }
 
                 public static readonly Color StringSingle_Default = Colors.Crimson;
                 public static Color StringSingle
                 {
-                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlighting), nameof(StringSingle))); }
-                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlighting), nameof(StringSingle), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(StringSingle))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(StringSingle), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
                 }
 
                 public static readonly Color PreProcessor_Default = Colors.Gray;
                 public static Color PreProcessor
                 {
-                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlighting), nameof(PreProcessor))); }
-                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlighting), nameof(PreProcessor), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(PreProcessor))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(PreProcessor), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
                 }
 
                 public static readonly Color LineComment_Default = Colors.DarkGreen;
                 public static Color LineComment
                 {
-                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlighting), nameof(LineComment))); }
-                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlighting), nameof(LineComment), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(LineComment))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(LineComment), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
                 }
 
                 public static readonly Color MultiLineComment_Default = Colors.DarkGreen;
                 public static Color MultiLineComment
                 {
-                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlighting), nameof(MultiLineComment))); }
-                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlighting), nameof(MultiLineComment), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(MultiLineComment))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(MultiLineComment), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
                 }
 
                 public static readonly Color BinaryCommands_Default = Colors.Blue;
                 public static Color BinaryCommands
                 {
-                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlighting), nameof(BinaryCommands))); }
-                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlighting), nameof(BinaryCommands), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(BinaryCommands))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(BinaryCommands), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
                 }
 
                 public static readonly Color UnaryCommands_Default = Colors.Blue;
                 public static Color UnaryCommands
                 {
-                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlighting), nameof(UnaryCommands))); }
-                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlighting), nameof(UnaryCommands), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(UnaryCommands))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(UnaryCommands), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
                 }
 
                 public static readonly Color NullarCommands_Default = Colors.Blue;
                 public static Color NullarCommands
                 {
-                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlighting), nameof(NullarCommands))); }
-                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlighting), nameof(NullarCommands), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(NullarCommands))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(NullarCommands), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+            }
+            public static class SyntaxHighlightingConfig
+            {
+                public static readonly Color Digits_Default = Colors.Chocolate;
+                public static Color Digits
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingConfig), nameof(Digits))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingConfig), nameof(Digits), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color StringNormal_Default = Colors.Crimson;
+                public static Color StringNormal
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingConfig), nameof(StringNormal))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingConfig), nameof(StringNormal), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color StringSingle_Default = Colors.Crimson;
+                public static Color StringSingle
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingConfig), nameof(StringSingle))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingConfig), nameof(StringSingle), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color PreProcessor_Default = Colors.Gray;
+                public static Color PreProcessor
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingConfig), nameof(PreProcessor))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingConfig), nameof(PreProcessor), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color LineComment_Default = Colors.DarkGreen;
+                public static Color LineComment
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingConfig), nameof(LineComment))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingConfig), nameof(LineComment), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color MultiLineComment_Default = Colors.DarkGreen;
+                public static Color MultiLineComment
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingConfig), nameof(MultiLineComment))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingConfig), nameof(MultiLineComment), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color Keywords_Default = Colors.Blue;
+                public static Color Keywords
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingConfig), nameof(Keywords))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingConfig), nameof(Keywords), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
                 }
             }
 

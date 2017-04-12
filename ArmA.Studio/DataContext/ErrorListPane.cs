@@ -27,7 +27,6 @@ namespace ArmA.Studio.DataContext
 
         public ObservableDictionary<string, IEnumerable<LintInfo>> LinterDictionary;
 
-
         public override string Title { get { return Properties.Localization.PanelDisplayName_ErrorList; } }
         public override string Icon { get { return @"Resources\Pictograms\BuildErrorList\BuildErrorList_16x.png"; } }
 

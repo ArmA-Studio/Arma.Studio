@@ -499,4 +499,7 @@ Do you want to update now?</value>
   <data name="DefaultPluginDescription" xml:space="preserve">
     <value>Provides basic functionality to ArmA.Studio</value>
   </data>
+  <data name="Splash_LoadingBreakpointInformations" xml:space="preserve">
+    <value>Loading Breakpoints</value>
+  </data>
 </root>

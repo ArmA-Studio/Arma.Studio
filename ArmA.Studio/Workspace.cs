@@ -138,6 +138,7 @@ namespace ArmA.Studio
                 {
                     Solution.Serialize(this.Solution, stream);
                 }
+                this.SaveBreakpointsToProject();
                 ConfigHost.Instance.ExecSave();
             }
             catch (Exception ex)
@@ -278,7 +279,6 @@ namespace ArmA.Studio
         {
             Instance = this;
             this.KeyManager = new KeyManager();
-            //ToDo: Save & restore breakpoints somewhere
             this.BreakpointManager = new BreakpointManager();
             foreach (var it in App.GetPlugins<IHotKeyPlugin>())
             {
@@ -611,5 +611,14 @@ namespace ArmA.Studio
             return null;
         }
 
+
+        public void SaveBreakpointsToProject()
+        {
+            var filePath = Path.ChangeExtension(this.Solution.FileUri.AbsolutePath, App.CONST_BREAKPOINTINFOEXTENSION);
+            using (var stream = File.Open(filePath, FileMode.Create))
+            {
+                this.BreakpointManager.SaveBreakpoints(stream);
+            }
+        }
     }
 }

@@ -173,7 +173,24 @@ namespace ArmA.Studio
                 App.Shutdown(App.ExitCodes.ConfigError);
                 return true;
             }
-
+            SetDisplayText(Properties.Localization.Splash_LoadingBreakpointInformations);
+            {
+                var filePath = Path.ChangeExtension(solutionPath, App.CONST_BREAKPOINTINFOEXTENSION);
+                if (File.Exists(filePath))
+                {
+                    using (var stream = File.OpenRead(filePath))
+                    {
+                        w.BreakpointManager.LoadBreakpoints(stream);
+                    }
+                }
+                else
+                {
+                    using (var stream = File.Open(filePath, FileMode.Create))
+                    {
+                        w.BreakpointManager.SaveBreakpoints(stream);
+                    }
+                }
+            }
             #endregion
 
             SetIndeterminate(false);

@@ -45,11 +45,12 @@ namespace ArmA.Studio
             get { return this.BreakPointDictionary[pff]; }
         }
 
-        public BreakpointInfo SetBreakpoint(ProjectFile pff, int line) => this.SetBreakpoint(pff, new BreakpointInfo() { FileFolder = pff, IsEnabled = true, Line = line, SqfCondition = null});
+        public BreakpointInfo SetBreakpoint(ProjectFile pff, int line) => this.SetBreakpoint(pff, new BreakpointInfo() { FileRef = pff, IsEnabled = true, Line = line, SqfCondition = null});
+        public BreakpointInfo SetBreakpoint(BreakpointInfo bpi) => this.SetBreakpoint(bpi.FileRef, bpi);
         public BreakpointInfo SetBreakpoint(ProjectFile pff, BreakpointInfo bpi)
         {
             Logger.Info($"Setting breakpoint {bpi.ToString()} in '{pff.ProjectRelativePath}'.");
-            bpi.FileFolder = pff;
+            bpi.FileRef = pff;
             List<BreakpointInfo> bpiList;
             if(!this.BreakPointDictionary.TryGetValue(pff, out bpiList))
             {
@@ -120,10 +121,10 @@ namespace ArmA.Studio
             {
                 try
                 {
-                    if (reader.Name.Equals("breakpointinfo") && currentFile != null)
+                    if (reader.Name.Equals("info") && currentFile != null)
                     {
                         var bpi = new BreakpointInfo();
-                        bpi.FileFolder = currentFile;
+                        bpi.FileRef = currentFile;
                         if (reader.MoveToFirstAttribute())
                         {
                             do
@@ -142,11 +143,29 @@ namespace ArmA.Studio
                                 }
                             } while (reader.MoveToNextAttribute());
                         }
-                        
+                        this.SetBreakpoint(bpi);
                     }
                     else if(reader.Name.Equals("file"))
                     {
-                        currentFile = Workspace.Instance.GetProjectFileFolderReference(new Uri(reader.Value, UriKind.RelativeOrAbsolute));
+                        string project = null;
+                        string file = null;
+                        if (reader.MoveToFirstAttribute())
+                        {
+                            do
+                            {
+                                switch (reader.Name)
+                                {
+                                    case "project":
+                                        project = reader.Value;
+                                        break;
+                                    case "path":
+                                        file = reader.Value;
+                                        break;
+                                }
+                            } while (reader.MoveToNextAttribute());
+                        }
+                        var prjct = Workspace.Instance.Solution.Projects.FirstOrDefault((p) => p.Name == project);
+                        currentFile = prjct?.FirstOrDefault((pf) => pf.ProjectRelativePath == file);
                     }
                 }
                 catch { }
@@ -156,18 +175,24 @@ namespace ArmA.Studio
         }
         public void SaveBreakpoints(System.IO.Stream stream)
         {
-            var writer = XmlWriter.Create(stream);
+            var writer = XmlWriter.Create(stream, new XmlWriterSettings()
+            {
+                Indent = true
+            });
 
+            writer.WriteStartDocument();
+            writer.WriteStartElement("root");
             foreach (var kvp in this.BreakPointDictionary)
             {
                 if (!kvp.Value.Any())
                     continue;
                 writer.WriteStartElement("file");
-                writer.WriteAttributeString("path", kvp.Key.FilePath);
+                writer.WriteAttributeString("project", kvp.Key.OwningProject.Name);
+                writer.WriteAttributeString("path", kvp.Key.ProjectRelativePath);
 
-                foreach(var bpi in kvp.Value)
+                foreach (var bpi in kvp.Value)
                 {
-                    writer.WriteStartElement("breakpointinfo");
+                    writer.WriteStartElement("info");
                     writer.WriteAttributeString(nameof(bpi.IsEnabled), bpi.IsEnabled.ToString());
                     writer.WriteAttributeString(nameof(bpi.Line), bpi.Line.ToString());
                     if (bpi.SqfCondition != null)
@@ -178,6 +203,9 @@ namespace ArmA.Studio
                 }
                 writer.WriteEndElement();
             }
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
             stream.Flush();
         }
     }

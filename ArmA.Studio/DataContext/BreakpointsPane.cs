@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ArmA.Studio.Data.UI.Commands;
 using System.Threading;
+using System.Linq;
 
 namespace ArmA.Studio.DataContext
 {
@@ -18,16 +19,33 @@ namespace ArmA.Studio.DataContext
             if (!(p is BreakpointInfo))
                 return;
             var bp = (BreakpointInfo)p;
-            var doc = Workspace.Instance.CreateOrFocusDocument(bp.FileFolder);
+            var doc = Workspace.Instance.CreateOrFocusDocument(bp.FileRef);
             if (doc is TextEditorBaseDataContext)
             {
                 var textDoc = doc as TextEditorBaseDataContext;
                 textDoc.GetEditorInstanceAsync().ContinueWith((t) =>
                 {
-                    t.Result.TextArea.Caret.Line = bp.Line;
-                    t.Result.ScrollToLine(bp.Line);
-                    t.Result.TextArea.Caret.Show();
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        t.Result.TextArea.Caret.Line = bp.Line;
+                        t.Result.ScrollToLine(bp.Line);
+                        t.Result.TextArea.Caret.Show();
+                    });
                 });
+            }
+        });
+
+        public ICommand CmdBreakPointInfoUpdated => new RelayCommand((p) =>
+        {
+            if(p is BreakpointInfo)
+            {
+                var bpi = (BreakpointInfo)p;
+                Workspace.Instance.BreakpointManager.SetBreakpoint(bpi);
+                var doc = Workspace.Instance.GetCurrentDocument();
+                if (doc.FileReference.Equals(bpi.FileRef))
+                {
+                    doc.RefreshVisuals();
+                }
             }
         });
         public IEnumerable<BreakpointInfo> Breakpoints { get { return this._Breakpoints; } set { this._Breakpoints = value; RaisePropertyChanged(); } }
@@ -46,7 +64,7 @@ namespace ArmA.Studio.DataContext
 
         private void BreakpointManager_OnBreakPointsChanged(object sender, BreakpointManager.BreakPointsChangedEventArgs e)
         {
-            this.Breakpoints = Workspace.Instance.BreakpointManager;
+            this.Breakpoints = Workspace.Instance.BreakpointManager.ToList();
         }
     }
 }
