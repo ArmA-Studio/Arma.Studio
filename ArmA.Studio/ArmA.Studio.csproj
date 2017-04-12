@@ -137,6 +137,7 @@
     <Compile Include="DefaultPlugin\PluginMain.cs" />
     <Compile Include="DefaultPlugin\ConfigDocument.cs" />
     <Compile Include="DefaultPlugin\SqfDocument.cs" />
+    <Compile Include="DefaultPlugin\SqfLintHelper.cs" />
     <Compile Include="Dialogs\CreateNewProjectDialog.xaml.cs">
       <DependentUpon>CreateNewProjectDialog.xaml</DependentUpon>
     </Compile>
@@ -171,7 +172,6 @@
     <Compile Include="Dialogs\PropertiesDialogDataContext.cs" />
     <Compile Include="IniHelper.cs" />
     <Compile Include="KeyManager.cs" />
-    <Compile Include="Linting.cs" />
     <Compile Include="LintScheduler.cs" />
     <Compile Include="LoggerTargets\SubscribableTarget.cs" />
     <Compile Include="SplashScreen.xaml.cs">
@@ -291,9 +291,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\DataTemplates\Properties.xaml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\DataTemplates\AvalonDockDocumentDataTemplate.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\DataTemplates\UiEditorDocumentTemplate.xaml">

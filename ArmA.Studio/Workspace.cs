@@ -278,6 +278,8 @@ namespace ArmA.Studio
         {
             Instance = this;
             this.KeyManager = new KeyManager();
+            //ToDo: Save & restore breakpoints somewhere
+            this.BreakpointManager = new BreakpointManager();
             foreach (var it in App.GetPlugins<IHotKeyPlugin>())
             {
                 foreach(var kc in it.GetGlobalHotKeys())
@@ -508,17 +510,27 @@ namespace ArmA.Studio
                 var describor = this.GetDocumentDescriborByPrompt();
                 var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(describor);
                 doc.KeyManager = this.KeyManager;
+                doc.OnDocumentClosing += Document_OnDocumentClosing;
                 return doc;
             }
             else
             {
                 var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(fileType);
                 doc.KeyManager = this.KeyManager;
+                doc.OnDocumentClosing += Document_OnDocumentClosing;
                 return doc;
             }
         }
 
-        
+        private void Document_OnDocumentClosing(object sender, EventArgs e)
+        {
+            var doc = sender as DocumentBase;
+            doc.OnDocumentClosing -= Document_OnDocumentClosing;
+            if(this.AvalonDockDocuments.Contains(doc))
+                this.AvalonDockDocuments.Remove(doc);
+        }
+
+
         /// <summary>
         /// Tries to find a <see cref="FileType"/> from provided path.
         /// If <see cref="Uri"/> is not found, null will be returned.
@@ -576,6 +588,7 @@ namespace ArmA.Studio
                 {
                     var doc = p.CreateDocument(describor);
                     doc.KeyManager = this.KeyManager;
+                    doc.OnDocumentClosing += Document_OnDocumentClosing;
                     return doc;
                 }
             }

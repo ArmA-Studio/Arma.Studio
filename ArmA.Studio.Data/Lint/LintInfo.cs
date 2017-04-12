@@ -28,9 +28,9 @@ namespace ArmA.Studio.Data.Lint
             return new TextSegment() { StartOffset = sErr.StartOffset, Length = sErr.Length, EndOffset = sErr.EndOffset };
         }
 
-        public LintInfo(ProjectFile pff)
+        public LintInfo(ProjectFile pf)
         {
-            this.FileReference = pff;
+            this.FileReference = pf;
         }
     }
 }

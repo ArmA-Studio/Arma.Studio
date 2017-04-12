@@ -10,19 +10,29 @@ using ICSharpCode.AvalonEdit.Rendering;
 using ArmA.Studio.DataContext;
 using ArmA.Studio.Data.Lint;
 using ArmA.Studio.Data;
+using ArmA.Studio.Data.UI;
 
 namespace ArmA.Studio.UI
 {
     internal class UnderlineBackgroundRenderer : IBackgroundRenderer
     {
+        private TextView ThisView;
+        private CodeEditorBaseDataContext EditorDataContext;
 
-        public UnderlineBackgroundRenderer()
+        public UnderlineBackgroundRenderer(CodeEditorBaseDataContext cebdc)
         {
+            this.EditorDataContext = cebdc;
+            cebdc.OnLintingInfoUpdated += Cebdc_OnLintingInfoUpdated;
         }
+
+        private void Cebdc_OnLintingInfoUpdated(object sender, EventArgs e)
+        {
+            App.Current.Dispatcher.Invoke(() => this.ThisView?.InvalidateLayer(KnownLayer.Selection));
+        }
+
         public KnownLayer Layer { get { return KnownLayer.Selection; } }
 
-        public IEnumerable<LintInfo> SyntaxErrors { get; internal set; }
-        public int SyntaxErrors_TextLength { get; internal set; }
+        public IEnumerable<LintInfo> SyntaxErrors => this.EditorDataContext.Linter.LinterInfo;
 
         private IEnumerable<Point> GetPoints(Rect rect, double offset, int count)
         {
@@ -35,13 +45,9 @@ namespace ArmA.Studio.UI
 
         public void Draw(TextView textView, DrawingContext drawingContext)
         {
+            this.ThisView = textView;
             if (this.SyntaxErrors == null)
                 return;
-            if (this.SyntaxErrors_TextLength != textView.Document.TextLength)
-            {
-                //ToDo: Update TextLength
-                return; //for now just hide the existing syntax linting
-            }
             var colorError = new SolidColorBrush(ConfigHost.Coloring.EditorUnderlining.ErrorColor);
             colorError.Freeze();
             var colorWarning = new SolidColorBrush(ConfigHost.Coloring.EditorUnderlining.WarningColor);

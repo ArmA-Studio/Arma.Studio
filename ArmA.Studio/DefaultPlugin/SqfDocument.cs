@@ -9,6 +9,7 @@ using ArmA.Studio.Data;
 using ArmA.Studio.Data.IntelliSense;
 using ArmA.Studio.Data.Lint;
 using ArmA.Studio.Data.UI;
+using ArmA.Studio.UI;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
@@ -31,12 +32,15 @@ namespace ArmA.Studio.DefaultPlugin
 
         public IEnumerable<LintInfo> LinterInfo { get; set; }
 
-        public void Display(TextEditor editorInstance, Point pos)
+
+        public void DoLinting(Stream stream, ProjectFile f)
         {
-            
+            var lintHelper = new SqfLintHelper();
+            lintHelper.DoLinting(stream, f);
+            this.LinterInfo = lintHelper.LinterInfo;
         }
 
-        public void DoLinting(Stream reader)
+        public void Display(TextEditor editorInstance, Point pos)
         {
             
         }
@@ -49,6 +53,17 @@ namespace ArmA.Studio.DefaultPlugin
         public void Update(TextDocument document, Caret caret)
         {
             
+        }
+
+        protected override void OnEditorInitialized(TextEditor editor)
+        {
+            base.OnEditorInitialized(editor);
+            var bpm = new BreakPointMargin(this.FileReference);
+            this.EditorInstance.TextArea.TextView.BackgroundRenderers.Add(new LineHighlighterBackgroundRenderer(this.EditorInstance));
+            this.EditorInstance.TextArea.TextView.BackgroundRenderers.Add(new UnderlineBackgroundRenderer(this));
+            this.EditorInstance.TextArea.TextView.BackgroundRenderers.Add(bpm);
+            this.EditorInstance.TextArea.LeftMargins.Insert(0, bpm);
+            this.EditorInstance.TextArea.LeftMargins.Insert(1, new RuntimeExecutionMargin());
         }
     }
 }

@@ -21,6 +21,8 @@ namespace ArmA.Studio.Data.UI
     {
         protected const int CONST_LINTER_UPDATE_TIMEOUT_MS = 200;
 
+        public event EventHandler OnLintingInfoUpdated;
+
 
         public ILinterHost Linter => this as ILinterHost;
         public IIntelliSenseHost IntelliSenseHost => this as IIntelliSenseHost;
@@ -37,7 +39,7 @@ namespace ArmA.Studio.Data.UI
         protected override void OnEditorInitialized(TextEditor editor)
         {
             base.OnEditorInitialized(editor);
-            editor.TextChanged += OnTextChanged;
+            editor.Document.TextChanged += OnTextChanged;
         }
 
 
@@ -67,7 +69,9 @@ namespace ArmA.Studio.Data.UI
             {
                 using (memstream)
                 {
-                    this.Linter.DoLinting(memstream);
+                    this.Linter.DoLinting(memstream, this.FileReference);
+                    this.OnLintingInfoUpdated?.Invoke(this, new EventArgs());
+                    this.RefreshVisuals();
                     Application.Current.Dispatcher.Invoke(() => this.EditorInstance.TextArea.InvalidateVisual());
                 }
             });

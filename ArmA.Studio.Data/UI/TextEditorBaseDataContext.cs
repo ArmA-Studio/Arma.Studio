@@ -66,7 +66,7 @@ namespace ArmA.Studio.Data.UI
         private IHighlightingDefinition _SyntaxHighlightingDefinition;
         #endregion
 
-        public override bool HasChanges { get { if (this.EditorInstance == null) return false; return this.EditorInstance.Document.UndoStack.IsOriginalFile; } }
+        public override bool HasChanges { get { if (this.EditorInstance == null) return false; return !this.EditorInstance.Document.UndoStack.IsOriginalFile; } }
         public override string Title => this.HasChanges ? string.Concat(this.IsTemporary ? "tmp" : this.FileReference.FileName, '*') : this.IsTemporary ? "tmp" : this.FileReference.FileName;
 
         public TextEditorBaseDataContext(ProjectFile fileRef) : base(fileRef)
@@ -110,19 +110,13 @@ namespace ArmA.Studio.Data.UI
         /// <param name="text">Text to display.</param>
         public void SetText(string text)
         {
-            this.GetEditorInstanceAsync().ContinueWith((t) =>
-            {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    int limit = t.Result.Document.UndoStack.SizeLimit;
-                    t.Result.Document.UndoStack.SizeLimit = 0;
+            int limit = this.Document.UndoStack.SizeLimit;
+            this.Document.UndoStack.SizeLimit = 0;
 
 
-                    t.Result.Document.Text = text;
+            this.Document.Text = text;
 
-                    limit = t.Result.Document.UndoStack.SizeLimit = limit;
-                });
-            });
+            limit = this.Document.UndoStack.SizeLimit = limit;
         }
 
         public override void SaveDocument() => this.SaveDocument(this.FileReference.FilePath);
@@ -176,12 +170,15 @@ namespace ArmA.Studio.Data.UI
 
         public override void RefreshVisuals()
         {
-            this.EditorInstance?.InvalidateVisual();
-            this.EditorInstance?.TextArea.InvalidateVisual();
-            this.EditorInstance?.TextArea.TextView.InvalidateLayer(ICSharpCode.AvalonEdit.Rendering.KnownLayer.Background);
-            this.EditorInstance?.TextArea.TextView.InvalidateLayer(ICSharpCode.AvalonEdit.Rendering.KnownLayer.Caret);
-            this.EditorInstance?.TextArea.TextView.InvalidateLayer(ICSharpCode.AvalonEdit.Rendering.KnownLayer.Selection);
-            this.EditorInstance?.TextArea.TextView.InvalidateLayer(ICSharpCode.AvalonEdit.Rendering.KnownLayer.Text);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                this.EditorInstance?.InvalidateVisual();
+                this.EditorInstance?.TextArea.InvalidateVisual();
+                this.EditorInstance?.TextArea.TextView.InvalidateLayer(ICSharpCode.AvalonEdit.Rendering.KnownLayer.Background);
+                this.EditorInstance?.TextArea.TextView.InvalidateLayer(ICSharpCode.AvalonEdit.Rendering.KnownLayer.Caret);
+                this.EditorInstance?.TextArea.TextView.InvalidateLayer(ICSharpCode.AvalonEdit.Rendering.KnownLayer.Selection);
+                this.EditorInstance?.TextArea.TextView.InvalidateLayer(ICSharpCode.AvalonEdit.Rendering.KnownLayer.Text);
+            });
         }
 
         #endregion

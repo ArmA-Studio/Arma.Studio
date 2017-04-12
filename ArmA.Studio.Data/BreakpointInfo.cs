@@ -13,5 +13,10 @@ namespace ArmA.Studio.Data
 
         public string SqfCondition { get; set; }
         public bool IsEnabled { get; set; }
+
+        public override string ToString()
+        {
+            return $"{{{(!this.IsEnabled ? "INACTIVE" : string.Empty)} Line {this.Line} {this.SqfCondition}}}";
+        }
     }
 }

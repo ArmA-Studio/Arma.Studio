@@ -31,7 +31,7 @@ namespace ArmA.Studio.DefaultPlugin
 
         public IEnumerable<LintInfo> LinterInfo { get; set; }
 
-        public void DoLinting(Stream reader)
+        public void DoLinting(Stream reader, ProjectFile pfile)
         {
             throw new NotImplementedException();
         }

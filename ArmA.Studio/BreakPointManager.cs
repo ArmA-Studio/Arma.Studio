@@ -12,6 +12,7 @@ namespace ArmA.Studio
 {
     public sealed class BreakpointManager : IEnumerable<BreakpointInfo>
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         public sealed class BreakPointsChangedEventArgs
         {
             public enum EMode
@@ -47,8 +48,14 @@ namespace ArmA.Studio
         public BreakpointInfo SetBreakpoint(ProjectFile pff, int line) => this.SetBreakpoint(pff, new BreakpointInfo() { FileFolder = pff, IsEnabled = true, Line = line, SqfCondition = null});
         public BreakpointInfo SetBreakpoint(ProjectFile pff, BreakpointInfo bpi)
         {
+            Logger.Info($"Setting breakpoint {bpi.ToString()} in '{pff.ProjectRelativePath}'.");
             bpi.FileFolder = pff;
-            var bpiList = this.BreakPointDictionary[pff];
+            List<BreakpointInfo> bpiList;
+            if(!this.BreakPointDictionary.TryGetValue(pff, out bpiList))
+            {
+                bpiList = new List<BreakpointInfo>();
+                this.BreakPointDictionary[pff] = bpiList;
+            }
             var index = bpiList.FindIndex((item) => item.Line == bpi.Line);
             var isUpdate = false;
             if (index == -1)
@@ -65,7 +72,12 @@ namespace ArmA.Studio
         }
         public BreakpointInfo GetBreakpoint(ProjectFile pff, int line)
         {
-            var bpiList = this.BreakPointDictionary[pff];
+            List<BreakpointInfo> bpiList;
+            if (!this.BreakPointDictionary.TryGetValue(pff, out bpiList))
+            {
+                bpiList = new List<BreakpointInfo>();
+                this.BreakPointDictionary[pff] = bpiList;
+            }
             var index = bpiList.FindIndex((item) => item.Line == line);
             if (index == -1)
             {
@@ -81,9 +93,10 @@ namespace ArmA.Studio
         {
             var bpiList = this.BreakPointDictionary[pff];
             var index = bpiList.FindIndex((item) => item.Line == line);
-            if (index == -1)
+            if (index != -1)
             {
                 var bpi = bpiList[index];
+                Logger.Info($"Removing breakpoint {bpi.ToString()} in '{pff.ProjectRelativePath}'.");
                 bpiList.RemoveAt(index);
                 this.OnBreakPointsChanged?.Invoke(this, new BreakPointsChangedEventArgs(BreakPointsChangedEventArgs.EMode.Remove, bpi));
             }

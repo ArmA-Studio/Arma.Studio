@@ -10,6 +10,6 @@ namespace ArmA.Studio.Data.Lint
     public interface ILinterHost
     {
         IEnumerable<LintInfo> LinterInfo { get; }
-        void DoLinting(Stream reader);
+        void DoLinting(Stream stream, ProjectFile file);
     }
 }

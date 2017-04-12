@@ -94,27 +94,22 @@ namespace ArmA.Studio.UI
             var view = this.TextView;
             if (view == null || !view.VisualLinesValid)
                 return;
-            var pos = e.MouseDevice.GetPosition(this);
-
-            foreach (var line in view.VisualLines)
+            var pos = e.MouseDevice.GetPosition(view);
+            var line = this.GetLineFromPoint(view, pos);
+            if (line == null)
+                return;
+            var lineNumber = this.GetLineNumber(this.GetLineFromPoint(view, e.GetPosition(this)));
+            var bp = Workspace.Instance.BreakpointManager.GetBreakpoint(this.FileFolderRef, lineNumber);
+            if (bp.IsDefault())
             {
-                var lineNumber = this.GetLineNumber(this.GetLineFromPoint(view, e.GetPosition(this)));
-                if (pos.Y >= line.VisualTop && pos.Y <= line.VisualTop + line.Height)
-                {
-                    var bp = Workspace.Instance.BreakpointManager.GetBreakpoint(this.FileFolderRef, lineNumber);
-                    if (bp.IsDefault())
-                    {
-                        Workspace.Instance.BreakpointManager.SetBreakpoint(this.FileFolderRef, new BreakpointInfo() { Line = lineNumber, IsEnabled = true, FileFolder = this.FileFolderRef, SqfCondition = string.Empty });
-                    }
-                    else
-                    {
-                        Workspace.Instance.BreakpointManager.RemoveBreakpoint(this.FileFolderRef, bp);
-                    }
-                    this.InvalidateVisual();
-                    this.TextView.InvalidateVisual();
-                    break;
-                }
+                Workspace.Instance.BreakpointManager.SetBreakpoint(this.FileFolderRef, new BreakpointInfo() { Line = lineNumber, IsEnabled = true, FileFolder = this.FileFolderRef, SqfCondition = string.Empty });
             }
+            else
+            {
+                Workspace.Instance.BreakpointManager.RemoveBreakpoint(this.FileFolderRef, bp);
+            }
+            this.InvalidateVisual();
+            this.TextView.InvalidateVisual();
             e.Handled = true;
         }
 

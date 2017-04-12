@@ -27,7 +27,7 @@ namespace ArmA.Studio.DataContext
                     t.Result.TextArea.Caret.Line = bp.Line;
                     t.Result.ScrollToLine(bp.Line);
                     t.Result.TextArea.Caret.Show();
-                }).Start();
+                });
             }
         });
         public IEnumerable<BreakpointInfo> Breakpoints { get { return this._Breakpoints; } set { this._Breakpoints = value; RaisePropertyChanged(); } }
