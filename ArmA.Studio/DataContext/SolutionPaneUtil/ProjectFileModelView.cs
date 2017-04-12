@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ArmA.Studio.Data;
+using ArmA.Studio.Data.UI.Commands;
 
 namespace ArmA.Studio.DataContext.SolutionPaneUtil
 {
@@ -17,6 +19,9 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
 
         public bool IsInRenameMode { get { return this._IsInRenameMode; } set { this._IsInRenameMode = value; RaisePropertyChanged(); } }
         private bool _IsInRenameMode;
+
+        public ICommand CmdMouseDoubleClick => new RelayCommand((p) => { Workspace.Instance.CreateOrFocusDocument((p as ProjectFileModelView).Ref); });
+
 
         public ProjectFileModelView(ProjectFile pff)
         {

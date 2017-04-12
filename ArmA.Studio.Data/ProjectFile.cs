@@ -21,7 +21,7 @@ namespace ArmA.Studio.Data
             get { return this._ProjectRelativePath; }
             set
             {
-                value = value.Replace('\\', '/');
+                value = value.Replace('\\', '/').TrimStart('/');
                 if (this._ProjectRelativePath == value)
                     return;
                 this._ProjectRelativePath = value;
@@ -35,7 +35,7 @@ namespace ArmA.Studio.Data
         }
         private string _ProjectRelativePath;
         public string ArmAPath { get { return string.Concat(this.OwningProject.ArmAPath, '\\', this.ProjectRelativePath); } }
-        public string FilePath { get { return string.Concat(this.OwningProject.FilePath, '\\', this.ProjectRelativePath); } }
+        public string FilePath { get { return Path.Combine(this.OwningProject.FilePath, this.ProjectRelativePath); } }
         public string FileName
         {
             get { return Path.GetFileName(this.ProjectRelativePath); }

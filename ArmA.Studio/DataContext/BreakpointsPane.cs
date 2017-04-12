@@ -22,11 +22,11 @@ namespace ArmA.Studio.DataContext
             if (doc is TextEditorBaseDataContext)
             {
                 var textDoc = doc as TextEditorBaseDataContext;
-                textDoc.GetEditorInstanceAsync((editor) =>
+                textDoc.GetEditorInstanceAsync().ContinueWith((t) =>
                 {
-                    editor.TextArea.Caret.Line = bp.Line;
-                    editor.ScrollToLine(bp.Line);
-                    editor.TextArea.Caret.Show();
+                    t.Result.TextArea.Caret.Line = bp.Line;
+                    t.Result.ScrollToLine(bp.Line);
+                    t.Result.TextArea.Caret.Show();
                 }).Start();
             }
         });

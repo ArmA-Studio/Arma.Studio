@@ -496,4 +496,7 @@ Do you want to update now?</value>
   <data name="AddExistingProject" xml:space="preserve">
     <value>Add Existing Project</value>
   </data>
+  <data name="DefaultPluginDescription" xml:space="preserve">
+    <value>Provides basic functionality to ArmA.Studio</value>
+  </data>
 </root>

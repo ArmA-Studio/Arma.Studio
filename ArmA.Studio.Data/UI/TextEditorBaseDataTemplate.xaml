@@ -8,8 +8,7 @@
     xmlns:local="clr-namespace:ArmA.Studio.Data.UI;assembly=ArmA.Studio.Data"
     xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data"
     DataType="{x:Type local:TextEditorBaseDataContext}">
-    <Grid>
-        <ae:TextEditor
+    <ae:TextEditor
             ev:Initialized.Command="{Binding CmdTextEditorInitialized}"
             ev:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
             ev:PreviewMouseDown.Command="{Binding CmdEditorPreviewMouseDown}"
@@ -17,6 +16,6 @@
             ShowLineNumbers="{Binding ShowLineNumbers}"
             FontFamily="{Binding UsedFontFamily}"
             SyntaxHighlighting="{Binding SyntaxHighlightingDefinition}"
+            Document="{Binding Document}"
             />
-    </Grid>
 </DataTemplate>

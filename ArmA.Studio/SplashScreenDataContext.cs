@@ -205,8 +205,9 @@ namespace ArmA.Studio
                 Logger.Error(ex, "Error while loading plugin.");
                 return true;
             });
+            App.Plugins.AddRange(pManager.Plugins);
             Logger.Info($"Loaded {pManager.Plugins.Count()} plugins:");
-            foreach (var p in pManager.Plugins)
+            foreach (var p in App.Plugins)
             {
                 Logger.Info($"\t- {p.Name} <{p.GetType().AssemblyQualifiedName}>");
                 if (p is IAccessCallsPlugin)
@@ -229,7 +230,6 @@ namespace ArmA.Studio
                     Data.Project.ValidFileExtensions.AddRange(extensions);
                 }
             }
-            App.Plugins = pManager.Plugins;
             return false;
         }
         private static bool Splash_CheckUpdate(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress)

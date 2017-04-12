@@ -131,12 +131,12 @@ namespace ArmA.Studio.DataContext
             if(doc is TextEditorBaseDataContext)
             {
                 var textDoc = doc as TextEditorBaseDataContext;
-                textDoc.GetEditorInstanceAsync((editor) =>
+                textDoc.GetEditorInstanceAsync().ContinueWith((t) =>
                  {
-                     editor.TextArea.Caret.Line = li.Line;
-                     editor.TextArea.Caret.Column = li.LineOffset;
-                     editor.ScrollToLine(li.Line);
-                     editor.TextArea.Caret.Show();
+                     t.Result.TextArea.Caret.Line = li.Line;
+                     t.Result.TextArea.Caret.Column = li.LineOffset;
+                     t.Result.ScrollToLine(li.Line);
+                     t.Result.TextArea.Caret.Show();
                  }).Start();
             }
         }

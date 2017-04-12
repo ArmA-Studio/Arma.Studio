@@ -72,11 +72,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.4\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.4.5\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -127,11 +127,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ASKeyContainer.cs" />
     <Compile Include="BreakpointManager.cs" />
     <Compile Include="DataContext\SolutionPane.cs" />
     <Compile Include="DataContext\SolutionPaneUtil\ProjectFileModelView.cs" />
     <Compile Include="DataContext\SolutionPaneUtil\ProjectFolderModelView.cs" />
     <Compile Include="DataContext\SolutionPaneUtil\ProjectModelView.cs" />
+    <Compile Include="DefaultPlugin\HighlightingHelper.cs" />
+    <Compile Include="DefaultPlugin\PluginMain.cs" />
+    <Compile Include="DefaultPlugin\ConfigDocument.cs" />
+    <Compile Include="DefaultPlugin\SqfDocument.cs" />
     <Compile Include="Dialogs\CreateNewProjectDialog.xaml.cs">
       <DependentUpon>CreateNewProjectDialog.xaml</DependentUpon>
     </Compile>
@@ -157,7 +162,6 @@
       <DependentUpon>DownloadToolUpdateDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\DownloadPluginUpdateDialogDataContext.cs" />
-    <Compile Include="Dialogs\PropertiesDialogUtil\ColorConfigItem.cs" />
     <Compile Include="Dialogs\WorkspaceSelectorDialog.cs" />
     <Compile Include="DebuggerContext.cs" />
     <Compile Include="Dialogs\IDialogContext.cs" />
@@ -166,6 +170,7 @@
     </Compile>
     <Compile Include="Dialogs\PropertiesDialogDataContext.cs" />
     <Compile Include="IniHelper.cs" />
+    <Compile Include="KeyManager.cs" />
     <Compile Include="Linting.cs" />
     <Compile Include="LintScheduler.cs" />
     <Compile Include="LoggerTargets\SubscribableTarget.cs" />
@@ -258,10 +263,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <EmbeddedResource Include="Dialogs\PropertiesDialogUtil\ColorConfigItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <Page Include="Dialogs\ReportDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -292,7 +293,7 @@
     <EmbeddedResource Include="UI\DataTemplates\Properties.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\DataTemplates\DocumentBase.xaml">
+    <EmbeddedResource Include="UI\DataTemplates\AvalonDockDocumentDataTemplate.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\DataTemplates\UiEditorDocumentTemplate.xaml">

@@ -13,7 +13,7 @@
     xmlns:util="clr-namespace:ArmA.Studio.DataContext.SolutionPaneUtil;assembly=ArmA.Studio"
     xmlns:ascv="clr-namespace:ArmA.Studio.UI.Converters;assembly=ArmA.Studio"
     xmlns:bhvr="clr-namespace:ArmA.Studio.Data.UI.Behaviors;assembly=ArmA.Studio.Data"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     mc:Ignorable="d" DataType="{x:Type dc:SolutionPane}">
     <DataTemplate.Resources>
         <ascv:SolutionExplorerItemVisibilityConverter x:Key="SolutionExplorerItemVisibilityConverter"/>

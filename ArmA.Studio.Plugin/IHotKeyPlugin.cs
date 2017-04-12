@@ -5,13 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using ArmA.Studio.Data;
 using ArmA.Studio.Data.Configuration;
-using ArmA.Studio.Data.Lint;
 using ArmA.Studio.Data.UI;
 
 namespace ArmA.Studio.Plugin
 {
-    public interface ILinterPlugin : IPlugin
+    public interface IHotKeyPlugin : IPlugin
     {
-        IEnumerable<ILinterHost> LinterHosts { get; }
+        IEnumerable<KeyContainer> GetGlobalHotKeys();
     }
 }

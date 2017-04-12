@@ -271,11 +271,21 @@ namespace ArmA.Studio
         public BreakpointManager BreakpointManager { get; internal set; }
         public string ConfigPath { get { return Path.Combine(PathUri.AbsolutePath, App.CONST_CONFIGURATION); } }
         public UI.GenericDataTemplateSelector LayoutItemTemplateSelector { get; private set; }
+        public KeyManager KeyManager { get; private set; }
         public DebuggerContext DebugContext { get; internal set; }
 
         public Workspace(UI.GenericDataTemplateSelector layoutItemTemplateSelector)
         {
             Instance = this;
+            this.KeyManager = new KeyManager();
+            foreach (var it in App.GetPlugins<IHotKeyPlugin>())
+            {
+                foreach(var kc in it.GetGlobalHotKeys())
+                {
+                    this.KeyManager.RegisterKey(kc);
+                }
+            }
+
             this.LayoutItemTemplateSelector = layoutItemTemplateSelector;
             this.AvailablePanels = new ObservableCollection<PanelBase>();
             this.AvalonDockDocuments = new ObservableCollection<DocumentBase>();
@@ -354,7 +364,9 @@ namespace ArmA.Studio
                     return doc;
                 }
             }
-            return this.CreateDocument(path, ECreateDocumentModes.AddFileReferenceOrTemporary);
+            var tmp = this.CreateDocument(path, ECreateDocumentModes.AddFileReferenceOrTemporary);
+            this.AvalonDockDocuments.Add(tmp);
+            return tmp;
         }
 
         /// <summary>
@@ -384,6 +396,7 @@ namespace ArmA.Studio
                         if (reference == null)
                             return null;
                         doc.FileReference = reference;
+                        doc.LoadDocument();
                         return doc;
                     }
 
@@ -397,6 +410,7 @@ namespace ArmA.Studio
                         {
                             doc.FileReference = reference;
                         }
+                        doc.LoadDocument();
                         return doc;
                     }
 
@@ -410,6 +424,7 @@ namespace ArmA.Studio
                                 {
                                     var pff = p.GetOrCreateFileFolder(path);
                                     doc.FileReference = pff;
+                                    doc.LoadDocument();
                                     return doc;
                                 }
                             }
@@ -418,13 +433,15 @@ namespace ArmA.Studio
                         else
                         {
                             doc.FileReference = reference;
+                            doc.LoadDocument();
+                            return doc;
                         }
-                        return doc;
                     }
 
                 case ECreateDocumentModes.CreateTemporary:
                     {
                         doc.IsTemporary = true;
+                        doc.LoadDocument();
                         return doc;
                     }
 
@@ -439,13 +456,14 @@ namespace ArmA.Studio
             var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(fileType);
             if(doc is TextEditorBaseDataContext)
             {
-                (doc as TextEditorBaseDataContext).SetTextAsync(content);
+                (doc as TextEditorBaseDataContext).SetText(content);
             }
             else
             {
                 throw new Exception("Cannot set text in non-TextEditorBaseDataContext classes");
             }
             doc.IsTemporary = true;
+            doc.KeyManager = this.KeyManager;
             return doc;
         }
 
@@ -488,11 +506,15 @@ namespace ArmA.Studio
             if (fileType == null)
             {
                 var describor = this.GetDocumentDescriborByPrompt();
-                return App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(describor);
+                var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(describor);
+                doc.KeyManager = this.KeyManager;
+                return doc;
             }
             else
             {
-                return App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(fileType);
+                var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(fileType);
+                doc.KeyManager = this.KeyManager;
+                return doc;
             }
         }
 
@@ -552,7 +574,9 @@ namespace ArmA.Studio
             {
                 if (p.Documents.Contains(describor))
                 {
-                    return p.CreateDocument(describor);
+                    var doc = p.CreateDocument(describor);
+                    doc.KeyManager = this.KeyManager;
+                    return doc;
                 }
             }
 

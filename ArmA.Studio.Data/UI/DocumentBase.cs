@@ -53,8 +53,7 @@ namespace ArmA.Studio.Data.UI
             }
         }
 
-        public override string ContentId { get { return this.FileReference.FilePath; } set { throw new NotImplementedException(); } }
-        public abstract DataTemplate Template { get; }
+        public override string ContentId { get { return this.FileReference?.FilePath; } set { throw new NotImplementedException(); } }
         public ICommand CmdClosing => new Commands.RelayCommand((p) =>
         {
             if (HasChanges)
@@ -72,6 +71,7 @@ namespace ArmA.Studio.Data.UI
             this.OnDocumentClosing?.Invoke(this, new EventArgs());
         });
         public abstract bool HasChanges { get; }
+        public IKeyManager KeyManager { get; set; }
 
         public ProjectFile FileReference { get { ProjectFile v; this.WeakFileReference.TryGetTarget(out v); return v; } set { this.WeakFileReference.SetTarget(value); } }
         private WeakReference<ProjectFile> WeakFileReference;

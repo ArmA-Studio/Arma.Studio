@@ -352,6 +352,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Provides basic functionality to ArmA.Studio.
+        /// </summary>
+        public static string DefaultPluginDescription {
+            get {
+                return ResourceManager.GetString("DefaultPluginDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {

@@ -10,15 +10,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using ArmA.Studio.Data.UI.Commands;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 
 namespace ArmA.Studio.Data.UI
 {
-    public abstract class TextEditorBaseDataContext : DocumentBase
+    public class TextEditorBaseDataContext : DocumentBase
     {
-        public event EventHandler<OnCaretChangedEventArgs> OnCaretChanged;
-        public event EventHandler<KeyEventArgs> OnKeyDown;
-
         public static DataTemplate TextEditorBaseDataTemplate => GetDataTemplateFromAssemblyRes(@"ArmA.Studio.Data.UI.TextEditorBaseDataTemplate.xaml");
         #region `TextEditor` 'EditorInstance' surroundings
         /// <summary>
@@ -27,20 +25,16 @@ namespace ArmA.Studio.Data.UI
         /// To get an awaiter, use the function.
         /// </summary>
         public TextEditor EditorInstance { get; private set; }
+
+        public TextDocument Document { get { return this._Document; } set { if (this._Document == value) return; this._Document = value; this.RaisePropertyChanged(); } }
+        private TextDocument _Document;
         /// <summary>
         /// Async function to receive the initialized instance of the Editor.
         /// </summary>
         /// <returns>Initialized <see cref="TextEditor"/> of this <see cref="TextEditorBaseDataContext"/>.</returns>
-        public async Task<TextEditor> GetEditorInstanceAsync() => await this.GetEditorInstanceAsync((te) => { });
-        /// <summary>
-        /// Async function to receive the initialized instance of the Editor.
-        /// </summary>
-        /// <param name="callback">Function to execute as soon as the <see cref="TextEditor"/> instance is ready.</param>
-        /// <returns>Initialized <see cref="TextEditor"/> of this <see cref="TextEditorBaseDataContext"/>.</returns>
-        public async Task<TextEditor> GetEditorInstanceAsync(Action<TextEditor> callback) => await Task.Run(() =>
+        public async Task<TextEditor> GetEditorInstanceAsync() => await Task.Run(() =>
         {
             SpinWait.SpinUntil(() => this.EditorInstance != null);
-            callback(this.EditorInstance);
             return this.EditorInstance;
         });
         #endregion
@@ -73,13 +67,14 @@ namespace ArmA.Studio.Data.UI
         #endregion
 
         public override bool HasChanges { get { if (this.EditorInstance == null) return false; return this.EditorInstance.Document.UndoStack.IsOriginalFile; } }
-        public override string Title => this.HasChanges ? string.Concat(this.FileReference.FileName, '*') : this.FileReference.FileName;
+        public override string Title => this.HasChanges ? string.Concat(this.IsTemporary ? "tmp" : this.FileReference.FileName, '*') : this.IsTemporary ? "tmp" : this.FileReference.FileName;
 
         public TextEditorBaseDataContext(ProjectFile fileRef) : base(fileRef)
         {
             this.UsedFontFamily = new FontFamily("Consolas");
             this.ShowLineNumbers = false;
             this.SyntaxHighlightingDefinition = null;
+            this.Document = new TextDocument();
         }
 
 
@@ -89,7 +84,6 @@ namespace ArmA.Studio.Data.UI
             var offset = this.EditorInstance.TextArea.Caret.Offset;
             var line = this.EditorInstance.TextArea.Caret.Line;
             var column = this.EditorInstance.TextArea.Caret.Column;
-            this.OnCaretChanged?.Invoke(this, new OnCaretChangedEventArgs() { Line = line, Column = column, Offset = offset });
             this.OnCaretPositionChanged(line, column, offset);
         }
         private void UndoStack_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -102,35 +96,33 @@ namespace ArmA.Studio.Data.UI
         }
         private void Editor_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            this.OnKeyDown?.Invoke(this, e);
+            var checkResult = this.KeyManager?.CheckKeys();
+            e.Handled = checkResult.HasValue && checkResult.Value;
         }
         #endregion
 
-
-        /// <summary>
-        /// Sets the text displayed and clears the UndoStack.
-        /// Use to create "new" documents/insert the content.
-        /// Will be executed async.
-        /// </summary>
-        /// <param name="reader">Reader containing the text.</param>
-        public void SetTextAsync(TextReader reader) => this.SetTextAsync(reader.ReadToEnd());
+        
         /// <summary>
         /// Sets the text displayed and clears the UndoStack.
         /// Use to create "new" documents/insert the content.
         /// Will be executed async.
         /// </summary>
         /// <param name="text">Text to display.</param>
-        public void SetTextAsync(string text)
+        public void SetText(string text)
         {
-            this.GetEditorInstanceAsync((editor) =>
+            this.GetEditorInstanceAsync().ContinueWith((t) =>
             {
-                var limit = this.EditorInstance.Document.UndoStack.SizeLimit;
-                this.EditorInstance.Document.UndoStack.SizeLimit = 0;
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    int limit = t.Result.Document.UndoStack.SizeLimit;
+                    t.Result.Document.UndoStack.SizeLimit = 0;
 
-                this.EditorInstance.Document.Text = text;
 
-                this.EditorInstance.Document.UndoStack.SizeLimit = limit;
-            }).Start();
+                    t.Result.Document.Text = text;
+
+                    limit = t.Result.Document.UndoStack.SizeLimit = limit;
+                });
+            });
         }
 
         public override void SaveDocument() => this.SaveDocument(this.FileReference.FilePath);
@@ -156,7 +148,7 @@ namespace ArmA.Studio.Data.UI
                 return;
             using (var reader = new StreamReader(File.OpenRead(path)))
             {
-                this.SetTextAsync(reader);
+                this.SetText(reader.ReadToEnd());
             }
         }
 
@@ -181,6 +173,16 @@ namespace ArmA.Studio.Data.UI
         /// <param name="column"></param>
         /// <param name="offset"></param>
         protected virtual void OnCaretPositionChanged(int line, int column, int offset) { }
+
+        public override void RefreshVisuals()
+        {
+            this.EditorInstance?.InvalidateVisual();
+            this.EditorInstance?.TextArea.InvalidateVisual();
+            this.EditorInstance?.TextArea.TextView.InvalidateLayer(ICSharpCode.AvalonEdit.Rendering.KnownLayer.Background);
+            this.EditorInstance?.TextArea.TextView.InvalidateLayer(ICSharpCode.AvalonEdit.Rendering.KnownLayer.Caret);
+            this.EditorInstance?.TextArea.TextView.InvalidateLayer(ICSharpCode.AvalonEdit.Rendering.KnownLayer.Selection);
+            this.EditorInstance?.TextArea.TextView.InvalidateLayer(ICSharpCode.AvalonEdit.Rendering.KnownLayer.Text);
+        }
 
         #endregion
     }

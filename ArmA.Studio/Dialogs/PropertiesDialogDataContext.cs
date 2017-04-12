@@ -7,7 +7,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using ArmA.Studio.Data.Configuration;
 using ArmA.Studio.Data.UI.Commands;
-using ArmA.Studio.Dialogs.PropertiesDialogUtil;
 
 namespace ArmA.Studio.Dialogs
 {

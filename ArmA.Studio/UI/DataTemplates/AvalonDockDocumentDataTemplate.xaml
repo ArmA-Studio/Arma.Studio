@@ -6,8 +6,6 @@
       xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
       xmlns:local="clr-namespace:ArmA.Studio;assembly=ArmA.Studio"
       xmlns:ui="clr-namespace:ArmA.Studio.Data.UI;assembly=ArmA.Studio.Data"
-      DataType="{x:Type ui:DocumentBase}">
-    <Grid>
-        <ContentControl ContentTemplate="{Binding Template}" Content="{Binding}"/>
-    </Grid>
+      DataType="{x:Type ContentPresenter}">
+    <ContentControl Content="{Binding Content}" ContentTemplateSelector="{Binding LayoutItemTemplateSelector, Source={x:Static local:Workspace.Instance}}"/>
 </DataTemplate>

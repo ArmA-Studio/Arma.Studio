@@ -49,8 +49,16 @@ namespace ArmA.Studio
         public static Version CurrentVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
         public static SubscribableTarget SubscribableLoggerTarget { get; private set; }
-        public static IEnumerable<IPlugin> Plugins { get; set; }
+        public static List<IPlugin> Plugins { get; private set; }
+
+        static App()
+        {
+            Plugins = new List<IPlugin>();
+            Plugins.Add(new DefaultPlugin.PluginMain());
+        }
+
         internal UpdateHelper.DownloadInfo UpdateDownloadInfo;
+
 
         private void SetupNLog()
         {
@@ -111,7 +119,7 @@ namespace ArmA.Studio
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-#if DEBUG
+#if !DEBUG
             System.Diagnostics.Debugger.Break();
 #else
             SendExceptionReport(e.Exception);
