@@ -120,7 +120,7 @@ namespace ArmA.Studio
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-#if !DEBUG
+#if DEBUG
             System.Diagnostics.Debugger.Break();
 #else
             SendExceptionReport(e.Exception);
