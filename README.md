@@ -2,7 +2,7 @@
 
 ArmA.Studio is a IDE developed specially for the ArmA game.
 
-ArmA.Studio uses the [ArmaDebugEngine](https://github.com/X39/ArmaDebugEngine).
+ArmA.Studio uses the [ArmaDebugEngine](https://github.com/dedmen/ArmaDebugEngine).
 
 ### Links
 
