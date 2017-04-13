@@ -147,6 +147,10 @@
       <DependentUpon>DocumentSelectorDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\DocumentSelectorDialogDataContext.cs" />
+    <Compile Include="Dialogs\AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\AboutDialogDataContext.cs" />
     <Compile Include="Dialogs\ReportDialog.xaml.cs">
       <DependentUpon>ReportDialog.xaml</DependentUpon>
     </Compile>
@@ -259,6 +263,10 @@
     <Page Include="Dialogs\DownloadToolUpdateDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\AboutDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\PropertiesDialog.xaml">
       <SubType>Designer</SubType>

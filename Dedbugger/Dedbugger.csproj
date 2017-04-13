@@ -58,6 +58,10 @@
       <Project>{ec8d472e-f967-475d-8fbb-fc9b2db56467}</Project>
       <Name>ArmA.Studio.Debugger</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ArmA.Studio.Plugin\ArmA.Studio.Plugin.csproj">
+      <Project>{c5bd46be-607f-41d5-8c6a-f2eef8706e24}</Project>
+      <Name>ArmA.Studio.Plugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

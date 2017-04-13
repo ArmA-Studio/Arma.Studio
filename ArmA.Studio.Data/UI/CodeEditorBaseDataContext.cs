@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using ArmA.Studio.Data.IntelliSense;
@@ -20,6 +22,8 @@ namespace ArmA.Studio.Data.UI
     public class CodeEditorBaseDataContext : TextEditorBaseDataContext
     {
         protected const int CONST_LINTER_UPDATE_TIMEOUT_MS = 200;
+        public static readonly Popup HighlightPopup = LoadFromEmbeddedResource<Popup>(typeof(CodeEditorBaseDataContext).Assembly, @"ArmA.Studio.Data.UI.CodeEditorBase_HighlightingPopup.xaml");
+        public static readonly Popup LintPopup = LoadFromEmbeddedResource<Popup>(typeof(CodeEditorBaseDataContext).Assembly, @"ArmA.Studio.Data.UI.CodeEditorBase_LintPopup.xaml");
 
         public event EventHandler OnLintingInfoUpdated;
 
@@ -40,7 +44,35 @@ namespace ArmA.Studio.Data.UI
         {
             base.OnEditorInitialized(editor);
             editor.Document.TextChanged += OnTextChanged;
+            editor.MouseHover += Editor_MouseHover;
+            editor.MouseHoverStopped += Editor_MouseHoverStopped;
             this.ExecuteLinter();
+        }
+
+        private void Editor_MouseHoverStopped(object sender, MouseEventArgs e)
+        {
+           HighlightPopup.IsOpen = false;
+        }
+
+        private void Editor_MouseHover(object sender, MouseEventArgs e)
+        {
+            if (this.Linter == null)
+                return;
+            var pos = e.GetPosition(this.EditorInstance);
+            var textViewPosQ = this.EditorInstance.GetPositionFromPoint(pos);
+            if (!textViewPosQ.HasValue)
+                return;
+            var textViewPos = textViewPosQ.Value;
+            var offset = this.Document.GetOffset(textViewPos.Location);
+            var linterInfo = this.Linter.LinterInfo.FirstOrDefault((li) => li.StartOffset <= offset && li.EndOffset >= offset);
+            if (linterInfo == null)
+                return;
+            HighlightPopup.DataContext = linterInfo;
+            HighlightPopup.PlacementTarget = this.EditorInstance;
+            HighlightPopup.Placement = PlacementMode.Relative;
+            HighlightPopup.HorizontalOffset = pos.X + 16;
+            HighlightPopup.VerticalOffset = pos.Y - 8;
+            HighlightPopup.IsOpen = true;
         }
 
 

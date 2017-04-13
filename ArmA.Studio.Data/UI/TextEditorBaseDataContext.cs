@@ -17,7 +17,7 @@ namespace ArmA.Studio.Data.UI
 {
     public class TextEditorBaseDataContext : DocumentBase
     {
-        public static DataTemplate TextEditorBaseDataTemplate => GetDataTemplateFromAssemblyRes(@"ArmA.Studio.Data.UI.TextEditorBaseDataTemplate.xaml");
+        public static readonly DataTemplate TextEditorBaseDataTemplate = LoadFromEmbeddedResource<DataTemplate>(typeof(TextEditorBaseDataContext).Assembly, @"ArmA.Studio.Data.UI.TextEditorBaseDataTemplate.xaml");
         #region `TextEditor` 'EditorInstance' surroundings
         /// <summary>
         /// The actual Editor Instance.

@@ -32,25 +32,40 @@ namespace ArmA.Studio.Data.UI
 
 
         public event EventHandler OnDocumentClosing;
-        protected static DataTemplate GetDataTemplateFromAssemblyRes(string path) => GetDataTemplateFromAssemblyRes(path, System.Reflection.Assembly.GetCallingAssembly());
-        protected static DataTemplate GetDataTemplateFromAssemblyRes(string path, System.Reflection.Assembly ass)
+        /// <summary>
+        /// Loads given type <typeparamref name="T"/> from provided <paramref name="path"/>.
+        /// Will throw <see cref="System.IO.FileNotFoundException"/> in case of the <paramref name="path"/> being not existing.
+        /// Will throw <see cref="InvalidCastException"/> in case of the item behind <paramref name="path"/> is not of type <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T"><see cref="class"/> type which will be loaded from <paramref name="assembly"/>.</typeparam>
+        /// <param name="assembly">The <see cref="System.Reflection.Assembly"/> where to look the <paramref name="path"/> up.</param>
+        /// <param name="path">Path to the xaml file. 'Example: ArmA.Studio.Data.Configuration.StringItem.xaml' </param>
+        /// <returns></returns>
+        protected static T LoadFromEmbeddedResource<T>(System.Reflection.Assembly assembly, string path) where T : class
         {
-            using (var stream = ass.GetManifestResourceStream(path))
+            var resNames = from name in assembly.GetManifestResourceNames() where name.EndsWith(".xaml") where name.Equals(path) select name;
+            foreach (var res in resNames)
             {
-                try
+                var resSplit = res.Split('.');
+                var header = resSplit[resSplit.Count() - 2];
+                using (var stream = assembly.GetManifestResourceStream(res))
                 {
-                    var obj = XamlReader.Load(stream);
-                    if (!(obj is DataTemplate))
+                    try
                     {
-                        return null;
+                        var obj = System.Windows.Markup.XamlReader.Load(stream);
+                        if (!(obj is T))
+                        {
+                            throw new InvalidCastException();
+                        }
+                        return obj as T;
                     }
-                    return obj as DataTemplate;
-                }
-                catch
-                {
-                    return null;
+                    catch
+                    {
+                        continue;
+                    }
                 }
             }
+            throw new System.IO.FileNotFoundException();
         }
 
         public override string ContentId { get { return this.FileReference?.FilePath; } set { throw new NotImplementedException(); } }

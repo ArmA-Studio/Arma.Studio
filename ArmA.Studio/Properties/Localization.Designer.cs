@@ -61,6 +61,42 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proudly made by:.
+        /// </summary>
+        public static string AboutDialog_ContributorsNote {
+            get {
+                return ResourceManager.GetString("AboutDialog_ContributorsNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ArmA.Studio.
+        /// </summary>
+        public static string AboutDialog_Header {
+            get {
+                return ResourceManager.GetString("AboutDialog_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugins in use.
+        /// </summary>
+        public static string AboutDialog_LoadedPlugins {
+            get {
+                return ResourceManager.GetString("AboutDialog_LoadedPlugins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string AboutDialog_Title {
+            get {
+                return ResourceManager.GetString("AboutDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
@@ -470,6 +506,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save Current Document.
+        /// </summary>
+        public static string Hotkey_SaveCurrentDocument {
+            get {
+                return ResourceManager.GetString("Hotkey_SaveCurrentDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Message.
         /// </summary>
         public static string Info {
@@ -520,6 +565,15 @@ namespace ArmA.Studio.Properties {
         public static string Line {
             get {
                 return ResourceManager.GetString("Line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About Tool.
+        /// </summary>
+        public static string MenuItem_About {
+            get {
+                return ResourceManager.GetString("MenuItem_About", resourceCulture);
             }
         }
         

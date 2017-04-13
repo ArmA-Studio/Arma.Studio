@@ -75,6 +75,11 @@ namespace ArmA.Studio
             var dlg = new Dialogs.LicenseViewer();
             var dlgResult = dlg.ShowDialog();
         });
+        public ICommand CmdDisplayAboutDialog => new RelayCommand((p) =>
+        {
+            var dlg = new Dialogs.AboutDialog();
+            var dlgResult = dlg.ShowDialog();
+        });
         public ICommand CmdDockingManagerInitialized => new RelayCommand((p) => this.OnAvalonDockingManagerInitialized(p as DockingManager));
         public ICommand CmdMainWindowClosing => new RelayCommand((p) =>
         {

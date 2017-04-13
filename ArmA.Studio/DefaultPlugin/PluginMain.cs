@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using ArmA.Studio.Data;
 using ArmA.Studio.Data.Lint;
 using ArmA.Studio.Data.UI;
@@ -11,7 +12,7 @@ using ArmA.Studio.Plugin;
 
 namespace ArmA.Studio.DefaultPlugin
 {
-    internal sealed class PluginMain : IDocumentProviderPlugin
+    internal sealed class PluginMain : IDocumentProviderPlugin, IHotKeyPlugin
     {
         public string Description => Properties.Localization.DefaultPluginDescription;
         public string Name => "ArmA.Studio";
@@ -56,6 +57,11 @@ namespace ArmA.Studio.DefaultPlugin
             {
                 throw new NotImplementedException();
             }
+        }
+
+        public IEnumerable<KeyContainer> GetGlobalHotKeys()
+        {
+            yield return new KeyContainer(Properties.Localization.Hotkey_SaveCurrentDocument, new Key[] { Key.LeftCtrl, Key.S }, (p) => Workspace.Instance.CmdSave.Execute(null));
         }
     }
 }

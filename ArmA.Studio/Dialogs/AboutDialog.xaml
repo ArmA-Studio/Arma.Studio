@@ -1,0 +1,48 @@
+﻿<Window x:Class="ArmA.Studio.Dialogs.AboutDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:ArmA.Studio.Properties"
+        xmlns:local="clr-namespace:ArmA.Studio"
+        xmlns:att="clr-namespace:ArmA.Studio.UI.Attached"
+        mc:Ignorable="d"
+        Title="{x:Static p:Localization.AboutDialog_Title}" Style="{StaticResource DialogWindow}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Margin="4" Background="White" BorderThickness="1" BorderBrush="#FF99B4D1" Padding="4">
+            <StackPanel Orientation="Vertical">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="4 0 0 0"/>
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock Text="{Binding ToolVersion, StringFormat={}Version {0}}" Margin="0"/>
+                <TextBlock Text="{x:Static p:Localization.AboutDialog_ContributorsNote}" Margin="0"/>
+                <TextBlock Text="- X39, Lead Tool Developer"/>
+                <TextBlock Text="- Dedmen, Lead Debugger Developer"/>
+                <TextBlock Text="- Knight, Contributor"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Column="1" Margin="4" Background="White" BorderThickness="1" BorderBrush="#FF99B4D1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="{x:Static p:Localization.AboutDialog_LoadedPlugins}" Margin="4"/>
+                <ListView Grid.Row="1" ItemsSource="{x:Static local:App.Plugins}" BorderThickness="0">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="{x:Static p:Localization.Name}" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="{x:Static p:Localization.Description}" DisplayMemberBinding="{Binding Description}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

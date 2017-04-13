@@ -9,6 +9,8 @@ using ArmA.Studio.Debugger;
 using System.Threading;
 using asapJson;
 using ArmA.Studio.Data.Configuration;
+using ArmA.Studio.Plugin;
+using ArmA.Studio.Data;
 
 namespace Dedbugger
 {
@@ -18,8 +20,8 @@ namespace Dedbugger
         public enum ESendCommands
         {
             GetVersionInfo = 1,
-            AddBreakpoint = 2,
-            RemoveBreakpoint = 3,
+            AddBreakpointInfo = 2,
+            RemoveBreakpointInfo = 3,
             ContinueExecution = 4,
             TriggerMonitorDump = 5,
             SetEngineHookEnabled = 6,
@@ -28,7 +30,7 @@ namespace Dedbugger
         public enum ERecvCommands
         {
             VersionInfo = 1,
-            HaltBreakpoint = 2,
+            HaltBreakpointInfo = 2,
             HaltStep = 3,
             HaltError = 4,
             HaltScriptAssert = 5,
@@ -51,13 +53,17 @@ namespace Dedbugger
         public event EventHandler<OnContinueEventArgs> OnContinue;
 
         private NamedPipeClientStream Pipe;
-        private List<Breakpoint> Breakpoints;
+        private List<BreakpointInfo> BreakpointInfos;
         private asapJson.JsonNode LastCallstack;
         private const int MinimalDebuggerBuild = 23;
 
         public Thread PipeReadThread { get; private set; }
         public ConcurrentBag<asapJson.JsonNode> Messages;
         public string LastError { get; private set; }
+
+        public string Name => "Debugger Bridge";
+
+        public string Description => "Plugin to connect to the ArmA Debugger.";
 
         public DebuggerCore()
         {
@@ -78,7 +84,7 @@ namespace Dedbugger
             
             this.Pipe = new NamedPipeClientStream(".", @"ArmaDebugEnginePipeIface", PipeDirection.InOut, PipeOptions.Asynchronous, System.Security.Principal.TokenImpersonationLevel.None, System.IO.HandleInheritability.None);
             
-            this.Breakpoints = new List<Breakpoint>();
+            this.BreakpointInfos = new List<BreakpointInfo>();
             try
             {
                 this.Pipe.Connect(1000);
@@ -167,7 +173,7 @@ namespace Dedbugger
                         {
                             switch ((ERecvCommands)node.GetValue_Object()["command"].GetValue_Number())
                             {
-                                case ERecvCommands.HaltBreakpoint:
+                                case ERecvCommands.HaltBreakpointInfo:
                                 case ERecvCommands.HaltStep:
                                     {
                                         var callstack = this.LastCallstack = node.GetValue_Object()["callstack"];
@@ -175,7 +181,7 @@ namespace Dedbugger
                                         var fileOffsetNode = instruction.GetValue_Object()["fileOffset"];
                                         var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
                                         var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
-                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = instruction.GetValue_Object()["filename"].GetValue_String(), Column = col, Line = line });
+                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs(instruction.GetValue_Object()["filename"].GetValue_String(), line, col));
                                     }
                                     break;
                                 case ERecvCommands.HaltError:
@@ -187,19 +193,19 @@ namespace Dedbugger
                                         var fileContent = error.GetValue_Object()["content"];//File content in case we don't have that file
                                         var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
                                         var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
-                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = error.GetValue_Object()["filename"].GetValue_String(), Column = col, Line = line });
+                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs(error.GetValue_Object()["filename"].GetValue_String(), line, col));
                                     }
                                     break;
                                 case ERecvCommands.HaltScriptAssert:
                                 case ERecvCommands.HaltScriptHalt:
                                     {
                                         var callstack = this.LastCallstack = node.GetValue_Object()["callstack"];
-                                        var error = node.GetValue_Object()["halt"];
-                                        var fileOffsetNode = error.GetValue_Object()["fileOffset"];
-                                        var fileContent = error.GetValue_Object()["content"];//File content in case we don't have that file
+                                        var halt = node.GetValue_Object()["halt"];
+                                        var fileOffsetNode = halt.GetValue_Object()["fileOffset"];
+                                        var fileContent = halt.GetValue_Object()["content"];//File content in case we don't have that file
                                         var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
                                         var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
-                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs() { DocumentPath = error.GetValue_Object()["filename"].GetValue_String(), Column = col, Line = line });
+                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs(halt.GetValue_Object()["filename"].GetValue_String(), line, col));
                                     }
                                     break;
                                 case ERecvCommands.ContinueExecution:
@@ -252,33 +258,33 @@ namespace Dedbugger
         }
 
         
-        public void AddBreakpoint(Breakpoint b)
+        public void AddBreakpoint(BreakpointInfo b)
         {
-            this.Breakpoints.Add(b);
+            this.BreakpointInfos.Add(b);
             {
                 var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-                command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.AddBreakpoint);
+                command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.AddBreakpointInfo);
                 command.GetValue_Object()["data"] = b.Serialize();
                 this.WriteMessage(command);
             }
         }
 
-        public void RemoveBreakpoint(Breakpoint b)
+        public void RemoveBreakpoint(BreakpointInfo b)
         {
-            this.Breakpoints.Remove(b);
+            this.BreakpointInfos.Remove(b);
             {
                 var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-                command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.RemoveBreakpoint);
+                command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.RemoveBreakpointInfo);
                 command.GetValue_Object()["data"] = b.Serialize();
                 this.WriteMessage(command);
             }
         }
 
-        public void UpdateBreakpoint(Breakpoint b)
+        public void UpdateBreakpoint(BreakpointInfo b)
         {
             {
                 var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-                command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.AddBreakpoint);
+                command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.AddBreakpointInfo);
                 command.GetValue_Object()["data"] = b.Serialize();
                 this.WriteMessage(command);
             }
@@ -286,7 +292,7 @@ namespace Dedbugger
 
         public void ClearBreakpoints()
         {
-            var tmp = this.Breakpoints.ToList();
+            var tmp = this.BreakpointInfos.ToList();
             foreach (var it in tmp)
             {
                 this.RemoveBreakpoint(it);
@@ -424,9 +430,9 @@ namespace Dedbugger
             return str;
         }
 
-        public IEnumerable<ConfigCategory> GetConfigurationOptions()
+        public string GetDocumentContent(string armapath)
         {
-            yield return new ConfigCategory("Dedbugger", @"/ArmA.Studio;component/Resources/Pictograms/Run/Run.ico");
+            throw new NotImplementedException();
         }
     }
 }
