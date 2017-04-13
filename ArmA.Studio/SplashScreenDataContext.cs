@@ -75,9 +75,11 @@ namespace ArmA.Studio
                 return;
             reset();
 
+#if !DEBUG
             if (Splash_DoInitialLint(setIndeterminate, setDisplayText, setProgress))
                 return;
             reset();
+#endif
 
             App.Current.Dispatcher.Invoke(() =>
             {
