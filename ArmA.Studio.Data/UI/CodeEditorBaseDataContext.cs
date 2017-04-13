@@ -23,7 +23,7 @@ namespace ArmA.Studio.Data.UI
     {
         protected const int CONST_LINTER_UPDATE_TIMEOUT_MS = 200;
         public static readonly Popup HighlightPopup = LoadFromEmbeddedResource<Popup>(typeof(CodeEditorBaseDataContext).Assembly, @"ArmA.Studio.Data.UI.CodeEditorBase_HighlightingPopup.xaml");
-        public static readonly Popup LintPopup = LoadFromEmbeddedResource<Popup>(typeof(CodeEditorBaseDataContext).Assembly, @"ArmA.Studio.Data.UI.CodeEditorBase_LintPopup.xaml");
+        public static readonly Popup IntelliSensePopup = LoadFromEmbeddedResource<Popup>(typeof(CodeEditorBaseDataContext).Assembly, @"ArmA.Studio.Data.UI.CodeEditorBase_IntelliSensePopup.xaml");
 
         public event EventHandler OnLintingInfoUpdated;
 
