@@ -8,7 +8,7 @@ ArmA.Studio uses the [ArmaDebugEngine](https://github.com/dedmen/ArmaDebugEngine
 
 [Website (Download)](https://x39.io/projects?project=ArmA.Studio)
 
-[Bi-Forum Thread](https://forums.bistudio.com/forums/topic/203020-armastudio-the-open-source-community-made-ide-for-arma/) / [Armaholic](http://www.armaholic.com/page.php?id=32550)
+[Bi-Forum Thread](https://forums.bistudio.com/forums/topic/203020-armastudio-the-open-source-community-made-ide-for-arma/) / [Armaholic](http://www.armaholic.com/page.php?id=32550) /
 [Armaworld (German)](https://armaworld.de/index.php?thread/2838-alpha-arma-studio-die-community-made-opensource-ide-f%C3%BCr-arma/)
 
 [Discord Invite](https://discord.gg/RRaPyb9)
