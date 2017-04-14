@@ -136,6 +136,15 @@ namespace ArmA.Studio.DataContext
         {
             var sqfSelection = from def in ConfigHost.Instance.SqfDefinitions where def.Name.StartsWith(currentWord) select def.Name;
             var curDocIdents = from str in currentDocument.AllIdents() where str.StartsWith(currentWord) select str;
+
+            //Filter entrys to prevent duplicates
+            var listHolder = new List<String>();
+            foreach (var s in curDocIdents)
+            {
+                if (!listHolder.Contains(s)) { listHolder.Add(s); }
+            }
+            curDocIdents = listHolder;
+
             var list = new List<IntelliSenseEntry>();
             foreach (var s in sqfSelection)
             {
