@@ -15,4 +15,4 @@
 ## Additional Notes
 * Relevant information
 * Document title
-* [Some document]([Linked Document](http://LinkToDoc)
+* [Some document](http://LinkToDoc)
