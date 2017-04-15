@@ -56,6 +56,26 @@ namespace ArmA.Studio
                 set { Instance.AppIni.SetValue(nameof(App), nameof(Workspace), value); Instance.Save(EIniSelector.App); }
             }
 
+            public static List<string> PrevWorkspacePath
+            {
+                get {
+                    string s = Instance.AppIni.GetValueOrNull(nameof(App), nameof(PrevWorkspacePath));
+                    string[] pathArray = new string[0];
+                    if (!(s == null))
+                    {
+                        pathArray = s.Split(',');
+                    }
+                    
+                    return new List<string>(pathArray);
+                }
+                set {
+                    string s = string.Join(",", value.ToArray());
+
+                    Instance.AppIni.SetValue(nameof(App), nameof(PrevWorkspacePath), s);
+                    Instance.Save(EIniSelector.App);
+                }
+            }
+
             public static bool ErrorList_IsErrorsDisplayed
             {
                 get { bool val; if (bool.TryParse(Instance.AppIni.GetValueOrNull(nameof(DataContext.ErrorListPane), nameof(DataContext.ErrorListPane.IsErrorsDisplayed)), out val)) return val; return true; }
