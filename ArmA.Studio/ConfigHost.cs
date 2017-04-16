@@ -63,6 +63,7 @@ namespace ArmA.Studio
                     string[] pathArray = new string[0];
                     if (!(s == null))
                     {
+                        s = s.Replace(" ", "");
                         pathArray = s.Split(',');
                     }
                     
