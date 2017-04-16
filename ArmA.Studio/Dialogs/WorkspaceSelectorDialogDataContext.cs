@@ -38,8 +38,6 @@ namespace ArmA.Studio.Dialogs
         public bool OKButtonEnabled { get { return this._OKButtonEnabled; } set { this._OKButtonEnabled = value; this.RaisePropertyChanged(); } }
         private bool _OKButtonEnabled;
 
-        public List<String> workSpaceList;
-
         public WorkspaceSelectorDialogDataContext()
         {
             this.CmdBrowse = new UI.Commands.RelayCommand(Cmd_Browse);
