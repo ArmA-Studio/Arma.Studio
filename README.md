@@ -13,7 +13,7 @@ ArmA.Studio uses the [ArmaDebugEngine](https://github.com/dedmen/ArmaDebugEngine
 
 [Discord Invite](https://discord.gg/RRaPyb9)
 
-[See in action (YouTube)]([https://youtu.be/pd-2WQzoG48](https://youtu.be/pd-2WQzoG48))
+[See in action (YouTube)](https://youtu.be/pd-2WQzoG48)
 
 ### Contribute
 
