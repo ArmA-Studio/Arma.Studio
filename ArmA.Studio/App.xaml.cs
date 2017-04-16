@@ -134,6 +134,11 @@ namespace ArmA.Studio
                 prevWorkSpaces.Remove(workspace);
             }
             prevWorkSpaces.Insert(0, workspace);
+            int numSpaces = 5;
+            if(prevWorkSpaces.Count > numSpaces)
+            {
+                prevWorkSpaces.RemoveRange(numSpaces, (prevWorkSpaces.Count- numSpaces));
+            }
             ConfigHost.App.PrevWorkspacePath = prevWorkSpaces;
 
             return true;
