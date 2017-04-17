@@ -5,7 +5,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ArmA.Studio.Data;
+using ArmA.Studio.Data.UI.Commands;
 
 namespace ArmA.Studio.DataContext.SolutionPaneUtil
 {
@@ -31,6 +33,13 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
         public void CopyTo(object[] array, int arrayIndex) => this.InnerList.CopyTo(array, arrayIndex);
         public bool Remove(object item) => this.InnerList.Remove(item);
 
+        public ICommand CmdContextMenuOpening => new RelayCommand((p) =>
+        {
+            if (this.IsInRenameMode)
+                return;
+            this.IsSelected = true;
+        });
+
         //ToDo: Make folder actually be renamed when this changes
         public string Name
         {
@@ -49,6 +58,9 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
         public bool IsExpaned { get { return this._IsExpaned; } set { this._IsExpaned = value; RaisePropertyChanged(); } }
         private bool _IsExpaned;
 
+        public bool IsSelected { get { return this._IsSelected; } set { this._IsSelected = value; RaisePropertyChanged(); } }
+        private bool _IsSelected;
+
         public bool IsInRenameMode { get { return this._IsInRenameMode; } set { this._IsInRenameMode = value; RaisePropertyChanged(); } }
         private bool _IsInRenameMode;
 
@@ -60,5 +72,9 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
             this.InnerList = new List<object>();
             this.Parent = parent;
         }
+
+        public ICommand CmdContextMenu_OpenInExplorer => new RelayCommand((p) => { /* System.Diagnostics.Process.Start("explorer.exe", string.Format("/select,\"{0}\"", this.Ref.FilePath)); */ });
+        public ICommand CmdContextMenu_Delete => new RelayCommand((p) => { });
+
     }
 }

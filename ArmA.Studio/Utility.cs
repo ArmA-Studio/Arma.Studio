@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArmA.Studio.Data;
 using ArmA.Studio.Data.UI;
 using ICSharpCode.AvalonEdit.Document;
 
@@ -118,6 +119,11 @@ namespace ArmA.Studio
             {
                 Workspace.Instance.AvalonDockPanels.Remove(panel);
             }
+        }
+        public static string GetTemplate(this FileType ftype)
+        {
+            //ToDo: make templates customizable
+            return ftype.FileTemplate;
         }
     }
 }

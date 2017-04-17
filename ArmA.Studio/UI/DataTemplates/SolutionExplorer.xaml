@@ -84,6 +84,21 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </MenuItem>
+                            <MenuItem Header="{x:Static p:Localization.Rename}" Command="{Binding CmdContextMenu_Rename}" CommandParameter="/">
+                                <MenuItem.Icon>
+                                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/Rename/Rename.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static p:Localization.OpenInExplorer}" Command="{Binding CmdContextMenu_OpenInExplorer}">
+                                <MenuItem.Icon>
+                                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/ArrowOpen_16x.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static p:Localization.Remove}" Command="{Binding CmdContextMenu_Remove}">
+                                <MenuItem.Icon>
+                                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/Cancel/Cancel.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
                         </ContextMenu>
                     </Grid.ContextMenu>
                     <Grid.ColumnDefinitions>
@@ -117,6 +132,21 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </MenuItem>
+                            <MenuItem Header="{x:Static p:Localization.Rename}" Command="{Binding CmdContextMenu_Rename}" CommandParameter="/">
+                                <MenuItem.Icon>
+                                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/Rename/Rename.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static p:Localization.OpenInExplorer}" Command="{Binding CmdContextMenu_OpenInExplorer}">
+                                <MenuItem.Icon>
+                                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/ArrowOpen_16x.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static p:Localization.Delete}" Command="{Binding CmdContextMenu_Delete}">
+                                <MenuItem.Icon>
+                                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/Cancel/Cancel.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
                         </ContextMenu>
                     </Grid.ContextMenu>
                     <Grid.ColumnDefinitions>
@@ -144,22 +174,20 @@
                 <Grid ev:ContextMenuOpening.Command="{Binding CmdContextMenuOpening}" ev:ContextMenuOpening.CommandParameter="{Binding}">
                     <Grid.ContextMenu>
                         <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
-                            <MenuItem Header="{x:Static p:Localization.Add}">
-                                <MenuItem Header="{x:Static p:Localization.NewItem}" Command="{Binding CmdContextMenu_Add_NewItem}" CommandParameter="/">
-                                    <MenuItem.Icon>
-                                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/NewItem/NewItem_16x.png"/>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{x:Static p:Localization.ExistingItem}" Command="{Binding CmdContextMenu_Add_ExistingItem}">
-                                    <MenuItem.Icon>
-                                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/AddItem/AddItem_16x.png"/>
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Header="{x:Static p:Localization.NewFolder}" Command="{Binding CmdContextMenu_Add_NewFolder}">
-                                    <MenuItem.Icon>
-                                        <Image Source="/ArmA.Studio;component/Resources/Pictograms/NewFolder_16x.png"/>
-                                    </MenuItem.Icon>
-                                </MenuItem>
+                            <MenuItem Header="{x:Static p:Localization.Rename}" Command="{Binding CmdContextMenu_Rename}" CommandParameter="/">
+                                <MenuItem.Icon>
+                                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/Rename/Rename.ico"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static p:Localization.OpenInExplorer}" Command="{Binding CmdContextMenu_OpenInExplorer}">
+                                <MenuItem.Icon>
+                                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/ArrowOpen_16x.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static p:Localization.Delete}" Command="{Binding CmdContextMenu_Delete}">
+                                <MenuItem.Icon>
+                                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/Cancel/Cancel.ico"/>
+                                </MenuItem.Icon>
                             </MenuItem>
                         </ContextMenu>
                     </Grid.ContextMenu>

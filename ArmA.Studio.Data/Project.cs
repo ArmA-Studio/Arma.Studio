@@ -51,7 +51,7 @@ namespace ArmA.Studio.Data
 
         public string ArmAPath { get { return this._ArmAPath; } set { if (this._ArmAPath == value) return; this._ArmAPath = value; RaisePropertyChanged(); } }
         private string _ArmAPath;
-        public Uri FileUri { get { return new Uri(this.FilePath); } }
+        public Uri FileUri { get { return new Uri(string.Concat(this.FilePath, '/')); } }
 
         private WeakReference<Solution> WeakOwningSolution;
 
@@ -149,9 +149,11 @@ namespace ArmA.Studio.Data
             }
         }
 
-        public void AddFile(string projectRelativePath)
+        public ProjectFile AddFile(string projectRelativePath)
         {
-            this.Children.Add(new ProjectFile(projectRelativePath) { OwningProject = this, OwningSolution = this.OwningSolution });
+            var pf = new ProjectFile(projectRelativePath) { OwningProject = this, OwningSolution = this.OwningSolution };
+            this.Children.Add(pf);
+            return pf;
         }
 
         public override string ToString()

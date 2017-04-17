@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 using ArmA.Studio.Data;
 using ArmA.Studio.Data.Configuration;
@@ -51,15 +53,65 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
         public bool IsInRenameMode { get { return this._IsInRenameMode; } set { this._IsInRenameMode = value; RaisePropertyChanged(); } }
         private bool _IsInRenameMode;
 
+        public bool IsSelected { get { return this._IsSelected; } set { this._IsSelected = value; RaisePropertyChanged(); } }
+        private bool _IsSelected;
+
         public ProjectModelView(Project p)
         {
             this.Ref = p;
             this.InnerList = new List<object>();
         }
 
+        public ICommand CmdContextMenuOpening => new RelayCommand((p) =>
+        {
+            if (this.IsInRenameMode)
+                return;
+            this.IsSelected = true;
+        });
 
-        public ICommand CmdContextMenu_Add_NewItem => new RelayCommand((p) => { });
-        public ICommand CmdContextMenu_Add_ExistingItem => new RelayCommand((p) => { });
-        public ICommand CmdContextMenu_Add_NewFolder => new RelayCommand((p) => { });
+        public ICommand CmdContextMenu_OpenInExplorer => new RelayCommand((p) => { System.Diagnostics.Process.Start("explorer.exe", string.Format("/select,\"{0}\"", this.Ref.FilePath)); });
+        public ICommand CmdContextMenu_Remove => new RelayCommand((p) => { this.Ref.OwningSolution.Projects.Remove(this.Ref); });
+
+        public ICommand CmdContextMenu_Add_NewItem => new RelayCommand((p) =>
+        {
+            var dlgdc = new Dialogs.CreateNewFileDialogDataContext();
+            var dlg = new Dialogs.CreateNewFileDialog(dlgdc);
+            var dlgResult = dlg.ShowDialog();
+            if (dlgResult.HasValue && dlgResult.Value)
+            {
+                var file = this.Ref.AddFile(dlgdc.FinalName);
+                using (var stream = new StreamWriter(file.FilePath))
+                {
+                    stream.Write(dlgdc.SelectedFileType.GetTemplate());
+                }
+                Workspace.Instance.CreateOrFocusDocument(file);
+            }
+        });
+        public ICommand CmdContextMenu_Add_ExistingItem => new RelayCommand((p) =>
+        {
+            var dlg = new OpenFileDialog() { InitialDirectory = this.Ref.FilePath };
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                var uri = new Uri(dlg.FileName, UriKind.RelativeOrAbsolute);
+                if (!this.Ref.FileUri.IsBaseOf(uri))
+                {
+                    try
+                    {
+                        var filePath = Path.Combine(this.Ref.FilePath, Path.GetFileName(dlg.FileName));
+                        uri = new Uri(filePath, UriKind.RelativeOrAbsolute);
+                        File.Copy(dlg.FileName, Path.Combine(this.Ref.FilePath, filePath));
+
+                    }
+                    catch (Exception ex)
+                    {
+                        App.ShowOperationFailedMessageBox(ex);
+                    }
+                }
+
+                var file = this.Ref.AddFile(this.Ref.FileUri.MakeRelativeUri(uri).OriginalString);
+                Workspace.Instance.CreateOrFocusDocument(file);
+            }
+        });
+        public ICommand CmdContextMenu_Add_NewFolder => new RelayCommand((p) => { this.Add(new ProjectFolderModelView(Properties.Localization.NewFolder, this)); });
     }
 }

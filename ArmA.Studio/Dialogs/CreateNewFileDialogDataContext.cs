@@ -26,6 +26,8 @@ namespace ArmA.Studio.Dialogs
         public object SelectedItem { get { return this._SelectedItem; } set { this._SelectedItem = value; this.UpdateOkButtonEnabled(); this.RaisePropertyChanged(); } }
         private object _SelectedItem;
 
+        public FileType SelectedFileType { get { return (FileType)this.SelectedItem; } }
+
         public string WindowHeader { get { return Properties.Localization.CreateNewFileDialog_Header; } }
 
         public string OKButtonText { get { return Properties.Localization.OK; } }

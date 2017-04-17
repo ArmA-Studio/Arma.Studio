@@ -12,7 +12,6 @@
         <ae:TextEditor
             ev:Initialized.Command="{Binding CmdTextEditorInitialized}"
             ev:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-            ev:PreviewMouseDown.Command="{Binding CmdEditorPreviewMouseDown}"
             
             ShowLineNumbers="{Binding ShowLineNumbers}"
             FontFamily="{Binding UsedFontFamily}"

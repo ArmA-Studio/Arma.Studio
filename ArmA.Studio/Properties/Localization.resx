@@ -523,4 +523,7 @@ Do you want to update now?</value>
   <data name="MenuItem_About" xml:space="preserve">
     <value>About Tool</value>
   </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
 </root>
