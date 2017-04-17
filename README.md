@@ -1,5 +1,5 @@
 ## Arma.Studio IDE
-__ArmA.Studio is a IDE developed specially for the ArmA game.__
+__ArmA.Studio is an IDE developed specially for the ArmA game.__
 ArmA.Studio uses the [ArmaDebugEngine](https://github.com/dedmen/ArmaDebugEngine).
 
 [![GitHub issues](https://img.shields.io/github/issues/X39/ArmA.Studio.svg)](https://github.com/X39/ArmA.Studio/issues) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/X39/ArmA.Studio/master/LICENSE) [![GitHub forks](https://img.shields.io/github/forks/X39/ArmA.Studio.svg)](https://github.com/X39/ArmA.Studio/network) [![GitHub stars](https://img.shields.io/github/stars/X39/ArmA.Studio.svg)](https://github.com/X39/ArmA.Studio/stargazers) [![Github All Releases](https://img.shields.io/github/downloads/X39/ArmA.Studio/total.svg)](https://github.com/X39/ArmA.Studio/releases)
