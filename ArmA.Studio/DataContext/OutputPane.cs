@@ -37,7 +37,7 @@ namespace ArmA.Studio.DataContext
                     }
                 }
                 var doc = DocumentDictionary[e.Logger];
-                doc.Insert(doc.TextLength, string.Concat(e.Severity, ": ", e.Message, "\r\n"));
+                doc.Insert(doc.TextLength, string.Concat(DateTime.Now.ToString("HH:mm:ss")," - ",e.Severity, ": ", e.Message, "\r\n"));
             });
         }
         static OutputPane()
