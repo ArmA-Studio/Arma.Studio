@@ -237,6 +237,7 @@
     <Compile Include="UI\Converters\PathExtensionConverter.cs" />
     <Compile Include="UI\CustomBinding.cs" />
     <Compile Include="UI\DataTemplates\AvalonDockStyleSelector.cs" />
+    <EmbeddedResource Include="Properties\Localization.de-DE.resx" />
     <EmbeddedResource Include="UI\DataTemplates\TextEditorDocumentTemplate.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
