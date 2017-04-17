@@ -18,6 +18,7 @@
             FontFamily="{Binding UsedFontFamily}"
             SyntaxHighlighting="{Binding SyntaxHighlightingDefinition}"
             Document="{Binding Document}"
+            ev:LostFocus.Command="{Binding CmdLostFocus}"
             />
     </Grid>
 </DataTemplate>

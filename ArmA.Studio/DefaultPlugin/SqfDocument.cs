@@ -15,6 +15,7 @@ using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using Utility;
 
 namespace ArmA.Studio.DefaultPlugin
 {
@@ -39,26 +40,10 @@ namespace ArmA.Studio.DefaultPlugin
             this.LinterInfo = lintHelper.Lint(stream, f);
         }
 
-        public void Display(TextEditor editorInstance, Point pos)
-        {
-            
-        }
-
-        public void Hide()
-        {
-            
-        }
-
-        public void Update(TextDocument document, Caret caret)
-        {
-            
-        }
-
         protected override void OnEditorInitialized(TextEditor editor)
         {
             base.OnEditorInitialized(editor);
             var bpm = new BreakPointMargin(this.FileReference);
-            this.EditorInstance.TextArea.TextView.BackgroundRenderers.Add(new LineHighlighterBackgroundRenderer(this.EditorInstance));
             this.EditorInstance.TextArea.TextView.BackgroundRenderers.Add(new UnderlineBackgroundRenderer(this));
             this.EditorInstance.TextArea.TextView.BackgroundRenderers.Add(bpm);
             this.EditorInstance.TextArea.LeftMargins.Insert(0, bpm);
@@ -69,6 +54,35 @@ namespace ArmA.Studio.DefaultPlugin
         {
             var lintHelper = new SqfLintHelper();
             return lintHelper.Lint(stream, f);
+        }
+
+        public IEnumerable<IntelliSenseItem> Generate(TextDocument document, Caret caret)
+        {
+            IEnumerable<string> docIdents = null;
+            string curWord = null;
+            int caretOffset = 0;
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                caretOffset = caret.Offset;
+                curWord = document.GetWordAround(caret.Offset - 1);
+                docIdents = document.GetAllSqfIdents().ToList();
+            });
+            var sqfDefs = from def in ConfigHost.Instance.SqfDefinitions where def.Kind != RealVirtuality.SQF.SqfDefinition.EKind.Type && def.Name.StartsWith(curWord) orderby def.Name select def;
+            docIdents = (from str in docIdents where str.StartsWith(curWord) && !sqfDefs.Any((def) => def.Name.Equals(str, StringComparison.InvariantCultureIgnoreCase)) orderby str select str).Distinct();
+
+
+            foreach (var it in docIdents)
+            {
+                yield return new IntelliSenseItem((td) => td.Insert(caretOffset, it.Remove(0, curWord.Length)), it) { ImageSource = @"/ArmA.Studio;component/Resources/Pictograms/Field/Field_16x.png" };
+            }
+            var l = new List<string>(sqfDefs.Count());
+            foreach (var it in sqfDefs)
+            {
+                if (l.Contains(it.Name))
+                    continue;
+                yield return new IntelliSenseItem((td) => td.Insert(caretOffset, it.Name.Remove(0, curWord.Length)), it.Name) { Description = it.Description };
+                l.Add(it.Name);
+            }
         }
     }
 }

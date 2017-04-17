@@ -94,6 +94,8 @@
     <Compile Include="Configuration\SubCategory.cs" />
     <Compile Include="EProjectType.cs" />
     <Compile Include="IKeyManager.cs" />
+    <Compile Include="IntelliSense\ExtensionMethod.cs" />
+    <Compile Include="IntelliSense\IntelliSenseItem.cs" />
     <Compile Include="IntelliSense\IIntelliSenseHost.cs" />
     <Compile Include="KeyContainer.cs" />
     <Compile Include="LicenseInfo.cs" />

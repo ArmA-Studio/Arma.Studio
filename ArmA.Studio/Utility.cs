@@ -16,11 +16,23 @@ namespace ArmA.Studio
         {
             var builder = new StringBuilder();
             bool isString = false;
+            bool isInComment = false;
+            bool isInMultiLineComment = false;
             char stringchar = '\0';
             for (int i = 0; i < doc.TextLength; i++)
             {
                 var c = doc.GetCharAt(i);
-                if (isString)
+                if (isInMultiLineComment)
+                {
+                    if (c == '*' && doc.GetCharAt(i + 1) == '/')
+                        isInMultiLineComment = false;
+                }
+                else if (isInComment)
+                {
+                    if (c == '\n')
+                        isInComment = false;
+                }
+                else if (isString)
                 {
                     if (c == stringchar)
                         isString = false;
@@ -33,6 +45,14 @@ namespace ArmA.Studio
                 {
                     stringchar = c;
                     isString = true;
+                }
+                else if (c == '/' && doc.GetCharAt(i + 1) == '*')
+                {
+                    isInMultiLineComment = true;
+                }
+                else if (c == '/' && doc.GetCharAt(i + 1) == '/')
+                {
+                    isInComment = true;
                 }
                 else
                 {

@@ -151,12 +151,12 @@
             <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Grid.Column="0" Visibility="{Binding CurrentContent.Line, Converter={StaticResource AlwaysVisibleConverter}, FallbackValue=Hidden}">
                     <TextBlock.Text>
-                        <Binding Path="CurrentContent.Line" Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}Ln {0}" FallbackValue="Ln NA"/>
+                        <Binding Path="CurrentContent.EditorInstance.TextArea.Caret.Line" Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}Ln {0}" FallbackValue="Ln NA"/>
                     </TextBlock.Text>
                 </TextBlock>
                 <TextBlock Grid.Column="0" Visibility="{Binding CurrentContent.Column, Converter={StaticResource AlwaysVisibleConverter}, FallbackValue=Hidden}">
                     <TextBlock.Text>
-                        <Binding Path="CurrentContent.Column" Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}Col {0}" FallbackValue="Col NA"/>
+                        <Binding Path="CurrentContent.EditorInstance.TextArea.Caret.Column" Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}Col {0}" FallbackValue="Col NA"/>
                     </TextBlock.Text>
                 </TextBlock>
             </StackPanel>

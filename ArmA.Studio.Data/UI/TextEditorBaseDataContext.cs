@@ -42,7 +42,8 @@ namespace ArmA.Studio.Data.UI
         #region Notifying properties
         #region ICommand's
         public ICommand CmdTextEditorInitialized => new RelayCommand((p) => { this.EditorInstance = p as TextEditor; this.OnEditorInitialized(this.EditorInstance); });
-        #endregion
+        public ICommand CmdLostFocus => new RelayCommand((p) => { this.OnLostFocus(); });
+       #endregion
 
         /// <summary>
         /// The <see cref="FontFamily"/> used by the TextEditor.
@@ -79,12 +80,15 @@ namespace ArmA.Studio.Data.UI
 
 
         #region Event Callbacks
+        private int LastCaretOffset;
         private void Caret_PositionChanged(object sender, EventArgs e)
         {
-            var offset = this.EditorInstance.TextArea.Caret.Offset;
+            if (this.LastCaretOffset == this.EditorInstance.TextArea.Caret.Offset)
+                return;
+            this.LastCaretOffset = this.EditorInstance.TextArea.Caret.Offset;
             var line = this.EditorInstance.TextArea.Caret.Line;
             var column = this.EditorInstance.TextArea.Caret.Column;
-            this.OnCaretPositionChanged(line, column, offset);
+            this.OnCaretPositionChanged(line, column, this.LastCaretOffset);
         }
         private void UndoStack_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -96,8 +100,17 @@ namespace ArmA.Studio.Data.UI
         }
         private void Editor_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            var checkResult = this.KeyManager?.CheckKeys();
-            e.Handled = checkResult.HasValue && checkResult.Value;
+            bool handled;
+            this.OnPreviewKeyDown(out handled);
+            if (handled)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                var checkResult = this.KeyManager?.CheckKeys();
+                e.Handled = checkResult.HasValue && checkResult.Value;
+            }
         }
         #endregion
 
@@ -167,6 +180,9 @@ namespace ArmA.Studio.Data.UI
         /// <param name="column"></param>
         /// <param name="offset"></param>
         protected virtual void OnCaretPositionChanged(int line, int column, int offset) { }
+        protected virtual void OnLostFocus() { }
+
+        protected virtual void OnPreviewKeyDown(out bool handled) { handled = false; }
 
         public override void RefreshVisuals()
         {

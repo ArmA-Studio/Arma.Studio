@@ -22,6 +22,7 @@ namespace ArmA.Studio.DefaultPlugin
             parser.Root = null;
             parser.doc = null;
             parser.Parse();
+            //ToDo: Add Line/Col properties (required to display correct lint info)
             return parser.errors.ErrorList.Select((it) => new LintInfo(file) { StartOffset = it.Item1, Length = it.Item2, Message = it.Item3, Severity = ESeverity.Error });
 
         }

@@ -188,6 +188,7 @@
     <Compile Include="UI\Converters\SolutionExplorerItemVisibilityConverter.cs" />
     <Compile Include="UI\Converters\StringRemoveNewLineConverter.cs" />
     <Compile Include="UI\GenericDataTemplateSelector.cs" />
+    <Compile Include="UI\LineHighlighterBackgroundRenderer.cs" />
     <Compile Include="UI\RuntimeExecutionMargin.cs" />
     <Compile Include="UI\Converters\CountEnumerableConverter.cs" />
     <Compile Include="UI\Converters\AlwaysVisibleConverter.cs" />
@@ -196,7 +197,6 @@
     <Compile Include="UI\Converters\Multi\BoolOrMultiConverter.cs" />
     <Compile Include="UI\Converters\Multi\CollectionContainsConverter.cs" />
     <Compile Include="UI\UnderlineBackgroundRenderer.cs" />
-    <Compile Include="UI\LineHighlighterBackgroundRenderer.cs" />
     <Compile Include="ConfigHost.cs" />
     <Compile Include="DataContext\PropertiesPane.cs" />
     <Compile Include="Dialogs\ConfigEntrySelectorDialog.xaml.cs">
@@ -337,6 +337,102 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Pictograms\CallStackWindow\CallStackWindow_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Field\F12_Field_20x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Field\Field_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Field\field_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Field\field_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Field\Field_blue_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\ASCube_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\ASCube_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\F12_Method_20x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\MethodRamp.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\method_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\method_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_32xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_32xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_purple_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_purple_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_purple_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_purple_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_purple_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_purple_exp.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1786,6 +1882,30 @@
     <None Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_64x.ai" />
     <None Include="Resources\Pictograms\CallStackWindow\CallStackWindow_16x.ai" />
     <None Include="Resources\Pictograms\CallStackWindow\VSO_CallStackWindow_16x.ai" />
+    <None Include="Resources\Pictograms\Field\F12_Field_20x.ai" />
+    <None Include="Resources\Pictograms\Field\Field_16x.ai" />
+    <None Include="Resources\Pictograms\Field\field_16xMD.ai" />
+    <None Include="Resources\Pictograms\Field\field_16xSM.ai" />
+    <None Include="Resources\Pictograms\Field\Field_blue_16x.ai" />
+    <None Include="Resources\Pictograms\Method\ASCube_16xMD.ai" />
+    <None Include="Resources\Pictograms\Method\ASCube_16xSM.ai" />
+    <None Include="Resources\Pictograms\Method\F12_Method_20x.ai" />
+    <None Include="Resources\Pictograms\Method\MethodRamp.ai" />
+    <None Include="Resources\Pictograms\Method\Method_16x.ai" />
+    <None Include="Resources\Pictograms\Method\method_16xMD.ai" />
+    <None Include="Resources\Pictograms\Method\method_16xSM.ai" />
+    <None Include="Resources\Pictograms\Method\Method_256x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_32x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_32xMD.ai" />
+    <None Include="Resources\Pictograms\Method\Method_32xSM.ai" />
+    <None Include="Resources\Pictograms\Method\Method_48x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_64x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_purple_16x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_purple_256x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_purple_32x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_purple_48x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_purple_64x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_purple_exp.ai" />
     <None Include="Resources\Pictograms\Output\Monaco_OutputCommandToggled_28x_32x.ai" />
     <None Include="Resources\Pictograms\Output\Monaco_OutputCommand_28x_32x.ai" />
     <None Include="Resources\Pictograms\Output\Output_12x.ai" />
@@ -2178,6 +2298,40 @@
     <Resource Include="Resources\Pictograms\CallStackWindow\CallStackWindow_16x_32.bmp" />
     <Resource Include="Resources\Pictograms\CallStackWindow\VSO_CallStackWindow_16x.png" />
     <Content Include="Resources\Pictograms\CallStackWindow\VSO_CallStackWindow_16x.svg" />
+    <Resource Include="Resources\Pictograms\Method\ASCube_16xMD.png" />
+    <Resource Include="Resources\Pictograms\Method\ASCube_16xSM.png" />
+    <Resource Include="Resources\Pictograms\Method\F12_Method_20x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method.ico" />
+    <Resource Include="Resources\Pictograms\Method\Method_16x.png" />
+    <Resource Include="Resources\Pictograms\Method\method_16xMD.png" />
+    <Resource Include="Resources\Pictograms\Method\method_16xSM.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_24.bmp" />
+    <Resource Include="Resources\Pictograms\Method\Method_256x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_32.bmp" />
+    <Resource Include="Resources\Pictograms\Method\Method_32x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_32xMD.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_32xSM.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_48x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_64x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_exp.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple.ico" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_16x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_256x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_32x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_48x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_64x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_Green24.bmp" />
+    <Resource Include="Resources\Pictograms\Field\F12_Field_20x.png" />
+    <Resource Include="Resources\Pictograms\Field\Field_16x.png" />
+    <Resource Include="Resources\Pictograms\Field\field_16xMD.png" />
+    <Resource Include="Resources\Pictograms\Field\field_16xSM.png" />
+    <Resource Include="Resources\Pictograms\Field\Field_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Field\Field_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\Field\Field_blue_16x.png" />
+    <Resource Include="Resources\Pictograms\Field\Field_blue_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Field\Field_blue_16x_32.bmp" />
     <Content Include="Resources\Pictograms\Output\Output_16x.svg" />
     <Resource Include="Resources\Pictograms\Output\Output_16xMD.png" />
     <Resource Include="Resources\Pictograms\Output\Output_16xSM.png" />

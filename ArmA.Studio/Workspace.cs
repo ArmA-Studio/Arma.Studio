@@ -565,6 +565,10 @@ namespace ArmA.Studio
                     {
                         (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += Workspace_OnLintingInfoUpdated;
                     }
+                    if (doc is TextEditorBaseDataContext)
+                    {
+                        (doc as TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => App.Current.Dispatcher.Invoke(() => t.Result.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(t.Result))));
+                    }
                     return doc;
                 }
             }
@@ -593,6 +597,10 @@ namespace ArmA.Studio
                 {
                     (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += Workspace_OnLintingInfoUpdated;
                 }
+                if (doc is TextEditorBaseDataContext)
+                {
+                    (doc as TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => App.Current.Dispatcher.Invoke(() => t.Result.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(t.Result))));
+                }
                 return doc;
             }
             else
@@ -603,6 +611,10 @@ namespace ArmA.Studio
                 if (doc is CodeEditorBaseDataContext)
                 {
                     (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += Workspace_OnLintingInfoUpdated;
+                }
+                if (doc is TextEditorBaseDataContext)
+                {
+                    (doc as TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => App.Current.Dispatcher.Invoke(() => t.Result.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(t.Result))));
                 }
                 return doc;
             }

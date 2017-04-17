@@ -6,6 +6,38 @@
     xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
     xmlns:ae="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
     xmlns:local="clr-namespace:ArmA.Studio.Data.UI;assembly=ArmA.Studio.Data"
-    xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data">
-    <TextBlock Text="{Binding Message}"/>
+    xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data" AllowsTransparency="True">
+    <Grid MaxHeight="256">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <ListBox Grid.Column="0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}" SelectedIndex="{Binding SelectedIndex}" ev:MouseDoubleClick.Command="{Binding CmdMouseDoubleClick}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="{Binding ImageSource}" MaxHeight="16" MaxWidth="16"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="4 0 0 0"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Border Grid.Column="1" VerticalAlignment="Top" BorderBrush="Gray" BorderThickness="1" Padding="4" Background="White">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedItem.Description, Converter={StaticResource IsStringNullConverter}}" Value="False">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <TextBlock Text="{Binding SelectedItem.Description}"/>
+        </Border>
+    </Grid>
 </Popup>

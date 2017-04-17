@@ -9,6 +9,7 @@ using ArmA.Studio.Data;
 using ArmA.Studio.Data.IntelliSense;
 using ArmA.Studio.Data.Lint;
 using ArmA.Studio.Data.UI;
+using ArmA.Studio.UI;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
@@ -41,6 +42,12 @@ namespace ArmA.Studio.DefaultPlugin
         {
             var lintHelper = new ConfigLintHelper();
             this.LinterInfo = lintHelper.Lint(stream, f);
+        }
+
+        protected override void OnEditorInitialized(TextEditor editor)
+        {
+            base.OnEditorInitialized(editor);
+            this.EditorInstance.TextArea.TextView.BackgroundRenderers.Add(new UnderlineBackgroundRenderer(this));
         }
     }
 }
