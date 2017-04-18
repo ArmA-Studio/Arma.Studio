@@ -24,6 +24,9 @@ namespace ArmA.Studio.DataContext
 {
     public class SolutionPane : PanelBase
     {
+        public static SolutionPane Instance { get { SolutionPane v = null; _Instance?.TryGetTarget(out v); return v; } set { if (_Instance == null) _Instance = new WeakReference<SolutionPane>(value); else _Instance.SetTarget(value); } }
+        private static WeakReference<SolutionPane> _Instance;
+
         public override string Title => Properties.Localization.PanelDisplayName_Solution;
 
         public IEnumerable<ProjectModelView> ProjectModels { get { return this._ProjectModels; } set { this._ProjectModels = value; RaisePropertyChanged(); } }
@@ -58,14 +61,17 @@ namespace ArmA.Studio.DataContext
 
         public void RebuildTree(Solution s)
         {
-            var projectModelsList = new List<ProjectModelView>();
-
-            foreach(var p in s.Projects)
+            App.Current.Dispatcher.Invoke(() =>
             {
-                projectModelsList.Add(Create(p));
-            }
-            //ToDo: Reapply selectedItem & isExtended property settings
-            this.ProjectModels = projectModelsList;
+                var projectModelsList = new List<ProjectModelView>();
+
+                foreach (var p in s.Projects)
+                {
+                    projectModelsList.Add(Create(p));
+                }
+                //ToDo: Reapply selectedItem & isExtended property settings
+                this.ProjectModels = projectModelsList;
+            });
         }
 
         private static ProjectModelView Create(Project p)
@@ -132,6 +138,7 @@ namespace ArmA.Studio.DataContext
 
         public SolutionPane()
         {
+            Instance = this;
             Task.Run(() =>
             {
                 SpinWait.SpinUntil(() => Workspace.Instance.Solution != null && Workspace.Instance.Solution.Projects != null);
@@ -142,7 +149,7 @@ namespace ArmA.Studio.DataContext
 
         private void Projects_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() => this.RebuildTree(Workspace.Instance.Solution));
+            this.RebuildTree(Workspace.Instance.Solution);
         }
     }
 }

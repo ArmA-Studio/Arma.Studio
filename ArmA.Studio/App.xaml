@@ -25,6 +25,7 @@
                     <conv:IsNullConverter x:Key="IsNullConverter"/>
                     <conv:IsStringNullConverter x:Key="IsStringNullConverter"/>
                     <conv:NullToDependencyPropertyUnsetConverter x:Key="NullToDependencyPropertyUnsetConverter"/>
+                    <conv:StringNullToDependencyPropertyUnsetConverter x:Key="StringNullToDependencyPropertyUnsetConverter"/>
                     <conv:CountEnumerableConverter x:Key="CountEnumerableConverter"/>
                     <conv:StringFormatConverter x:Key="StringFormatConverter"/>
                     <conv:AlwaysVisibleConverter x:Key="AlwaysVisibleConverter"/>

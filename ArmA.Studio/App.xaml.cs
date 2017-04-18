@@ -113,7 +113,7 @@ namespace ArmA.Studio
             dlg.Show();
         }
 
-        internal static void ShowOperationFailedMessageBox(Exception ex)
+        public static void ShowOperationFailedMessageBox(Exception ex)
         {
             App.Current.Dispatcher.Invoke(() => MessageBox.Show(string.Format(Studio.Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Studio.Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
         }

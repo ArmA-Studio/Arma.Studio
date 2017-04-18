@@ -28,13 +28,13 @@ namespace ArmA.Studio.DefaultPlugin
 params [];" };
         public static readonly DocumentBase.DocumentDescribor SqfDocumentDescribor = new DocumentBase.DocumentDescribor(new[] { SqfFileType }, "SQF");
 
-        public static readonly FileType ConfigFileType = new FileType((ext) => ext.Equals(".cpp", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".ext", StringComparison.InvariantCultureIgnoreCase), "Config", ".cpp") { Linter = new ConfigLintHelper(), FileTemplate = @"/*
+        public static readonly FileType ConfigFileType = new FileType((ext) => ext.Equals(".cpp", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".ext", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".hpp", StringComparison.InvariantCultureIgnoreCase), "Config", ".cpp") { Linter = new ConfigLintHelper(), FileTemplate = @"/*
  * @Author: 
  * 
  * @Purpose: 
  *
  */" };
-        public static readonly FileType ConfigCppFileType = new FileType((ext) => ext.Equals(".cpp", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".ext", StringComparison.InvariantCultureIgnoreCase), "Config.cpp", ".cpp") { Linter = new ConfigLintHelper(), StaticFileName = "config.cpp", FileTemplate = @"class CfgPatches
+        public static readonly FileType ConfigCppFileType = new FileType((ext) => ext.Equals(".cpp", StringComparison.InvariantCultureIgnoreCase), "Config.cpp", ".cpp") { Linter = new ConfigLintHelper(), StaticFileName = "config.cpp", FileTemplate = @"class CfgPatches
 {
     class TAG_ModName
     {

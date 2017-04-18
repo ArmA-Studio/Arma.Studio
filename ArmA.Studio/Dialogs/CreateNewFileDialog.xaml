@@ -22,8 +22,8 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="{Binding Image}" Margin="0 0 4 0"/>
-                        <TextBlock Grid.Column="1" Text="{Binding FileTypeName}"/>
+                        <Image Grid.Column="0" Source="{Binding IconSource}" Margin="0 0 4 0"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Name}"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -34,10 +34,10 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="{x:Static p:Localization.FileName}" Margin="8 0" VerticalAlignment="Center"/>
-            <TextBox Grid.Column="1" IsReadOnly="{Binding SelectedItem.StaticFileName, Converter={StaticResource IsNullConverter}, ConverterParameter=True}" ev:PreviewKeyDown.Command="{Binding CmdPreviewKeyDown}">
+            <TextBox Grid.Column="1" IsReadOnly="{Binding SelectedItem.StaticFileName, Converter={StaticResource IsStringNullConverter}, ConverterParameter=True}" ev:PreviewKeyDown.Command="{Binding CmdPreviewKeyDown}">
                 <TextBox.Text>
                     <PriorityBinding>
-                        <Binding Path="SelectedItem.StaticFileName" Converter="{StaticResource NullToDependencyPropertyUnsetConverter}"/>
+                        <Binding Path="SelectedItem.StaticFileName" Converter="{StaticResource StringNullToDependencyPropertyUnsetConverter}"/>
                         <Binding Path="SelectedName" UpdateSourceTrigger="PropertyChanged"/>
                     </PriorityBinding>
                 </TextBox.Text>

@@ -134,6 +134,8 @@ namespace ArmA.Studio
             {
                 foreach (var doc in this.AvalonDockDocuments)
                 {
+                    if (doc == null)
+                        continue;
                     if (doc.HasChanges)
                     {
                         doc.SaveDocument();
@@ -312,19 +314,28 @@ namespace ArmA.Studio
 
             const double DEF_WIN_HEIGHT = 512;
             const double DEF_WIN_WIDTH = 1024;
-            this._WindowHeight = DEF_WIN_HEIGHT;
-            this._WindowWidth = DEF_WIN_WIDTH;
-            this._WindowLeft = (SystemParameters.PrimaryScreenWidth - DEF_WIN_WIDTH) / 2;
+            //Load values
+            this._WindowHeight = ConfigHost.App.WindowHeight;
+            this._WindowWidth = ConfigHost.App.WindowWidth;
+            this._WindowLeft = ConfigHost.App.WindowLeft;
+            this._WindowTop = ConfigHost.App.WindowTop;
+            this._WindowCurrentState = ConfigHost.App.WindowCurrentState;
+            if (this._WindowHeight < 0)
+            {
+                this._WindowHeight = DEF_WIN_HEIGHT;
+            }
+            if (this._WindowWidth < 0)
+            {
+                this._WindowWidth = DEF_WIN_WIDTH;
+            }
             if (this._WindowLeft < 0)
             {
-                this._WindowLeft = 0;
+                this._WindowLeft = (SystemParameters.PrimaryScreenWidth - DEF_WIN_WIDTH) / 2;
             }
-            this._WindowTop = (SystemParameters.PrimaryScreenHeight - DEF_WIN_HEIGHT) / 2;
             if (this._WindowTop < 0)
             {
-                this._WindowTop = 0;
+                this._WindowTop = (SystemParameters.PrimaryScreenHeight - DEF_WIN_HEIGHT) / 2;
             }
-            this._WindowCurrentState = WindowState.Normal;
         }
 
         public ProjectFile GetProjectFileFolderReference(Uri path)
@@ -366,6 +377,8 @@ namespace ArmA.Studio
         {
             foreach (var doc in this.AvalonDockDocuments)
             {
+                if (doc == null)
+                    continue;
                 if (doc.FileReference.FileUri.Equals(path))
                 {
                     doc.IsSelected = true;
@@ -652,6 +665,8 @@ namespace ArmA.Studio
 
             foreach (var doc in this.AvalonDockDocuments)
             {
+                if (doc == null)
+                    continue;
                 if (doc.IsSelected)
                 {
                     return doc;

@@ -33,6 +33,7 @@ namespace ArmA.Studio.Data
         public ObservableSortedCollection<ProjectFile> Children { get; private set; }
 
         public Solution OwningSolution { get { Solution v; this.WeakOwningSolution.TryGetTarget(out v); return v; } set { this.WeakOwningSolution.SetTarget(value); } }
+        private WeakReference<Solution> WeakOwningSolution;
 
         public string FilePath
         {
@@ -53,7 +54,6 @@ namespace ArmA.Studio.Data
         private string _ArmAPath;
         public Uri FileUri { get { return new Uri(string.Concat(this.FilePath, '/')); } }
 
-        private WeakReference<Solution> WeakOwningSolution;
 
         public Project()
         {
@@ -80,6 +80,11 @@ namespace ArmA.Studio.Data
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator().Cast();
+        }
+
+        internal void RemoveFile(ProjectFile projectFile)
+        {
+            this.Children.Remove(projectFile);
         }
 
         public ProjectFile FindFileFolder(Uri uri)

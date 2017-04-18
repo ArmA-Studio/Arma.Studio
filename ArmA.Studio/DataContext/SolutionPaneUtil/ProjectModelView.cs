@@ -53,6 +53,9 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
         public bool IsInRenameMode { get { return this._IsInRenameMode; } set { this._IsInRenameMode = value; RaisePropertyChanged(); } }
         private bool _IsInRenameMode;
 
+        public bool IsExpanded { get { return this._IsExpanded; } set { this._IsExpanded = value; RaisePropertyChanged(); } }
+        private bool _IsExpanded;
+
         public bool IsSelected { get { return this._IsSelected; } set { this._IsSelected = value; RaisePropertyChanged(); } }
         private bool _IsSelected;
 
@@ -71,7 +74,7 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
 
         public ICommand CmdContextMenu_OpenInExplorer => new RelayCommand((p) => { System.Diagnostics.Process.Start("explorer.exe", string.Format("/select,\"{0}\"", this.Ref.FilePath)); });
         public ICommand CmdContextMenu_Remove => new RelayCommand((p) => { this.Ref.OwningSolution.Projects.Remove(this.Ref); });
-
+        public ICommand CmdMouseDoubleClick => new RelayCommand((p) => { });
         public ICommand CmdContextMenu_Add_NewItem => new RelayCommand((p) =>
         {
             var dlgdc = new Dialogs.CreateNewFileDialogDataContext();
@@ -85,6 +88,7 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
                     stream.Write(dlgdc.SelectedFileType.GetTemplate());
                 }
                 Workspace.Instance.CreateOrFocusDocument(file);
+                SolutionPane.Instance.RebuildTree(Workspace.Instance.Solution);
             }
         });
         public ICommand CmdContextMenu_Add_ExistingItem => new RelayCommand((p) =>
@@ -110,8 +114,11 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
 
                 var file = this.Ref.AddFile(this.Ref.FileUri.MakeRelativeUri(uri).OriginalString);
                 Workspace.Instance.CreateOrFocusDocument(file);
+                SolutionPane.Instance.RebuildTree(Workspace.Instance.Solution);
             }
         });
         public ICommand CmdContextMenu_Add_NewFolder => new RelayCommand((p) => { this.Add(new ProjectFolderModelView(Properties.Localization.NewFolder, this)); });
+        public ICommand CmdContextMenu_Rename => new RelayCommand((p) => { this.IsInRenameMode = true; });
+        public ICommand CmdTextBoxLostKeyboardFocus => new RelayCommand((p) => { this.IsInRenameMode = false; });
     }
 }

@@ -80,7 +80,6 @@ namespace ArmA.Studio
                 return;
             reset();
 #endif
-
             App.Current.Dispatcher.Invoke(() =>
             {
                 var mainWindow = new MainWindow();
@@ -364,12 +363,21 @@ namespace ArmA.Studio
                 index++;
                 SetDisplayText(string.Format(Properties.Localization.Splash_DoingInitialLint, index, (int)count, it.FileName));
                 SetProgress(index / count);
+
+                System.Diagnostics.Debugger.Break();
                 var fileType = Workspace.Instance.GetFileType(it.FileUri);
                 if (fileType == null || fileType.Linter == null)
                     continue;
-                using (var stream = File.OpenRead(it.FilePath))
+                try
                 {
-                    DataContext.ErrorListPane.Instance.LinterDictionary[it.FilePath] = fileType.Linter.Lint(stream, it);
+                    using (var stream = File.OpenRead(it.FilePath))
+                    {
+                        DataContext.ErrorListPane.Instance.LinterDictionary[it.FilePath] = fileType.Linter.Lint(stream, it);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    App.ShowOperationFailedMessageBox(ex);
                 }
             }
             return doShutdown;

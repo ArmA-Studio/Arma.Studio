@@ -81,7 +81,20 @@ namespace ArmA.Studio.DefaultPlugin
                         break;
                 }
             }));
-            p.sqf();
+            try
+            {
+                p.sqf();
+            }
+            catch(Exception ex)
+            {
+                App.ShowOperationFailedMessageBox(ex);
+                while(ex.InnerException != null)
+                {
+                    ex = ex.InnerException;
+                    App.ShowOperationFailedMessageBox(ex);
+                }
+                System.Diagnostics.Debugger.Break();
+            }
             return se;
         }
     }

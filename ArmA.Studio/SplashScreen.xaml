@@ -19,6 +19,7 @@
         ev:Loaded.Command="{Binding CmdLoaded}"
         ev:Loaded.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
         WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False"
         >
     <Canvas>
         <Canvas.Background>

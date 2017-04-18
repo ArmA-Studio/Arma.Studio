@@ -43,13 +43,36 @@ namespace ArmA.Studio.Data
             {
                 var newFilePath = Path.Combine(Path.GetDirectoryName(this.FilePath), value);
                 var newRelativePath = Path.Combine(Path.GetDirectoryName(this.ProjectRelativePath), value);
-                File.Move(this.FilePath, newFilePath);
-                this.ProjectRelativePath = newRelativePath;
+                try
+                {
+                    File.Move(this.FilePath, newFilePath);
+                    this.ProjectRelativePath = newRelativePath;
+                }
+                catch (Exception ex)
+                {
+                    Virtual.ShowOperationFailedMessageBox(ex);
+                    RaisePropertyChanged(nameof(FileName));
+                }
             }
         }
         public string FileExtension { get { return Path.GetExtension(this.ProjectRelativePath); } }
 
         public Uri FileUri { get { return new Uri(this.FilePath); } }
+
+        public bool Delete()
+        {
+            try
+            {
+                this.OwningProject.RemoveFile(this);
+                File.Delete(this.FilePath);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Virtual.ShowOperationFailedMessageBox(ex);
+                return false;
+            }
+        }
 
         public Solution OwningSolution { get { Solution v; this.WeakOwningSolution.TryGetTarget(out v); return v; } set { this.WeakOwningSolution.SetTarget(value); } }
         private WeakReference<Solution> WeakOwningSolution;
@@ -73,6 +96,25 @@ namespace ArmA.Studio.Data
                 return this.ProjectRelativePath.CompareTo((obj as ProjectFile).ProjectRelativePath);
             }
             return this.ProjectRelativePath.CompareTo(obj);
+        }
+
+        public void MoveRelative(string v)
+        {
+            try
+            {
+                var newPath = Path.Combine(this.OwningProject.FilePath, v);
+                var directory = Path.GetDirectoryName(newPath);
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+                File.Move(this.FilePath, newPath);
+                this.ProjectRelativePath = v;
+            }
+            catch (Exception ex)
+            {
+                Virtual.ShowOperationFailedMessageBox(ex);
+            }
         }
     }
 }

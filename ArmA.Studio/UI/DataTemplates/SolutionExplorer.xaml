@@ -59,12 +59,12 @@
                 <Setter Property="ev:MouseDoubleClick.Command" Value="{Binding CmdMouseDoubleClick}"/>
                 <Setter Property="ev:MouseDoubleClick.CommandParameter" Value="{Binding}"/>
                 <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
-                <Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
+                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
             </Style>
         </TreeView.ItemContainerStyle>
         <TreeView.Resources>
             <HierarchicalDataTemplate DataType="{x:Type util:ProjectModelView}" ItemsSource="{Binding}">
-                <Grid ev:ContextMenuOpening.Command="{Binding CmdContextMenuOpening}" ev:ContextMenuOpening.CommandParameter="{Binding}">
+                <Grid ev:ContextMenuOpening.Command="{Binding CmdContextMenuOpening}" ev:ContextMenuOpening.CommandParameter="{Binding}" Margin="0 0 4 0">
                     <Grid.ContextMenu>
                         <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
                             <MenuItem Header="{x:Static p:Localization.Add}">
@@ -84,7 +84,7 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </MenuItem>
-                            <MenuItem Header="{x:Static p:Localization.Rename}" Command="{Binding CmdContextMenu_Rename}" CommandParameter="/">
+                            <MenuItem Header="{x:Static p:Localization.Rename}" Command="{Binding CmdContextMenu_Rename}">
                                 <MenuItem.Icon>
                                     <Image Source="/ArmA.Studio;component/Resources/Pictograms/Rename/Rename.ico"/>
                                 </MenuItem.Icon>
@@ -105,14 +105,27 @@
                         <ColumnDefinition Width="16"/>
                         <ColumnDefinition Width="4"/>
                         <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="4"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Height="16" Width="16" Source="/ArmA.Studio;component/Resources/Project.png" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}, ConverterParameter=True}"/>
+                    <Image Grid.Column="0" Height="16" Width="16" Source="/ArmA.Studio;component/Resources/Project.png"/>
                     <TextBlock Grid.Column="2" Text="{Binding Ref.Name}" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}, ConverterParameter=True}"/>
-                    <TextBox Grid.ColumnSpan="3" Text="{Binding Ref.Name}" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}}" att:LooseFocusOnKeyAttached.Key="Return" att:SelectFileNameOnFocusAttached.Attach="True" Height="16" Margin="4 0" Padding="0" BorderThickness="0"/>
+                    <TextBox Grid.Column="2" Text="{Binding Ref.Name}" att:LooseFocusOnKeyAttached.Key="Return" att:SelectFileNameOnFocusAttached.Attach="True" Height="16" Padding="0" BorderThickness="0" ev:LostKeyboardFocus.Command="{Binding CmdTextBoxLostKeyboardFocus}">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsInRenameMode}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource Self}}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                 </Grid>
             </HierarchicalDataTemplate>
             <HierarchicalDataTemplate DataType="{x:Type util:ProjectFolderModelView}" ItemsSource="{Binding}">
-                <Grid ev:ContextMenuOpening.Command="{Binding CmdContextMenuOpening}" ev:ContextMenuOpening.CommandParameter="{Binding}">
+                <Grid ev:ContextMenuOpening.Command="{Binding CmdContextMenuOpening}" ev:ContextMenuOpening.CommandParameter="{Binding}" Margin="0 0 4 0">
                     <Grid.ContextMenu>
                         <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
                             <MenuItem Header="{x:Static p:Localization.Add}">
@@ -153,13 +166,14 @@
                         <ColumnDefinition Width="16"/>
                         <ColumnDefinition Width="4"/>
                         <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="4"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Height="16" Width="16" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}, ConverterParameter=True}">
+                    <Image Grid.Column="0" Height="16" Width="16">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Setter Property="Source" Value="/ArmA.Studio;component/Resources/FileTypes/Folder_16x.png"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsExpaned}" Value="True">
+                                    <DataTrigger Binding="{Binding IsExpanded}" Value="True">
                                         <Setter Property="Source" Value="/ArmA.Studio;component/Resources/FileTypes/FolderExpanded_16x.png"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -167,11 +181,23 @@
                         </Image.Style>
                     </Image>
                     <TextBlock Grid.Column="2" Text="{Binding Name}" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}, ConverterParameter=True}"/>
-                    <TextBox Grid.ColumnSpan="3" Text="{Binding Name}" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}}" att:LooseFocusOnKeyAttached.Key="Return" att:SelectFileNameOnFocusAttached.Attach="True" Height="16" Margin="4 0" Padding="0" BorderThickness="0"/>
+                    <TextBox Grid.Column="2" Text="{Binding Name}" att:LooseFocusOnKeyAttached.Key="Return" att:SelectFileNameOnFocusAttached.Attach="True" Height="16" Padding="0" BorderThickness="0" ev:LostKeyboardFocus.Command="{Binding CmdTextBoxLostKeyboardFocus}">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsInRenameMode}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource Self}}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                 </Grid>
             </HierarchicalDataTemplate>
             <DataTemplate DataType="{x:Type util:ProjectFileModelView}">
-                <Grid ev:ContextMenuOpening.Command="{Binding CmdContextMenuOpening}" ev:ContextMenuOpening.CommandParameter="{Binding}">
+                <Grid ev:ContextMenuOpening.Command="{Binding CmdContextMenuOpening}" ev:ContextMenuOpening.CommandParameter="{Binding}" Margin="0 0 4 0">
                     <Grid.ContextMenu>
                         <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
                             <MenuItem Header="{x:Static p:Localization.Rename}" Command="{Binding CmdContextMenu_Rename}" CommandParameter="/">
@@ -195,8 +221,9 @@
                         <ColumnDefinition Width="16"/>
                         <ColumnDefinition Width="4"/>
                         <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="4"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Height="16" Width="16" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}, ConverterParameter=True}">
+                    <Image Grid.Column="0" Height="16" Width="16">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Setter Property="Source" Value="/ArmA.Studio;component/Resources/FileTypes/Document_16x.png"/>
@@ -218,7 +245,19 @@
                         </Image.Style>
                     </Image>
                     <TextBlock Grid.Column="2" Text="{Binding Ref.FileName}" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}, ConverterParameter=True}"/>
-                    <TextBox Grid.ColumnSpan="3" Text="{Binding Ref.FileName}" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}}" att:LooseFocusOnKeyAttached.Key="Return" att:SelectFileNameOnFocusAttached.Attach="True" Height="16" Margin="4 0" Padding="0" BorderThickness="0"/>
+                    <TextBox Grid.Column="2" Text="{Binding Ref.FileName}" att:LooseFocusOnKeyAttached.Key="Return" att:SelectFileNameOnFocusAttached.Attach="True" Height="16" Padding="0" BorderThickness="0" ev:LostKeyboardFocus.Command="{Binding CmdTextBoxLostKeyboardFocus}">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsInRenameMode}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource Self}}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                 </Grid>
             </DataTemplate>
         </TreeView.Resources>

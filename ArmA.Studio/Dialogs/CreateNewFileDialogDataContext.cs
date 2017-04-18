@@ -35,7 +35,7 @@ namespace ArmA.Studio.Dialogs
         public bool OKButtonEnabled { get { return this._OKButtonEnabled; } set { this._OKButtonEnabled = value; this.RaisePropertyChanged(); } }
         private bool _OKButtonEnabled;
 
-        public string FinalName { get { return (this.SelectedItem as FileType).HasStaticFileName ? (this.SelectedItem as FileType).StaticFileName : this.SelectedName; } }
+        public string FinalName { get { return (this.SelectedItem as FileType).HasStaticFileName ? (this.SelectedItem as FileType).StaticFileName : (System.IO.Path.HasExtension(this.SelectedName) ? this.SelectedName : string.Concat(this.SelectedName, this.SelectedFileType.DefaultExtension)); } }
 
         public CreateNewFileDialogDataContext()
         {
