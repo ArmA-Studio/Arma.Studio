@@ -50,7 +50,39 @@ namespace ArmA.Studio.Data
         }
         private string _FilePath;
 
-        public string ArmAPath { get { return this._ArmAPath; } set { if (this._ArmAPath == value) return; this._ArmAPath = value; RaisePropertyChanged(); } }
+        public string ArmAPath
+        {
+            get
+            {
+                return this._ArmAPath;
+            }
+            set
+            {
+                if (this._ArmAPath == value)
+                    return;
+                if (this.ProjectType == EProjectType.Addon)
+                {
+                    try
+                    {
+                        using (var stream = new StreamWriter(Path.Combine(this.FilePath, "$PBOPREFIX$")))
+                        {
+                            stream.Write(value);
+                            stream.Flush();
+                        }
+                        this._ArmAPath = value;
+                    }
+                    catch(Exception ex)
+                    {
+                        Virtual.ShowOperationFailedMessageBox(ex);
+                    }
+                }
+                else
+                {
+                    this._ArmAPath = value;
+                }
+                RaisePropertyChanged();
+            }
+        }
         private string _ArmAPath;
         public Uri FileUri { get { return new Uri(string.Concat(this.FilePath, '/')); } }
 
