@@ -24,7 +24,8 @@ namespace ArmA.Studio.Data.UI
         /// Requires some time to get initialized.
         /// To get an awaiter, use the function.
         /// </summary>
-        public TextEditor EditorInstance { get; private set; }
+        public TextEditor EditorInstance { get { return this._EditorInstance; } private set { if (this._EditorInstance == value) return; this._EditorInstance = value; this.RaisePropertyChanged(); } }
+        private TextEditor _EditorInstance;
 
         public TextDocument Document { get { return this._Document; } set { if (this._Document == value) return; this._Document = value; this.RaisePropertyChanged(); } }
         private TextDocument _Document;
@@ -39,11 +40,13 @@ namespace ArmA.Studio.Data.UI
         });
         #endregion
 
+
+
         #region Notifying properties
         #region ICommand's
         public ICommand CmdTextEditorInitialized => new RelayCommand((p) => { this.EditorInstance = p as TextEditor; this.OnEditorInitialized(this.EditorInstance); });
         public ICommand CmdLostFocus => new RelayCommand((p) => { this.OnLostFocus(); });
-       #endregion
+        #endregion
 
         /// <summary>
         /// The <see cref="FontFamily"/> used by the TextEditor.
@@ -58,6 +61,11 @@ namespace ArmA.Studio.Data.UI
         /// </summary>
         public bool ShowLineNumbers { get { return this._ShowLineNumbers; } set { if (this._ShowLineNumbers == value) return; this._ShowLineNumbers = value; this.RaisePropertyChanged(); } }
         private bool _ShowLineNumbers;
+
+        public int Line { get { return this._Line; } set { if (this._Line == value) return; this._Line = value; this.RaisePropertyChanged(); } }
+        private int _Line;
+        public int Column { get { return this._Column; } set { if (this._Column == value) return; this._Column = value; this.RaisePropertyChanged(); } }
+        private int _Column;
 
         /// <summary>
         /// Syntax Highlighting to use by the editor.
@@ -86,9 +94,10 @@ namespace ArmA.Studio.Data.UI
             if (this.LastCaretOffset == this.EditorInstance.TextArea.Caret.Offset)
                 return;
             this.LastCaretOffset = this.EditorInstance.TextArea.Caret.Offset;
-            var line = this.EditorInstance.TextArea.Caret.Line;
-            var column = this.EditorInstance.TextArea.Caret.Column;
-            this.OnCaretPositionChanged(line, column, this.LastCaretOffset);
+            this.Line = this.EditorInstance.TextArea.Caret.Line;
+            this.Column = this.EditorInstance.TextArea.Caret.Column;
+            
+            this.OnCaretPositionChanged(this.Line, this.Column, this.LastCaretOffset);
         }
         private void UndoStack_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
