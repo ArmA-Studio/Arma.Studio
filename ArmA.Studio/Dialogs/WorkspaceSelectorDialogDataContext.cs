@@ -22,9 +22,6 @@ namespace ArmA.Studio.Dialogs
         public List<String> WorkSpaceListBox { get { return this._WorkSpaceListBox;  } set { this._WorkSpaceListBox = value; this.RaisePropertyChanged(); } }
         private List<String> _WorkSpaceListBox;
 
-        public String WorkSpaceListBoxSelectedItem { get { return this._WorkSpaceListBoxSelectedItem; } set { this._WorkSpaceListBoxSelectedItem = value; this.RaisePropertyChanged();  this.WorkSpaceListBoxSelectionChanged(); } }
-        public String _WorkSpaceListBoxSelectedItem;
-
         public ICommand CmdBrowse { get; private set; }
         public ICommand CmdOKButtonPressed { get; private set; }
 
@@ -41,14 +38,30 @@ namespace ArmA.Studio.Dialogs
         public WorkspaceSelectorDialogDataContext()
         {
             this.CmdBrowse = new UI.Commands.RelayCommand(Cmd_Browse);
-            this.CmdOKButtonPressed = new UI.Commands.RelayCommand((p) => this.DialogResult = true);
+            this.CmdOKButtonPressed = new UI.Commands.RelayCommand(Cmd_Ok);
 
             this.WorkSpaceListBox = ConfigHost.App.PrevWorkspacePath;   
         }
 
-        public void WorkSpaceListBoxSelectionChanged()
+        public void Cmd_Ok(object param)
         {
-            this.CurrentPath = this.WorkSpaceListBoxSelectedItem;
+
+            //Save new Workspace to Prev Workspace List
+            List<string> prevWorkSpaces = ConfigHost.App.PrevWorkspacePath;
+            if (prevWorkSpaces.Contains(this.CurrentPath))
+            {
+                prevWorkSpaces.Remove(this.CurrentPath);
+            }
+            prevWorkSpaces.Insert(0, this.CurrentPath);
+            int numSpaces = 5;
+            if (prevWorkSpaces.Count > numSpaces)
+            {
+                prevWorkSpaces.RemoveRange(numSpaces, (prevWorkSpaces.Count - numSpaces));
+            }
+            ConfigHost.App.PrevWorkspacePath = prevWorkSpaces;
+
+            this.DialogResult = true;
+
         }
 
         public void Cmd_Browse(object param)

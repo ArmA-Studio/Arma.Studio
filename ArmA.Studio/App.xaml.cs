@@ -127,20 +127,6 @@ namespace ArmA.Studio
             var workspace = dlgDc.CurrentPath;
             ConfigHost.App.WorkspacePath = workspace;
 
-            //Save new Workspace to Prev Workspace List
-            List<string> prevWorkSpaces = ConfigHost.App.PrevWorkspacePath;
-            if (prevWorkSpaces.Contains(workspace))
-            {
-                prevWorkSpaces.Remove(workspace);
-            }
-            prevWorkSpaces.Insert(0, workspace);
-            int numSpaces = 5;
-            if(prevWorkSpaces.Count > numSpaces)
-            {
-                prevWorkSpaces.RemoveRange(numSpaces, (prevWorkSpaces.Count- numSpaces));
-            }
-            ConfigHost.App.PrevWorkspacePath = prevWorkSpaces;
-
             return true;
         }
 

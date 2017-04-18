@@ -58,7 +58,8 @@ namespace ArmA.Studio
 
             public static List<string> PrevWorkspacePath
             {
-                get {
+                get
+                {
                     string s = Instance.AppIni.GetValueOrNull(nameof(App), nameof(PrevWorkspacePath));
                     string[] pathArray = new string[0];
                     if (!(s == null))
@@ -69,7 +70,8 @@ namespace ArmA.Studio
                     
                     return new List<string>(pathArray);
                 }
-                set {
+                set
+                {
                     string s = string.Join(",", value.ToArray());
 
                     Instance.AppIni.SetValue(nameof(App), nameof(PrevWorkspacePath), s);

@@ -23,7 +23,7 @@
         <Button Grid.Row="0" Grid.Column="2" Content="{x:Static p:Localization.WorkspaceSelectorDialog_Browse}" Padding="8 0" MinWidth="100" Command="{Binding CmdBrowse}"/>
 
         <Label Grid.Row="1" Content="{x:Static p:Localization.WorkspaceSelectorDialog_SelectPrev}"></Label>
-        <ListBox Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding WorkSpaceListBox}" SelectedItem="{Binding WorkSpaceListBoxSelectedItem}" >
+        <ListBox Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding WorkSpaceListBox}" SelectedItem="{Binding CurrentPath}" >
             
         </ListBox>
     </Grid>
