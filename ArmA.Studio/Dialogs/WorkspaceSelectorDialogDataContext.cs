@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Forms;
 using System.ComponentModel;
 using System.Windows.Input;
 using ArmA.Studio.Data.UI.Commands;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using System.Windows.Controls;
 
 namespace ArmA.Studio.Dialogs
 {
@@ -26,7 +19,7 @@ namespace ArmA.Studio.Dialogs
         private List<String> _WorkSpaceListBox;
 
         public ICommand CmdBrowse => new RelayCommand(Cmd_Browse);
-        public ICommand CmdOKButtonPressed => new UI.Commands.RelayCommand(Cmd_Ok);
+        public ICommand CmdOKButtonPressed => new RelayCommand(Cmd_Ok);
 
         public bool? DialogResult { get { return this._DialogResult; } set { this._DialogResult = value; this.RaisePropertyChanged(); } }
         private bool? _DialogResult;
@@ -40,9 +33,6 @@ namespace ArmA.Studio.Dialogs
 
         public WorkspaceSelectorDialogDataContext()
         {
-            this.CmdBrowse = new UI.Commands.RelayCommand(Cmd_Browse);
-            this.CmdOKButtonPressed = new UI.Commands.RelayCommand(Cmd_Ok);
-
             this.WorkSpaceListBox = ConfigHost.App.PrevWorkspacePath;   
         }
 
