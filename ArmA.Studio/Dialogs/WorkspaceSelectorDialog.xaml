@@ -7,14 +7,25 @@
         xmlns:p="clr-namespace:ArmA.Studio.Properties"
         xmlns:att="clr-namespace:ArmA.Studio.UI.Attached"
         mc:Ignorable="d"
-        Title="{x:Static p:Localization.WorkspaceSelectorDialog_Title}" Height="210" Style="{StaticResource DialogWindow}">
+        Title="{x:Static p:Localization.WorkspaceSelectorDialog_Title}" Height="322" Style="{StaticResource DialogWindow}">
     <Grid VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="8"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <TextBox Grid.Column="0" IsReadOnly="True" Text="{Binding CurrentPath, UpdateSourceTrigger=PropertyChanged}" Foreground="Gray"/>
-        <Button Grid.Column="2" Content="{x:Static p:Localization.WorkspaceSelectorDialog_Browse}" Padding="8 0" MinWidth="100" Command="{Binding CmdBrowse}"/>
+        <TextBox Grid.Row="0" Grid.Column="0" IsReadOnly="True" Text="{Binding CurrentPath, UpdateSourceTrigger=PropertyChanged}" Foreground="Gray"/>
+        <Button Grid.Row="0" Grid.Column="2" Content="{x:Static p:Localization.WorkspaceSelectorDialog_Browse}" Padding="8 0" MinWidth="100" Command="{Binding CmdBrowse}"/>
+
+        <Label Grid.Row="1" Content="{x:Static p:Localization.WorkspaceSelectorDialog_SelectPrev}"></Label>
+        <ListBox Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding WorkSpaceListBox}" SelectedItem="{Binding CurrentPath}" >
+            
+        </ListBox>
     </Grid>
+
 </Window>

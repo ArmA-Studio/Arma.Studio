@@ -1,22 +1,18 @@
-Steps to reproduce
-==================
+## Steps to reproduce
 1. Do this
 2. Do that
 3. Do here
 
-Issues
-======
+
+## Issues
 * While step 2: that and that is happening
 
-Expected
-========
+
+### Expected
 * While step 2: that and that should happen
 
-Additional Notes
-================
+
+## Additional Notes
 * Relevant information
 * Document title
-```
-Some document
-```
-* [Linked Document](http://LinkToDoc)
+* [Some document](http://LinkToDoc)

@@ -1196,7 +1196,18 @@ namespace ArmA.Studio.Properties {
                 return ResourceManager.GetString("WorkspaceSelectorDialog_Browse", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Select Existing.
+        /// </summary>
+        public static string WorkspaceSelectorDialog_SelectPrev
+        {
+            get
+            {
+                return ResourceManager.GetString("WorkspaceSelectorDialog_SelectPrev", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Please select the folder where the project is located..
         /// </summary>
