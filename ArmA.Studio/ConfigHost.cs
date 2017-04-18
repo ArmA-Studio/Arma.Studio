@@ -57,27 +57,10 @@ namespace ArmA.Studio
                 set { if (WorkspacePath.Equals(value)) return; Instance.AppIni.SetValue(nameof(App), nameof(Workspace), value); Instance.Save(EIniSelector.App); }
             }
 
-            public static List<string> PrevWorkspacePath
+            public static IEnumerable<string> RecentWorkspaces
             {
-                get
-                {
-                    string s = Instance.AppIni.GetValueOrNull(nameof(App), nameof(PrevWorkspacePath));
-                    string[] pathArray = new string[0];
-                    if (!(s == null))
-                    {
-                        s = s.Replace(" ", "");
-                        pathArray = s.Split(',');
-                    }
-                    
-                    return new List<string>(pathArray);
-                }
-                set
-                {
-                    string s = string.Join(",", value.ToArray());
-
-                    Instance.AppIni.SetValue(nameof(App), nameof(PrevWorkspacePath), s);
-                    Instance.Save(EIniSelector.App);
-                }
+                get { string s = Instance.AppIni.GetValueOrNull(nameof(App), nameof(RecentWorkspaces)); return s != null ? s.Split(',') : new string[0]; }
+                set { string s = string.Join(",", value); Instance.AppIni.SetValue(nameof(App), nameof(RecentWorkspaces), s); Instance.Save(EIniSelector.App); }
             }
 
             public static bool ErrorList_IsErrorsDisplayed

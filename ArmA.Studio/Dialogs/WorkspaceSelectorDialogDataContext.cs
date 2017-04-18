@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using ArmA.Studio.Data.UI.Commands;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -15,8 +16,8 @@ namespace ArmA.Studio.Dialogs
         public string CurrentPath { get { return this._CurrentPath; } set { this._CurrentPath = value; this.OKButtonEnabled = !string.IsNullOrWhiteSpace(value); this.RaisePropertyChanged(); } }
         private string _CurrentPath;
 
-        public List<String> WorkSpaceListBox { get { return this._WorkSpaceListBox;  } set { this._WorkSpaceListBox = value; this.RaisePropertyChanged(); } }
-        private List<String> _WorkSpaceListBox;
+        public IEnumerable<string> WorkSpaceListBox { get { return this._WorkSpaceListBox;  } set { this._WorkSpaceListBox = value; this.RaisePropertyChanged(); } }
+        private IEnumerable<string> _WorkSpaceListBox;
 
         public ICommand CmdBrowse => new RelayCommand(Cmd_Browse);
         public ICommand CmdOKButtonPressed => new RelayCommand(Cmd_Ok);
@@ -33,28 +34,29 @@ namespace ArmA.Studio.Dialogs
 
         public WorkspaceSelectorDialogDataContext()
         {
-            this.WorkSpaceListBox = ConfigHost.App.PrevWorkspacePath;   
+            this.WorkSpaceListBox = ConfigHost.App.RecentWorkspaces;   
         }
 
         public void Cmd_Ok(object param)
         {
-
             //Save new Workspace to Prev Workspace List
-            List<string> prevWorkSpaces = ConfigHost.App.PrevWorkspacePath;
+            var prevWorkSpaces = ConfigHost.App.RecentWorkspaces.ToList();
             if (prevWorkSpaces.Contains(this.CurrentPath))
             {
                 prevWorkSpaces.Remove(this.CurrentPath);
             }
             prevWorkSpaces.Insert(0, this.CurrentPath);
-            int numSpaces = 5;
+            const int numSpaces = 15;
             if (prevWorkSpaces.Count > numSpaces)
             {
                 prevWorkSpaces.RemoveRange(numSpaces, (prevWorkSpaces.Count - numSpaces));
             }
-            ConfigHost.App.PrevWorkspacePath = prevWorkSpaces;
+            if (!ConfigHost.App.RecentWorkspaces.SequenceEqual(prevWorkSpaces))
+            {
+                ConfigHost.App.RecentWorkspaces = prevWorkSpaces;
+            }
 
             this.DialogResult = true;
-
         }
 
         public void Cmd_Browse(object param)
@@ -67,10 +69,10 @@ namespace ArmA.Studio.Dialogs
             };
             if (!string.IsNullOrWhiteSpace(this.CurrentPath))
             {
-                cofd.InitialDirectory = CurrentPath;
+                cofd.InitialDirectory = CurrentPath.Replace('/', '\\');
             }
             var dlgResult = cofd.ShowDialog();
-            if(dlgResult == Microsoft.WindowsAPICodePack.Dialogs.CommonFileDialogResult.Ok)
+            if (dlgResult == CommonFileDialogResult.Ok)
             {
                 this.CurrentPath = cofd.FileName;
             }

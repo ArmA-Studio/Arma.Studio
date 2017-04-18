@@ -10,18 +10,21 @@ namespace ArmA.Studio.Dialogs
         /// <returns>new workspace path or empty string</returns>
         public static string GetWorkspacePath(string selectedPath = null)
         {
-            var dlgDc = new WorkspaceSelectorDialogDataContext();
-            if (!string.IsNullOrEmpty(selectedPath))
+            string workspace = string.Empty;
+            App.Current.Dispatcher.Invoke(() =>
             {
-                dlgDc.CurrentPath = selectedPath;
-            }
-            var dlg = new WorkspaceSelectorDialog(dlgDc);
-            var dlgResult = dlg.ShowDialog();
-            if (!dlgResult.HasValue || !dlgResult.Value || dlgDc.CurrentPath.Equals(selectedPath, StringComparison.InvariantCultureIgnoreCase))
-            {
-                return string.Empty;
-            }
-            var workspace = dlgDc.CurrentPath;
+                var dlgDc = new WorkspaceSelectorDialogDataContext();
+                if (!string.IsNullOrWhiteSpace(selectedPath))
+                {
+                    dlgDc.CurrentPath = selectedPath.Replace('/', '\\');
+                }
+                var dlg = new WorkspaceSelectorDialog(dlgDc);
+                var dlgResult = dlg.ShowDialog();
+                if (dlgResult.HasValue && dlgResult.Value && !dlgDc.CurrentPath.Equals(selectedPath, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    workspace = dlgDc.CurrentPath;
+                }
+            });
             return workspace;
         }
     }
