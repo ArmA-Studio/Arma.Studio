@@ -102,6 +102,7 @@ namespace ArmA.Studio
             var newWorkspace = Dialogs.WorkspaceSelectorDialog.GetWorkspacePath(this.PathUri.AbsolutePath);
             if (!string.IsNullOrWhiteSpace(newWorkspace))
             {
+                this.CmdSaveAll.Execute(null);
                 ConfigHost.App.WorkspacePath = newWorkspace;
                 App.Shutdown(App.ExitCodes.Restart);
             }
