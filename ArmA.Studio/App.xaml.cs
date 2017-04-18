@@ -126,6 +126,7 @@ namespace ArmA.Studio
             }
             var workspace = dlgDc.CurrentPath;
             ConfigHost.App.WorkspacePath = workspace;
+
             return true;
         }
 

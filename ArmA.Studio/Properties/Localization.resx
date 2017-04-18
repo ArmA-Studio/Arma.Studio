@@ -397,6 +397,9 @@ Do you want to update now?</value>
   <data name="WorkspaceSelectorDialog_Browse" xml:space="preserve">
     <value>Select Existing</value>
   </data>
+  <data name="WorkspaceSelectorDialog_SelectPrev" xml:space="preserve">
+    <value>Recent</value>
+  </data>
   <data name="WorkspaceSelectorDialog_Description" xml:space="preserve">
     <value>Please select the folder where the project is located.</value>
   </data>

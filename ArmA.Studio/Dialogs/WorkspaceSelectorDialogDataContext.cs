@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Forms;
 using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace ArmA.Studio.Dialogs
 {
@@ -17,6 +18,9 @@ namespace ArmA.Studio.Dialogs
 
         public string CurrentPath { get { return this._CurrentPath; } set { this._CurrentPath = value; this.OKButtonEnabled = !string.IsNullOrWhiteSpace(value); this.RaisePropertyChanged(); } }
         private string _CurrentPath;
+
+        public List<String> WorkSpaceListBox { get { return this._WorkSpaceListBox;  } set { this._WorkSpaceListBox = value; this.RaisePropertyChanged(); } }
+        private List<String> _WorkSpaceListBox;
 
         public ICommand CmdBrowse { get; private set; }
         public ICommand CmdOKButtonPressed { get; private set; }
@@ -34,11 +38,34 @@ namespace ArmA.Studio.Dialogs
         public WorkspaceSelectorDialogDataContext()
         {
             this.CmdBrowse = new UI.Commands.RelayCommand(Cmd_Browse);
-            this.CmdOKButtonPressed = new UI.Commands.RelayCommand((p) => this.DialogResult = true);
+            this.CmdOKButtonPressed = new UI.Commands.RelayCommand(Cmd_Ok);
+
+            this.WorkSpaceListBox = ConfigHost.App.PrevWorkspacePath;   
         }
-        public void Cmd_Browse(object param)
+
+        public void Cmd_Ok(object param)
         {
 
+            //Save new Workspace to Prev Workspace List
+            List<string> prevWorkSpaces = ConfigHost.App.PrevWorkspacePath;
+            if (prevWorkSpaces.Contains(this.CurrentPath))
+            {
+                prevWorkSpaces.Remove(this.CurrentPath);
+            }
+            prevWorkSpaces.Insert(0, this.CurrentPath);
+            int numSpaces = 5;
+            if (prevWorkSpaces.Count > numSpaces)
+            {
+                prevWorkSpaces.RemoveRange(numSpaces, (prevWorkSpaces.Count - numSpaces));
+            }
+            ConfigHost.App.PrevWorkspacePath = prevWorkSpaces;
+
+            this.DialogResult = true;
+
+        }
+
+        public void Cmd_Browse(object param)
+        {
             var cofd = new Microsoft.WindowsAPICodePack.Dialogs.CommonOpenFileDialog()
             {
                 IsFolderPicker = true,
