@@ -364,7 +364,6 @@ namespace ArmA.Studio
                 SetDisplayText(string.Format(Properties.Localization.Splash_DoingInitialLint, index, (int)count, it.FileName));
                 SetProgress(index / count);
 
-                System.Diagnostics.Debugger.Break();
                 var fileType = Workspace.Instance.GetFileType(it.FileUri);
                 if (fileType == null || fileType.Linter == null)
                     continue;
