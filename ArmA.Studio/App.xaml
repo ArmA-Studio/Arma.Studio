@@ -331,6 +331,9 @@ EFFET JURIDIQUE. Le présent contrat décrit certains droits juridiques. Vous po
                     </x:Array>
                 </ResourceDictionary>
                 <ResourceDictionary x:Name="GlobalStyles">
+                    <Style TargetType="Image">
+                        <Setter Property="StretchDirection" Value="DownOnly"/>
+                    </Style>
                     <Style TargetType="ae:TextEditor">
                         <Setter Property="FontFamily" Value="Consolas"/>
                     </Style>
