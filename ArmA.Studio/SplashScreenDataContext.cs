@@ -172,6 +172,7 @@ namespace ArmA.Studio
                     solutionPath = Path.Combine(workspace, string.Concat("solution", App.CONST_SOLUTIONEXTENSION));
                     Logger.Info($"No solution file found, creating new at '{solutionPath}'");
                     w.Solution = new Data.Solution();
+                    w.Solution.FileUri = new Uri(solutionPath, UriKind.Absolute);
                     using (var stream = File.Open(solutionPath, FileMode.Create))
                     {
                         Data.Solution.Serialize(w.Solution, stream);
