@@ -54,10 +54,16 @@ namespace ArmA.Studio
             }));
 
             if (Splash_LoadPlugins(setIndeterminate, setDisplayText, setProgress))
+            {
+                App.Shutdown(App.ExitCodes.OK);
                 return;
+            }
             reset();
             if (Splash_CheckUpdate(setIndeterminate, setDisplayText, setProgress))
+            {
+                App.Shutdown(App.ExitCodes.OK);
                 return;
+            }
             reset();
 
             foreach (var splashActivityPlugin in from plugin in App.Plugins where plugin is ISplashActivityPlugin select plugin as ISplashActivityPlugin)
@@ -66,18 +72,27 @@ namespace ArmA.Studio
                 bool terminate;
                 splashActivityPlugin.PerformSplashActivity(App.Current.Dispatcher, setIndeterminate, setDisplayText, setProgress, out terminate);
                 if (terminate)
+                {
+                    App.Shutdown(App.ExitCodes.OK);
                     return;
+                }
             }
             reset();
 
             Workspace w;
             if (Splash_Workspace(setIndeterminate, setDisplayText, setProgress, out w))
+            {
+                App.Shutdown(App.ExitCodes.OK);
                 return;
+            }
             reset();
 
 #if !DEBUG
             if (Splash_DoInitialLint(setIndeterminate, setDisplayText, setProgress))
+            {
+                App.Shutdown(App.ExitCodes.OK);
                 return;
+            }
             reset();
 #endif
             App.Current.Dispatcher.Invoke(() =>
