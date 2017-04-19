@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using ArmA.Studio.Plugin;
 using IniParser;
 using IniParser.Model;
 using IniParser.Parser;
@@ -27,56 +28,39 @@ namespace ArmA.Studio
             public static WindowState WindowCurrentState
             {
                 get { WindowState state; if (Enum.TryParse(Instance.AppIni.GetValueOrNull(nameof(MainWindow), nameof(MainWindow.WindowState)), out state)) return state; return WindowState.Normal; }
-                set { Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.WindowState), value.ToString()); Instance.Save(EIniSelector.App); }
+                set { if (WindowCurrentState == value) return; Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.WindowState), value.ToString()); Instance.Save(EIniSelector.App); }
             }
             public static double WindowHeight
             {
                 get { double d; if (double.TryParse(Instance.AppIni.GetValueOrNull(nameof(MainWindow), nameof(MainWindow.Height)), out d)) return d; return -1; }
-                set { Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Height), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+                set { if (WindowHeight == value) return; Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Height), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
             }
             public static double WindowWidth
             {
                 get { double d; if (double.TryParse(Instance.AppIni.GetValueOrNull(nameof(MainWindow), nameof(MainWindow.Width)), out d)) return d; return -1;  }
-                set { Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Width), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+                set { if (WindowWidth == value) return; Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Width), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
             }
             public static double WindowTop
             {
                 get { double d; if (double.TryParse(Instance.AppIni.GetValueOrNull(nameof(MainWindow), nameof(MainWindow.Top)), out d)) return d; return -1; }
-                set { Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Top), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+                set { if (WindowTop == value) return; Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Top), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
             }
             public static double WindowLeft
             {
                 get { double d; if (double.TryParse(Instance.AppIni.GetValueOrNull(nameof(MainWindow), nameof(MainWindow.Left)), out d)) return d; return -1;  }
-                set { Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Left), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+                set { if (WindowLeft == value) return; Instance.AppIni.SetValue(nameof(MainWindow), nameof(MainWindow.Left), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
             }
 
             public static string WorkspacePath
             {
-                get { return Instance.AppIni.GetValueOrNull(nameof(App), nameof(Workspace)); }
-                set { Instance.AppIni.SetValue(nameof(App), nameof(Workspace), value); Instance.Save(EIniSelector.App); }
+                get { return  Instance.AppIni.GetValueOrNull(nameof(App), nameof(Workspace)); }
+                set { if (WorkspacePath != null && WorkspacePath.Equals(value)) return; Instance.AppIni.SetValue(nameof(App), nameof(Workspace), value); Instance.Save(EIniSelector.App); }
             }
 
-            public static List<string> PrevWorkspacePath
+            public static IEnumerable<string> RecentWorkspaces
             {
-                get
-                {
-                    string s = Instance.AppIni.GetValueOrNull(nameof(App), nameof(PrevWorkspacePath));
-                    string[] pathArray = new string[0];
-                    if (!(s == null))
-                    {
-                        s = s.Replace(" ", "");
-                        pathArray = s.Split(',');
-                    }
-                    
-                    return new List<string>(pathArray);
-                }
-                set
-                {
-                    string s = string.Join(",", value.ToArray());
-
-                    Instance.AppIni.SetValue(nameof(App), nameof(PrevWorkspacePath), s);
-                    Instance.Save(EIniSelector.App);
-                }
+                get { string s = Instance.AppIni.GetValueOrNull(nameof(App), nameof(RecentWorkspaces)); return s != null ? s.Split(',') : new string[0]; }
+                set { string s = string.Join(",", value); Instance.AppIni.SetValue(nameof(App), nameof(RecentWorkspaces), s); Instance.Save(EIniSelector.App); }
             }
 
             public static bool ErrorList_IsErrorsDisplayed
@@ -93,6 +77,22 @@ namespace ArmA.Studio
             {
                 get { bool val; if (bool.TryParse(Instance.AppIni.GetValueOrNull(nameof(DataContext.ErrorListPane), nameof(DataContext.ErrorListPane.IsInfosDisplayed)), out val)) return val; return true; }
                 set { Instance.AppIni.SetValue(nameof(DataContext.ErrorListPane), nameof(DataContext.ErrorListPane.IsInfosDisplayed), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+            }
+
+            public static bool EnableAutoToolUpdates
+            {
+                get { bool val; if (bool.TryParse(Instance.AppIni.GetValueOrNull(nameof(App), nameof(EnableAutoToolUpdates)), out val)) return val; return true; }
+                set { Instance.AppIni.SetValue(nameof(App), nameof(EnableAutoToolUpdates), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+            }
+            public static bool EnableAutoPluginsUpdate
+            {
+                get { bool val; if (bool.TryParse(Instance.AppIni.GetValueOrNull(nameof(App), nameof(EnableAutoPluginsUpdate)), out val)) return val; return true; }
+                set { Instance.AppIni.SetValue(nameof(App), nameof(EnableAutoPluginsUpdate), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+            }
+            public static bool AutoReportException
+            {
+                get { bool val; if (bool.TryParse(Instance.AppIni.GetValueOrNull(nameof(App), nameof(AutoReportException)), out val)) return val; return true; }
+                set { Instance.AppIni.SetValue(nameof(App), nameof(AutoReportException), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
             }
         }
         public static class Coloring
@@ -230,8 +230,138 @@ namespace ArmA.Studio
                 }
             }
 
+            public static class SyntaxHighlightingSqf
+            {
+                public static readonly Color Digits_Default = Colors.Chocolate;
+                public static Color Digits
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(Digits))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(Digits), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color StringNormal_Default = Colors.Crimson;
+                public static Color StringNormal
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(StringNormal))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(StringNormal), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color StringSingle_Default = Colors.Crimson;
+                public static Color StringSingle
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(StringSingle))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(StringSingle), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color PreProcessor_Default = Colors.Gray;
+                public static Color PreProcessor
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(PreProcessor))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(PreProcessor), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color LineComment_Default = Colors.DarkGreen;
+                public static Color LineComment
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(LineComment))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(LineComment), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color MultiLineComment_Default = Colors.DarkGreen;
+                public static Color MultiLineComment
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(MultiLineComment))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(MultiLineComment), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color BinaryCommands_Default = Colors.Blue;
+                public static Color BinaryCommands
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(BinaryCommands))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(BinaryCommands), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color UnaryCommands_Default = Colors.Blue;
+                public static Color UnaryCommands
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(UnaryCommands))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(UnaryCommands), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color NullarCommands_Default = Colors.Blue;
+                public static Color NullarCommands
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingSqf), nameof(NullarCommands))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingSqf), nameof(NullarCommands), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+            }
+            public static class SyntaxHighlightingConfig
+            {
+                public static readonly Color Digits_Default = Colors.Chocolate;
+                public static Color Digits
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingConfig), nameof(Digits))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingConfig), nameof(Digits), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color StringNormal_Default = Colors.Crimson;
+                public static Color StringNormal
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingConfig), nameof(StringNormal))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingConfig), nameof(StringNormal), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color StringSingle_Default = Colors.Crimson;
+                public static Color StringSingle
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingConfig), nameof(StringSingle))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingConfig), nameof(StringSingle), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color PreProcessor_Default = Colors.Gray;
+                public static Color PreProcessor
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingConfig), nameof(PreProcessor))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingConfig), nameof(PreProcessor), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color LineComment_Default = Colors.DarkGreen;
+                public static Color LineComment
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingConfig), nameof(LineComment))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingConfig), nameof(LineComment), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color MultiLineComment_Default = Colors.DarkGreen;
+                public static Color MultiLineComment
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingConfig), nameof(MultiLineComment))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingConfig), nameof(MultiLineComment), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+
+                public static readonly Color Keywords_Default = Colors.Blue;
+                public static Color Keywords
+                {
+                    get { return ColorParse(Instance.ColoringIni.GetValueOrNull(nameof(SyntaxHighlightingConfig), nameof(Keywords))); }
+                    set { Instance.ColoringIni.SetValue(nameof(SyntaxHighlightingConfig), nameof(Keywords), ColorParse(value)); Instance.Save(EIniSelector.Coloring); }
+                }
+            }
+
 
         }
+
+        public void PreparePlugin(IStorageAccessPlugin sap)
+        {
+            if (this.Plugins.Contains(sap))
+                return;
+            this.Plugins.Add(sap);
+            var projectConfig = GetProjectStoragePath(sap);
+            var toolConfig = GetToolStoragePath(sap);
+            var parser = new FileIniDataParser();
+            sap.ProjectStorage = File.Exists(projectConfig) ? parser.ReadFile(projectConfig, Encoding.UTF8) : new IniData();
+            sap.ToolStorage = File.Exists(toolConfig) ? parser.ReadFile(toolConfig, Encoding.UTF8) : new IniData();
+        }
+
         public static ConfigHost Instance { get; private set; }
         static ConfigHost()
         {
@@ -243,53 +373,28 @@ namespace ArmA.Studio
         public IniData AppIni { get; private set; }
         public IniData ColoringIni { get; private set; }
         public IEnumerable<RealVirtuality.SQF.SqfDefinition> SqfDefinitions { get; private set; }
-
+        public List<IStorageAccessPlugin> Plugins { get; private set; }
         private Dictionary<EIniSelector, bool> SaveTriggers;
 
 
         public ConfigHost()
         {
+            this.Plugins = new List<IStorageAccessPlugin>();
             this.SaveTriggers = new Dictionary<EIniSelector, bool>();
+            var parser = new FileIniDataParser();
             string fPath;
+
             fPath = Path.Combine(Studio.App.ConfigPath, "Layout.ini");
-            if (File.Exists(fPath))
-            {
-                var parser = new FileIniDataParser();
-                this.LayoutIni = parser.ReadFile(fPath);
-            }
-            else
-            {
-                this.LayoutIni = new IniData();
-            }
+            this.LayoutIni = File.Exists(fPath) ? parser.ReadFile(fPath, Encoding.UTF8) : new IniData();
+
             fPath = Path.Combine(Studio.App.ConfigPath, "App.ini");
-            if (File.Exists(fPath))
-            {
-                var parser = new FileIniDataParser();
-                this.AppIni = parser.ReadFile(fPath);
-            }
-            else
-            {
-                this.AppIni = new IniData();
-            }
+            this.AppIni = File.Exists(fPath) ? parser.ReadFile(fPath, Encoding.UTF8) : new IniData();
+
             fPath = Path.Combine(Studio.App.ConfigPath, "Coloring.ini");
-            if (File.Exists(fPath))
-            {
-                var parser = new FileIniDataParser();
-                this.ColoringIni = parser.ReadFile(fPath);
-            }
-            else
-            {
-                this.ColoringIni = new IniData();
-            }
+            this.ColoringIni = File.Exists(fPath) ? parser.ReadFile(fPath, Encoding.UTF8) : new IniData();
+
             fPath = Path.Combine(Studio.App.ExecutablePath, "SqfDefinition.xml");
-            if (File.Exists(fPath))
-            {
-                this.SqfDefinitions = fPath.XmlDeserialize<List<RealVirtuality.SQF.SqfDefinition>>();
-            }
-            else
-            {
-                this.SqfDefinitions = new List<RealVirtuality.SQF.SqfDefinition>();
-            }
+            this.SqfDefinitions = File.Exists(fPath) ? fPath.XmlDeserialize<List<RealVirtuality.SQF.SqfDefinition>>() : new List<RealVirtuality.SQF.SqfDefinition>();
         }
         public void SaveAll()
         {
@@ -298,6 +403,15 @@ namespace ArmA.Studio
                 this.Save(sel);
             }
             this.ExecSave();
+        }
+
+        public static string GetToolStoragePath(IStorageAccessPlugin p)
+        {
+            return Path.Combine(Studio.App.ConfigPath, string.Concat(p.GetType().FullName, ".plugin.ini"));
+        }
+        public static string GetProjectStoragePath(IStorageAccessPlugin p)
+        {
+            return Path.Combine(Workspace.Instance.ConfigPath, string.Concat(p.GetType().FullName, ".plugin.ini"));
         }
 
         public void Save(EIniSelector selector)
@@ -321,12 +435,23 @@ namespace ArmA.Studio
                             parser.WriteFile(Path.Combine(Studio.App.ConfigPath, "App.ini"), this.AppIni, Encoding.UTF8);
                             break;
                         case EIniSelector.Coloring:
-                            parser.WriteFile(Path.Combine(Studio.App.ConfigPath, "Coloring.ini"), this.ColoringIni);
+                            parser.WriteFile(Path.Combine(Studio.App.ConfigPath, "Coloring.ini"), this.ColoringIni, Encoding.UTF8);
                             break;
                         case EIniSelector.Layout:
-                            parser.WriteFile(Path.Combine(Studio.App.ConfigPath, "Layout.ini"), this.LayoutIni);
+                            parser.WriteFile(Path.Combine(Studio.App.ConfigPath, "Layout.ini"), this.LayoutIni, Encoding.UTF8);
                             break;
                     }
+                }
+            }
+            foreach(var p in this.Plugins)
+            {
+                if(p.ProjectStorageHasChanges)
+                {
+                    parser.WriteFile(GetProjectStoragePath(p), p.ProjectStorage, Encoding.UTF8);
+                }
+                if(p.ToolStorageHasChanges)
+                {
+                    parser.WriteFile(GetToolStoragePath(p), p.ToolStorage, Encoding.UTF8);
                 }
             }
         }

@@ -12,8 +12,9 @@ using System.Xml;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using ArmA.Studio.UI.Commands;
 using Utility.Collections;
+using ArmA.Studio.Data.UI;
+using ArmA.Studio.Data.UI.Commands;
 
 namespace ArmA.Studio.DataContext
 {
@@ -40,7 +41,7 @@ namespace ArmA.Studio.DataContext
                 doc.Insert(doc.TextLength, string.Concat(DateTime.Now.ToString("HH:mm:ss")," - ",e.Severity, ": ", e.Message, "\r\n"));
             });
         }
-        static OutputPane()
+        internal static void Initialize()
         {
             DocumentDictionary = new Dictionary<string, TextDocument>();
             App.SubscribableLoggerTarget.OnLog += Logger_OnLog;

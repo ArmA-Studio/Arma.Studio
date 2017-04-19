@@ -28,7 +28,6 @@ namespace ArmA.Studio.UI
         {
             if (this.Editor.Document == null)
                 return;
-
             textView.EnsureVisualLines();
             var line = this.Editor.Document.GetLineByOffset(this.Editor.CaretOffset);
             var segment = new TextSegment { StartOffset = line.Offset, EndOffset = line.EndOffset };

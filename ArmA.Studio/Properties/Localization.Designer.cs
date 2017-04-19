@@ -61,11 +61,56 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proudly made by:.
+        /// </summary>
+        public static string AboutDialog_ContributorsNote {
+            get {
+                return ResourceManager.GetString("AboutDialog_ContributorsNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ArmA.Studio.
+        /// </summary>
+        public static string AboutDialog_Header {
+            get {
+                return ResourceManager.GetString("AboutDialog_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugins in use.
+        /// </summary>
+        public static string AboutDialog_LoadedPlugins {
+            get {
+                return ResourceManager.GetString("AboutDialog_LoadedPlugins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string AboutDialog_Title {
+            get {
+                return ResourceManager.GetString("AboutDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
             get {
                 return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Existing Project.
+        /// </summary>
+        public static string AddExistingProject {
+            get {
+                return ResourceManager.GetString("AddExistingProject", resourceCulture);
             }
         }
         
@@ -143,6 +188,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Community made utility.
+        /// </summary>
+        public static string CommunityMadeUtility {
+            get {
+                return ResourceManager.GetString("CommunityMadeUtility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Condition.
         /// </summary>
         public static string Condition {
@@ -184,6 +238,33 @@ namespace ArmA.Studio.Properties {
         public static string CreateNewFileDialog_Title {
             get {
                 return ResourceManager.GetString("CreateNewFileDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Project.
+        /// </summary>
+        public static string CreateNewProjectDialog_Header {
+            get {
+                return ResourceManager.GetString("CreateNewProjectDialog_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Project.
+        /// </summary>
+        public static string CreateNewProjectDialog_Title {
+            get {
+                return ResourceManager.GetString("CreateNewProjectDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Project.
+        /// </summary>
+        public static string CreateProject {
+            get {
+                return ResourceManager.GetString("CreateProject", resourceCulture);
             }
         }
         
@@ -307,6 +388,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Provides basic functionality to ArmA.Studio.
+        /// </summary>
+        public static string DefaultPluginDescription {
+            get {
+                return ResourceManager.GetString("DefaultPluginDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -407,6 +497,24 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string GeneralProperties {
+            get {
+                return ResourceManager.GetString("GeneralProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Current Document.
+        /// </summary>
+        public static string Hotkey_SaveCurrentDocument {
+            get {
+                return ResourceManager.GetString("Hotkey_SaveCurrentDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Message.
         /// </summary>
         public static string Info {
@@ -457,6 +565,15 @@ namespace ArmA.Studio.Properties {
         public static string Line {
             get {
                 return ResourceManager.GetString("Line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About Tool.
+        /// </summary>
+        public static string MenuItem_About {
+            get {
+                return ResourceManager.GetString("MenuItem_About", resourceCulture);
             }
         }
         
@@ -600,6 +717,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Folder.
         /// </summary>
         public static string NewFolder {
@@ -632,6 +758,15 @@ namespace ArmA.Studio.Properties {
         public static string NoConfigPresent_Title {
             get {
                 return ResourceManager.GetString("NoConfigPresent_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not affiliated with Bohemia Interactive.
+        /// </summary>
+        public static string NotAffiliatedWithBohemiaInteractive {
+            get {
+                return ResourceManager.GetString("NotAffiliatedWithBohemiaInteractive", resourceCulture);
             }
         }
         
@@ -726,6 +861,51 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One or more plugins have updates available to download. Do you want to update now?.
+        /// </summary>
+        public static string PluginUpdateAvailable_Body {
+            get {
+                return ResourceManager.GetString("PluginUpdateAvailable_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin updates available.
+        /// </summary>
+        public static string PluginUpdateAvailable_Title {
+            get {
+                return ResourceManager.GetString("PluginUpdateAvailable_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin Updater.
+        /// </summary>
+        public static string PluginUpdater_Title {
+            get {
+                return ResourceManager.GetString("PluginUpdater_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ArmA Path.
+        /// </summary>
+        public static string Prop_ArmAPath {
+            get {
+                return ResourceManager.GetString("Prop_ArmAPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project Type.
+        /// </summary>
+        public static string Prop_ProjectType {
+            get {
+                return ResourceManager.GetString("Prop_ProjectType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Properties.
         /// </summary>
         public static string PropertiesDialog_Header {
@@ -740,6 +920,60 @@ namespace ArmA.Studio.Properties {
         public static string PropertiesDialog_Title {
             get {
                 return ResourceManager.GetString("PropertiesDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error Reporting.
+        /// </summary>
+        public static string Property_General_ErrorReporting {
+            get {
+                return ResourceManager.GetString("Property_General_ErrorReporting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto-Report Exceptions.
+        /// </summary>
+        public static string Property_General_ErrorReporting_AutoReportException {
+            get {
+                return ResourceManager.GetString("Property_General_ErrorReporting_AutoReportException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating.
+        /// </summary>
+        public static string Property_General_Updating {
+            get {
+                return ResourceManager.GetString("Property_General_Updating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Auto-Plugin-Update at start.
+        /// </summary>
+        public static string Property_General_Updating_EnableAutoPluginsUpdateAtStart {
+            get {
+                return ResourceManager.GetString("Property_General_Updating_EnableAutoPluginsUpdateAtStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Auto-Tool-Update at start.
+        /// </summary>
+        public static string Property_General_Updating_EnableAutoToolUpdateAtStart {
+            get {
+                return ResourceManager.GetString("Property_General_Updating_EnableAutoToolUpdateAtStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
             }
         }
         
@@ -816,6 +1050,96 @@ namespace ArmA.Studio.Properties {
         public static string SolutionFile_NameContainsInvalidFiles {
             get {
                 return ResourceManager.GetString("SolutionFile_NameContainsInvalidFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Applying available plugin updates.
+        /// </summary>
+        public static string Splash_ApplyingPossiblyAvailablePluginUpdates {
+            get {
+                return ResourceManager.GetString("Splash_ApplyingPossiblyAvailablePluginUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checking for plugin&lt;{0}&gt; update.
+        /// </summary>
+        public static string Splash_CheckingForPluginXUpdate {
+            get {
+                return ResourceManager.GetString("Splash_CheckingForPluginXUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checking for tool updates.
+        /// </summary>
+        public static string Splash_CheckingForToolUpdates {
+            get {
+                return ResourceManager.GetString("Splash_CheckingForToolUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Doing Initial Lint {0}/{1} &apos;{2}&apos;.
+        /// </summary>
+        public static string Splash_DoingInitialLint {
+            get {
+                return ResourceManager.GetString("Splash_DoingInitialLint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Breakpoints.
+        /// </summary>
+        public static string Splash_LoadingBreakpointInformations {
+            get {
+                return ResourceManager.GetString("Splash_LoadingBreakpointInformations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Plugins.
+        /// </summary>
+        public static string Splash_LoadingPlugins {
+            get {
+                return ResourceManager.GetString("Splash_LoadingPlugins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preparing Solution.
+        /// </summary>
+        public static string Splash_PreparingSolution {
+            get {
+                return ResourceManager.GetString("Splash_PreparingSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searching Solution File.
+        /// </summary>
+        public static string Splash_SearchingSolutionFile {
+            get {
+                return ResourceManager.GetString("Splash_SearchingSolutionFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting Worksapce.
+        /// </summary>
+        public static string Splash_SettingWorkspace {
+            get {
+                return ResourceManager.GetString("Splash_SettingWorkspace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update available.
+        /// </summary>
+        public static string Splash_UpdateAvailable {
+            get {
+                return ResourceManager.GetString("Splash_UpdateAvailable", resourceCulture);
             }
         }
         

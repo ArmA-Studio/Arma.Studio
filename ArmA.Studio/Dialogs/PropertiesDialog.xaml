@@ -6,91 +6,120 @@
         xmlns:local="clr-namespace:ArmA.Studio.Dialogs"
         xmlns:p="clr-namespace:ArmA.Studio.Properties"
         mc:Ignorable="d"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="{x:Static p:Localization.PropertiesDialog_Title}" Style="{StaticResource DialogWindow}">
+        xmlns:conf="clr-namespace:ArmA.Studio.Data.Configuration;assembly=ArmA.Studio.Data"
+        Title="{x:Static p:Localization.PropertiesDialog_Title}" Style="{StaticResource DialogWindow}" Width="1024" Height="512">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*" MinWidth="128"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="3*" MinWidth="256"/>
         </Grid.ColumnDefinitions>
-
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="2"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <xctk:WatermarkTextBox Padding="4 1" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
-                <xctk:WatermarkTextBox.Watermark>
-                    <Grid HorizontalAlignment="Stretch">
+        <ListView Grid.Column="0" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" Margin="4">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type conf:Category}">
+                    <Grid Margin="4" Height="32">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="32"/>
+                            <ColumnDefinition Width="8"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Search" VerticalAlignment="Center"/>
-                        <Path Grid.Column="1" Data="{StaticResource SearchR}" Height="11" Stretch="Uniform" Fill="Black" Opacity="0.4"/>
+                        <Image Grid.Column="0" Source="{Binding ImageSource}" MaxWidth="32" MaxHeight="32" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Grid>
-                </xctk:WatermarkTextBox.Watermark>
-            </xctk:WatermarkTextBox>
-            <ListBox Grid.Row="2" ItemsSource="{Binding AvailableCategories}" SelectedItem="{Binding SelectedCategory}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Height="32">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="32"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="{Binding ImageSource}" VerticalAlignment="Center" Height="32"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="6 0" VerticalAlignment="Center"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Grid>
-        <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"/>
-        <ListView Grid.Column="2" ItemsSource="{Binding SelectedCategory}">
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Width="4" Background="Transparent"/>
+        <ListView Grid.Column="2" ItemsSource="{Binding SelectedCategory}" HorizontalContentAlignment="Stretch" Margin="4" ScrollViewer.CanContentScroll="False">
             <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <ContentPresenter Margin="2"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
                 </Style>
             </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <ContentControl Content="{Binding}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                    <ContentControl.Style>
-                                        <Style TargetType="ContentControl">
-                                            <Setter Property="ContentTemplate">
-                                                <Setter.Value>
-                                                    <DataTemplate>
-                                                        <TextBox Text="{Binding Value}"/>
-                                                    </DataTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding EditTemplate}" Value="Color">
-                                                    <Setter Property="ContentTemplate">
-                                                        <Setter.Value>
-                                                            <DataTemplate>
-                                                                <xctk:ColorPicker ColorMode="ColorCanvas" SelectedColor="{Binding Value}" HorizontalAlignment="Stretch"/>
-                                                            </DataTemplate>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ContentControl.Style>
-                                </ContentControl>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type conf:SubCategory}">
+                    <Border CornerRadius="0" BorderBrush="Gray" BorderThickness="1">
+                        <Expander Grid.Column="2" IsExpanded="{Binding IsExpanded}" BorderThickness="0" Padding="4">
+                            <Expander.Header>
+                                <Grid Margin="4" Height="24">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="24"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Source="{Binding ImageSource}" MaxWidth="24" MaxHeight="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                            </Expander.Header>
+                            <!-- ToDo: Fix blocked scrolling -->
+                            <ListView ItemsSource="{Binding}" BorderThickness="0" Background="Transparent">
+                                <ListView.Style>
+                                    <Style TargetType="ListView">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <ItemsPresenter/>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListView.Style>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                        <Setter Property="ToolTip" Value="{Binding ToolTip}"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                    <Grid Background="{TemplateBinding Background}">
+                                                        <Border Name="Selection" Visibility="Collapsed" />
+                                                        <GridViewRowPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                                    </Grid>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+
+                                <ListView.View>
+                                    <GridView>
+                                        <GridView.ColumnHeaderContainerStyle>
+                                            <Style TargetType="GridViewColumnHeader">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </Style>
+                                        </GridView.ColumnHeaderContainerStyle>
+                                        <GridViewColumn Width="16">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <!-- Hacky fix for ContentPresenter of GridViewColumn having margin of {6,0,6,0} HardCoded -->
+                                                    <Image Margin="-6, 0" Source="{Binding ImageSource}" MaxWidth="16" MaxHeight="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <ContentPresenter Content="{Binding}" ContentTemplate="{Binding Template}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </Expander>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
     </Grid>
 </Window>

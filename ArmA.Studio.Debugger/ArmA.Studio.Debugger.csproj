@@ -40,12 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Breakpoint.cs" />
     <Compile Include="CallstackItem.cs" />
     <Compile Include="EVariableNamespace.cs" />
-    <Compile Include="Extensions.cs" />
     <Compile Include="EOperation.cs" />
-    <Compile Include="IDebugger.cs" />
     <Compile Include="OnContinueEventArgs.cs" />
     <Compile Include="OnHaltEventArgs.cs" />
     <Compile Include="OnConnectionClosedEventArgs.cs" />
@@ -57,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ArmA.Studio.Data\ArmA.Studio.Data.csproj">
-      <Project>{dc5bb018-6ca3-4f0a-864a-425cef2f454b}</Project>
+      <Project>{DC5BB018-6CA3-4F0A-864A-425CEF2F454B}</Project>
       <Name>ArmA.Studio.Data</Name>
     </ProjectReference>
   </ItemGroup>

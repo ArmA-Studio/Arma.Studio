@@ -31,6 +31,7 @@ namespace ArmA.Studio.UI
         {
             if (this._Templates.Contains(dt))
                 return;
+            dt.Seal();
             this._Templates.Add(dt);
         }
 
@@ -62,7 +63,8 @@ namespace ArmA.Studio.UI
                         continue;
                     }
                 }
-                this._Templates.Add(template);
+                if (template.DataType is Type)
+                    this.AddDataTemplate(template);
             }
         }
 
@@ -98,7 +100,7 @@ namespace ArmA.Studio.UI
             var itemType = item.GetType();
             var dtCollection = this._Templates.FindAll((d) => ((Type)d.DataType).IsAssignableFrom(itemType));
             DataTemplate dt = dtCollection.FirstOrDefault();
-            var dtRank = -1;
+            var dtRank = int.MaxValue;
             foreach (var it in dtCollection)
             {
                 var parentRank = ParentRank((Type)it.DataType, itemType);

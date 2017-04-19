@@ -17,6 +17,21 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -39,6 +54,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\ArmA.Studio.documentation.XML</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>ArmA.Studio.App</StartupObject>
@@ -72,11 +88,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.4\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.4.4.5\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -127,24 +143,49 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ASKeyContainer.cs" />
+    <Compile Include="BreakpointManager.cs" />
+    <Compile Include="DataContext\SolutionPane.cs" />
+    <Compile Include="DataContext\SolutionPaneUtil\ProjectFileModelView.cs" />
+    <Compile Include="DataContext\SolutionPaneUtil\ProjectFolderModelView.cs" />
+    <Compile Include="DataContext\SolutionPaneUtil\ProjectModelView.cs" />
+    <Compile Include="DefaultPlugin\HighlightingHelper.cs" />
+    <Compile Include="DefaultPlugin\ImageViewerDocument.cs" />
+    <Compile Include="DefaultPlugin\PluginMain.cs" />
+    <Compile Include="DefaultPlugin\ConfigDocument.cs" />
+    <Compile Include="DefaultPlugin\SqfDocument.cs" />
+    <Compile Include="DefaultPlugin\ConfigLintHelper.cs" />
+    <Compile Include="DefaultPlugin\SqfLintHelper.cs" />
+    <Compile Include="Dialogs\CreateNewProjectDialog.xaml.cs">
+      <DependentUpon>CreateNewProjectDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\CreateNewProjectDialogDataContext.cs" />
+    <Compile Include="Dialogs\DocumentSelectorDialog.xaml.cs">
+      <DependentUpon>DocumentSelectorDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DocumentSelectorDialogDataContext.cs" />
+    <Compile Include="Dialogs\AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\AboutDialogDataContext.cs" />
     <Compile Include="Dialogs\ReportDialog.xaml.cs">
       <DependentUpon>ReportDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ReportDialogDataContext.cs" />
     <Compile Include="DataContext\VariablesViewPane.cs" />
-    <Compile Include="DataContext\BreakpointsPaneUtil\Breakpoint.cs" />
     <Compile Include="DataContext\ErrorListPane.cs" />
     <Compile Include="DataContext\BreakpointsPane.cs" />
     <Compile Include="DataContext\OutputPane.cs" />
     <Compile Include="DataContext\CallStackPane.cs" />
-    <Compile Include="DataContext\TextEditorUtil\IntelliSenseEntry.cs" />
     <Compile Include="Dialogs\CreateNewFileDialogDataContext.cs" />
-    <Compile Include="Dialogs\DownloadDialog.xaml.cs">
-      <DependentUpon>DownloadDialog.xaml</DependentUpon>
+    <Compile Include="Dialogs\DownloadPluginUpdateDialog.xaml.cs">
+      <DependentUpon>DownloadPluginUpdateDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\PropertiesDialogUtil\ColorConfigEntry.cs" />
-    <Compile Include="ESeverity.cs" />
-    <Compile Include="DataContext\TextEditorUtil\LinterInfo.cs" />
+    <Compile Include="Dialogs\DownloadToolUpdateDialog.xaml.cs">
+      <DependentUpon>DownloadToolUpdateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DownloadPluginUpdateDialogDataContext.cs" />
+    <Compile Include="Dialogs\WorkspaceSelectorDialog.cs" />
     <Compile Include="DebuggerContext.cs" />
     <Compile Include="Dialogs\IDialogContext.cs" />
     <Compile Include="Dialogs\PropertiesDialog.xaml.cs">
@@ -152,16 +193,20 @@
     </Compile>
     <Compile Include="Dialogs\PropertiesDialogDataContext.cs" />
     <Compile Include="IniHelper.cs" />
-    <Compile Include="Linting.cs" />
+    <Compile Include="KeyManager.cs" />
     <Compile Include="LintScheduler.cs" />
     <Compile Include="LoggerTargets\SubscribableTarget.cs" />
-    <Compile Include="UI\Attached\Eventing\PreviewKeyDown.cs" />
-    <Compile Include="UI\Attached\Eventing\PreviewMouseDown.cs" />
-    <Compile Include="UI\Attached\Eventing\MouseDown.cs" />
+    <Compile Include="SplashScreen.xaml.cs">
+      <DependentUpon>SplashScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SplashScreenDataContext.cs" />
     <Compile Include="UI\Attached\ActiveContentChangedAttached.cs" />
     <Compile Include="UI\Controls\ListView_ScrollSelectionChanged.cs" />
+    <Compile Include="UI\Converters\StringNullToDependencyPropertyUnsetConverter.cs" />
+    <Compile Include="UI\Converters\SolutionExplorerItemVisibilityConverter.cs" />
     <Compile Include="UI\Converters\StringRemoveNewLineConverter.cs" />
     <Compile Include="UI\GenericDataTemplateSelector.cs" />
+    <Compile Include="UI\LineHighlighterBackgroundRenderer.cs" />
     <Compile Include="UI\RuntimeExecutionMargin.cs" />
     <Compile Include="UI\Converters\CountEnumerableConverter.cs" />
     <Compile Include="UI\Converters\AlwaysVisibleConverter.cs" />
@@ -170,64 +215,36 @@
     <Compile Include="UI\Converters\Multi\BoolOrMultiConverter.cs" />
     <Compile Include="UI\Converters\Multi\CollectionContainsConverter.cs" />
     <Compile Include="UI\UnderlineBackgroundRenderer.cs" />
-    <Compile Include="UI\LineHighlighterBackgroundRenderer.cs" />
     <Compile Include="ConfigHost.cs" />
     <Compile Include="DataContext\PropertiesPane.cs" />
-    <Compile Include="DataContext\ConfigEditorDocument.cs" />
-    <Compile Include="DataContext\UiEditorDocument.cs" />
-    <Compile Include="DataContext\SqfReaderDocument.cs" />
-    <Compile Include="DataContext\TextEditorDocument.cs" />
     <Compile Include="Dialogs\ConfigEntrySelectorDialog.xaml.cs">
       <DependentUpon>ConfigEntrySelectorDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\FileType.cs" />
     <Compile Include="Dialogs\CreateNewFileDialog.xaml.cs">
       <DependentUpon>CreateNewFileDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\DownloadDialogDataContext.cs" />
+    <Compile Include="Dialogs\DownloadToolUpdateDialogDataContext.cs" />
     <Compile Include="Dialogs\WorkspaceSelectorDialog.xaml.cs">
       <DependentUpon>WorkspaceSelectorDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ConfigEntrySelectorDialogDataContext.cs" />
     <Compile Include="Dialogs\WorkspaceSelectorDialogDataContext.cs" />
-    <Compile Include="Dialogs\License.cs" />
     <Compile Include="Dialogs\LicenseViewer.xaml.cs">
       <DependentUpon>LicenseViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\LicenseViewerDataContext.cs" />
-    <Compile Include="DockableBase.cs" />
-    <Compile Include="DocumentBase.cs" />
     <Compile Include="LayoutUpdateStrategy.cs" />
-    <Compile Include="PanelBase.cs" />
-    <Compile Include="SolutionUtil\Solution.cs" />
-    <Compile Include="SolutionUtil\SolutionFile.cs" />
-    <Compile Include="SolutionUtil\SolutionFileBase.cs" />
     <Compile Include="Properties\Localization.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Localization.resx</DependentUpon>
     </Compile>
-    <Compile Include="SolutionUtil\SolutionFolder.cs" />
-    <Compile Include="UI\Attached\ChangePropertiesViewCurrentAttached.cs" />
-    <Compile Include="UI\Attached\Eventing\Closing.cs" />
-    <Compile Include="UI\Attached\Eventing\LostKeyboardFocus.cs" />
-    <Compile Include="UI\Attached\Eventing\ContextMenuOpening.cs" />
-    <Compile Include="UI\Attached\Eventing\MouseRightButtonDown.cs" />
-    <Compile Include="UI\Attached\Eventing\MouseLeftButtonDown.cs" />
-    <Compile Include="UI\Attached\Eventing\LostFocus.cs" />
-    <Compile Include="UI\Attached\Eventing\Unloaded.cs" />
-    <Compile Include="UI\Attached\Eventing\KeyDown.cs" />
-    <Compile Include="UI\Attached\Eventing\Initialized.cs" />
-    <Compile Include="UI\Attached\Eventing\TextChanged.cs" />
-    <Compile Include="UI\Attached\Eventing\MouseDoubleClick.cs" />
     <Compile Include="UI\Attached\DialogResultAttached.cs" />
     <Compile Include="UI\Attached\LooseFocusOnKeyAttached.cs" />
     <Compile Include="UI\Attached\SelectFileNameOnFocusAttached.cs" />
     <Compile Include="UI\Attached\SelectAllOnFocusAttached.cs" />
     <Compile Include="UI\Attached\TextboxInputTypeAttached.cs" />
     <Compile Include="UI\BreakPointMargin.cs" />
-    <Compile Include="UI\Commands\RelayCommand.cs" />
-    <Compile Include="UI\Commands\RelayCommandAsync.cs" />
     <Compile Include="UI\Converters\BoolInvertConverter.cs" />
     <Compile Include="UI\Converters\IsStringNullConverter.cs" />
     <Compile Include="UI\Converters\IsNullConverter.cs" />
@@ -238,17 +255,22 @@
     <Compile Include="UI\CustomBinding.cs" />
     <Compile Include="UI\DataTemplates\AvalonDockStyleSelector.cs" />
     <EmbeddedResource Include="Properties\Localization.de-DE.resx" />
-    <EmbeddedResource Include="UI\DataTemplates\TextEditorDocumentTemplate.xaml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <Compile Include="UI\UserInteractionEventArgs.cs" />
-    <Compile Include="UI\ViewModel\IPropertyDataTemplateProvider.cs" />
-    <Compile Include="UI\ViewModel\IUserInteractable.cs" />
-    <Compile Include="UI\ViewModel\IViewModel.cs" />
     <Compile Include="UpdateHelper.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Workspace.cs" />
+    <EmbeddedResource Include="DefaultPlugin\ImageViewerDocumentDataTemplate.xaml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Page Include="Dialogs\ConfigEntrySelectorDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\CreateNewProjectDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DocumentSelectorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -256,17 +278,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\ReportDialog.xaml">
+    <Page Include="Dialogs\DownloadPluginUpdateDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\DownloadDialog.xaml">
+    <Page Include="Dialogs\DownloadToolUpdateDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\AboutDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\PropertiesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ReportDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\WorkspaceSelectorDialog.xaml">
       <SubType>Designer</SubType>
@@ -292,9 +322,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\DataTemplates\Properties.xaml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\DataTemplates\DocumentBase.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\DataTemplates\UiEditorDocumentTemplate.xaml">
@@ -332,6 +359,122 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Pictograms\CallStackWindow\CallStackWindow_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Field\F12_Field_20x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Field\Field_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Field\field_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Field\field_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Field\Field_blue_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\IconFile\IconFile_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\IconFile\IconFile_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\IconFile\IconFile_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\IconFile\IconFile_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\IconFile\IconFile_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\ASCube_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\ASCube_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\F12_Method_20x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\MethodRamp.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\method_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\method_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_32xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_32xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_purple_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_purple_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_purple_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_purple_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_purple_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Method\Method_purple_exp.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1735,6 +1878,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Page Include="SplashScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -1777,6 +1924,35 @@
     <None Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_64x.ai" />
     <None Include="Resources\Pictograms\CallStackWindow\CallStackWindow_16x.ai" />
     <None Include="Resources\Pictograms\CallStackWindow\VSO_CallStackWindow_16x.ai" />
+    <None Include="Resources\Pictograms\Field\F12_Field_20x.ai" />
+    <None Include="Resources\Pictograms\Field\Field_16x.ai" />
+    <None Include="Resources\Pictograms\Field\field_16xMD.ai" />
+    <None Include="Resources\Pictograms\Field\field_16xSM.ai" />
+    <None Include="Resources\Pictograms\Field\Field_blue_16x.ai" />
+    <None Include="Resources\Pictograms\IconFile\IconFile_16x.ai" />
+    <None Include="Resources\Pictograms\IconFile\IconFile_256x.ai" />
+    <None Include="Resources\Pictograms\IconFile\IconFile_32x.ai" />
+    <None Include="Resources\Pictograms\IconFile\IconFile_48x.ai" />
+    <None Include="Resources\Pictograms\IconFile\IconFile_64x.ai" />
+    <None Include="Resources\Pictograms\Method\ASCube_16xMD.ai" />
+    <None Include="Resources\Pictograms\Method\ASCube_16xSM.ai" />
+    <None Include="Resources\Pictograms\Method\F12_Method_20x.ai" />
+    <None Include="Resources\Pictograms\Method\MethodRamp.ai" />
+    <None Include="Resources\Pictograms\Method\Method_16x.ai" />
+    <None Include="Resources\Pictograms\Method\method_16xMD.ai" />
+    <None Include="Resources\Pictograms\Method\method_16xSM.ai" />
+    <None Include="Resources\Pictograms\Method\Method_256x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_32x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_32xMD.ai" />
+    <None Include="Resources\Pictograms\Method\Method_32xSM.ai" />
+    <None Include="Resources\Pictograms\Method\Method_48x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_64x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_purple_16x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_purple_256x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_purple_32x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_purple_48x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_purple_64x.ai" />
+    <None Include="Resources\Pictograms\Method\Method_purple_exp.ai" />
     <None Include="Resources\Pictograms\Output\Monaco_OutputCommandToggled_28x_32x.ai" />
     <None Include="Resources\Pictograms\Output\Monaco_OutputCommand_28x_32x.ai" />
     <None Include="Resources\Pictograms\Output\Output_12x.ai" />
@@ -2169,6 +2345,50 @@
     <Resource Include="Resources\Pictograms\CallStackWindow\CallStackWindow_16x_32.bmp" />
     <Resource Include="Resources\Pictograms\CallStackWindow\VSO_CallStackWindow_16x.png" />
     <Content Include="Resources\Pictograms\CallStackWindow\VSO_CallStackWindow_16x.svg" />
+    <Resource Include="Resources\Pictograms\Method\ASCube_16xMD.png" />
+    <Resource Include="Resources\Pictograms\Method\ASCube_16xSM.png" />
+    <Resource Include="Resources\Pictograms\Method\F12_Method_20x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method.ico" />
+    <Resource Include="Resources\Pictograms\Method\Method_16x.png" />
+    <Resource Include="Resources\Pictograms\Method\method_16xMD.png" />
+    <Resource Include="Resources\Pictograms\Method\method_16xSM.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_24.bmp" />
+    <Resource Include="Resources\Pictograms\Method\Method_256x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_32.bmp" />
+    <Resource Include="Resources\Pictograms\Method\Method_32x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_32xMD.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_32xSM.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_48x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_64x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_exp.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple.ico" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_16x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_256x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_32x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_48x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_64x.png" />
+    <Resource Include="Resources\Pictograms\Method\Method_purple_Green24.bmp" />
+    <Resource Include="Resources\Pictograms\Field\F12_Field_20x.png" />
+    <Resource Include="Resources\Pictograms\Field\Field_16x.png" />
+    <Resource Include="Resources\Pictograms\Field\field_16xMD.png" />
+    <Resource Include="Resources\Pictograms\Field\field_16xSM.png" />
+    <Resource Include="Resources\Pictograms\Field\Field_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Field\Field_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\Field\Field_blue_16x.png" />
+    <Resource Include="Resources\Pictograms\Field\Field_blue_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Field\Field_blue_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile.ico" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_16x.png" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_16x_Green24.bmp" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_256x.png" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_32x.png" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_32x_24.bmp" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_48x.png" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_64x.png" />
     <Content Include="Resources\Pictograms\Output\Output_16x.svg" />
     <Resource Include="Resources\Pictograms\Output\Output_16xMD.png" />
     <Resource Include="Resources\Pictograms\Output\Output_16xSM.png" />
@@ -2185,6 +2405,8 @@
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_32x.png" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_48x.png" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_64x.png" />
+    <Resource Include="Resources\SplashScreen.png" />
+    <Resource Include="Resources\Project.png" />
     <Content Include="SqfDefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2208,6 +2430,10 @@
     <ProjectReference Include="..\ArmA.Studio.Debugger\ArmA.Studio.Debugger.csproj">
       <Project>{ec8d472e-f967-475d-8fbb-fc9b2db56467}</Project>
       <Name>ArmA.Studio.Debugger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ArmA.Studio.Plugin\ArmA.Studio.Plugin.csproj">
+      <Project>{C5BD46BE-607F-41D5-8C6A-F2EEF8706E24}</Project>
+      <Name>ArmA.Studio.Plugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\ArmAClassParser\ArmAClassParser.csproj">
       <Project>{2e1b48ad-1de2-457e-ae85-8230969296bf}</Project>
@@ -2852,7 +3078,18 @@
     <Resource Include="Resources\Pictograms\Save\VSO_Save_whiteNoHalo_16x.png" />
     <Content Include="Resources\Pictograms\Save\VSO_Save_whiteNoHalo_16x.svg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

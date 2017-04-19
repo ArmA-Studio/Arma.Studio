@@ -7,8 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ArmA.Studio.Data;
+using ArmA.Studio.Data.UI;
+using ArmA.Studio.Data.UI.Commands;
 using ArmA.Studio.Debugger;
-using ArmA.Studio.SolutionUtil;
+using ArmA.Studio.Plugin;
 
 namespace ArmA.Studio
 {
@@ -29,7 +32,7 @@ namespace ArmA.Studio
         public IEnumerable<CallstackItem> CallStack { get { return this._CallStack; } set { this._CallStack = value; this.RaisePropertyChanged(); } }
         private IEnumerable<CallstackItem> _CallStack;
 
-        private readonly IDebugger DebuggerInstance;
+        public IDebuggerPlugin DebuggerInstance { get; private set; }
 
         public ICommand CmdRunDebuggerClick { get; private set; }
         public ICommand CmdPauseDebugger { get; private set; }
@@ -37,24 +40,25 @@ namespace ArmA.Studio
         public ICommand CmdStepInto { get; private set; }
         public ICommand CmdStepOver { get; private set; }
         public ICommand CmdStepOut { get; private set; }
-        public DocumentBase CurrentDocument { get; internal set; }
-        public int CurrentLine { get; internal set; }
-        public int CurrentColumn { get; private set; }
 
-        private SolutionFile LastSF = null;
+        public int CurrentLine { get; private set; }
+        public int CurrentColumn { get; private set; }
+        public string CurrentArmADocument { get; private set; }
+
+        private CodeEditorBaseDataContext LastEditorContext;
 
         public DebuggerContext()
         {
             Instance = this;
             this._IsDebuggerAttached = false;
             this._IsPaused = false;
+            
+            this.DebuggerInstance = App.GetPlugins<IDebuggerPlugin>().FirstOrDefault();
+            Logger.Info(this.DebuggerInstance == null ? "Could not locate debugger plugin." : $"Using '{this.DebuggerInstance.Name}' as debugger.");
 
-
-            //ToDo: Find debugger dynamically
-            this.DebuggerInstance = GetDebuggerInstance();
             if (this.DebuggerInstance == null)
             {
-                this.CmdRunDebuggerClick = new UI.Commands.RelayCommand((p) => MessageBox.Show(Properties.Localization.DebuggerContext_NoDebuggerAvailable_Body, Properties.Localization.DebuggerContext_NoDebuggerAvailable_Title, MessageBoxButton.OK, MessageBoxImage.Information));
+                this.CmdRunDebuggerClick = new RelayCommand((p) => MessageBox.Show(Properties.Localization.DebuggerContext_NoDebuggerAvailable_Body, Properties.Localization.DebuggerContext_NoDebuggerAvailable_Title, MessageBoxButton.OK, MessageBoxImage.Information));
             }
             else
             {
@@ -63,7 +67,7 @@ namespace ArmA.Studio
                 this.DebuggerInstance.OnError += DebuggerInstance_OnError;
                 this.DebuggerInstance.OnException += DebuggerInstance_OnException;
                 this.DebuggerInstance.OnContinue += DebuggerInstance_OnContinue;
-                this.CmdRunDebuggerClick = new UI.Commands.RelayCommandAsync(async (p) =>
+                this.CmdRunDebuggerClick = new RelayCommandAsync(async (p) =>
                 {
                     if (!this.IsDebuggerAttached)
                     {
@@ -84,51 +88,41 @@ namespace ArmA.Studio
                     else if (this.IsPaused)
                     {
                         this.IsPaused = false;
-                        await ExecuteOperation(Debugger.EOperation.Continue);
+                        await ExecuteOperationAsync(Debugger.EOperation.Continue);
                     }
                 });
-                this.CmdStopDebugger = new UI.Commands.RelayCommandAsync(async (p) =>
+                this.CmdStopDebugger = new RelayCommandAsync(async (p) =>
                 {
                     Logger.Log(NLog.LogLevel.Info, "Detaching debugger...");
                     await Task.Run(() => this.DebuggerInstance.Detach());
                 });
-                this.CmdPauseDebugger = new UI.Commands.RelayCommandAsync((p) => ExecuteOperation(EOperation.Pause));
-                this.CmdStepInto = new UI.Commands.RelayCommandAsync((p) => ExecuteOperation(EOperation.StepInto));
-                this.CmdStepOver = new UI.Commands.RelayCommandAsync((p) => ExecuteOperation(EOperation.StepOver));
-                this.CmdStepOut = new UI.Commands.RelayCommandAsync((p) => ExecuteOperation(EOperation.StepOut));
+                this.CmdPauseDebugger = new RelayCommandAsync((p) => ExecuteOperationAsync(EOperation.Pause));
+                this.CmdStepInto = new RelayCommandAsync((p) => ExecuteOperationAsync(EOperation.StepInto));
+                this.CmdStepOver = new RelayCommandAsync((p) => ExecuteOperationAsync(EOperation.StepOver));
+                this.CmdStepOut = new RelayCommandAsync((p) => ExecuteOperationAsync(EOperation.StepOut));
 
-                DataContext.BreakpointsPane.Breakpoints.CollectionChanged += Breakpoints_CollectionChanged;
+                Workspace.Instance.BreakpointManager.OnBreakPointsChanged += BreakpointManager_OnBreakPointsChanged;
             }
         }
 
-        public IEnumerable<Data.Configuration.ConfigCategory> GetPropertyCategories()
-        {
-            return this.DebuggerInstance?.GetConfigurationOptions();
-        }
-
-        private void Breakpoints_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void BreakpointManager_OnBreakPointsChanged(object sender, BreakpointManager.BreakPointsChangedEventArgs e)
         {
             if (!this.IsDebuggerAttached)
             {
                 return;
             }
-            switch (e.Action)
+            switch (e.Mode)
             {
-                case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
-                    foreach (DataContext.BreakpointsPaneUtil.Breakpoint it in e.NewItems)
-                        this.DebuggerInstance.AddBreakpoint(it);
+                case BreakpointManager.BreakPointsChangedEventArgs.EMode.Add:
+                        this.DebuggerInstance.AddBreakpoint(e.Breakpoint);
                     break;
-                case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
-                    foreach (DataContext.BreakpointsPaneUtil.Breakpoint it in e.OldItems)
-                        this.DebuggerInstance.RemoveBreakpoint(it);
+                case BreakpointManager.BreakPointsChangedEventArgs.EMode.Remove:
+                        this.DebuggerInstance.RemoveBreakpoint(e.Breakpoint);
                     break;
-                case System.Collections.Specialized.NotifyCollectionChangedAction.Replace:
-                    foreach (DataContext.BreakpointsPaneUtil.Breakpoint it in e.OldItems)
-                        this.DebuggerInstance.AddBreakpoint(it);
-                    foreach (DataContext.BreakpointsPaneUtil.Breakpoint it in e.NewItems)
-                        this.DebuggerInstance.AddBreakpoint(it);
+                case BreakpointManager.BreakPointsChangedEventArgs.EMode.Update:
+                    this.DebuggerInstance.UpdateBreakpoint(e.Breakpoint);
                     break;
-                case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
+                case BreakpointManager.BreakPointsChangedEventArgs.EMode.DrasticChange:
                     this.DebuggerInstance.ClearBreakpoints();
                     this.AddAllBreakpointsToDebugger();
                     break;
@@ -137,13 +131,13 @@ namespace ArmA.Studio
 
         private void AddAllBreakpointsToDebugger()
         {
-            foreach (var it in DataContext.BreakpointsPane.Breakpoints)
+            foreach (var bpi in Workspace.Instance.BreakpointManager)
             {
-                this.DebuggerInstance.AddBreakpoint(it);
+                this.DebuggerInstance.AddBreakpoint(bpi);
             }
         }
 
-        #region Event subscription methods
+        #region Event callback methods
         private void DebuggerInstance_OnException(object sender, Debugger.OnExceptionEventArgs e)
         {
             App.Current.Dispatcher.Invoke(() =>
@@ -158,9 +152,9 @@ namespace ArmA.Studio
         private void DebuggerInstance_OnError(object sender, Debugger.OnErrorEventArgs e)
         {
             App.Current.Dispatcher.Invoke(() =>
-        {
-            Logger.Log(NLog.LogLevel.Info, string.Format("Error was caught: {0}", e.Message));
-        }, System.Windows.Threading.DispatcherPriority.Send);
+            {
+                Logger.Log(NLog.LogLevel.Info, string.Format("Error was caught: {0}", e.Message));
+            }, System.Windows.Threading.DispatcherPriority.Send);
         }
 
         private void DebuggerInstance_OnConnectionClosed(object sender, Debugger.OnConnectionClosedEventArgs e)
@@ -179,35 +173,26 @@ namespace ArmA.Studio
                 Logger.Log(NLog.LogLevel.Info, "Execution was halted.");
                 this.IsPaused = true;
                 this.CurrentLine = e.Line;
-                this.CurrentColumn = e.Col;
+                this.CurrentColumn = e.Column;
                 this.CallStack = this.DebuggerInstance.GetCallstack();
 
                 App.Current.MainWindow.Activate();
-                SolutionFile sf = null;
-                if (!SolutionFileBase.WalkThrough(Workspace.CurrentWorkspace.CurrentSolution.FilesCollection, (sfb) =>
-                 {
-                     var f = sfb as SolutionFile;
-                     if (f != null && f.ArmAPath.Equals(e.DocumentPath, StringComparison.InvariantCultureIgnoreCase))
-                     {
-                         LastSF = sf = f;
-                         return true;
-                     }
-                     return false;
-                 }))
+                this.CurrentArmADocument = e.DocumentPath;
+
+                var pff = Workspace.Instance.Solution.GetProjectFileFolderFromArmAPath(e.DocumentPath);
+                DocumentBase doc;
+                if (pff == null)
                 {
-                    Logger.Log(NLog.LogLevel.Info, string.Format("Could not locate document {0}.", e.DocumentPath));
-                    return;
+                    var content = DebuggerInstance.GetDocumentContent(e.DocumentPath);
+                    doc = Workspace.Instance.CreateTemporaryDocument(content, ".sqf");
+                    Logger.Info($"Created temporary document for {e.DocumentPath}");
                 }
-                Workspace.CurrentWorkspace.OpenOrFocusDocument(sf);
-                var doc = Workspace.CurrentWorkspace.GetDocumentOfSolutionFileBase(sf) as DataContext.TextEditorDocument;
-                sf.RedrawEditor();
-                if (doc == null)
+                else
                 {
-                    Logger.Log(NLog.LogLevel.Info, string.Format("Document {0} is no TextEditorDocument?", sf.RelativePath));
-                    return;
+                    doc = Workspace.Instance.CreateOrFocusDocument(pff);
                 }
-                //ToDo: Remove when document gets closed
-                this.CurrentDocument = doc;
+                doc.RefreshVisuals();
+                this.LastEditorContext = doc as CodeEditorBaseDataContext;
             }, System.Windows.Threading.DispatcherPriority.Send);
         }
 
@@ -218,48 +203,25 @@ namespace ArmA.Studio
                 Logger.Log(NLog.LogLevel.Info, "Execution was continued.");
                 this.IsPaused = false;
                 this.CallStack = Enumerable.Empty<CallstackItem>();
-                LastSF?.RedrawEditor();
+                if (this.LastEditorContext != null && this.LastEditorContext.IsTemporary)
+                {
+                    this.LastEditorContext.Close();
+                }
+                else
+                {
+                    this.LastEditorContext?.RefreshVisuals();
+                }
             }, System.Windows.Threading.DispatcherPriority.Send);
         }
         #endregion
-        /// <summary>
-        /// Finds first instance of any debugger in DebuggerPath
-        /// </summary>
-        /// <returns>Instance of the debugger or null.</returns>
-        private static IDebugger GetDebuggerInstance()
-        {
-            Logger.Log(NLog.LogLevel.Info, "Trying to find debugger...");
-            var path = App.DebuggerPath;
-            if (!Directory.Exists(path))
-            {
-                Logger.Log(NLog.LogLevel.Error, string.Format("Directory '{0}' is not existing, cannot continue debugger dll search.", path));
-                return null;
-            }
-            foreach (var file in Directory.EnumerateFiles(path, "*.dll"))
-            {
-                var ass = System.Reflection.Assembly.LoadFile(file);
-                var assTypes = ass.GetTypes();
-                foreach (var type in assTypes)
-                {
-                    if (typeof(IDebugger).IsAssignableFrom(type))
-                    {
-                        Logger.Log(NLog.LogLevel.Info, string.Format("Using '{0}' as debugger.", file));
-                        return Activator.CreateInstance(type) as Debugger.IDebugger;
-                    }
-                }
-            }
-            Logger.Log(NLog.LogLevel.Error, "No debugger found!");
-            return null;
-        }
 
-        public async Task UpdateBreakpoint(DataContext.BreakpointsPaneUtil.Breakpoint bp)
+        public async Task UpdateBreakpointAsync(BreakpointInfo bp)
         {
             if (!this.IsDebuggerAttached)
                 return;
             await this.DebuggerInstance?.UpdateBreakpointAsync(bp);
         }
-
-        public async Task ExecuteOperation(EOperation operation)
+        public async Task ExecuteOperationAsync(EOperation operation)
         {
             Logger.Log(NLog.LogLevel.Info, string.Format("Executing '{0}' on debugger", Enum.GetName(typeof(EOperation), operation)));
             if (!await this.DebuggerInstance.PerformAsync(operation))
@@ -268,21 +230,18 @@ namespace ArmA.Studio
                 MessageBox.Show(string.Format(Properties.Localization.DebuggerContext_OperationFailed_Body, Enum.GetName(typeof(EOperation), operation), reason), Properties.Localization.DebuggerContext_OperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-        public async Task<IEnumerable<Variable>> GetVariables(EVariableNamespace scope = EVariableNamespace.All, params string[] names)
+        public async Task<IEnumerable<Variable>> GetVariablesAsync(EVariableNamespace scope = EVariableNamespace.All, params string[] names)
         {
             if (!this.IsDebuggerAttached)
                 return new Variable[0];
             return await this.DebuggerInstance.GetVariablesAsync(scope, names);
         }
-
-        public async Task SetVariable(Variable variable)
+        public async Task SetVariableAsync(Variable variable)
         {
             if (!this.IsDebuggerAttached)
                 return;
             await this.DebuggerInstance.SetVariableAsync(variable);
         }
-
-
         internal void Close()
         {
             this.DebuggerInstance?.Dispose();

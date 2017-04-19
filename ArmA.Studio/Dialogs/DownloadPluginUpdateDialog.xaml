@@ -1,0 +1,36 @@
+﻿<Window x:Class="ArmA.Studio.Dialogs.DownloadPluginUpdateDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ArmA.Studio.Dialogs"
+        xmlns:p="clr-namespace:ArmA.Studio.Properties"
+        xmlns:att="clr-namespace:ArmA.Studio.UI.Attached"
+        xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data"
+        mc:Ignorable="d"
+        Title="{x:Static p:Localization.PluginUpdater_Title}" Style="{StaticResource DialogWindow}" ev:Initialized.Command="{Binding CmdInitialized}" Height="218">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <ProgressBar Maximum="1" Minimum="0" Value="{Binding CurrentPluginProgress}" Background="Gray"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource SCB_DefaultTextColor}" Text="{Binding CurrentDownloadProgressInKiloBytes, FallbackValue=123}"/>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource SCB_DefaultTextColor}" Text=" kb / "/>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource SCB_DefaultTextColor}" Text="{Binding FileSizeInKiloBytes, FallbackValue=15000}"/>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource SCB_DefaultTextColor}" Text=" kb"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <ProgressBar Maximum="1" Minimum="0" Value="{Binding OverallPluginProgress}" Background="Gray"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource SCB_DefaultTextColor}" Text="{Binding CurrentPluginToUpdate, FallbackValue=3}"/>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource SCB_DefaultTextColor}" Text=" / "/>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource SCB_DefaultTextColor}" Text="{Binding TotalPluginsToUpdate, FallbackValue=10}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

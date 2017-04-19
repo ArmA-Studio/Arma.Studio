@@ -10,6 +10,8 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
+using ArmA.Studio.Data;
+using Utility;
 
 namespace ArmA.Studio.UI
 {
@@ -17,14 +19,13 @@ namespace ArmA.Studio.UI
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-        private SolutionUtil.SolutionFile SolutionFileRef;
-        public BreakPointMargin(SolutionUtil.SolutionFile sf)
+        private ProjectFile FileFolderRef;
+        public BreakPointMargin(ProjectFile pff)
         {
-            this.SolutionFileRef = sf;
-            
+            this.FileFolderRef = pff;
         }
-        
-        
+
+
 
         protected override void OnTextViewChanged(TextView oldTextView, TextView newTextView)
         {
@@ -52,7 +53,7 @@ namespace ArmA.Studio.UI
             //accept clicks even when clicking on the background
             return new PointHitTestResult(this, hitTestParameters.HitPoint);
         }
-        
+
         protected override Size MeasureOverride(Size availableSize)
         {
             return new Size(18, 0);
@@ -73,13 +74,16 @@ namespace ArmA.Studio.UI
             foreach (var line in view.VisualLines)
             {
                 var lineNumber = this.GetLineNumber(line);
-                var bp = this.SolutionFileRef.GetFirstBreakpoint(lineNumber);
-                if (bp != null)
+
+                var bp = Workspace.Instance.BreakpointManager.GetBreakpoint(this.FileFolderRef, lineNumber);
+                if (!bp.IsDefault())
                 {
                     var lineTop = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextTop) - view.VerticalOffset;
                     var lineBot = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextBottom) - view.VerticalOffset;
                     //drawingContext.DrawRoundedRectangle(color, pen, new Rect((18 - 12) / 2, lineTop, 12, 12), 5, 5);
                     const double rectSize = 12;
+
+                    //ToDo: display IsEnabled => false and condition differently
                     drawingContext.DrawRectangle(bp.IsEnabled ? colorActive : colorInactive, pen, new Rect((18 - rectSize) / 2, lineTop + (18 - rectSize) / 4, rectSize, rectSize));
                 }
             }
@@ -90,27 +94,22 @@ namespace ArmA.Studio.UI
             var view = this.TextView;
             if (view == null || !view.VisualLinesValid)
                 return;
-            var pos = e.MouseDevice.GetPosition(this);
-            
-            foreach(var line in view.VisualLines)
+            var pos = e.MouseDevice.GetPosition(view);
+            var line = this.GetLineFromPoint(view, pos);
+            if (line == null)
+                return;
+            var lineNumber = this.GetLineNumber(this.GetLineFromPoint(view, e.GetPosition(this)));
+            var bp = Workspace.Instance.BreakpointManager.GetBreakpoint(this.FileFolderRef, lineNumber);
+            if (bp.IsDefault())
             {
-                var lineNumber = this.GetLineNumber(this.GetLineFromPoint(view, e.GetPosition(this)));
-                if (pos.Y >= line.VisualTop && pos.Y <= line.VisualTop + line.Height)
-                {
-                    var bp = this.SolutionFileRef.GetFirstBreakpoint(lineNumber);
-                    if (bp != null)
-                    {
-                        this.SolutionFileRef.BreakPoints.Remove(bp);
-                    }
-                    else
-                    {
-                        this.SolutionFileRef.AddBreakpoint(lineNumber, 0);
-                    }
-                    this.InvalidateVisual();
-                    this.TextView.InvalidateVisual();
-                    break;
-                }
+                Workspace.Instance.BreakpointManager.SetBreakpoint(this.FileFolderRef, new BreakpointInfo() { Line = lineNumber, IsEnabled = true, FileRef = this.FileFolderRef, SqfCondition = string.Empty });
             }
+            else
+            {
+                Workspace.Instance.BreakpointManager.RemoveBreakpoint(this.FileFolderRef, bp);
+            }
+            this.InvalidateVisual();
+            this.TextView.InvalidateVisual();
             e.Handled = true;
         }
 
@@ -129,15 +128,10 @@ namespace ArmA.Studio.UI
             textView.EnsureVisualLines();
             var color = new SolidColorBrush(ConfigHost.Coloring.BreakPoint.TextHighlightColor);
             color.Freeze();
-            var invalidBps = new List<DataContext.BreakpointsPaneUtil.Breakpoint>();
-            foreach (var bp in this.SolutionFileRef.BreakPoints)
+            foreach (var bp in Workspace.Instance.BreakpointManager[this.FileFolderRef])
             {
-                if (bp.Line < 0)
-                {
-                    Logger.Log(NLog.LogLevel.Warn, $"Removed invalid breakpoint in file '{this.SolutionFileRef.FileName}'.");
-                    invalidBps.Add(bp);
+                if (!bp.IsEnabled)
                     continue;
-                }
                 var line = this.Document.GetLineByNumber(bp.Line);
                 var segment = new TextSegment { StartOffset = line.Offset, EndOffset = line.EndOffset };
                 foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))
@@ -145,11 +139,7 @@ namespace ArmA.Studio.UI
                     drawingContext.DrawRectangle(color, null, new Rect(rect.Location, new Size(textView.ActualWidth, rect.Height)));
                 }
             }
-            foreach (var bp in invalidBps)
-            {
-                this.SolutionFileRef.BreakPoints.Remove(bp);
-            }
         }
-        
+
     }
 }

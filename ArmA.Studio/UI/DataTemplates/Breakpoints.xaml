@@ -7,18 +7,18 @@
       xmlns:local="clr-namespace:ArmA.Studio;assembly=ArmA.Studio"
       xmlns:dc="clr-namespace:ArmA.Studio.DataContext;assembly=ArmA.Studio"
       xmlns:ae="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
-      xmlns:ev="clr-namespace:ArmA.Studio.UI.Attached.Eventing;assembly=ArmA.Studio"
+      xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data"
       xmlns:p="clr-namespace:ArmA.Studio.Properties;assembly=ArmA.Studio"
-      xmlns:SolutionUtil="clr-namespace:ArmA.Studio.SolutionUtil;assembly=ArmA.Studio"
       DataType="{x:Type dc:BreakpointsPane}">
     <Grid>
-        <ListView Grid.Row="1" ItemsSource="{Binding XAMLBreakpointsReference}">
+        <ListView Grid.Row="1" ItemsSource="{Binding Breakpoints}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
+                    <Setter Property="Margin" Value="0"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="ListViewItem">
-                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="0 4">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="0 0">
                                     <GridViewRowPresenter/>
                                 </Border>
                             </ControlTemplate>
@@ -38,15 +38,13 @@
                     <GridViewColumn Header="{x:Static p:Localization.BreakpointEnabled}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding IsEnabled}"/>
+                                <CheckBox IsChecked="{Binding IsEnabled}" Command="{Binding DataContext.CmdBreakPointInfoUpdated, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" CommandParameter="{Binding}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="{x:Static p:Localization.Line}" DisplayMemberBinding="{Binding Line}"/>
-                    <GridViewColumn Header="{x:Static p:Localization.Column}" DisplayMemberBinding="{Binding LineOffset}"/>
-                    <GridViewColumn Header="{x:Static p:Localization.File}" DisplayMemberBinding="{Binding FileReference.FileName}" Width="512"/>
-                    <GridViewColumn Header="{x:Static p:Localization.BreakpointLabel}" DisplayMemberBinding="{Binding Label}"/>
-                    <GridViewColumn Header="{x:Static p:Localization.Condition}" DisplayMemberBinding="{Binding Condition}"/>
+                    <GridViewColumn Header="{x:Static p:Localization.File}" DisplayMemberBinding="{Binding FileRef.FileName}" Width="512"/>
+                    <GridViewColumn Header="{x:Static p:Localization.Condition}" DisplayMemberBinding="{Binding SqfCondition}"/>
                 </GridView>
             </ListView.View>
         </ListView>

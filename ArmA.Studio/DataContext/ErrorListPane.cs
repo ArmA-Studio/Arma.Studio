@@ -10,12 +10,14 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Xml;
-using ArmA.Studio.UI.Commands;
+using ArmA.Studio.Data;
+using ArmA.Studio.Data.Lint;
+using ArmA.Studio.Data.UI;
+using ArmA.Studio.Data.UI.Commands;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using Utility.Collections;
-using ArmA.Studio.SolutionUtil;
 
 namespace ArmA.Studio.DataContext
 {
@@ -23,8 +25,7 @@ namespace ArmA.Studio.DataContext
     {
         public static ErrorListPane Instance { get; private set; }
 
-        public ObservableDictionary<string, IEnumerable<TextEditorUtil.LinterInfo>> LinterDictionary;
-
+        public ObservableDictionary<string, IEnumerable<LintInfo>> LinterDictionary;
 
         public override string Title { get { return Properties.Localization.PanelDisplayName_ErrorList; } }
         public override string Icon { get { return @"Resources\Pictograms\BuildErrorList\BuildErrorList_16x.png"; } }
@@ -58,7 +59,7 @@ namespace ArmA.Studio.DataContext
 
         public ErrorListPane()
         {
-            this.LinterDictionary = new ObservableDictionary<string, IEnumerable<TextEditorUtil.LinterInfo>>();
+            this.LinterDictionary = new ObservableDictionary<string, IEnumerable<LintInfo>>();
             this.LinterDictionary.CollectionChanged += LinterDictionary_CollectionChanged;
             this.ListView = new ListCollectionView(new List<object>());
             this._IsErrorsDisplayed = ConfigHost.App.ErrorList_IsErrorsDisplayed;
@@ -77,7 +78,7 @@ namespace ArmA.Studio.DataContext
         {
             if (this.FileFilter == null)
             {
-                var list = new List<TextEditorUtil.LinterInfo>();
+                var list = new List<LintInfo>();
                 foreach (var val in this.LinterDictionary.Values)
                 {
                     list.AddRange(val);
@@ -109,7 +110,7 @@ namespace ArmA.Studio.DataContext
 
         private bool ListViewFilter(object item)
         {
-            var li = item as TextEditorUtil.LinterInfo;
+            var li = item as LintInfo;
             if (li == null)
                 return false;
             return (this.IsErrorsDisplayed ? true : li.Severity != ESeverity.Error) &&
@@ -119,28 +120,27 @@ namespace ArmA.Studio.DataContext
 
         private void Cmd_EntryOnDoubleClick(object param)
         {
-            var li = param as TextEditorUtil.LinterInfo;
+            var li = param as LintInfo;
             if (li == null)
             {
                 System.Diagnostics.Debugger.Break();
                 return;
             }
-            Workspace.CurrentWorkspace.OpenOrFocusDocument(li.FilePath);
-
-            SolutionFileBase.WalkThrough(Workspace.CurrentWorkspace.CurrentSolution.FilesCollection, (sfb) => {
-                var f = sfb as SolutionFile;
-                if (f != null && f.ArmAPath.Contains(li.FileName)) {
-                    var doc = Workspace.CurrentWorkspace.GetDocumentOfSolutionFileBase(f) as TextEditorDocument;
-                    if (doc != null && doc.Editor != null) {
-                        doc.Editor.TextArea.Caret.Line = li.Line;
-                        doc.Editor.TextArea.Caret.Column = li.LineOffset;
-                        doc.Editor.ScrollToLine(li.Line);
-                        doc.Editor.TextArea.Caret.Show();
-                    }
-                    return true;
-                }
-                return false;
-            });
+            var doc = Workspace.Instance.CreateOrFocusDocument(li.FileReference);
+            if(doc is TextEditorBaseDataContext)
+            {
+                var textDoc = doc as TextEditorBaseDataContext;
+                textDoc.GetEditorInstanceAsync().ContinueWith((t) =>
+                 {
+                     App.Current.Dispatcher.Invoke(() =>
+                     {
+                         t.Result.TextArea.Caret.Line = li.Line;
+                         t.Result.TextArea.Caret.Column = li.LineOffset;
+                         t.Result.ScrollToLine(li.Line);
+                         t.Result.TextArea.Caret.Show();
+                     });
+                 });
+            }
         }
     }
 }

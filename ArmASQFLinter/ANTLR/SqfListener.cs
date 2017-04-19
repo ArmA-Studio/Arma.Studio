@@ -23,9 +23,7 @@ namespace RealVirtuality.SQF.ANTLR
             public int StartOffset { get; set; }
             public string Message { get; set; }
         }
-#if DEBUG
         private readonly SqfNode Original;
-#endif
         public SqfNode Current { get; set; }
         public readonly List<SyntaxError> OtherSyntaxErrors;
 
@@ -33,9 +31,7 @@ namespace RealVirtuality.SQF.ANTLR
         {
             this.OtherSyntaxErrors = new List<SyntaxError>();
             this.Current = new SqfCode(null);
-#if DEBUG
             this.Original = this.Current;
-#endif
         }
         private void EnterGeneric(SqfNode node, [System.Runtime.CompilerServices.CallerMemberName]string caller = "")
         {

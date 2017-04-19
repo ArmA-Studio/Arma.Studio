@@ -10,8 +10,14 @@ namespace ArmA.Studio.Debugger
 {
     public class OnHaltEventArgs : EventArgs
     {
-        public string DocumentPath;
-        public int Line;
-        public int Col;
+        public readonly string DocumentPath;
+        public readonly int Line;
+        public readonly int Column;
+        public OnHaltEventArgs(string documentPath, int line, int column)
+        {
+            this.DocumentPath = documentPath;
+            this.Line = line;
+            this.Column = column;
+        }
     }
 }

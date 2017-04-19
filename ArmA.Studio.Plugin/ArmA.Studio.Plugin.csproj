@@ -30,6 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="INIFileParser, Version=2.4.0.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL">
+      <HintPath>..\packages\ini-parser.3.4.0\lib\net20\INIFileParser.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -38,10 +43,36 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions.cs" />
+    <Compile Include="IHotKeyPlugin.cs" />
+    <Compile Include="IAccessCallsPlugin.cs" />
+    <Compile Include="IPaneProviderPlugin.cs" />
+    <Compile Include="IDocumentProviderPlugin.cs" />
+    <Compile Include="ILicenseProviderPlugin.cs" />
+    <Compile Include="ISplashActivityPlugin.cs" />
+    <Compile Include="IUpdatingPlugin.cs" />
+    <Compile Include="IDebuggerPlugin.cs" />
+    <Compile Include="IStorageAccessPlugin.cs" />
+    <Compile Include="IPropertiesPlugin.cs" />
     <Compile Include="IPlugin.cs" />
+    <Compile Include="PluginManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ArmA.Studio.Data\ArmA.Studio.Data.csproj">
+      <Project>{dc5bb018-6ca3-4f0a-864a-425cef2f454b}</Project>
+      <Name>ArmA.Studio.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ArmA.Studio.Debugger\ArmA.Studio.Debugger.csproj">
+      <Project>{ec8d472e-f967-475d-8fbb-fc9b2db56467}</Project>
+      <Name>ArmA.Studio.Debugger</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

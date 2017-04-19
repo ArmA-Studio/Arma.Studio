@@ -1587,6 +1587,7 @@
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
       <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+      <xs:element name="parameterType" minOccurs="0" maxOccurs="1" type="xs:string" />
       <xs:element name="type" minOccurs="0" maxOccurs="1" type="xs:string" />
     </xs:choice>
     <xs:attribute name="layout" type="SimpleLayoutAttribute">
@@ -1599,9 +1600,14 @@
         <xs:documentation>Name of the parameter.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="type" type="xs:string">
+    <xs:attribute name="parameterType" type="xs:string">
       <xs:annotation>
         <xs:documentation>Type of the parameter.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="type" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Type of the parameter. Obsolete alias for </xs:documentation>
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>

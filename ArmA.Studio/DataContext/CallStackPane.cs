@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using ArmA.Studio.DataContext.TextEditorUtil;
-using ArmA.Studio.UI;
-using ArmA.Studio.UI.Commands;
-using ICSharpCode.AvalonEdit.Highlighting;
-using RealVirtuality.SQF.Parser;
+using ArmA.Studio.Data.UI;
+using ArmA.Studio.Data.UI.Commands;
 
 namespace ArmA.Studio.DataContext
 {

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Forms;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Input;
+using ArmA.Studio.Data.UI.Commands;
 
 namespace ArmA.Studio.Dialogs
 {
@@ -35,7 +30,7 @@ namespace ArmA.Studio.Dialogs
 
         public ConfigEntrySelectorDialogDataContext()
         {
-            this.CmdOKButtonPressed = new UI.Commands.RelayCommand(Cmd_OKButtonPressed);
+            this.CmdOKButtonPressed = new RelayCommand(Cmd_OKButtonPressed);
             this._ThisCollection = new ObservableCollection<object>();
             this._OKButtonEnabled = false;
         }

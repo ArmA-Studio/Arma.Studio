@@ -91,5 +91,31 @@ namespace Utility
             return count;
         }
         #endregion
+        #region AllNested
+        public static bool AllNested<T>(this IEnumerable<T> enumerable, Func<T, bool> condition)
+        {
+            foreach (var it in enumerable)
+            {
+                if (!condition(it) || (it is IEnumerable<T> && !AllNested(it as IEnumerable<T>, condition)))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        #endregion
+        #region ForEachNested
+        public static void ForEachNested<T>(this IEnumerable<T> enumerable, Action<T> action)
+        {
+            foreach (var it in enumerable)
+            {
+                action(it);
+                if (it is IEnumerable<T>)
+                {
+                    ForEachNested(it as IEnumerable<T>, action);
+                }
+            }
+        }
+        #endregion
     }
 }

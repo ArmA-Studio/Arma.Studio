@@ -7,9 +7,8 @@
       xmlns:local="clr-namespace:ArmA.Studio;assembly=ArmA.Studio"
       xmlns:dc="clr-namespace:ArmA.Studio.DataContext;assembly=ArmA.Studio"
       xmlns:ae="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
-      xmlns:ev="clr-namespace:ArmA.Studio.UI.Attached.Eventing;assembly=ArmA.Studio"
+      xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data"
       xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
-      xmlns:SolutionUtil="clr-namespace:ArmA.Studio.SolutionUtil;assembly=ArmA.Studio"
       xmlns:p="clr-namespace:ArmA.Studio.Properties;assembly=ArmA.Studio"
       xmlns:ctrl="clr-namespace:ArmA.Studio.UI.Controls;assembly=ArmA.Studio"
       DataType="{x:Type dc:VariablesViewPane}">

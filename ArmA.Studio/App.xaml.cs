@@ -12,6 +12,7 @@ using System.Xml;
 using NLog;
 using ArmA.Studio.LoggerTargets;
 using NLog.Config;
+using ArmA.Studio.Plugin;
 using System.Text;
 
 namespace ArmA.Studio
@@ -21,19 +22,27 @@ namespace ArmA.Studio
     /// </summary>
     public partial class App : Application
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        public const string CONST_UPDATESUFFIX = ".update";
+        public const string CONST_SOLUTIONEXTENSION = ".asln";
+        public const string CONST_BREAKPOINTINFOEXTENSION = ".asbp";
+        public const string CONST_CONFIGURATION = "Configuration";
+
+
         public enum ExitCodes
         {
             ConfigError = -2,
             NoWorkspaceSelected = -1,
             OK = 0,
             Restart = 1,
-            Updating = 2
+            Updating = 2,
+            RestartPluginUpdate = 3
         }
         public static string ExecutablePath { get { return Path.GetDirectoryName(ExecutableFile); } }
         public static string ExecutableFile { get { return Assembly.GetExecutingAssembly().GetName().CodeBase.Substring("file:///".Length); } }
         public static string SyntaxFilesPath { get { return Path.Combine(ExecutablePath, "SyntaxFiles"); } }
-        public static string DebuggerPath { get { return Path.Combine(ExecutablePath, "Debugger"); } }
-        public static string ConfigPath { get { return Path.Combine(ApplicationDataPath, "Configuration"); } }
+        public static string PluginsPath { get { return Path.Combine(ExecutablePath, "Plugins"); } }
+        public static string ConfigPath { get { return Path.Combine(ApplicationDataPath, CONST_CONFIGURATION); } }
         public static string FileTemplatePath { get { return Path.Combine(ApplicationDataPath, "Templates"); } }
         public static string TempPath { get { return Path.Combine(Path.GetTempPath(), @"ArmA.Studio"); } }
         public static string CommonApplicationDataPath { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @"ArmA.Studio"); } }
@@ -41,6 +50,17 @@ namespace ArmA.Studio
         public static Version CurrentVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
         public static SubscribableTarget SubscribableLoggerTarget { get; private set; }
+        public static List<IPlugin> Plugins { get; private set; }
+
+        static App()
+        {
+            Plugins = new List<IPlugin>();
+            Plugins.Add(new DefaultPlugin.PluginMain());
+        }
+
+        internal UpdateHelper.DownloadInfo UpdateDownloadInfo;
+
+
         private void SetupNLog()
         {
             //this.TraceListenerInstance = new TraceListener();
@@ -57,38 +77,25 @@ namespace ArmA.Studio
             if (!Directory.Exists(ConfigPath))
             {
                 Directory.CreateDirectory(ConfigPath);
+                Logger.Info($"Creating new directory at {ConfigPath}.");
             }
             if (!Directory.Exists(FileTemplatePath))
             {
                 Directory.CreateDirectory(FileTemplatePath);
+                Logger.Info($"Creating new directory at {FileTemplatePath}.");
+            }
+            if (!Directory.Exists(PluginsPath))
+            {
+                Directory.CreateDirectory(PluginsPath);
+                Logger.Info($"Creating new directory at {PluginsPath}.");
             }
         }
-        private UpdateHelper.DownloadInfo DownloadInfo;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-#if !DEBUG
-            Task.Run(() => {
-                DownloadInfo = UpdateHelper.GetDownloadInfo().Result;
-                if(DownloadInfo.available)
-                {
-                    Dispatcher.Invoke(() =>
-                    {
-                        var msgboxresult = MessageBox.Show(
-                              string.Format(Studio.Properties.Localization.SoftwareUpdateAvailable_Body, CurrentVersion, DownloadInfo.version),
-                              string.Format(Studio.Properties.Localization.SoftwareUpdateAvailable_Title, DownloadInfo.version),
-                              MessageBoxButton.YesNo,
-                              MessageBoxImage.Information
-                        );
-                        if (msgboxresult == MessageBoxResult.Yes)
-                        {
-                            App.Shutdown(ExitCodes.Updating);
-                        }
-                    });
-                }
-            });
-#endif
-            
+            this.SetupNLog();
+            DataContext.OutputPane.Initialize();
             this.CreateUserDirectories();
+            
             try
             {
                 //Invoke getter, will never be null
@@ -101,33 +108,14 @@ namespace ArmA.Studio
                 App.Shutdown(ExitCodes.ConfigError);
                 return;
             }
-            this.SetupNLog();
-            var workspace = ConfigHost.App.WorkspacePath;
-            if (string.IsNullOrWhiteSpace(workspace) && !SwitchWorkspace())
-            {
-                MessageBox.Show(Studio.Properties.Localization.WorkspaceSelectorDialog_NoWorkspaceSelected, Studio.Properties.Localization.Whoops, MessageBoxButton.OK, MessageBoxImage.Error);
-                this.Shutdown((int)ExitCodes.NoWorkspaceSelected);
-                return;
-            }
-            workspace = ConfigHost.App.WorkspacePath;
-            Workspace.CurrentWorkspace = new Workspace(workspace);
-            var mwnd = new MainWindow();
-            mwnd.Show();
+            var dc = new SplashScreenDataContext();
+            var dlg = new SplashScreen(dc);
+            dlg.Show();
         }
 
-        public static bool SwitchWorkspace()
+        public static void ShowOperationFailedMessageBox(Exception ex)
         {
-            var dlgDc = new Dialogs.WorkspaceSelectorDialogDataContext();
-            var dlg = new Dialogs.WorkspaceSelectorDialog(dlgDc);
-            var dlgResult = dlg.ShowDialog();
-            if (!dlgResult.HasValue || !dlgResult.Value)
-            {
-                return false;
-            }
-            var workspace = dlgDc.CurrentPath;
-            ConfigHost.App.WorkspacePath = workspace;
-
-            return true;
+            App.Current.Dispatcher.Invoke(() => MessageBox.Show(string.Format(Studio.Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Studio.Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
@@ -137,29 +125,32 @@ namespace ArmA.Studio
 #else
             SendExceptionReport(e.Exception);
 #endif
+            e.Handled = true;
         }
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             if (e.ApplicationExitCode == (int)ExitCodes.ConfigError)
                 return;
-            Workspace.CurrentWorkspace = null;
-            if (e.ApplicationExitCode == (int)ExitCodes.Restart)
+            ConfigHost.Instance.ExecSave();
+            if (e.ApplicationExitCode == (int)ExitCodes.Restart || e.ApplicationExitCode == (int)ExitCodes.RestartPluginUpdate)
             {
                 Process.Start(ExecutableFile);
             }
-            ConfigHost.Instance.ExecSave();
         }
 
         public static void Shutdown(ExitCodes code)
         {
-            if (code == ExitCodes.Updating)
+            App.Current.Dispatcher.Invoke(() =>
             {
-                var dlgdc = new Dialogs.DownloadDialogDataContext((App.Current as App).DownloadInfo);
-                var dlg = new Dialogs.DownloadDialog(dlgdc);
-                dlg.ShowDialog();
-            }
-            App.Current.Shutdown((int)code);
+                if (code == ExitCodes.Updating)
+                {
+                    var dlgdc = new Dialogs.DownloadToolUpdateDialogDataContext((App.Current as App).UpdateDownloadInfo);
+                    var dlg = new Dialogs.DownloadToolUpdateDialog(dlgdc);
+                    dlg.ShowDialog();
+                }
+                App.Current.Shutdown((int)code);
+            });
         }
 
         public static Stream GetStreamFromEmbeddedResource(string path)
@@ -190,9 +181,15 @@ namespace ArmA.Studio
                 }
             }
         }
+        public static IEnumerable<T> GetPlugins<T>() where T : Plugin.IPlugin
+        {
+            return from plugin in App.Plugins where plugin is T select (T)plugin;
+        }
 
         private static void SendExceptionReport(Exception ex)
         {
+            if (!ConfigHost.App.AutoReportException)
+                return;
             using (var memStream = new MemoryStream())
             {
                 var writer = new XmlTextWriter(new StreamWriter(memStream));
@@ -261,7 +258,7 @@ namespace ArmA.Studio
                     { }
                 }
 
-                Workspace.CurrentWorkspace?.CmdSaveAll.Execute(null);
+                Workspace.Instance?.CmdSaveAll.Execute(null);
             }
         }
     }

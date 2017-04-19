@@ -145,6 +145,9 @@ Do you want to restart now?</value>
   <data name="Column" xml:space="preserve">
     <value>Column</value>
   </data>
+  <data name="CommunityMadeUtility" xml:space="preserve">
+    <value>Community made utility</value>
+  </data>
   <data name="Condition" xml:space="preserve">
     <value>Condition</value>
   </data>
@@ -159,6 +162,15 @@ Do you want to restart now?</value>
   </data>
   <data name="CreateNewFileDialog_Title" xml:space="preserve">
     <value>Create New File</value>
+  </data>
+  <data name="CreateNewProjectDialog_Header" xml:space="preserve">
+    <value>Create Project</value>
+  </data>
+  <data name="CreateNewProjectDialog_Title" xml:space="preserve">
+    <value>Create New Project</value>
+  </data>
+  <data name="CreateProject" xml:space="preserve">
+    <value>Create Project</value>
   </data>
   <data name="DebuggerContext_AttachFailed_Body" xml:space="preserve">
     <value>Attaching the debugger failed.
@@ -235,6 +247,9 @@ Do you want to save before close?</value>
   <data name="FileNotFound" xml:space="preserve">
     <value>The file '{0}' was not found.</value>
   </data>
+  <data name="GeneralProperties" xml:space="preserve">
+    <value>General</value>
+  </data>
   <data name="Info" xml:space="preserve">
     <value>Message</value>
   </data>
@@ -302,6 +317,9 @@ Current progress will be lost.</value>
   <data name="MessageBoxOperationFailed_Title" xml:space="preserve">
     <value>Operation Failed</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
   <data name="NewFolder" xml:space="preserve">
     <value>New Folder</value>
   </data>
@@ -313,6 +331,9 @@ Current progress will be lost.</value>
   </data>
   <data name="NoConfigPresent_Title" xml:space="preserve">
     <value>Missing Config Entry</value>
+  </data>
+  <data name="NotAffiliatedWithBohemiaInteractive" xml:space="preserve">
+    <value>Not affiliated with Bohemia Interactive</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
@@ -344,11 +365,41 @@ Current progress will be lost.</value>
   <data name="PanelDisplayName_VariablesView" xml:space="preserve">
     <value>Variables View</value>
   </data>
+  <data name="PluginUpdateAvailable_Body" xml:space="preserve">
+    <value>One or more plugins have updates available to download. Do you want to update now?</value>
+  </data>
+  <data name="PluginUpdateAvailable_Title" xml:space="preserve">
+    <value>Plugin updates available</value>
+  </data>
+  <data name="PluginUpdater_Title" xml:space="preserve">
+    <value>Plugin Updater</value>
+  </data>
   <data name="PropertiesDialog_Header" xml:space="preserve">
     <value>Properties</value>
   </data>
   <data name="PropertiesDialog_Title" xml:space="preserve">
     <value>Properties</value>
+  </data>
+  <data name="Property_General_ErrorReporting" xml:space="preserve">
+    <value>Error Reporting</value>
+  </data>
+  <data name="Property_General_ErrorReporting_AutoReportException" xml:space="preserve">
+    <value>Auto-Report Exceptions</value>
+  </data>
+  <data name="Property_General_Updating" xml:space="preserve">
+    <value>Updating</value>
+  </data>
+  <data name="Property_General_Updating_EnableAutoPluginsUpdateAtStart" xml:space="preserve">
+    <value>Enable Auto-Plugin-Update at start</value>
+  </data>
+  <data name="Property_General_Updating_EnableAutoToolUpdateAtStart" xml:space="preserve">
+    <value>Enable Auto-Tool-Update at start</value>
+  </data>
+  <data name="Prop_ArmAPath" xml:space="preserve">
+    <value>ArmA Path</value>
+  </data>
+  <data name="Prop_ProjectType" xml:space="preserve">
+    <value>Project Type</value>
   </data>
   <data name="Rename" xml:space="preserve">
     <value>Rename</value>
@@ -377,6 +428,30 @@ Do you want to update now?</value>
   </data>
   <data name="SolutionFile_NameContainsInvalidFiles" xml:space="preserve">
     <value>Provided value contains invalid characters</value>
+  </data>
+  <data name="Splash_ApplyingPossiblyAvailablePluginUpdates" xml:space="preserve">
+    <value>Applying available plugin updates</value>
+  </data>
+  <data name="Splash_CheckingForPluginXUpdate" xml:space="preserve">
+    <value>Checking for plugin&lt;{0}&gt; update</value>
+  </data>
+  <data name="Splash_CheckingForToolUpdates" xml:space="preserve">
+    <value>Checking for tool updates</value>
+  </data>
+  <data name="Splash_LoadingPlugins" xml:space="preserve">
+    <value>Loading Plugins</value>
+  </data>
+  <data name="Splash_PreparingSolution" xml:space="preserve">
+    <value>Preparing Solution</value>
+  </data>
+  <data name="Splash_SearchingSolutionFile" xml:space="preserve">
+    <value>Searching Solution File</value>
+  </data>
+  <data name="Splash_SettingWorkspace" xml:space="preserve">
+    <value>Setting Worksapce</value>
+  </data>
+  <data name="Splash_UpdateAvailable" xml:space="preserve">
+    <value>Update available</value>
   </data>
   <data name="VariableName" xml:space="preserve">
     <value>Name</value>
@@ -420,5 +495,38 @@ Do you want to update now?</value>
   </data>
   <data name="XSHD_Loading_Error_Title" xml:space="preserve">
     <value>XSHD Syntax file loading failed.</value>
+  </data>
+  <data name="AddExistingProject" xml:space="preserve">
+    <value>Add Existing Project</value>
+  </data>
+  <data name="DefaultPluginDescription" xml:space="preserve">
+    <value>Provides basic functionality to ArmA.Studio</value>
+  </data>
+  <data name="Splash_LoadingBreakpointInformations" xml:space="preserve">
+    <value>Loading Breakpoints</value>
+  </data>
+  <data name="Splash_DoingInitialLint" xml:space="preserve">
+    <value>Doing Initial Lint {0}/{1} '{2}'</value>
+  </data>
+  <data name="Hotkey_SaveCurrentDocument" xml:space="preserve">
+    <value>Save Current Document</value>
+  </data>
+  <data name="AboutDialog_ContributorsNote" xml:space="preserve">
+    <value>Proudly made by:</value>
+  </data>
+  <data name="AboutDialog_Header" xml:space="preserve">
+    <value>ArmA.Studio</value>
+  </data>
+  <data name="AboutDialog_LoadedPlugins" xml:space="preserve">
+    <value>Plugins in use</value>
+  </data>
+  <data name="AboutDialog_Title" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="MenuItem_About" xml:space="preserve">
+    <value>About Tool</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
   </data>
 </root>

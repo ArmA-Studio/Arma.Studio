@@ -15,7 +15,7 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <ListBox x:Name="lbTitles" Grid.Column="0" ItemsSource="{Binding Licenses}" DisplayMemberPath="Title" SelectedValuePath="Value"/>
+        <ListBox x:Name="lbTitles" Grid.Column="0" ItemsSource="{Binding Licenses}" DisplayMemberPath="Target" SelectedValuePath="Content"/>
         <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"/>
         <TextBox Grid.Column="2" HorizontalScrollBarVisibility="Hidden" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" IsReadOnly="True" Text="{Binding SelectedValue, ElementName=lbTitles}"/>
     </Grid>

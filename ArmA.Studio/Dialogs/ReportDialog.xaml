@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ArmA.Studio.Dialogs"
         xmlns:p="clr-namespace:ArmA.Studio.Properties"
         xmlns:att="clr-namespace:ArmA.Studio.UI.Attached"
-        xmlns:ev="clr-namespace:ArmA.Studio.UI.Attached.Eventing"
+        xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data"
         mc:Ignorable="d"
         Title="{x:Static p:Localization.ReportDialog_Title}" Style="{StaticResource DialogWindow}" ev:Initialized.Command="{Binding CmdInitialized}">
     <Grid>

@@ -8,23 +8,38 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using ArmA.Studio.UI.Commands;
 using System.Reflection;
 using Xceed.Wpf.AvalonDock;
 using Utility;
 using Utility.Collections;
 using Xceed.Wpf.AvalonDock.Layout;
 using RealVirtuality.SQF;
+using ArmA.Studio.Data.UI;
+using ArmA.Studio.Data.UI.Commands;
+using ArmA.Studio.Data;
+using ArmA.Studio.Plugin;
 
 namespace ArmA.Studio
 {
     public sealed class Workspace : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
         public const string CONST_DOCKING_MANAGER_LAYOUT_NAME = "docklayout.xml";
 
-        public double WindowWidth { get { return this._WindowWidth; } set { this._WindowWidth = value; ConfigHost.App.WindowWidth = value;  this.RaisePropertyChanged(); } }
+        public enum ECreateDocumentModes
+        {
+            CreateTemporary,
+            AddFileReferenceOrTemporary,
+            AddOrCreateFileReference,
+            AddFileReferenceOrNull
+        }
+
+        public static Workspace Instance { get; private set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
+
+        #region Updating window properties
+        public double WindowWidth { get { return this._WindowWidth; } set { this._WindowWidth = value; ConfigHost.App.WindowWidth = value; this.RaisePropertyChanged(); } }
         private double _WindowWidth;
 
         public double WindowHeight { get { return this._WindowHeight; } set { this._WindowHeight = value; ConfigHost.App.WindowHeight = value; this.RaisePropertyChanged(); } }
@@ -38,184 +53,165 @@ namespace ArmA.Studio
 
         public WindowState WindowCurrentState { get { return this._WindowCurrentState; } set { this._WindowCurrentState = value; ConfigHost.App.WindowCurrentState = value; this.RaisePropertyChanged(); } }
         private WindowState _WindowCurrentState;
-
-
-
-
-
-        public static Workspace CurrentWorkspace { get { return _CurrentWorkspace; } set { if (_CurrentWorkspace != null) _CurrentWorkspace.Close(); _CurrentWorkspace = value; value?.Open(); } }
-        private static Workspace _CurrentWorkspace;
-
-        public DebuggerContext DebugContext { get { return this._DebugContext; } set { this._DebugContext = value; this.RaisePropertyChanged(); } }
-        private DebuggerContext _DebugContext;
-
-        public SolutionUtil.Solution CurrentSolution { get { return this._CurrentSolution; } set { this._CurrentSolution = value; this.RaisePropertyChanged(); } }
-        private SolutionUtil.Solution _CurrentSolution;
-        public UI.ViewModel.IPropertyDatatemplateProvider CurrentSelectedProperty { get { return this._CurrentSelectedProperty; } set { this._CurrentSelectedProperty = value; this.RaisePropertyChanged(); } }
-        public DataTemplate CurrentSelectedPropertyTemplate { get { return this._CurrentSelectedProperty?.PropertiesTemplate; } }
-        private UI.ViewModel.IPropertyDatatemplateProvider _CurrentSelectedProperty;
-
-        public ObservableCollection<PanelBase> PanelsDisplayed
+        #endregion
+        #region Commands
+        public ICommand CmdDisplayPanel => new RelayCommand((p) =>
         {
-            get { return this._PanelsDisplayed; }
-            set
+            if (p is PanelBase)
             {
-                if(this._PanelsDisplayed != null)
-                    this._PanelsDisplayed.CollectionChanged -= PanelsDisplayed_CollectionChanged;
-                this._PanelsDisplayed = value;
-                this.RaisePropertyChanged();
-                this.RaisePropertyChanged("CurrentSelectedPropertyTemplate");
-
-                this._PanelsDisplayed.CollectionChanged += PanelsDisplayed_CollectionChanged;
-            }
-        }
-        private ObservableCollection<PanelBase> _PanelsDisplayed;
-
-        public ObservableCollection<PanelBase> PanelsAvailable { get { return this._PanelsAvailable; } set { this._PanelsAvailable = value; this.RaisePropertyChanged(); } }
-        private ObservableCollection<PanelBase> _PanelsAvailable;
-
-        public ObservableCollection<DocumentBase> DocumentsDisplayed { get { return this._DocumentsDisplayed; } set { this._DocumentsDisplayed = value; this.RaisePropertyChanged(); } }
-        private ObservableCollection<DocumentBase> _DocumentsDisplayed;
-
-        public ObservableCollection<DocumentBase> DocumentsAvailable { get { return this._DocumentsAvailable; } set { this._DocumentsAvailable = value; this.RaisePropertyChanged(); } }
-        private ObservableCollection<DocumentBase> _DocumentsAvailable;
-
-        public ICommand CmdDisplayPanel { get; private set; }
-        public ICommand CmdDisplayLicensesDialog { get; private set; }
-        public ICommand CmdDockingManagerInitialized { get; private set; }
-        public ICommand CmdMainWindowClosing { get; private set; }
-        public ICommand CmdSwitchWorkspace { get; private set; }
-        public ICommand CmdShowProperties { get; private set; }
-        public ICommand CmdQuit { get; private set; }
-        public ICommand CmdSave { get; private set; }
-        public ICommand CmdSaveAll { get; private set; }
-        public ICommand CmdActiveContentChanged { get; private set; }
-
-        public string WorkingDir { get; private set; }
-
-        private DockingManager MWDockingManager;
-
-        public DocumentBase CurrentDocument { get { return this._CurrentDocument; } set { this._CurrentDocument = value; this.RaisePropertyChanged(); } }
-        private DocumentBase _CurrentDocument;
-
-        public UI.GenericDataTemplateSelector PaneDataTemplateSelector { get; private set; }
-
-        public DocumentBase GetDocumentOfSolutionFileBase(SolutionUtil.SolutionFileBase sfb)
-        {
-            foreach (var it in this.DocumentsDisplayed)
-            {
-                if (it.FilePath == sfb.FullPath)
+                var pb = p as PanelBase;
+                if (this.AvalonDockPanels.Contains(p))
                 {
-                    return it;
+                    pb.CurrentVisibility = pb.CurrentVisibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
+                }
+                else
+                {
+                    this.AvalonDockPanels.Add(pb);
                 }
             }
-            return null;
-        }
-
-        public Workspace(string path)
+        });
+        public ICommand CmdDisplayLicensesDialog => new RelayCommand((p) =>
         {
-            this.PaneDataTemplateSelector = new UI.GenericDataTemplateSelector(Assembly.GetExecutingAssembly(), (s) => s.StartsWith("ArmA.Studio.UI.DataTemplates."));
-            this.WorkingDir = path;
-            this._PanelsAvailable = new ObservableCollection<PanelBase>(FindAllAnchorablePanelsInAssembly());
-            this.PanelsDisplayed = new ObservableCollection<PanelBase>();
-            this._DebugContext = new DebuggerContext();
-            this._DocumentsDisplayed = new ObservableCollection<DocumentBase>();
-            this._DocumentsAvailable = new ObservableCollection<DocumentBase>(FindAllDocumentsInAssembly());
-            this.CmdDisplayPanel = new RelayCommand((p) =>
+            var dlg = new Dialogs.LicenseViewer();
+            var dlgResult = dlg.ShowDialog();
+        });
+        public ICommand CmdDisplayAboutDialog => new RelayCommand((p) =>
+        {
+            var dlg = new Dialogs.AboutDialog();
+            var dlgResult = dlg.ShowDialog();
+        });
+        public ICommand CmdDockingManagerInitialized => new RelayCommand((p) => this.OnAvalonDockingManagerInitialized(p as DockingManager));
+        public ICommand CmdMainWindowClosing => new RelayCommand((p) =>
+        {
+            SaveLayout(this.AvalonDockDockingManager, Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
+            foreach (var panel in this.AvailablePanels)
             {
-                if (p is PanelBase)
+                var iniName = panel.GetType().FullName;
+                if (!ConfigHost.Instance.LayoutIni.Sections.ContainsSection(iniName))
+                    ConfigHost.Instance.LayoutIni.Sections.AddSection(iniName);
+                var section = ConfigHost.Instance.LayoutIni[iniName];
+                section["ContentId"] = panel.ContentId;
+                section["IsSelected"] = panel.IsSelected.ToString();
+            }
+            this.CmdSaveAll.Execute(null);
+
+            App.Current.Shutdown((int)App.ExitCodes.OK);
+        });
+        public ICommand CmdSwitchWorkspace => new RelayCommand((p) =>
+        {
+            var newWorkspace = Dialogs.WorkspaceSelectorDialog.GetWorkspacePath(this.PathUri.AbsolutePath);
+            if (!string.IsNullOrWhiteSpace(newWorkspace))
+            {
+                this.CmdSaveAll.Execute(null);
+                ConfigHost.App.WorkspacePath = newWorkspace;
+                App.Shutdown(App.ExitCodes.Restart);
+            }
+        });
+        public ICommand CmdShowProperties => new RelayCommand((p) =>
+        {
+            var dlgDc = new Dialogs.PropertiesDialogDataContext();
+            var dlg = new Dialogs.PropertiesDialog(dlgDc);
+            dlg.ShowDialog();
+            if (dlgDc.RestartRequired)
+            {
+                var msgResult = MessageBox.Show(Properties.Localization.ChangesRequireRestart_Body, Properties.Localization.ChangesRequireRestart_Title, MessageBoxButton.YesNo, MessageBoxImage.Information);
+                if (msgResult == MessageBoxResult.Yes)
                 {
-                    var pb = p as PanelBase;
-                    if (this.PanelsDisplayed.Contains(p))
-                    {
-                        pb.CurrentVisibility = pb.CurrentVisibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
-                    }
-                    else
-                    {
-                        this.PanelsDisplayed.Add(pb);
-                    }
+                    App.Shutdown(App.ExitCodes.Restart);
                 }
-            });
-            this.CmdDisplayLicensesDialog = new RelayCommand((p) =>
+            }
+        });
+        public ICommand CmdQuit => new RelayCommand((p) => { App.Current.MainWindow.Close(); });
+        public ICommand CmdSave => new RelayCommand((p) =>
+        {
+            var doc = this.GetCurrentDocument();
+            if (doc != null && doc.HasChanges)
             {
-                var dlg = new Dialogs.LicenseViewer();
-                var dlgResult = dlg.ShowDialog();
-            });
-            this.CmdDockingManagerInitialized = new RelayCommand((p) => this.DockingMangerInitialized(p as DockingManager));
-            this.CmdMainWindowClosing = new RelayCommand((p) =>
+                doc.SaveDocument();
+            }
+        });
+        public ICommand CmdSaveAll => new RelayCommand((p) =>
+        {
+            try
             {
-                SaveLayout(this.MWDockingManager, Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
-                App.Current.Shutdown((int)App.ExitCodes.OK);
-            });
-            this.CmdSwitchWorkspace = new RelayCommand((p) => { if (App.SwitchWorkspace()) App.Shutdown(App.ExitCodes.Restart); });
-            this.CmdShowProperties = new RelayCommand((p) =>
-            {
-                var dlgDc = new Dialogs.PropertiesDialogDataContext();
-                var dlg = new Dialogs.PropertiesDialog(dlgDc);
-                dlg.ShowDialog();
-                if (dlgDc.RestartRequired)
+                foreach (var doc in this.AvalonDockDocuments)
                 {
-                    var msgResult = MessageBox.Show(Properties.Localization.ChangesRequireRestart_Body, Properties.Localization.ChangesRequireRestart_Title, MessageBoxButton.YesNo, MessageBoxImage.Information);
-                    if (msgResult == MessageBoxResult.Yes)
-                    {
-                        App.Shutdown(App.ExitCodes.Restart);
-                    }
-                }
-            });
-            this.CmdQuit = new RelayCommand((p) => { App.Shutdown(App.ExitCodes.OK); });
-            this.CmdSave = new RelayCommand((p) =>
-            {
-                foreach (var doc in this.DocumentsDisplayed)
-                {
-                    if (doc.IsSelected)
-                    {
-                        if (!doc.HasChanges)
-                            break;
-                        doc.SaveDocument(doc.FilePath);
-                        break;
-                    }
-                }
-            });
-            this.CmdSaveAll = new RelayCommand((p) =>
-            {
-                foreach (var doc in this.DocumentsDisplayed)
-                {
+                    if (doc == null)
+                        continue;
                     if (doc.HasChanges)
                     {
-                        doc.SaveDocument(doc.FilePath);
+                        doc.SaveDocument();
                     }
                 }
-                this.SaveSolution();
-            });
-            this.CmdActiveContentChanged = new RelayCommand((p) =>
-            {
-                var dm = p as DockingManager;
-                this.CurrentDocument = dm.ActiveContent as DocumentBase;
-            });
-
-            const double DEF_WIN_HEIGHT = 512;
-            const double DEF_WIN_WIDTH = 1024;
-            this._WindowHeight = DEF_WIN_HEIGHT;
-            this._WindowWidth = DEF_WIN_WIDTH;
-            this._WindowLeft = (SystemParameters.PrimaryScreenWidth - DEF_WIN_WIDTH) / 2;
-            if (this._WindowLeft < 0)
-            {
-                this._WindowLeft = 0;
+                using (var stream = File.Open(this.Solution.FileUri.AbsolutePath, FileMode.Create))
+                {
+                    Solution.Serialize(this.Solution, stream);
+                }
+                this.SaveBreakpointsToProject();
+                ConfigHost.Instance.ExecSave();
             }
-            this._WindowTop = (SystemParameters.PrimaryScreenHeight - DEF_WIN_HEIGHT) / 2;
-            if (this._WindowTop < 0)
+            catch (Exception ex)
             {
-                this._WindowTop = 0;
+                App.ShowOperationFailedMessageBox(ex);
             }
-            this._WindowCurrentState = WindowState.Normal;
-
-            
-        }
-
-        private void PanelsDisplayed_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        });
+        public ICommand CmdActiveContentChanged => new RelayCommand((p) =>
         {
-            RaisePropertyChanged("PanelsDisplayed");
+            var dm = p as DockingManager;
+            this.CurrentContent = dm.ActiveContent as DockableBase;
+        });
+        #endregion
+        #region Updating Properties
+        public ObservableCollection<PanelBase> AvailablePanels
+        {
+            get { return this._AvailablePanels; }
+            set { this._AvailablePanels = value; this.RaisePropertyChanged(); }
         }
+
+        private ObservableCollection<PanelBase> _AvailablePanels;
+
+        public DockableBase CurrentContent
+        {
+            get { return this._CurrentContent; }
+            set { if (this._CurrentContent == value) return; this._CurrentContent = value; this.RaisePropertyChanged(); }
+        }
+        private DockableBase _CurrentContent;
+        #endregion
+        #region AvalonDock Layout handling
+        public ObservableCollection<PanelBase> AvalonDockPanels { get { return this._AvalonDockPanels; } set { this._AvalonDockPanels = value; this.RaisePropertyChanged(); } }
+        private ObservableCollection<PanelBase> _AvalonDockPanels;
+
+        public ObservableCollection<DocumentBase> AvalonDockDocuments { get { return this._AvalonDockDocuments; } set { this._AvalonDockDocuments = value; this.RaisePropertyChanged(); } }
+        private ObservableCollection<DocumentBase> _AvalonDockDocuments;
+
+        private DockingManager AvalonDockDockingManager;
+
+        private void OnAvalonDockingManagerInitialized(DockingManager dockingManager)
+        {
+            this.AvalonDockDockingManager = dockingManager;
+
+            foreach (var panel in this.AvailablePanels)
+            {
+                var iniName = panel.GetType().FullName;
+                if (ConfigHost.Instance.LayoutIni.Sections.ContainsSection(iniName))
+                {
+                    var section = ConfigHost.Instance.LayoutIni[iniName];
+                    if (section.ContainsKey("ContentId"))
+                    {
+                        panel.ContentId = section["ContentId"];
+                    }
+                    if (section.ContainsKey("IsSelected"))
+                    {
+                        bool isSelectedFlag;
+                        bool.TryParse(section["IsSelected"], out isSelectedFlag);
+                        panel.IsSelected = isSelectedFlag;
+                    }
+                }
+            }
+
+            Workspace.LoadLayout(dockingManager, Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
+        }
+
 
         private static void LoadLayout(DockingManager dm, string v)
         {
@@ -242,20 +238,25 @@ namespace ArmA.Studio
         {
             if (e.Model is LayoutAnchorable)
             {
-                foreach (var panel in CurrentWorkspace.PanelsAvailable)
+                foreach (var panel in Instance.AvailablePanels)
                 {
                     if (panel.ContentId != e.Model.ContentId)
                         continue;
                     e.Content = panel;
-                    CurrentWorkspace.PanelsDisplayed.Add(panel);
+                    Instance.AvalonDockPanels.Add(panel);
                     break;
                 }
             }
-            else if(e.Model is LayoutDocument)
+            else if (e.Model is LayoutDocument)
             {
-                var doc = CurrentWorkspace.GetNewDocument(e.Model.ContentId);
+                var doc = Instance.CreateDocument(new Uri(e.Model.ContentId, UriKind.RelativeOrAbsolute), ECreateDocumentModes.AddFileReferenceOrNull);
+                if (doc == null)
+                {
+                    e.Cancel = true;
+                    return;
+                }
                 e.Content = doc;
-                CurrentWorkspace.DocumentsDisplayed.Add(doc);
+                Instance.AvalonDockDocuments.Add(doc);
             }
         }
 
@@ -272,214 +273,418 @@ namespace ArmA.Studio
                 layoutSerializer.Serialize(writer);
             }
         }
-        public void OpenOrFocusDocument(SolutionUtil.SolutionFile sf)
+
+        #endregion
+
+        public Uri PathUri { get; internal set; }
+        public Solution Solution { get; internal set; }
+        public BreakpointManager BreakpointManager { get; internal set; }
+        public string ConfigPath { get { return Path.Combine(PathUri.AbsolutePath, App.CONST_CONFIGURATION); } }
+        public UI.GenericDataTemplateSelector LayoutItemTemplateSelector { get; private set; }
+        public KeyManager KeyManager { get; private set; }
+        public DebuggerContext DebugContext { get; internal set; }
+
+        public Workspace(UI.GenericDataTemplateSelector layoutItemTemplateSelector)
         {
-            this.OpenOrFocusDocument(sf.FullPath);
-        }
-        public void OpenOrFocusDocument(string path)
-        {
-            path = path.Trim('/', '\\');
-            if (Path.IsPathRooted(path))
+            Instance = this;
+            this.KeyManager = new KeyManager();
+            this.BreakpointManager = new BreakpointManager();
+            foreach (var it in App.GetPlugins<IHotKeyPlugin>())
             {
-                path = path.Substring(this.WorkingDir.Length + 1);
+                foreach(var kc in it.GetGlobalHotKeys())
+                {
+                    this.KeyManager.RegisterKey(kc);
+                }
             }
-            var fullPath = Path.Combine(this.WorkingDir, path);
-            //Check if document is already open and select instead of open
-            foreach (var doc in DocumentsDisplayed)
+
+            this.LayoutItemTemplateSelector = layoutItemTemplateSelector;
+            this.AvailablePanels = new ObservableCollection<PanelBase>();
+            this.AvalonDockDocuments = new ObservableCollection<DocumentBase>();
+            this.AvalonDockPanels = new ObservableCollection<PanelBase>();
+
+            this.DebugContext = new DebuggerContext();
+
+            foreach (var t in Assembly.GetExecutingAssembly().DefinedTypes)
             {
-                if(doc.FilePath == fullPath)
+                if (typeof(PanelBase).IsAssignableFrom(t))
+                {
+                    var instance = Activator.CreateInstance(t, true) as PanelBase;
+                    this.AvailablePanels.Add(instance);
+                }
+            }
+
+
+            const double DEF_WIN_HEIGHT = 512;
+            const double DEF_WIN_WIDTH = 1024;
+            //Load values
+            this._WindowHeight = ConfigHost.App.WindowHeight;
+            this._WindowWidth = ConfigHost.App.WindowWidth;
+            this._WindowLeft = ConfigHost.App.WindowLeft;
+            this._WindowTop = ConfigHost.App.WindowTop;
+            this._WindowCurrentState = ConfigHost.App.WindowCurrentState;
+            if (this._WindowHeight < 0)
+            {
+                this._WindowHeight = DEF_WIN_HEIGHT;
+            }
+            if (this._WindowWidth < 0)
+            {
+                this._WindowWidth = DEF_WIN_WIDTH;
+            }
+            if (this._WindowLeft < 0)
+            {
+                this._WindowLeft = (SystemParameters.PrimaryScreenWidth - DEF_WIN_WIDTH) / 2;
+            }
+            if (this._WindowTop < 0)
+            {
+                this._WindowTop = (SystemParameters.PrimaryScreenHeight - DEF_WIN_HEIGHT) / 2;
+            }
+        }
+
+        public ProjectFile GetProjectFileFolderReference(Uri path)
+        {
+            foreach (var p in this.Solution.Projects)
+            {
+                if (!p.FileUri.IsBaseOf(path))
+                    continue;
+                foreach (var pff in p)
+                {
+                    if (pff.FileUri.Equals(path))
+                    {
+                        return pff;
+                    }
+                }
+            }
+            return null;
+        }
+
+
+        /// <summary>
+        /// Focuses an existing document or creates a new one if non is yet existing.
+        /// </summary>
+        /// <param name="fileReference">reference to the file used.</param>
+        /// <returns>The document created/focused.</returns>
+        public DocumentBase CreateOrFocusDocument(ProjectFile fileReference) => this.CreateOrFocusDocument(fileReference.FileUri);
+        /// <summary>
+        /// Focuses an existing document or creates a new one if non is yet existing.
+        /// </summary>
+        /// <param name="filePath">Path to the file to open.</param>
+        /// <returns>The document created/focused.</returns>
+        public DocumentBase CreateOrFocusDocument(string filePath) => this.CreateOrFocusDocument(new Uri(filePath, UriKind.RelativeOrAbsolute));
+        /// <summary>
+        /// Focuses an existing document or creates a new one if non is yet existing.
+        /// </summary>
+        /// <param name="path">Path to the file to open.</param>
+        /// <returns>The document created/focused.</returns>
+        public DocumentBase CreateOrFocusDocument(Uri path)
+        {
+            foreach (var doc in this.AvalonDockDocuments)
+            {
+                if (doc == null)
+                    continue;
+                if (doc.FileReference.FileUri.Equals(path))
                 {
                     doc.IsSelected = true;
-                    return;
+                    return doc;
                 }
             }
-
-            var instance = this.GetNewDocument(path);
-            if (instance == null)
-                return;
-            this.DocumentsDisplayed.Add(instance);
-            instance.IsSelected = true;
+            var tmp = this.CreateDocument(path, ECreateDocumentModes.AddFileReferenceOrTemporary);
+            this.AvalonDockDocuments.Add(tmp);
+            tmp.IsSelected = true;
+            return tmp;
         }
-        public DocumentBase GetNewDocument(string path)
+
+        /// <summary>
+        /// Creates a new <see cref="DocumentBase"/>.
+        /// Could return null if creation of the <see cref="DocumentBase"/> fails.
+        /// </summary>
+        /// <param name="path">Path to the file.</param>
+        /// <param name="mode">file creation mode which determines some parameters for the file.</param>
+        /// <returns></returns>
+        /// <exception cref="KeyNotFoundException">If <see cref="ECreateDocumentModes.AddOrCreateFileReference"/> fails to find a project at the URI.</exception>
+        public DocumentBase CreateDocument(Uri path, ECreateDocumentModes mode)
         {
-            path = path.Trim('/', '\\');
-            if (Path.IsPathRooted(path))
+            DocumentBase doc;
+            try
             {
-                path = path.Substring(this.WorkingDir.Length + 1);
+                doc = this.CreateNewDocument(path);
             }
-            var fullPath = Path.Combine(this.WorkingDir, path);
-            Type docType = null;
-            var fExt = Path.GetExtension(path);
-            foreach (var doc in DocumentsAvailable)
+            catch (KeyNotFoundException)
             {
-                if (doc.SupportedFileExtensions.Contains(fExt))
-                {
-                    docType = doc.GetType();
-                }
-            }
-            if (docType == null)
-            {
-                //ToDo: Let user decide how to open this document
-                MessageBox.Show("No matching editor context found. Selecting is not yet implemented.");
                 return null;
             }
-            var instance = Activator.CreateInstance(docType) as DocumentBase;
-            instance.OpenDocument(fullPath);
-            return instance;
-        }
-
-        private void DockingMangerInitialized(DockingManager dm)
-        {
-            if (dm == null)
-                return;
-            this.MWDockingManager = dm;
-            LoadLayout(dm, Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
-        }
-
-        private void Open()
-        {
-            var solutionFile = Directory.Exists(this.WorkingDir) ? Directory.EnumerateFiles(this.WorkingDir, "*.assln").FirstOrDefault() : string.Empty;
-            if (!string.IsNullOrWhiteSpace(solutionFile))
+            var reference = this.GetProjectFileFolderReference(path);
+            switch (mode)
             {
-                try
-                {
-                    this.CurrentSolution = solutionFile.XmlDeserialize<SolutionUtil.Solution>();
-                    this.CurrentSolution.RestoreFromXml();
-                    this.CurrentSolution.Prepare(this);
-                }
-                catch (Exception ex)
-                {
-                    while (ex.InnerException != null)
-                        ex = ex.InnerException;
-                    MessageBox.Show(string.Format(Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
-                    this.CurrentSolution = new SolutionUtil.Solution();
-                    this.CurrentSolution.Prepare(this);
-                    this.CurrentSolution.ReScan();
-                }
+                case ECreateDocumentModes.AddFileReferenceOrNull:
+                    {
+                        if (reference == null)
+                            return null;
+                        doc.FileReference = reference;
+                        doc.LoadDocument();
+                        return doc;
+                    }
+
+                case ECreateDocumentModes.AddFileReferenceOrTemporary:
+                    {
+                        if (reference == null)
+                        {
+                            doc.IsTemporary = true;
+                        }
+                        else
+                        {
+                            doc.FileReference = reference;
+                        }
+                        doc.LoadDocument();
+                        return doc;
+                    }
+
+                case ECreateDocumentModes.AddOrCreateFileReference:
+                    {
+                        if (reference == null)
+                        {
+                            foreach (var p in this.Solution.Projects)
+                            {
+                                if (p.FileUri.IsBaseOf(path))
+                                {
+                                    var pff = p.GetOrCreateFileFolder(path);
+                                    doc.FileReference = pff;
+                                    doc.LoadDocument();
+                                    return doc;
+                                }
+                            }
+                            throw new KeyNotFoundException(nameof(ECreateDocumentModes.AddOrCreateFileReference));
+                        }
+                        else
+                        {
+                            doc.FileReference = reference;
+                            doc.LoadDocument();
+                            return doc;
+                        }
+                    }
+
+                case ECreateDocumentModes.CreateTemporary:
+                    {
+                        doc.IsTemporary = true;
+                        doc.LoadDocument();
+                        return doc;
+                    }
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        public DocumentBase CreateTemporaryDocument(string content, string extension) => this.CreateTemporaryDocument(content, this.GetFileTypeFromExtension(extension));
+        public DocumentBase CreateTemporaryDocument(string content, FileType fileType)
+        {
+            var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(fileType);
+            if(doc is TextEditorBaseDataContext)
+            {
+                (doc as TextEditorBaseDataContext).SetText(content);
             }
             else
             {
-                //Create new solution as no existing is present
-                this.CurrentSolution = new SolutionUtil.Solution();
-                this.CurrentSolution.Prepare(this);
-                this.CurrentSolution.ReScan();
+                throw new Exception("Cannot set text in non-TextEditorBaseDataContext classes");
             }
-            this.PanelsAvailable.Add(this.CurrentSolution);
+            doc.IsTemporary = true;
+            doc.KeyManager = this.KeyManager;
+            return doc;
+        }
 
-            foreach (var panel in this.PanelsAvailable)
+        /// <summary>
+        /// Returns the corresponding <see cref="FileType"/> for given file extension.
+        /// extension has to be prefixed by a dot.
+        /// </summary>
+        /// <param name="ext">File extension prefixed by dot.</param>
+        /// <returns>The corresponding <see cref="FileType"/> or null.</returns>
+        public FileType GetFileTypeFromExtension(string ext)
+        {
+            return App.GetPlugins<IDocumentProviderPlugin>().FirstOrDefault((prov) => prov.FileTypes.Any((ft) => ft.IsFileTypeCondition(ext)))?.FileTypes.First((ft) => ft.IsFileTypeCondition(ext));
+        }
+
+        /// <summary>
+        /// Adds provided <see cref="DocumentBase"/> to the displayed documents.
+        /// If already added, <see cref="DocumentBase"/> will be focused.
+        /// </summary>
+        /// <param name="doc">The document to focus/display</param>
+        public void DisplayDocument(DocumentBase doc)
+        {
+            if (this.AvalonDockDocuments.Contains(doc))
             {
-                var iniName = panel.GetType().Name;
-                if (ConfigHost.Instance.LayoutIni.Sections.ContainsSection(iniName))
+                this.AvalonDockDocuments.Add(doc);
+            }
+            doc.IsActive = true;
+        }
+
+
+
+        /// <summary>
+        /// Tries to find a <see cref="FileType"/> from provided path.
+        /// If <see cref="Uri"/> is not found, null will be returned.
+        /// </summary>
+        /// <param name="path">Path to the document.</param>
+        /// <returns>Correct <see cref="FileType"/> or null.</returns>
+        public FileType GetFileType(Uri path)
+        {
+            foreach (var p in App.GetPlugins<IDocumentProviderPlugin>())
+            {
+                var fileType = p.FileTypes.FirstOrDefault((ft) => ft.IsFileType(path));
+                if (fileType != null)
                 {
-                    var section = ConfigHost.Instance.LayoutIni[iniName];
-                    if (section.ContainsKey("ContentId"))
-                    {
-                        panel.ContentId = section["ContentId"];
-                    }
-                    if (section.ContainsKey("IsSelected"))
-                    {
-                        bool isSelectedFlag;
-                        bool.TryParse(section["IsSelected"], out isSelectedFlag);
-                        panel.IsSelected = isSelectedFlag;
-                    }
+                    return fileType;
                 }
             }
-            double d;
-            d = ConfigHost.App.WindowWidth;
-            if(d >= 0)
+            return null;
+        }
+        /// <summary>
+        /// User will be prompted to select a <see cref="DocumentBase.DocumentDescribor"/>.
+        /// In case he aborts, exception will be thrown.
+        /// </summary>
+        /// <returns>The <see cref="DocumentBase.DocumentDescribor"/> the user selected.</returns>
+        /// <exception cref="KeyNotFoundException">Thrown when user aborted the selection dialog.</exception>
+        public DocumentBase.DocumentDescribor GetDocumentDescriborByPrompt()
+        {
+            DocumentBase.DocumentDescribor descr = null;
+            App.Current.Dispatcher.Invoke(() =>
             {
-                this.WindowWidth = d;
-            }
-            d = ConfigHost.App.WindowHeight;
-            if (d >= 0)
-            {
-                this.WindowHeight = d;
-            }
-            d = ConfigHost.App.WindowLeft;
-            if (d >= 0)
-            {
-                this.WindowLeft = d;
-            }
-            d = ConfigHost.App.WindowTop;
-            if (d >= 0)
-            {
-                this.WindowTop = d;
-            }
-            this.WindowCurrentState = ConfigHost.App.WindowCurrentState;
-
-            var sqfLintFileList = new List<SolutionUtil.SolutionFile>();
-            SolutionUtil.SolutionFileBase.WalkThrough(this.CurrentSolution.FilesCollection, (sfb) =>
-            {
-                var sf = sfb as SolutionUtil.SolutionFile;
-                if(sf != null && Path.GetExtension(sf.FileName).Equals(".sqf", StringComparison.InvariantCultureIgnoreCase))
+                var dlgdc = new Dialogs.DocumentSelectorDialogDataContext();
+                var dlg = new Dialogs.DocumentSelectorDialog(dlgdc);
+                var dlgResult = dlg.ShowDialog();
+                if (dlgResult.HasValue && dlgResult.Value)
                 {
-                    sqfLintFileList.Add(sf);
+                    descr = dlgdc.SelectedItem as DocumentBase.DocumentDescribor;
                 }
-                return false;
             });
-            Task.Run(() => {
-                foreach(var sf in sqfLintFileList)
+            if (descr != null)
+                return descr;
+            throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Creates a new document with provided describor.
+        /// If describor is not found in any document providers, exception will be thrown.
+        /// </summary>
+        /// <param name="describor">Describor of some <see cref="DocumentBase"/>.</param>
+        /// <returns>new <see cref="DocumentBase"/> instance.</returns>
+        /// <exception cref="KeyNotFoundException">Thrown when <see cref="DocumentBase.DocumentDescribor"/> is not found in any DocumentProvider</exception>
+        private DocumentBase CreateNewDocument(DocumentBase.DocumentDescribor describor)
+        {
+            foreach (var p in App.GetPlugins<IDocumentProviderPlugin>())
+            {
+                if (p.Documents.Contains(describor))
                 {
-                    if (!File.Exists(sf.FullPath))
-                        continue;
-                    using (var stream = File.OpenRead(sf.FullPath))
+                    var doc = p.CreateDocument(describor);
+                    doc.KeyManager = this.KeyManager;
+                    doc.OnDocumentClosing += Document_OnDocumentClosing;
+                    if(doc is CodeEditorBaseDataContext)
                     {
-                        DataContext.ErrorListPane.Instance.LinterDictionary[sf.FullPath] = Linting.SQF_GetLinterInfo(stream, sf.FullPath);
+                        (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += Workspace_OnLintingInfoUpdated;
                     }
+                    if (doc is TextEditorBaseDataContext)
+                    {
+                        (doc as TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => App.Current.Dispatcher.Invoke(() => t.Result.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(t.Result))));
+                    }
+                    return doc;
                 }
-            });
-        }
-
-        private void Close()
-        {
-            this.DebugContext.Close();
-            //Save Layout GUIDs of the panels
-            foreach (var panel in PanelsAvailable)
-            {
-                var iniName = panel.GetType().Name;
-                if (!ConfigHost.Instance.LayoutIni.Sections.ContainsSection(iniName))
-                    ConfigHost.Instance.LayoutIni.Sections.AddSection(iniName);
-                var section = ConfigHost.Instance.LayoutIni[iniName];
-                section["ContentId"] = panel.ContentId;
-                section["IsSelected"] = panel.IsSelected.ToString();
             }
-            this.SaveSolution();
+
+            throw new KeyNotFoundException();
         }
 
-        public void SaveSolution()
+        /// <summary>
+        /// Creates a new document with provided describor.
+        /// If <see cref="Uri"/> is not found, the User will be prompted to select a <see cref="DocumentBase.DocumentDescribor"/>.
+        /// In case he aborts, exception will be thrown.
+        /// Should be executed on dialog thread.
+        /// </summary>
+        /// <param name="path">Path to the document.</param>
+        /// <returns>new <see cref="DocumentBase"/> instance.</returns>
+        private DocumentBase CreateNewDocument(Uri path)
         {
-            if (Directory.Exists(this.WorkingDir)) {
-                var solutionFile = Directory.EnumerateFiles(this.WorkingDir, "*.assln").FirstOrDefault();
-                this.CurrentSolution.XmlSerialize(Path.Combine(this.WorkingDir, solutionFile == null ? string.Concat(Path.GetFileName(this.WorkingDir), ".assln") : solutionFile));
-            }
-        }
-
-        private static IEnumerable<PanelBase> FindAllAnchorablePanelsInAssembly()
-        {
-            var list = new List<PanelBase>();
-            foreach (var t in Assembly.GetExecutingAssembly().DefinedTypes)
+            var fileType = GetFileType(path);
+            if (fileType == null)
             {
-                if (!t.IsEquivalentTo(typeof(PanelBase)) && typeof(PanelBase).IsAssignableFrom(t))
+                var describor = this.GetDocumentDescriborByPrompt();
+                var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(describor);
+                doc.KeyManager = this.KeyManager;
+                doc.OnDocumentClosing += Document_OnDocumentClosing;
+                if (doc is CodeEditorBaseDataContext)
                 {
-                    var instance = Activator.CreateInstance(t, true) as PanelBase;
-                    if (instance.AutoAddPanel)
-                        list.Add(instance);
+                    (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += Workspace_OnLintingInfoUpdated;
                 }
-            }
-            return list;
-        }
-        private static IEnumerable<DocumentBase> FindAllDocumentsInAssembly()
-        {
-            var list = new List<DocumentBase>();
-            foreach (var t in Assembly.GetExecutingAssembly().DefinedTypes)
-            {
-                if (!t.IsEquivalentTo(typeof(DocumentBase)) && typeof(DocumentBase).IsAssignableFrom(t))
+                if (doc is TextEditorBaseDataContext)
                 {
-                    var instance = Activator.CreateInstance(t) as DocumentBase;
-                    list.Add(instance);
+                    (doc as TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => App.Current.Dispatcher.Invoke(() => t.Result.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(t.Result))));
+                }
+                return doc;
+            }
+            else
+            {
+                var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(fileType);
+                doc.KeyManager = this.KeyManager;
+                doc.OnDocumentClosing += Document_OnDocumentClosing;
+                if (doc is CodeEditorBaseDataContext)
+                {
+                    (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += Workspace_OnLintingInfoUpdated;
+                }
+                if (doc is TextEditorBaseDataContext)
+                {
+                    (doc as TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => App.Current.Dispatcher.Invoke(() => t.Result.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(t.Result))));
+                }
+                return doc;
+            }
+        }
+
+        private void Document_OnDocumentClosing(object sender, EventArgs e)
+        {
+            var doc = sender as DocumentBase;
+            doc.OnDocumentClosing -= Document_OnDocumentClosing;
+            if (doc is CodeEditorBaseDataContext)
+            {
+                (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated -= Workspace_OnLintingInfoUpdated;
+            }
+            if (this.AvalonDockDocuments.Contains(doc))
+            {
+                try
+                {
+                    this.AvalonDockDocuments.Remove(doc);
+                }
+                catch (NullReferenceException) { } //AvalonDock ...
+            }
+        }
+        private void Workspace_OnLintingInfoUpdated(object sender, EventArgs e)
+        {
+            var editor = sender as CodeEditorBaseDataContext;
+            if (editor == null || editor.FileReference == null)
+                return;
+            DataContext.ErrorListPane.Instance.LinterDictionary[editor.FileReference.FilePath] = editor.Linter.LinterInfo;
+        }
+
+        public DocumentBase GetCurrentDocument()
+        {
+            if (this.CurrentContent is DocumentBase)
+                return this.CurrentContent as DocumentBase;
+
+            foreach (var doc in this.AvalonDockDocuments)
+            {
+                if (doc == null)
+                    continue;
+                if (doc.IsSelected)
+                {
+                    return doc;
                 }
             }
-            return list;
+            return null;
+        }
+
+
+        public void SaveBreakpointsToProject()
+        {
+            var filePath = Path.ChangeExtension(this.Solution.FileUri.AbsolutePath, App.CONST_BREAKPOINTINFOEXTENSION);
+            using (var stream = File.Open(filePath, FileMode.Create))
+            {
+                this.BreakpointManager.SaveBreakpoints(stream);
+            }
         }
     }
 }

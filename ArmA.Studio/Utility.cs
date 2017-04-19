@@ -3,47 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArmA.Studio.Data;
+using ArmA.Studio.Data.UI;
+using ICSharpCode.AvalonEdit.Document;
 
 namespace ArmA.Studio
 {
     public static class Utility
     {
-        public static string GetWordAround(this ICSharpCode.AvalonEdit.Document.TextDocument doc, int offset)
-        {
-            if (offset < 0 || offset >= doc.TextLength)
-                return string.Empty;
-            int start, end;
 
-            //find start
-            for (start = offset; start >= 0; start--)
-            {
-                var c = doc.GetCharAt(start);
-                if (!char.IsLetterOrDigit(c) && c != '_')
-                {
-                    start++;
-                    break;
-                }
-            }
-            //find end
-            for (end = start; end < doc.TextLength; end++)
-            {
-                var c = doc.GetCharAt(end);
-                if (!char.IsLetterOrDigit(c) && c != '_')
-                {
-                    break;
-                }
-            }
-            return doc.GetText(start, end - start);
-        }
-        public static IEnumerable<string> AllIdents(this ICSharpCode.AvalonEdit.Document.TextDocument doc, int minLength = 2)
+
+        public static IEnumerable<string> GetAllSqfIdents(this TextDocument doc, int minLength = 2)
         {
             var builder = new StringBuilder();
             bool isString = false;
+            bool isInComment = false;
+            bool isInMultiLineComment = false;
             char stringchar = '\0';
-            for(int i = 0; i < doc.TextLength; i++)
+            for (int i = 0; i < doc.TextLength; i++)
             {
                 var c = doc.GetCharAt(i);
-                if(isString)
+                if (isInMultiLineComment)
+                {
+                    if (c == '*' && doc.GetCharAt(i + 1) == '/')
+                        isInMultiLineComment = false;
+                }
+                else if (isInComment)
+                {
+                    if (c == '\n')
+                        isInComment = false;
+                }
+                else if (isString)
                 {
                     if (c == stringchar)
                         isString = false;
@@ -52,10 +42,18 @@ namespace ArmA.Studio
                 {
                     builder.Append(c);
                 }
-                else if(c == '"' || c == '\'')
+                else if (c == '"' || c == '\'')
                 {
                     stringchar = c;
                     isString = true;
+                }
+                else if (c == '/' && doc.GetCharAt(i + 1) == '*')
+                {
+                    isInMultiLineComment = true;
+                }
+                else if (c == '/' && doc.GetCharAt(i + 1) == '/')
+                {
+                    isInComment = true;
                 }
                 else
                 {
@@ -67,7 +65,6 @@ namespace ArmA.Studio
                 }
             }
         }
-
         public static bool Contains(this string s, string cont, bool ignoreCasing)
         {
             if (cont.Length == 0)
@@ -106,6 +103,27 @@ namespace ArmA.Studio
                 }
             }
             return false;
+        }
+
+
+        public static void Close(this DocumentBase doc)
+        {
+            if (Workspace.Instance.AvalonDockDocuments.Contains(doc))
+            {
+                Workspace.Instance.AvalonDockDocuments.Remove(doc);
+            }
+        }
+        public static void Close(this PanelBase panel)
+        {
+            if (Workspace.Instance.AvalonDockPanels.Contains(panel))
+            {
+                Workspace.Instance.AvalonDockPanels.Remove(panel);
+            }
+        }
+        public static string GetTemplate(this FileType ftype)
+        {
+            //ToDo: make templates customizable
+            return ftype.FileTemplate;
         }
     }
 }

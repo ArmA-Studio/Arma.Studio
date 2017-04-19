@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 using ArmA.Studio.Data.Configuration;
-using ArmA.Studio.Dialogs.PropertiesDialogUtil;
+using ArmA.Studio.Data.UI.Commands;
 
 namespace ArmA.Studio.Dialogs
 {
@@ -15,13 +15,10 @@ namespace ArmA.Studio.Dialogs
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
 
-        public ICommand CmdOKButtonPressed { get; private set; }
+        public ICommand CmdOKButtonPressed => new RelayCommand((p) => this.DialogResult = true);
 
         public bool? DialogResult { get { return this._DialogResult; } set { this._DialogResult = value; this.RaisePropertyChanged(); } }
         private bool? _DialogResult;
-
-        public string SearchText { get { return this._SearchText; } set { this._SearchText = value; this.AvailableCategories.Refresh(); this.RaisePropertyChanged(); } }
-        private string _SearchText;
 
         public string WindowHeader { get { return Properties.Localization.PropertiesDialog_Header; } }
 
@@ -31,69 +28,55 @@ namespace ArmA.Studio.Dialogs
 
         public bool RestartRequired { get; internal set; }
 
-        public ICollectionView AvailableCategories { get; private set; }
+        public IEnumerable<Category> Categories { get { return this._Categories; } set { this._Categories = value; this.RaisePropertyChanged(); } }
+        private IEnumerable<Category> _Categories;
+        public Category SelectedCategory { get { return this._SelectedCategory; } set { if (this._SelectedCategory == value) return; this._SelectedCategory = value; this.RaisePropertyChanged(); } }
+        private Category _SelectedCategory;
 
-        public ObservableCollection<ConfigCategory> Categories { get; private set; }
-
-        public ConfigCategory SelectedCategory { get { return this._SelectedCategory; } set { if (this._SelectedCategory == value) return; this._SelectedCategory = value; this.AvailableCategories.Refresh(); this.RaisePropertyChanged(); } }
-        private ConfigCategory _SelectedCategory;
-        
         public PropertiesDialogDataContext()
         {
-            this.CmdOKButtonPressed = new UI.Commands.RelayCommand(Cmd_OKButtonPressed);
-            this.Categories = new ObservableCollection<ConfigCategory>(GetCategories());
-            this._SelectedCategory = this.Categories.First();
-            this.AvailableCategories = CollectionViewSource.GetDefaultView(this.Categories);
-            this.AvailableCategories.Filter = new Predicate<object>(AvailableCategories_Filter);
-            var debuggerCategories = Workspace.CurrentWorkspace.DebugContext.GetPropertyCategories();
-            if (debuggerCategories != null) {
-                foreach (var it in debuggerCategories)
-                {
-                    bool flag = false;
-                    foreach (var it2 in this.Categories)
-                    {
-                        if (it.Name.Equals(it2.Name, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            it2.Add(it);
-                            flag = true;
-                            break;
-                        }
-                    }
-                    if (!flag)
-                    {
-                        this.Categories.Add(it);
-                    }
-                }
-            }
+
+            this.Categories = new ObservableCollection<Category>(this.GetCategories());
+            this._SelectedCategory = this.Categories.FirstOrDefault();
         }
 
-        private bool AvailableCategories_Filter(object obj)
+        private IEnumerable<Category> GetCategories()
         {
-            var cat = obj as ConfigCategory;
-            if (cat == null || this.SearchText == null || cat.Name.Contains(this.SearchText, true) || cat.Any((it) => it.Name.Contains(this.SearchText, true)))
-                return true;
-            return false;
-        }
+            var list = new List<Category>(App.GetPlugins<Plugin.IPropertiesPlugin>().SelectMany((p) => p.GetCategories()));
 
-        public void Cmd_OKButtonPressed(object param)
-        {
-            this.DialogResult = true;
-        }
+            list.Add(new Category(this.GetGeneralSubCategories()) { Name = Properties.Localization.GeneralProperties });
+            list.Add(new Category(this.GetColorSubCategories()) { Name = Properties.Localization.ColoringProperties, ImageSource = @"/ArmA.Studio;component/Resources/Pictograms/ColorPalette/ColorPalette_26x.png" });
 
-        private IEnumerable<ConfigCategory> GetCategories()
-        {
-            yield return new ConfigCategory(Properties.Localization.ColoringProperties, @"/ArmA.Studio;component/Resources/Pictograms/ColorPalette/ColorPalette_26x.png", GetColorConfigEntries());
+            return Category.Merge(list);
         }
-
-        private IEnumerable<ConfigEntry> GetColorConfigEntries()
+        private IEnumerable<SubCategory> GetColorSubCategories()
         {
-            foreach(var c in typeof(ConfigHost.Coloring).GetNestedTypes())
+            foreach (var c in typeof(ConfigHost.Coloring).GetNestedTypes())
             {
-                foreach(var prop in c.GetProperties())
-                {
-                    yield return new ColorConfigEntry(c.Name, prop.Name, prop.GetValue(null), prop.SetMethod);
-                }
+                yield return new SubCategory(this.GetColorItems(c)) { Name = c.Name, ImageSource = @"/ArmA.Studio;component/Resources/Pictograms/ColorPalette/ColorPalette_26x.png" };
             }
+        }
+        private IEnumerable<Item> GetColorItems(Type colorType)
+        {
+            foreach (var prop in colorType.GetProperties())
+            {
+                yield return new ColorConfigItem(prop.Name, prop);
+            }
+        }
+
+        private IEnumerable<SubCategory> GetGeneralSubCategories()
+        {
+            yield return new SubCategory(new Item[]
+            {
+                new BoolItem(Properties.Localization.Property_General_Updating_EnableAutoToolUpdateAtStart, typeof(ConfigHost.App).GetProperty(nameof(ConfigHost.App.EnableAutoToolUpdates)), null),
+                new BoolItem(Properties.Localization.Property_General_Updating_EnableAutoPluginsUpdateAtStart, typeof(ConfigHost.App).GetProperty(nameof(ConfigHost.App.EnableAutoPluginsUpdate)), null)
+            })
+            { Name = Properties.Localization.Property_General_Updating, ImageSource = @"/ArmA.Studio;component/Resources/Logo.ico" };
+            yield return new SubCategory(new Item[]
+            {
+                new BoolItem(Properties.Localization.Property_General_ErrorReporting_AutoReportException, typeof(ConfigHost.App).GetProperty(nameof(ConfigHost.App.AutoReportException)), null)
+            })
+            { Name = Properties.Localization.Property_General_ErrorReporting, ImageSource = @"/ArmA.Studio;component/Resources/Logo.ico" };
         }
     }
 }
