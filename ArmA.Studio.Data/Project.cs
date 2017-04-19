@@ -173,9 +173,16 @@ namespace ArmA.Studio.Data
                 if (depth - origPathDepth == 1 && fname.Equals("$PBOPREFIX$"))
                 {
                     Logger.Info($"\tLocated ArmAPath at '{fpath.Remove(0, this.FilePath.Length)}'.");
-                    using (var reader = new StreamReader(fpath))
+                    try
                     {
-                        this.ArmAPath = reader.ReadToEnd();
+                        using (var reader = new StreamReader(fpath))
+                        {
+                            this._ArmAPath = reader.ReadToEnd();
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        Virtual.ShowOperationFailedMessageBox(ex);
                     }
                 }
                 else if (ValidFileExtensions.Any((s) => s.Equals(ext, StringComparison.InvariantCultureIgnoreCase)))
