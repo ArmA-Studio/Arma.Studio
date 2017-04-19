@@ -150,6 +150,7 @@
     <Compile Include="DataContext\SolutionPaneUtil\ProjectFolderModelView.cs" />
     <Compile Include="DataContext\SolutionPaneUtil\ProjectModelView.cs" />
     <Compile Include="DefaultPlugin\HighlightingHelper.cs" />
+    <Compile Include="DefaultPlugin\ImageViewerDocument.cs" />
     <Compile Include="DefaultPlugin\PluginMain.cs" />
     <Compile Include="DefaultPlugin\ConfigDocument.cs" />
     <Compile Include="DefaultPlugin\SqfDocument.cs" />
@@ -258,6 +259,9 @@
     <Compile Include="UpdateHelper.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="Workspace.cs" />
+    <EmbeddedResource Include="DefaultPlugin\ImageViewerDocumentDataTemplate.xaml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Page Include="Dialogs\ConfigEntrySelectorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -375,6 +379,26 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Pictograms\Field\Field_blue_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\IconFile\IconFile_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\IconFile\IconFile_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\IconFile\IconFile_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\IconFile\IconFile_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\IconFile\IconFile_64x.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1905,6 +1929,11 @@
     <None Include="Resources\Pictograms\Field\field_16xMD.ai" />
     <None Include="Resources\Pictograms\Field\field_16xSM.ai" />
     <None Include="Resources\Pictograms\Field\Field_blue_16x.ai" />
+    <None Include="Resources\Pictograms\IconFile\IconFile_16x.ai" />
+    <None Include="Resources\Pictograms\IconFile\IconFile_256x.ai" />
+    <None Include="Resources\Pictograms\IconFile\IconFile_32x.ai" />
+    <None Include="Resources\Pictograms\IconFile\IconFile_48x.ai" />
+    <None Include="Resources\Pictograms\IconFile\IconFile_64x.ai" />
     <None Include="Resources\Pictograms\Method\ASCube_16xMD.ai" />
     <None Include="Resources\Pictograms\Method\ASCube_16xSM.ai" />
     <None Include="Resources\Pictograms\Method\F12_Method_20x.ai" />
@@ -2350,6 +2379,16 @@
     <Resource Include="Resources\Pictograms\Field\Field_blue_16x.png" />
     <Resource Include="Resources\Pictograms\Field\Field_blue_16x_24.bmp" />
     <Resource Include="Resources\Pictograms\Field\Field_blue_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile.ico" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_16x.png" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_16x_Green24.bmp" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_256x.png" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_32x.png" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_32x_24.bmp" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_48x.png" />
+    <Resource Include="Resources\Pictograms\IconFile\IconFile_64x.png" />
     <Content Include="Resources\Pictograms\Output\Output_16x.svg" />
     <Resource Include="Resources\Pictograms\Output\Output_16xMD.png" />
     <Resource Include="Resources\Pictograms\Output\Output_16xSM.png" />

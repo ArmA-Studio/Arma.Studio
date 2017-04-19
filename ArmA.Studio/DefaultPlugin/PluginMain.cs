@@ -50,9 +50,12 @@ params [];" };
         public static readonly FileType DescriptionExtFileType = new FileType((ext) => ext.Equals(".cpp", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".ext", StringComparison.InvariantCultureIgnoreCase), "description.ext", ".ext") { Linter = new ConfigLintHelper(), StaticFileName = "description.ext" };
         public static readonly DocumentBase.DocumentDescribor ConfigDocumentDescribor = new DocumentBase.DocumentDescribor(new[] { ConfigFileType }, "Config");
 
-        public IEnumerable<DataTemplate> DocumentDataTemplates => new[] { TextEditorBaseDataContext.TextEditorBaseDataTemplate };
-        public IEnumerable<DocumentBase.DocumentDescribor> Documents => new[] { SqfDocumentDescribor, ConfigDocumentDescribor };
-        public IEnumerable<FileType> FileTypes => new[] { SqfFileType, ConfigFileType, ConfigCppFileType, DescriptionExtFileType };
+        public static readonly FileType ImageViewerFileType = new FileType((ext) => new string[] { ".png", ".paa", "jpeg", "jpe", "jpg", "tga" }.Contains(ext.ToLower()), "Image", ".png");
+        public static readonly DocumentBase.DocumentDescribor ImageViewerDescribor = new DocumentBase.DocumentDescribor(new[] { ImageViewerFileType }, "Image");
+
+        public IEnumerable<DataTemplate> DocumentDataTemplates => new[] { TextEditorBaseDataContext.TextEditorBaseDataTemplate, ImageViewerDocument.ImageViewerDocumentDataTemplate };
+        public IEnumerable<DocumentBase.DocumentDescribor> Documents => new[] { SqfDocumentDescribor, ConfigDocumentDescribor, ImageViewerDescribor };
+        public IEnumerable<FileType> FileTypes => new[] { SqfFileType, ConfigFileType, ConfigCppFileType, DescriptionExtFileType, ImageViewerFileType };
 
         public DocumentBase CreateDocument(DocumentBase.DocumentDescribor describor)
         {
@@ -63,6 +66,10 @@ params [];" };
             else if (describor == ConfigDocumentDescribor)
             {
                 return new ConfigDocument();
+            }
+            else if(describor == ImageViewerDescribor)
+            {
+                return new ImageViewerDocument();
             }
             else
             {
@@ -79,6 +86,10 @@ params [];" };
             else if (type == ConfigFileType || type == ConfigCppFileType || type == DescriptionExtFileType)
             {
                 return new ConfigDocument();
+            }
+            else if (type == ImageViewerFileType)
+            {
+                return new ImageViewerDocument();
             }
             else
             {

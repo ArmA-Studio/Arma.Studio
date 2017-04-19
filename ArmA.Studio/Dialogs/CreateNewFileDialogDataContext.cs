@@ -39,7 +39,7 @@ namespace ArmA.Studio.Dialogs
 
         public CreateNewFileDialogDataContext()
         {
-            this.FileTypeCollection = new ObservableCollection<FileType>(App.GetPlugins<Plugin.IDocumentProviderPlugin>().SelectMany((p) => p.FileTypes));
+            this.FileTypeCollection = new ObservableCollection<FileType>(App.GetPlugins<Plugin.IDocumentProviderPlugin>().SelectMany((p) => p.FileTypes).Where((p) => p.CanCreate));
             this.SelectedItem = this.FileTypeCollection.First();
             this.UpdateOkButtonEnabled();
         }

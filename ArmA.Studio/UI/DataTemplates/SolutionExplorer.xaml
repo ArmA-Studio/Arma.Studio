@@ -240,6 +240,24 @@
                                     <DataTrigger Binding="{Binding Ref.FileExtension}" Value=".hpp">
                                         <Setter Property="Source" Value="/ArmA.Studio;component/Resources/FileTypes/HeaderFile_16x.png"/>
                                     </DataTrigger>
+                                    <DataTrigger Binding="{Binding Ref.FileExtension}" Value=".png">
+                                        <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/IconFile/IconFile.ico"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Ref.FileExtension}" Value=".paa">
+                                        <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/IconFile/IconFile.ico"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Ref.FileExtension}" Value=".jpeg">
+                                        <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/IconFile/IconFile.ico"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Ref.FileExtension}" Value=".jpe">
+                                        <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/IconFile/IconFile.ico"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Ref.FileExtension}" Value=".jpg">
+                                        <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/IconFile/IconFile.ico"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Ref.FileExtension}" Value=".tga">
+                                        <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/IconFile/IconFile.ico"/>
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Image.Style>

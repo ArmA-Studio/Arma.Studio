@@ -24,6 +24,7 @@ namespace ArmA.Studio.Data
 
         public string StaticFileName { get; set; }
         public bool HasStaticFileName => !string.IsNullOrWhiteSpace(this.StaticFileName);
+        public bool CanCreate { get; set; }
 
         public ILinterHost Linter { get; set; }
 
