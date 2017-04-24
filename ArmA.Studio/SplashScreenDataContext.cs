@@ -187,6 +187,14 @@ namespace ArmA.Studio
                     }
                 }
             }
+            catch (UnauthorizedAccessException ex)
+            {
+                ConfigHost.App.WorkspacePath = string.Empty;
+                Logger.Error(ex, "Exception while trying to get Solution");
+                App.ShowOperationFailedMessageBox(ex);
+                App.Shutdown(App.ExitCodes.NoWorkspaceSelected);
+                return true;
+            }
             catch (Exception ex)
             {
                 Logger.Error(ex, "Exception while trying to get Solution");
