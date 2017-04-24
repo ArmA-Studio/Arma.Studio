@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using ArmA.Studio.Data.UI.Commands;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -16,7 +17,7 @@ namespace ArmA.Studio.Dialogs
         public string CurrentPath { get { return this._CurrentPath; } set { this._CurrentPath = value; this.OKButtonEnabled = !string.IsNullOrWhiteSpace(value); this.RaisePropertyChanged(); } }
         private string _CurrentPath;
 
-        public IEnumerable<string> WorkSpaceListBox { get { return this._WorkSpaceListBox;  } set { this._WorkSpaceListBox = value; this.RaisePropertyChanged(); } }
+        public IEnumerable<string> WorkSpaceListBox { get { return this._WorkSpaceListBox; } set { this._WorkSpaceListBox = value; this.RaisePropertyChanged(); } }
         private IEnumerable<string> _WorkSpaceListBox;
 
         public ICommand CmdBrowse => new RelayCommand(Cmd_Browse);
@@ -34,7 +35,7 @@ namespace ArmA.Studio.Dialogs
 
         public WorkspaceSelectorDialogDataContext()
         {
-            this.WorkSpaceListBox = ConfigHost.App.RecentWorkspaces;   
+            this.WorkSpaceListBox = ConfigHost.App.RecentWorkspaces;
         }
 
         public void Cmd_Ok(object param)
@@ -74,7 +75,14 @@ namespace ArmA.Studio.Dialogs
             var dlgResult = cofd.ShowDialog();
             if (dlgResult == CommonFileDialogResult.Ok)
             {
-                this.CurrentPath = cofd.FileName;
+                if (System.IO.Path.GetPathRoot(cofd.FileName) == cofd.FileName)
+                {
+                    MessageBox.Show(Properties.Localization.MessageBoxWorkspaceCannotBeRoot_Body, Properties.Localization.MessageBoxWorkspaceCannotBeRoot_Title, MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    this.CurrentPath = cofd.FileName;
+                }
             }
         }
     }
