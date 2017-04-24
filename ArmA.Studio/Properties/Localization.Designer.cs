@@ -542,6 +542,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string KeySearch {
+            get {
+                return ResourceManager.GetString("KeySearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Licenses.
         /// </summary>
         public static string LicenseViewer_Header {
@@ -713,6 +722,24 @@ namespace ArmA.Studio.Properties {
         public static string MessageBoxOperationFailed_Title {
             get {
                 return ResourceManager.GetString("MessageBoxOperationFailed_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The path is not allowed to be at a root level..
+        /// </summary>
+        public static string MessageBoxWorkspaceCannotBeRoot_Body {
+            get {
+                return ResourceManager.GetString("MessageBoxWorkspaceCannotBeRoot_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Root Path Selected.
+        /// </summary>
+        public static string MessageBoxWorkspaceCannotBeRoot_Title {
+            get {
+                return ResourceManager.GetString("MessageBoxWorkspaceCannotBeRoot_Title", resourceCulture);
             }
         }
         
@@ -1014,6 +1041,42 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current Document.
+        /// </summary>
+        public static string SearchModeCurrentDocument {
+            get {
+                return ResourceManager.GetString("SearchModeCurrentDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Project.
+        /// </summary>
+        public static string SearchModeCurrentProject {
+            get {
+                return ResourceManager.GetString("SearchModeCurrentProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entire Solution.
+        /// </summary>
+        public static string SearchModeEntireSolution {
+            get {
+                return ResourceManager.GetString("SearchModeEntireSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Documents.
+        /// </summary>
+        public static string SearchModeOpenDocuments {
+            get {
+                return ResourceManager.GetString("SearchModeOpenDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show output from:.
         /// </summary>
         public static string ShowOutputFromSource {
@@ -1196,18 +1259,7 @@ namespace ArmA.Studio.Properties {
                 return ResourceManager.GetString("WorkspaceSelectorDialog_Browse", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Select Existing.
-        /// </summary>
-        public static string WorkspaceSelectorDialog_SelectPrev
-        {
-            get
-            {
-                return ResourceManager.GetString("WorkspaceSelectorDialog_SelectPrev", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Please select the folder where the project is located..
         /// </summary>
@@ -1232,6 +1284,15 @@ namespace ArmA.Studio.Properties {
         public static string WorkspaceSelectorDialog_NoWorkspaceSelected {
             get {
                 return ResourceManager.GetString("WorkspaceSelectorDialog_NoWorkspaceSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recent.
+        /// </summary>
+        public static string WorkspaceSelectorDialog_SelectPrev {
+            get {
+                return ResourceManager.GetString("WorkspaceSelectorDialog_SelectPrev", resourceCulture);
             }
         }
         
