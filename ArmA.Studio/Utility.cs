@@ -125,5 +125,66 @@ namespace ArmA.Studio
             //ToDo: make templates customizable
             return ftype.FileTemplate;
         }
+
+        /// <summary>
+        /// Loads given type <typeparamref name="T"/> from provided <paramref name="path"/>.
+        /// Will throw <see cref="System.IO.FileNotFoundException"/> in case of the <paramref name="path"/> being not existing.
+        /// Will throw <see cref="InvalidCastException"/> in case of the item behind <paramref name="path"/> is not of type <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T"><see cref="class"/> type which will be loaded from <paramref name="assembly"/>.</typeparam>
+        /// <param name="assembly">The <see cref="System.Reflection.Assembly"/> where to look the <paramref name="path"/> up.</param>
+        /// <param name="path">Path to the xaml file. 'Example: ArmA.Studio.Data.Configuration.StringItem.xaml' </param>
+        /// <returns></returns>
+        public static T LoadFromEmbeddedResource<T>(System.Reflection.Assembly assembly, string path) where T : class
+        {
+            var resNames = from name in assembly.GetManifestResourceNames() where name.EndsWith(".xaml") where name.Equals(path) select name;
+            foreach (var res in resNames)
+            {
+                var resSplit = res.Split('.');
+                var header = resSplit[resSplit.Count() - 2];
+                using (var stream = assembly.GetManifestResourceStream(res))
+                {
+                    try
+                    {
+                        var obj = System.Windows.Markup.XamlReader.Load(stream);
+                        if (!(obj is T))
+                        {
+                            throw new InvalidCastException();
+                        }
+                        return obj as T;
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+            }
+            throw new System.IO.FileNotFoundException();
+        }
+
+        public static string GetContentAsString(this ProjectFile pf)
+        {
+            var doc = Workspace.Instance.AvalonDockDocuments.FirstOrDefault((d) => d.FileReference == pf);
+            if(doc != null && doc is TextEditorBaseDataContext)
+            {
+                return (doc as TextEditorBaseDataContext).Document.Text;
+            }
+            using (var stream = new System.IO.StreamReader(System.IO.File.OpenRead(pf.FilePath)))
+            {
+                return stream.ReadToEnd();
+            }
+        }
+        public static void SetContentAsString(this ProjectFile pf, string replaceText)
+        {
+            var doc = Workspace.Instance.AvalonDockDocuments.FirstOrDefault((d) => d.FileReference == pf);
+            if (doc != null && doc is TextEditorBaseDataContext)
+            {
+                (doc as TextEditorBaseDataContext).Document.Text = replaceText;
+            }
+            using (var stream = new System.IO.StreamWriter(System.IO.File.Open(pf.FilePath, System.IO.FileMode.Create)))
+            {
+                stream.Write(replaceText);
+            }
+        }
     }
 }

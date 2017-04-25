@@ -18,6 +18,7 @@ using ArmA.Studio.Data.UI;
 using ArmA.Studio.Data.UI.Commands;
 using ArmA.Studio.Data;
 using ArmA.Studio.Plugin;
+using System.Windows.Controls.Primitives;
 
 namespace ArmA.Studio
 {
@@ -288,10 +289,12 @@ namespace ArmA.Studio
         {
             Instance = this;
             this.KeyManager = new KeyManager();
+            KeyManager.RegisterKey(new ASKeyContainer(new KeyContainer(Properties.Localization.KeySearch, new Key[] { Key.LeftCtrl, Key.F }, DisplaySearchPopup)));
+
             this.BreakpointManager = new BreakpointManager();
             foreach (var it in App.GetPlugins<IHotKeyPlugin>())
             {
-                foreach(var kc in it.GetGlobalHotKeys())
+                foreach (var kc in it.GetGlobalHotKeys())
                 {
                     this.KeyManager.RegisterKey(kc);
                 }
@@ -478,7 +481,7 @@ namespace ArmA.Studio
         public DocumentBase CreateTemporaryDocument(string content, FileType fileType)
         {
             var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(fileType);
-            if(doc is TextEditorBaseDataContext)
+            if (doc is TextEditorBaseDataContext)
             {
                 (doc as TextEditorBaseDataContext).SetText(content);
             }
@@ -576,7 +579,7 @@ namespace ArmA.Studio
                     var doc = p.CreateDocument(describor);
                     doc.KeyManager = this.KeyManager;
                     doc.OnDocumentClosing += Document_OnDocumentClosing;
-                    if(doc is CodeEditorBaseDataContext)
+                    if (doc is CodeEditorBaseDataContext)
                     {
                         (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += Workspace_OnLintingInfoUpdated;
                     }
@@ -685,6 +688,24 @@ namespace ArmA.Studio
             {
                 this.BreakpointManager.SaveBreakpoints(stream);
             }
+        }
+
+        private Popup CurrentSearchPopup;
+        public void DisplaySearchPopup(object param)
+        {
+            if (!(this.CurrentContent is TextEditorBaseDataContext))
+                return;
+            if(this.CurrentSearchPopup != null && this.CurrentSearchPopup.IsOpen)
+            {
+                this.CurrentSearchPopup.IsOpen = false;
+            }
+            var doc = this.CurrentContent as TextEditorBaseDataContext;
+            var dc = new DataContext.SearchDataContext();
+            this.CurrentSearchPopup = Utility.LoadFromEmbeddedResource<Popup>(Assembly.GetExecutingAssembly(), "ArmA.Studio.UI.SearchPopup.xaml");
+            this.CurrentSearchPopup.PlacementTarget = doc.EditorInstance;
+            this.CurrentSearchPopup.DataContext = dc;
+            this.CurrentSearchPopup.Placement = PlacementMode.Mouse;
+            this.CurrentSearchPopup.IsOpen = true;
         }
     }
 }
