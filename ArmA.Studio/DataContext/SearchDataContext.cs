@@ -205,6 +205,9 @@ namespace ArmA.Studio.DataContext
         public ICommand CmdClose => new RelayCommand((p) => { (p as Popup).IsOpen = false; });
         public ICommand CmdReplaceNext => new RelayCommand((param) =>
         {
+            var regex = this.GetRegex(true);
+            if (regex == null)
+                return;
             switch (this.SelectedSearchMode)
             {
                 case ESearchMode.CurrentDocument:
@@ -328,7 +331,7 @@ namespace ArmA.Studio.DataContext
                     var tebdc = doc as Data.UI.TextEditorBaseDataContext;
                     (doc as Data.UI.TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => App.Current.Dispatcher.Invoke(() =>
                     {
-                        var str = this.GetRegex().Replace(tebdc.Document.GetText(match.Index, match.Length), this.ReplaceText);
+                        var str = regex.Replace(tebdc.Document.GetText(match.Index, match.Length), this.ReplaceText);
                         tebdc.Document.Replace(match.Index, match.Length, str);
                         t.Result.Select(match.Index, str.Length);
                         t.Result.ScrollToLine(t.Result.TextArea.Caret.Line);
@@ -349,6 +352,9 @@ namespace ArmA.Studio.DataContext
         });
         public ICommand CmdReplaceAll => new RelayCommand((param) =>
         {
+            var regex = this.GetRegex(true);
+            if (regex == null)
+                return;
             IEnumerable<Tuple<Data.ProjectFile, MatchCollection>> stuff;
             switch (this.SelectedSearchMode)
             {
@@ -390,7 +396,6 @@ namespace ArmA.Studio.DataContext
                     throw new NotImplementedException();
             }
 
-            var regex = this.GetRegex();
             foreach (var it in stuff)
             {
                 var str = it.Item1.GetContentAsString();
@@ -411,7 +416,7 @@ namespace ArmA.Studio.DataContext
             this.SelectedSearchMode = ESearchMode.CurrentDocument;
         }
 
-        private Regex GetRegex()
+        private Regex GetRegex(bool testReplace = false)
         {
             var txt = this.FindText;
             if (!this.UseRegex)
@@ -431,7 +436,10 @@ namespace ArmA.Studio.DataContext
             try
             {
                 var regex = new Regex(txt, options);
-                regex.Replace(string.Empty, this.ReplaceText);
+                if (testReplace)
+                {
+                    regex.Replace(string.Empty, this.ReplaceText);
+                }
                 return regex;
             }
             catch (Exception ex)
