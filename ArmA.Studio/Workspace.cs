@@ -491,6 +491,7 @@ namespace ArmA.Studio
             }
             doc.IsTemporary = true;
             doc.KeyManager = this.KeyManager;
+            this.AvalonDockDocuments.Add(doc);
             return doc;
         }
 
