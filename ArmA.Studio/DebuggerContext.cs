@@ -184,6 +184,10 @@ namespace ArmA.Studio
                 if (pff == null)
                 {
                     var content = DebuggerInstance.GetDocumentContent(e.DocumentPath);
+                    if(string.IsNullOrWhiteSpace(content))
+                    {
+                        content = "NA";
+                    }
                     doc = Workspace.Instance.CreateTemporaryDocument(content, ".sqf");
                     Logger.Info($"Created temporary document for {e.DocumentPath}");
                 }
