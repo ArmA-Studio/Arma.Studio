@@ -34,20 +34,6 @@ namespace Utility
             return null;
         }
         #endregion
-        #region Pick
-        public static IEnumerable<T> Pick<T>(this IEnumerable<T> enumerable, Func<T, bool> func)
-        {
-            var list = new List<T>();
-            foreach (var it in enumerable)
-            {
-                if (func(it))
-                {
-                    list.Add(it);
-                }
-            }
-            return list;
-        }
-        #endregion
         #region Cast
         public static IEnumerator<T> Cast<T>(this IEnumerator iterator)
         {
@@ -115,6 +101,103 @@ namespace Utility
                     ForEachNested(it as IEnumerable<T>, action);
                 }
             }
+        }
+        #endregion
+        #region MoveStart
+        public static IEnumerable<T> MoveStart<T>(this IEnumerable<T> enumerable, T start)
+        {
+            var count = enumerable.Count();
+            var index = enumerable.IndexOf(start);
+            if (index == -1)
+                throw new InvalidOperationException();
+            if (index == 0)
+            {
+                foreach(var it in enumerable)
+                {
+                    yield return it;
+                }
+            }
+            else
+            {
+                var enumerator = enumerable.GetEnumerator();
+                for (int i = 0; enumerator.MoveNext(); i++)
+                {
+                    if (i < index)
+                        continue;
+                    yield return enumerator.Current;
+                }
+                enumerator = enumerable.GetEnumerator();
+                for (int i = 0; enumerator.MoveNext() && i < index; i++)
+                {
+                    yield return enumerator.Current;
+                }
+            }
+        }
+        #endregion
+        #region IndexOf
+        public static int IndexOf<T>(this IEnumerable<T> enumerable, T item)
+        {
+            var enumerator = enumerable.GetEnumerator();
+            for (int i = 0; enumerator.MoveNext(); i++)
+            {
+                if (enumerator.Current.Equals(item))
+                    return i;
+            }
+            return -1;
+        }
+        public static int IndexOf(this IEnumerable enumerable, object item)
+        {
+            var enumerator = enumerable.GetEnumerator();
+            for (int i = 0; enumerator.MoveNext(); i++)
+            {
+                if (enumerator.Current.Equals(item))
+                    return i;
+            }
+            return -1;
+        }
+        public static int IndexOf<T>(this IEnumerable<T> enumerable, Func<T, bool> cond)
+        {
+            var enumerator = enumerable.GetEnumerator();
+            for (int i = 0; enumerator.MoveNext(); i++)
+            {
+                if (cond.Invoke(enumerator.Current))
+                    return i;
+            }
+            return -1;
+        }
+        public static int IndexOf(this IEnumerable enumerable, Func<object, bool> cond)
+        {
+            var enumerator = enumerable.GetEnumerator();
+            for (int i = 0; enumerator.MoveNext(); i++)
+            {
+                if (cond.Invoke(enumerator.Current))
+                    return i;
+            }
+            return -1;
+        }
+        #endregion
+        #region Second
+        public static T Second<T>(this IEnumerable<T> enumerable)
+        {
+            int i = 0;
+            foreach (var it in enumerable)
+            {
+                i++;
+                if (i == 2)
+                    return it;
+            }
+            throw new InvalidOperationException();
+        }
+        public static object Second(this IEnumerable enumerable)
+        {
+            int i = 0;
+            foreach (var it in enumerable)
+            {
+                i++;
+                if (i == 2)
+                    return it;
+            }
+            throw new InvalidOperationException();
         }
         #endregion
     }

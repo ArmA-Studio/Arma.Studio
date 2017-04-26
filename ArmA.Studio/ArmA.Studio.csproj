@@ -145,6 +145,7 @@
     </ApplicationDefinition>
     <Compile Include="ASKeyContainer.cs" />
     <Compile Include="BreakpointManager.cs" />
+    <Compile Include="DataContext\SearchDataContext.cs" />
     <Compile Include="DataContext\SolutionPane.cs" />
     <Compile Include="DataContext\SolutionPaneUtil\ProjectFileModelView.cs" />
     <Compile Include="DataContext\SolutionPaneUtil\ProjectFolderModelView.cs" />
@@ -362,6 +363,70 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Pictograms\CaseSensitive\CaseSensitive_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Close\Close_12x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Close\Close_12x_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Close\Close_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Close\Close_8x_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Close\Close_NoHalo_12x_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Close\Close_WhiteNoHalo_12x_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Close\Close_White_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Close\F12_Close_32x96.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Close\F12_Close_header_32x96.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Close\VSO_Close_12x_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Close\VSO_Close_whiteNoHalo_12x_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\ExpandChevronUp\ExpandChevronUp_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\ExpandChevronUp\ExpandChevronUp_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Pictograms\Field\F12_Field_20x.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -478,6 +543,70 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Pictograms\Next\Next_12x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\Next_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\Next_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\Next_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\Next_grey_12x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\Next_grey_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\Next_grey_16xLG.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\Next_grey_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\Next_grey_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\Next_grey_24x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\Next_inverse_16xLG.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\Next_LtGrey_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\Next_LtGrey_inverse_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\StatisticsFlat_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\VSO_Next_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Next\VSO_Next_whiteNoHalo_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Pictograms\Output\Monaco_OutputCommandToggled_28x_32x.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -515,6 +644,30 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Pictograms\Output\Output_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\QuickReplace\QuickReplace_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\QuickReplace\QuickReplace_inverse_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\RegularExpression\RegularExpression_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\ReplaceAll\ReplaceAll_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\ReplaceAll\ReplaceAll_inverse_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\WholeWordMatch\WholeWordMatch_16x.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1882,6 +2035,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <EmbeddedResource Include="UI\SearchPopup.xaml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -1924,6 +2080,27 @@
     <None Include="Resources\Pictograms\BuildErrorList\BuildErrorList_inverse_64x.ai" />
     <None Include="Resources\Pictograms\CallStackWindow\CallStackWindow_16x.ai" />
     <None Include="Resources\Pictograms\CallStackWindow\VSO_CallStackWindow_16x.ai" />
+    <None Include="Resources\Pictograms\CaseSensitive\CaseSensitive_16x.ai" />
+    <None Include="Resources\Pictograms\Close\Close_12x.ai" />
+    <None Include="Resources\Pictograms\Close\Close_12x_16x.ai" />
+    <None Include="Resources\Pictograms\Close\Close_16x.ai" />
+    <None Include="Resources\Pictograms\Close\Close_8x_16x.ai" />
+    <None Include="Resources\Pictograms\Close\Close_NoHalo_12x_16x.ai" />
+    <None Include="Resources\Pictograms\Close\Close_WhiteNoHalo_12x_16x.ai" />
+    <None Include="Resources\Pictograms\Close\Close_White_16x.ai" />
+    <None Include="Resources\Pictograms\Close\F12_Close_32x96.ai" />
+    <None Include="Resources\Pictograms\Close\F12_Close_header_32x96.ai" />
+    <None Include="Resources\Pictograms\Close\VSO_Close_12x_16x.ai" />
+    <None Include="Resources\Pictograms\Close\VSO_Close_whiteBlackHalo_12x_16x.ai" />
+    <None Include="Resources\Pictograms\Close\VSO_Close_whiteNoHalo_12x_16x.ai" />
+    <None Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16x.ai" />
+    <None Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16xMD.ai" />
+    <None Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_lightGray_16x.ai" />
+    <None Include="Resources\Pictograms\ExpandChevronDown\VSO_ExpandChevronDown_16x.ai" />
+    <None Include="Resources\Pictograms\ExpandChevronUp\ExpandChevronUp_16x.ai" />
+    <None Include="Resources\Pictograms\ExpandChevronUp\ExpandChevronUp_16xMD.ai" />
+    <None Include="Resources\Pictograms\ExpandChevronUp\ExpandChevronUp_lightGrey_16x.ai" />
+    <None Include="Resources\Pictograms\ExpandChevronUp\VSO_ExpandChevronUp_16x.ai" />
     <None Include="Resources\Pictograms\Field\F12_Field_20x.ai" />
     <None Include="Resources\Pictograms\Field\Field_16x.ai" />
     <None Include="Resources\Pictograms\Field\field_16xMD.ai" />
@@ -1953,6 +2130,23 @@
     <None Include="Resources\Pictograms\Method\Method_purple_48x.ai" />
     <None Include="Resources\Pictograms\Method\Method_purple_64x.ai" />
     <None Include="Resources\Pictograms\Method\Method_purple_exp.ai" />
+    <None Include="Resources\Pictograms\Next\Next_12x.ai" />
+    <None Include="Resources\Pictograms\Next\Next_16x.ai" />
+    <None Include="Resources\Pictograms\Next\Next_16xMD.ai" />
+    <None Include="Resources\Pictograms\Next\Next_16xSM.ai" />
+    <None Include="Resources\Pictograms\Next\Next_grey_12x.ai" />
+    <None Include="Resources\Pictograms\Next\Next_grey_16x.ai" />
+    <None Include="Resources\Pictograms\Next\Next_grey_16xLG.ai" />
+    <None Include="Resources\Pictograms\Next\Next_grey_16xMD.ai" />
+    <None Include="Resources\Pictograms\Next\Next_grey_16xSM.ai" />
+    <None Include="Resources\Pictograms\Next\Next_grey_24x.ai" />
+    <None Include="Resources\Pictograms\Next\Next_inverse_16xLG.ai" />
+    <None Include="Resources\Pictograms\Next\Next_LtGrey_16x.ai" />
+    <None Include="Resources\Pictograms\Next\Next_LtGrey_inverse_16x.ai" />
+    <None Include="Resources\Pictograms\Next\StatisticsFlat_16x.ai" />
+    <None Include="Resources\Pictograms\Next\VSO_Next_16x.ai" />
+    <None Include="Resources\Pictograms\Next\VSO_Next_grey_16x.ai" />
+    <None Include="Resources\Pictograms\Next\VSO_Next_whiteNoHalo_16x.ai" />
     <None Include="Resources\Pictograms\Output\Monaco_OutputCommandToggled_28x_32x.ai" />
     <None Include="Resources\Pictograms\Output\Monaco_OutputCommand_28x_32x.ai" />
     <None Include="Resources\Pictograms\Output\Output_12x.ai" />
@@ -1963,6 +2157,12 @@
     <None Include="Resources\Pictograms\Output\Output_32x.ai" />
     <None Include="Resources\Pictograms\Output\Output_48x.ai" />
     <None Include="Resources\Pictograms\Output\Output_64x.ai" />
+    <None Include="Resources\Pictograms\QuickReplace\QuickReplace_16x.ai" />
+    <None Include="Resources\Pictograms\QuickReplace\QuickReplace_inverse_16x.ai" />
+    <None Include="Resources\Pictograms\RegularExpression\RegularExpression_16x.ai" />
+    <None Include="Resources\Pictograms\ReplaceAll\ReplaceAll_16x.ai" />
+    <None Include="Resources\Pictograms\ReplaceAll\ReplaceAll_inverse_16x.ai" />
+    <None Include="Resources\Pictograms\WholeWordMatch\WholeWordMatch_16x.ai" />
     <None Include="Resources\Pictograms\XMLFile\XMLFile_16x.ai" />
     <None Include="Resources\Pictograms\XMLFile\XMLFile_256x.ai" />
     <None Include="Resources\Pictograms\XMLFile\XMLFile_32x.ai" />
@@ -2389,6 +2589,81 @@
     <Resource Include="Resources\Pictograms\IconFile\IconFile_32x_24.bmp" />
     <Resource Include="Resources\Pictograms\IconFile\IconFile_48x.png" />
     <Resource Include="Resources\Pictograms\IconFile\IconFile_64x.png" />
+    <Resource Include="Resources\Pictograms\Next\Next_12x.png" />
+    <Resource Include="Resources\Pictograms\Next\Next_16x.png" />
+    <Resource Include="Resources\Pictograms\ExpandChevronUp\ExpandChevronUp_16x.png" />
+    <Resource Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16x.png" />
+    <Resource Include="Resources\Pictograms\Close\Close_12x.png" />
+    <Resource Include="Resources\Pictograms\Close\Close_12x_16x.png" />
+    <Resource Include="Resources\Pictograms\CaseSensitive\CaseSensitive_16x.png" />
+    <Content Include="Resources\Pictograms\CaseSensitive\CaseSensitive_16x.svg" />
+    <Content Include="Resources\Pictograms\Close\Close_12x_16x.svg" />
+    <Resource Include="Resources\Pictograms\Close\Close_12x_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Close\Close_12x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Close\Close_16x.png" />
+    <Content Include="Resources\Pictograms\Close\Close_16x.svg" />
+    <Resource Include="Resources\Pictograms\Close\Close_8x_16x.png" />
+    <Resource Include="Resources\Pictograms\Close\Close_NoHalo_12x_16x.png" />
+    <Resource Include="Resources\Pictograms\Close\Close_NoHalo_12x_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Close\Close_white.png" />
+    <Resource Include="Resources\Pictograms\Close\Close_WhiteNoHalo_12x_16x.png" />
+    <Resource Include="Resources\Pictograms\Close\Close_WhiteNoHalo_12x_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Close\Close_White_16x.png" />
+    <Resource Include="Resources\Pictograms\Close\Close_White_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Close\F12_CloseErrorBoxBlue1.png" />
+    <Resource Include="Resources\Pictograms\Close\F12_CloseErrorBoxBlue2.png" />
+    <Resource Include="Resources\Pictograms\Close\F12_CloseErrorBoxGrey.png" />
+    <Resource Include="Resources\Pictograms\Close\F12_CloseErrorBoxLtGrey.png" />
+    <Resource Include="Resources\Pictograms\Close\F12_Close_32x96.png" />
+    <Content Include="Resources\Pictograms\Close\F12_Close_32x96.svg" />
+    <Resource Include="Resources\Pictograms\Close\F12_Close_header_32x96.png" />
+    <Content Include="Resources\Pictograms\Close\F12_Close_header_32x96.svg" />
+    <Resource Include="Resources\Pictograms\Close\VSO_Close_12x_16x.png" />
+    <Content Include="Resources\Pictograms\Close\VSO_Close_12x_16x.svg" />
+    <Resource Include="Resources\Pictograms\Close\VSO_Close_16x.png" />
+    <Resource Include="Resources\Pictograms\Close\VSO_Close_whiteBlackHalo_12x_16x.png" />
+    <Resource Include="Resources\Pictograms\Close\VSO_Close_whiteNoHalo_12x_16x.png" />
+    <Content Include="Resources\Pictograms\Close\VSO_Close_whiteNoHalo_12x_16x.svg" />
+    <Content Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16x.svg" />
+    <Resource Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16xMD.png" />
+    <Resource Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_lightGray_16x.png" />
+    <Content Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_lightGray_16x.svg" />
+    <Resource Include="Resources\Pictograms\ExpandChevronDown\VSO_ExpandChevronDown_16x.png" />
+    <Content Include="Resources\Pictograms\ExpandChevronDown\VSO_ExpandChevronDown_16x.svg" />
+    <Content Include="Resources\Pictograms\ExpandChevronUp\ExpandChevronUp_16x.svg" />
+    <Resource Include="Resources\Pictograms\ExpandChevronUp\ExpandChevronUp_16xMD.png" />
+    <Resource Include="Resources\Pictograms\ExpandChevronUp\ExpandChevronUp_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\ExpandChevronUp\ExpandChevronUp_lightGrey_16x.png" />
+    <Content Include="Resources\Pictograms\ExpandChevronUp\ExpandChevronUp_lightGrey_16x.svg" />
+    <Resource Include="Resources\Pictograms\ExpandChevronUp\VSO_ExpandChevronUp_16x.png" />
+    <Content Include="Resources\Pictograms\ExpandChevronUp\VSO_ExpandChevronUp_16x.svg" />
+    <Content Include="Resources\Pictograms\Next\Next_16x.svg" />
+    <Resource Include="Resources\Pictograms\Next\Next_16xMD.png" />
+    <Content Include="Resources\Pictograms\Next\Next_16xMD.svg" />
+    <Resource Include="Resources\Pictograms\Next\Next_16xSM.png" />
+    <Content Include="Resources\Pictograms\Next\Next_16xSM.svg" />
+    <Resource Include="Resources\Pictograms\Next\Next_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Next\Next_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\Next\Next_grey_12x.png" />
+    <Resource Include="Resources\Pictograms\Next\Next_grey_16x.ico" />
+    <Resource Include="Resources\Pictograms\Next\Next_grey_16x.png" />
+    <Content Include="Resources\Pictograms\Next\Next_grey_16x.svg" />
+    <Resource Include="Resources\Pictograms\Next\Next_grey_16xMD.png" />
+    <Resource Include="Resources\Pictograms\Next\Next_grey_16xSM.png" />
+    <Resource Include="Resources\Pictograms\Next\Next_grey_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Next\Next_grey_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\Next\Next_grey_24x.png" />
+    <Content Include="Resources\Pictograms\Next\Next_LtGrey_16x.svg" />
+    <Resource Include="Resources\Pictograms\Next\Next_whiteBlackHalo_16x.png" />
+    <Resource Include="Resources\Pictograms\Next\StatisticsFlat_16x.png" />
+    <Resource Include="Resources\Pictograms\Next\StatisticsFlat_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Next\StatisticsFlat_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\Next\VSO_Next_16x.png" />
+    <Content Include="Resources\Pictograms\Next\VSO_Next_16x.svg" />
+    <Resource Include="Resources\Pictograms\Next\VSO_Next_grey_16x.png" />
+    <Content Include="Resources\Pictograms\Next\VSO_Next_grey_16x.svg" />
+    <Resource Include="Resources\Pictograms\Next\VSO_Next_whiteNoHalo_16x.png" />
+    <Content Include="Resources\Pictograms\Next\VSO_Next_whiteNoHalo_16x.svg" />
     <Content Include="Resources\Pictograms\Output\Output_16x.svg" />
     <Resource Include="Resources\Pictograms\Output\Output_16xMD.png" />
     <Resource Include="Resources\Pictograms\Output\Output_16xSM.png" />
@@ -2398,6 +2673,14 @@
     <Resource Include="Resources\Pictograms\Output\Output_32x.png" />
     <Resource Include="Resources\Pictograms\Output\Output_48x.png" />
     <Resource Include="Resources\Pictograms\Output\Output_64x.png" />
+    <Resource Include="Resources\Pictograms\WholeWordMatch\WholeWordMatch_16x.png" />
+    <Resource Include="Resources\Pictograms\ReplaceAll\ReplaceAll_16x.png" />
+    <Resource Include="Resources\Pictograms\ReplaceAll\ReplaceAll_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\RegularExpression\RegularExpression_16x.png" />
+    <Resource Include="Resources\Pictograms\QuickReplace\QuickReplace_16x.png" />
+    <Resource Include="Resources\Pictograms\QuickReplace\QuickReplace_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\QuickReplace\QuickReplace_16x_32.bmp" />
+    <Content Include="Resources\Pictograms\WholeWordMatch\WholeWordMatch_16x.svg" />
     <Content Include="Resources\Pictograms\XMLFile\XMLFile_16x.svg" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_16x_24.bmp" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_16x_32.bmp" />
@@ -3090,6 +3373,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
