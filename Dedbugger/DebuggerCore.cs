@@ -432,7 +432,7 @@ namespace Dedbugger
 
         public string GetDocumentContent(string armapath)
         {
-            return this.LastDocumentContent;
+            throw new NotImplementedException();
         }
     }
 }
