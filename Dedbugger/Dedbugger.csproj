@@ -72,7 +72,8 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>if not exist "$(SolutionDir)ArmA.Studio\$(OutDir)Plugins" mkdir ""$(SolutionDir)ArmA.Studio\$(OutDir)Plugins"" xcopy /Y "$(TargetName).*" "$(SolutionDir)ArmA.Studio\$(OutDir)Plugins"</PostBuildEvent>
+    <PostBuildEvent>if not exist "$(SolutionDir)ArmA.Studio\$(OutDir)Plugins" mkdir ""$(SolutionDir)ArmA.Studio\$(OutDir)Plugins""
+xcopy /Y "$(TargetName).*" "$(SolutionDir)ArmA.Studio\$(OutDir)Plugins"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
