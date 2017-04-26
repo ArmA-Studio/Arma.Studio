@@ -15,9 +15,11 @@ namespace ArmA.Studio.UI
 {
     public class RuntimeExecutionMargin : AbstractMargin
     {
-        public RuntimeExecutionMargin()
+        private readonly Data.UI.CodeEditorBaseDataContext CodeEditorDataContext;
+        public RuntimeExecutionMargin(Data.UI.CodeEditorBaseDataContext cebdc)
         {
             this.IsHitTestVisible = false;
+            this.CodeEditorDataContext = cebdc;
         }
 
         protected override void OnRender(DrawingContext drawingContext)
@@ -29,9 +31,12 @@ namespace ArmA.Studio.UI
                 return;
             if (!Workspace.Instance.DebugContext.IsPaused)
                 return;
-            var CurrentDoc = Workspace.Instance.GetCurrentDocument();
-            if (!CurrentDoc.FileReference.ArmAPath.Equals(Workspace.Instance.DebugContext.CurrentArmADocument, StringComparison.InvariantCultureIgnoreCase))
-                return;
+
+            if (this.CodeEditorDataContext != Workspace.Instance.DebugContext.CurrentDocument)
+            {
+
+            }
+
             var color = new SolidColorBrush(ConfigHost.Coloring.ExecutionMarker.MainColor);
             color.Freeze();
             var pen = new Pen(new SolidColorBrush(ConfigHost.Coloring.ExecutionMarker.BorderColor), 1);

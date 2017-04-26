@@ -43,7 +43,7 @@ namespace ArmA.Studio
 
         public int CurrentLine { get; private set; }
         public int CurrentColumn { get; private set; }
-        public string CurrentArmADocument { get; private set; }
+        public DocumentBase CurrentDocument { get; private set; }
 
         private CodeEditorBaseDataContext LastEditorContext;
 
@@ -177,7 +177,6 @@ namespace ArmA.Studio
                 this.CallStack = this.DebuggerInstance.GetCallstack();
 
                 App.Current.MainWindow.Activate();
-                this.CurrentArmADocument = e.DocumentPath;
 
                 var pff = Workspace.Instance.Solution.GetProjectFileFolderFromArmAPath(e.DocumentPath);
                 DocumentBase doc;
@@ -188,12 +187,12 @@ namespace ArmA.Studio
                     {
                         content = "NA";
                     }
-                    doc = Workspace.Instance.CreateOrFocusTemporaryDocument(e.DocumentPath, content, ".sqf");
+                    this.CurrentDocument = doc = Workspace.Instance.CreateOrFocusTemporaryDocument(e.DocumentPath, content, ".sqf");
                     Logger.Info($"Created temporary document for {e.DocumentPath}");
                 }
                 else
                 {
-                    doc = Workspace.Instance.CreateOrFocusDocument(pff);
+                    this.CurrentDocument = doc = Workspace.Instance.CreateOrFocusDocument(pff);
                 }
                 doc.RefreshVisuals();
                 this.LastEditorContext = doc as CodeEditorBaseDataContext;

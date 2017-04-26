@@ -47,7 +47,7 @@ namespace ArmA.Studio.DefaultPlugin
             this.EditorInstance.TextArea.TextView.BackgroundRenderers.Add(new UnderlineBackgroundRenderer(this));
             this.EditorInstance.TextArea.TextView.BackgroundRenderers.Add(bpm);
             this.EditorInstance.TextArea.LeftMargins.Insert(0, bpm);
-            this.EditorInstance.TextArea.LeftMargins.Insert(1, new RuntimeExecutionMargin());
+            this.EditorInstance.TextArea.LeftMargins.Insert(1, new RuntimeExecutionMargin(this));
         }
 
         public IEnumerable<LintInfo> Lint(Stream stream, ProjectFile f)
