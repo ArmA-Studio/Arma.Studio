@@ -94,6 +94,9 @@ namespace ArmA.Studio.Data.UI
         public bool IsTemporary { get { return this._IsTemporary; } set { if (this._IsTemporary == value) return; this._IsTemporary = value; RaisePropertyChanged(); } }
         private bool _IsTemporary;
 
+        public string TemporaryIdentifier { get { return this._TemporaryIdentifier; } set { if (this._TemporaryIdentifier == value) return; this._TemporaryIdentifier = value; RaisePropertyChanged(); } }
+        private string _TemporaryIdentifier;
+
         public abstract void SaveDocument();
         public abstract void SaveDocument(string path);
         public abstract void LoadDocument();

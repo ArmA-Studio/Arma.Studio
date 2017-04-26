@@ -477,6 +477,22 @@ namespace ArmA.Studio
             }
         }
 
+        public DocumentBase CreateOrFocusTemporaryDocument(string info, string content, string extension) => this.CreateOrFocusTemporaryDocument(info, content, this.GetFileTypeFromExtension(extension));
+        public DocumentBase CreateOrFocusTemporaryDocument(string info, string content, FileType fileType)
+        {
+            foreach (var it in this.AvalonDockDocuments)
+            {
+                if (it.IsTemporary && it.TemporaryIdentifier.Equals(info))
+                {
+                    it.IsSelected = true;
+                    return it;
+                }
+            }
+            var doc = CreateTemporaryDocument(content, fileType);
+            doc.TemporaryIdentifier = info;
+            return doc;
+        }
+
         public DocumentBase CreateTemporaryDocument(string content, string extension) => this.CreateTemporaryDocument(content, this.GetFileTypeFromExtension(extension));
         public DocumentBase CreateTemporaryDocument(string content, FileType fileType)
         {

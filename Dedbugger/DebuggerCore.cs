@@ -55,7 +55,6 @@ namespace Dedbugger
         private NamedPipeClientStream Pipe;
         private List<BreakpointInfo> BreakpointInfos;
         private asapJson.JsonNode LastCallstack;
-        private string LastDocumentContent;
         private const int MinimalDebuggerBuild = 23;
 
         public Thread PipeReadThread { get; private set; }
@@ -70,7 +69,6 @@ namespace Dedbugger
         {
             Messages = new ConcurrentBag<JsonNode>();
             this.Pipe = null;
-            this.this.LastDocumentContent = string.Empty;
         }
 
         public bool Attach()
@@ -183,7 +181,7 @@ namespace Dedbugger
                                         var fileOffsetNode = instruction.GetValue_Object()["fileOffset"];
                                         var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
                                         var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
-                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs(instruction.GetValue_Object()["filename"].GetValue_String(), line, col));
+                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs(instruction.GetValue_Object()["filename"].GetValue_String(), null, line, col));
                                     }
                                     break;
                                 case ERecvCommands.HaltError:
@@ -193,10 +191,9 @@ namespace Dedbugger
                                         var fileOffsetNode = error.GetValue_Object()["fileOffset"];
                                         var errorMessage = error.GetValue_Object()["message"];//ToDo: display to user
                                         var fileContent = error.GetValue_Object()["content"];//File content in case we don't have that file
-                                        this.LastDocumentContent = fileContent.GetValue_String();
                                         var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
                                         var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
-                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs(error.GetValue_Object()["filename"].GetValue_String(), line, col));
+                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs(error.GetValue_Object()["filename"].GetValue_String(), fileContent.GetValue_String(), line, col));
                                     }
                                     break;
                                 case ERecvCommands.HaltScriptAssert:
@@ -208,7 +205,7 @@ namespace Dedbugger
                                         var fileContent = halt.GetValue_Object()["content"];//File content in case we don't have that file
                                         var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
                                         var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
-                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs(halt.GetValue_Object()["filename"].GetValue_String(), line, col));
+                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs(halt.GetValue_Object()["filename"].GetValue_String(), null, line, col));
                                     }
                                     break;
                                 case ERecvCommands.ContinueExecution:

@@ -99,6 +99,7 @@ namespace ArmA.Studio
             {
                 var mainWindow = new MainWindow();
                 mainWindow.Show();
+                App.Current.MainWindow = mainWindow;
                 wind.Close();
             });
         }
