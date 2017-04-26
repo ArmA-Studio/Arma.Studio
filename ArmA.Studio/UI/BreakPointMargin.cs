@@ -61,6 +61,8 @@ namespace ArmA.Studio.UI
 
         protected override void OnRender(DrawingContext drawingContext)
         {
+            if (this.FileFolderRef == null)
+                return;
             var view = this.TextView;
             if (view == null || !view.VisualLinesValid)
                 return;
@@ -91,6 +93,8 @@ namespace ArmA.Studio.UI
         }
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
+            if (this.FileFolderRef == null)
+                return;
             var view = this.TextView;
             if (view == null || !view.VisualLinesValid)
                 return;
@@ -125,6 +129,8 @@ namespace ArmA.Studio.UI
 
         public void Draw(TextView textView, DrawingContext drawingContext)
         {
+            if (this.FileFolderRef == null)
+                return;
             textView.EnsureVisualLines();
             var color = new SolidColorBrush(ConfigHost.Coloring.BreakPoint.TextHighlightColor);
             color.Freeze();
