@@ -7,6 +7,15 @@
     xmlns:ae="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
     xmlns:local="clr-namespace:ArmA.Studio.Data.UI;assembly=ArmA.Studio.Data"
     xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data" AllowsTransparency="True">
+    <!--<Popup.Style>
+        <Style TargetType="Popup">
+            <Style.Triggers>
+                <Trigger Property="Popup.IsMouseOver" Value="True">
+                    <Setter Property="IsOpen" Value="True"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Popup.Style>-->
     <Grid MaxHeight="256">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>

@@ -94,16 +94,26 @@ namespace ArmA.Studio.Data.UI
                 return;
             var textViewPos = textViewPosQ.Value;
             var offset = this.Document.GetOffset(textViewPos.Location);
-            var linterInfo = this.Linter.LinterInfo.FirstOrDefault((li) => li.StartOffset <= offset && li.EndOffset >= offset);
-            if (linterInfo == null)
-                return;
-            HighlightPopup.DataContext = linterInfo;
+            var info = this.OnHoverInformations(offset);
+            if (string.IsNullOrWhiteSpace(info))
+            {
+                var linterInfo = this.Linter.LinterInfo.FirstOrDefault((li) => li.StartOffset <= offset && li.EndOffset >= offset);
+                if (linterInfo == null)
+                    return;
+                HighlightPopup.DataContext = linterInfo;
+            }
+            else
+            {
+                HighlightPopup.DataContext = new LintInfo(null) { Message = info };
+            }
             HighlightPopup.PlacementTarget = this.EditorInstance;
             HighlightPopup.Placement = PlacementMode.Relative;
             HighlightPopup.HorizontalOffset = pos.X + 16;
             HighlightPopup.VerticalOffset = pos.Y - 8;
             HighlightPopup.IsOpen = true;
         }
+
+        public virtual string OnHoverInformations(int offset) { return string.Empty; }
 
 
         //ToDo: Fix error offset moving
@@ -238,6 +248,12 @@ namespace ArmA.Studio.Data.UI
                     }
                 }
             }
+        }
+        protected override void OnLostFocus()
+        {
+            base.OnLostFocus();
+            //ToDo: Improve so that clicking the popup is possible
+            IntelliSensePopup.IsOpen = false;
         }
     }
 }

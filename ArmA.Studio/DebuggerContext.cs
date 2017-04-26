@@ -166,6 +166,7 @@ namespace ArmA.Studio
                 Logger.Log(NLog.LogLevel.Info, "Debugger got detached.");
                 this.CurrentDocument?.RefreshVisuals();
                 this.IsDebuggerAttached = false;
+                this.CallStack = Enumerable.Empty<CallstackItem>();
             }, System.Windows.Threading.DispatcherPriority.Send);
         }
 

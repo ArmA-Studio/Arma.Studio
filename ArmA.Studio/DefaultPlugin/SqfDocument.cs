@@ -84,5 +84,19 @@ namespace ArmA.Studio.DefaultPlugin
                 l.Add(it.Name);
             }
         }
+
+        public override string OnHoverInformations(int offset)
+        {
+            if (!Workspace.Instance.DebugContext.IsPaused)
+                return base.OnHoverInformations(offset);
+            var word = this.Document.GetWordAround(offset);
+            if (string.IsNullOrWhiteSpace(word))
+                return base.OnHoverInformations(offset);
+            var task = Workspace.Instance.DebugContext.GetVariablesAsync(Debugger.EVariableNamespace.All, word);
+            var variable = task.Result.FirstOrNullable();
+            if (!variable.HasValue)
+                return base.OnHoverInformations(offset);
+            return variable.Value.Value;
+        }
     }
 }
