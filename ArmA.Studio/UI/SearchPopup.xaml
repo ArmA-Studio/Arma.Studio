@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data"
         xmlns:att="clr-namespace:ArmA.Studio.UI.Attached;assembly=ArmA.Studio"
+        xmlns:p="clr-namespace:ArmA.Studio.Properties;assembly=ArmA.Studio"
         MinWidth="256">
     <Border Padding="2" Background="White" BorderThickness="1" BorderBrush="Black" Grid.IsSharedSizeScope="True">
         <Border.Resources>
@@ -89,12 +90,12 @@
                         </Style>
                     </CheckBox.Style>
                 </CheckBox>
-                <TextBox Grid.Column="1" Text="{Binding FindText}" VerticalContentAlignment="Center"/>
+                <TextBox Grid.Column="1" Text="{Binding FindText}" VerticalContentAlignment="Center" att:CueBannerAttached.CueBanner="{x:Static p:Localization.Search_CueFindText}"/>
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
-                    <Button Command="{Binding CmdSearchNext}">
+                    <Button Command="{Binding CmdSearchNext}" ToolTip="{x:Static p:Localization.Search_Next}">
                         <Image Source="/Resources/Pictograms/Next/VSO_Next_grey_16x.png"/>
                     </Button>
-                    <Button HorizontalAlignment="Right" Command="{Binding CmdClose}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Popup}}">
+                    <Button HorizontalAlignment="Right" Command="{Binding CmdClose}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Popup}}" ToolTip="{x:Static p:Localization.Search_Close}">
                         <Image Source="/Resources/Pictograms/Close/VSO_Close_16x.png"/>
                     </Button>
                 </StackPanel>
@@ -115,12 +116,12 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition SharedSizeGroup="SearchCol2"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="1" Text="{Binding ReplaceText}" VerticalContentAlignment="Center"/>
+                <TextBox Grid.Column="1" Text="{Binding ReplaceText}" VerticalContentAlignment="Center" att:CueBannerAttached.CueBanner="{x:Static p:Localization.Search_CueReplaceText}"/>
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
-                    <Button Command="{Binding CmdReplaceNext}">
+                    <Button Command="{Binding CmdReplaceNext}" ToolTip="{x:Static p:Localization.Search_ReplaceNext}">
                         <Image Source="/Resources/Pictograms/QuickReplace/QuickReplace_16x.png"/>
                     </Button>
-                    <Button Command="{Binding CmdReplaceAll}">
+                    <Button Command="{Binding CmdReplaceAll}" ToolTip="{x:Static p:Localization.Search_ReplaceAll}">
                         <Image Source="/Resources/Pictograms/ReplaceAll/ReplaceAll_16x.png"/>
                     </Button>
                 </StackPanel>
@@ -134,13 +135,13 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <ToggleButton Grid.Column="1" IsChecked="{Binding IsCaseSensitive}">
+                <ToggleButton Grid.Column="1" IsChecked="{Binding IsCaseSensitive}" ToolTip="{x:Static p:Localization.Search_IsCaseSensitive}">
                     <Image Source="/Resources/Pictograms/CaseSensitive/CaseSensitive_16x.png"/>
                 </ToggleButton>
-                <ToggleButton Grid.Column="2" IsChecked="{Binding MatchWholeWord}" IsEnabled="{Binding UseRegex, Converter={StaticResource BoolInvertConverter}}">
+                <ToggleButton Grid.Column="2" IsChecked="{Binding MatchWholeWord}" IsEnabled="{Binding UseRegex, Converter={StaticResource BoolInvertConverter}}" ToolTip="{x:Static p:Localization.Search_MatchWholeWord}">
                     <Image Source="/Resources/Pictograms/WholeWordMatch/WholeWordMatch_16x.png"/>
                 </ToggleButton>
-                <ToggleButton Grid.Column="3" IsChecked="{Binding UseRegex}">
+                <ToggleButton Grid.Column="3" IsChecked="{Binding UseRegex}" ToolTip="{x:Static p:Localization.Search_UseRegex}">
                     <Image Source="/Resources/Pictograms/RegularExpression/RegularExpression_16x.png"/>
                 </ToggleButton>
                 <ComboBox Grid.Column="4" ItemsSource="{Binding SearchModes}" DisplayMemberPath="Key" SelectedValuePath="Value" SelectedValue="{Binding SelectedSearchModeBinding}" VerticalContentAlignment="Center" Padding="4 0"/>

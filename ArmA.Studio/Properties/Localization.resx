@@ -550,4 +550,31 @@ Do you want to update now?</value>
   <data name="SearchModeOpenDocuments" xml:space="preserve">
     <value>Open Documents</value>
   </data>
+  <data name="Search_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Search_IsCaseSensitive" xml:space="preserve">
+    <value>Is Case Sensitive</value>
+  </data>
+  <data name="Search_MatchWholeWord" xml:space="preserve">
+    <value>Match Whole Word</value>
+  </data>
+  <data name="Search_Next" xml:space="preserve">
+    <value>Find Next</value>
+  </data>
+  <data name="Search_ReplaceAll" xml:space="preserve">
+    <value>Replace All</value>
+  </data>
+  <data name="Search_ReplaceNext" xml:space="preserve">
+    <value>Replace Next</value>
+  </data>
+  <data name="Search_UseRegex" xml:space="preserve">
+    <value>Use Regex</value>
+  </data>
+  <data name="Search_CueFindText" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="Search_CueReplaceText" xml:space="preserve">
+    <value>Replace</value>
+  </data>
 </root>

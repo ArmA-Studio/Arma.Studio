@@ -1041,6 +1041,87 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Search_Close {
+            get {
+                return ResourceManager.GetString("Search_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find.
+        /// </summary>
+        public static string Search_CueFindText {
+            get {
+                return ResourceManager.GetString("Search_CueFindText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace.
+        /// </summary>
+        public static string Search_CueReplaceText {
+            get {
+                return ResourceManager.GetString("Search_CueReplaceText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Case Sensitive.
+        /// </summary>
+        public static string Search_IsCaseSensitive {
+            get {
+                return ResourceManager.GetString("Search_IsCaseSensitive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match Whole Word.
+        /// </summary>
+        public static string Search_MatchWholeWord {
+            get {
+                return ResourceManager.GetString("Search_MatchWholeWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Next.
+        /// </summary>
+        public static string Search_Next {
+            get {
+                return ResourceManager.GetString("Search_Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace All.
+        /// </summary>
+        public static string Search_ReplaceAll {
+            get {
+                return ResourceManager.GetString("Search_ReplaceAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace Next.
+        /// </summary>
+        public static string Search_ReplaceNext {
+            get {
+                return ResourceManager.GetString("Search_ReplaceNext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Regex.
+        /// </summary>
+        public static string Search_UseRegex {
+            get {
+                return ResourceManager.GetString("Search_UseRegex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Document.
         /// </summary>
         public static string SearchModeCurrentDocument {
