@@ -18,6 +18,7 @@
             SyntaxHighlighting="{Binding SyntaxHighlightingDefinition}"
             Document="{Binding Document}"
             ev:LostFocus.Command="{Binding CmdLostFocus}"
+            IsReadOnly="{Binding IsTemporary}"
             />
     </Grid>
 </DataTemplate>
