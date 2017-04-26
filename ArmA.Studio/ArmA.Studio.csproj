@@ -2031,7 +2031,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\DataTemplates\VariablesView.xaml">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <Page Include="SplashScreen.xaml">
       <SubType>Designer</SubType>

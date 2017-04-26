@@ -248,6 +248,14 @@ namespace ArmA.Studio
             }), (ex) =>
             {
                 Logger.Error($"Error while loading plugin: {ex.Message}");
+                if(ex is ReflectionTypeLoadException)
+                {
+                    var refl = ex as ReflectionTypeLoadException;
+                    foreach(var loaderEx in refl.LoaderExceptions)
+                    {
+                        Logger.Error($"-> loaderEx.Message");
+                    }
+                }
                 return true;
             });
             App.Plugins.AddRange(pManager.Plugins);
