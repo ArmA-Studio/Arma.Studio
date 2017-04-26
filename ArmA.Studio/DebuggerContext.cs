@@ -146,6 +146,7 @@ namespace ArmA.Studio
                 //ToDo: Do something
                 MessageBox.Show("DebuggerInstance_OnException");
                 System.Diagnostics.Debugger.Break();
+                this.CurrentDocument?.RefreshVisuals();
             }, System.Windows.Threading.DispatcherPriority.Send);
         }
 
@@ -154,6 +155,7 @@ namespace ArmA.Studio
             App.Current.Dispatcher.Invoke(() =>
             {
                 Logger.Log(NLog.LogLevel.Info, string.Format("Error was caught: {0}", e.Message));
+                this.CurrentDocument?.RefreshVisuals();
             }, System.Windows.Threading.DispatcherPriority.Send);
         }
 
@@ -162,6 +164,7 @@ namespace ArmA.Studio
             App.Current.Dispatcher.Invoke(() =>
             {
                 Logger.Log(NLog.LogLevel.Info, "Debugger got detached.");
+                this.CurrentDocument?.RefreshVisuals();
                 this.IsDebuggerAttached = false;
             }, System.Windows.Threading.DispatcherPriority.Send);
         }
@@ -206,6 +209,7 @@ namespace ArmA.Studio
                 Logger.Log(NLog.LogLevel.Info, "Execution was continued.");
                 this.IsPaused = false;
                 this.CallStack = Enumerable.Empty<CallstackItem>();
+                this.CurrentDocument?.RefreshVisuals();
                 if (this.LastEditorContext != null && this.LastEditorContext.IsTemporary)
                 {
                     this.LastEditorContext.Close();
