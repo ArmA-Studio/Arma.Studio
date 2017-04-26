@@ -61,14 +61,18 @@ namespace Dedbugger
         public ConcurrentBag<asapJson.JsonNode> Messages;
         public string LastError { get; private set; }
 
+
         public string Name => "Debugger Bridge";
 
         public string Description => "Plugin to connect to the ArmA Debugger.";
+
+        private bool IsHalted;
 
         public DebuggerCore()
         {
             Messages = new ConcurrentBag<JsonNode>();
             this.Pipe = null;
+            this.IsHalted = false;
         }
 
         public bool Attach()
@@ -127,6 +131,10 @@ namespace Dedbugger
         {
             if (this.Pipe == null)
                 return;
+            if (this.IsHalted)
+            {
+                this.Perform(EOperation.Continue);
+            }
             this.ClearBreakpoints();
             this.OnConnectionClosed?.Invoke(this, new OnConnectionClosedEventArgs());
             this.Pipe.Close();
@@ -181,6 +189,7 @@ namespace Dedbugger
                                         var fileOffsetNode = instruction.GetValue_Object()["fileOffset"];
                                         var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
                                         var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
+                                        this.IsHalted = true;
                                         this.OnHalt?.Invoke(this, new OnHaltEventArgs(instruction.GetValue_Object()["filename"].GetValue_String(), null, line, col));
                                     }
                                     break;
@@ -193,6 +202,7 @@ namespace Dedbugger
                                         var fileContent = error.GetValue_Object()["content"];//File content in case we don't have that file
                                         var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
                                         var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
+                                        this.IsHalted = true;
                                         this.OnHalt?.Invoke(this, new OnHaltEventArgs(error.GetValue_Object()["filename"].GetValue_String(), fileContent.GetValue_String(), line, col));
                                     }
                                     break;
@@ -205,11 +215,13 @@ namespace Dedbugger
                                         var fileContent = halt.GetValue_Object()["content"];//File content in case we don't have that file
                                         var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
                                         var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
+                                        this.IsHalted = true;
                                         this.OnHalt?.Invoke(this, new OnHaltEventArgs(halt.GetValue_Object()["filename"].GetValue_String(), null, line, col));
                                     }
                                     break;
                                 case ERecvCommands.ContinueExecution:
                                     {
+                                        this.IsHalted = false;
                                         this.OnContinue?.Invoke(this, new OnContinueEventArgs() { });
                                     }
                                     break;
