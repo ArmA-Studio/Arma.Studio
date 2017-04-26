@@ -247,11 +247,11 @@ namespace ArmA.Studio
                 SetProgress(d);
             }), (ex) =>
             {
-                Logger.Error(ex, "Error while loading plugin.");
+                Logger.Error($"Error while loading plugin: {ex.Message}");
                 return true;
             });
             App.Plugins.AddRange(pManager.Plugins);
-            Logger.Info($"Loaded {pManager.Plugins.Count()} plugins:");
+            Logger.Info($"Loaded {App.Plugins.Count} plugins:");
             foreach (var p in App.Plugins)
             {
                 Logger.Info($"\t- {p.Name} <{p.GetType().AssemblyQualifiedName}>");
