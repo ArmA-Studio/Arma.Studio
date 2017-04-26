@@ -490,6 +490,7 @@ namespace ArmA.Studio
             }
             var doc = CreateTemporaryDocument(content, fileType);
             doc.TemporaryIdentifier = info;
+            doc.IsSelected = true;
             return doc;
         }
 
