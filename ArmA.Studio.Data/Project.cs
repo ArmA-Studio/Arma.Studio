@@ -153,7 +153,7 @@ namespace ArmA.Studio.Data
                 if (pff.FileUri.Equals(path))
                     return pff;
             }
-            var tmp = new ProjectFile(Uri.UnescapeDataString(this.FileUri.MakeRelativeUri(path).ToString()));
+            var tmp = new ProjectFile(Uri.UnescapeDataString(this.FileUri.MakeRelativeUri(path).LocalPath));
             this.Children.Add(tmp);
             tmp.OwningProject = this;
             tmp.OwningSolution = this.OwningSolution;

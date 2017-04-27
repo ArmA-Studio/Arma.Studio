@@ -188,7 +188,7 @@ namespace ArmA.Studio.Data
             return null;
         }
 
-        public void AddProject(string projectName, EProjectType type) => this.AddProject(projectName, type, Path.Combine(this.FileUri.AbsolutePath, projectName));
+        public void AddProject(string projectName, EProjectType type) => this.AddProject(projectName, type, Path.Combine(this.FileUri.LocalPath, projectName));
         public void AddProject(string projectName, EProjectType type, string path)
         {
             var project = new Project() { Name = projectName, ProjectType = type, FilePath = path, OwningSolution = this };

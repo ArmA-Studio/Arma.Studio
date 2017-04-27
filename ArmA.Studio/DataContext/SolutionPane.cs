@@ -50,7 +50,7 @@ namespace ArmA.Studio.DataContext
                 IsFolderPicker = true,
                 Multiselect = false,
                 Title = Properties.Localization.AddExistingProject,
-                InitialDirectory = Path.GetDirectoryName(Workspace.Instance.Solution.FileUri.AbsolutePath)
+                InitialDirectory = Path.GetDirectoryName(Workspace.Instance.Solution.FileUri.LocalPath)
             };
             var dlgResult = cofd.ShowDialog();
             if (dlgResult == CommonFileDialogResult.Ok)

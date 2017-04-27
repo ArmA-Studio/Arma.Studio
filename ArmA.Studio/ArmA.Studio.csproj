@@ -2697,10 +2697,8 @@
     </Content>
     <None Include="SyntaxFiles\armaconfig.xshd">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SyntaxFiles\sqf.xshd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

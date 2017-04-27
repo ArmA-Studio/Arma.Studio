@@ -100,7 +100,7 @@ namespace ArmA.Studio
         });
         public ICommand CmdSwitchWorkspace => new RelayCommand((p) =>
         {
-            var newWorkspace = Dialogs.WorkspaceSelectorDialog.GetWorkspacePath(this.PathUri.AbsolutePath);
+            var newWorkspace = Dialogs.WorkspaceSelectorDialog.GetWorkspacePath(this.PathUri.LocalPath);
             if (!string.IsNullOrWhiteSpace(newWorkspace))
             {
                 this.CmdSaveAll.Execute(null);
@@ -144,7 +144,7 @@ namespace ArmA.Studio
                         doc.SaveDocument();
                     }
                 }
-                using (var stream = File.Open(this.Solution.FileUri.AbsolutePath, FileMode.Create))
+                using (var stream = File.Open(this.Solution.FileUri.LocalPath, FileMode.Create))
                 {
                     Solution.Serialize(this.Solution, stream);
                 }
@@ -280,7 +280,7 @@ namespace ArmA.Studio
         public Uri PathUri { get; internal set; }
         public Solution Solution { get; internal set; }
         public BreakpointManager BreakpointManager { get; internal set; }
-        public string ConfigPath { get { return Path.Combine(PathUri.AbsolutePath, App.CONST_CONFIGURATION); } }
+        public string ConfigPath { get { return Path.Combine(PathUri.LocalPath, App.CONST_CONFIGURATION); } }
         public UI.GenericDataTemplateSelector LayoutItemTemplateSelector { get; private set; }
         public KeyManager KeyManager { get; private set; }
         public DebuggerContext DebugContext { get; internal set; }
@@ -701,7 +701,7 @@ namespace ArmA.Studio
 
         public void SaveBreakpointsToProject()
         {
-            var filePath = Path.ChangeExtension(this.Solution.FileUri.AbsolutePath, App.CONST_BREAKPOINTINFOEXTENSION);
+            var filePath = Path.ChangeExtension(this.Solution.FileUri.LocalPath, App.CONST_BREAKPOINTINFOEXTENSION);
             using (var stream = File.Open(filePath, FileMode.Create))
             {
                 this.BreakpointManager.SaveBreakpoints(stream);

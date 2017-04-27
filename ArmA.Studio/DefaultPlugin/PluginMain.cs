@@ -50,7 +50,7 @@ params [];" };
         public static readonly FileType DescriptionExtFileType = new FileType((ext) => ext.Equals(".cpp", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".ext", StringComparison.InvariantCultureIgnoreCase), "description.ext", ".ext") { Linter = new ConfigLintHelper(), StaticFileName = "description.ext" };
         public static readonly DocumentBase.DocumentDescribor ConfigDocumentDescribor = new DocumentBase.DocumentDescribor(new[] { ConfigFileType }, "Config");
 
-        public static readonly FileType ImageViewerFileType = new FileType((ext) => new string[] { ".png", ".paa", "jpeg", "jpe", "jpg", "tga" }.Contains(ext.ToLower()), "Image", ".png");
+        public static readonly FileType ImageViewerFileType = new FileType((ext) => new string[] { ".png", ".paa", "jpeg", "jpe", "jpg", "tga" }.Contains(ext.ToLower()), "Image", ".png") { CanCreate = false };
         public static readonly DocumentBase.DocumentDescribor ImageViewerDescribor = new DocumentBase.DocumentDescribor(new[] { ImageViewerFileType }, "Image");
 
         public IEnumerable<DataTemplate> DocumentDataTemplates => new[] { TextEditorBaseDataContext.TextEditorBaseDataTemplate, ImageViewerDocument.ImageViewerDocumentDataTemplate };

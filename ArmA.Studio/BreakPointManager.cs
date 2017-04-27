@@ -186,6 +186,8 @@ namespace ArmA.Studio
             {
                 if (!kvp.Value.Any())
                     continue;
+                if (kvp.Key.OwningProject == null)
+                    continue;
                 writer.WriteStartElement("file");
                 writer.WriteAttributeString("project", kvp.Key.OwningProject.Name);
                 writer.WriteAttributeString("path", kvp.Key.ProjectRelativePath);

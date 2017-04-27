@@ -114,7 +114,7 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
             pathList.Add(string.Empty);
             var path = string.Join("/", pathList);
             var thisUri = new Uri(Path.Combine((cur as ProjectModelView).Ref.FilePath, path).Replace('/', '\\'));
-            var dlg = new OpenFileDialog() { InitialDirectory = thisUri.AbsolutePath };
+            var dlg = new OpenFileDialog() { InitialDirectory = thisUri.LocalPath };
             if (dlg.ShowDialog() == DialogResult.OK)
             {
 
@@ -123,7 +123,7 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
                 {
                     try
                     {
-                        var filePath = Path.Combine(thisUri.AbsolutePath, Path.GetFileName(dlg.FileName));
+                        var filePath = Path.Combine(thisUri.LocalPath, Path.GetFileName(dlg.FileName));
                         uri = new Uri(filePath, UriKind.RelativeOrAbsolute);
                         File.Copy(dlg.FileName, filePath);
                     }
