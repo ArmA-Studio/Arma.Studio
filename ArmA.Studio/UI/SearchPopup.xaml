@@ -90,7 +90,7 @@
                         </Style>
                     </CheckBox.Style>
                 </CheckBox>
-                <TextBox Grid.Column="1" Text="{Binding FindText}" VerticalContentAlignment="Center" att:CueBannerAttached.CueBanner="{x:Static p:Localization.Search_CueFindText}"/>
+                <TextBox Grid.Column="1" Text="{Binding FindText, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" att:CueBannerAttached.CueBanner="{x:Static p:Localization.Search_CueFindText}" ev:KeyDown.Command="{Binding CmdKeyDownFindText}" ev:KeyDown.KeyDownHandled="{Binding KeyDownFindTextHandled}" FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}" att:KeyboardFocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}"/>
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
                     <Button Command="{Binding CmdSearchNext}" ToolTip="{x:Static p:Localization.Search_Next}">
                         <Image Source="/Resources/Pictograms/Next/VSO_Next_grey_16x.png"/>
@@ -116,7 +116,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition SharedSizeGroup="SearchCol2"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="1" Text="{Binding ReplaceText}" VerticalContentAlignment="Center" att:CueBannerAttached.CueBanner="{x:Static p:Localization.Search_CueReplaceText}"/>
+                <TextBox Grid.Column="1" Text="{Binding ReplaceText, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" att:CueBannerAttached.CueBanner="{x:Static p:Localization.Search_CueReplaceText}"  ev:KeyDown.Command="{Binding CmdKeyDownReplaceText}" ev:KeyDown.KeyDownHandled="{Binding KeyDownReplaceTextHandled}"/>
+                <StackPanel Grid.Column="2" Orientation="Horizontal"/>
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
                     <Button Command="{Binding CmdReplaceNext}" ToolTip="{x:Static p:Localization.Search_ReplaceNext}">
                         <Image Source="/Resources/Pictograms/QuickReplace/QuickReplace_16x.png"/>

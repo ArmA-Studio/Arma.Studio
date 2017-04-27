@@ -176,7 +176,7 @@ namespace ArmA.Studio.DataContext
                 var index = this.CurrentCollectionIndex + this.CurrentCollectionOffset;
                 if (index >= current.Item2.Count)
                 {
-                    index = this.CurrentCollectionIndex - this.CurrentCollectionOffset;
+                    index -= current.Item2.Count;
                 }
                 var match = current.Item2[index];
                 this.CurrentCollectionIndex++;
@@ -403,6 +403,28 @@ namespace ArmA.Studio.DataContext
                 it.Item1.SetContentAsString(repl);
             }
         });
+
+        public ICommand CmdKeyDownFindText => new RelayCommand((p) =>
+        {
+            if (Keyboard.IsKeyDown(Key.Enter))
+            {
+                this.KeyDownFindTextHandled = true;
+                this.CmdSearchNext.Execute(p);
+            }
+        });
+        public ICommand CmdKeyDownReplaceText => new RelayCommand((p) =>
+        {
+            if (Keyboard.IsKeyDown(Key.Enter))
+            {
+                this.KeyDownReplaceTextHandled = true;
+                this.CmdReplaceNext.Execute(p);
+            }
+        });
+
+        public bool KeyDownFindTextHandled { get { return this._KeyDownFindTextHandled; } set { this._KeyDownFindTextHandled = value; this.RaisePropertyChanged(); } }
+        private bool _KeyDownFindTextHandled;
+        public bool KeyDownReplaceTextHandled { get { return this._KeyDownReplaceTextHandled; } set { this._KeyDownReplaceTextHandled = value; this.RaisePropertyChanged(); } }
+        private bool _KeyDownReplaceTextHandled;
 
         public SearchDataContext()
         {

@@ -203,6 +203,7 @@
     <Compile Include="SplashScreenDataContext.cs" />
     <Compile Include="UI\Adorners\CueBannerAdorner.cs" />
     <Compile Include="UI\Attached\ActiveContentChangedAttached.cs" />
+    <Compile Include="UI\Attached\KeyboardFocusManager.cs" />
     <Compile Include="UI\Attached\CueBannerAttached.cs" />
     <Compile Include="UI\Controls\ListView_ScrollSelectionChanged.cs" />
     <Compile Include="UI\Converters\StringNullToDependencyPropertyUnsetConverter.cs" />

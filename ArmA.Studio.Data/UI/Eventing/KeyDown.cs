@@ -72,9 +72,19 @@ namespace ArmA.Studio.Data.UI.Eventing
             var control = sender as FrameworkElement;
             var command = (ICommand)control.GetValue(CommandProperty);
             var commandParameter = control.GetValue(CommandParameterProperty);
-            command.Execute(commandParameter);
-            e.Handled = GetKeyDownHandled(control);
-            SetKeyDownHandled(control, false);
+            try
+            {
+                command.Execute(commandParameter);
+                e.Handled = GetKeyDownHandled(control);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                SetKeyDownHandled(control, false);
+            }
         }
     }
 
