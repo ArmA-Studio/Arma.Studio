@@ -235,6 +235,7 @@ namespace Dedbugger
                 }
             }
             catch (ObjectDisposedException) { }
+            catch (Exception ex) { Virtual.ShowOperationFailedMessageBox(ex); }
         }
 
         public asapJson.JsonNode ReadMessage(Func<asapJson.JsonNode, bool> cond)
