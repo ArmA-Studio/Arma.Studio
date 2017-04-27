@@ -84,7 +84,7 @@ namespace ArmA.Studio.Data.UI
            HighlightPopup.IsOpen = false;
         }
 
-        private void Editor_MouseHover(object sender, MouseEventArgs e)
+        private async void Editor_MouseHover(object sender, MouseEventArgs e)
         {
             if (this.Linter == null)
                 return;
@@ -94,7 +94,7 @@ namespace ArmA.Studio.Data.UI
                 return;
             var textViewPos = textViewPosQ.Value;
             var offset = this.Document.GetOffset(textViewPos.Location);
-            var info = this.OnHoverInformations(offset);
+            var info = await this.OnHoverInformationsAsync(offset);
             if (string.IsNullOrWhiteSpace(info))
             {
                 var linterInfo = this.Linter.LinterInfo.FirstOrDefault((li) => li.StartOffset <= offset && li.EndOffset >= offset);
@@ -113,7 +113,9 @@ namespace ArmA.Studio.Data.UI
             HighlightPopup.IsOpen = true;
         }
 
-        public virtual string OnHoverInformations(int offset) { return string.Empty; }
+#pragma warning disable CS1998
+        public virtual async Task<string> OnHoverInformationsAsync(int offset) { return string.Empty; }
+#pragma warning restore CS1998
 
 
         //ToDo: Fix error offset moving

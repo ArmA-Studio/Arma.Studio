@@ -85,17 +85,16 @@ namespace ArmA.Studio.DefaultPlugin
             }
         }
 
-        public override string OnHoverInformations(int offset)
+        public override async Task<string> OnHoverInformationsAsync(int offset)
         {
             if (!Workspace.Instance.DebugContext.IsPaused)
-                return base.OnHoverInformations(offset);
+                return await base.OnHoverInformationsAsync(offset);
             var word = this.Document.GetWordAround(offset);
             if (string.IsNullOrWhiteSpace(word))
-                return base.OnHoverInformations(offset);
-            var task = Workspace.Instance.DebugContext.GetVariablesAsync(Debugger.EVariableNamespace.All, word);
-            var variable = task.Result.FirstOrNullable();
+                return await base.OnHoverInformationsAsync(offset);
+            var variable = (await Workspace.Instance.DebugContext.GetVariablesAsync(Debugger.EVariableNamespace.All, word)).FirstOrNullable();
             if (!variable.HasValue)
-                return base.OnHoverInformations(offset);
+                return await base.OnHoverInformationsAsync(offset);
             return variable.Value.Value;
         }
     }
