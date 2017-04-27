@@ -208,9 +208,16 @@ namespace ArmA.Studio
                 var filePath = Path.ChangeExtension(solutionPath, App.CONST_BREAKPOINTINFOEXTENSION);
                 if (File.Exists(filePath))
                 {
-                    using (var stream = File.OpenRead(filePath))
+                    try
                     {
-                        w.BreakpointManager.LoadBreakpoints(stream);
+                        using (var stream = File.OpenRead(filePath))
+                        {
+                            w.BreakpointManager.LoadBreakpoints(stream);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        App.ShowOperationFailedMessageBox(ex);
                     }
                 }
                 else
