@@ -31,6 +31,7 @@ namespace ArmA.Studio
 
         public enum ExitCodes
         {
+            SplashError = -3,
             ConfigError = -2,
             NoWorkspaceSelected = -1,
             OK = 0,
