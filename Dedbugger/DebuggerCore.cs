@@ -382,6 +382,8 @@ namespace Dedbugger
 
         public IEnumerable<CallstackItem> GetCallstack()
         {
+            if (this.LastCallstack == null || this.LastCallstack.GetValueType() != JsonNode.EJType.Array)
+                yield break;
             foreach (var node in this.LastCallstack.GetValue_Array())
             {
                 if (!node.GetValue_Object().ContainsKey("lastInstruction")) //Not every callstackItem has instructions
