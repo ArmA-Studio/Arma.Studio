@@ -161,13 +161,13 @@ Do you want to restart now?</value>
     <value>Please choose File Type</value>
   </data>
   <data name="CreateNewFileDialog_Title" xml:space="preserve">
-    <value>Create New File</value>
+    <value>File Creation Dialog</value>
   </data>
   <data name="CreateNewProjectDialog_Header" xml:space="preserve">
-    <value>Create Project</value>
+    <value>Project Creation</value>
   </data>
   <data name="CreateNewProjectDialog_Title" xml:space="preserve">
-    <value>Create New Project</value>
+    <value>Project Creation Dialog</value>
   </data>
   <data name="CreateProject" xml:space="preserve">
     <value>Create Project</value>
@@ -186,7 +186,7 @@ Do you want to restart now?</value>
     <value>No Debugging Available</value>
   </data>
   <data name="DebuggerContext_OperationFailed_Body" xml:space="preserve">
-    <value>The operation {0} failed to execute.
+    <value>The operation '{0}' failed to execute.
 {1}</value>
   </data>
   <data name="DebuggerContext_OperationFailed_Title" xml:space="preserve">
@@ -448,7 +448,7 @@ Do you want to update now?</value>
     <value>Searching Solution File</value>
   </data>
   <data name="Splash_SettingWorkspace" xml:space="preserve">
-    <value>Setting Worksapce</value>
+    <value>Setting Workspace</value>
   </data>
   <data name="Splash_UpdateAvailable" xml:space="preserve">
     <value>Update available</value>
@@ -470,7 +470,7 @@ Do you want to update now?</value>
     <comment>Generic error title (messagebox) for non-problematic but user related errors</comment>
   </data>
   <data name="WorkspaceSelectorDialog_Browse" xml:space="preserve">
-    <value>Select Existing</value>
+    <value>Select</value>
   </data>
   <data name="WorkspaceSelectorDialog_SelectPrev" xml:space="preserve">
     <value>Recent</value>

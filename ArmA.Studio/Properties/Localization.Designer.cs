@@ -233,7 +233,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create New File.
+        ///   Looks up a localized string similar to File Creation Dialog.
         /// </summary>
         public static string CreateNewFileDialog_Title {
             get {
@@ -242,7 +242,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Project.
+        ///   Looks up a localized string similar to Project Creation.
         /// </summary>
         public static string CreateNewProjectDialog_Header {
             get {
@@ -251,7 +251,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create New Project.
+        ///   Looks up a localized string similar to Project Creation Dialog.
         /// </summary>
         public static string CreateNewProjectDialog_Title {
             get {
@@ -369,7 +369,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The operation {0} failed to execute.
+        ///   Looks up a localized string similar to The operation &apos;{0}&apos; failed to execute.
         ///{1}.
         /// </summary>
         public static string DebuggerContext_OperationFailed_Body {
@@ -1270,7 +1270,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Setting Worksapce.
+        ///   Looks up a localized string similar to Setting Workspace.
         /// </summary>
         public static string Splash_SettingWorkspace {
             get {
@@ -1333,7 +1333,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Existing.
+        ///   Looks up a localized string similar to Select.
         /// </summary>
         public static string WorkspaceSelectorDialog_Browse {
             get {
