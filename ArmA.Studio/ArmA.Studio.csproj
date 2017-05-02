@@ -150,6 +150,7 @@
     <Compile Include="DataContext\SolutionPaneUtil\ProjectFileModelView.cs" />
     <Compile Include="DataContext\SolutionPaneUtil\ProjectFolderModelView.cs" />
     <Compile Include="DataContext\SolutionPaneUtil\ProjectModelView.cs" />
+    <Compile Include="DataContext\VariablesViewPaneUtil\ItemContainer.cs" />
     <Compile Include="DefaultPlugin\HighlightingHelper.cs" />
     <Compile Include="DefaultPlugin\ImageViewerDocument.cs" />
     <Compile Include="DefaultPlugin\PluginMain.cs" />
@@ -411,6 +412,42 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Pictograms\Close\VSO_Close_whiteNoHalo_12x_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_16xLG.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_7x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\VSO_Create_16x.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -2095,6 +2132,15 @@
     <None Include="Resources\Pictograms\Close\VSO_Close_12x_16x.ai" />
     <None Include="Resources\Pictograms\Close\VSO_Close_whiteBlackHalo_12x_16x.ai" />
     <None Include="Resources\Pictograms\Close\VSO_Close_whiteNoHalo_12x_16x.ai" />
+    <None Include="Resources\Pictograms\Create\Create_16x.ai" />
+    <None Include="Resources\Pictograms\Create\Create_16xLG.ai" />
+    <None Include="Resources\Pictograms\Create\Create_16xSM.ai" />
+    <None Include="Resources\Pictograms\Create\Create_256x.ai" />
+    <None Include="Resources\Pictograms\Create\Create_32x.ai" />
+    <None Include="Resources\Pictograms\Create\Create_48x.ai" />
+    <None Include="Resources\Pictograms\Create\Create_64x.ai" />
+    <None Include="Resources\Pictograms\Create\Create_7x.ai" />
+    <None Include="Resources\Pictograms\Create\VSO_Create_16x.ai" />
     <None Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16x.ai" />
     <None Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16xMD.ai" />
     <None Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_lightGray_16x.ai" />
@@ -2626,6 +2672,20 @@
     <Resource Include="Resources\Pictograms\Close\VSO_Close_whiteBlackHalo_12x_16x.png" />
     <Resource Include="Resources\Pictograms\Close\VSO_Close_whiteNoHalo_12x_16x.png" />
     <Content Include="Resources\Pictograms\Close\VSO_Close_whiteNoHalo_12x_16x.svg" />
+    <Resource Include="Resources\Pictograms\Create\Create_16x.ico" />
+    <Resource Include="Resources\Pictograms\Create\Create_16x.png" />
+    <Content Include="Resources\Pictograms\Create\Create_16x.svg" />
+    <Resource Include="Resources\Pictograms\Create\Create_16xMD.png" />
+    <Resource Include="Resources\Pictograms\Create\Create_16xSM.png" />
+    <Resource Include="Resources\Pictograms\Create\Create_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Create\Create_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\Create\Create_256x.png" />
+    <Resource Include="Resources\Pictograms\Create\Create_32x.png" />
+    <Resource Include="Resources\Pictograms\Create\Create_48x.png" />
+    <Resource Include="Resources\Pictograms\Create\Create_64x.png" />
+    <Resource Include="Resources\Pictograms\Create\Create_7x.png" />
+    <Resource Include="Resources\Pictograms\Create\VSO_Create_16x.png" />
+    <Content Include="Resources\Pictograms\Create\VSO_Create_16x.svg" />
     <Content Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16x.svg" />
     <Resource Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16xMD.png" />
     <Resource Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_lightGray_16x.png" />

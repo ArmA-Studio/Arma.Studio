@@ -62,10 +62,16 @@ namespace ArmA.Studio
                     return;
                 }
                 reset();
-                if (Splash_CheckUpdate(setIndeterminate, setDisplayText, setProgress))
+                try
                 {
-                    App.Shutdown(App.ExitCodes.OK);
-                    return;
+                    if (Splash_CheckUpdate(setIndeterminate, setDisplayText, setProgress))
+                    {
+                        App.Shutdown(App.ExitCodes.OK);
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
                 }
                 reset();
 
