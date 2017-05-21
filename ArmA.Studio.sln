@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xceed.Wpf.AvalonDock.Themes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{890C5984-F7CB-49BB-BC66-2A666CE7D981}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmASQFLinter", "ArmASQFLinter\ArmASQFLinter.csproj", "{C335388F-C062-4612-86C9-6F326B6E7E29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealVirtuality.SQF", "RealVirtuality.SQF\RealVirtuality.SQF.csproj", "{C335388F-C062-4612-86C9-6F326B6E7E29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmA.Studio.Debugger", "ArmA.Studio.Debugger\ArmA.Studio.Debugger.csproj", "{EC8D472E-F967-475D-8FBB-FC9B2DB56467}"
 EndProject
@@ -26,6 +26,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmA.Studio.Plugin", "ArmA.Studio.Plugin\ArmA.Studio.Plugin.csproj", "{C5BD46BE-607F-41D5-8C6A-F2EEF8706E24}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmA.Studio.Data", "ArmA.Studio.Data\ArmA.Studio.Data.csproj", "{DC5BB018-6CA3-4F0A-864A-425CEF2F454B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test-Projects", "Test-Projects", "{FCA6E385-A7FB-4312-BD18-33F19E85900F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sqf-Linter-Test", "Sqf-Linter-Test\Sqf-Linter-Test.csproj", "{888AE498-49DA-4F94-8F2F-9E16A8D6263D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -181,8 +185,23 @@ Global
 		{DC5BB018-6CA3-4F0A-864A-425CEF2F454B}.Release|x64.Build.0 = Release|Any CPU
 		{DC5BB018-6CA3-4F0A-864A-425CEF2F454B}.Release|x86.ActiveCfg = Release|Any CPU
 		{DC5BB018-6CA3-4F0A-864A-425CEF2F454B}.Release|x86.Build.0 = Release|Any CPU
+		{888AE498-49DA-4F94-8F2F-9E16A8D6263D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{888AE498-49DA-4F94-8F2F-9E16A8D6263D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{888AE498-49DA-4F94-8F2F-9E16A8D6263D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{888AE498-49DA-4F94-8F2F-9E16A8D6263D}.Debug|x64.Build.0 = Debug|Any CPU
+		{888AE498-49DA-4F94-8F2F-9E16A8D6263D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{888AE498-49DA-4F94-8F2F-9E16A8D6263D}.Debug|x86.Build.0 = Debug|Any CPU
+		{888AE498-49DA-4F94-8F2F-9E16A8D6263D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{888AE498-49DA-4F94-8F2F-9E16A8D6263D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{888AE498-49DA-4F94-8F2F-9E16A8D6263D}.Release|x64.ActiveCfg = Release|Any CPU
+		{888AE498-49DA-4F94-8F2F-9E16A8D6263D}.Release|x64.Build.0 = Release|Any CPU
+		{888AE498-49DA-4F94-8F2F-9E16A8D6263D}.Release|x86.ActiveCfg = Release|Any CPU
+		{888AE498-49DA-4F94-8F2F-9E16A8D6263D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{888AE498-49DA-4F94-8F2F-9E16A8D6263D} = {FCA6E385-A7FB-4312-BD18-33F19E85900F}
 	EndGlobalSection
 EndGlobal

@@ -2722,9 +2722,9 @@
       <Project>{2e1b48ad-1de2-457e-ae85-8230969296bf}</Project>
       <Name>ArmAClassParser</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ArmASQFLinter\ArmASQFLinter.csproj">
+    <ProjectReference Include="..\RealVirtuality.SQF\RealVirtuality.SQF.csproj">
       <Project>{c335388f-c062-4612-86c9-6f326b6e7e29}</Project>
-      <Name>ArmASQFLinter</Name>
+      <Name>RealVirtuality.SQF</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utility\Utility.csproj">
       <Project>{e95cb476-aa64-429d-9349-64290b8164bb}</Project>

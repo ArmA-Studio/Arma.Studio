@@ -18,10 +18,10 @@ namespace ArmA.Studio.DefaultPlugin
         public IEnumerable<LintInfo> Lint(Stream stream, ProjectFile file)
         {
             var inputStream = new Antlr4.Runtime.AntlrInputStream(stream);
-            var lexer = new RealVirtuality.SQF.ANTLR.Parser.sqfLexer(inputStream);
-            var commonTokenStream = new Antlr4.Runtime.CommonTokenStream(lexer);
-            var p = new RealVirtuality.SQF.ANTLR.Parser.sqfParser(commonTokenStream, ConfigHost.Instance.SqfDefinitions);
-            var listener = new RealVirtuality.SQF.ANTLR.SqfListener();
+            var lexer = new RealVirtuality.SQF.Parser.v1.sqfLexer(inputStream);
+            var tokenStream = new Antlr4.Runtime.CommonTokenStream(lexer);
+            var p = new RealVirtuality.SQF.Parser.v1.sqfParser(tokenStream, ConfigHost.Instance.SqfDefinitions);
+            var listener = new RealVirtuality.SQF.Parser.v1.SqfListener();
             p.AddParseListener(listener);
             p.RemoveErrorListeners();
 #if DEBUG
@@ -30,7 +30,7 @@ namespace ArmA.Studio.DefaultPlugin
 #endif
 
             var se = new List<LintInfo>();
-            p.AddErrorListener(new RealVirtuality.SQF.ANTLR.ErrorListener((recognizer, token, line, charPositionInLine, msg, ex) =>
+            p.AddErrorListener(new RealVirtuality.SQF.Parser.v1.ErrorListener((recognizer, token, line, charPositionInLine, msg, ex) =>
             {
                 switch (ex == null ? null : p.RuleNames[ex.Context.RuleIndex])
                 {
