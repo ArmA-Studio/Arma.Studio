@@ -109,17 +109,11 @@ namespace ArmA.Studio
             }
 
             // set language before displaying any ui
-            SetLanguage();
+            LanguageManager.SetDisplayLanguage();
 
             var dc = new SplashScreenDataContext();
             var dlg = new SplashScreen(dc);
             dlg.Show();
-        }
-
-        private void SetLanguage()
-        {
-            var ci = CultureInfo.GetCultureInfo( ConfigHost.App.Language );
-            Localization.Culture = ci;
         }
 
         public static void ShowOperationFailedMessageBox(Exception ex)

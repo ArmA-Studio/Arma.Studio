@@ -48,7 +48,7 @@ namespace ArmA.Studio
                         Process.Start( exe );
                     }
                 };
-                App.Shutdown( 0 );
+                App.Shutdown( App.ExitCodes.Restart );
             }
         }
     }
