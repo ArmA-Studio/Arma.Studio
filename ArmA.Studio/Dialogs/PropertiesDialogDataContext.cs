@@ -105,7 +105,7 @@ namespace ArmA.Studio.Dialogs
                         Process.Start( exe );
                     }
                 };
-                Application.Current.Shutdown(0);
+                App.Shutdown(0);
             }
             return o;
         }
