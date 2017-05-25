@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using ArmA.Studio.Plugin;
+using ArmA.Studio.UI.Attached;
 using IniParser;
 using IniParser.Model;
 using IniParser.Parser;
@@ -93,6 +94,30 @@ namespace ArmA.Studio
             {
                 get { bool val; if (bool.TryParse(Instance.AppIni.GetValueOrNull(nameof(App), nameof(AutoReportException)), out val)) return val; return true; }
                 set { Instance.AppIni.SetValue(nameof(App), nameof(AutoReportException), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+            }
+
+            /// <summary>
+            /// Language id used by the application
+            /// </summary>
+            /// <remarks>
+            /// see https://msdn.microsoft.com/de-de/library/ee825488(v=cs.20).aspx for more information
+            /// </remarks>
+            public static int Language
+            {
+                get
+                {
+                    int val;
+                    if (int.TryParse(Instance.AppIni.GetValueOrNull(nameof(App), nameof(Language)), out val))
+                    {
+                        return val;
+                    }
+                    return CultureInfo.InstalledUICulture.LCID; // if there is no value set, return system culture
+                }
+                set
+                {
+                    Instance.AppIni.SetValue(nameof(App), nameof(Language), value.ToString(CultureInfo.InvariantCulture));
+                    Instance.Save( EIniSelector.App );
+                }
             }
         }
         public static class Coloring
