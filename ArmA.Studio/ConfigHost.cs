@@ -115,8 +115,11 @@ namespace ArmA.Studio
                 }
                 set
                 {
-                    Instance.AppIni.SetValue(nameof(App), nameof(Language), value.ToString(CultureInfo.InvariantCulture));
-                    Instance.Save( EIniSelector.App );
+                    if (Language != value)
+                    {
+                        Instance.AppIni.SetValue(nameof(App), nameof(Language), value.ToString(CultureInfo.InvariantCulture));
+                        Instance.Save(EIniSelector.App);
+                    }
                 }
             }
         }

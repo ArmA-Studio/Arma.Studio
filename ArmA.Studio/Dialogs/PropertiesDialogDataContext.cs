@@ -83,38 +83,9 @@ namespace ArmA.Studio.Dialogs
             { Name = Properties.Localization.Property_General_ErrorReporting, ImageSource = @"/ArmA.Studio;component/Resources/Logo.ico" };
             yield return new SubCategory( new Item[]
             {
-                    new ComboBoxItem<int>( SupportedLanguages(), Properties.Localization.Properties_General_Language, typeof(ConfigHost.App).GetProperty(nameof(ConfigHost.App.Language)), null )
-                    {
-                        ValueChangeCallback = LanguageChanged
-                    }
+                    new ComboBoxItem<int>(LanguageManager.SupportedLanguages(), Properties.Localization.Properties_General_Language, typeof(LanguageManager).GetProperty(nameof(LanguageManager.Language)), null )
             })
             { Name = Properties.Localization.Properties_General_Language, ImageSource = @"/ArmA.Studio;component/Resources/Logo.ico" };
-        }
-
-        private object LanguageChanged( object o )
-        {
-            var msgbox = MessageBox.Show( Properties.Localization.MessageDialog_PropertyChange, "Property", MessageBoxButton.YesNo );
-
-            if ( msgbox == MessageBoxResult.Yes )
-            {
-                Application.Current.Exit += ( sender, args ) =>
-                {
-                    var exe = Application.ResourceAssembly.Location;
-                    if (!string.IsNullOrEmpty(exe))
-                    {
-                        Process.Start( exe );
-                    }
-                };
-                App.Shutdown(0);
-            }
-            return o;
-        }
-
-        private IEnumerable<KeyValuePair<string, int>> SupportedLanguages()
-        {
-            // TODO : Implement function to scan app resources files, for automatic language support detection
-            yield return new KeyValuePair<string, int>( CultureInfo.GetCultureInfo(1033).NativeName, 1033);
-            yield return new KeyValuePair<string, int>( CultureInfo.GetCultureInfo(1031).NativeName, 1031);
         }
     }
 }
