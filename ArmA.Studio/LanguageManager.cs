@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
+using Localization = ArmA.Studio.Properties.Localization;
 
 namespace ArmA.Studio
 {
@@ -27,9 +28,15 @@ namespace ArmA.Studio
             yield return new KeyValuePair<string, int>( CultureInfo.GetCultureInfo( 1031 ).NativeName, 1031 );
         }
 
+        public static void SetDisplayLanguage()
+        {
+            var ci = CultureInfo.GetCultureInfo( Language );
+            Localization.Culture = ci;
+        }
+
         private static void LanguageChanged()
         {
-            var msgbox = MessageBox.Show( Properties.Localization.MessageDialog_PropertyChange, string.Empty, MessageBoxButton.YesNo );
+            var msgbox = MessageBox.Show( Localization.MessageDialog_PropertyChange, string.Empty, MessageBoxButton.YesNo );
 
             if (msgbox == MessageBoxResult.Yes)
             {
