@@ -583,4 +583,8 @@ Möchten Sie jetzt Aktualisieren?</value>
   <data name="Properties_General_Language" xml:space="preserve">
     <value>Sprache</value>
   </data>
+  <data name="MessageDialog_PropertyChange" xml:space="preserve">
+    <value>Damit die Änderungen aktiv werden, muss die Anwendung neugestartet werden.
+Jetzt neu starten?</value>
+  </data>
 </root>

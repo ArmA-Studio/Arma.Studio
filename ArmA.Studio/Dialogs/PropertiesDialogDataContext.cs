@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Resources;
+using System.Windows;
 using System.Windows.Input;
 using ArmA.Studio.Data.Configuration;
 using ArmA.Studio.Data.UI.Commands;
@@ -81,9 +83,31 @@ namespace ArmA.Studio.Dialogs
             { Name = Properties.Localization.Property_General_ErrorReporting, ImageSource = @"/ArmA.Studio;component/Resources/Logo.ico" };
             yield return new SubCategory( new Item[]
             {
-                new ComboBoxItem<int>( SupportedLanguages(), Properties.Localization.Properties_General_Language, typeof(ConfigHost.App).GetProperty(nameof(ConfigHost.App.Language)), null )
+                    new ComboBoxItem<int>( SupportedLanguages(), Properties.Localization.Properties_General_Language, typeof(ConfigHost.App).GetProperty(nameof(ConfigHost.App.Language)), null )
+                    {
+                        ValueChangeCallback = LanguageChanged
+                    }
             })
             { Name = Properties.Localization.Properties_General_Language, ImageSource = @"/ArmA.Studio;component/Resources/Logo.ico" };
+        }
+
+        private object LanguageChanged( object o )
+        {
+            var msgbox = MessageBox.Show( Properties.Localization.MessageDialog_PropertyChange, "Property", MessageBoxButton.YesNo );
+
+            if ( msgbox == MessageBoxResult.Yes )
+            {
+                Application.Current.Exit += ( sender, args ) =>
+                {
+                    var exe = Application.ResourceAssembly.Location;
+                    if (!string.IsNullOrEmpty(exe))
+                    {
+                        Process.Start( exe );
+                    }
+                };
+                Application.Current.Shutdown(0);
+            }
+            return o;
         }
 
         private IEnumerable<KeyValuePair<string, int>> SupportedLanguages()
