@@ -744,6 +744,16 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restart application in order to make changes take effect.
+        ///Restart now?.
+        /// </summary>
+        public static string MessageDialog_PropertyChange {
+            get {
+                return ResourceManager.GetString("MessageDialog_PropertyChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {
@@ -929,6 +939,15 @@ namespace ArmA.Studio.Properties {
         public static string Prop_ProjectType {
             get {
                 return ResourceManager.GetString("Prop_ProjectType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Properties_General_Language {
+            get {
+                return ResourceManager.GetString("Properties_General_Language", resourceCulture);
             }
         }
         

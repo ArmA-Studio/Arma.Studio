@@ -577,4 +577,11 @@ Do you want to update now?</value>
   <data name="Search_CueReplaceText" xml:space="preserve">
     <value>Replace</value>
   </data>
+  <data name="Properties_General_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="MessageDialog_PropertyChange" xml:space="preserve">
+    <value>Restart application in order to make changes take effect.
+Restart now?</value>
+  </data>
 </root>

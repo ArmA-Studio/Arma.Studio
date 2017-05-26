@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
 using System.IO;
 using System.Windows;
 using System.Reflection;
 using System.Diagnostics;
+using System.Globalization;
 using System.Xml;
 using NLog;
 using ArmA.Studio.LoggerTargets;
 using NLog.Config;
 using ArmA.Studio.Plugin;
 using System.Text;
+using Localization = ArmA.Studio.Properties.Localization;
 
 namespace ArmA.Studio
 {
@@ -60,7 +59,6 @@ namespace ArmA.Studio
         }
 
         internal UpdateHelper.DownloadInfo UpdateDownloadInfo;
-
 
         private void SetupNLog()
         {
@@ -109,6 +107,10 @@ namespace ArmA.Studio
                 App.Shutdown(ExitCodes.ConfigError);
                 return;
             }
+
+            // set language before displaying any ui
+            LanguageManager.SetDisplayLanguage();
+
             var dc = new SplashScreenDataContext();
             var dlg = new SplashScreen(dc);
             dlg.Show();
