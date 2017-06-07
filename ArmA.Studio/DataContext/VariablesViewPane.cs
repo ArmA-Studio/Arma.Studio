@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ArmA.Studio.Data.UI;
 using ArmA.Studio.Data.UI.Commands;
@@ -15,7 +16,8 @@ namespace ArmA.Studio.DataContext
 
         public ObservableCollection<ItemContainer> Variables { get { return this._Variables; } set { this._Variables = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<ItemContainer> _Variables;
-        
+
+
         public VariablesViewPane()
         {
             Variables = new ObservableCollection<ItemContainer>();
@@ -25,6 +27,24 @@ namespace ArmA.Studio.DataContext
                 System.Threading.SpinWait.SpinUntil(() => Workspace.Instance != null);
                 System.Threading.SpinWait.SpinUntil(() => Workspace.Instance.DebugContext != null);
                 Workspace.Instance.DebugContext.PropertyChanged += DebugContext_PropertyChanged;
+            });
+            this.Variables.Add(new ItemContainer()
+            {
+                CmdDelete = new RelayCommand((para) => { MessageBox.Show("DELETE"); }),
+                Name = "MyName1",
+                Value = "123"
+            });
+            this.Variables.Add(new ItemContainer()
+            {
+                CmdDelete = new RelayCommand((para) => { MessageBox.Show("DELETE"); }),
+                Name = "MyName2",
+                Value = "231"
+            });
+            this.Variables.Add(new ItemContainer()
+            {
+                CmdDelete = new RelayCommand((para) => { MessageBox.Show("DELETE"); }),
+                Name = "MyName3",
+                Value = "312"
             });
         }
         private void DebugContext_PropertyChanged(object sender, PropertyChangedEventArgs e)

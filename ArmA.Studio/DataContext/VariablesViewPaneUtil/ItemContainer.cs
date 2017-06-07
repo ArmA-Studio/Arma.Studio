@@ -31,11 +31,13 @@ namespace ArmA.Studio.DataContext.VariablesViewPaneUtil
 
         public ICommand CmdDelete { get; set; }
         public ICommand CmdTextBoxLostKeyboardFocus => new RelayCommand((p) => { this.EditName = false; });
-        public ICommand CmdNameDoubleClick => new RelayCommand((p) => { this.EditName = true; });
+        public ICommand CmdNameClick => new RelayCommand((p) => { this.EditName = true; });
 
 
         public async void UpdateValue()
         {
+            if (string.IsNullOrWhiteSpace(this.Name))
+                return;
             if (this.IsExpression)
             {
                 this.NeedsUpdate = true;

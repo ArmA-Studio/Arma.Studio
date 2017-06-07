@@ -21,29 +21,11 @@
         </ListView.ItemContainerStyle>
         <ListView.View>
             <GridView>
-                <GridViewColumn>
-                    <GridViewColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="/ArmA.Studio;component/Resources/Pictograms/Create/Create_16x.ico">
-                                <Image.Style>
-                                    <Style TargetType="Image">
-                                        <Setter Property="Visibility" Value="Hidden"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Name, Converter={StaticResource IsStringNullConverter}}">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Image.Style>
-                            </Image>
-                        </DataTemplate>
-                    </GridViewColumn.CellTemplate>
-                </GridViewColumn>
                 <GridViewColumn Header="{x:Static p:Localization.VariableName}">
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
-                                <Border Background="Transparent" ev:MouseDoubleClick.Command="{Binding CmdNameDoubleClick}">
+                                <Border Background="Transparent"  ev:MouseLeftButtonDown.Command="{Binding CmdNameClick}">
                                     <Border.Style>
                                         <Style TargetType="Border">
                                             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -57,7 +39,7 @@
                                     </Border.Style>
                                     <TextBlock Text="{Binding Name}"/>
                                 </Border>
-                                <TextBox Text="{Binding Name}" HorizontalAlignment="Stretch" att:LooseFocusOnKeyAttached.Key="Return" att:SelectFileNameOnFocusAttached.Attach="True" Height="16" Padding="0" BorderThickness="0" ev:LostKeyboardFocus.Command="{Binding CmdTextBoxLostKeyboardFocus}">
+                                <TextBox Text="{Binding Name}" HorizontalAlignment="Stretch" att:LooseFocusOnKeyAttached.Key="Return" att:SelectFileNameOnFocusAttached.Attach="True" Height="16" Padding="0" BorderThickness="0">
                                     <TextBox.Style>
                                         <Style TargetType="TextBox">
                                             <Setter Property="BorderThickness" Value="0"/>
