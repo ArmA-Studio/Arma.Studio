@@ -233,7 +233,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create New File.
+        ///   Looks up a localized string similar to File Creation Dialog.
         /// </summary>
         public static string CreateNewFileDialog_Title {
             get {
@@ -242,7 +242,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Project.
+        ///   Looks up a localized string similar to Project Creation.
         /// </summary>
         public static string CreateNewProjectDialog_Header {
             get {
@@ -251,7 +251,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create New Project.
+        ///   Looks up a localized string similar to Project Creation Dialog.
         /// </summary>
         public static string CreateNewProjectDialog_Title {
             get {
@@ -369,7 +369,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The operation {0} failed to execute.
+        ///   Looks up a localized string similar to The operation &apos;{0}&apos; failed to execute.
         ///{1}.
         /// </summary>
         public static string DebuggerContext_OperationFailed_Body {
@@ -744,6 +744,16 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restart application in order to make changes take effect.
+        ///Restart now?.
+        /// </summary>
+        public static string MessageDialog_PropertyChange {
+            get {
+                return ResourceManager.GetString("MessageDialog_PropertyChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {
@@ -938,6 +948,15 @@ namespace ArmA.Studio.Properties {
         public static string Prop_ProjectType {
             get {
                 return ResourceManager.GetString("Prop_ProjectType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Properties_General_Language {
+            get {
+                return ResourceManager.GetString("Properties_General_Language", resourceCulture);
             }
         }
         
@@ -1279,7 +1298,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Setting Worksapce.
+        ///   Looks up a localized string similar to Setting Workspace.
         /// </summary>
         public static string Splash_SettingWorkspace {
             get {
@@ -1351,7 +1370,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Existing.
+        ///   Looks up a localized string similar to Select.
         /// </summary>
         public static string WorkspaceSelectorDialog_Browse {
             get {

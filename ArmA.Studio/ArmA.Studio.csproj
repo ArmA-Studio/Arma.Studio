@@ -196,6 +196,7 @@
     <Compile Include="Dialogs\PropertiesDialogDataContext.cs" />
     <Compile Include="IniHelper.cs" />
     <Compile Include="KeyManager.cs" />
+    <Compile Include="LanguageManager.cs" />
     <Compile Include="LintScheduler.cs" />
     <Compile Include="LoggerTargets\SubscribableTarget.cs" />
     <Compile Include="SplashScreen.xaml.cs">

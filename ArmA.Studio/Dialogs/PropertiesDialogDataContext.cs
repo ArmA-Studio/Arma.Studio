@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
-using System.Windows.Data;
+using System.Resources;
+using System.Windows;
 using System.Windows.Input;
 using ArmA.Studio.Data.Configuration;
 using ArmA.Studio.Data.UI.Commands;
+using ArmA.Studio.Properties;
+using Localization = System.Windows.Localization;
 
 namespace ArmA.Studio.Dialogs
 {
@@ -35,7 +40,6 @@ namespace ArmA.Studio.Dialogs
 
         public PropertiesDialogDataContext()
         {
-
             this.Categories = new ObservableCollection<Category>(this.GetCategories());
             this._SelectedCategory = this.Categories.FirstOrDefault();
         }
@@ -77,6 +81,11 @@ namespace ArmA.Studio.Dialogs
                 new BoolItem(Properties.Localization.Property_General_ErrorReporting_AutoReportException, typeof(ConfigHost.App).GetProperty(nameof(ConfigHost.App.AutoReportException)), null)
             })
             { Name = Properties.Localization.Property_General_ErrorReporting, ImageSource = @"/ArmA.Studio;component/Resources/Logo.ico" };
+            yield return new SubCategory( new Item[]
+            {
+                    new ComboBoxItem<int>(LanguageManager.SupportedLanguages(), Properties.Localization.Properties_General_Language, typeof(LanguageManager).GetProperty(nameof(LanguageManager.Language)), null )
+            })
+            { Name = Properties.Localization.Properties_General_Language, ImageSource = @"/ArmA.Studio;component/Resources/Logo.ico" };
         }
     }
 }
