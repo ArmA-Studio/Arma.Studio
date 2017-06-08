@@ -23,16 +23,16 @@ namespace ArmA.Studio.Data.UI.Eventing
                                                 typeof(MouseDoubleClick),
                                                 new UIPropertyMetadata(null));
 
-        public static void SetCommand(DependencyObject target, ICommand value)
+        public static void SetCommand(Control target, ICommand value)
         {
             target.SetValue(CommandProperty, value);
         }
 
-        public static void SetCommandParameter(DependencyObject target, object value)
+        public static void SetCommandParameter(Control target, object value)
         {
             target.SetValue(CommandParameterProperty, value);
         }
-        public static object GetCommandParameter(DependencyObject target)
+        public static object GetCommandParameter(Control target)
         {
             return target.GetValue(CommandParameterProperty);
         }

@@ -148,7 +148,7 @@ namespace ArmA.Studio
                 {
                     Solution.Serialize(this.Solution, stream);
                 }
-                this.SaveBreakpointsToProject();
+                this.SaveProjectSpecificFiles();
                 ConfigHost.Instance.ExecSave();
             }
             catch (Exception ex)
@@ -699,12 +699,19 @@ namespace ArmA.Studio
         }
 
 
-        public void SaveBreakpointsToProject()
+        public void SaveProjectSpecificFiles()
         {
             var filePath = Path.ChangeExtension(this.Solution.FileUri.LocalPath, App.CONST_BREAKPOINTINFOEXTENSION);
             using (var stream = File.Open(filePath, FileMode.Create))
             {
                 this.BreakpointManager.SaveBreakpoints(stream);
+            }
+
+            filePath = Path.ChangeExtension(this.Solution.FileUri.LocalPath, App.CONST_WATCHEXTENSION);
+            using (var stream = File.Open(filePath, FileMode.Create))
+            {
+                var vvp = this.AvailablePanels.First((it) => it is DataContext.VariablesViewPane) as DataContext.VariablesViewPane;
+                vvp.SaveVariables(stream);
             }
         }
 

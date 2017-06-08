@@ -808,6 +808,24 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not Available.
+        /// </summary>
+        public static string NotAvailable {
+            get {
+                return ResourceManager.GetString("NotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Found.
+        /// </summary>
+        public static string NotFound {
+            get {
+                return ResourceManager.GetString("NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
         public static string OK {
@@ -1307,6 +1325,24 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unavailable.
+        /// </summary>
+        public static string Unavailable {
+            get {
+                return ResourceManager.GetString("Unavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating.
+        /// </summary>
+        public static string Updating {
+            get {
+                return ResourceManager.GetString("Updating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string VariableName {
@@ -1316,11 +1352,29 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to load existing watch entries..
+        /// </summary>
+        public static string VariablesView_FailedToLoadExistingWatchEntries {
+            get {
+                return ResourceManager.GetString("VariablesView_FailedToLoadExistingWatchEntries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value.
         /// </summary>
         public static string VariableValue {
             get {
                 return ResourceManager.GetString("VariableValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string VariableValueType {
+            get {
+                return ResourceManager.GetString("VariableValueType", resourceCulture);
             }
         }
         
@@ -1375,6 +1429,27 @@ namespace ArmA.Studio.Properties {
         public static string WorkspaceSelectorDialog_Header {
             get {
                 return ResourceManager.GetString("WorkspaceSelectorDialog_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Workspace path is a simple folder where ArmA.Studio is saving some files related to the tool.
+        ///For addon development, it is best placed in your &apos;@mod/Addons&apos;.
+        ///For mission development, it should be placed in the folder above your mission files:
+        ///&apos;C:\Users\&lt;Username&gt;\Documents\Arma 3\missions\&apos;.
+        /// </summary>
+        public static string WorkspaceSelectorDialog_Help_Body {
+            get {
+                return ResourceManager.GetString("WorkspaceSelectorDialog_Help_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Where to place this path at?.
+        /// </summary>
+        public static string WorkspaceSelectorDialog_Help_Header {
+            get {
+                return ResourceManager.GetString("WorkspaceSelectorDialog_Help_Header", resourceCulture);
             }
         }
         

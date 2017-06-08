@@ -18,6 +18,10 @@ namespace ArmA.Studio.Dialogs
                 {
                     dlgDc.CurrentPath = selectedPath.Replace('/', '\\');
                 }
+                else
+                {
+                    dlgDc.CurrentPath = App.DefaultWorkspacepath;
+                }
                 var dlg = new WorkspaceSelectorDialog(dlgDc);
                 var dlgResult = dlg.ShowDialog();
                 if (dlgResult.HasValue && dlgResult.Value && !dlgDc.CurrentPath.Equals(selectedPath, StringComparison.InvariantCultureIgnoreCase))

@@ -125,6 +125,7 @@
     <Compile Include="UI\Eventing\LostKeyboardFocus.cs" />
     <Compile Include="UI\Eventing\MouseDoubleClick.cs" />
     <Compile Include="UI\Eventing\MouseDown.cs" />
+    <Compile Include="UI\Eventing\MouseLeftButtonUp.cs" />
     <Compile Include="UI\Eventing\MouseLeftButtonDown.cs" />
     <Compile Include="UI\Eventing\MouseRightButtonDown.cs" />
     <Compile Include="UI\Eventing\PreviewKeyDown.cs" />

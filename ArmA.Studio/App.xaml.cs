@@ -25,6 +25,7 @@ namespace ArmA.Studio
         public const string CONST_UPDATESUFFIX = ".update";
         public const string CONST_SOLUTIONEXTENSION = ".asln";
         public const string CONST_BREAKPOINTINFOEXTENSION = ".asbp";
+        public const string CONST_WATCHEXTENSION = ".aswtch";
         public const string CONST_CONFIGURATION = "Configuration";
 
 
@@ -47,6 +48,7 @@ namespace ArmA.Studio
         public static string TempPath { get { return Path.Combine(Path.GetTempPath(), @"ArmA.Studio"); } }
         public static string CommonApplicationDataPath { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @"ArmA.Studio"); } }
         public static string ApplicationDataPath { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ArmA.Studio"); } }
+        public static string DefaultWorkspacepath { get { return Path.Combine(ApplicationDataPath, @"DefaultWorkspace"); } }
         public static Version CurrentVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
         public static SubscribableTarget SubscribableLoggerTarget { get; private set; }
@@ -119,6 +121,10 @@ namespace ArmA.Studio
         public static void ShowOperationFailedMessageBox(Exception ex)
         {
             App.Current.Dispatcher.Invoke(() => MessageBox.Show(string.Format(Studio.Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Studio.Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
+        }
+        public static void ShowOperationFailedMessageBox(Exception ex, string body)
+        {
+            App.Current.Dispatcher.Invoke(() => MessageBox.Show(string.Concat(body, '\n', string.Format(Studio.Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace)), Studio.Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
