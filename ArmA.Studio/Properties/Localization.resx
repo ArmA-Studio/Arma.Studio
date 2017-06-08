@@ -590,4 +590,22 @@ Restart now?</value>
   <data name="Updating" xml:space="preserve">
     <value>Updating</value>
   </data>
+  <data name="VariableValueType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>Not Available</value>
+  </data>
+  <data name="VariablesView_FailedToLoadExistingWatchEntries" xml:space="preserve">
+    <value>Failed to load existing watch entries.</value>
+  </data>
+  <data name="WorkspaceSelectorDialog_Help_Body" xml:space="preserve">
+    <value>The Workspace path is a simple folder where ArmA.Studio is saving some files related to the tool.
+For addon development, it is best placed in your '@mod/Addons'.
+For mission development, it should be placed in the folder above your mission files:
+'C:\Users\&lt;Username&gt;\Documents\Arma 3\missions\'</value>
+  </data>
+  <data name="WorkspaceSelectorDialog_Help_Header" xml:space="preserve">
+    <value>Where to place this path at?</value>
+  </data>
 </root>
