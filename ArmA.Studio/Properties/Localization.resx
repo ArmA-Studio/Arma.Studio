@@ -608,4 +608,7 @@ For mission development, it should be placed in the folder above your mission fi
   <data name="WorkspaceSelectorDialog_Help_Header" xml:space="preserve">
     <value>Where to place this path at?</value>
   </data>
+  <data name="Unavailable" xml:space="preserve">
+    <value>Unavailable</value>
+  </data>
 </root>

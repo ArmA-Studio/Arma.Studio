@@ -17,15 +17,70 @@
         <ListView.ItemContainerStyle>
             <Style TargetType="ListViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu>
+                            <MenuItem Header="{x:Static p:Localization.Delete}" Command="{Binding CmdDelete}" CommandParameter="{Binding}" IsEnabled="{Binding CmdDelete, Converter={StaticResource IsNullConverter}, ConverterParameter=True}"/>
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
             </Style>
         </ListView.ItemContainerStyle>
         <ListView.View>
             <GridView>
+                <GridViewColumn>
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border Background="Transparent" Visibility="{Binding IsExpression, Converter={StaticResource VisibilityConverter}}" IsHitTestVisible="{Binding NeedsUpdate}">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Padding" Value="2"/>
+                                        <Setter Property="BorderBrush" Value="Transparent"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="Border.IsMouseOver" Value="True">
+                                                <Setter Property="Padding" Value="1"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Setter Property="BorderThickness" Value="1"/>
+                                            </Trigger>
+                                            <DataTrigger Binding="{Binding NeedsUpdate}" Value="True">
+                                                <Setter Property="Padding" Value="2"/>
+                                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding DataContext.IsAvailable, RelativeSource={RelativeSource AncestorType=ListView, Mode=FindAncestor}}" Value="False">
+                                                <Setter Property="Padding" Value="2"/>
+                                                <Setter Property="BorderBrush" Value="Transparent"/>
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                                <Setter Property="Opacity" Value="0.5"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <Image Height="16" Width="16">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/Refresh/Refresh_grey_16x.png"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding NeedsUpdate}" Value="True">
+                                                    <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/Refresh/Refresh_16x.png"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding DataContext.IsAvailable, RelativeSource={RelativeSource AncestorType=ListView, Mode=FindAncestor}}" Value="False">
+                                                    <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/Refresh/Refresh_grey_16x.png"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </Border>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
                 <GridViewColumn Header="{x:Static p:Localization.VariableName}">
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
-                                <Border Background="Transparent"  ev:MouseLeftButtonDown.Command="{Binding CmdNameClick}">
+                                <Border Background="Transparent" ev:MouseLeftButtonUp.Command="{Binding CmdNameClick}">
                                     <Border.Style>
                                         <Style TargetType="Border">
                                             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -39,7 +94,7 @@
                                     </Border.Style>
                                     <TextBlock Text="{Binding Name}"/>
                                 </Border>
-                                <TextBox Text="{Binding Name}" HorizontalAlignment="Stretch" att:LooseFocusOnKeyAttached.Key="Return" att:SelectFileNameOnFocusAttached.Attach="True" Height="16" Padding="0" BorderThickness="0">
+                                <TextBox Text="{Binding Name}" HorizontalAlignment="Stretch" att:LooseFocusOnKeyAttached.Key="Return" Height="16" Padding="0" BorderThickness="0" ev:LostKeyboardFocus.Command="{Binding CmdTextBoxLostKeyboardFocus}">
                                     <TextBox.Style>
                                         <Style TargetType="TextBox">
                                             <Setter Property="BorderThickness" Value="0"/>
@@ -72,7 +127,41 @@
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding IsUpdating}" Value="True">
                                                 <Setter Property="Text" Value="{x:Static p:Localization.Updating}"/>
-                                                <Setter Property="Foreground" Value="Yellow"/>
+                                                <Setter Property="Foreground" Value="Orange"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding DataContext.IsAvailable, RelativeSource={RelativeSource AncestorType=ListView, Mode=FindAncestor}}" Value="False">
+                                                <Setter Property="Text" Value="{x:Static p:Localization.Unavailable}"/>
+                                                <Setter Property="Foreground" Value="Orange"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Name, Converter={StaticResource IsStringNullConverter}}" Value="True">
+                                                <Setter Property="Text" Value=""/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="{x:Static p:Localization.VariableValueType}">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Text" Value="{Binding ValueType}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ValueType, Converter={StaticResource IsStringNullConverter}}" Value="True">
+                                                <Setter Property="Text" Value="{x:Static p:Localization.NotAvailable}"/>
+                                                <Setter Property="Foreground" Value="Red"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsUpdating}" Value="True">
+                                                <Setter Property="Text" Value="{x:Static p:Localization.Updating}"/>
+                                                <Setter Property="Foreground" Value="Orange"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding DataContext.IsAvailable, RelativeSource={RelativeSource AncestorType=ListView, Mode=FindAncestor}}" Value="False">
+                                                <Setter Property="Text" Value="{x:Static p:Localization.Unavailable}"/>
+                                                <Setter Property="Foreground" Value="Orange"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Name, Converter={StaticResource IsStringNullConverter}}" Value="True">
                                                 <Setter Property="Text" Value=""/>

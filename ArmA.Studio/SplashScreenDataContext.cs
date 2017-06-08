@@ -220,7 +220,7 @@ namespace ArmA.Studio
                 return true;
             }
             SetDisplayText(Properties.Localization.Splash_LoadingBreakpointInformations);
-            {
+            { //Load Breakpoints
                 var filePath = Path.ChangeExtension(solutionPath, App.CONST_BREAKPOINTINFOEXTENSION);
                 if (File.Exists(filePath))
                 {
@@ -241,6 +241,32 @@ namespace ArmA.Studio
                     using (var stream = File.Open(filePath, FileMode.Create))
                     {
                         w.BreakpointManager.SaveBreakpoints(stream);
+                    }
+                }
+            }
+            { //Load Watch Variables
+                var filePath = Path.ChangeExtension(solutionPath, App.CONST_WATCHEXTENSION);
+                if (File.Exists(filePath))
+                {
+                    try
+                    {
+                        using (var stream = File.OpenRead(filePath))
+                        {
+                            var vvp = w.AvailablePanels.First((it) => it is DataContext.VariablesViewPane) as DataContext.VariablesViewPane;
+                            vvp.LoadVariables(stream);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        App.ShowOperationFailedMessageBox(ex, Properties.Localization.VariablesView_FailedToLoadExistingWatchEntries);
+                    }
+                }
+                else
+                {
+                    using (var stream = File.Open(filePath, FileMode.Create))
+                    {
+                        var vvp = w.AvailablePanels.First((it) => it is DataContext.VariablesViewPane) as DataContext.VariablesViewPane;
+                        vvp.SaveVariables(stream);
                     }
                 }
             }
