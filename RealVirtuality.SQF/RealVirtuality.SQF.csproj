@@ -52,7 +52,6 @@
   <ItemGroup>
     <Compile Include="Parser\v1\ErrorListener.cs" />
     <Compile Include="Parser\v2\Extensions.cs" />
-    <Compile Include="Parser\v2\Sqf2Visitor.cs" />
     <Compile Include="Parser\v2\Sqf2Listener.cs" />
     <Compile Include="Parser\v1\SqfArray.cs" />
     <Compile Include="Parser\v1\SqfAssignment.cs" />

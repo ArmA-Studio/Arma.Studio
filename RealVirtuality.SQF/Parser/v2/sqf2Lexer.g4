@@ -71,7 +71,10 @@ ASSIGNOP: '=';
 ENDOP: ';';
 COMMA: ',';
 
+/*
 DIRECTIVE: '#' -> channel(DIRECTIVE_CHANNEL), mode(DIRECTIVE_MODE);
+*/
+DIRECTIVE: '#' ( . | ('\\' '\r' '\n') )*;
 
 //Datatypes
 STRING1: '"' ( ANY | '""' )*? '"';
@@ -83,6 +86,7 @@ NUMBER: DIGIT+ ( '.' DIGIT+ )?;
 GLOBALIDENT: LETTER (LETTER | DIGIT | '_')*;
 PRIVATEIDENT: '_' (LETTER | DIGIT | '_')*;
 
+/*
 mode DIRECTIVE_MODE;
 DEFINE: 'define';
 DEFINE_ESCAPE: '\\' '\r'? '\n' -> channel(HIDDEN);
@@ -91,3 +95,4 @@ IF: 'if';
 ELSE: 'else';
 ENDIF: 'endif';
 EOD: '\n' -> popMode;
+*/
