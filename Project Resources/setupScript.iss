@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ArmA.Studio"
-#define MyAppVersion "0.1.6293.24366"
+#define MyAppVersion "0.2.6331.26237"
 #define MyAppPublisher "X39"
 #define MyAppURL "https://x39.io/projects?project=ArmA.Studio"
 #define MyAppExeName "ArmA.Studio.exe"
@@ -40,8 +40,7 @@ Source: "..\{#MyAppName}\bin\Release\{#MyAppName}.exe"; DestDir: "{app}"; Flags:
 Source: "..\{#MyAppName}\bin\Release\{#MyAppName}.exe.config"; DestDir: "{app}"; Flags: ignoreversion    
 Source: "..\{#MyAppName}\bin\Release\*.dll"; DestDir: "{app}"; Flags: ignoreversion    
 Source: "..\{#MyAppName}\bin\Release\SqfDefinition.xml"; DestDir: "{app}"; Flags: ignoreversion           
-Source: "..\{#MyAppName}\bin\Release\SyntaxFiles\*"; DestDir: "{app}\SyntaxFiles\"; Flags: ignoreversion recursesubdirs
-Source: "..\{#MyAppName}\bin\Release\Debugger\*"; DestDir: "{app}\Debugger\"; Flags: ignoreversion recursesubdirs       
+Source: "..\{#MyAppName}\bin\Release\Plugins\*"; DestDir: "{app}\Plugins\"; Flags: ignoreversion recursesubdirs       
 Source: "..\{#MyAppName}\bin\Release\*.resources.dll"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ArmA.Studio.Dialogs"
         xmlns:p="clr-namespace:ArmA.Studio.Properties"
         xmlns:att="clr-namespace:ArmA.Studio.UI.Attached"
+        xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data"
         mc:Ignorable="d"
         Title="{x:Static p:Localization.WorkspaceSelectorDialog_Title}" Height="322" Style="{StaticResource DialogWindow}">
     <Grid VerticalAlignment="Center">
@@ -15,15 +16,34 @@
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="8"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="8"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <TextBox Grid.Row="0" Grid.Column="0" IsReadOnly="True" Text="{Binding CurrentPath, UpdateSourceTrigger=PropertyChanged}" Foreground="Gray"/>
-        <Button Grid.Row="0" Grid.Column="2" Content="{x:Static p:Localization.WorkspaceSelectorDialog_Browse}" Padding="8 0" MinWidth="100" Command="{Binding CmdBrowse}"/>
+        <Border Grid.Row="0" Grid.Column="0" Background="Transparent" ev:MouseLeftButtonDown.Command="{Binding CmdDisplayHelp}" Width="18" Height="18">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Padding" Value="2"/>
+                    <Style.Triggers>
+                        <Trigger Property="Border.IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="Black"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="Padding" Value="1"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Image Height="12" Width="12" Source="/ArmA.Studio;component/Resources/Pictograms/OfficeRibbon/Help.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+        <TextBox Grid.Row="0" Grid.Column="2" IsReadOnly="True" Text="{Binding CurrentPath, UpdateSourceTrigger=PropertyChanged}" Foreground="Gray"/>
+        <Button Grid.Row="0" Grid.Column="4" Content="{x:Static p:Localization.WorkspaceSelectorDialog_Browse}" Padding="8 0" MinWidth="100" Command="{Binding CmdBrowse}"/>
 
-        <Label Grid.Row="1" Content="{x:Static p:Localization.WorkspaceSelectorDialog_SelectPrev}"></Label>
-        <ListBox Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding WorkSpaceListBox}" SelectedItem="{Binding CurrentPath}" >
+        <Label Grid.Row="1" Grid.ColumnSpan="5" Content="{x:Static p:Localization.WorkspaceSelectorDialog_SelectPrev}"></Label>
+        <ListBox Grid.Row="2" Grid.ColumnSpan="5" ItemsSource="{Binding WorkSpaceListBox}" SelectedItem="{Binding CurrentPath}" >
             
         </ListBox>
     </Grid>

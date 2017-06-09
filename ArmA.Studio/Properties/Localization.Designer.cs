@@ -233,7 +233,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create New File.
+        ///   Looks up a localized string similar to File Creation Dialog.
         /// </summary>
         public static string CreateNewFileDialog_Title {
             get {
@@ -242,7 +242,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Project.
+        ///   Looks up a localized string similar to Project Creation.
         /// </summary>
         public static string CreateNewProjectDialog_Header {
             get {
@@ -251,7 +251,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create New Project.
+        ///   Looks up a localized string similar to Project Creation Dialog.
         /// </summary>
         public static string CreateNewProjectDialog_Title {
             get {
@@ -369,7 +369,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The operation {0} failed to execute.
+        ///   Looks up a localized string similar to The operation &apos;{0}&apos; failed to execute.
         ///{1}.
         /// </summary>
         public static string DebuggerContext_OperationFailed_Body {
@@ -744,6 +744,16 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restart application in order to make changes take effect.
+        ///Restart now?.
+        /// </summary>
+        public static string MessageDialog_PropertyChange {
+            get {
+                return ResourceManager.GetString("MessageDialog_PropertyChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {
@@ -794,6 +804,24 @@ namespace ArmA.Studio.Properties {
         public static string NotAffiliatedWithBohemiaInteractive {
             get {
                 return ResourceManager.GetString("NotAffiliatedWithBohemiaInteractive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Available.
+        /// </summary>
+        public static string NotAvailable {
+            get {
+                return ResourceManager.GetString("NotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Found.
+        /// </summary>
+        public static string NotFound {
+            get {
+                return ResourceManager.GetString("NotFound", resourceCulture);
             }
         }
         
@@ -929,6 +957,15 @@ namespace ArmA.Studio.Properties {
         public static string Prop_ProjectType {
             get {
                 return ResourceManager.GetString("Prop_ProjectType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Properties_General_Language {
+            get {
+                return ResourceManager.GetString("Properties_General_Language", resourceCulture);
             }
         }
         
@@ -1270,7 +1307,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Setting Worksapce.
+        ///   Looks up a localized string similar to Setting Workspace.
         /// </summary>
         public static string Splash_SettingWorkspace {
             get {
@@ -1288,6 +1325,24 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unavailable.
+        /// </summary>
+        public static string Unavailable {
+            get {
+                return ResourceManager.GetString("Unavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating.
+        /// </summary>
+        public static string Updating {
+            get {
+                return ResourceManager.GetString("Updating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string VariableName {
@@ -1297,11 +1352,29 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to load existing watch entries..
+        /// </summary>
+        public static string VariablesView_FailedToLoadExistingWatchEntries {
+            get {
+                return ResourceManager.GetString("VariablesView_FailedToLoadExistingWatchEntries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value.
         /// </summary>
         public static string VariableValue {
             get {
                 return ResourceManager.GetString("VariableValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string VariableValueType {
+            get {
+                return ResourceManager.GetString("VariableValueType", resourceCulture);
             }
         }
         
@@ -1333,7 +1406,7 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Existing.
+        ///   Looks up a localized string similar to Select.
         /// </summary>
         public static string WorkspaceSelectorDialog_Browse {
             get {
@@ -1356,6 +1429,27 @@ namespace ArmA.Studio.Properties {
         public static string WorkspaceSelectorDialog_Header {
             get {
                 return ResourceManager.GetString("WorkspaceSelectorDialog_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Workspace path is a simple folder where ArmA.Studio is saving some files related to the tool.
+        ///For addon development, it is best placed in your &apos;@mod/Addons&apos;.
+        ///For mission development, it should be placed in the folder above your mission files:
+        ///&apos;C:\Users\&lt;Username&gt;\Documents\Arma 3\missions\&apos;.
+        /// </summary>
+        public static string WorkspaceSelectorDialog_Help_Body {
+            get {
+                return ResourceManager.GetString("WorkspaceSelectorDialog_Help_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Where to place this path at?.
+        /// </summary>
+        public static string WorkspaceSelectorDialog_Help_Header {
+            get {
+                return ResourceManager.GetString("WorkspaceSelectorDialog_Help_Header", resourceCulture);
             }
         }
         

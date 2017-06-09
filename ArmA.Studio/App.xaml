@@ -30,6 +30,7 @@
                     <conv:StringFormatConverter x:Key="StringFormatConverter"/>
                     <conv:AlwaysVisibleConverter x:Key="AlwaysVisibleConverter"/>
                     <conv:StringRemoveNewLineConverter x:Key="StringRemoveNewLineConverter"/>
+                    <conv:VisibilityConverter x:Key="VisibilityConverter"/>
 
                     <convm:CollectionContainsConverter x:Key="CollectionContainsConverter"/>
                     <convm:AllTrueMultiConverter x:Key="AllTrueMultiConverter"/>
@@ -339,6 +340,7 @@ EFFET JURIDIQUE. Le présent contrat décrit certains droits juridiques. Vous po
                     </Style>
                     <Style x:Key="DialogWindow" TargetType="{x:Type Window}">
                         <Setter Property="SnapsToDevicePixels" Value="true" />
+                        <Setter Property="UseLayoutRounding" Value="true" />
                         <Setter Property="Width" Value="512"/>
                         <Setter Property="Height" Value="384"/>
                         <Setter Property="MinWidth" Value="512"/>
