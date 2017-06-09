@@ -83,6 +83,10 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
             if (dlgResult.HasValue && dlgResult.Value)
             {
                 var file = this.Ref.AddFile(dlgdc.FinalName);
+                if (!Directory.Exists(Path.GetDirectoryName(file.FilePath)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(file.FilePath));
+                }
                 using (var stream = new StreamWriter(file.FilePath))
                 {
                     stream.Write(dlgdc.SelectedFileType.GetTemplate());

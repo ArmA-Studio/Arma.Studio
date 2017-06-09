@@ -124,10 +124,11 @@
     <value>Aktiviert</value>
   </data>
   <data name="BreakpointLabel" xml:space="preserve">
-    <value>Label</value>
+    <value>Beschriftung</value>
   </data>
   <data name="ChangesRequireRestart_Body" xml:space="preserve">
-    <value>Die Änderungen erfordern einen neustart.</value>
+    <value>Die Änderungen erfordern einen Neustart.
+Wollen sie jetzt neu starten?</value>
   </data>
   <data name="ChangesRequireRestart_Title" xml:space="preserve">
     <value>Neustart Erforderlich</value>
@@ -136,10 +137,10 @@
     <value>Wählen</value>
   </data>
   <data name="CodeSnippet" xml:space="preserve">
-    <value>Code Snippet</value>
+    <value>Code Schnipsel</value>
   </data>
   <data name="ColoringProperties" xml:space="preserve">
-    <value>Farben</value>
+    <value>Färbung</value>
   </data>
   <data name="Column" xml:space="preserve">
     <value>Spalte</value>
@@ -148,53 +149,54 @@
     <value>Bedingung</value>
   </data>
   <data name="ConfigEntrySelectorDialog_Header" xml:space="preserve">
-    <value>Bitte wähle den Haupt-UI Config Eintrag</value>
+    <value>Bitte wählen Sie den Haupt-UI Config Eintrag</value>
   </data>
   <data name="ConfigEntrySelectorDialog_Title" xml:space="preserve">
     <value>UI-Config Auswahl</value>
   </data>
   <data name="CreateNewFileDialog_Header" xml:space="preserve">
-    <value>Bitte Dateityp wählen</value>
+    <value>Bitte wählen sie den Datentyp</value>
   </data>
   <data name="CreateNewFileDialog_Title" xml:space="preserve">
-    <value>Neue Datei erstellen</value>
+    <value>Dateierstellungs Dialog</value>
   </data>
   <data name="DebuggerContext_AttachFailed_Body" xml:space="preserve">
-    <value>Anhängen des Debuggers fehlgeschlagen {0}</value>
+    <value>Der versuch den Debugger anzuhängen ist fehlgeschlagen.
+{0}</value>
   </data>
   <data name="DebuggerContext_AttachFailed_Title" xml:space="preserve">
-    <value>Debugger Anhängen Fehler</value>
+    <value>Anhängen des Debuggers fehlgeschlagen</value>
   </data>
   <data name="DebuggerContext_NoDebuggerAvailable_Body" xml:space="preserve">
-    <value>Debugging Funktionen nicht verfügbar da kein Debugger gefunden wurde.</value>
+    <value>Debugging Funktionen nicht verfügbar, da kein Debugger gefunden wurde.</value>
   </data>
   <data name="DebuggerContext_NoDebuggerAvailable_Title" xml:space="preserve">
     <value>Kein Debugger gefunden</value>
   </data>
   <data name="DebuggerContext_OperationFailed_Body" xml:space="preserve">
-    <value>Die Operation {0} konnte nicht ausgeführt werden.
+    <value>Der Vorgang '{0}' konnte nicht ausgeführt werden.
 {1}</value>
   </data>
   <data name="DebuggerContext_OperationFailed_Title" xml:space="preserve">
-    <value>Debugger Operation Fehlgeschlagen</value>
+    <value>Operation Fehlgeschlagen</value>
   </data>
   <data name="Debugger_Continue" xml:space="preserve">
-    <value>Weiter</value>
+    <value>Fortfahren</value>
   </data>
   <data name="Debugger_Pause_Tooltip" xml:space="preserve">
-    <value>Ausführung an aktueller Position pausieren</value>
+    <value>Pausiert die Ausführung.</value>
   </data>
   <data name="Debugger_Start" xml:space="preserve">
     <value>Start</value>
   </data>
   <data name="Debugger_StepInto_Tooltip" xml:space="preserve">
-    <value>Springe in aktuelles Scope</value>
+    <value>Springe in den aktuellen Geltungsbereich.</value>
   </data>
   <data name="Debugger_StepOut_Tooltip" xml:space="preserve">
-    <value>Springe aus aktuellem scope</value>
+    <value>Springe aus dem aktuellem Geltungsbereich.</value>
   </data>
   <data name="Debugger_StepOver_Tooltip" xml:space="preserve">
-    <value>Springe über Anweisung</value>
+    <value>Springe über den aktuellen Geltungsbereich.</value>
   </data>
   <data name="Debugger_Stop_Tooltip" xml:space="preserve">
     <value>Entkoppelt den Debugger und beendet die aktuelle Session</value>
@@ -206,13 +208,14 @@
     <value>Beschreibung</value>
   </data>
   <data name="DocumentBase_CloseSaveConfirmation_Body" xml:space="preserve">
-    <value>Das aktuelle Dokument beinhaltet ungespeicherte Änderungen. Möchten sie vor dem schließen speichern?</value>
+    <value>Das aktuelle Dokument beinhaltet ungespeicherte Änderungen.
+Möchten Sie vor dem schließen speichern?</value>
   </data>
   <data name="DocumentBase_CloseSaveConfirmation_Caption" xml:space="preserve">
     <value>Ungespeicherte Daten</value>
   </data>
   <data name="DownloadingX" xml:space="preserve">
-    <value>Downloading {0}</value>
+    <value>Herunterladen von {0}</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -221,13 +224,13 @@
     <value>Errors</value>
   </data>
   <data name="ExistingItem" xml:space="preserve">
-    <value>Vorhandenes Item...</value>
+    <value>Vorhandenes Element...</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>Datei</value>
   </data>
   <data name="FileName" xml:space="preserve">
-    <value>Datei name</value>
+    <value>Dateiname</value>
   </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>Die Datei '{0}' konnte nicht gefunden werden.</value>
@@ -239,13 +242,13 @@
     <value>Nachrichten</value>
   </data>
   <data name="InstallUpdate" xml:space="preserve">
-    <value>Installiere Updates</value>
+    <value>Installiere Update</value>
   </data>
   <data name="LicenseViewer_Header" xml:space="preserve">
-    <value>Lizenz</value>
+    <value>Lizenz Einsicht</value>
   </data>
   <data name="LicenseViewer_Title" xml:space="preserve">
-    <value>Lizenz Ansicht</value>
+    <value>Verwendete Lizenzen</value>
   </data>
   <data name="Line" xml:space="preserve">
     <value>Zeile</value>
@@ -272,13 +275,13 @@
     <value>Speichern</value>
   </data>
   <data name="MenuItem_SaveAll" xml:space="preserve">
-    <value>Alle Speichern</value>
+    <value>Alles Speichern</value>
   </data>
   <data name="MenuItem_SwitchWorkspace" xml:space="preserve">
     <value>Workspace wechseln</value>
   </data>
   <data name="MessageBoxDeleteFileConfirmation_Body" xml:space="preserve">
-    <value>Bist du sicher das du '{0}' löschen möchtest?</value>
+    <value>Bist du sicher das du die Datei '{0}' löschen möchtest?</value>
   </data>
   <data name="MessageBoxDeleteFileConfirmation_Title" xml:space="preserve">
     <value>Datei Löschung bestätigen.</value>
@@ -286,7 +289,7 @@
   <data name="MessageBoxFileChanged_Body" xml:space="preserve">
     <value>Die Datei wurde außerhalb von ArmA.Studio geändert.
 Möchtest du die Datei neu laden?
-Aktueller Fortschritt geht dabei verloren.</value>
+Jeglicher ungespeicherter Fortschritt geht dabei verloren.</value>
   </data>
   <data name="MessageBoxFileChanged_Title" xml:space="preserve">
     <value>Datei wurde geändert.</value>
@@ -306,7 +309,7 @@ Aktueller Fortschritt geht dabei verloren.</value>
     <value>Neues Item...</value>
   </data>
   <data name="NoConfigPresent_Body" xml:space="preserve">
-    <value>Im aktuellen dokument ist kein Config Eintrag vorhanden von dem ein UI hätte generiert werden können.</value>
+    <value>Im aktuellen Dokument ist kein Config Eintrag vorhanden von dem ein UI hätte generiert werden können.</value>
   </data>
   <data name="NoConfigPresent_Title" xml:space="preserve">
     <value>Fehlender Config Eintrag</value>
@@ -315,21 +318,21 @@ Aktueller Fortschritt geht dabei verloren.</value>
     <value>OK</value>
   </data>
   <data name="OpenInExplorer" xml:space="preserve">
-    <value>In Explorer öffnen</value>
+    <value>In Datei-Explorer öffnen</value>
   </data>
   <data name="Output_ClearAllToolTip" xml:space="preserve">
-    <value>Clear All</value>
+    <value>Alles Löschen</value>
   </data>
   <data name="PanelDisplayName_Breakpoints" xml:space="preserve">
     <value>Breakpoints</value>
     <comment>Should this be translated?</comment>
   </data>
   <data name="PanelDisplayName_CallStack" xml:space="preserve">
-    <value>Callstack</value>
+    <value>Aufrufstapel</value>
     <comment>Should this be translated?</comment>
   </data>
   <data name="PanelDisplayName_ErrorList" xml:space="preserve">
-    <value>Error List</value>
+    <value>Fehler Liste</value>
     <comment>Should this be translated?</comment>
   </data>
   <data name="PanelDisplayName_Output" xml:space="preserve">
@@ -354,26 +357,26 @@ Aktueller Fortschritt geht dabei verloren.</value>
     <value>Umbenennnen</value>
   </data>
   <data name="ReportDialog_Header" xml:space="preserve">
-    <value>Bitte sagen sie uns was passiert ist </value>
+    <value>Bitte beschreiben Sie, was passiert ist</value>
   </data>
   <data name="ReportDialog_Title" xml:space="preserve">
-    <value>Fehler Report Dialog</value>
+    <value>Fehler Dialog</value>
   </data>
   <data name="RescanWorkspace" xml:space="preserve">
-    <value>Neu-Scannen des Workspaces</value>
+    <value>Erneutes durchsuchen des Arbeitsplatzes</value>
   </data>
   <data name="ShowOutputFromSource" xml:space="preserve">
-    <value>Zeige Ausgabe von:</value>
+    <value>Ausgabe von:</value>
   </data>
   <data name="SoftwareUpdateAvailable_Body" xml:space="preserve">
     <value>Es ist ein neues Update für ArmA.Studio verfügbar.
 Aktuelle Version: {0}
 Neue Version {1}
 
-Möchtest du jetzt Updaten ?</value>
+Möchten Sie jetzt Aktualisieren?</value>
   </data>
   <data name="SoftwareUpdateAvailable_Title" xml:space="preserve">
-    <value>Software update {0} Verfügbar</value>
+    <value>Software Aktualisierung {0} Verfügbar</value>
   </data>
   <data name="SolutionFile_NameContainsInvalidFiles" xml:space="preserve">
     <value>Angegebener Wert enthält unzulässige Zeichen</value>
@@ -391,7 +394,7 @@ Möchtest du jetzt Updaten ?</value>
     <value>Warnungen</value>
   </data>
   <data name="Whoops" xml:space="preserve">
-    <value>Whoops</value>
+    <value>Hopla</value>
     <comment>Generic error title (messagebox) for non-problematic but user related errors</comment>
   </data>
   <data name="WorkspaceSelectorDialog_Browse" xml:space="preserve">
@@ -401,13 +404,13 @@ Möchtest du jetzt Updaten ?</value>
     <value>Bitte Wähle den Ordner in dem sich das Projekt befindet.</value>
   </data>
   <data name="WorkspaceSelectorDialog_Header" xml:space="preserve">
-    <value>Workspace Einstellungen</value>
+    <value>Arbeitsplatz Einstellungen</value>
   </data>
   <data name="WorkspaceSelectorDialog_NoWorkspaceSelected" xml:space="preserve">
-    <value>Bitte zulässiegen Workspace auswählen.</value>
+    <value>Bitte zulässigen Arbeitsplatz auswählen.</value>
   </data>
   <data name="WorkspaceSelectorDialog_Title" xml:space="preserve">
-    <value>Workspace Dialog</value>
+    <value>Arbeitsplatz Dialog</value>
   </data>
   <data name="XSHD_Loading_Error_Body" xml:space="preserve">
     <value>Fehler beim laden von '{0}'
@@ -417,5 +420,171 @@ Möchtest du jetzt Updaten ?</value>
   </data>
   <data name="XSHD_Loading_Error_Title" xml:space="preserve">
     <value>XSHD Syntax Datei laden Fehlgeschlagen.</value>
+  </data>
+  <data name="CommunityMadeUtility" xml:space="preserve">
+    <value>Community Tool</value>
+  </data>
+  <data name="CreateNewProjectDialog_Header" xml:space="preserve">
+    <value>Projekt Erstellung</value>
+  </data>
+  <data name="CreateNewProjectDialog_Title" xml:space="preserve">
+    <value>Projekt Erstellungs Dialog</value>
+  </data>
+  <data name="CreateProject" xml:space="preserve">
+    <value>Projekt Erstellen</value>
+  </data>
+  <data name="GeneralProperties" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NotAffiliatedWithBohemiaInteractive" xml:space="preserve">
+    <value>Nicht mit Bohemia Interactive Verbunden</value>
+  </data>
+  <data name="PluginUpdateAvailable_Body" xml:space="preserve">
+    <value>Ein oder mehrere Plugins haben Updates zum Download verfügbar. Möchten Sie jetzt aktualisieren?</value>
+  </data>
+  <data name="PluginUpdateAvailable_Title" xml:space="preserve">
+    <value>Plugin Aktualisierungen verfügbar</value>
+  </data>
+  <data name="PluginUpdater_Title" xml:space="preserve">
+    <value>Plugin Updater</value>
+  </data>
+  <data name="Property_General_ErrorReporting" xml:space="preserve">
+    <value>Fehler Meldung</value>
+  </data>
+  <data name="Property_General_ErrorReporting_AutoReportException" xml:space="preserve">
+    <value>Automatisches melden von Fehlern</value>
+  </data>
+  <data name="Property_General_Updating" xml:space="preserve">
+    <value>Aktuallisierung</value>
+  </data>
+  <data name="Property_General_Updating_EnableAutoPluginsUpdateAtStart" xml:space="preserve">
+    <value>Aktivierung von automatischen Plugin-Aktualisierungen</value>
+  </data>
+  <data name="Property_General_Updating_EnableAutoToolUpdateAtStart" xml:space="preserve">
+    <value>Aktivierung von automatischen Tool-Aktualisierungen</value>
+  </data>
+  <data name="Prop_ArmAPath" xml:space="preserve">
+    <value>ArmA Pfad</value>
+  </data>
+  <data name="Prop_ProjectType" xml:space="preserve">
+    <value>Projekt Typ</value>
+  </data>
+  <data name="Splash_ApplyingPossiblyAvailablePluginUpdates" xml:space="preserve">
+    <value>Übernehme geladene Plugin Aktuallisierungen</value>
+  </data>
+  <data name="Splash_CheckingForPluginXUpdate" xml:space="preserve">
+    <value>Prüfe Plugin &lt;{0}&gt; auf Aktualisierungen</value>
+  </data>
+  <data name="Splash_CheckingForToolUpdates" xml:space="preserve">
+    <value>Prüfe Tool auf Aktualisierungen</value>
+  </data>
+  <data name="Splash_LoadingPlugins" xml:space="preserve">
+    <value>Lade Plugins</value>
+  </data>
+  <data name="Splash_PreparingSolution" xml:space="preserve">
+    <value>Bereite Solution vor</value>
+  </data>
+  <data name="Splash_SearchingSolutionFile" xml:space="preserve">
+    <value>Suche Solution datei</value>
+  </data>
+  <data name="Splash_SettingWorkspace" xml:space="preserve">
+    <value>Setze Arbeitsplatz</value>
+  </data>
+  <data name="Splash_UpdateAvailable" xml:space="preserve">
+    <value>Software Aktualisierung Verfügbar</value>
+  </data>
+  <data name="WorkspaceSelectorDialog_SelectPrev" xml:space="preserve">
+    <value>Letzte</value>
+  </data>
+  <data name="AddExistingProject" xml:space="preserve">
+    <value>Vorhandenes Projekt Hinzufügen</value>
+  </data>
+  <data name="DefaultPluginDescription" xml:space="preserve">
+    <value>Stellt grundlegende Funktionalität zur Verfügung</value>
+  </data>
+  <data name="Splash_LoadingBreakpointInformations" xml:space="preserve">
+    <value>Lade Haltepunkte</value>
+  </data>
+  <data name="Splash_DoingInitialLint" xml:space="preserve">
+    <value>Anfängliches Linting {0}/{1} '{2}'</value>
+  </data>
+  <data name="Hotkey_SaveCurrentDocument" xml:space="preserve">
+    <value>Aktuelles Dokument Speichern</value>
+  </data>
+  <data name="AboutDialog_ContributorsNote" xml:space="preserve">
+    <value>Erstellt mit Stolz von:</value>
+  </data>
+  <data name="AboutDialog_Header" xml:space="preserve">
+    <value>ArmA.Studio</value>
+  </data>
+  <data name="AboutDialog_LoadedPlugins" xml:space="preserve">
+    <value>Plugins in Nutzung</value>
+  </data>
+  <data name="AboutDialog_Title" xml:space="preserve">
+    <value>Über</value>
+  </data>
+  <data name="MenuItem_About" xml:space="preserve">
+    <value>Über</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Entfernen</value>
+  </data>
+  <data name="KeySearch" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
+  <data name="MessageBoxWorkspaceCannotBeRoot_Body" xml:space="preserve">
+    <value>Der Pfad darf sich nicht direkt auf ein Laufwerk zeigen.</value>
+  </data>
+  <data name="MessageBoxWorkspaceCannotBeRoot_Title" xml:space="preserve">
+    <value>Laufwerk ausgewählt</value>
+  </data>
+  <data name="SearchModeCurrentDocument" xml:space="preserve">
+    <value>Aktuelles Dokument</value>
+  </data>
+  <data name="SearchModeCurrentProject" xml:space="preserve">
+    <value>Aktuelles Projekt</value>
+  </data>
+  <data name="SearchModeEntireSolution" xml:space="preserve">
+    <value>Gesamte Solution</value>
+  </data>
+  <data name="SearchModeOpenDocuments" xml:space="preserve">
+    <value>Offene Dokumente</value>
+  </data>
+  <data name="Search_Close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="Search_IsCaseSensitive" xml:space="preserve">
+    <value>Groß- und Kleinschreibung beachten</value>
+  </data>
+  <data name="Search_MatchWholeWord" xml:space="preserve">
+    <value>Ganzes Wort</value>
+  </data>
+  <data name="Search_Next" xml:space="preserve">
+    <value>Nächstes Finden</value>
+  </data>
+  <data name="Search_ReplaceAll" xml:space="preserve">
+    <value>Alle Ersetzen</value>
+  </data>
+  <data name="Search_ReplaceNext" xml:space="preserve">
+    <value>Nächstes Ersetzen</value>
+  </data>
+  <data name="Search_UseRegex" xml:space="preserve">
+    <value>REGEX nutzung</value>
+  </data>
+  <data name="Search_CueFindText" xml:space="preserve">
+    <value>Finde</value>
+  </data>
+  <data name="Search_CueReplaceText" xml:space="preserve">
+    <value>Ersetze mit</value>
+  </data>
+  <data name="Properties_General_Language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="MessageDialog_PropertyChange" xml:space="preserve">
+    <value>Damit die Änderungen aktiv werden, muss die Anwendung neugestartet werden.
+Jetzt neu starten?</value>
   </data>
 </root>

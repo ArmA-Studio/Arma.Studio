@@ -22,6 +22,10 @@ namespace ArmA.Studio.Dialogs
 
         public ICommand CmdBrowse => new RelayCommand(Cmd_Browse);
         public ICommand CmdOKButtonPressed => new RelayCommand(Cmd_Ok);
+        public ICommand CmdDisplayHelp => new RelayCommand((para) =>
+        {
+            MessageBox.Show(Properties.Localization.WorkspaceSelectorDialog_Help_Body, Properties.Localization.WorkspaceSelectorDialog_Help_Header, MessageBoxButton.OK, MessageBoxImage.Information);
+        });
 
         public bool? DialogResult { get { return this._DialogResult; } set { this._DialogResult = value; this.RaisePropertyChanged(); } }
         private bool? _DialogResult;
@@ -59,7 +63,6 @@ namespace ArmA.Studio.Dialogs
 
             this.DialogResult = true;
         }
-
         public void Cmd_Browse(object param)
         {
             var cofd = new CommonOpenFileDialog()
