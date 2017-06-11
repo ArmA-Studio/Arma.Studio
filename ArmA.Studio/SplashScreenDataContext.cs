@@ -337,7 +337,7 @@ namespace ArmA.Studio
         }
         private static bool Splash_CheckUpdate(Action<bool> SetIndeterminate, Action<string> SetDisplayText, Action<double> SetProgress)
         {
-            //ToDo: Fix no network causes crash
+            //ToDo: Fix cert issue causes appclose
             var doShutdown = false;
             SetIndeterminate(true);
             SetDisplayText(Properties.Localization.Splash_CheckingForToolUpdates);
