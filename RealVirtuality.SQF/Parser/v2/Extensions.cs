@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Antlr4.Runtime;
+using Antlr4.Runtime.Misc;
 
 namespace RealVirtuality.SQF.Parser.v2
 {
@@ -50,7 +51,8 @@ namespace RealVirtuality.SQF.Parser.v2
         public override bool CanWrite => this.BaseStream.CanWrite;
         public override long Length => this.BaseStream.Length;
         public override long Position { get { return this.BaseStream.Position; } set { this.BaseStream.Position = value; } }
-        
+
+
         public PreProcessingStreamHelper(System.IO.Stream input)
         {
             this.BaseStream = input;
@@ -194,13 +196,12 @@ namespace RealVirtuality.SQF.Parser.v2
     {
         public bool InPreprocessingMode => this.StreamHelper.CurrentDirective != null;
         public List<PPDirective> Defines;
-        private PreProcessingStreamHelper StreamHelper => this.TokenSource.InputStream as PreProcessingStreamHelper;
+        private readonly PreProcessingStreamHelper StreamHelper;
         private Lexer CurLexer => this.TokenSource as Lexer;
-        public PreProcessingTokenStream(Lexer tokenSource) : base(tokenSource)
+        public PreProcessingTokenStream(Lexer tokenSource, PreProcessingStreamHelper streamhelper) : base(tokenSource)
         {
             this.Defines = new List<PPDirective>();
-            if (!(tokenSource.InputStream is PreProcessingStreamHelper))
-                throw new ArgumentException("provided token source has is not using PreProcessingStreamHelper as input stream.", nameof(TokenSource));
+            this.StreamHelper = streamhelper;
         }
         //only this override is required as ANTLR4 is first checking the type to be matching
         public override int La(int i)

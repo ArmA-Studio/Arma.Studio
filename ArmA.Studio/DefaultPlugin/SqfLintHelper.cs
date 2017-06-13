@@ -17,11 +17,12 @@ namespace ArmA.Studio.DefaultPlugin
 
         public IEnumerable<LintInfo> Lint(Stream stream, ProjectFile file)
         {
-            var inputStream = new Antlr4.Runtime.AntlrInputStream(stream);
-            var lexer = new RealVirtuality.SQF.Parser.v1.sqfLexer(inputStream);
-            var tokenStream = new Antlr4.Runtime.CommonTokenStream(lexer);
-            var p = new RealVirtuality.SQF.Parser.v1.sqfParser(tokenStream, ConfigHost.Instance.SqfDefinitions);
-            var listener = new RealVirtuality.SQF.Parser.v1.SqfListener();
+            var helper = new RealVirtuality.SQF.Parser.v2.PreProcessingStreamHelper(stream);
+            var inputStream = new Antlr4.Runtime.AntlrInputStream(helper);
+            var lexer = new RealVirtuality.SQF.Parser.v2.sqf2Lexer(inputStream);
+            var tokenStream = new RealVirtuality.SQF.Parser.v2.PreProcessingTokenStream(lexer, helper);
+            var p = new RealVirtuality.SQF.Parser.v2.sqf2Parser(tokenStream, ConfigHost.Instance.SqfDefinitions, new string[] { "private" });
+            var listener = new RealVirtuality.SQF.Parser.v2.Sqf2Listener();
             p.AddParseListener(listener);
             p.RemoveErrorListeners();
 #if DEBUG
@@ -83,7 +84,7 @@ namespace ArmA.Studio.DefaultPlugin
             }));
             try
             {
-                p.sqf();
+                p.sqf2();
             }
             catch(Exception ex)
             {
