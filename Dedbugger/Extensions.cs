@@ -16,10 +16,7 @@ namespace Dedbugger
          *          "basePath" : "string",
          *          "type": 0
          *      },
-         *      "condition":  {
-         *          "code": "string",
-         *          "type": 0
-         *      },
+         *      "condition": "string",
          *      "filename": "string",
          *      "line": 0
          *  }
@@ -31,7 +28,7 @@ namespace Dedbugger
             action.GetValue_Object()["code"] = new asapJson.JsonNode();
             action.GetValue_Object()["basePath"] = new asapJson.JsonNode();
             action.GetValue_Object()["type"] = new asapJson.JsonNode(2); //https://github.com/dedmen/ArmaDebugEngine/blob/master/BIDebugEngine/BIDebugEngine/breakPoint.h#L82
-            data.GetValue_Object()["condition"] = new asapJson.JsonNode();
+            data.GetValue_Object()["condition"] = string.IsNullOrWhiteSpace(b.SqfCondition) ? new asapJson.JsonNode() : new asapJson.JsonNode(b.SqfCondition);
             data.GetValue_Object()["filename"] = new asapJson.JsonNode(b.FileRef.ArmAPath.Replace('/', '\\').Replace(@"\\", @"\"));
             data.GetValue_Object()["line"] = new asapJson.JsonNode(b.Line);
             return data;

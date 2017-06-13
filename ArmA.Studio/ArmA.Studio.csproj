@@ -158,6 +158,10 @@
     <Compile Include="DefaultPlugin\SqfDocument.cs" />
     <Compile Include="DefaultPlugin\ConfigLintHelper.cs" />
     <Compile Include="DefaultPlugin\SqfLintHelper.cs" />
+    <Compile Include="Dialogs\EditBreakpointDialog.xaml.cs">
+      <DependentUpon>EditBreakpointDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\EditBreakpointDialogDataContext.cs" />
     <Compile Include="Dialogs\CreateNewProjectDialog.xaml.cs">
       <DependentUpon>CreateNewProjectDialog.xaml</DependentUpon>
     </Compile>
@@ -269,6 +273,10 @@
     <EmbeddedResource Include="DefaultPlugin\ImageViewerDocumentDataTemplate.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Page Include="Dialogs\EditBreakpointDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dialogs\ConfigEntrySelectorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -611,4 +611,13 @@ For mission development, it should be placed in the folder above your mission fi
   <data name="Unavailable" xml:space="preserve">
     <value>Unavailable</value>
   </data>
+  <data name="EditBreakpointDialog_Header" xml:space="preserve">
+    <value>Please modify the breakpoint</value>
+  </data>
+  <data name="EditBreakpointDialog_Title" xml:space="preserve">
+    <value>Breakpoint Editing</value>
+  </data>
+  <data name="IsBreakpointActive" xml:space="preserve">
+    <value>Is Active</value>
+  </data>
 </root>

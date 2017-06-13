@@ -443,6 +443,24 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please modify the breakpoint.
+        /// </summary>
+        public static string EditBreakpointDialog_Header {
+            get {
+                return ResourceManager.GetString("EditBreakpointDialog_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Breakpoint Editing.
+        /// </summary>
+        public static string EditBreakpointDialog_Title {
+            get {
+                return ResourceManager.GetString("EditBreakpointDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -538,6 +556,15 @@ namespace ArmA.Studio.Properties {
         public static string InstallUpdate {
             get {
                 return ResourceManager.GetString("InstallUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Active.
+        /// </summary>
+        public static string IsBreakpointActive {
+            get {
+                return ResourceManager.GetString("IsBreakpointActive", resourceCulture);
             }
         }
         
