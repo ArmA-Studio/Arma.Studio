@@ -33,7 +33,7 @@ namespace ArmA.Studio
 
         public event EventHandler<BreakPointsChangedEventArgs> OnBreakPointsChanged;
 
-        private Dictionary<ProjectFile, List<BreakpointInfo>> BreakPointDictionary;
+        private readonly Dictionary<ProjectFile, List<BreakpointInfo>> BreakPointDictionary;
 
         public BreakpointManager()
         {
@@ -86,7 +86,7 @@ namespace ArmA.Studio
                 return bpiList[index];
             }
         }
-        public void RemoveBreakpoint(ProjectFile pff, BreakpointInfo bpi) => this.RemoveBreakpoint(pff, bpi.Line);
+        public void RemoveBreakpoint(BreakpointInfo bpi) => this.RemoveBreakpoint(bpi.FileRef, bpi.Line);
         public void RemoveBreakpoint(ProjectFile pff, int line)
         {
             var bpiList = this.BreakPointDictionary[pff];

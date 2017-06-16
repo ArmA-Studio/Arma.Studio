@@ -19,7 +19,7 @@ namespace ArmA.Studio.UI
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-        private ProjectFile FileFolderRef;
+        private readonly ProjectFile FileFolderRef;
         public BreakPointMargin(ProjectFile pff)
         {
             this.FileFolderRef = pff;
@@ -78,20 +78,21 @@ namespace ArmA.Studio.UI
                 var lineNumber = this.GetLineNumber(line);
 
                 var bp = Workspace.Instance.BreakpointManager.GetBreakpoint(this.FileFolderRef, lineNumber);
-                if (!bp.IsDefault())
+                if (bp.IsDefault())
                 {
-                    var lineTop = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextTop) - view.VerticalOffset;
-                    var lineBot = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextBottom) - view.VerticalOffset;
-                    //drawingContext.DrawRoundedRectangle(color, pen, new Rect((18 - 12) / 2, lineTop, 12, 12), 5, 5);
-                    const double rectSize = 12;
+                    continue;
+                }
+                var lineTop = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextTop) - view.VerticalOffset;
+                var lineBot = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextBottom) - view.VerticalOffset;
+                //drawingContext.DrawRoundedRectangle(color, pen, new Rect((18 - 12) / 2, lineTop, 12, 12), 5, 5);
+                const double rectSize = 12;
 
-                    drawingContext.DrawRectangle(bp.IsEnabled ? colorActive : colorInactive, pen, new Rect((18 - rectSize) / 2, lineTop + (18 - rectSize) / 4, rectSize, rectSize));
-                    //ToDo: Enable Actions for breakpoints
-                    //drawingContext.DrawEllipse(bp.IsEnabled ? colorActive : colorInactive, pen, new Point(18 / 2, lineTop + 15 / 2), rectSize, rectSize);
-                    if (!string.IsNullOrWhiteSpace(bp.SqfCondition))
-                    {
-                        drawingContext.DrawEllipse(null, pen, new Point(18 / 2, lineTop + 15 / 2), rectSize / 4, rectSize / 4);
-                    }
+                drawingContext.DrawRectangle(bp.IsEnabled ? colorActive : colorInactive, pen, new Rect((18 - rectSize) / 2, lineTop + (18 - rectSize) / 4, rectSize, rectSize));
+                //ToDo: Enable Actions for breakpoints
+                //drawingContext.DrawEllipse(bp.IsEnabled ? colorActive : colorInactive, pen, new Point(18 / 2, lineTop + 15 / 2), rectSize, rectSize);
+                if (!string.IsNullOrWhiteSpace(bp.SqfCondition))
+                {
+                    drawingContext.DrawEllipse(null, pen, new Point(18 / 2, lineTop + 15 / 2), rectSize / 4, rectSize / 4);
                 }
             }
 
@@ -120,7 +121,7 @@ namespace ArmA.Studio.UI
             {
                 if (e.LeftButton == MouseButtonState.Pressed)
                 {
-                    Workspace.Instance.BreakpointManager.RemoveBreakpoint(this.FileFolderRef, bp);
+                    Workspace.Instance.BreakpointManager.RemoveBreakpoint(bp);
                 }
                 else if (e.RightButton == MouseButtonState.Pressed)
                 {
@@ -132,6 +133,10 @@ namespace ArmA.Studio.UI
                     var bp2 = dlgdc.GetUpdatedBPI();
                     if (!bp2.Equals(bp))
                     {
+                        if (bp.Line != bp2.Line)
+                        {
+                            Workspace.Instance.BreakpointManager.RemoveBreakpoint(bp);
+                        }
                         Workspace.Instance.BreakpointManager.SetBreakpoint(bp2);
                     }
 
