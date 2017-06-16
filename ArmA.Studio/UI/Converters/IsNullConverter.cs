@@ -8,6 +8,11 @@ using System.Windows.Data;
 
 namespace ArmA.Studio.UI.Converters
 {
+    /// <summary>
+    /// Provides the ability to check if provided value is null.
+    /// If no parameter is provided, <see cref="Convert(object, Type, object, CultureInfo)"/> will return true if value is null and false if it is not.
+    /// If parameter is of type bool and true, <see cref="Convert(object, Type, object, CultureInfo)"/> will return false if value is null and true if it is not.
+    /// </summary>
     public class IsNullConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

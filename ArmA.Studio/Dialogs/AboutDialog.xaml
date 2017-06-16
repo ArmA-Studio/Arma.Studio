@@ -27,6 +27,7 @@
                 <TextBlock Text="- Dedmen, Lead Debugger Developer"/>
                 <TextBlock Text="- Knight, Contributor"/>
                 <TextBlock Text="- vabene1111, Contributor"/>
+                <TextBlock Text="- railey1990, Contributor"/>
             </StackPanel>
         </Border>
         <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"/>

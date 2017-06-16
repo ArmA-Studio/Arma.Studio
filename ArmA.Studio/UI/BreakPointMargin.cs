@@ -85,8 +85,13 @@ namespace ArmA.Studio.UI
                     //drawingContext.DrawRoundedRectangle(color, pen, new Rect((18 - 12) / 2, lineTop, 12, 12), 5, 5);
                     const double rectSize = 12;
 
-                    //ToDo: display IsEnabled => false and condition differently
                     drawingContext.DrawRectangle(bp.IsEnabled ? colorActive : colorInactive, pen, new Rect((18 - rectSize) / 2, lineTop + (18 - rectSize) / 4, rectSize, rectSize));
+                    //ToDo: Enable Actions for breakpoints
+                    //drawingContext.DrawEllipse(bp.IsEnabled ? colorActive : colorInactive, pen, new Point(18 / 2, lineTop + 15 / 2), rectSize, rectSize);
+                    if (!string.IsNullOrWhiteSpace(bp.SqfCondition))
+                    {
+                        drawingContext.DrawEllipse(null, pen, new Point(18 / 2, lineTop + 15 / 2), rectSize / 4, rectSize / 4);
+                    }
                 }
             }
 
@@ -104,13 +109,34 @@ namespace ArmA.Studio.UI
                 return;
             var lineNumber = this.GetLineNumber(this.GetLineFromPoint(view, e.GetPosition(this)));
             var bp = Workspace.Instance.BreakpointManager.GetBreakpoint(this.FileFolderRef, lineNumber);
+
             if (bp.IsDefault())
             {
+                if (e.LeftButton != MouseButtonState.Pressed)
+                    return;
                 Workspace.Instance.BreakpointManager.SetBreakpoint(this.FileFolderRef, new BreakpointInfo() { Line = lineNumber, IsEnabled = true, FileRef = this.FileFolderRef, SqfCondition = string.Empty });
             }
             else
             {
-                Workspace.Instance.BreakpointManager.RemoveBreakpoint(this.FileFolderRef, bp);
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    Workspace.Instance.BreakpointManager.RemoveBreakpoint(this.FileFolderRef, bp);
+                }
+                else if (e.RightButton == MouseButtonState.Pressed)
+                {
+                    //ToDo: Create context menu containing basic breakpoint-related operations. Examples: Delete, Disable, Edit
+
+                    var dlgdc = new Dialogs.EditBreakpointDialogDataContext(bp);
+                    var dlg = new Dialogs.EditBreakpointDialog(dlgdc);
+                    dlg.ShowDialog();
+                    var bp2 = dlgdc.GetUpdatedBPI();
+                    if (!bp2.Equals(bp))
+                    {
+                        Workspace.Instance.BreakpointManager.SetBreakpoint(bp2);
+                    }
+
+                }
+
             }
             this.InvalidateVisual();
             this.TextView.InvalidateVisual();

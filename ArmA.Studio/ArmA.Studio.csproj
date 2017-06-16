@@ -150,6 +150,7 @@
     <Compile Include="DataContext\SolutionPaneUtil\ProjectFileModelView.cs" />
     <Compile Include="DataContext\SolutionPaneUtil\ProjectFolderModelView.cs" />
     <Compile Include="DataContext\SolutionPaneUtil\ProjectModelView.cs" />
+    <Compile Include="DataContext\VariablesViewPaneUtil\ItemContainer.cs" />
     <Compile Include="DefaultPlugin\HighlightingHelper.cs" />
     <Compile Include="DefaultPlugin\ImageViewerDocument.cs" />
     <Compile Include="DefaultPlugin\PluginMain.cs" />
@@ -157,6 +158,10 @@
     <Compile Include="DefaultPlugin\SqfDocument.cs" />
     <Compile Include="DefaultPlugin\ConfigLintHelper.cs" />
     <Compile Include="DefaultPlugin\SqfLintHelper.cs" />
+    <Compile Include="Dialogs\EditBreakpointDialog.xaml.cs">
+      <DependentUpon>EditBreakpointDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\EditBreakpointDialogDataContext.cs" />
     <Compile Include="Dialogs\CreateNewProjectDialog.xaml.cs">
       <DependentUpon>CreateNewProjectDialog.xaml</DependentUpon>
     </Compile>
@@ -207,6 +212,7 @@
     <Compile Include="UI\Attached\KeyboardFocusManager.cs" />
     <Compile Include="UI\Attached\CueBannerAttached.cs" />
     <Compile Include="UI\Controls\ListView_ScrollSelectionChanged.cs" />
+    <Compile Include="UI\Converters\VisibilityConverter.cs" />
     <Compile Include="UI\Converters\StringNullToDependencyPropertyUnsetConverter.cs" />
     <Compile Include="UI\Converters\SolutionExplorerItemVisibilityConverter.cs" />
     <Compile Include="UI\Converters\StringRemoveNewLineConverter.cs" />
@@ -267,6 +273,10 @@
     <EmbeddedResource Include="DefaultPlugin\ImageViewerDocumentDataTemplate.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Page Include="Dialogs\EditBreakpointDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dialogs\ConfigEntrySelectorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -412,6 +422,42 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Pictograms\Close\VSO_Close_whiteNoHalo_12x_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_16xLG.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\Create_7x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Create\VSO_Create_16x.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -656,6 +702,98 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Pictograms\QuickReplace\QuickReplace_inverse_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\F12_Refresh_32x96.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\F12_Refresh_36x108.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_24x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_disabled_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_grey_12x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_grey_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_grey_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_grey_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_grey_20x21.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_grey_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_grey_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_grey_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_grey_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_inverse_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_inverse_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_inverse_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_inverse_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\Refresh_inverse_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\StandardRefresh_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\StandardRefresh_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\Refresh\VSO_Refresh_grey_16x.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -2096,6 +2234,15 @@
     <None Include="Resources\Pictograms\Close\VSO_Close_12x_16x.ai" />
     <None Include="Resources\Pictograms\Close\VSO_Close_whiteBlackHalo_12x_16x.ai" />
     <None Include="Resources\Pictograms\Close\VSO_Close_whiteNoHalo_12x_16x.ai" />
+    <None Include="Resources\Pictograms\Create\Create_16x.ai" />
+    <None Include="Resources\Pictograms\Create\Create_16xLG.ai" />
+    <None Include="Resources\Pictograms\Create\Create_16xSM.ai" />
+    <None Include="Resources\Pictograms\Create\Create_256x.ai" />
+    <None Include="Resources\Pictograms\Create\Create_32x.ai" />
+    <None Include="Resources\Pictograms\Create\Create_48x.ai" />
+    <None Include="Resources\Pictograms\Create\Create_64x.ai" />
+    <None Include="Resources\Pictograms\Create\Create_7x.ai" />
+    <None Include="Resources\Pictograms\Create\VSO_Create_16x.ai" />
     <None Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16x.ai" />
     <None Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16xMD.ai" />
     <None Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_lightGray_16x.ai" />
@@ -2162,6 +2309,30 @@
     <None Include="Resources\Pictograms\Output\Output_64x.ai" />
     <None Include="Resources\Pictograms\QuickReplace\QuickReplace_16x.ai" />
     <None Include="Resources\Pictograms\QuickReplace\QuickReplace_inverse_16x.ai" />
+    <None Include="Resources\Pictograms\Refresh\F12_Refresh_32x96.ai" />
+    <None Include="Resources\Pictograms\Refresh\F12_Refresh_36x108.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_16x.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_24x.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_32x.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_disabled_16x.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_grey_12x.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_grey_16x.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_grey_16xMD.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_grey_16xSM.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_grey_20x21.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_grey_256x.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_grey_32x.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_grey_48x.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_grey_64x.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_inverse_16x.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_inverse_256x.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_inverse_32x.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_inverse_48x.ai" />
+    <None Include="Resources\Pictograms\Refresh\Refresh_inverse_64x.ai" />
+    <None Include="Resources\Pictograms\Refresh\StandardRefresh_16xMD.ai" />
+    <None Include="Resources\Pictograms\Refresh\StandardRefresh_16xSM.ai" />
+    <None Include="Resources\Pictograms\Refresh\VSO_Refresh_16x.ai" />
+    <None Include="Resources\Pictograms\Refresh\VSO_Refresh_grey_16x.ai" />
     <None Include="Resources\Pictograms\RegularExpression\RegularExpression_16x.ai" />
     <None Include="Resources\Pictograms\ReplaceAll\ReplaceAll_16x.ai" />
     <None Include="Resources\Pictograms\ReplaceAll\ReplaceAll_inverse_16x.ai" />
@@ -2627,6 +2798,20 @@
     <Resource Include="Resources\Pictograms\Close\VSO_Close_whiteBlackHalo_12x_16x.png" />
     <Resource Include="Resources\Pictograms\Close\VSO_Close_whiteNoHalo_12x_16x.png" />
     <Content Include="Resources\Pictograms\Close\VSO_Close_whiteNoHalo_12x_16x.svg" />
+    <Resource Include="Resources\Pictograms\Create\Create_16x.ico" />
+    <Resource Include="Resources\Pictograms\Create\Create_16x.png" />
+    <Content Include="Resources\Pictograms\Create\Create_16x.svg" />
+    <Resource Include="Resources\Pictograms\Create\Create_16xMD.png" />
+    <Resource Include="Resources\Pictograms\Create\Create_16xSM.png" />
+    <Resource Include="Resources\Pictograms\Create\Create_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Create\Create_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\Create\Create_256x.png" />
+    <Resource Include="Resources\Pictograms\Create\Create_32x.png" />
+    <Resource Include="Resources\Pictograms\Create\Create_48x.png" />
+    <Resource Include="Resources\Pictograms\Create\Create_64x.png" />
+    <Resource Include="Resources\Pictograms\Create\Create_7x.png" />
+    <Resource Include="Resources\Pictograms\Create\VSO_Create_16x.png" />
+    <Content Include="Resources\Pictograms\Create\VSO_Create_16x.svg" />
     <Content Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16x.svg" />
     <Resource Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_16xMD.png" />
     <Resource Include="Resources\Pictograms\ExpandChevronDown\ExpandChevronDown_lightGray_16x.png" />
@@ -2683,6 +2868,90 @@
     <Resource Include="Resources\Pictograms\QuickReplace\QuickReplace_16x.png" />
     <Resource Include="Resources\Pictograms\QuickReplace\QuickReplace_16x_24.bmp" />
     <Resource Include="Resources\Pictograms\QuickReplace\QuickReplace_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\Refresh\F12_Refresh_32x96.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\AddNewChild.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\AddNewLevel.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\AreaAndIterations.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\Column.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\ComponentView.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\Configure.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\ConfigureList.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\ConfigureServerConnection.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\ConfigureServerConnection_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\DefaultView.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\Help.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\Help_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\Import.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\Indent.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\Indent_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\IterationView.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\LinksandAttachments.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\NewList.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\NewList_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\NewWorkItem.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\NewWorkItemReport.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\NewWorkItemReport_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\OpenInWebAccess.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\OpenInWebAccess_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\Outdent.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\Outdent_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\PPTAddToLayout.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\PPTAddToMyShapes.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\PPTAddToMyShapes_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\PPTCreateLayout.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\PPTExportMyShapes.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\PPTExportMyShapes_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\PPTImportShapes32.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\PPTImportShapes32_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\PPTLinkToWorkItems.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\PPTLinkToWorkItems_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\PPTStoryboardShapes.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\PPTStoryboardShapes_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\PPTUpdateMyShape.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\PPTUpdateMyShape_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\ProcessGuidance.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\ProjectPortal.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\Publish.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\Publish_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\Refresh.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\Refresh_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\TreeGroup_32x.png" />
+    <Resource Include="Resources\Pictograms\OfficeRibbon\WorkItemsGroup_32x.png" />
+    <Content Include="Resources\Pictograms\Refresh\F12_Refresh_32x96.svg" />
+    <Resource Include="Resources\Pictograms\Refresh\F12_Refresh_36x108.png" />
+    <Content Include="Resources\Pictograms\Refresh\F12_Refresh_36x108.svg" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_16x.png" />
+    <Content Include="Resources\Pictograms\Refresh\Refresh_16x.svg" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_24x.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_32x.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_disabled_16x.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_grey.ico" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_grey_12x.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_grey_16x.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_grey_16xMD.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_grey_16xSM.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_grey_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_grey_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_grey_20x21.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_grey_20x21_24.bmp" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_grey_256x.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_grey_32x.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_grey_48x.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_grey_64x.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_inverse.ico" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_inverse_16x.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_inverse_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_inverse_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_inverse_256x.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_inverse_32x.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_inverse_48x.png" />
+    <Resource Include="Resources\Pictograms\Refresh\Refresh_inverse_64x.png" />
+    <Resource Include="Resources\Pictograms\Refresh\StandardRefresh_16xMD.png" />
+    <Resource Include="Resources\Pictograms\Refresh\StandardRefresh_16xSM.png" />
+    <Resource Include="Resources\Pictograms\Refresh\VSO_Refresh_16x.png" />
+    <Content Include="Resources\Pictograms\Refresh\VSO_Refresh_16x.svg" />
+    <Resource Include="Resources\Pictograms\Refresh\VSO_Refresh_grey_16x.png" />
+    <Content Include="Resources\Pictograms\Refresh\VSO_Refresh_grey_16x.svg" />
     <Content Include="Resources\Pictograms\WholeWordMatch\WholeWordMatch_16x.svg" />
     <Content Include="Resources\Pictograms\XMLFile\XMLFile_16x.svg" />
     <Resource Include="Resources\Pictograms\XMLFile\XMLFile_16x_24.bmp" />

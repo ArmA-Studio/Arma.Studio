@@ -25,6 +25,7 @@ namespace ArmA.Studio
         public const string CONST_UPDATESUFFIX = ".update";
         public const string CONST_SOLUTIONEXTENSION = ".asln";
         public const string CONST_BREAKPOINTINFOEXTENSION = ".asbp";
+        public const string CONST_WATCHEXTENSION = ".aswtch";
         public const string CONST_CONFIGURATION = "Configuration";
 
 
@@ -119,6 +120,10 @@ namespace ArmA.Studio
         public static void ShowOperationFailedMessageBox(Exception ex)
         {
             Current.Dispatcher.Invoke(() => MessageBox.Show(string.Format(Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
+        }
+        public static void ShowOperationFailedMessageBox(Exception ex, string body)
+        {
+            App.Current.Dispatcher.Invoke(() => MessageBox.Show(string.Concat(body, '\n', string.Format(Studio.Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace)), Studio.Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)

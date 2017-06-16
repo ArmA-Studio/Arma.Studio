@@ -30,8 +30,11 @@ namespace ArmA.Studio
 
         public static void SetDisplayLanguage()
         {
-            var ci = CultureInfo.GetCultureInfo( Language );
-            Localization.Culture = ci;
+            var usedCulture = CultureInfo.GetCultureInfo( Language );
+            System.Threading.Thread.CurrentThread.CurrentCulture = usedCulture;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = usedCulture;
+            CultureInfo.DefaultThreadCurrentCulture = usedCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = usedCulture;
         }
 
         private static void LanguageChanged()
