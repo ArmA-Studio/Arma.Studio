@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ArmA.Studio.Data;
 using ArmA.Studio.Data.UI.Commands;
@@ -17,13 +18,16 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
 
         public ProjectFile Ref { get; private set; }
 
-        public bool IsInRenameMode { get { return this._IsInRenameMode; } set { this._IsInRenameMode = value; RaisePropertyChanged(); } }
+        public bool IsInRenameMode { get { return this._IsInRenameMode; } set { this._IsInRenameMode = value;
+            this.RaisePropertyChanged(); } }
         private bool _IsInRenameMode;
 
-        public bool IsSelected { get { return this._IsSelected; } set { this._IsSelected = value; RaisePropertyChanged(); } }
+        public bool IsSelected { get { return this._IsSelected; } set { this._IsSelected = value;
+            this.RaisePropertyChanged(); } }
         private bool _IsSelected;
 
-        public bool IsExpanded { get { return this._IsExpanded; } set { this._IsExpanded = value; RaisePropertyChanged(); } }
+        public bool IsExpanded { get { return this._IsExpanded; } set { this._IsExpanded = value;
+            this.RaisePropertyChanged(); } }
         private bool _IsExpanded;
 
         public ICommand CmdMouseDoubleClick => new RelayCommand((p) => { Workspace.Instance.CreateOrFocusDocument((p as ProjectFileModelView).Ref); });
@@ -40,7 +44,7 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
             if(opendoc != null)
             {
                 opendoc.CmdClosing.Execute(null);
-                App.Current.Dispatcher.Invoke(() =>
+                Application.Current.Dispatcher.Invoke(() =>
                 {
                     if (Workspace.Instance.AvalonDockDocuments.FirstOrDefault((doc) => doc.FileReference == this.Ref) == null)
                         this.IsInRenameMode = true;
@@ -74,7 +78,7 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
             {
                 opendoc.CmdClosing.Execute(null);
                 bool flag = false;
-                App.Current.Dispatcher.Invoke(() =>
+                Application.Current.Dispatcher.Invoke(() =>
                 {
                     if (Workspace.Instance.AvalonDockDocuments.FirstOrDefault((doc) => doc.FileReference == this.Ref) == null)
                     {

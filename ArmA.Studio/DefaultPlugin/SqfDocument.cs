@@ -61,7 +61,7 @@ namespace ArmA.Studio.DefaultPlugin
             IEnumerable<string> docIdents = null;
             string curWord = null;
             int caretOffset = 0;
-            App.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 caretOffset = caret.Offset;
                 curWord = document.GetWordAround(caret.Offset - 1);

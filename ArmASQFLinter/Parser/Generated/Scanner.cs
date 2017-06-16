@@ -38,60 +38,61 @@ namespace RealVirtuality.SQF.Parser
         bool isUserStream;  // was the stream opened by the user?
         
         public Buffer (Stream s, bool isUserStream) {
-            stream = s; this.isUserStream = isUserStream;
+            this.stream = s; this.isUserStream = isUserStream;
             
-            if (stream.CanSeek) {
-                fileLen = (int) stream.Length;
-                bufLen = Math.Min(fileLen, MAX_BUFFER_LENGTH);
-                bufStart = Int32.MaxValue; // nothing in the buffer so far
+            if (this.stream.CanSeek) {
+                this.fileLen = (int) this.stream.Length;
+                this.bufLen = Math.Min(this.fileLen, MAX_BUFFER_LENGTH);
+                this.bufStart = Int32.MaxValue; // nothing in the buffer so far
             } else {
-                fileLen = bufLen = bufStart = 0;
+                this.fileLen = this.bufLen = this.bufStart = 0;
             }
 
-            buf = new byte[(bufLen>0) ? bufLen : MIN_BUFFER_LENGTH];
-            if (fileLen > 0) Pos = 0; // setup buffer to position 0 (start)
-            else bufPos = 0; // index 0 is already after the file, thus Pos = 0 is invalid
-            if (bufLen == fileLen && stream.CanSeek) Close();
+            this.buf = new byte[(this.bufLen>0) ? this.bufLen : MIN_BUFFER_LENGTH];
+            if (this.fileLen > 0) this.Pos = 0; // setup buffer to position 0 (start)
+            else this.bufPos = 0; // index 0 is already after the file, thus Pos = 0 is invalid
+            if (this.bufLen == this.fileLen && this.stream.CanSeek) this.Close();
         }
         
         protected Buffer(Buffer b) { // called in UTF8Buffer constructor
-            buf = b.buf;
-            bufStart = b.bufStart;
-            bufLen = b.bufLen;
-            fileLen = b.fileLen;
-            bufPos = b.bufPos;
-            stream = b.stream;
+            this.buf = b.buf;
+            this.bufStart = b.bufStart;
+            this.bufLen = b.bufLen;
+            this.fileLen = b.fileLen;
+            this.bufPos = b.bufPos;
+            this.stream = b.stream;
             // keep destructor from closing the stream
             b.stream = null;
-            isUserStream = b.isUserStream;
+            this.isUserStream = b.isUserStream;
         }
 
-        ~Buffer() { Close(); }
+        ~Buffer() {
+            this.Close(); }
         
         protected void Close() {
-            if (!isUserStream && stream != null) {
-                stream.Close();
-                stream = null;
+            if (!this.isUserStream && this.stream != null) {
+                this.stream.Close();
+                this.stream = null;
             }
         }
         
         public virtual int Read () {
-            if (bufPos < bufLen) {
-                return buf[bufPos++];
-            } else if (Pos < fileLen) {
-                Pos = Pos; // shift buffer start to Pos
-                return buf[bufPos++];
-            } else if (stream != null && !stream.CanSeek && ReadNextStreamChunk() > 0) {
-                return buf[bufPos++];
+            if (this.bufPos < this.bufLen) {
+                return this.buf[this.bufPos++];
+            } else if (this.Pos < this.fileLen) {
+                this.Pos = this.Pos; // shift buffer start to Pos
+                return this.buf[this.bufPos++];
+            } else if (this.stream != null && !this.stream.CanSeek && this.ReadNextStreamChunk() > 0) {
+                return this.buf[this.bufPos++];
             } else {
                 return EOF;
             }
         }
 
         public int Peek () {
-            int curPos = Pos;
-            int ch = Read();
-            Pos = curPos;
+            int curPos = this.Pos;
+            int ch = this.Read();
+            this.Pos = curPos;
             return ch;
         }
         
@@ -100,37 +101,38 @@ namespace RealVirtuality.SQF.Parser
         public string GetString (int beg, int end) {
             int len = 0;
             char[] buf = new char[end - beg];
-            int oldPos = Pos;
-            Pos = beg;
-            while (Pos < end) buf[len++] = (char) Read();
-            Pos = oldPos;
+            int oldPos = this.Pos;
+            this.Pos = beg;
+            while (this.Pos < end) buf[len++] = (char) this.Read();
+            this.Pos = oldPos;
             return new String(buf, 0, len);
         }
 
         public int Pos {
-            get { return bufPos + bufStart; }
+            get { return this.bufPos + this.bufStart; }
             set {
-                if (value >= fileLen && stream != null && !stream.CanSeek) {
+                if (value >= this.fileLen && this.stream != null && !this.stream.CanSeek) {
                     // Wanted position is after buffer and the stream
                     // is not seek-able e.g. network or console,
                     // thus we have to read the stream manually till
                     // the wanted position is in sight.
-                    while (value >= fileLen && ReadNextStreamChunk() > 0);
+                    while (value >= this.fileLen && this.ReadNextStreamChunk() > 0);
                 }
 
-                if (value < 0 || value > fileLen) {
+                if (value < 0 || value > this.fileLen) {
                     throw new FatalError("buffer out of bounds access, position: " + value);
                 }
 
-                if (value >= bufStart && value < bufStart + bufLen) { // already in buffer
-                    bufPos = value - bufStart;
-                } else if (stream != null) { // must be swapped in
-                    stream.Seek(value, SeekOrigin.Begin);
-                    bufLen = stream.Read(buf, 0, buf.Length);
-                    bufStart = value; bufPos = 0;
+                if (value >= this.bufStart && value < this.bufStart + this.bufLen) { // already in buffer
+                    this.bufPos = value - this.bufStart;
+                } else if (this.stream != null) { // must be swapped in
+                    this.stream.Seek(value, SeekOrigin.Begin);
+                    this.bufLen = this.stream.Read(this.buf, 0, this.buf.Length);
+                    this.bufStart = value;
+                    this.bufPos = 0;
                 } else {
                     // set the position to the end of the file, Pos will return fileLen.
-                    bufPos = fileLen - bufStart;
+                    this.bufPos = this.fileLen - this.bufStart;
                 }
             }
         }
@@ -139,20 +141,20 @@ namespace RealVirtuality.SQF.Parser
         // if needed and updates the fields fileLen and bufLen.
         // Returns the number of bytes read.
         private int ReadNextStreamChunk() {
-            int free = buf.Length - bufLen;
+            int free = this.buf.Length - this.bufLen;
             if (free == 0) {
                 // in the case of a growing input stream
                 // we can neither seek in the stream, nor can we
                 // foresee the maximum length, thus we must adapt
                 // the buffer size on demand.
-                byte[] newBuf = new byte[bufLen * 2];
-                Array.Copy(buf, newBuf, bufLen);
-                buf = newBuf;
-                free = bufLen;
+                byte[] newBuf = new byte[this.bufLen * 2];
+                Array.Copy(this.buf, newBuf, this.bufLen);
+                this.buf = newBuf;
+                free = this.bufLen;
             }
-            int read = stream.Read(buf, bufLen, free);
+            int read = this.stream.Read(this.buf, this.bufLen, free);
             if (read > 0) {
-                fileLen = bufLen = (bufLen + read);
+                this.fileLen = this.bufLen = (this.bufLen + read);
                 return read;
             }
             // end of stream reached
@@ -275,14 +277,14 @@ namespace RealVirtuality.SQF.Parser
         public bool FollowedByWO(string s)
         {
             Token next = this.Peek();
-            return t.val == s || next.val == s;
+            return this.t.val == s || next.val == s;
         }
         public bool FollowedByWO(string[] sArr)
         {
             foreach(var s in sArr)
             {
                 Token next = this.Peek();
-                if(t.val == s || next.val == s)
+                if(this.t.val == s || next.val == s)
                     return true;
             }
             return false;
@@ -290,304 +292,401 @@ namespace RealVirtuality.SQF.Parser
         public Scanner (string fileName) {
             try {
                 Stream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-                buffer = new Buffer(stream, false);
-                Init();
+                this.buffer = new Buffer(stream, false);
+                this.Init();
             } catch (IOException) {
                 throw new FatalError("Cannot open file " + fileName);
             }
         }
         
         public Scanner (Stream s) {
-            buffer = new Buffer(s, true);
-            Init();
+            this.buffer = new Buffer(s, true);
+            this.Init();
         }
         
         void Init() {
-            pos = -1; line = 1; col = 0; charPos = -1;
-            oldEols = 0;
-            NextCh();
-            if (ch == 0xEF) { // check optional byte order mark for UTF-8
-                NextCh(); int ch1 = ch;
-                NextCh(); int ch2 = ch;
+            this.pos = -1;
+            this.line = 1;
+            this.col = 0;
+            this.charPos = -1;
+            this.oldEols = 0;
+            this.NextCh();
+            if (this.ch == 0xEF) { // check optional byte order mark for UTF-8
+                this.NextCh(); int ch1 = this.ch;
+                this.NextCh(); int ch2 = this.ch;
                 if (ch1 != 0xBB || ch2 != 0xBF) {
                     throw new FatalError(String.Format("illegal byte order mark: EF {0,2:X} {1,2:X}", ch1, ch2));
                 }
-                buffer = new UTF8Buffer(buffer); col = 0; charPos = -1;
-                NextCh();
+                this.buffer = new UTF8Buffer(this.buffer);
+                this.col = 0;
+                this.charPos = -1;
+                this.NextCh();
             }
-            pt = tokens = new Token();  // first token is a dummy
+            this.pt = this.tokens = new Token();  // first token is a dummy
         }
         
         void NextCh() {
-            if (oldEols > 0) { ch = EOL; oldEols--; } 
+            if (this.oldEols > 0) {
+                this.ch = EOL;
+                this.oldEols--; } 
             else {
-                pos = buffer.Pos;
+                this.pos = this.buffer.Pos;
                 // buffer reads unicode chars, if UTF8 has been detected
-                ch = buffer.Read(); col++; charPos++;
+                this.ch = this.buffer.Read();
+                this.col++;
+                this.charPos++;
                 // replace isolated '\r' by '\n' in order to make
                 // eol handling uniform across Windows, Unix and Mac
-                if (ch == '\r' && buffer.Peek() != '\n') ch = EOL;
-                if (ch == EOL) { line++; col = 0; }
+                if (this.ch == '\r' && this.buffer.Peek() != '\n') this.ch = EOL;
+                if (this.ch == EOL) {
+                    this.line++;
+                    this.col = 0; }
             }
     
         }
 
         void AddCh() {
-            if (tlen >= tval.Length) {
-                char[] newBuf = new char[2 * tval.Length];
-                Array.Copy(tval, 0, newBuf, 0, tval.Length);
-                tval = newBuf;
+            if (this.tlen >= this.tval.Length) {
+                char[] newBuf = new char[2 * this.tval.Length];
+                Array.Copy(this.tval, 0, newBuf, 0, this.tval.Length);
+                this.tval = newBuf;
             }
-            if (ch != Buffer.EOF) {
-    			tval[tlen++] = (char) ch;
-                NextCh();
+            if (this.ch != Buffer.EOF) {
+                this.tval[this.tlen++] = (char) this.ch;
+                this.NextCh();
             }
         }
 
 
     
 	bool Comment0() {
-		int level = 1, pos0 = pos, line0 = line, col0 = col, charPos0 = charPos;
-		NextCh();
+		int level = 1, pos0 = this.pos, line0 = this.line, col0 = this.col, charPos0 = this.charPos;
+	    this.NextCh();
 			for(;;) {
-				if (ch == 10) {
+				if (this.ch == 10) {
 					level--;
-					if (level == 0) { oldEols = line - line0; NextCh(); return true; }
-					NextCh();
-				} else if (ch == Buffer.EOF) return false;
-				else NextCh();
+					if (level == 0) {
+					    this.oldEols = this.line - line0;
+					    this.NextCh(); return true; }
+				    this.NextCh();
+				} else if (this.ch == Buffer.EOF) return false;
+				else this.NextCh();
 			}
 	}
 
 	bool Comment1() {
-		int level = 1, pos0 = pos, line0 = line, col0 = col, charPos0 = charPos;
-		NextCh();
-		if (ch == '/') {
-			NextCh();
+		int level = 1, pos0 = this.pos, line0 = this.line, col0 = this.col, charPos0 = this.charPos;
+	    this.NextCh();
+		if (this.ch == '/') {
+		    this.NextCh();
 			for(;;) {
-				if (ch == 10) {
+				if (this.ch == 10) {
 					level--;
-					if (level == 0) { oldEols = line - line0; NextCh(); return true; }
-					NextCh();
-				} else if (ch == Buffer.EOF) return false;
-				else NextCh();
+					if (level == 0) {
+					    this.oldEols = this.line - line0;
+					    this.NextCh(); return true; }
+				    this.NextCh();
+				} else if (this.ch == Buffer.EOF) return false;
+				else this.NextCh();
 			}
 		} else {
-			buffer.Pos = pos0; NextCh(); line = line0; col = col0; charPos = charPos0;
+		    this.buffer.Pos = pos0;
+		    this.NextCh();
+		    this.line = line0;
+		    this.col = col0;
+		    this.charPos = charPos0;
 		}
 		return false;
 	}
 
 	bool Comment2() {
-		int level = 1, pos0 = pos, line0 = line, col0 = col, charPos0 = charPos;
-		NextCh();
-		if (ch == '*') {
-			NextCh();
+		int level = 1, pos0 = this.pos, line0 = this.line, col0 = this.col, charPos0 = this.charPos;
+	    this.NextCh();
+		if (this.ch == '*') {
+		    this.NextCh();
 			for(;;) {
-				if (ch == '*') {
-					NextCh();
-					if (ch == '/') {
+				if (this.ch == '*') {
+				    this.NextCh();
+					if (this.ch == '/') {
 						level--;
-						if (level == 0) { oldEols = line - line0; NextCh(); return true; }
-						NextCh();
+						if (level == 0) {
+						    this.oldEols = this.line - line0;
+						    this.NextCh(); return true; }
+					    this.NextCh();
 					}
-				} else if (ch == '/') {
-					NextCh();
-					if (ch == '*') {
-						level++; NextCh();
+				} else if (this.ch == '/') {
+				    this.NextCh();
+					if (this.ch == '*') {
+						level++;
+					    this.NextCh();
 					}
-				} else if (ch == Buffer.EOF) return false;
-				else NextCh();
+				} else if (this.ch == Buffer.EOF) return false;
+				else this.NextCh();
 			}
 		} else {
-			buffer.Pos = pos0; NextCh(); line = line0; col = col0; charPos = charPos0;
+		    this.buffer.Pos = pos0;
+		    this.NextCh();
+		    this.line = line0;
+		    this.col = col0;
+		    this.charPos = charPos0;
 		}
 		return false;
 	}
 
 
         void CheckLiteral() {
-    		switch (t.val) {
-			case "private": t.kind = 9; break;
-			case "or": t.kind = 12; break;
-			case "and": t.kind = 14; break;
-			case "else": t.kind = 22; break;
-			case "max": t.kind = 25; break;
-			case "min": t.kind = 26; break;
-			case "mod": t.kind = 30; break;
-			case "atan2": t.kind = 31; break;
+    		switch (this.t.val) {
+			case "private":
+			    this.t.kind = 9; break;
+			case "or":
+			    this.t.kind = 12; break;
+			case "and":
+			    this.t.kind = 14; break;
+			case "else":
+			    this.t.kind = 22; break;
+			case "max":
+			    this.t.kind = 25; break;
+			case "min":
+			    this.t.kind = 26; break;
+			case "mod":
+			    this.t.kind = 30; break;
+			case "atan2":
+			    this.t.kind = 31; break;
 			default: break;
 		}
         }
 
         Token NextToken() {
-            while (ch == ' ' ||
-    			ch >= 9 && ch <= 10 || ch == 13
-            ) NextCh();
-    		if (ch == '#' && Comment0() ||ch == '/' && Comment1() ||ch == '/' && Comment2()) return NextToken();
+            while (this.ch == ' ' || this.ch >= 9 && this.ch <= 10 || this.ch == 13
+            ) this.NextCh();
+    		if (this.ch == '#' && this.Comment0() || this.ch == '/' && this.Comment1() || this.ch == '/' && this.Comment2()) return this.NextToken();
             int recKind = noSym;
-            int recEnd = pos;
-            t = new Token();
-            t.pos = pos; t.col = col; t.line = line; t.charPos = charPos;
+            int recEnd = this.pos;
+            this.t = new Token();
+            this.t.pos = this.pos;
+            this.t.col = this.col;
+            this.t.line = this.line;
+            this.t.charPos = this.charPos;
             int state;
-            if (start.ContainsKey(ch)) { state = (int) start[ch]; }
+            if (start.ContainsKey(this.ch)) { state = (int) start[this.ch]; }
             else { state = 0; }
-            tlen = 0; AddCh();
+            this.tlen = 0;
+            this.AddCh();
             
             switch (state) {
-                case -1: { t.kind = eofSym; break; } // NextCh already done
+                case -1: {
+                    this.t.kind = eofSym; break; } // NextCh already done
                 case 0: {
                     if (recKind != noSym) {
-                        tlen = recEnd - t.pos;
-                        SetScannerBehindT();
+                        this.tlen = recEnd - this.t.pos;
+                        this.SetScannerBehindT();
                     }
-                    t.kind = recKind; break;
+                    this.t.kind = recKind; break;
                 } // NextCh already done
     			case 1:
-				recEnd = pos; recKind = 1;
-				if (ch >= '0' && ch <= '9') {AddCh(); goto case 1;}
-				else if (ch == '.') {AddCh(); goto case 2;}
-				else {t.kind = 1; break;}
+				recEnd = this.pos; recKind = 1;
+				if (this.ch >= '0' && this.ch <= '9') {
+				    this.AddCh(); goto case 1;}
+				else if (this.ch == '.') {
+				    this.AddCh(); goto case 2;}
+				else {
+				    this.t.kind = 1; break;}
 			case 2:
-				if (ch >= '0' && ch <= '9') {AddCh(); goto case 3;}
+				if (this.ch >= '0' && this.ch <= '9') {
+				    this.AddCh(); goto case 3;}
 				else {goto case 0;}
 			case 3:
-				recEnd = pos; recKind = 1;
-				if (ch >= '0' && ch <= '9') {AddCh(); goto case 3;}
-				else {t.kind = 1; break;}
+				recEnd = this.pos; recKind = 1;
+				if (this.ch >= '0' && this.ch <= '9') {
+				    this.AddCh(); goto case 3;}
+				else {
+				    this.t.kind = 1; break;}
 			case 4:
-				if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') {AddCh(); goto case 5;}
+				if (this.ch >= '0' && this.ch <= '9' || this.ch >= 'A' && this.ch <= 'F' || this.ch >= 'a' && this.ch <= 'f') {
+				    this.AddCh(); goto case 5;}
 				else {goto case 0;}
 			case 5:
-				recEnd = pos; recKind = 2;
-				if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') {AddCh(); goto case 5;}
-				else {t.kind = 2; break;}
+				recEnd = this.pos; recKind = 2;
+				if (this.ch >= '0' && this.ch <= '9' || this.ch >= 'A' && this.ch <= 'F' || this.ch >= 'a' && this.ch <= 'f') {
+				    this.AddCh(); goto case 5;}
+				else {
+				    this.t.kind = 2; break;}
 			case 6:
-				if (ch <= 9 || ch >= 11 && ch <= 12 || ch >= 14 && ch <= '!' || ch >= '#' && ch <= 65535) {AddCh(); goto case 6;}
-				else if (ch == '"') {AddCh(); goto case 10;}
+				if (this.ch <= 9 || this.ch >= 11 && this.ch <= 12 || this.ch >= 14 && this.ch <= '!' || this.ch >= '#' && this.ch <= 65535) {
+				    this.AddCh(); goto case 6;}
+				else if (this.ch == '"') {
+				    this.AddCh(); goto case 10;}
 				else {goto case 0;}
 			case 7:
-				recEnd = pos; recKind = 4;
-				if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'Z' || ch == '_' || ch >= 'a' && ch <= 'z') {AddCh(); goto case 7;}
-				else {t.kind = 4; break;}
+				recEnd = this.pos; recKind = 4;
+				if (this.ch >= '0' && this.ch <= '9' || this.ch >= 'A' && this.ch <= 'Z' || this.ch == '_' || this.ch >= 'a' && this.ch <= 'z') {
+				    this.AddCh(); goto case 7;}
+				else {
+				    this.t.kind = 4; break;}
 			case 8:
-				recEnd = pos; recKind = 5;
-				if (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'Z' || ch == '_' || ch >= 'a' && ch <= 'z') {AddCh(); goto case 8;}
-				else {t.kind = 5; t.val = new String(tval, 0, tlen); CheckLiteral(); return t;}
+				recEnd = this.pos; recKind = 5;
+				if (this.ch >= '0' && this.ch <= '9' || this.ch >= 'A' && this.ch <= 'Z' || this.ch == '_' || this.ch >= 'a' && this.ch <= 'z') {
+				    this.AddCh(); goto case 8;}
+				else {
+				    this.t.kind = 5;
+				    this.t.val = new String(this.tval, 0, this.tlen);
+				    this.CheckLiteral(); return this.t;}
 			case 9:
-				recEnd = pos; recKind = 1;
-				if (ch >= '0' && ch <= '9') {AddCh(); goto case 1;}
-				else if (ch == '.') {AddCh(); goto case 2;}
-				else if (ch == 'X' || ch == 'x') {AddCh(); goto case 4;}
-				else {t.kind = 1; break;}
+				recEnd = this.pos; recKind = 1;
+				if (this.ch >= '0' && this.ch <= '9') {
+				    this.AddCh(); goto case 1;}
+				else if (this.ch == '.') {
+				    this.AddCh(); goto case 2;}
+				else if (this.ch == 'X' || this.ch == 'x') {
+				    this.AddCh(); goto case 4;}
+				else {
+				    this.t.kind = 1; break;}
 			case 10:
-				recEnd = pos; recKind = 3;
-				if (ch == '"') {AddCh(); goto case 6;}
-				else {t.kind = 3; break;}
+				recEnd = this.pos; recKind = 3;
+				if (this.ch == '"') {
+				    this.AddCh(); goto case 6;}
+				else {
+				    this.t.kind = 3; break;}
 			case 11:
-				{t.kind = 6; break;}
+				{
+				    this.t.kind = 6; break;}
 			case 12:
-				{t.kind = 7; break;}
+				{
+				    this.t.kind = 7; break;}
 			case 13:
-				{t.kind = 8; break;}
+				{
+				    this.t.kind = 8; break;}
 			case 14:
-				if (ch == '|') {AddCh(); goto case 15;}
+				if (this.ch == '|') {
+				    this.AddCh(); goto case 15;}
 				else {goto case 0;}
 			case 15:
-				{t.kind = 11; break;}
+				{
+				    this.t.kind = 11; break;}
 			case 16:
-				if (ch == '&') {AddCh(); goto case 17;}
+				if (this.ch == '&') {
+				    this.AddCh(); goto case 17;}
 				else {goto case 0;}
 			case 17:
-				{t.kind = 13; break;}
+				{
+				    this.t.kind = 13; break;}
 			case 18:
-				{t.kind = 15; break;}
+				{
+				    this.t.kind = 15; break;}
 			case 19:
-				{t.kind = 16; break;}
+				{
+				    this.t.kind = 16; break;}
 			case 20:
-				{t.kind = 19; break;}
+				{
+				    this.t.kind = 19; break;}
 			case 21:
-				{t.kind = 20; break;}
+				{
+				    this.t.kind = 20; break;}
 			case 22:
-				{t.kind = 21; break;}
+				{
+				    this.t.kind = 21; break;}
 			case 23:
-				{t.kind = 23; break;}
+				{
+				    this.t.kind = 23; break;}
 			case 24:
-				{t.kind = 27; break;}
+				{
+				    this.t.kind = 27; break;}
 			case 25:
-				{t.kind = 28; break;}
+				{
+				    this.t.kind = 28; break;}
 			case 26:
-				{t.kind = 29; break;}
+				{
+				    this.t.kind = 29; break;}
 			case 27:
-				{t.kind = 32; break;}
+				{
+				    this.t.kind = 32; break;}
 			case 28:
-				{t.kind = 33; break;}
+				{
+				    this.t.kind = 33; break;}
 			case 29:
-				{t.kind = 34; break;}
+				{
+				    this.t.kind = 34; break;}
 			case 30:
-				{t.kind = 36; break;}
+				{
+				    this.t.kind = 36; break;}
 			case 31:
-				{t.kind = 37; break;}
+				{
+				    this.t.kind = 37; break;}
 			case 32:
-				{t.kind = 38; break;}
+				{
+				    this.t.kind = 38; break;}
 			case 33:
-				recEnd = pos; recKind = 24;
-				if (ch >= '0' && ch <= '9') {AddCh(); goto case 1;}
-				else {t.kind = 24; break;}
+				recEnd = this.pos; recKind = 24;
+				if (this.ch >= '0' && this.ch <= '9') {
+				    this.AddCh(); goto case 1;}
+				else {
+				    this.t.kind = 24; break;}
 			case 34:
-				recEnd = pos; recKind = 10;
-				if (ch == '=') {AddCh(); goto case 18;}
-				else {t.kind = 10; break;}
+				recEnd = this.pos; recKind = 10;
+				if (this.ch == '=') {
+				    this.AddCh(); goto case 18;}
+				else {
+				    this.t.kind = 10; break;}
 			case 35:
-				recEnd = pos; recKind = 35;
-				if (ch == '=') {AddCh(); goto case 19;}
-				else {t.kind = 35; break;}
+				recEnd = this.pos; recKind = 35;
+				if (this.ch == '=') {
+				    this.AddCh(); goto case 19;}
+				else {
+				    this.t.kind = 35; break;}
 			case 36:
-				recEnd = pos; recKind = 17;
-				if (ch == '=') {AddCh(); goto case 20;}
-				else if (ch == '>') {AddCh(); goto case 22;}
-				else {t.kind = 17; break;}
+				recEnd = this.pos; recKind = 17;
+				if (this.ch == '=') {
+				    this.AddCh(); goto case 20;}
+				else if (this.ch == '>') {
+				    this.AddCh(); goto case 22;}
+				else {
+				    this.t.kind = 17; break;}
 			case 37:
-				recEnd = pos; recKind = 18;
-				if (ch == '=') {AddCh(); goto case 21;}
-				else {t.kind = 18; break;}
+				recEnd = this.pos; recKind = 18;
+				if (this.ch == '=') {
+				    this.AddCh(); goto case 21;}
+				else {
+				    this.t.kind = 18; break;}
 
             }
-            t.val = new String(tval, 0, tlen);
-            return t;
+            this.t.val = new String(this.tval, 0, this.tlen);
+            return this.t;
         }
         
         private void SetScannerBehindT() {
-            buffer.Pos = t.pos;
-            NextCh();
-            line = t.line; col = t.col; charPos = t.charPos;
-            for (int i = 0; i < tlen; i++) NextCh();
+            this.buffer.Pos = this.t.pos;
+            this.NextCh();
+            this.line = this.t.line;
+            this.col = this.t.col;
+            this.charPos = this.t.charPos;
+            for (int i = 0; i < this.tlen; i++) this.NextCh();
         }
         
         // get the next token (possibly a token already seen during peeking)
         public Token Scan () {
-            if (tokens.next == null) {
-                return NextToken();
+            if (this.tokens.next == null) {
+                return this.NextToken();
             } else {
-                pt = tokens = tokens.next;
-                return tokens;
+                this.pt = this.tokens = this.tokens.next;
+                return this.tokens;
             }
         }
 
         // peek for the next token, ignore pragmas
         public Token Peek () {
             do {
-                if (pt.next == null) {
-                    pt.next = NextToken();
+                if (this.pt.next == null) {
+                    this.pt.next = this.NextToken();
                 }
-                pt = pt.next;
-            } while (pt.kind > maxT); // skip pragmas
+                this.pt = this.pt.next;
+            } while (this.pt.kind > maxT); // skip pragmas
         
-            return pt;
+            return this.pt;
         }
 
         // make sure that peeking starts at the current scan position
-        public void ResetPeek () { pt = tokens; }
+        public void ResetPeek () {
+            this.pt = this.tokens; }
 
     } // end Scanner
 }

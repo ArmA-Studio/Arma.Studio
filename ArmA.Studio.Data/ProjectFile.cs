@@ -25,17 +25,18 @@ namespace ArmA.Studio.Data
                 if (this._ProjectRelativePath == value)
                     return;
                 this._ProjectRelativePath = value;
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(ArmAPath));
-                RaisePropertyChanged(nameof(FilePath));
-                RaisePropertyChanged(nameof(FileName));
-                RaisePropertyChanged(nameof(FileExtension));
-                RaisePropertyChanged(nameof(FileUri));
+                this.RaisePropertyChanged();
+                this.RaisePropertyChanged(nameof(this.ArmAPath));
+                this.RaisePropertyChanged(nameof(this.FilePath));
+                this.RaisePropertyChanged(nameof(this.FileName));
+                this.RaisePropertyChanged(nameof(this.FileExtension));
+                this.RaisePropertyChanged(nameof(this.FileUri));
             }
         }
         private string _ProjectRelativePath;
-        public string ArmAPath { get { return string.Concat(this.OwningProject.ArmAPath, '\\', this.ProjectRelativePath); } }
-        public string FilePath { get { return Path.Combine(this.OwningProject.FilePath, this.ProjectRelativePath); } }
+        public string ArmAPath => string.Concat(this.OwningProject.ArmAPath, '\\', this.ProjectRelativePath);
+        public string FilePath => Path.Combine(this.OwningProject.FilePath, this.ProjectRelativePath);
+
         public string FileName
         {
             get { return Path.GetFileName(this.ProjectRelativePath); }
@@ -51,13 +52,13 @@ namespace ArmA.Studio.Data
                 catch (Exception ex)
                 {
                     Virtual.ShowOperationFailedMessageBox(ex);
-                    RaisePropertyChanged(nameof(FileName));
+                    this.RaisePropertyChanged(nameof(this.FileName));
                 }
             }
         }
-        public string FileExtension { get { return Path.GetExtension(this.ProjectRelativePath); } }
+        public string FileExtension => Path.GetExtension(this.ProjectRelativePath);
 
-        public Uri FileUri { get { return new Uri(this.FilePath); } }
+        public Uri FileUri => new Uri(this.FilePath);
 
         public bool Delete()
         {

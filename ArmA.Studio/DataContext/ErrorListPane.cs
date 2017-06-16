@@ -27,8 +27,8 @@ namespace ArmA.Studio.DataContext
 
         public ObservableDictionary<string, IEnumerable<LintInfo>> LinterDictionary;
 
-        public override string Title { get { return Properties.Localization.PanelDisplayName_ErrorList; } }
-        public override string Icon { get { return @"Resources\Pictograms\BuildErrorList\BuildErrorList_16x.png"; } }
+        public override string Title => Properties.Localization.PanelDisplayName_ErrorList;
+        public override string Icon => @"Resources\Pictograms\BuildErrorList\BuildErrorList_16x.png";
 
         public bool IsErrorsDisplayed { get { return this._IsErrorsDisplayed; } set { ConfigHost.App.ErrorList_IsErrorsDisplayed = this._IsErrorsDisplayed = value; this.ListView.Refresh(); this.RaisePropertyChanged(); } }
         private bool _IsErrorsDisplayed;
@@ -52,7 +52,7 @@ namespace ArmA.Studio.DataContext
         private int _CurrentInfoCount;
 
 
-        public ListCollectionView ListView { get { return this._ListView; } set { this._ListView = value; value.Filter = new Predicate<object>(ListViewFilter); this.RaisePropertyChanged(); } }
+        public ListCollectionView ListView { get { return this._ListView; } set { this._ListView = value; value.Filter = new Predicate<object>(this.ListViewFilter); this.RaisePropertyChanged(); } }
         private ListCollectionView _ListView;
 
         public ICommand CmdEntryOnDoubleClick { get; private set; }
@@ -60,12 +60,12 @@ namespace ArmA.Studio.DataContext
         public ErrorListPane()
         {
             this.LinterDictionary = new ObservableDictionary<string, IEnumerable<LintInfo>>();
-            this.LinterDictionary.CollectionChanged += LinterDictionary_CollectionChanged;
+            this.LinterDictionary.CollectionChanged += this.LinterDictionary_CollectionChanged;
             this.ListView = new ListCollectionView(new List<object>());
             this._IsErrorsDisplayed = ConfigHost.App.ErrorList_IsErrorsDisplayed;
             this._IsWarningsDisplayed = ConfigHost.App.ErrorList_IsWarningsDisplayed;
             this._IsInfosDisplayed = ConfigHost.App.ErrorList_IsInfosDisplayed;
-            this.CmdEntryOnDoubleClick = new RelayCommand(Cmd_EntryOnDoubleClick);
+            this.CmdEntryOnDoubleClick = new RelayCommand(this.Cmd_EntryOnDoubleClick);
             Instance = this;
         }
 
@@ -132,7 +132,7 @@ namespace ArmA.Studio.DataContext
                 var textDoc = doc as TextEditorBaseDataContext;
                 textDoc.GetEditorInstanceAsync().ContinueWith((t) =>
                  {
-                     App.Current.Dispatcher.Invoke(() =>
+                     Application.Current.Dispatcher.Invoke(() =>
                      {
                          t.Result.TextArea.Caret.Line = li.Line;
                          t.Result.TextArea.Caret.Column = li.LineOffset;

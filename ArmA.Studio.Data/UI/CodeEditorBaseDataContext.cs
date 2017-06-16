@@ -73,9 +73,9 @@ namespace ArmA.Studio.Data.UI
         protected override void OnEditorInitialized(TextEditor editor)
         {
             base.OnEditorInitialized(editor);
-            editor.Document.TextChanged += OnTextChanged;
-            editor.MouseHover += Editor_MouseHover;
-            editor.MouseHoverStopped += Editor_MouseHoverStopped;
+            editor.Document.TextChanged += this.OnTextChanged;
+            editor.MouseHover += this.Editor_MouseHover;
+            editor.MouseHoverStopped += this.Editor_MouseHoverStopped;
             this.ExecuteLinter();
         }
 

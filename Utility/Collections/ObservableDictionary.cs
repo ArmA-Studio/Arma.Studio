@@ -16,9 +16,9 @@ namespace Utility.Collections
         public event NotifyCollectionChangedEventHandler CollectionChanged;
         public void RaiseCollectionChanged() { this.CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset)); }
 
-        public ICollection<TKey> Keys { get { return this.Dictionary.Keys.CastCollection<TKey>(); } }
-        public ICollection<TValue> Values { get { return this.Dictionary.Values.CastCollection<TValue>(); } }
-        public bool IsReadOnly { get { return this.Dictionary.IsReadOnly; } }
+        public ICollection<TKey> Keys => this.Dictionary.Keys.CastCollection<TKey>();
+        public ICollection<TValue> Values => this.Dictionary.Values.CastCollection<TValue>();
+        public bool IsReadOnly => this.Dictionary.IsReadOnly;
         public TValue this[TKey key] { get { return (TValue)this.Dictionary[key]; } set { this.Dictionary[key] = value; } }
 
         public void Add(TKey key, TValue value) { this.Dictionary.Add(key, value); }
@@ -27,7 +27,7 @@ namespace Utility.Collections
         public bool Contains(KeyValuePair<TKey, TValue> item) { return this.Dictionary.Contains(item); }
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) { this.Dictionary.CopyTo(array, arrayIndex); }
         public bool Remove(KeyValuePair<TKey, TValue> item) { this.Dictionary.Remove(item); return true; }
-        IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() { return Dictionary.GetEnumerator().Cast<KeyValuePair<TKey, TValue>>(); }
+        IEnumerator<KeyValuePair<TKey, TValue>> IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator() { return this.Dictionary.GetEnumerator().Cast<KeyValuePair<TKey, TValue>>(); }
 
         public bool ContainsKey(TKey key)
         {

@@ -44,16 +44,16 @@ namespace ArmA.Studio.UI
                     this.UpdateTargetValueFromSource();
                     break;
                 case EMode.SourceToTarget:
-                    this.ValueSource.PropertyChanged += Source_PropertyChanged;
+                    this.ValueSource.PropertyChanged += this.Source_PropertyChanged;
                     this.UpdateTargetValueFromSource();
                     break;
                 case EMode.TargetToSource:
-                    this.ValueTarget.PropertyChanged += Target_PropertyChanged;
+                    this.ValueTarget.PropertyChanged += this.Target_PropertyChanged;
                     this.UpdateSourceValueFromTarget();
                     break;
                 case EMode.TwoWay:
-                    this.ValueSource.PropertyChanged += Source_PropertyChanged;
-                    this.ValueTarget.PropertyChanged += Target_PropertyChanged;
+                    this.ValueSource.PropertyChanged += this.Source_PropertyChanged;
+                    this.ValueTarget.PropertyChanged += this.Target_PropertyChanged;
                     this.UpdateTargetValueFromSource();
                     break;
             }
@@ -106,14 +106,14 @@ namespace ArmA.Studio.UI
             switch (this.Mode)
             {
                 case EMode.SourceToTarget:
-                    this.ValueSource.PropertyChanged -= Source_PropertyChanged;
+                    this.ValueSource.PropertyChanged -= this.Source_PropertyChanged;
                     break;
                 case EMode.TargetToSource:
-                    this.ValueTarget.PropertyChanged -= Target_PropertyChanged;
+                    this.ValueTarget.PropertyChanged -= this.Target_PropertyChanged;
                     break;
                 case EMode.TwoWay:
-                    this.ValueSource.PropertyChanged -= Source_PropertyChanged;
-                    this.ValueTarget.PropertyChanged -= Target_PropertyChanged;
+                    this.ValueSource.PropertyChanged -= this.Source_PropertyChanged;
+                    this.ValueTarget.PropertyChanged -= this.Target_PropertyChanged;
                     break;
             }
         }

@@ -21,8 +21,8 @@ namespace ArmA.Studio.Dialogs
         public string ToolVersion => App.CurrentVersion.ToString();
 
 
-        public string WindowHeader { get { return Properties.Localization.AboutDialog_Header; } }
-        public string OKButtonText { get { return Properties.Localization.OK; } }
-        public bool OKButtonEnabled { get { return true; } }
+        public string WindowHeader => Properties.Localization.AboutDialog_Header;
+        public string OKButtonText => Properties.Localization.OK;
+        public bool OKButtonEnabled => true;
     }
 }

@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using ArmA.Studio.Data.UI.Commands;
 using System.Threading;
 using System.Linq;
+using System.Windows;
 
 namespace ArmA.Studio.DataContext
 {
     public class BreakpointsPane : PanelBase
     {
-        public override string Title { get { return Properties.Localization.PanelDisplayName_Breakpoints; } }
+        public override string Title => Properties.Localization.PanelDisplayName_Breakpoints;
 
         public ICommand CmdEntryOnDoubleClick => new RelayCommand((p) =>
         {
@@ -25,7 +26,7 @@ namespace ArmA.Studio.DataContext
                 var textDoc = doc as TextEditorBaseDataContext;
                 textDoc.GetEditorInstanceAsync().ContinueWith((t) =>
                 {
-                    App.Current.Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
                         t.Result.TextArea.Caret.Line = bp.Line;
                         t.Result.ScrollToLine(bp.Line);
@@ -48,7 +49,8 @@ namespace ArmA.Studio.DataContext
                 }
             }
         });
-        public IEnumerable<BreakpointInfo> Breakpoints { get { return this._Breakpoints; } set { this._Breakpoints = value; RaisePropertyChanged(); } }
+        public IEnumerable<BreakpointInfo> Breakpoints { get { return this._Breakpoints; } set { this._Breakpoints = value;
+            this.RaisePropertyChanged(); } }
         private IEnumerable<BreakpointInfo> _Breakpoints;
 
         public BreakpointsPane()
@@ -57,7 +59,7 @@ namespace ArmA.Studio.DataContext
             {
                 SpinWait.SpinUntil(() => Workspace.Instance != null);
                 SpinWait.SpinUntil(() => Workspace.Instance.BreakpointManager != null);
-                Workspace.Instance.BreakpointManager.OnBreakPointsChanged += BreakpointManager_OnBreakPointsChanged;
+                Workspace.Instance.BreakpointManager.OnBreakPointsChanged += this.BreakpointManager_OnBreakPointsChanged;
                 this.Breakpoints = Workspace.Instance.BreakpointManager;
             });
         }

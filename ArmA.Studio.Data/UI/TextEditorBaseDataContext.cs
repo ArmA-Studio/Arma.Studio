@@ -175,9 +175,9 @@ namespace ArmA.Studio.Data.UI
         /// <param name="editor">Initialized <see cref="TextEditor"/> instance.</param>
         protected virtual void OnEditorInitialized(TextEditor editor)
         {
-            editor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
-            editor.Document.UndoStack.PropertyChanged += UndoStack_PropertyChanged;
-            editor.PreviewKeyDown += Editor_PreviewKeyDown;
+            editor.TextArea.Caret.PositionChanged += this.Caret_PositionChanged;
+            editor.Document.UndoStack.PropertyChanged += this.UndoStack_PropertyChanged;
+            editor.PreviewKeyDown += this.Editor_PreviewKeyDown;
         }
 
 

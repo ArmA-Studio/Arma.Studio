@@ -96,7 +96,7 @@ namespace ArmA.Studio
             }
             this.CmdSaveAll.Execute(null);
 
-            App.Current.Shutdown((int)App.ExitCodes.OK);
+            Application.Current.Shutdown((int)App.ExitCodes.OK);
         });
         public ICommand CmdSwitchWorkspace => new RelayCommand((p) =>
         {
@@ -122,7 +122,7 @@ namespace ArmA.Studio
                 }
             }
         });
-        public ICommand CmdQuit => new RelayCommand((p) => { App.Current.MainWindow.Close(); });
+        public ICommand CmdQuit => new RelayCommand((p) => { Application.Current.MainWindow.Close(); });
         public ICommand CmdSave => new RelayCommand((p) =>
         {
             var doc = this.GetCurrentDocument();
@@ -210,7 +210,7 @@ namespace ArmA.Studio
                 }
             }
 
-            Workspace.LoadLayout(dockingManager, Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
+            LoadLayout(dockingManager, Path.Combine(App.ConfigPath, CONST_DOCKING_MANAGER_LAYOUT_NAME));
         }
 
 
@@ -280,7 +280,7 @@ namespace ArmA.Studio
         public Uri PathUri { get; internal set; }
         public Solution Solution { get; internal set; }
         public BreakpointManager BreakpointManager { get; internal set; }
-        public string ConfigPath { get { return Path.Combine(PathUri.LocalPath, App.CONST_CONFIGURATION); } }
+        public string ConfigPath => Path.Combine(this.PathUri.LocalPath, App.CONST_CONFIGURATION);
         public UI.GenericDataTemplateSelector LayoutItemTemplateSelector { get; private set; }
         public KeyManager KeyManager { get; private set; }
         public DebuggerContext DebugContext { get; internal set; }
@@ -289,7 +289,7 @@ namespace ArmA.Studio
         {
             Instance = this;
             this.KeyManager = new KeyManager();
-            KeyManager.RegisterKey(new ASKeyContainer(new KeyContainer(Properties.Localization.KeySearch, new Key[] { Key.LeftCtrl, Key.F }, DisplaySearchPopup)));
+            this.KeyManager.RegisterKey(new ASKeyContainer(new KeyContainer(Properties.Localization.KeySearch, new Key[] { Key.LeftCtrl, Key.F }, this.DisplaySearchPopup)));
 
             this.BreakpointManager = new BreakpointManager();
             foreach (var it in App.GetPlugins<IHotKeyPlugin>())
@@ -488,7 +488,7 @@ namespace ArmA.Studio
                     return it;
                 }
             }
-            var doc = CreateTemporaryDocument(content, fileType);
+            var doc = this.CreateTemporaryDocument(content, fileType);
             doc.TemporaryIdentifier = info;
             doc.IsSelected = true;
             return doc;
@@ -566,7 +566,7 @@ namespace ArmA.Studio
         public DocumentBase.DocumentDescribor GetDocumentDescriborByPrompt()
         {
             DocumentBase.DocumentDescribor descr = null;
-            App.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 var dlgdc = new Dialogs.DocumentSelectorDialogDataContext();
                 var dlg = new Dialogs.DocumentSelectorDialog(dlgdc);
@@ -596,14 +596,14 @@ namespace ArmA.Studio
                 {
                     var doc = p.CreateDocument(describor);
                     doc.KeyManager = this.KeyManager;
-                    doc.OnDocumentClosing += Document_OnDocumentClosing;
+                    doc.OnDocumentClosing += this.Document_OnDocumentClosing;
                     if (doc is CodeEditorBaseDataContext)
                     {
-                        (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += Workspace_OnLintingInfoUpdated;
+                        (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += this.Workspace_OnLintingInfoUpdated;
                     }
                     if (doc is TextEditorBaseDataContext)
                     {
-                        (doc as TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => App.Current.Dispatcher.Invoke(() => t.Result.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(t.Result))));
+                        (doc as TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => Application.Current.Dispatcher.Invoke(() => t.Result.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(t.Result))));
                     }
                     return doc;
                 }
@@ -622,20 +622,20 @@ namespace ArmA.Studio
         /// <returns>new <see cref="DocumentBase"/> instance.</returns>
         private DocumentBase CreateNewDocument(Uri path)
         {
-            var fileType = GetFileType(path);
+            var fileType = this.GetFileType(path);
             if (fileType == null)
             {
                 var describor = this.GetDocumentDescriborByPrompt();
                 var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(describor);
                 doc.KeyManager = this.KeyManager;
-                doc.OnDocumentClosing += Document_OnDocumentClosing;
+                doc.OnDocumentClosing += this.Document_OnDocumentClosing;
                 if (doc is CodeEditorBaseDataContext)
                 {
-                    (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += Workspace_OnLintingInfoUpdated;
+                    (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += this.Workspace_OnLintingInfoUpdated;
                 }
                 if (doc is TextEditorBaseDataContext)
                 {
-                    (doc as TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => App.Current.Dispatcher.Invoke(() => t.Result.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(t.Result))));
+                    (doc as TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => Application.Current.Dispatcher.Invoke(() => t.Result.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(t.Result))));
                 }
                 return doc;
             }
@@ -643,14 +643,14 @@ namespace ArmA.Studio
             {
                 var doc = App.GetPlugins<IDocumentProviderPlugin>().CreateDocument(fileType);
                 doc.KeyManager = this.KeyManager;
-                doc.OnDocumentClosing += Document_OnDocumentClosing;
+                doc.OnDocumentClosing += this.Document_OnDocumentClosing;
                 if (doc is CodeEditorBaseDataContext)
                 {
-                    (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += Workspace_OnLintingInfoUpdated;
+                    (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += this.Workspace_OnLintingInfoUpdated;
                 }
                 if (doc is TextEditorBaseDataContext)
                 {
-                    (doc as TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => App.Current.Dispatcher.Invoke(() => t.Result.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(t.Result))));
+                    (doc as TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => Application.Current.Dispatcher.Invoke(() => t.Result.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(t.Result))));
                 }
                 return doc;
             }
@@ -659,10 +659,10 @@ namespace ArmA.Studio
         private void Document_OnDocumentClosing(object sender, EventArgs e)
         {
             var doc = sender as DocumentBase;
-            doc.OnDocumentClosing -= Document_OnDocumentClosing;
+            doc.OnDocumentClosing -= this.Document_OnDocumentClosing;
             if (doc is CodeEditorBaseDataContext)
             {
-                (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated -= Workspace_OnLintingInfoUpdated;
+                (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated -= this.Workspace_OnLintingInfoUpdated;
             }
             if (this.AvalonDockDocuments.Contains(doc))
             {

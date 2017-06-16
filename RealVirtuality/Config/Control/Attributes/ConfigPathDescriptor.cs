@@ -26,7 +26,7 @@ namespace RealVirtuality.Config.Control.Attributes
             var info = obj.GetType().GetMember(obj.ToString());
             if (info != null && info.Length > 0)
             {
-                var attr = Attribute.GetCustomAttribute(info.First(), typeof(ConfigPathDescriptor)) as ConfigPathDescriptor;
+                var attr = GetCustomAttribute(info.First(), typeof(ConfigPathDescriptor)) as ConfigPathDescriptor;
                 if (attr != null)
                 {
                     return attr;

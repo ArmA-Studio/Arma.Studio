@@ -24,10 +24,12 @@ namespace ArmA.Studio.Data
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
 
-        public string Name { get { return this._Name; } set { if (this._Name == value) return; this._Name = value; RaisePropertyChanged(); } }
+        public string Name { get { return this._Name; } set { if (this._Name == value) return; this._Name = value;
+            this.RaisePropertyChanged(); } }
         private string _Name;
 
-        public EProjectType ProjectType { get { return this._ProjectType; } set { if (this._ProjectType == value) return; this._ProjectType = value; RaisePropertyChanged(); } }
+        public EProjectType ProjectType { get { return this._ProjectType; } set { if (this._ProjectType == value) return; this._ProjectType = value;
+            this.RaisePropertyChanged(); } }
         private EProjectType _ProjectType;
 
         public ObservableSortedCollection<ProjectFile> Children { get; private set; }
@@ -43,9 +45,9 @@ namespace ArmA.Studio.Data
                 if (this._FilePath == value)
                     return;
                 this._FilePath = value;
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(FilePath));
-                RaisePropertyChanged(nameof(FileUri));
+                this.RaisePropertyChanged();
+                this.RaisePropertyChanged(nameof(this.FilePath));
+                this.RaisePropertyChanged(nameof(this.FileUri));
             }
         }
         private string _FilePath;
@@ -80,11 +82,11 @@ namespace ArmA.Studio.Data
                 {
                     this._ArmAPath = value;
                 }
-                RaisePropertyChanged();
+                this.RaisePropertyChanged();
             }
         }
         private string _ArmAPath;
-        public Uri FileUri { get { return new Uri(string.Concat(this.FilePath, '/')); } }
+        public Uri FileUri => new Uri(string.Concat(this.FilePath, '/'));
 
 
         public Project()
@@ -121,7 +123,7 @@ namespace ArmA.Studio.Data
 
         public ProjectFile FindFileFolder(Uri uri)
         {
-            var res = FindFileFolderOrNull(uri);
+            var res = this.FindFileFolderOrNull(uri);
             if (res == null)
                 throw new KeyNotFoundException();
             return res;

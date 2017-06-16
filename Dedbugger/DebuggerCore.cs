@@ -54,11 +54,11 @@ namespace Dedbugger
 
         private NamedPipeClientStream Pipe;
         private List<BreakpointInfo> BreakpointInfos;
-        private asapJson.JsonNode LastCallstack;
+        private JsonNode LastCallstack;
         private const int MinimalDebuggerBuild = 23;
 
         public Thread PipeReadThread { get; private set; }
-        public ConcurrentBag<asapJson.JsonNode> Messages;
+        public ConcurrentBag<JsonNode> Messages;
         public string LastError { get; private set; }
 
 
@@ -70,7 +70,7 @@ namespace Dedbugger
 
         public DebuggerCore()
         {
-            Messages = new ConcurrentBag<JsonNode>();
+            this.Messages = new ConcurrentBag<JsonNode>();
             this.Pipe = null;
             this.IsHalted = false;
         }
@@ -93,7 +93,7 @@ namespace Dedbugger
             {
                 this.Pipe.Connect(1000);
                 this.Pipe.ReadMode = PipeTransmissionMode.Message;
-                this.PipeReadThread = new Thread(Thread_ReadPipeMessage);
+                this.PipeReadThread = new Thread(this.Thread_ReadPipeMessage);
                 this.PipeReadThread.Start();
             }
             catch (TimeoutException ex)
@@ -103,8 +103,8 @@ namespace Dedbugger
                 return false;
             }
 
-            var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-            command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.GetVersionInfo);
+            var command = new JsonNode(new Dictionary<string, JsonNode>());
+            command.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.GetVersionInfo);
             this.WriteMessage(command);
             var response = this.ReadMessage((node) => (int)(node.GetValue_Object()["command"].GetValue_Number()) == (int)ERecvCommands.VersionInfo);
 
@@ -122,7 +122,7 @@ namespace Dedbugger
             if (build < MinimalDebuggerBuild)
             {
                 this.LastError = "Unsupported Debugger build: " + build +" \nMinimal build required: "+MinimalDebuggerBuild;
-                Detach();
+                this.Detach();
                 return false;
             }
             return true;
@@ -171,7 +171,7 @@ namespace Dedbugger
                     } while (!this.Pipe.IsMessageComplete);
                     if (builder.Length > 0)
                     {
-                        var node = new asapJson.JsonNode(builder.ToString(), true);
+                        var node = new JsonNode(builder.ToString(), true);
                         Logger.Log(NLog.LogLevel.Info, string.Format("RECV {0}", node.ToString()));
                         if (node.GetValue_Object().ContainsKey("exception"))
                         {
@@ -238,13 +238,13 @@ namespace Dedbugger
             catch (Exception ex) { Virtual.ShowOperationFailedMessageBox(ex); }
         }
 
-        public asapJson.JsonNode ReadMessage(Func<asapJson.JsonNode, bool> cond)
+        public JsonNode ReadMessage(Func<JsonNode, bool> cond)
         {
             while(true)
             {
                 SpinWait.SpinUntil(() => this.Messages.Count > 0);
-                var temp = new List<asapJson.JsonNode>();
-                asapJson.JsonNode y = null;
+                var temp = new List<JsonNode>();
+                JsonNode y = null;
                 while (!this.Messages.IsEmpty) //Would be more efficient to use a ConcurrentSet
                 {
                     this.Messages.TryTake(out y);
@@ -262,11 +262,11 @@ namespace Dedbugger
                     return y;
             }
         }
-        public void WriteMessage(asapJson.JsonNode node)
+        public void WriteMessage(JsonNode node)
         {
             var str = node.ToString();
             Logger.Log(NLog.LogLevel.Info, string.Format("SEND {0}", str));
-            var bytes = ASCIIEncoding.UTF8.GetBytes(str);
+            var bytes = Encoding.UTF8.GetBytes(str);
             this.Pipe.Write(bytes, 0, bytes.Length);
         }
 
@@ -275,8 +275,8 @@ namespace Dedbugger
         {
             this.BreakpointInfos.Add(b);
             {
-                var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-                command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.AddBreakpointInfo);
+                var command = new JsonNode(new Dictionary<string, JsonNode>());
+                command.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.AddBreakpointInfo);
                 command.GetValue_Object()["data"] = b.Serialize();
                 this.WriteMessage(command);
             }
@@ -286,8 +286,8 @@ namespace Dedbugger
         {
             this.BreakpointInfos.Remove(b);
             {
-                var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-                command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.RemoveBreakpointInfo);
+                var command = new JsonNode(new Dictionary<string, JsonNode>());
+                command.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.RemoveBreakpointInfo);
                 command.GetValue_Object()["data"] = b.Serialize();
                 this.WriteMessage(command);
             }
@@ -296,8 +296,8 @@ namespace Dedbugger
         public void UpdateBreakpoint(BreakpointInfo b)
         {
             {
-                var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-                command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.AddBreakpointInfo);
+                var command = new JsonNode(new Dictionary<string, JsonNode>());
+                command.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.AddBreakpointInfo);
                 command.GetValue_Object()["data"] = b.Serialize();
                 this.WriteMessage(command);
             }
@@ -335,11 +335,11 @@ namespace Dedbugger
 
         public IEnumerable<Variable> GetVariables(EVariableNamespace scope, params string[] names)
         {
-            var command = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-            command.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.GetVariable);
-            var data = command.GetValue_Object()["data"] = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-            data.GetValue_Object()["name"] = new asapJson.JsonNode(names.Select(name => new asapJson.JsonNode(name)));
-            data.GetValue_Object()["scope"] = new asapJson.JsonNode((int)scope);
+            var command = new JsonNode(new Dictionary<string, JsonNode>());
+            command.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.GetVariable);
+            var data = command.GetValue_Object()["data"] = new JsonNode(new Dictionary<string, JsonNode>());
+            data.GetValue_Object()["name"] = new JsonNode(names.Select(name => new JsonNode(name)));
+            data.GetValue_Object()["scope"] = new JsonNode((int)scope);
             this.WriteMessage(command);
             
 
@@ -402,33 +402,33 @@ namespace Dedbugger
             {
                 case EOperation.Continue:
                     {
-                        var node = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-                        node.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.ContinueExecution);
-                        node.GetValue_Object()["data"] = new asapJson.JsonNode((int)EStepType.Continue);
+                        var node = new JsonNode(new Dictionary<string, JsonNode>());
+                        node.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.ContinueExecution);
+                        node.GetValue_Object()["data"] = new JsonNode((int)EStepType.Continue);
                         this.WriteMessage(node);
                         return true;
                     }
                 case EOperation.StepInto:
                     {
-                        var node = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-                        node.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.ContinueExecution);
-                        node.GetValue_Object()["data"] = new asapJson.JsonNode((int)EStepType.StepInto);
+                        var node = new JsonNode(new Dictionary<string, JsonNode>());
+                        node.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.ContinueExecution);
+                        node.GetValue_Object()["data"] = new JsonNode((int)EStepType.StepInto);
                         this.WriteMessage(node);
                         return true;
                     }
                 case EOperation.StepOver:
                     {
-                        var node = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-                        node.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.ContinueExecution);
-                        node.GetValue_Object()["data"] = new asapJson.JsonNode((int)EStepType.StepOver);
+                        var node = new JsonNode(new Dictionary<string, JsonNode>());
+                        node.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.ContinueExecution);
+                        node.GetValue_Object()["data"] = new JsonNode((int)EStepType.StepOver);
                         this.WriteMessage(node);
                         return true;
                     }
                 case EOperation.StepOut:
                     {
-                        var node = new asapJson.JsonNode(new Dictionary<string, asapJson.JsonNode>());
-                        node.GetValue_Object()["command"] = new asapJson.JsonNode((int)ESendCommands.ContinueExecution);
-                        node.GetValue_Object()["data"] = new asapJson.JsonNode((int)EStepType.StepOut);
+                        var node = new JsonNode(new Dictionary<string, JsonNode>());
+                        node.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.ContinueExecution);
+                        node.GetValue_Object()["data"] = new JsonNode((int)EStepType.StepOut);
                         this.WriteMessage(node);
                         return true;
                     }

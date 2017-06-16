@@ -40,10 +40,7 @@ namespace ArmA.Studio
             this.BreakPointDictionary = new Dictionary<ProjectFile, List<BreakpointInfo>>();
         }
 
-        public IEnumerable<BreakpointInfo> this[ProjectFile pff]
-        {
-            get { return this.BreakPointDictionary[pff]; }
-        }
+        public IEnumerable<BreakpointInfo> this[ProjectFile pff] => this.BreakPointDictionary[pff];
 
         public BreakpointInfo SetBreakpoint(ProjectFile pff, int line) => this.SetBreakpoint(pff, new BreakpointInfo() { FileRef = pff, IsEnabled = true, Line = line, SqfCondition = null});
         public BreakpointInfo SetBreakpoint(BreakpointInfo bpi) => this.SetBreakpoint(bpi.FileRef, bpi);

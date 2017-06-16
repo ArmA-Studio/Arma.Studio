@@ -33,7 +33,7 @@ namespace ArmA.Studio.Data
         /// </summary>
         /// <param name="fileUri">The <see cref="Uri"/> leading to the file.</param>
         /// <returns>true if file behind <see cref="Uri"/> is matching this FileType. false in any other case including null values.</returns>
-        public bool IsFileType(Uri fileUri) => IsFileType(fileUri?.LocalPath);
+        public bool IsFileType(Uri fileUri) => this.IsFileType(fileUri?.LocalPath);
         /// <summary>
         /// Checks if provided file is valid to be used with this <see cref="FileType"/>.
         /// </summary>

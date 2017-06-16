@@ -2,6 +2,6 @@
 {
     public class MapControl : ControlBase
     {
-        public override EType ControlType { get { return EType.CT_MAP; } }
+        public override EType ControlType => EType.CT_MAP;
     }
 }

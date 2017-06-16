@@ -12,7 +12,7 @@ namespace ArmA.Studio.UI
 {
     public class GenericDataTemplateSelector : DataTemplateSelector
     {
-        public IEnumerable<DataTemplate> Templates { get { return this._Templates; } }
+        public IEnumerable<DataTemplate> Templates => this._Templates;
         private List<DataTemplate> _Templates;
 
         public GenericDataTemplateSelector()

@@ -32,13 +32,13 @@ namespace ArmA.Studio.UI
             if (oldTextView != null)
             {
                 newTextView.BackgroundRenderers.Remove(this);
-                oldTextView.VisualLinesChanged -= TextView_VisualLinesChanged;
+                oldTextView.VisualLinesChanged -= this.TextView_VisualLinesChanged;
             }
             base.OnTextViewChanged(oldTextView, newTextView);
             if (newTextView != null)
             {
                 newTextView.BackgroundRenderers.Add(this);
-                newTextView.VisualLinesChanged += TextView_VisualLinesChanged;
+                newTextView.VisualLinesChanged += this.TextView_VisualLinesChanged;
             }
             this.InvalidateVisual();
         }
@@ -125,7 +125,7 @@ namespace ArmA.Studio.UI
         {
             return view.GetVisualLineFromVisualTop(p.Y + view.ScrollOffset.Y);
         }
-        public KnownLayer Layer { get { return KnownLayer.Background; } }
+        public KnownLayer Layer => KnownLayer.Background;
 
         public void Draw(TextView textView, DrawingContext drawingContext)
         {

@@ -21,17 +21,20 @@ namespace ArmA.Studio
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
 
         #region BindableProperties
-        public Version CurrentVersion { get { return App.CurrentVersion; } }
+        public Version CurrentVersion => App.CurrentVersion;
 
-        public ICommand CmdLoaded => new RelayCommandAsync((p) => RunSplashAsync(p as Window));
+        public ICommand CmdLoaded => new RelayCommandAsync((p) => this.RunSplashAsync(p as Window));
 
-        public double ProgressValue { get { return this._ProgressValue; } set { if (this._ProgressValue == value) return; this._ProgressValue = value; RaisePropertyChanged(); } }
+        public double ProgressValue { get { return this._ProgressValue; } set { if (this._ProgressValue == value) return; this._ProgressValue = value;
+            this.RaisePropertyChanged(); } }
         private double _ProgressValue;
 
-        public string ProgressText { get { return this._ProgressText; } set { if (this._ProgressText == value) return; this._ProgressText = value; RaisePropertyChanged(); } }
+        public string ProgressText { get { return this._ProgressText; } set { if (this._ProgressText == value) return; this._ProgressText = value;
+            this.RaisePropertyChanged(); } }
         private string _ProgressText;
 
-        public bool ProgressIndeterminate { get { return this._ProgressIndeterminate; } set { if (this._ProgressIndeterminate == value) return; this._ProgressIndeterminate = value; RaisePropertyChanged(); } }
+        public bool ProgressIndeterminate { get { return this._ProgressIndeterminate; } set { if (this._ProgressIndeterminate == value) return; this._ProgressIndeterminate = value;
+            this.RaisePropertyChanged(); } }
         private bool _ProgressIndeterminate;
         #endregion
 
@@ -43,10 +46,10 @@ namespace ArmA.Studio
         private async Task RunSplashAsync(Window wind) => await Task.Run(() => this.RunSplash(wind));
         private void RunSplash(Window wind)
         {
-            var setIndeterminate = new Action<bool>((v) => App.Current.Dispatcher.Invoke(() => this.ProgressIndeterminate = v));
-            var setDisplayText = new Action<string>((v) => App.Current.Dispatcher.Invoke(() => this.ProgressText = v));
-            var setProgress = new Action<double>((v) => App.Current.Dispatcher.Invoke(() => this.ProgressValue = v));
-            var reset = new Action(() => App.Current.Dispatcher.Invoke(() =>
+            var setIndeterminate = new Action<bool>((v) => Application.Current.Dispatcher.Invoke(() => this.ProgressIndeterminate = v));
+            var setDisplayText = new Action<string>((v) => Application.Current.Dispatcher.Invoke(() => this.ProgressText = v));
+            var setProgress = new Action<double>((v) => Application.Current.Dispatcher.Invoke(() => this.ProgressValue = v));
+            var reset = new Action(() => Application.Current.Dispatcher.Invoke(() =>
             {
                 this.ProgressIndeterminate = false;
                 this.ProgressText = string.Empty;
@@ -73,7 +76,7 @@ namespace ArmA.Studio
                 {
                     reset();
                     bool terminate;
-                    splashActivityPlugin.PerformSplashActivity(App.Current.Dispatcher, setIndeterminate, setDisplayText, setProgress, out terminate);
+                    splashActivityPlugin.PerformSplashActivity(Application.Current.Dispatcher, setIndeterminate, setDisplayText, setProgress, out terminate);
                     if (terminate)
                     {
                         App.Shutdown(App.ExitCodes.OK);
@@ -98,11 +101,11 @@ namespace ArmA.Studio
                 }
                 reset();
 #endif
-                App.Current.Dispatcher.Invoke(() =>
+                Application.Current.Dispatcher.Invoke(() =>
                 {
                     var mainWindow = new MainWindow();
                     mainWindow.Show();
-                    App.Current.MainWindow = mainWindow;
+                    Application.Current.MainWindow = mainWindow;
                     wind.Close();
                 });
             }
@@ -128,8 +131,8 @@ namespace ArmA.Studio
             if (string.IsNullOrWhiteSpace(workspace))
             {
                 Logger.Info("No workspace set, exiting");
-                App.Current.Dispatcher.Invoke(() =>
-                MessageBox.Show(Properties.Localization.WorkspaceSelectorDialog_NoWorkspaceSelected, Studio.Properties.Localization.Whoops, MessageBoxButton.OK, MessageBoxImage.Error));
+                Application.Current.Dispatcher.Invoke(() =>
+                MessageBox.Show(Properties.Localization.WorkspaceSelectorDialog_NoWorkspaceSelected, Properties.Localization.Whoops, MessageBoxButton.OK, MessageBoxImage.Error));
                 return true;
             }
             else
@@ -312,17 +315,17 @@ namespace ArmA.Studio
             Logger.Info("Checking for tool updates...");
             if (ConfigHost.App.EnableAutoToolUpdates)
             {
-                (App.Current as App).UpdateDownloadInfo = UpdateHelper.GetDownloadInfo().Result;
-                if ((App.Current as App).UpdateDownloadInfo.available)
+                (Application.Current as App).UpdateDownloadInfo = UpdateHelper.GetDownloadInfo().Result;
+                if ((Application.Current as App).UpdateDownloadInfo.available)
                 {
                     SetIndeterminate(false);
                     SetDisplayText(Properties.Localization.Splash_UpdateAvailable);
-                    Logger.Info($"Update {(App.Current as App).UpdateDownloadInfo.version} is available.");
-                    App.Current.Dispatcher.Invoke(() =>
+                    Logger.Info($"Update {(Application.Current as App).UpdateDownloadInfo.version} is available.");
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
                         var msgboxresult = MessageBox.Show(
-                              string.Format(Properties.Localization.SoftwareUpdateAvailable_Body, App.CurrentVersion, (App.Current as App).UpdateDownloadInfo.version),
-                              string.Format(Properties.Localization.SoftwareUpdateAvailable_Title, (App.Current as App).UpdateDownloadInfo.version),
+                              string.Format(Properties.Localization.SoftwareUpdateAvailable_Body, App.CurrentVersion, (Application.Current as App).UpdateDownloadInfo.version),
+                              string.Format(Properties.Localization.SoftwareUpdateAvailable_Title, (Application.Current as App).UpdateDownloadInfo.version),
                               MessageBoxButton.YesNo,
                               MessageBoxImage.Information
                         );
@@ -367,11 +370,11 @@ namespace ArmA.Studio
                     }
                     if (list.Any())
                     {
-                        App.Current.Dispatcher.Invoke(() =>
+                        Application.Current.Dispatcher.Invoke(() =>
                         {
                             var msgboxresult = MessageBox.Show(
-                                  string.Format(Properties.Localization.SoftwareUpdateAvailable_Body, App.CurrentVersion, (App.Current as App).UpdateDownloadInfo.version),
-                                  string.Format(Properties.Localization.SoftwareUpdateAvailable_Title, (App.Current as App).UpdateDownloadInfo.version),
+                                  string.Format(Properties.Localization.SoftwareUpdateAvailable_Body, App.CurrentVersion, (Application.Current as App).UpdateDownloadInfo.version),
+                                  string.Format(Properties.Localization.SoftwareUpdateAvailable_Title, (Application.Current as App).UpdateDownloadInfo.version),
                                   MessageBoxButton.YesNo,
                                   MessageBoxImage.Information
                             );

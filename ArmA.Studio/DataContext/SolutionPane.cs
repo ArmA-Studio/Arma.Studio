@@ -29,7 +29,8 @@ namespace ArmA.Studio.DataContext
 
         public override string Title => Properties.Localization.PanelDisplayName_Solution;
 
-        public IEnumerable<ProjectModelView> ProjectModels { get { return this._ProjectModels; } set { this._ProjectModels = value; RaisePropertyChanged(); } }
+        public IEnumerable<ProjectModelView> ProjectModels { get { return this._ProjectModels; } set { this._ProjectModels = value;
+            this.RaisePropertyChanged(); } }
         private IEnumerable<ProjectModelView> _ProjectModels;
 
 
@@ -61,7 +62,7 @@ namespace ArmA.Studio.DataContext
 
         public void RebuildTree(Solution s)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 var projectModelsList = new List<ProjectModelView>();
 
@@ -142,8 +143,8 @@ namespace ArmA.Studio.DataContext
             Task.Run(() =>
             {
                 SpinWait.SpinUntil(() => Workspace.Instance.Solution != null && Workspace.Instance.Solution.Projects != null);
-                Workspace.Instance.Solution.Projects.CollectionChanged += Projects_CollectionChanged;
-                App.Current.Dispatcher.Invoke(() => this.RebuildTree(Workspace.Instance.Solution));
+                Workspace.Instance.Solution.Projects.CollectionChanged += this.Projects_CollectionChanged;
+                Application.Current.Dispatcher.Invoke(() => this.RebuildTree(Workspace.Instance.Solution));
             });
         }
 

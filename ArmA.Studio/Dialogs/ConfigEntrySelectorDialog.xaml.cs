@@ -22,7 +22,7 @@ namespace ArmA.Studio.Dialogs
         public ConfigEntrySelectorDialog(ConfigEntrySelectorDialogDataContext dc)
         {
             this.DataContext = dc;
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

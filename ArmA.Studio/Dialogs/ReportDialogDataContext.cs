@@ -17,9 +17,9 @@ namespace ArmA.Studio.Dialogs
         public string ReportText { get { return this._ReportText; } set { this._ReportText = value; this.OKButtonEnabled = !string.IsNullOrWhiteSpace(value); this.RaisePropertyChanged(); } }
         private string _ReportText;
 
-        public string WindowHeader { get { return Properties.Localization.ReportDialog_Header; } }
+        public string WindowHeader => Properties.Localization.ReportDialog_Header;
 
-        public string OKButtonText { get { return Properties.Localization.OK; } }
+        public string OKButtonText => Properties.Localization.OK;
 
         public bool OKButtonEnabled { get { return this._OKButtonEnabled; } set { if (this._OKButtonEnabled == value) return; this._OKButtonEnabled = value; this.RaisePropertyChanged(); } }
         private bool _OKButtonEnabled;

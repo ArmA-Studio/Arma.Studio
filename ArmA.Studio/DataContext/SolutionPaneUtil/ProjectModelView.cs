@@ -24,13 +24,13 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
 
         private readonly IList<object> InnerList;
 
-        public IEnumerator<object> GetEnumerator() => InnerList.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => InnerList.GetEnumerator();
+        public IEnumerator<object> GetEnumerator() => this.InnerList.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => this.InnerList.GetEnumerator();
 
         public int Count => this.InnerList.Count;
         public bool IsReadOnly => this.InnerList.IsReadOnly;
 
-        public IEnumerable<Item> Items => GetPropertyPaneItems();
+        public IEnumerable<Item> Items => this.GetPropertyPaneItems();
         private IEnumerable<Item> GetPropertyPaneItems()
         {
             yield return new StringItem(Properties.Localization.Prop_ArmAPath, nameof(this.Ref.ArmAPath), this.Ref);
@@ -50,13 +50,16 @@ namespace ArmA.Studio.DataContext.SolutionPaneUtil
         public void CopyTo(object[] array, int arrayIndex) => this.InnerList.CopyTo(array, arrayIndex);
         public bool Remove(object item) => this.InnerList.Remove(item);
 
-        public bool IsInRenameMode { get { return this._IsInRenameMode; } set { this._IsInRenameMode = value; RaisePropertyChanged(); } }
+        public bool IsInRenameMode { get { return this._IsInRenameMode; } set { this._IsInRenameMode = value;
+            this.RaisePropertyChanged(); } }
         private bool _IsInRenameMode;
 
-        public bool IsExpanded { get { return this._IsExpanded; } set { this._IsExpanded = value; RaisePropertyChanged(); } }
+        public bool IsExpanded { get { return this._IsExpanded; } set { this._IsExpanded = value;
+            this.RaisePropertyChanged(); } }
         private bool _IsExpanded;
 
-        public bool IsSelected { get { return this._IsSelected; } set { this._IsSelected = value; RaisePropertyChanged(); } }
+        public bool IsSelected { get { return this._IsSelected; } set { this._IsSelected = value;
+            this.RaisePropertyChanged(); } }
         private bool _IsSelected;
 
         public ProjectModelView(Project p)

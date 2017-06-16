@@ -11,9 +11,9 @@ namespace Utility.Collections
     {
         private List<T> InnerList;
 
-        public int Count { get { return InnerList.Count; } }
+        public int Count => this.InnerList.Count;
 
-        public bool IsReadOnly { get { return false; } }
+        public bool IsReadOnly => false;
 
         public T this[int index] { get { return this.InnerList[index]; } set { this.OnUpdating?.Invoke(this, new Tuple<T, T>(this.InnerList[index], value)); this.InnerList[index] = value; } }
 

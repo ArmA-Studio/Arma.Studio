@@ -26,16 +26,16 @@ namespace ArmA.Studio.Dialogs
         public object SelectedItem { get { return this._SelectedItem; } set { this._SelectedItem = value; this.UpdateOkButtonEnabled(); this.RaisePropertyChanged(); } }
         private object _SelectedItem;
 
-        public FileType SelectedFileType { get { return (FileType)this.SelectedItem; } }
+        public FileType SelectedFileType => (FileType)this.SelectedItem;
 
-        public string WindowHeader { get { return Properties.Localization.CreateNewFileDialog_Header; } }
+        public string WindowHeader => Properties.Localization.CreateNewFileDialog_Header;
 
-        public string OKButtonText { get { return Properties.Localization.OK; } }
+        public string OKButtonText => Properties.Localization.OK;
 
         public bool OKButtonEnabled { get { return this._OKButtonEnabled; } set { this._OKButtonEnabled = value; this.RaisePropertyChanged(); } }
         private bool _OKButtonEnabled;
 
-        public string FinalName { get { return (this.SelectedItem as FileType).HasStaticFileName ? (this.SelectedItem as FileType).StaticFileName : (System.IO.Path.HasExtension(this.SelectedName) ? this.SelectedName : string.Concat(this.SelectedName, this.SelectedFileType.DefaultExtension)); } }
+        public string FinalName => (this.SelectedItem as FileType).HasStaticFileName ? (this.SelectedItem as FileType).StaticFileName : (System.IO.Path.HasExtension(this.SelectedName) ? this.SelectedName : string.Concat(this.SelectedName, this.SelectedFileType.DefaultExtension));
 
         public CreateNewFileDialogDataContext()
         {

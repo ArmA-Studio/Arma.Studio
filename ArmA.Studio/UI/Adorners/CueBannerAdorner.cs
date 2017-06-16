@@ -50,7 +50,6 @@ namespace ArmA.Studio.UI.Adorners
         {
             return this.Presenter;
         }
-        protected override int VisualChildrenCount { get { return 1; } }
-
+        protected override int VisualChildrenCount => 1;
     }
 }

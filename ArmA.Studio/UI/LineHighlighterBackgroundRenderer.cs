@@ -14,7 +14,7 @@ namespace ArmA.Studio.UI
         public LineHighlighterBackgroundRenderer(TextEditor editor)
         {
             this.Editor = editor;
-            this.Editor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
+            this.Editor.TextArea.Caret.PositionChanged += this.Caret_PositionChanged;
         }
 
         private void Caret_PositionChanged(object sender, EventArgs e)
@@ -22,7 +22,7 @@ namespace ArmA.Studio.UI
             this.Editor.TextArea.TextView.InvalidateLayer(KnownLayer.Background);
         }
 
-        public KnownLayer Layer { get { return KnownLayer.Background; } }
+        public KnownLayer Layer => KnownLayer.Background;
 
         public void Draw(TextView textView, DrawingContext drawingContext)
         {

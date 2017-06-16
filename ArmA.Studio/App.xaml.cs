@@ -21,7 +21,7 @@ namespace ArmA.Studio
     /// </summary>
     public partial class App : Application
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public const string CONST_UPDATESUFFIX = ".update";
         public const string CONST_SOLUTIONEXTENSION = ".asln";
         public const string CONST_BREAKPOINTINFOEXTENSION = ".asbp";
@@ -38,15 +38,15 @@ namespace ArmA.Studio
             Updating = 2,
             RestartPluginUpdate = 3
         }
-        public static string ExecutablePath { get { return Path.GetDirectoryName(ExecutableFile); } }
-        public static string ExecutableFile { get { return Assembly.GetExecutingAssembly().GetName().CodeBase.Substring("file:///".Length); } }
-        public static string SyntaxFilesPath { get { return Path.Combine(ExecutablePath, "SyntaxFiles"); } }
-        public static string PluginsPath { get { return Path.Combine(ExecutablePath, "Plugins"); } }
-        public static string ConfigPath { get { return Path.Combine(ApplicationDataPath, CONST_CONFIGURATION); } }
-        public static string FileTemplatePath { get { return Path.Combine(ApplicationDataPath, "Templates"); } }
-        public static string TempPath { get { return Path.Combine(Path.GetTempPath(), @"ArmA.Studio"); } }
-        public static string CommonApplicationDataPath { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @"ArmA.Studio"); } }
-        public static string ApplicationDataPath { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ArmA.Studio"); } }
+        public static string ExecutablePath => Path.GetDirectoryName(ExecutableFile);
+        public static string ExecutableFile => Assembly.GetExecutingAssembly().GetName().CodeBase.Substring("file:///".Length);
+        public static string SyntaxFilesPath => Path.Combine(ExecutablePath, "SyntaxFiles");
+        public static string PluginsPath => Path.Combine(ExecutablePath, "Plugins");
+        public static string ConfigPath => Path.Combine(ApplicationDataPath, CONST_CONFIGURATION);
+        public static string FileTemplatePath => Path.Combine(ApplicationDataPath, "Templates");
+        public static string TempPath => Path.Combine(Path.GetTempPath(), @"ArmA.Studio");
+        public static string CommonApplicationDataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @"ArmA.Studio");
+        public static string ApplicationDataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ArmA.Studio");
         public static Version CurrentVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
         public static SubscribableTarget SubscribableLoggerTarget { get; private set; }
@@ -104,7 +104,7 @@ namespace ArmA.Studio
             catch (Exception ex)
             {
                 MessageBox.Show(ex.InnerException != null ? ex.InnerException.Message : ex.Message, "FATAL ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                App.Shutdown(ExitCodes.ConfigError);
+                Shutdown(ExitCodes.ConfigError);
                 return;
             }
 
@@ -118,7 +118,7 @@ namespace ArmA.Studio
 
         public static void ShowOperationFailedMessageBox(Exception ex)
         {
-            App.Current.Dispatcher.Invoke(() => MessageBox.Show(string.Format(Studio.Properties.Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Studio.Properties.Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
+            Current.Dispatcher.Invoke(() => MessageBox.Show(string.Format(Localization.MessageBoxOperationFailed_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Localization.MessageBoxOperationFailed_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
         }
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
@@ -144,15 +144,15 @@ namespace ArmA.Studio
 
         public static void Shutdown(ExitCodes code)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            Current.Dispatcher.Invoke(() =>
             {
                 if (code == ExitCodes.Updating)
                 {
-                    var dlgdc = new Dialogs.DownloadToolUpdateDialogDataContext((App.Current as App).UpdateDownloadInfo);
+                    var dlgdc = new Dialogs.DownloadToolUpdateDialogDataContext((Current as App).UpdateDownloadInfo);
                     var dlg = new Dialogs.DownloadToolUpdateDialog(dlgdc);
                     dlg.ShowDialog();
                 }
-                App.Current.Shutdown((int)code);
+                Current.Shutdown((int)code);
             });
         }
 
@@ -184,9 +184,9 @@ namespace ArmA.Studio
                 }
             }
         }
-        public static IEnumerable<T> GetPlugins<T>() where T : Plugin.IPlugin
+        public static IEnumerable<T> GetPlugins<T>() where T : IPlugin
         {
-            return from plugin in App.Plugins where plugin is T select (T)plugin;
+            return from plugin in Plugins where plugin is T select (T)plugin;
         }
 
         private static void SendExceptionReport(Exception ex)
@@ -203,7 +203,7 @@ namespace ArmA.Studio
                 writer.WriteStartElement("root");
                 #region <version>
                 writer.WriteStartElement("version");
-                writer.WriteString(App.CurrentVersion.ToString());
+                writer.WriteString(CurrentVersion.ToString());
                 writer.WriteEndElement();
 
                 #endregion

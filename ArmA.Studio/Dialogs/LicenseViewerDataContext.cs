@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using ArmA.Studio.Data.UI.Commands;
 using Utility;
@@ -19,14 +20,14 @@ namespace ArmA.Studio.Dialogs
         private bool? _DialogResult;
 
 
-        public string WindowHeader { get { return Properties.Localization.LicenseViewer_Header; } }
-        public string OKButtonText { get { return Properties.Localization.OK; } }
-        public bool OKButtonEnabled { get { return true; } }
+        public string WindowHeader => Properties.Localization.LicenseViewer_Header;
+        public string OKButtonText => Properties.Localization.OK;
+        public bool OKButtonEnabled => true;
 
         public LicenseViewerDataContext()
         {
-            this.CmdOKButtonPressed = new RelayCommand(Cmd_OKButtonPressed);
-            var arr = App.Current.TryFindResource("Licenses") as Array;
+            this.CmdOKButtonPressed = new RelayCommand(this.Cmd_OKButtonPressed);
+            var arr = Application.Current.TryFindResource("Licenses") as Array;
             this.Licenses = new ObservableCollection<Data.LicenseInfo>(arr.Cast<Data.LicenseInfo>().Concat(App.GetPlugins<Plugin.ILicenseProviderPlugin>().SelectMany((p) => p.LicenseInfos)));
         }
         public void Cmd_OKButtonPressed(object param)

@@ -10,7 +10,7 @@ namespace ArmA.Studio.Dialogs
         public ReportDialog(ReportDialogDataContext dc)
         {
             this.DataContext = dc;
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

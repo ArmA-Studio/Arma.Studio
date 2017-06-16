@@ -22,7 +22,7 @@ namespace ArmA.Studio.Dialogs
         public LicenseViewer()
         {
             this.DataContext = new LicenseViewerDataContext();
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

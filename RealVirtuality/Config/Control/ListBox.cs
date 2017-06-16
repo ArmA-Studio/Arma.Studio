@@ -2,6 +2,6 @@
 {
     public class ListBox : ControlBase
     {
-        public override EType ControlType { get { return EType.CT_LISTBOX; } }
+        public override EType ControlType => EType.CT_LISTBOX;
     }
 }

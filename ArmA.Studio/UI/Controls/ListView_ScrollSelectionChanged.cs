@@ -11,7 +11,7 @@ namespace ArmA.Studio.UI.Controls
     {
         public ListView_ScrollSelectionChanged() : base()
         {
-            this.SelectionChanged += ListBox_ScrollSelectionChanged_SelectionChanged;
+            this.SelectionChanged += this.ListBox_ScrollSelectionChanged_SelectionChanged;
         }
 
         private void ListBox_ScrollSelectionChanged_SelectionChanged(object sender, SelectionChangedEventArgs e)

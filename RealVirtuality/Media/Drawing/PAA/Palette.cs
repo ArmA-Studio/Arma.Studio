@@ -10,7 +10,7 @@ namespace RealVirtuality.Media.Drawing.PAA
 {
     public struct Palette
     {
-        public ushort TripletCount { get { return (ushort)(this.BGRTriplets.Length / 3); } }
+        public ushort TripletCount => (ushort)(this.BGRTriplets.Length / 3);
         public byte[] BGRTriplets { get; private set; }
         public Color[] Triplets
         {
@@ -18,11 +18,11 @@ namespace RealVirtuality.Media.Drawing.PAA
             {
                 var list = new List<Color>();
 
-                for (int i = 2; i < TripletCount; i++)
+                for (int i = 2; i < this.TripletCount; i++)
                 {
                     if (i % 3 == 2)
                     {
-                        list.Add(Color.FromArgb(BGRTriplets[i], BGRTriplets[i - 1], BGRTriplets[i - 2]));
+                        list.Add(Color.FromArgb(this.BGRTriplets[i], this.BGRTriplets[i - 1], this.BGRTriplets[i - 2]));
                     }
                 }
 

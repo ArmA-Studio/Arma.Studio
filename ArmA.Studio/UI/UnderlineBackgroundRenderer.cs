@@ -22,15 +22,15 @@ namespace ArmA.Studio.UI
         public UnderlineBackgroundRenderer(CodeEditorBaseDataContext cebdc)
         {
             this.EditorDataContext = cebdc;
-            cebdc.OnLintingInfoUpdated += Cebdc_OnLintingInfoUpdated;
+            cebdc.OnLintingInfoUpdated += this.Cebdc_OnLintingInfoUpdated;
         }
 
         private void Cebdc_OnLintingInfoUpdated(object sender, EventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() => this.ThisView?.InvalidateLayer(KnownLayer.Selection));
+            Application.Current.Dispatcher.Invoke(() => this.ThisView?.InvalidateLayer(KnownLayer.Selection));
         }
 
-        public KnownLayer Layer { get { return KnownLayer.Selection; } }
+        public KnownLayer Layer => KnownLayer.Selection;
 
         public IEnumerable<LintInfo> SyntaxErrors => this.EditorDataContext.Linter.LinterInfo;
 
@@ -73,7 +73,7 @@ namespace ArmA.Studio.UI
                     using (var streamGeo = geometry.Open())
                     {
                         streamGeo.BeginFigure(rect.BottomLeft, false, false);
-                        streamGeo.PolyLineTo(GetPoints(rect, vOffset, count).ToArray(), true, false);
+                        streamGeo.PolyLineTo(this.GetPoints(rect, vOffset, count).ToArray(), true, false);
                     }
                     geometry.Freeze();
                     Pen pen;

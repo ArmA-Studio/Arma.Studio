@@ -27,14 +27,14 @@ namespace ArmA.Studio.Dialogs
         public object SelectedItem { get { return this._SelectedItem; } set { this._SelectedItem = value; this.UpdateOkButtonEnabled(); this.RaisePropertyChanged(); } }
         private object _SelectedItem;
 
-        public string WindowHeader { get { return Properties.Localization.CreateNewProjectDialog_Header; } }
+        public string WindowHeader => Properties.Localization.CreateNewProjectDialog_Header;
 
-        public string OKButtonText { get { return Properties.Localization.OK; } }
+        public string OKButtonText => Properties.Localization.OK;
 
         public bool OKButtonEnabled { get { return this._OKButtonEnabled; } set { this._OKButtonEnabled = value; this.RaisePropertyChanged(); } }
         private bool _OKButtonEnabled;
 
-        public EProjectType FinalType { get { return (EProjectType)Enum.Parse(typeof(EProjectType), (this.SelectedItem as string)); } }
+        public EProjectType FinalType => (EProjectType)Enum.Parse(typeof(EProjectType), (this.SelectedItem as string));
 
         public CreateNewProjectDialogDataContext()
         {

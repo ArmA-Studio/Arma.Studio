@@ -39,238 +39,240 @@ namespace RealVirtuality.Config.Parser
 
         public Parser(Scanner scanner) {
             this.scanner = scanner;
-            errors = new Errors();
+            this.errors = new Errors();
         }
         
         bool peekCompare(params int[] values)
         {
-            Token t = la;
+            Token t = this.la;
             foreach(int i in values)
             {
                 if(i != -1 && t.kind != i)
                 {
-                    scanner.ResetPeek();
+                    this.scanner.ResetPeek();
                     return false;
                 }
                 if (t.next == null)
-                    t = scanner.Peek();
+                    t = this.scanner.Peek();
                 else
                     t = t.next;
             }
-            scanner.ResetPeek();
+            this.scanner.ResetPeek();
             return true;
         }
         bool peekString(int count, params string[] values)
         {
-            Token t = la;
+            Token t = this.la;
             for(; count > 0; count --)
-                t = scanner.Peek();
+                t = this.scanner.Peek();
             foreach(var it in values)
             {
                 if(t.val == it)
                 {
-                    scanner.ResetPeek();
+                    this.scanner.ResetPeek();
                     return true;
                 }
             }
-            scanner.ResetPeek();
+            this.scanner.ResetPeek();
             return false;
         }
         
         
         void SynErr (int n) {
-            if (errDist >= minErrDist) errors.SynErr(la.line, la.col, n, t.charPos, t == null ? 0 : t.val.Length);
-            errDist = 0;
+            if (this.errDist >= minErrDist) this.errors.SynErr(this.la.line, this.la.col, n, this.t.charPos, this.t == null ? 0 : this.t.val.Length);
+            this.errDist = 0;
         }
         void Warning (string msg) {
-            errors.Warning(la.line, la.col, msg);
+            this.errors.Warning(this.la.line, this.la.col, msg);
         }
 
         public void SemErr (string msg) {
-            if (errDist >= minErrDist) errors.SemErr(t.line, t.col, msg, t.charPos, t == null ? 0 : t.val.Length);
-            errDist = 0;
+            if (this.errDist >= minErrDist) this.errors.SemErr(this.t.line, this.t.col, msg, this.t.charPos, this.t == null ? 0 : this.t.val.Length);
+            this.errDist = 0;
         }
         
         void Get () {
             for (;;) {
-                t = la;
-                la = scanner.Scan();
-                if (la.kind <= maxT) { ++errDist; break; }
-    
-                la = t;
+                this.t = this.la;
+                this.la = this.scanner.Scan();
+                if (this.la.kind <= maxT) { ++this.errDist; break; }
+
+                this.la = this.t;
             }
         }
         
         void Expect (int n) {
-            if (la.kind==n) Get(); else { SynErr(n); }
+            if (this.la.kind==n) this.Get(); else {
+                this.SynErr(n); }
         }
         
         bool StartOf (int s) {
-            return set[s, la.kind];
+            return set[s, this.la.kind];
         }
         
         void ExpectWeak (int n, int follow) {
-            if (la.kind == n) Get();
+            if (this.la.kind == n) this.Get();
             else {
-                SynErr(n);
-                while (!StartOf(follow)) Get();
+                this.SynErr(n);
+                while (!this.StartOf(follow)) this.Get();
             }
         }
 
 
         bool WeakSeparator(int n, int syFol, int repFol) {
-            int kind = la.kind;
-            if (kind == n) {Get(); return true;}
-            else if (StartOf(repFol)) {return false;}
+            int kind = this.la.kind;
+            if (kind == n) {
+                this.Get(); return true;}
+            else if (this.StartOf(repFol)) {return false;}
             else {
-                SynErr(n);
+                this.SynErr(n);
                 while (!(set[syFol, kind] || set[repFol, kind] || set[0, kind])) {
-                    Get();
-                    kind = la.kind;
+                    this.Get();
+                    kind = this.la.kind;
                 }
-                return StartOf(syFol);
+                return this.StartOf(syFol);
             }
         }
 
         
     	void CONFIGFILE() {
-		CONFIG(Root);
-		while (la.kind == 6) {
-			CONFIG(Root);
+	        this.CONFIG(this.Root);
+		while (this.la.kind == 6) {
+		    this.CONFIG(this.Root);
 		}
 	}
 
 	void CONFIG(ConfigEntry parent) {
-		ConfigEntry cur = Root == null ? null : new ConfigEntry(parent); if(Root != null) cur.IsField = true; 
-		Expect(6);
-		if(Root != null) cur.FullStart = doc.ContentStart.GetPointerFromCharOffset(t.charPos); 
-		Expect(5);
-		if(Root != null) {cur.NameStart = doc.ContentStart.GetPointerFromCharOffset(t.charPos);
-		cur.NameEnd = doc.ContentStart.GetPointerFromCharOffset(t.charPos + t.val.Length);}
+		ConfigEntry cur = this.Root == null ? null : new ConfigEntry(parent); if(this.Root != null) cur.IsField = true;
+	    this.Expect(6);
+		if(this.Root != null) cur.FullStart = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos);
+	    this.Expect(5);
+		if(this.Root != null) {cur.NameStart = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos);
+		cur.NameEnd = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos + this.t.val.Length);}
 		
-		if (la.kind == 7) {
-			Get();
-			Expect(5);
-			if(Root != null) {cur.ParentStart = doc.ContentStart.GetPointerFromCharOffset(t.charPos);
-			cur.ParentEnd = doc.ContentStart.GetPointerFromCharOffset(t.charPos + t.val.Length);}
+		if (this.la.kind == 7) {
+		    this.Get();
+		    this.Expect(5);
+			if(this.Root != null) {cur.ParentStart = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos);
+			cur.ParentEnd = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos + this.t.val.Length);}
 			
 		}
-		if (la.kind == 8) {
-			Get();
-			if(Root != null) cur.ContentStart = doc.ContentStart.GetPointerFromCharOffset(t.charPos + t.val.Length); 
-			while (la.kind == 5 || la.kind == 6) {
-				if (la.kind == 5) {
-					FIELD(cur);
+		if (this.la.kind == 8) {
+		    this.Get();
+			if(this.Root != null) cur.ContentStart = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos + this.t.val.Length); 
+			while (this.la.kind == 5 || this.la.kind == 6) {
+				if (this.la.kind == 5) {
+				    this.FIELD(cur);
 				} else {
-					CONFIG(cur);
+				    this.CONFIG(cur);
 				}
 			}
-			Expect(9);
-			if(Root != null) cur.ContentEnd = doc.ContentStart.GetPointerFromCharOffset(t.charPos); 
+		    this.Expect(9);
+			if(this.Root != null) cur.ContentEnd = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos); 
 		}
-		Expect(10);
-		if(Root != null) cur.FullEnd = doc.ContentStart.GetPointerFromCharOffset(t.charPos + t.val.Length); 
+	    this.Expect(10);
+		if(this.Root != null) cur.FullEnd = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos + this.t.val.Length); 
 	}
 
 	void FIELD(ConfigEntry parent) {
-		ConfigEntry cur = Root == null ? null : new ConfigEntry(parent); if(Root != null) cur.IsField = true; 
-		Expect(5);
-		if(Root != null) {cur.FullStart = cur.NameStart = doc.ContentStart.GetPointerFromCharOffset(t.charPos);
-		cur.NameEnd = doc.ContentStart.GetPointerFromCharOffset(t.charPos + t.val.Length);}
+		ConfigEntry cur = this.Root == null ? null : new ConfigEntry(parent); if(this.Root != null) cur.IsField = true;
+	    this.Expect(5);
+		if(this.Root != null) {cur.FullStart = cur.NameStart = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos);
+		cur.NameEnd = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos + this.t.val.Length);}
 		
-		if (la.kind == 11) {
-			Get();
-			Expect(12);
+		if (this.la.kind == 11) {
+		    this.Get();
+		    this.Expect(12);
 		}
-		Expect(13);
-		if (la.kind == 8) {
-			ARRAY();
-			if(Root != null) {cur.ContentStart = doc.ContentStart.GetPointerFromCharOffset(t.charPos);
-			cur.ContentEnd = doc.ContentStart.GetPointerFromCharOffset(t.charPos + t.val.Length);}
+	    this.Expect(13);
+		if (this.la.kind == 8) {
+		    this.ARRAY();
+			if(this.Root != null) {cur.ContentStart = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos);
+			cur.ContentEnd = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos + this.t.val.Length);}
 			
-		} else if (la.kind == 1 || la.kind == 2) {
-			SCALAR();
-			if(Root != null) {cur.ContentStart = doc.ContentStart.GetPointerFromCharOffset(t.charPos);
-			cur.ContentEnd = doc.ContentStart.GetPointerFromCharOffset(t.charPos + t.val.Length);}
+		} else if (this.la.kind == 1 || this.la.kind == 2) {
+		    this.SCALAR();
+			if(this.Root != null) {cur.ContentStart = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos);
+			cur.ContentEnd = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos + this.t.val.Length);}
 			
-		} else if (la.kind == 3 || la.kind == 4) {
-			STRING();
-			if(Root != null) {cur.ContentStart = doc.ContentStart.GetPointerFromCharOffset(t.charPos);
-			cur.ContentEnd = doc.ContentStart.GetPointerFromCharOffset(t.charPos + t.val.Length);}
+		} else if (this.la.kind == 3 || this.la.kind == 4) {
+		    this.STRING();
+			if(this.Root != null) {cur.ContentStart = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos);
+			cur.ContentEnd = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos + this.t.val.Length);}
 			
-		} else if (la.kind == 14 || la.kind == 15) {
-			BOOLEAN();
-			if(Root != null) {cur.ContentStart = doc.ContentStart.GetPointerFromCharOffset(t.charPos);
-			cur.ContentEnd = doc.ContentStart.GetPointerFromCharOffset(t.charPos + t.val.Length);}
+		} else if (this.la.kind == 14 || this.la.kind == 15) {
+		    this.BOOLEAN();
+			if(this.Root != null) {cur.ContentStart = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos);
+			cur.ContentEnd = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos + this.t.val.Length);}
 			
-		} else if (StartOf(1)) {
-			Get();
-			if(Root != null) cur.ContentStart = doc.ContentStart.GetPointerFromCharOffset(t.charPos); 
-			while (StartOf(2)) {
-				Get();
+		} else if (this.StartOf(1)) {
+		    this.Get();
+			if(this.Root != null) cur.ContentStart = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos); 
+			while (this.StartOf(2)) {
+			    this.Get();
 			}
-			if(Root != null) cur.ContentEnd = doc.ContentStart.GetPointerFromCharOffset(t.charPos + t.val.Length); 
-		} else SynErr(18);
-		Expect(10);
-		if(Root != null) cur.FullEnd = doc.ContentStart.GetPointerFromCharOffset(t.charPos + t.val.Length); 
+			if(this.Root != null) cur.ContentEnd = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos + this.t.val.Length); 
+		} else this.SynErr(18);
+	    this.Expect(10);
+		if(this.Root != null) cur.FullEnd = this.doc.ContentStart.GetPointerFromCharOffset(this.t.charPos + this.t.val.Length); 
 	}
 
 	void ARRAY() {
-		Expect(8);
-		if (StartOf(3)) {
-			if (la.kind == 1 || la.kind == 2) {
-				SCALAR();
-			} else if (la.kind == 3 || la.kind == 4) {
-				STRING();
+	    this.Expect(8);
+		if (this.StartOf(3)) {
+			if (this.la.kind == 1 || this.la.kind == 2) {
+			    this.SCALAR();
+			} else if (this.la.kind == 3 || this.la.kind == 4) {
+			    this.STRING();
 			} else {
-				BOOLEAN();
+			    this.BOOLEAN();
 			}
-			while (la.kind == 16) {
-				Get();
-				if (la.kind == 1 || la.kind == 2) {
-					SCALAR();
-				} else if (la.kind == 3 || la.kind == 4) {
-					STRING();
-				} else if (la.kind == 14 || la.kind == 15) {
-					BOOLEAN();
-				} else SynErr(19);
+			while (this.la.kind == 16) {
+			    this.Get();
+				if (this.la.kind == 1 || this.la.kind == 2) {
+				    this.SCALAR();
+				} else if (this.la.kind == 3 || this.la.kind == 4) {
+				    this.STRING();
+				} else if (this.la.kind == 14 || this.la.kind == 15) {
+				    this.BOOLEAN();
+				} else this.SynErr(19);
 			}
 		}
-		Expect(9);
+	    this.Expect(9);
 	}
 
 	void SCALAR() {
-		if (la.kind == 1) {
-			Get();
-		} else if (la.kind == 2) {
-			Get();
-		} else SynErr(20);
+		if (this.la.kind == 1) {
+		    this.Get();
+		} else if (this.la.kind == 2) {
+		    this.Get();
+		} else this.SynErr(20);
 	}
 
 	void STRING() {
-		if (la.kind == 3) {
-			Get();
-		} else if (la.kind == 4) {
-			Get();
-		} else SynErr(21);
+		if (this.la.kind == 3) {
+		    this.Get();
+		} else if (this.la.kind == 4) {
+		    this.Get();
+		} else this.SynErr(21);
 	}
 
 	void BOOLEAN() {
-		if (la.kind == 14) {
-			Get();
-		} else if (la.kind == 15) {
-			Get();
-		} else SynErr(22);
+		if (this.la.kind == 14) {
+		    this.Get();
+		} else if (this.la.kind == 15) {
+		    this.Get();
+		} else this.SynErr(22);
 	}
 
 
     
         public void Parse() {
-		la = new Token();
-		la.val = "";		
-		Get();
-    		CONFIGFILE();
-		Expect(0);
+            this.la = new Token();
+            this.la.val = "";
+            this.Get();
+            this.CONFIGFILE();
+            this.Expect(0);
 
         }
         
@@ -286,12 +288,12 @@ namespace RealVirtuality.Config.Parser
 
     public class Errors {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        public int Count { get { return this.ErrorList.Count; } }
+        public int Count => this.ErrorList.Count;
         public List<Tuple<int, int, string>> ErrorList;
         public string errMsgFormat = "line {0} col {1}: {2}"; // 0=line, 1=column, 2=text
         public Errors()
         {
-            ErrorList = new List<Tuple<int, int, string>>();
+            this.ErrorList = new List<Tuple<int, int, string>>();
         }
 
         public virtual void SynErr (int line, int col, int n, int offset, int length) {
@@ -323,13 +325,13 @@ namespace RealVirtuality.Config.Parser
 
                 default: s = "error " + n; break;
             }
-            logger.Error(string.Format(errMsgFormat, line, col, s));
-                    ErrorList.Add(new Tuple<int, int, string>(offset, length, s));
+            logger.Error(string.Format(this.errMsgFormat, line, col, s));
+            this.ErrorList.Add(new Tuple<int, int, string>(offset, length, s));
 }
 
         public virtual void SemErr (int line, int col, string s, int offset, int length) {
-            logger.Error(string.Format(errMsgFormat, line, col, s));
-                    ErrorList.Add(new Tuple<int, int, string>(offset, length, s));
+            logger.Error(string.Format(this.errMsgFormat, line, col, s));
+            this.ErrorList.Add(new Tuple<int, int, string>(offset, length, s));
 }
         
         public virtual void SemErr (string s) {
@@ -337,7 +339,7 @@ namespace RealVirtuality.Config.Parser
         }
         
         public virtual void Warning (int line, int col, string s) {
-            logger.Warn(string.Format(errMsgFormat, line, col, s));
+            logger.Warn(string.Format(this.errMsgFormat, line, col, s));
         }
         
         public virtual void Warning(string s) {

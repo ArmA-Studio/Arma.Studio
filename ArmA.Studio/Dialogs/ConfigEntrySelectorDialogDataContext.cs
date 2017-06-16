@@ -21,16 +21,16 @@ namespace ArmA.Studio.Dialogs
         public bool? DialogResult { get { return this._DialogResult; } set { this._DialogResult = value; this.RaisePropertyChanged(); } }
         private bool? _DialogResult;
 
-        public string WindowHeader { get { return Properties.Localization.ConfigEntrySelectorDialog_Header; } }
+        public string WindowHeader => Properties.Localization.ConfigEntrySelectorDialog_Header;
 
-        public string OKButtonText { get { return Properties.Localization.Choose; }}
+        public string OKButtonText => Properties.Localization.Choose;
 
         public bool OKButtonEnabled { get { return this._OKButtonEnabled; } set { this._OKButtonEnabled = value; this.RaisePropertyChanged(); } }
         private bool _OKButtonEnabled;
 
         public ConfigEntrySelectorDialogDataContext()
         {
-            this.CmdOKButtonPressed = new RelayCommand(Cmd_OKButtonPressed);
+            this.CmdOKButtonPressed = new RelayCommand(this.Cmd_OKButtonPressed);
             this._ThisCollection = new ObservableCollection<object>();
             this._OKButtonEnabled = false;
         }

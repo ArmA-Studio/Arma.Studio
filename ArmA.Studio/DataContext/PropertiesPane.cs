@@ -9,6 +9,6 @@ namespace ArmA.Studio.DataContext
 {
     public sealed class PropertiesPane : PanelBase
     {
-        public override string Title { get { return Properties.Localization.PanelDisplayName_Properties; } }
+        public override string Title => Properties.Localization.PanelDisplayName_Properties;
     }
 }

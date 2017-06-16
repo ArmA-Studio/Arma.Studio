@@ -17,7 +17,7 @@ namespace Utility.Collections
 
         public T this[int index] { get { return (T)this.InnerList[index]; } set { this.InnerList[index] = value; } }
 
-        public bool IsReadOnly { get { return this.InnerList.IsReadOnly; } }
+        public bool IsReadOnly => this.InnerList.IsReadOnly;
 
         public ObservableSortedCollection() { }
         public ObservableSortedCollection(ICollection<T> col)

@@ -22,7 +22,7 @@ namespace ArmA.Studio.Dialogs
         public PropertiesDialog(PropertiesDialogDataContext dc)
         {
             this.DataContext = dc;
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

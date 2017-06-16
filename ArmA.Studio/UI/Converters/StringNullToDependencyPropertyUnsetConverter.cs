@@ -16,7 +16,7 @@ namespace ArmA.Studio.UI.Converters
             return string.IsNullOrWhiteSpace(value as string) ? DependencyProperty.UnsetValue : value;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value;
         }

@@ -22,7 +22,7 @@ namespace ArmA.Studio.Dialogs
         public DocumentSelectorDialog(DocumentSelectorDialogDataContext dc)
         {
             this.DataContext = dc;
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

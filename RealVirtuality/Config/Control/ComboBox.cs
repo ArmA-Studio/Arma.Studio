@@ -2,6 +2,6 @@
 {
     public class ComboBox : ControlBase
     {
-        public override EType ControlType { get { return EType.CT_COMBO; } }
+        public override EType ControlType => EType.CT_COMBO;
     }
 }

@@ -16,11 +16,11 @@ namespace ArmA.Studio.Data.UI.Behaviors
         {
             if(this.AssociatedObject is Selector)
             {
-                (this.AssociatedObject as Selector).SelectionChanged += Selector_SelectionChanged;
+                (this.AssociatedObject as Selector).SelectionChanged += this.Selector_SelectionChanged;
             }
             else if(this.AssociatedObject is TreeView)
             {
-                (this.AssociatedObject as TreeView).SelectedItemChanged += TreeView_SelectedItemChanged;
+                (this.AssociatedObject as TreeView).SelectedItemChanged += this.TreeView_SelectedItemChanged;
             }
             else
             {
@@ -32,11 +32,11 @@ namespace ArmA.Studio.Data.UI.Behaviors
         {
             if (this.AssociatedObject is Selector)
             {
-                (this.AssociatedObject as Selector).SelectionChanged -= Selector_SelectionChanged;
+                (this.AssociatedObject as Selector).SelectionChanged -= this.Selector_SelectionChanged;
             }
             else if (this.AssociatedObject is TreeView)
             {
-                (this.AssociatedObject as TreeView).SelectedItemChanged -= TreeView_SelectedItemChanged;
+                (this.AssociatedObject as TreeView).SelectedItemChanged -= this.TreeView_SelectedItemChanged;
             }
             else
             {

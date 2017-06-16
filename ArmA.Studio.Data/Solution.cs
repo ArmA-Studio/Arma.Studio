@@ -97,12 +97,12 @@ namespace ArmA.Studio.Data
         }
 
         #region Xml Serialization
-        public static void Serialize(Solution solution, System.IO.Stream stream)
+        public static void Serialize(Solution solution, Stream stream)
         {
             var serializer = new XmlSerializer(typeof(Solution));
             serializer.Serialize(stream, solution);
         }
-        public static Solution Deserialize(System.IO.Stream stream, Uri fileUri)
+        public static Solution Deserialize(Stream stream, Uri fileUri)
         {
             var serializer = new XmlSerializer(typeof(Solution));
             var sol = serializer.Deserialize(stream) as Solution;

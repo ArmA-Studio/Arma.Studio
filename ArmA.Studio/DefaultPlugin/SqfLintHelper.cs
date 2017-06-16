@@ -13,7 +13,7 @@ namespace ArmA.Studio.DefaultPlugin
     {
         public IEnumerable<LintInfo> LinterInfo { get; set; }
 
-        public void LintWriteCache(Stream stream, ProjectFile file) => this.LinterInfo = Lint(stream, file);
+        public void LintWriteCache(Stream stream, ProjectFile file) => this.LinterInfo = this.Lint(stream, file);
 
         public IEnumerable<LintInfo> Lint(Stream stream, ProjectFile file)
         {

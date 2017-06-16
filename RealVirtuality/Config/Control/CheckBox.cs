@@ -2,6 +2,6 @@
 {
     public class CheckBox : ControlBase
     {
-        public override EType ControlType { get { return EType.CT_CHECKBOX; } }
+        public override EType ControlType => EType.CT_CHECKBOX;
     }
 }

@@ -37,7 +37,7 @@ namespace ArmA.Studio.Plugin
         }
 
         private List<T> _Ts;
-        public IEnumerable<T> Plugins { get { return this._Ts; } }
+        public IEnumerable<T> Plugins => this._Ts;
 
         public PluginManager()
         {

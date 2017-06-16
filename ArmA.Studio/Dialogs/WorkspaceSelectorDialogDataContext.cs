@@ -20,15 +20,15 @@ namespace ArmA.Studio.Dialogs
         public IEnumerable<string> WorkSpaceListBox { get { return this._WorkSpaceListBox; } set { this._WorkSpaceListBox = value; this.RaisePropertyChanged(); } }
         private IEnumerable<string> _WorkSpaceListBox;
 
-        public ICommand CmdBrowse => new RelayCommand(Cmd_Browse);
-        public ICommand CmdOKButtonPressed => new RelayCommand(Cmd_Ok);
+        public ICommand CmdBrowse => new RelayCommand(this.Cmd_Browse);
+        public ICommand CmdOKButtonPressed => new RelayCommand(this.Cmd_Ok);
 
         public bool? DialogResult { get { return this._DialogResult; } set { this._DialogResult = value; this.RaisePropertyChanged(); } }
         private bool? _DialogResult;
 
-        public string WindowHeader { get { return Properties.Localization.WorkspaceSelectorDialog_Header; } }
+        public string WindowHeader => Properties.Localization.WorkspaceSelectorDialog_Header;
 
-        public string OKButtonText { get { return Properties.Localization.OK; } }
+        public string OKButtonText => Properties.Localization.OK;
 
         public bool OKButtonEnabled { get { return this._OKButtonEnabled; } set { this._OKButtonEnabled = value; this.RaisePropertyChanged(); } }
         private bool _OKButtonEnabled;
@@ -70,7 +70,7 @@ namespace ArmA.Studio.Dialogs
             };
             if (!string.IsNullOrWhiteSpace(this.CurrentPath))
             {
-                cofd.InitialDirectory = CurrentPath.Replace('/', '\\');
+                cofd.InitialDirectory = this.CurrentPath.Replace('/', '\\');
             }
             var dlgResult = cofd.ShowDialog();
             if (dlgResult == CommonFileDialogResult.Ok)

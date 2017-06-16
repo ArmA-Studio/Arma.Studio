@@ -2,6 +2,6 @@
 {
     public class ToolBox : ControlBase
     {
-        public override EType ControlType { get { return EType.CT_TOOLBOX; } }
+        public override EType ControlType => EType.CT_TOOLBOX;
     }
 }

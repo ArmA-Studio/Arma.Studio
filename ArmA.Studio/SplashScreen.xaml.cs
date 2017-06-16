@@ -22,7 +22,7 @@ namespace ArmA.Studio
         public SplashScreen(SplashScreenDataContext dc)
         {
             this.DataContext = dc;
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

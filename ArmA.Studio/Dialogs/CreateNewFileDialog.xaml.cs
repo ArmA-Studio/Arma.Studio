@@ -22,7 +22,7 @@ namespace ArmA.Studio.Dialogs
         public CreateNewFileDialog(CreateNewFileDialogDataContext dc)
         {
             this.DataContext = dc;
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

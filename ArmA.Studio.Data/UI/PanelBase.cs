@@ -12,6 +12,6 @@ namespace ArmA.Studio.Data.UI
 {
     public abstract class PanelBase : DockableBase
     {
-        public virtual string Icon { get { return string.Empty; } }
+        public virtual string Icon => string.Empty;
     }
 }

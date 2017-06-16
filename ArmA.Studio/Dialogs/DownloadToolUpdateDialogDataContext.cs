@@ -7,24 +7,24 @@ using ArmA.Studio.Data.UI.Commands;
 
 namespace ArmA.Studio.Dialogs
 {
-    public class DownloadToolUpdateDialogDataContext : INotifyPropertyChanged, IDialogContext
+    public class DownloadToolUpdateDialogDataContext : IDialogContext
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
 
-        public ICommand CmdOKButtonPressed { get { return this._CmdOKButtonPressed; } set { this._CmdOKButtonPressed = value; this.RaisePropertyChanged(); } }
-        private ICommand _CmdOKButtonPressed;
+        public ICommand CmdOKButtonPressed { get { return this._CmdOkButtonPressed; } set { this._CmdOkButtonPressed = value; this.RaisePropertyChanged(); } }
+        private ICommand _CmdOkButtonPressed;
         public ICommand CmdInitialized { get { return new RelayCommandAsync((p) => this.Window_Initialized()); } }
 
         public bool? DialogResult { get { return this._DialogResult; } set { this._DialogResult = value; this.RaisePropertyChanged(); } }
         private bool? _DialogResult;
 
-        public string Title { get { return string.Format(Properties.Localization.DownloadingX, DownloadInfo.name); } }
-        public string WindowHeader { get { return string.Format(Properties.Localization.DownloadingX, DownloadInfo.version); } }
-        public string OKButtonText { get { return Properties.Localization.InstallUpdate; } }
+        public string Title => string.Format(Properties.Localization.DownloadingX, this.DownloadInfo.name);
+        public string WindowHeader => string.Format(Properties.Localization.DownloadingX, this.DownloadInfo.version);
+        public string OKButtonText => Properties.Localization.InstallUpdate;
 
-        public bool OKButtonEnabled { get { return this._OKButtonEnabled; } set { this._OKButtonEnabled = value; this.RaisePropertyChanged(); } }
-        private bool _OKButtonEnabled;
+        public bool OKButtonEnabled { get { return this._OkButtonEnabled; } set { this._OkButtonEnabled = value; this.RaisePropertyChanged(); } }
+        private bool _OkButtonEnabled;
 
         public double ProgressValue { get { return this._ProgressValue; } set { this._ProgressValue = value; this.RaisePropertyChanged(); } }
         private double _ProgressValue;
@@ -40,12 +40,12 @@ namespace ArmA.Studio.Dialogs
         public DownloadToolUpdateDialogDataContext(UpdateHelper.DownloadInfo info)
         {
             this.DownloadInfo = info;
-            this._OKButtonEnabled = false;
+            this._OkButtonEnabled = false;
         }
 
         public async Task Window_Initialized()
         {
-            var file = await UpdateHelper.DownloadFile(DownloadInfo, new Progress<Tuple<long, long>>((t) =>
+            var file = await UpdateHelper.DownloadFile(this.DownloadInfo, new Progress<Tuple<long, long>>((t) =>
             {
                 this.CurrentProgress = t.Item1;
                 this.FileSize = t.Item2;

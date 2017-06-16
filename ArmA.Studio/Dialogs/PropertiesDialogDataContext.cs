@@ -25,11 +25,11 @@ namespace ArmA.Studio.Dialogs
         public bool? DialogResult { get { return this._DialogResult; } set { this._DialogResult = value; this.RaisePropertyChanged(); } }
         private bool? _DialogResult;
 
-        public string WindowHeader { get { return Properties.Localization.PropertiesDialog_Header; } }
+        public string WindowHeader => Properties.Localization.PropertiesDialog_Header;
 
-        public string OKButtonText { get { return Properties.Localization.OK; } }
+        public string OKButtonText => Properties.Localization.OK;
 
-        public bool OKButtonEnabled { get { return true; } }
+        public bool OKButtonEnabled => true;
 
         public bool RestartRequired { get; internal set; }
 

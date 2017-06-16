@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Input;
-using System.Windows.Documents;
-using System.Xml;
-using ICSharpCode.AvalonEdit.Document;
-using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using Utility.Collections;
 using ArmA.Studio.Data.UI;
 using ArmA.Studio.Data.UI.Commands;
+using ArmA.Studio.LoggerTargets;
+using ICSharpCode.AvalonEdit.Document;
+using Utility.Collections;
+using Localization = ArmA.Studio.Properties.Localization;
 
 namespace ArmA.Studio.DataContext
 {
@@ -22,11 +15,57 @@ namespace ArmA.Studio.DataContext
     {
         private static OutputPane Instance;
         private static readonly TextDocument NullDocument = new TextDocument();
-        private static Dictionary<string, TextDocument> DocumentDictionary { get; set; }
-        private static void Logger_OnLog(object sender, LoggerTargets.SubscribableTarget.OnLogEventArgs e)
+        private ObservableSortedCollection<string> _AvailableTargets;
+        private object _SelectedTarget;
+
+        public OutputPane()
         {
-            if (App.Current == null) { return; }
-            App.Current.Dispatcher.InvokeAsync(() =>
+            this._AvailableTargets = new ObservableSortedCollection<string>(DocumentDictionary.Keys);
+            this.CmdClearOutputWindow = new RelayCommand(p => this.Document.Text = string.Empty);
+            Instance = this;
+        }
+
+        private static Dictionary<string, TextDocument> DocumentDictionary { get; set; }
+
+        public override string Title => Localization.PanelDisplayName_Output;
+
+        public override string Icon => @"Resources\Pictograms\Output\Output.ico";
+
+        public ICommand CmdClearOutputWindow { get; }
+
+
+        public TextDocument Document => !(this.SelectedTarget is string)
+            ? NullDocument
+            : DocumentDictionary[(string) this.SelectedTarget];
+
+        public object SelectedTarget
+        {
+            get { return this._SelectedTarget; }
+            set
+            {
+                this._SelectedTarget = value;
+                this.RaisePropertyChanged();
+                this.RaisePropertyChanged(nameof(this.Document));
+            }
+        }
+
+        public ObservableSortedCollection<string> AvailableTargets
+        {
+            get { return this._AvailableTargets; }
+            set
+            {
+                this._AvailableTargets = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        private static void Logger_OnLog(object sender, SubscribableTarget.OnLogEventArgs e)
+        {
+            if (Application.Current == null)
+            {
+                return;
+            }
+            Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 if (!DocumentDictionary.ContainsKey(e.Logger))
                 {
@@ -38,36 +77,15 @@ namespace ArmA.Studio.DataContext
                     }
                 }
                 var doc = DocumentDictionary[e.Logger];
-                doc.Insert(doc.TextLength, string.Concat(DateTime.Now.ToString("HH:mm:ss")," - ",e.Severity, ": ", e.Message, "\r\n"));
+                doc.Insert(doc.TextLength,
+                    string.Concat(DateTime.Now.ToString("HH:mm:ss"), " - ", e.Severity, ": ", e.Message, "\r\n"));
             });
         }
+
         internal static void Initialize()
         {
             DocumentDictionary = new Dictionary<string, TextDocument>();
             App.SubscribableLoggerTarget.OnLog += Logger_OnLog;
         }
-
-        public override string Title { get { return Properties.Localization.PanelDisplayName_Output; } }
-
-        public override string Icon { get { return @"Resources\Pictograms\Output\Output.ico"; } }
-
-        public ICommand CmdClearOutputWindow { get; private set; }
-
-
-        public TextDocument Document { get { return this.SelectedTarget == null ? NullDocument : DocumentDictionary[this.SelectedTarget as string]; } }
-
-        public object SelectedTarget { get { return this._SelectedTarget; } set { this._SelectedTarget = value; this.RaisePropertyChanged(); this.RaisePropertyChanged(nameof(this.Document)); } }
-        private object _SelectedTarget;
-
-        public ObservableSortedCollection<string> AvailableTargets { get { return this._AvailableTargets; } set { this._AvailableTargets = value; this.RaisePropertyChanged(); } }
-        private ObservableSortedCollection<string> _AvailableTargets;
-
-        public OutputPane()
-        {
-            this._AvailableTargets = new ObservableSortedCollection<string>(DocumentDictionary.Keys);
-            this.CmdClearOutputWindow = new RelayCommand((p) => this.Document.Text = string.Empty);
-            Instance = this;
-        }
-
     }
 }

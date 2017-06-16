@@ -53,23 +53,23 @@ namespace RealVirtuality.Media.Drawing.PAA.TaggUtil
             this.Data.DataRaw[off + 7] = (byte)(value >> (sizeof(byte) * 0));
         }
 
-        public ulong Offset_1048576 { get { return GetUlongFromOffset(sizeof(ulong) * 16); } set { SetUlongFromOffset(sizeof(ulong) * 16, value); } }
-        public ulong Offset_524288  { get { return GetUlongFromOffset(sizeof(ulong) * 15); } set { SetUlongFromOffset(sizeof(ulong) * 15, value); } }
-        public ulong Offset_262144  { get { return GetUlongFromOffset(sizeof(ulong) * 14); } set { SetUlongFromOffset(sizeof(ulong) * 14, value); } }
-        public ulong Offset_131072  { get { return GetUlongFromOffset(sizeof(ulong) * 13); } set { SetUlongFromOffset(sizeof(ulong) * 13, value); } }
-        public ulong Offset_32768   { get { return GetUlongFromOffset(sizeof(ulong) * 12); } set { SetUlongFromOffset(sizeof(ulong) * 12, value); } }
-        public ulong Offset_16384   { get { return GetUlongFromOffset(sizeof(ulong) * 11); } set { SetUlongFromOffset(sizeof(ulong) * 11, value); } }
-        public ulong Offset_8192    { get { return GetUlongFromOffset(sizeof(ulong) * 10); } set { SetUlongFromOffset(sizeof(ulong) * 10, value); } }
-        public ulong Offset_4096    { get { return GetUlongFromOffset(sizeof(ulong) *  9); } set { SetUlongFromOffset(sizeof(ulong) *  9, value); } }
-        public ulong Offset_2048    { get { return GetUlongFromOffset(sizeof(ulong) *  8); } set { SetUlongFromOffset(sizeof(ulong) *  8, value); } }
-        public ulong Offset_1024    { get { return GetUlongFromOffset(sizeof(ulong) *  7); } set { SetUlongFromOffset(sizeof(ulong) *  7, value); } }
-        public ulong Offset_512     { get { return GetUlongFromOffset(sizeof(ulong) *  6); } set { SetUlongFromOffset(sizeof(ulong) *  6, value); } }
-        public ulong Offset_256     { get { return GetUlongFromOffset(sizeof(ulong) *  5); } set { SetUlongFromOffset(sizeof(ulong) *  5, value); } }
-        public ulong Offset_128     { get { return GetUlongFromOffset(sizeof(ulong) *  4); } set { SetUlongFromOffset(sizeof(ulong) *  4, value); } }
-        public ulong Offset_32      { get { return GetUlongFromOffset(sizeof(ulong) *  3); } set { SetUlongFromOffset(sizeof(ulong) *  3, value); } }
-        public ulong Offset_16      { get { return GetUlongFromOffset(sizeof(ulong) *  2); } set { SetUlongFromOffset(sizeof(ulong) *  2, value); } }
-        public ulong Offset_8       { get { return GetUlongFromOffset(sizeof(ulong) *  1); } set { SetUlongFromOffset(sizeof(ulong) *  1, value); } }
-        public ulong Offset_4       { get { return GetUlongFromOffset(sizeof(ulong) *  0); } set { SetUlongFromOffset(sizeof(ulong) *  0, value); } }
+        public ulong Offset_1048576 { get { return this.GetUlongFromOffset(sizeof(ulong) * 16); } set { this.SetUlongFromOffset(sizeof(ulong) * 16, value); } }
+        public ulong Offset_524288  { get { return this.GetUlongFromOffset(sizeof(ulong) * 15); } set { this.SetUlongFromOffset(sizeof(ulong) * 15, value); } }
+        public ulong Offset_262144  { get { return this.GetUlongFromOffset(sizeof(ulong) * 14); } set { this.SetUlongFromOffset(sizeof(ulong) * 14, value); } }
+        public ulong Offset_131072  { get { return this.GetUlongFromOffset(sizeof(ulong) * 13); } set { this.SetUlongFromOffset(sizeof(ulong) * 13, value); } }
+        public ulong Offset_32768   { get { return this.GetUlongFromOffset(sizeof(ulong) * 12); } set { this.SetUlongFromOffset(sizeof(ulong) * 12, value); } }
+        public ulong Offset_16384   { get { return this.GetUlongFromOffset(sizeof(ulong) * 11); } set { this.SetUlongFromOffset(sizeof(ulong) * 11, value); } }
+        public ulong Offset_8192    { get { return this.GetUlongFromOffset(sizeof(ulong) * 10); } set { this.SetUlongFromOffset(sizeof(ulong) * 10, value); } }
+        public ulong Offset_4096    { get { return this.GetUlongFromOffset(sizeof(ulong) *  9); } set { this.SetUlongFromOffset(sizeof(ulong) *  9, value); } }
+        public ulong Offset_2048    { get { return this.GetUlongFromOffset(sizeof(ulong) *  8); } set { this.SetUlongFromOffset(sizeof(ulong) *  8, value); } }
+        public ulong Offset_1024    { get { return this.GetUlongFromOffset(sizeof(ulong) *  7); } set { this.SetUlongFromOffset(sizeof(ulong) *  7, value); } }
+        public ulong Offset_512     { get { return this.GetUlongFromOffset(sizeof(ulong) *  6); } set { this.SetUlongFromOffset(sizeof(ulong) *  6, value); } }
+        public ulong Offset_256     { get { return this.GetUlongFromOffset(sizeof(ulong) *  5); } set { this.SetUlongFromOffset(sizeof(ulong) *  5, value); } }
+        public ulong Offset_128     { get { return this.GetUlongFromOffset(sizeof(ulong) *  4); } set { this.SetUlongFromOffset(sizeof(ulong) *  4, value); } }
+        public ulong Offset_32      { get { return this.GetUlongFromOffset(sizeof(ulong) *  3); } set { this.SetUlongFromOffset(sizeof(ulong) *  3, value); } }
+        public ulong Offset_16      { get { return this.GetUlongFromOffset(sizeof(ulong) *  2); } set { this.SetUlongFromOffset(sizeof(ulong) *  2, value); } }
+        public ulong Offset_8       { get { return this.GetUlongFromOffset(sizeof(ulong) *  1); } set { this.SetUlongFromOffset(sizeof(ulong) *  1, value); } }
+        public ulong Offset_4       { get { return this.GetUlongFromOffset(sizeof(ulong) *  0); } set { this.SetUlongFromOffset(sizeof(ulong) *  0, value); } }
 
         internal MipMapOffsetsTag(Tagg t) : base(t, NAME, DATALENGTH)
         {

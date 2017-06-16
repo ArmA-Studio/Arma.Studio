@@ -2,6 +2,6 @@
 {
     public class HtmlView : ControlBase
     {
-        public override EType ControlType { get { return EType.CT_HTML; } }
+        public override EType ControlType => EType.CT_HTML;
     }
 }

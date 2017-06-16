@@ -25,19 +25,19 @@ namespace ArmA.Studio.Dialogs
         public bool? DialogResult { get { return this._DialogResult; } set { this._DialogResult = value; this.RaisePropertyChanged(); } }
         private bool? _DialogResult;
 
-        public string WindowHeader { get { return string.Format(Properties.Localization.DownloadingX, this.CurrentPlugin?.Name); } }
-        public string OKButtonText { get { return Properties.Localization.InstallUpdate; } }
+        public string WindowHeader => string.Format(Properties.Localization.DownloadingX, this.CurrentPlugin?.Name);
+        public string OKButtonText => Properties.Localization.InstallUpdate;
 
         public bool OKButtonEnabled { get { return this._OKButtonEnabled; } set { this._OKButtonEnabled = value; this.RaisePropertyChanged(); } }
         private bool _OKButtonEnabled;
 
-        public double OverallPluginProgress { get { return this.CurrentPluginToUpdate / (double)this.TotalPluginsToUpdate; } }
+        public double OverallPluginProgress => this.CurrentPluginToUpdate / (double)this.TotalPluginsToUpdate;
         public int CurrentPluginToUpdate { get { return this._CurrentPluginToUpdate; } set { this._CurrentPluginToUpdate = value; this.RaisePropertyChanged(); this.RaisePropertyChanged(nameof(this.OverallPluginProgress)); } }
         private int _CurrentPluginToUpdate;
         public int TotalPluginsToUpdate { get { return this._TotalPluginsToUpdate; } set { this._TotalPluginsToUpdate = value; this.RaisePropertyChanged(); } }
         private int _TotalPluginsToUpdate;
 
-        public double CurrentPluginProgress { get { return this.CurrentDownloadProgressInKiloBytes / (double)this.FileSizeInKiloBytes; } }
+        public double CurrentPluginProgress => this.CurrentDownloadProgressInKiloBytes / (double)this.FileSizeInKiloBytes;
         public long CurrentDownloadProgressInKiloBytes { get { return this._CurrentDownloadProgressInKiloBytes; } set { this._CurrentDownloadProgressInKiloBytes = value; this.RaisePropertyChanged(); this.RaisePropertyChanged(nameof(this.CurrentPluginProgress)); } }
         private long _CurrentDownloadProgressInKiloBytes;
         public long FileSizeInKiloBytes { get { return this._FileSizeInKiloBytes; } set { this._FileSizeInKiloBytes = value; this.RaisePropertyChanged(); } }

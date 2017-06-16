@@ -2,6 +2,6 @@
 {
     public class TreeView : ControlBase
     {
-        public override EType ControlType { get { return EType.CT_TREE; } }
+        public override EType ControlType => EType.CT_TREE;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 
 namespace ArmA.Studio.Dialogs
 {
@@ -11,7 +12,7 @@ namespace ArmA.Studio.Dialogs
         public static string GetWorkspacePath(string selectedPath = null)
         {
             string workspace = string.Empty;
-            App.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 var dlgDc = new WorkspaceSelectorDialogDataContext();
                 if (!string.IsNullOrWhiteSpace(selectedPath))

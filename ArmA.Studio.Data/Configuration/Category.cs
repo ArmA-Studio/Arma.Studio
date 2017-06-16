@@ -11,8 +11,8 @@ namespace ArmA.Studio.Data.Configuration
     { 
         private readonly IList<SubCategory> InnerList;
 
-        public IEnumerator<SubCategory> GetEnumerator() => InnerList.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => InnerList.GetEnumerator();
+        public IEnumerator<SubCategory> GetEnumerator() => this.InnerList.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => this.InnerList.GetEnumerator();
 
         public int Count => this.InnerList.Count;
         public bool IsReadOnly => this.InnerList.IsReadOnly;

@@ -22,7 +22,7 @@ namespace ArmA.Studio.Dialogs
         public DownloadToolUpdateDialog(DownloadToolUpdateDialogDataContext dc)
         {
             this.DataContext = dc;
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

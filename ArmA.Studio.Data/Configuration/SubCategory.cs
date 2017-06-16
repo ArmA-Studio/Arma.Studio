@@ -15,8 +15,8 @@ namespace ArmA.Studio.Data.Configuration
         private bool _IsExpanded;
 
 
-        public IEnumerator<Item> GetEnumerator() => InnerList.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => InnerList.GetEnumerator();
+        public IEnumerator<Item> GetEnumerator() => this.InnerList.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => this.InnerList.GetEnumerator();
 
         public SubCategory(IEnumerable<Item> items) : this (items, true) { }
         public SubCategory(IEnumerable<Item> items, bool isExpanded)

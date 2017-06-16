@@ -22,7 +22,7 @@ namespace ArmA.Studio.Dialogs
         public CreateNewProjectDialog(CreateNewProjectDialogDataContext dc)
         {
             this.DataContext = dc;
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

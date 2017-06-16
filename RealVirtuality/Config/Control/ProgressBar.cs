@@ -2,6 +2,6 @@
 {
     public class ProgressBar : ControlBase
     {
-        public override EType ControlType { get { return EType.CT_PROGRESS; } }
+        public override EType ControlType => EType.CT_PROGRESS;
     }
 }

@@ -62,11 +62,11 @@ namespace ArmA.Studio
             }
             else
             {
-                this.DebuggerInstance.OnHalt += DebuggerInstance_OnHalt;
-                this.DebuggerInstance.OnConnectionClosed += DebuggerInstance_OnConnectionClosed;
-                this.DebuggerInstance.OnError += DebuggerInstance_OnError;
-                this.DebuggerInstance.OnException += DebuggerInstance_OnException;
-                this.DebuggerInstance.OnContinue += DebuggerInstance_OnContinue;
+                this.DebuggerInstance.OnHalt += this.DebuggerInstance_OnHalt;
+                this.DebuggerInstance.OnConnectionClosed += this.DebuggerInstance_OnConnectionClosed;
+                this.DebuggerInstance.OnError += this.DebuggerInstance_OnError;
+                this.DebuggerInstance.OnException += this.DebuggerInstance_OnException;
+                this.DebuggerInstance.OnContinue += this.DebuggerInstance_OnContinue;
                 this.CmdRunDebuggerClick = new RelayCommandAsync(async (p) =>
                 {
                     if (!this.IsDebuggerAttached)
@@ -88,7 +88,7 @@ namespace ArmA.Studio
                     else if (this.IsPaused)
                     {
                         this.IsPaused = false;
-                        await ExecuteOperationAsync(Debugger.EOperation.Continue);
+                        await this.ExecuteOperationAsync(EOperation.Continue);
                     }
                 });
                 this.CmdStopDebugger = new RelayCommandAsync(async (p) =>
@@ -96,12 +96,12 @@ namespace ArmA.Studio
                     Logger.Log(NLog.LogLevel.Info, "Detaching debugger...");
                     await Task.Run(() => this.DebuggerInstance.Detach());
                 });
-                this.CmdPauseDebugger = new RelayCommandAsync((p) => ExecuteOperationAsync(EOperation.Pause));
-                this.CmdStepInto = new RelayCommandAsync((p) => ExecuteOperationAsync(EOperation.StepInto));
-                this.CmdStepOver = new RelayCommandAsync((p) => ExecuteOperationAsync(EOperation.StepOver));
-                this.CmdStepOut = new RelayCommandAsync((p) => ExecuteOperationAsync(EOperation.StepOut));
+                this.CmdPauseDebugger = new RelayCommandAsync((p) => this.ExecuteOperationAsync(EOperation.Pause));
+                this.CmdStepInto = new RelayCommandAsync((p) => this.ExecuteOperationAsync(EOperation.StepInto));
+                this.CmdStepOver = new RelayCommandAsync((p) => this.ExecuteOperationAsync(EOperation.StepOver));
+                this.CmdStepOut = new RelayCommandAsync((p) => this.ExecuteOperationAsync(EOperation.StepOut));
 
-                Workspace.Instance.BreakpointManager.OnBreakPointsChanged += BreakpointManager_OnBreakPointsChanged;
+                Workspace.Instance.BreakpointManager.OnBreakPointsChanged += this.BreakpointManager_OnBreakPointsChanged;
             }
         }
 
@@ -138,9 +138,9 @@ namespace ArmA.Studio
         }
 
         #region Event callback methods
-        private void DebuggerInstance_OnException(object sender, Debugger.OnExceptionEventArgs e)
+        private void DebuggerInstance_OnException(object sender, OnExceptionEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 Logger.Log(NLog.LogLevel.Info, "OnException got raised.");
                 //ToDo: Do something
@@ -150,18 +150,18 @@ namespace ArmA.Studio
             }, System.Windows.Threading.DispatcherPriority.Send);
         }
 
-        private void DebuggerInstance_OnError(object sender, Debugger.OnErrorEventArgs e)
+        private void DebuggerInstance_OnError(object sender, OnErrorEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 Logger.Log(NLog.LogLevel.Info, string.Format("Error was caught: {0}", e.Message));
                 this.CurrentDocument?.RefreshVisuals();
             }, System.Windows.Threading.DispatcherPriority.Send);
         }
 
-        private void DebuggerInstance_OnConnectionClosed(object sender, Debugger.OnConnectionClosedEventArgs e)
+        private void DebuggerInstance_OnConnectionClosed(object sender, OnConnectionClosedEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 Logger.Log(NLog.LogLevel.Info, "Debugger got detached.");
                 this.CurrentDocument?.RefreshVisuals();
@@ -170,9 +170,9 @@ namespace ArmA.Studio
             }, System.Windows.Threading.DispatcherPriority.Send);
         }
 
-        private void DebuggerInstance_OnHalt(object sender, Debugger.OnHaltEventArgs e)
+        private void DebuggerInstance_OnHalt(object sender, OnHaltEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 Logger.Log(NLog.LogLevel.Info, "Execution was halted.");
                 this.IsPaused = true;
@@ -180,7 +180,7 @@ namespace ArmA.Studio
                 this.CurrentColumn = e.Column;
                 this.CallStack = this.DebuggerInstance.GetCallstack();
 
-                App.Current.MainWindow.Activate();
+                Application.Current.MainWindow.Activate();
 
                 var pff = Workspace.Instance.Solution.GetProjectFileFolderFromArmAPath(e.DocumentPath);
                 DocumentBase doc;
@@ -203,9 +203,9 @@ namespace ArmA.Studio
             }, System.Windows.Threading.DispatcherPriority.Send);
         }
 
-        private void DebuggerInstance_OnContinue(object sender, Debugger.OnContinueEventArgs e)
+        private void DebuggerInstance_OnContinue(object sender, OnContinueEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 Logger.Log(NLog.LogLevel.Info, "Execution was continued.");
                 this.IsPaused = false;

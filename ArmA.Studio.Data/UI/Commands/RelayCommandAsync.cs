@@ -49,7 +49,7 @@ namespace ArmA.Studio.Data.UI.Commands
             }
             this.execute = execute;
             this.canExecute = canExecute;
-            awaitable = null;
+            this.awaitable = null;
         }
         public event EventHandler CanExecuteChanged
         {
@@ -65,8 +65,8 @@ namespace ArmA.Studio.Data.UI.Commands
                 this.CanExecuteChangedInternal -= value;
             }
         }
-        public bool CanExecute(object parameter) => this.canExecute != null && this.canExecute(parameter) && (this.awaitable == null || awaitable.IsCompleted);
-        public void Execute(object parameter) => awaitable = this.execute(parameter);
+        public bool CanExecute(object parameter) => this.canExecute != null && this.canExecute(parameter) && (this.awaitable == null || this.awaitable.IsCompleted);
+        public void Execute(object parameter) => this.awaitable = this.execute(parameter);
         private static bool DefaultCanExecute(object parameter) => true;
 
         public void OnCanExecuteChanged()

@@ -54,8 +54,8 @@ namespace RealVirtuality.Config.Parser
             this._ConfigEntryParent = new WeakReference<ConfigEntry>(parent);
         }
         private object _Value;
-        public object Value { get { return _Value; } set {  this._Value = value; this.RaisePropertyChanged(); } }
-        public ObservableCollection<ConfigEntry> Children { get { return (ObservableCollection<ConfigEntry>)_Value; } set { this._Value = value; this.RaisePropertyChanged(); this.RaisePropertyChanged("Value"); } }
+        public object Value { get { return this._Value; } set {  this._Value = value; this.RaisePropertyChanged(); } }
+        public ObservableCollection<ConfigEntry> Children { get { return (ObservableCollection<ConfigEntry>) this._Value; } set { this._Value = value; this.RaisePropertyChanged(); this.RaisePropertyChanged("Value"); } }
 
         public string Name
         {
@@ -102,7 +102,7 @@ namespace RealVirtuality.Config.Parser
         }
 
         public bool IsField { get; internal set; }
-        public bool IsDummy { get { return this.FullStart.GetOffsetToPosition(this.FullEnd) == 0; } }
+        public bool IsDummy => this.FullStart.GetOffsetToPosition(this.FullEnd) == 0;
 
 
         public TextPointer FullEnd { get; internal set; }
@@ -204,24 +204,24 @@ namespace RealVirtuality.Config.Parser
             var builder = new StringBuilder();
             if(this.IsField)
             {
-                builder.Append(new string('\t', ConfigEntryParentsCount));
+                builder.Append(new string('\t', this.ConfigEntryParentsCount));
                 var fName = this.ConfigEntryParent.GetUniqueChildName();
                 builder.Append(fName);
                 builder.Append(" = 0;");
                 range.Text = builder.ToString();
-                this.NameStart = this.FullStart.GetPositionAtOffset(ConfigEntryParentsCount, LogicalDirection.Forward);
+                this.NameStart = this.FullStart.GetPositionAtOffset(this.ConfigEntryParentsCount, LogicalDirection.Forward);
                 this.NameEnd = this.NameStart.GetPositionAtOffset(fName.Length, LogicalDirection.Backward);
                 this.ContentStart = this.NameEnd.GetPositionAtOffset(3, LogicalDirection.Forward);
                 this.ContentEnd = this.ContentStart.GetPositionAtOffset(1, LogicalDirection.Backward);
             }
             else
             {
-                builder.Append(new string('\t', ConfigEntryParentsCount));
+                builder.Append(new string('\t', this.ConfigEntryParentsCount));
                 var fName = this.ConfigEntryParent.GetUniqueChildName();
                 builder.Append(fName);
                 builder.Append(" { };");
                 range.Text = builder.ToString();
-                this.NameStart = this.FullStart.GetPositionAtOffset(ConfigEntryParentsCount, LogicalDirection.Forward);
+                this.NameStart = this.FullStart.GetPositionAtOffset(this.ConfigEntryParentsCount, LogicalDirection.Forward);
                 this.NameEnd = this.NameStart.GetPositionAtOffset(fName.Length, LogicalDirection.Backward);
                 this.ParentStart = this.NameEnd.GetPositionAtOffset(0, LogicalDirection.Forward);
                 this.ParentEnd = this.NameEnd.GetPositionAtOffset(0, LogicalDirection.Backward);

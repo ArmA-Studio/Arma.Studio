@@ -2,6 +2,6 @@
 {
     public class StaticControl : ControlBase
     {
-        public override EType ControlType { get { return EType.CT_STATIC; } }
+        public override EType ControlType => EType.CT_STATIC;
     }
 }

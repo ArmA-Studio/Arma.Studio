@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using ArmA.Studio.Data.UI.Commands;
@@ -183,7 +184,7 @@ namespace ArmA.Studio.DataContext
                 var doc = Workspace.Instance.CreateOrFocusDocument(current.Item1);
                 if (doc is Data.UI.TextEditorBaseDataContext)
                 {
-                    (doc as Data.UI.TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => App.Current.Dispatcher.Invoke(() =>
+                    (doc as Data.UI.TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => Application.Current.Dispatcher.Invoke(() =>
                     {
                         t.Result.Select(match.Index, match.Length);
                         t.Result.ScrollToLine(t.Result.TextArea.Caret.Line);
@@ -194,7 +195,7 @@ namespace ArmA.Studio.DataContext
             {
                 this.CurrentCollectionIndex = 0;
                 this.CurrentCollectionOffset = -1;
-                CmdSearchNext.Execute(param);
+                this.CmdSearchNext.Execute(param);
             }
             else
             {
@@ -329,7 +330,7 @@ namespace ArmA.Studio.DataContext
                 if (doc is Data.UI.TextEditorBaseDataContext)
                 {
                     var tebdc = doc as Data.UI.TextEditorBaseDataContext;
-                    (doc as Data.UI.TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => App.Current.Dispatcher.Invoke(() =>
+                    (doc as Data.UI.TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => Application.Current.Dispatcher.Invoke(() =>
                     {
                         var str = regex.Replace(tebdc.Document.GetText(match.Index, match.Length), this.ReplaceText);
                         tebdc.Document.Replace(match.Index, match.Length, str);
@@ -342,7 +343,7 @@ namespace ArmA.Studio.DataContext
             {
                 this.CurrentCollectionIndex = 0;
                 this.CurrentCollectionOffset = -1;
-                CmdReplaceNext.Execute(param);
+                this.CmdReplaceNext.Execute(param);
             }
             else
             {

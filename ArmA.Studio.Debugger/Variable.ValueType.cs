@@ -136,7 +136,7 @@ namespace ArmA.Studio.Debugger
 
             public override string ToString()
             {
-                return Value;
+                return this.Value;
             }
         }
     }

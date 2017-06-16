@@ -22,7 +22,7 @@ namespace ArmA.Studio.Dialogs
         public AboutDialog()
         {
             this.DataContext = new AboutDialogDataContext();
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

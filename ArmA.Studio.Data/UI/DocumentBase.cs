@@ -52,7 +52,7 @@ namespace ArmA.Studio.Data.UI
                 {
                     try
                     {
-                        var obj = System.Windows.Markup.XamlReader.Load(stream);
+                        var obj = XamlReader.Load(stream);
                         if (!(obj is T))
                         {
                             throw new InvalidCastException();
@@ -71,13 +71,13 @@ namespace ArmA.Studio.Data.UI
         public override string ContentId { get { return this.FileReference?.FilePath; } set { throw new NotImplementedException(); } }
         public ICommand CmdClosing => new Commands.RelayCommand((p) =>
         {
-            if (HasChanges)
+            if (this.HasChanges)
             {
                 var msgResult = MessageBox.Show(Properties.Localization.DocumentBase_CloseSaveConfirmation_Body, Properties.Localization.DocumentBase_CloseSaveConfirmation_Caption, MessageBoxButton.YesNoCancel, MessageBoxImage.Information, MessageBoxResult.Yes);
                 switch (msgResult)
                 {
                     case MessageBoxResult.Yes:
-                        SaveDocument(this.FileReference.FilePath);
+                        this.SaveDocument(this.FileReference.FilePath);
                         break;
                     case MessageBoxResult.Cancel:
                         return;
@@ -91,10 +91,12 @@ namespace ArmA.Studio.Data.UI
         public ProjectFile FileReference { get { ProjectFile v; this.WeakFileReference.TryGetTarget(out v); return v; } set { this.WeakFileReference.SetTarget(value); } }
         private WeakReference<ProjectFile> WeakFileReference;
 
-        public bool IsTemporary { get { return this._IsTemporary; } set { if (this._IsTemporary == value) return; this._IsTemporary = value; RaisePropertyChanged(); } }
+        public bool IsTemporary { get { return this._IsTemporary; } set { if (this._IsTemporary == value) return; this._IsTemporary = value;
+            this.RaisePropertyChanged(); } }
         private bool _IsTemporary;
 
-        public string TemporaryIdentifier { get { return this._TemporaryIdentifier; } set { if (this._TemporaryIdentifier == value) return; this._TemporaryIdentifier = value; RaisePropertyChanged(); } }
+        public string TemporaryIdentifier { get { return this._TemporaryIdentifier; } set { if (this._TemporaryIdentifier == value) return; this._TemporaryIdentifier = value;
+            this.RaisePropertyChanged(); } }
         private string _TemporaryIdentifier;
 
         public abstract void SaveDocument();

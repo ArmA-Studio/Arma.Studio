@@ -45,25 +45,25 @@ namespace asapJson
         private object value;
         public JsonNode()
         {
-            Type = EJType.Object;
-            value = null;
+            this.Type = EJType.Object;
+            this.value = null;
         }
         public JsonNode(Dictionary<string, JsonNode> input)
         {
-            Type = EJType.Object;
-            value = (object)input;
+            this.Type = EJType.Object;
+            this.value = (object)input;
         }
         public JsonNode(IEnumerable<JsonNode> input)
         {
-            Type = EJType.Array;
-            value = input.ToList();
+            this.Type = EJType.Array;
+            this.value = input.ToList();
         }
         public JsonNode(string input, bool isJson = false)
         {
             if (isJson)
             {
-                Type = EJType.Object;
-                value = null;
+                this.Type = EJType.Object;
+                this.value = null;
                 using (System.IO.MemoryStream memStream = new System.IO.MemoryStream())
                 {
                     System.IO.StreamWriter sw = new System.IO.StreamWriter(memStream);
@@ -75,24 +75,24 @@ namespace asapJson
             }
             else
             {
-                Type = EJType.String;
-                value = (object)input;
+                this.Type = EJType.String;
+                this.value = (object)input;
             }
         }
         public JsonNode(double input)
         {
-            Type = EJType.Number;
-            value = (object)input;
+            this.Type = EJType.Number;
+            this.value = (object)input;
         }
         public JsonNode(bool input)
         {
-            Type = EJType.Boolean;
-            value = (object)input;
+            this.Type = EJType.Boolean;
+            this.value = (object)input;
         }
         public JsonNode(System.IO.StreamReader input)
         {
-            Type = EJType.Object;
-            value = null;
+            this.Type = EJType.Object;
+            this.value = null;
             this.Read(input);
         }
 
@@ -674,11 +674,11 @@ namespace asapJson
 
         public void Print(System.IO.StreamWriter sw)
         {
-            Print_handle(sw, false, 0);
+            this.Print_handle(sw, false, 0);
         }
         public void PrintBeauty(System.IO.StreamWriter sw)
         {
-            Print_handle(sw, true, 0);
+            this.Print_handle(sw, true, 0);
         }
         private void Print_handle(System.IO.StreamWriter sw, bool beautify, int tablength)
         {

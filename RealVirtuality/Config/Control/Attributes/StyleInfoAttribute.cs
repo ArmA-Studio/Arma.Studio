@@ -25,7 +25,7 @@ namespace RealVirtuality.Config.Control.Attributes
             var info = obj.GetType().GetMember(obj.ToString());
             if (info != null && info.Length > 0)
             {
-                var attr = Attribute.GetCustomAttribute(info.First(), typeof(StyleInfoAttribute)) as StyleInfoAttribute;
+                var attr = GetCustomAttribute(info.First(), typeof(StyleInfoAttribute)) as StyleInfoAttribute;
                 if (attr != null)
                 {
                     return attr;

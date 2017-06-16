@@ -36,13 +36,13 @@ namespace RealVirtuality.SQF.ANTLR
         private void EnterGeneric(SqfNode node, [System.Runtime.CompilerServices.CallerMemberName]string caller = "")
         {
             Logger.Info(string.Format("ENTER:{0}{1}", new string('\t', node.ParentCount()), caller.Remove(0, "Enter".Length)));
-            Current.AddChild(node);
-            Current = node;
+            this.Current.AddChild(node);
+            this.Current = node;
         }
         private T ExitGeneric<T>(ParserRuleContext ctx, [System.Runtime.CompilerServices.CallerMemberName]string caller = "") where T : SqfNode
         {
-            var node = Current;
-            Current = node.GetParent();
+            var node = this.Current;
+            this.Current = node.GetParent();
 
             Logger.Info(string.Format("EXIT :{0:#####}{1}{2}: {3}", ctx.start.Line, new string('\t', node.ParentCount()), caller.Remove(0, "Exit".Length), ctx.GetText()));
             node.StartOffset = ctx.Start.StartIndex;

@@ -32,7 +32,7 @@ namespace ArmA.Studio.DataContext
                     this.Value = "NA";
             }
         }
-        public override string Title { get { return Properties.Localization.PanelDisplayName_VariablesView; } }
+        public override string Title => Properties.Localization.PanelDisplayName_VariablesView;
 
         public ObservableCollection<VariableViewContainer> Variables { get { return this._Variables; } set { this._Variables = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<VariableViewContainer> _Variables;
@@ -52,11 +52,11 @@ namespace ArmA.Studio.DataContext
 
         public VariablesViewPane()
         {
-            Variables = new ObservableCollection<VariableViewContainer>();
+            this.Variables = new ObservableCollection<VariableViewContainer>();
             Task.Run(() =>
             {
                 System.Threading.SpinWait.SpinUntil(() => Workspace.Instance != null);
-                Workspace.Instance.DebugContext.PropertyChanged += DebugContext_PropertyChanged;
+                Workspace.Instance.DebugContext.PropertyChanged += this.DebugContext_PropertyChanged;
             });
         }
 

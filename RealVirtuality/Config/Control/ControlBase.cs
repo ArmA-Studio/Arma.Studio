@@ -41,25 +41,29 @@ namespace RealVirtuality.Config.Control
         /// the position X of the control in fractions of screen size.
         /// </summary>
         [ConfigPathDescriptor("/x")]
-        public double PositionX { get { return this._PositionX; } set { this._PositionX = value; RaisePropertyChanged(); } }
+        public double PositionX { get { return this._PositionX; } set { this._PositionX = value;
+            this.RaisePropertyChanged(); } }
         private double _PositionX;
         /// <summary>
         /// the position Y of the control in fractions of screen size.
         /// </summary>
         [ConfigPathDescriptor("/y")]
-        public double PositionY { get { return this._PositionY; } set { this._PositionY = value; RaisePropertyChanged(); } }
+        public double PositionY { get { return this._PositionY; } set { this._PositionY = value;
+            this.RaisePropertyChanged(); } }
         private double _PositionY;
         /// <summary>
         /// the Width of the control in fractions of screen size.
         /// </summary>
         [ConfigPathDescriptor("/w")]
-        public double Width { get { return this._Width; } set { this._Width = value; RaisePropertyChanged(); } }
+        public double Width { get { return this._Width; } set { this._Width = value;
+            this.RaisePropertyChanged(); } }
         private double _Width;
         /// <summary>
         /// the Height of the control in fractions of screen size.
         /// </summary>
         [ConfigPathDescriptor("/h")]
-        public double Height { get { return this._Height; } set { this._Height = value; RaisePropertyChanged(); } }
+        public double Height { get { return this._Height; } set { this._Height = value;
+            this.RaisePropertyChanged(); } }
         private double _Height;
         ///<summary>
         ///the font size of text (0..1)

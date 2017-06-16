@@ -12,8 +12,8 @@ namespace ArmA.Studio.Data.Lint
         public int Line { get; set; }
         public int LineOffset { get; set; }
         public ESeverity Severity { get; set; }
-        public int EndOffset { get { return this.StartOffset + Length; } }
-        public int Offset { get { return this.StartOffset; } }
+        public int EndOffset => this.StartOffset + this.Length;
+        public int Offset => this.StartOffset;
 
         public int Length { get; set; }
         public int StartOffset { get; set; }
