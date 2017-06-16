@@ -48,6 +48,7 @@ namespace ArmA.Studio
         public static string TempPath => Path.Combine(Path.GetTempPath(), @"ArmA.Studio");
         public static string CommonApplicationDataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @"ArmA.Studio");
         public static string ApplicationDataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"ArmA.Studio");
+        public static string DefaultWorkspacepath => Path.Combine(ApplicationDataPath, "DefaultWorkspace");
         public static Version CurrentVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
         public static SubscribableTarget SubscribableLoggerTarget { get; private set; }
@@ -55,13 +56,12 @@ namespace ArmA.Studio
 
         static App()
         {
-            Plugins = new List<IPlugin>();
-            Plugins.Add(new DefaultPlugin.PluginMain());
+            Plugins = new List<IPlugin> {new DefaultPlugin.PluginMain()};
         }
 
         internal UpdateHelper.DownloadInfo UpdateDownloadInfo;
 
-        private void SetupNLog()
+        private static void SetupNLog()
         {
             //this.TraceListenerInstance = new TraceListener();
             //System.Diagnostics.Trace.Listeners.Add(this.TraceListenerInstance);
@@ -72,7 +72,7 @@ namespace ArmA.Studio
             LogManager.ReconfigExistingLoggers();
         }
 
-        private void CreateUserDirectories()
+        private static void CreateUserDirectories()
         {
             if (!Directory.Exists(ConfigPath))
             {
@@ -92,9 +92,9 @@ namespace ArmA.Studio
         }
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            this.SetupNLog();
+            SetupNLog();
             DataContext.OutputPane.Initialize();
-            this.CreateUserDirectories();
+            CreateUserDirectories();
             
             try
             {
@@ -104,7 +104,7 @@ namespace ArmA.Studio
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.InnerException != null ? ex.InnerException.Message : ex.Message, "FATAL ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.InnerException?.Message ?? ex.Message, "FATAL ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 Shutdown(ExitCodes.ConfigError);
                 return;
             }
