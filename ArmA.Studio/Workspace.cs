@@ -482,11 +482,12 @@ namespace ArmA.Studio
         {
             foreach (var it in this.AvalonDockDocuments)
             {
-                if (it.IsTemporary && it.TemporaryIdentifier.Equals(info))
+                if (!it.IsTemporary || !it.TemporaryIdentifier.Equals(info))
                 {
-                    it.IsSelected = true;
-                    return it;
+                    continue;
                 }
+                it.IsSelected = true;
+                return it;
             }
             var doc = this.CreateTemporaryDocument(content, fileType);
             doc.TemporaryIdentifier = info;
@@ -592,21 +593,22 @@ namespace ArmA.Studio
         {
             foreach (var p in App.GetPlugins<IDocumentProviderPlugin>())
             {
-                if (p.Documents.Contains(describor))
+                if (!p.Documents.Contains(describor))
                 {
-                    var doc = p.CreateDocument(describor);
-                    doc.KeyManager = this.KeyManager;
-                    doc.OnDocumentClosing += this.Document_OnDocumentClosing;
-                    if (doc is CodeEditorBaseDataContext)
-                    {
-                        (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += this.Workspace_OnLintingInfoUpdated;
-                    }
-                    if (doc is TextEditorBaseDataContext)
-                    {
-                        (doc as TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => Application.Current.Dispatcher.Invoke(() => t.Result.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(t.Result))));
-                    }
-                    return doc;
+                    continue;
                 }
+                var doc = p.CreateDocument(describor);
+                doc.KeyManager = this.KeyManager;
+                doc.OnDocumentClosing += this.Document_OnDocumentClosing;
+                if (doc is CodeEditorBaseDataContext)
+                {
+                    (doc as CodeEditorBaseDataContext).OnLintingInfoUpdated += this.Workspace_OnLintingInfoUpdated;
+                }
+                if (doc is TextEditorBaseDataContext)
+                {
+                    (doc as TextEditorBaseDataContext).GetEditorInstanceAsync().ContinueWith((t) => Application.Current.Dispatcher.Invoke(() => t.Result.TextArea.TextView.BackgroundRenderers.Add(new UI.LineHighlighterBackgroundRenderer(t.Result))));
+                }
+                return doc;
             }
 
             throw new KeyNotFoundException();
@@ -676,7 +678,7 @@ namespace ArmA.Studio
         private void Workspace_OnLintingInfoUpdated(object sender, EventArgs e)
         {
             var editor = sender as CodeEditorBaseDataContext;
-            if (editor == null || editor.FileReference == null)
+            if (editor?.FileReference == null)
                 return;
             DataContext.ErrorListPane.Instance.LinterDictionary[editor.FileReference.FilePath] = editor.Linter.LinterInfo;
         }
