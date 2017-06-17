@@ -80,6 +80,13 @@ namespace ArmA.Studio
                 set { Instance.AppIni.SetValue(nameof(DataContext.ErrorListPane), nameof(DataContext.ErrorListPane.IsInfosDisplayed), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
             }
 
+
+            public static bool UseInDevBuild
+            {
+                get { bool val; if (bool.TryParse(Instance.AppIni.GetValueOrNull(nameof(App), nameof(UseInDevBuild)), out val)) return val; return false; }
+                set { Instance.AppIni.SetValue(nameof(App), nameof(UseInDevBuild), value.ToString(CultureInfo.InvariantCulture)); Instance.Save(EIniSelector.App); }
+            }
+
             public static bool EnableAutoToolUpdates
             {
                 get { bool val; if (bool.TryParse(Instance.AppIni.GetValueOrNull(nameof(App), nameof(EnableAutoToolUpdates)), out val)) return val; return true; }

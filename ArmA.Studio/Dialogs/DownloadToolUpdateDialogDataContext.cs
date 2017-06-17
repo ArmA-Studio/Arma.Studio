@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ArmA.Studio.Data.UI.Commands;
@@ -45,7 +46,7 @@ namespace ArmA.Studio.Dialogs
 
         public async Task Window_Initialized()
         {
-            var file = await UpdateHelper.DownloadFile(this.DownloadInfo, new Progress<Tuple<long, long>>((t) =>
+            var file = await UpdateHelper.DownloadFileAsync(this.DownloadInfo, new Progress<Tuple<long, long>>((t) =>
             {
                 this.CurrentProgress = t.Item1;
                 this.FileSize = t.Item2;
@@ -53,11 +54,26 @@ namespace ArmA.Studio.Dialogs
             }));
             this.CmdOKButtonPressed = new RelayCommand((p) =>
             {
-                var process = new Process();
-                process.StartInfo.FileName = file;
-                process.StartInfo.UseShellExecute = false;
-                process.Start();
-                this.DialogResult = true;
+                if (ConfigHost.App.UseInDevBuild)
+                {
+                    var dir = string.Concat(file, "DIR");
+                    System.IO.Compression.ZipFile.ExtractToDirectory(file, dir);
+                    Process.Start("cmd.exe", $"/c echo Update Shell Script & echo Please wait until the tool is closed & pause & xcopy /s \"{dir}\" \"{App.ExecutablePath}\" /Y");
+                    this.DialogResult = true;
+                }
+                else
+                {
+                    var process = new Process
+                    {
+                        StartInfo =
+                        {
+                            FileName = file,
+                            UseShellExecute = false
+                        }
+                    };
+                    process.Start();
+                    this.DialogResult = true;
+                }
             });
             this.OKButtonEnabled = true;
         }

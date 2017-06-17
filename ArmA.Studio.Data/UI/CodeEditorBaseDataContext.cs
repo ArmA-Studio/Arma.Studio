@@ -163,14 +163,19 @@ namespace ArmA.Studio.Data.UI
                     this.WaitTimeoutTask = Task.Run(() =>
                     {
                         SpinWait.SpinUntil(() => (DateTime.Now - this.LastTextChanged).TotalMilliseconds > CONST_LINTER_UPDATE_TIMEOUT_MS && (this.LinterTask == null || this.LinterTask.IsCompleted));
-                        Application.Current.Dispatcher.Invoke(() => this.ExecuteLinter());
+                        Application.Current.Dispatcher.Invoke(this.ExecuteLinter);
                     });
                 }
             }
 
+
             //IntelliSense
-            this.DisplayIntelliSensePopup();
-            this.IntelliSenseCaretOperation = true;
+            var word = this.EditorInstance.Document.GetWordAround(this.EditorInstance.CaretOffset);
+            if (word.Length >= 3)
+            {
+                this.DisplayIntelliSensePopup();
+                this.IntelliSenseCaretOperation = true;
+            }
         }
 
         private void DisplayIntelliSensePopup()

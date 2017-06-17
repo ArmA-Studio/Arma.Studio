@@ -1060,6 +1060,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use InDev Builds.
+        /// </summary>
+        public static string Property_General_Updating_UseInDevBuilds {
+            get {
+                return ResourceManager.GetString("Property_General_Updating_UseInDevBuilds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
         public static string Remove {

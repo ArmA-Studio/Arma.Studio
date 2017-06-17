@@ -51,6 +51,15 @@ namespace ArmA.Studio
         public static string DefaultWorkspacepath => Path.Combine(ApplicationDataPath, "DefaultWorkspace");
         public static Version CurrentVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
+        public static DateTime BuildDateTime
+        {
+            get
+            {
+                var dt = new DateTime(2000, 1, 1).AddDays(CurrentVersion.Build).AddSeconds(CurrentVersion.Revision * 2);
+                return TimeZone.IsDaylightSavingTime(dt, TimeZone.CurrentTimeZone.GetDaylightChanges(dt.Year)) ? dt.AddHours(1) : dt;
+            }
+        }
+
         public static SubscribableTarget SubscribableLoggerTarget { get; private set; }
         public static List<IPlugin> Plugins { get; private set; }
 

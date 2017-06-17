@@ -348,7 +348,7 @@ namespace ArmA.Studio
             Logger.Info("Checking for tool updates...");
             if (ConfigHost.App.EnableAutoToolUpdates)
             {
-                (Application.Current as App).UpdateDownloadInfo = UpdateHelper.GetDownloadInfo().Result;
+                (Application.Current as App).UpdateDownloadInfo = UpdateHelper.GetDownloadInfoAsync().Result;
                 if ((Application.Current as App).UpdateDownloadInfo.available)
                 {
                     SetIndeterminate(false);

@@ -73,7 +73,8 @@ namespace ArmA.Studio.Dialogs
             yield return new SubCategory(new Item[]
             {
                 new BoolItem(Properties.Localization.Property_General_Updating_EnableAutoToolUpdateAtStart, typeof(ConfigHost.App).GetProperty(nameof(ConfigHost.App.EnableAutoToolUpdates)), null),
-                new BoolItem(Properties.Localization.Property_General_Updating_EnableAutoPluginsUpdateAtStart, typeof(ConfigHost.App).GetProperty(nameof(ConfigHost.App.EnableAutoPluginsUpdate)), null)
+                new BoolItem(Properties.Localization.Property_General_Updating_EnableAutoPluginsUpdateAtStart, typeof(ConfigHost.App).GetProperty(nameof(ConfigHost.App.EnableAutoPluginsUpdate)), null),
+                new BoolItem(Properties.Localization.Property_General_Updating_UseInDevBuilds, typeof(ConfigHost.App).GetProperty(nameof(ConfigHost.App.UseInDevBuild)), null)
             })
             { Name = Properties.Localization.Property_General_Updating, ImageSource = @"/ArmA.Studio;component/Resources/Logo.ico" };
             yield return new SubCategory(new Item[]

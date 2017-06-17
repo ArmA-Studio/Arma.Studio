@@ -620,4 +620,7 @@ For mission development, it should be placed in the folder above your mission fi
   <data name="IsBreakpointActive" xml:space="preserve">
     <value>Is Active</value>
   </data>
+  <data name="Property_General_Updating_UseInDevBuilds" xml:space="preserve">
+    <value>Use InDev Builds</value>
+  </data>
 </root>
