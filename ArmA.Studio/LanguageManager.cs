@@ -39,20 +39,25 @@ namespace ArmA.Studio
 
         private static void LanguageChanged()
         {
-            var msgbox = MessageBox.Show( Localization.MessageDialog_PropertyChange, string.Empty, MessageBoxButton.YesNo );
-
-            if (msgbox == MessageBoxResult.Yes)
+            App.Current.Dispatcher.Invoke(() =>
             {
-                Application.Current.Exit += ( sender, args ) =>
+                var msgbox = MessageBox.Show(Localization.MessageDialog_PropertyChange, string.Empty,
+                    MessageBoxButton.YesNo);
+
+                if (msgbox != MessageBoxResult.Yes)
+                {
+                    return;
+                }
+                Application.Current.Exit += (sender, args) =>
                 {
                     var exe = Application.ResourceAssembly.Location;
-                    if (!string.IsNullOrEmpty( exe ))
+                    if (!string.IsNullOrEmpty(exe))
                     {
-                        Process.Start( exe );
+                        Process.Start(exe);
                     }
                 };
-                App.Shutdown( App.ExitCodes.Restart );
-            }
+                App.Shutdown(App.ExitCodes.Restart);
+            });
         }
     }
 }
