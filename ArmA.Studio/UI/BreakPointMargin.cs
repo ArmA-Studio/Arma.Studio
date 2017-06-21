@@ -169,6 +169,11 @@ namespace ArmA.Studio.UI
             {
                 if (!bp.IsEnabled)
                     continue;
+                if (bp.Line >= this.Document.LineCount)
+                {
+                    Workspace.Instance.BreakpointManager.RemoveBreakpoint(bp);
+                    continue;
+                }
                 var line = this.Document.GetLineByNumber(bp.Line);
                 var segment = new TextSegment { StartOffset = line.Offset, EndOffset = line.EndOffset };
                 foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))
