@@ -118,7 +118,7 @@ namespace ArmA.Studio
                     commitId = Convert.ToString(doc.build.commitId);
                     date = Convert.ToDateTime(doc.build.created);
                 }
-
+                date = date.ToUniversalTime();
                 if (date <= App.BuildDateTime)
                 {
                     return default(DownloadInfo);
