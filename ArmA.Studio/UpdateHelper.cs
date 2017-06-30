@@ -116,7 +116,7 @@ namespace ArmA.Studio
                     dynamic doc = JObject.Parse(responseString);
                     jobid = Convert.ToString(doc.build.jobs[0].jobId);
                     commitId = Convert.ToString(doc.build.commitId);
-                    date = Convert.ToDateTime(doc.build.committed);
+                    date = Convert.ToDateTime(doc.build.created);
                 }
 
                 if (date <= App.BuildDateTime)
@@ -138,7 +138,7 @@ namespace ArmA.Studio
                     available = true,
                     link = string.Concat(string.Format(CONST_INDEV_ARTIFACTSURL, jobid), '/', fileName),
                     name = commitId,
-                    version = new Version(App.CurrentVersion.Major, App.CurrentVersion.Minor, (int)(date - tmpDate).TotalDays, (int)(date - tmpDate2).TotalSeconds)
+                    version = new Version(App.CurrentVersion.Major, App.CurrentVersion.Minor, (int)(date - tmpDate).TotalDays, (int)(date - tmpDate2).TotalSeconds / 2)
                 };
             }
         }
