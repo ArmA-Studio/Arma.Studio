@@ -1325,6 +1325,28 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Plugin &apos;{0}&apos; is blocked due to being downloaded from the internet.
+        ///To unblock this file, user action is required.
+        ///
+        ///Please manually navigate into the &apos;Plugins&apos; folder of ArmA.Studio, open the file properties and click &apos;Approve&apos; (at the very bottom)
+        ///In case that does not fixes the problem, please get in contact via Discord..
+        /// </summary>
+        public static string Splash_LoadUnsafeException_Body {
+            get {
+                return ResourceManager.GetString("Splash_LoadUnsafeException_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin Blocked.
+        /// </summary>
+        public static string Splash_LoadUnsafeException_Title {
+            get {
+                return ResourceManager.GetString("Splash_LoadUnsafeException_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Preparing Solution.
         /// </summary>
         public static string Splash_PreparingSolution {

@@ -587,4 +587,15 @@ Möchten Sie jetzt Aktualisieren?</value>
     <value>Damit die Änderungen aktiv werden, muss die Anwendung neugestartet werden.
 Jetzt neu starten?</value>
   </data>
+  <data name="Splash_LoadUnsafeException_Body" xml:space="preserve">
+    <value>Das Plugin '{0}' wurde Blockiert, da es aus dem Internet geladen wurde.
+Um es zu entsperren ist ein Manueller eingriff erforderlich.
+
+Bitte Navigieren sie in den Plugins order von ArmA.Studio.
+Anschließend öffnen sie die Datei Einstellungen und klicken 'Zulassen' (ganz unten)
+Sollte dies das Problem nicht beheben, treten sie bitte über Discord in Kontakt.</value>
+  </data>
+  <data name="Splash_LoadUnsafeException_Title" xml:space="preserve">
+    <value>Plugin Blockiert</value>
+  </data>
 </root>

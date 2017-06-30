@@ -623,4 +623,14 @@ For mission development, it should be placed in the folder above your mission fi
   <data name="Property_General_Updating_UseInDevBuilds" xml:space="preserve">
     <value>Use InDev Builds</value>
   </data>
+  <data name="Splash_LoadUnsafeException_Body" xml:space="preserve">
+    <value>The Plugin '{0}' is blocked due to being downloaded from the internet.
+To unblock this file, user action is required.
+
+Please manually navigate into the 'Plugins' folder of ArmA.Studio, open the file properties and click 'Approve' (at the very bottom)
+In case that does not fixes the problem, please get in contact via Discord.</value>
+  </data>
+  <data name="Splash_LoadUnsafeException_Title" xml:space="preserve">
+    <value>Plugin Blocked</value>
+  </data>
 </root>
