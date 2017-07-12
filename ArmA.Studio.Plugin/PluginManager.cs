@@ -49,7 +49,7 @@ namespace ArmA.Studio.Plugin
         /// <param name="pathes"><see cref="IEnumerable{S}"/> where <typeparamref name="S"/> is of type <see cref="string"/> containing valid pathes to .net DLLs.</param>
         /// <param name="progress">Progress reporter or null.</param>
         /// <param name="exHandler">Exception handler function or null.</param>
-        public void LoadPlugins(IEnumerable<string> pathes, IProgress<double> progress = null, Func<Exception, bool> exHandler = null)
+        public void LoadPlugins(IEnumerable<string> pathes, IProgress<double> progress = null, Func<string, Exception, bool> exHandler = null)
         {
             progress?.Report(0);
             var domain = AppDomain.CreateDomain(Guid.NewGuid().ToString(), null, new AppDomainSetup { ApplicationBase = AppDomain.CurrentDomain.BaseDirectory });
@@ -77,7 +77,7 @@ namespace ArmA.Studio.Plugin
                 }
                 catch (Exception ex)
                 {
-                    var flag = exHandler?.Invoke(ex);
+                    var flag = exHandler?.Invoke(assemblyPath, ex);
                     if (!flag.HasValue || !flag.Value)
                     {
                         throw ex;

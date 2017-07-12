@@ -55,8 +55,8 @@ namespace ArmA.Studio
         {
             get
             {
-                var dt = new DateTime(2000, 1, 1).AddDays(CurrentVersion.Build).AddSeconds(CurrentVersion.Revision * 2);
-                return TimeZone.IsDaylightSavingTime(dt, TimeZone.CurrentTimeZone.GetDaylightChanges(dt.Year)) ? dt.AddHours(1) : dt;
+                var dt = new DateTime(2000, 1, 1).AddDays(CurrentVersion.Build).AddSeconds(CurrentVersion.Revision * 2).ToUniversalTime();
+                return dt;
             }
         }
 

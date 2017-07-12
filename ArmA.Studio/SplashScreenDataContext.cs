@@ -298,10 +298,15 @@ namespace ArmA.Studio
             pManager.LoadPlugins(plugins, new Progress<double>((d) =>
             {
                 SetProgress(d);
-            }), (ex) =>
+            }), (fPath, ex) =>
             {
-                Logger.Error($"Error while loading plugin: {ex.Message}");
-                if(ex is ReflectionTypeLoadException)
+                Logger.Error($"Error while loading plugin ({Path.GetFileName(fPath)}):  {ex.Message}");
+                //Check for HRESULT that comes up when the plugin got loaded from remote with "unsafe" flag being set and notify user if it was
+                if (ex.Message.Contains("0x80131515"))
+                {
+                    MessageBox.Show(string.Format(Properties.Localization.Splash_LoadUnsafeException_Body, Path.GetFileName(fPath)), Properties.Localization.Splash_LoadUnsafeException_Title, MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                if (ex is ReflectionTypeLoadException)
                 {
                     var refl = ex as ReflectionTypeLoadException;
                     foreach(var loaderEx in refl.LoaderExceptions)
