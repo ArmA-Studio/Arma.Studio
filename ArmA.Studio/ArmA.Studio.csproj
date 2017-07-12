@@ -499,6 +499,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Pictograms\FileWarning\FileWarning_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\FileWarning\FileWarning_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\FileWarning\FileWarning_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\FileWarning\FileWarning_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pictograms\FileWarning\FileWarning_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Pictograms\IconFile\IconFile_16x.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -2258,6 +2278,11 @@
     <None Include="Resources\Pictograms\Field\field_16xMD.ai" />
     <None Include="Resources\Pictograms\Field\field_16xSM.ai" />
     <None Include="Resources\Pictograms\Field\Field_blue_16x.ai" />
+    <None Include="Resources\Pictograms\FileWarning\FileWarning_16x.ai" />
+    <None Include="Resources\Pictograms\FileWarning\FileWarning_256x.ai" />
+    <None Include="Resources\Pictograms\FileWarning\FileWarning_32x.ai" />
+    <None Include="Resources\Pictograms\FileWarning\FileWarning_48x.ai" />
+    <None Include="Resources\Pictograms\FileWarning\FileWarning_64x.ai" />
     <None Include="Resources\Pictograms\IconFile\IconFile_16x.ai" />
     <None Include="Resources\Pictograms\IconFile\IconFile_256x.ai" />
     <None Include="Resources\Pictograms\IconFile\IconFile_32x.ai" />
@@ -2827,6 +2852,14 @@
     <Content Include="Resources\Pictograms\ExpandChevronUp\ExpandChevronUp_lightGrey_16x.svg" />
     <Resource Include="Resources\Pictograms\ExpandChevronUp\VSO_ExpandChevronUp_16x.png" />
     <Content Include="Resources\Pictograms\ExpandChevronUp\VSO_ExpandChevronUp_16x.svg" />
+    <Resource Include="Resources\Pictograms\FileWarning\FileWarning_16x.png" />
+    <Resource Include="Resources\Pictograms\FileWarning\FileWarning_16x_24.bmp" />
+    <Resource Include="Resources\Pictograms\FileWarning\FileWarning_16x_32.bmp" />
+    <Resource Include="Resources\Pictograms\FileWarning\FileWarning_24.ico" />
+    <Resource Include="Resources\Pictograms\FileWarning\FileWarning_256x.png" />
+    <Resource Include="Resources\Pictograms\FileWarning\FileWarning_32x.png" />
+    <Resource Include="Resources\Pictograms\FileWarning\FileWarning_48x.png" />
+    <Resource Include="Resources\Pictograms\FileWarning\FileWarning_64x.png" />
     <Content Include="Resources\Pictograms\Next\Next_16x.svg" />
     <Resource Include="Resources\Pictograms\Next\Next_16xMD.png" />
     <Content Include="Resources\Pictograms\Next\Next_16xMD.svg" />

@@ -81,12 +81,17 @@ namespace ArmA.Studio.Data
         public Project OwningProject { get { Project v; this.WeakOwningProject.TryGetTarget(out v); return v; } set { this.WeakOwningProject.SetTarget(value); } }
         private WeakReference<Project> WeakOwningProject;
 
+
+        public bool Exists { get { return this._Exists; } set { this._Exists = value; this.RaisePropertyChanged(); } }
+        private bool _Exists;
+
         internal ProjectFile() : this(string.Empty) { }
         public ProjectFile(string projectRelativePath)
         {
             this.WeakOwningSolution = new WeakReference<Solution>(null);
             this.WeakOwningProject = new WeakReference<Project>(null);
             this.ProjectRelativePath = projectRelativePath;
+            this._Exists = true;
         }
 
 

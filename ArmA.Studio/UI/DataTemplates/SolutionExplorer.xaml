@@ -200,7 +200,7 @@
                 <Grid ev:ContextMenuOpening.Command="{Binding CmdContextMenuOpening}" ev:ContextMenuOpening.CommandParameter="{Binding}" Margin="0 0 4 0">
                     <Grid.ContextMenu>
                         <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
-                            <MenuItem Header="{x:Static p:Localization.Rename}" Command="{Binding CmdContextMenu_Rename}" CommandParameter="/">
+                            <MenuItem Header="{x:Static p:Localization.Rename}" Command="{Binding CmdContextMenu_Rename}" CommandParameter="/" IsEnabled="{Binding Ref.Exists}">
                                 <MenuItem.Icon>
                                     <Image Source="/ArmA.Studio;component/Resources/Pictograms/Rename/Rename.ico"/>
                                 </MenuItem.Icon>
@@ -258,11 +258,24 @@
                                     <DataTrigger Binding="{Binding Ref.FileExtension}" Value=".tga">
                                         <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/IconFile/IconFile.ico"/>
                                     </DataTrigger>
+                                    <DataTrigger Binding="{Binding Ref.Exists}" Value="False">
+                                        <Setter Property="Source" Value="/ArmA.Studio;component/Resources/Pictograms/FileWarning/FileWarning_16x.png"/>
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Image.Style>
                     </Image>
-                    <TextBlock Grid.Column="2" Text="{Binding Ref.FileName}" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}, ConverterParameter=True}"/>
+                    <TextBlock Grid.Column="2" Text="{Binding Ref.FileName}" Visibility="{Binding IsInRenameMode, Converter={StaticResource SolutionExplorerItemVisibilityConverter}, ConverterParameter=True}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Ref.Exists}" Value="False">
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                     <TextBox Grid.Column="2" Text="{Binding Ref.FileName}" att:LooseFocusOnKeyAttached.Key="Return" att:SelectFileNameOnFocusAttached.Attach="True" Height="16" Padding="0" BorderThickness="0" ev:LostKeyboardFocus.Command="{Binding CmdTextBoxLostKeyboardFocus}">
                         <TextBox.Style>
                             <Style TargetType="TextBox">

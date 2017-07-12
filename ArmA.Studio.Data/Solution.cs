@@ -34,7 +34,7 @@ namespace ArmA.Studio.Data
 
                 writer.WriteEndElement();
             }
-            public static Project Deserialize_Project(XmlReader reader)
+            public static Project Deserialize_Project(Solution sol, XmlReader reader)
             {
                 if (reader.Name != nameof(Project))
                     throw new XmlException($"Invalid {nameof(Project)}");
@@ -62,6 +62,13 @@ namespace ArmA.Studio.Data
                     }
                     reader.ReadEndElement();
                 }
+                p.OwningSolution = sol;
+                foreach (var pff in p)
+                {
+                    pff.OwningSolution = sol;
+                    pff.OwningProject = p;
+                }
+                p.DeserializeCallback();
                 return p;
             }
 
@@ -94,6 +101,25 @@ namespace ArmA.Studio.Data
         public Solution()
         {
             this.Projects = new ObservableSortedCollection<Project>();
+            this.Projects.CollectionChanged += Projects_CollectionChanged;
+        }
+
+        private static void Projects_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (Project it in e.NewItems)
+                {
+                    it.AddedCallback();
+                }
+            }
+            if (e.OldItems != null)
+            {
+                foreach (Project it in e.OldItems)
+                {
+                    it.RemovedCallback();
+                }
+            }
         }
 
         #region Xml Serialization
@@ -106,22 +132,8 @@ namespace ArmA.Studio.Data
         {
             var serializer = new XmlSerializer(typeof(Solution));
             var sol = serializer.Deserialize(stream) as Solution;
-            sol.Deserialize_RepairReferences();
             sol.FileUri = fileUri;
             return sol;
-        }
-
-        private void Deserialize_RepairReferences()
-        {
-            foreach (var proj in this.Projects)
-            {
-                proj.OwningSolution = this;
-                foreach (var pff in proj)
-                {
-                    pff.OwningSolution = this;
-                    pff.OwningProject = proj;
-                }
-            }
         }
 
         XmlSchema IXmlSerializable.GetSchema()
@@ -137,7 +149,7 @@ namespace ArmA.Studio.Data
 
             while (reader.Name == nameof(Project))
             {
-                this.Projects.Add(XmlHelper.Deserialize_Project(reader));
+                this.Projects.Add(XmlHelper.Deserialize_Project(this, reader));
             }
 
             reader.ReadEndElement();

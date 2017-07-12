@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmA.Studio.Plugin", "ArmA.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmA.Studio.Data", "ArmA.Studio.Data\ArmA.Studio.Data.csproj", "{DC5BB018-6CA3-4F0A-864A-425CEF2F454B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{C0E1FA7D-3FB3-4D40-81B4-DFC1EEE7F475}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -184,5 +186,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0E7106E7-7972-4A59-9E57-DC4964D62664} = {C0E1FA7D-3FB3-4D40-81B4-DFC1EEE7F475}
 	EndGlobalSection
 EndGlobal

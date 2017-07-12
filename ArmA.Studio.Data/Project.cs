@@ -13,10 +13,11 @@ namespace ArmA.Studio.Data
 {
     public class Project : IComparable, INotifyPropertyChanged, IEnumerable<ProjectFile>
     {
+        public const string CONST_PBOPREFIXFILENAME = "$PBOPREFIX$";
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
 #if DEBUG
-        public static readonly List<string> ValidFileExtensions = new List<string>(new [] { ".sqf", ".cpp", ".ext", ".hpp" });
+        public static readonly List<string> ValidFileExtensions = new List<string>(new[] { ".sqf", ".cpp", ".ext", ".hpp" });
 #else
         public static readonly List<string> ValidFileExtensions = new List<string>();
 #endif
@@ -24,12 +25,30 @@ namespace ArmA.Studio.Data
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
 
-        public string Name { get { return this._Name; } set { if (this._Name == value) return; this._Name = value;
-            this.RaisePropertyChanged(); } }
+        public string Name
+        {
+            get { return this._Name; }
+            set
+            {
+                if (this._Name == value)
+                    return;
+                this._Name = value;
+                this.RaisePropertyChanged();
+            }
+        }
         private string _Name;
 
-        public EProjectType ProjectType { get { return this._ProjectType; } set { if (this._ProjectType == value) return; this._ProjectType = value;
-            this.RaisePropertyChanged(); } }
+        public EProjectType ProjectType
+        {
+            get { return this._ProjectType; }
+            set
+            {
+                if (this._ProjectType == value)
+                    return;
+                this._ProjectType = value;
+                this.RaisePropertyChanged();
+            }
+        }
         private EProjectType _ProjectType;
 
         public ObservableSortedCollection<ProjectFile> Children { get; private set; }
@@ -66,14 +85,15 @@ namespace ArmA.Studio.Data
                 {
                     try
                     {
-                        using (var stream = new StreamWriter(Path.Combine(this.FilePath, "$PBOPREFIX$")))
+                        using (var stream = new StreamWriter(Path.Combine(this.FilePath, CONST_PBOPREFIXFILENAME)))
                         {
+                            this.SkipPboPrefixUpdate = true;
                             stream.Write(value);
                             stream.Flush();
                         }
                         this._ArmAPath = value;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Virtual.ShowOperationFailedMessageBox(ex);
                     }
@@ -85,6 +105,8 @@ namespace ArmA.Studio.Data
                 this.RaisePropertyChanged();
             }
         }
+
+
         private string _ArmAPath;
         public Uri FileUri => new Uri(string.Concat(this.FilePath, '/'));
 
@@ -116,6 +138,7 @@ namespace ArmA.Studio.Data
             return this.GetEnumerator().Cast();
         }
 
+
         internal void RemoveFile(ProjectFile projectFile)
         {
             this.Children.Remove(projectFile);
@@ -128,6 +151,8 @@ namespace ArmA.Studio.Data
                 throw new KeyNotFoundException();
             return res;
         }
+
+
         public ProjectFile FindFileFolderOrNull(Uri uri)
         {
             foreach (var it in this)
@@ -182,7 +207,7 @@ namespace ArmA.Studio.Data
                             this._ArmAPath = reader.ReadToEnd();
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Virtual.ShowOperationFailedMessageBox(ex);
                     }
@@ -205,6 +230,128 @@ namespace ArmA.Studio.Data
         public override string ToString()
         {
             return $"Project '{this.Name}'";
+        }
+
+
+        internal void DeserializeCallback()
+        {
+
+            foreach (var it in this.Children)
+            {
+                if (!File.Exists(it.FilePath))
+                {
+                    System.Windows.Application.Current.Dispatcher.Invoke(() => it.Exists = false);
+                }
+            }
+        }
+        internal void AddedCallback()
+        {
+            this.PrepareFileSystemWatcher();
+        }
+        internal void RemovedCallback()
+        {
+            this.RemoveFileSystemWatcher();
+        }
+
+        #region FileSystemWatcher
+        private FileSystemWatcher FSWatcher;
+        private void PrepareFileSystemWatcher()
+        {
+            this.FSWatcher = new FileSystemWatcher(this.FilePath);
+            this.FSWatcher.Changed += FileSystemWatcher_Changed;
+            this.FSWatcher.Created += FileSystemWatcher_Created;
+            this.FSWatcher.Deleted += FileSystemWatcher_Deleted;
+            this.FSWatcher.Error += FileSystemWatcher_Error;
+            this.FSWatcher.Renamed += FileSystemWatcher_Renamed;
+            this.FSWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            this.FSWatcher.Filter = "*";
+            this.FSWatcher.EnableRaisingEvents = true;
+        }
+        private void RemoveFileSystemWatcher()
+        {
+            this.FSWatcher.Dispose();
+        }
+        private void FileSystemWatcher_Renamed(object sender, RenamedEventArgs e)
+        {
+            var pathOld = new Uri(e.OldFullPath, UriKind.Absolute);
+            var pathNew = new Uri(e.FullPath, UriKind.Absolute);
+            if (this.FileUri.MakeRelativeUri(pathNew).ToString().Equals(CONST_PBOPREFIXFILENAME, StringComparison.InvariantCultureIgnoreCase))
+            {
+                this.UpdateArmAPathFromFile(e.FullPath);
+                return;
+            }
+            var pFile = this.Children.FirstOrDefault((pf) => pf.FileUri.Equals(pathOld));
+            if (pFile == null)
+            {
+                Logger.Info($"File got renamed: project '{this.Name}' old '{this.FileUri.MakeRelativeUri(pathOld).ToString()}' new '{this.FileUri.MakeRelativeUri(pathNew).ToString()}'");
+                return;
+            }
+            System.Windows.Application.Current.Dispatcher.Invoke(() => pFile.ProjectRelativePath = this.FileUri.MakeRelativeUri(pathNew).ToString());
+        }
+
+        private void FileSystemWatcher_Error(object sender, ErrorEventArgs e)
+        {
+            Logger.Error(e.GetException());
+        }
+
+        private void FileSystemWatcher_Deleted(object sender, FileSystemEventArgs e)
+        {
+            var path = new Uri(e.FullPath, UriKind.Absolute);
+            var pFile = this.Children.FirstOrDefault((pf) => pf.FileUri.Equals(path));
+            if (pFile == null)
+            {
+                Logger.Info($"File got deleted: project '{this.Name}' affected '{this.FileUri.MakeRelativeUri(path).ToString()}'");
+                return;
+            }
+            System.Windows.Application.Current.Dispatcher.Invoke(() => pFile.Exists = false);
+        }
+
+        private void FileSystemWatcher_Created(object sender, FileSystemEventArgs e)
+        {
+            var path = new Uri(e.FullPath, UriKind.Absolute);
+            if (this.FileUri.MakeRelativeUri(path).ToString().Equals(CONST_PBOPREFIXFILENAME, StringComparison.InvariantCultureIgnoreCase))
+            {
+                this.UpdateArmAPathFromFile(e.FullPath);
+                return;
+            }
+            var pFile = this.Children.FirstOrDefault((pf) => pf.FileUri.Equals(path));
+            if (pFile == null)
+            {
+                Logger.Info($"File got created: project '{this.Name}' affected '{this.FileUri.MakeRelativeUri(path).ToString()}'");
+                return;
+            }
+            System.Windows.Application.Current.Dispatcher.Invoke(() => pFile.Exists = true);
+        }
+        private bool SkipPboPrefixUpdate = false;
+        private void FileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            var path = new Uri(e.FullPath, UriKind.Absolute);
+            if (this.FileUri.MakeRelativeUri(path).ToString().Equals(CONST_PBOPREFIXFILENAME, StringComparison.InvariantCultureIgnoreCase))
+            {
+                if(this.SkipPboPrefixUpdate)
+                {
+                    this.SkipPboPrefixUpdate = false;
+                    return;
+                }
+                this.UpdateArmAPathFromFile(e.FullPath);
+                return;
+            }
+        }
+        #endregion
+
+        private void UpdateArmAPathFromFile(string path)
+        {
+            try
+            {
+                using (var reader = new StreamReader(path))
+                {
+                    this._ArmAPath = reader.ReadToEnd();
+                }
+            }
+            catch (Exception ex)
+            {
+                Virtual.ShowOperationFailedMessageBox(ex);
+            }
         }
     }
 }
