@@ -12,6 +12,18 @@ namespace ArmA.Studio.Data
     ///Param2 array -> 1:1 representation of the actual properties, has to be an object array
     public static class Virtual
     {
+        private static bool CheckMethodParameters(this System.Reflection.MethodInfo m, params Type[] types)
+        {
+            var p = m.GetParameters();
+            if (p.Length != types.Length)
+                return false;
+            for(int i = 0; i < p.Length; i++)
+            {
+                if (!p[i].ParameterType.IsEquivalentTo(types[i]))
+                    return false;
+            }
+            return true;
+        }
         /// <summary>
         /// Virtual wrapper for <code>Application.Current.ShowOperationFailedMessageBox(Exception)</code>
         /// </summary>
@@ -19,11 +31,7 @@ namespace ArmA.Studio.Data
         public static void ShowOperationFailedMessageBox(Exception ex)
         {
             const string fncName = "ShowOperationFailedMessageBox";
-            System.Diagnostics.Debug.Assert(System.Windows.Application.Current.GetType().GetMethod(fncName) != null);
-            System.Diagnostics.Debug.Assert(System.Windows.Application.Current.GetType().GetMethod(fncName)?.ContainsGenericParameters == false);
-            System.Diagnostics.Debug.Assert(System.Windows.Application.Current.GetType().GetMethod(fncName)?.GetParameters().Count() == 1);
-            System.Diagnostics.Debug.Assert(System.Windows.Application.Current.GetType().GetMethod(fncName)?.GetParameters().ElementAtOrDefault(0)?.ParameterType.IsEquivalentTo(typeof(Exception))??false);
-            System.Windows.Application.Current.GetType().GetMethod(fncName).Invoke(null, new[] { ex });
+            System.Windows.Application.Current.GetType().GetMethods().First((m) => m.Name.Equals(fncName) && m.CheckMethodParameters(typeof(Exception))).Invoke(null, new[] { ex });
         }
     }
 }
