@@ -116,7 +116,7 @@ namespace ArmA.Studio
                     dynamic doc = JObject.Parse(responseString);
                     jobid = Convert.ToString(doc.build.jobs[0].jobId);
                     commitId = Convert.ToString(doc.build.commitId);
-                    date = Convert.ToDateTime(doc.build.created);
+                    date = Convert.ToDateTime(doc.build.created).ToUniversalTime().AddHours(-12).AddMinutes(50);
                 }
                 date = date.ToUniversalTime();
                 if (date <= App.BuildDateTime)
