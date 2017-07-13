@@ -12,10 +12,33 @@
     <Grid>
         <ProgressBar Maximum="1" Minimum="0" Value="{Binding ProgressValue}" Background="Gray"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding DisplayText, Converter={StaticResource IsNullConverter}}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Resources>
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource SCB_DefaultTextColor}" Text="{Binding CurrentProgress, FallbackValue=123}"/>
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource SCB_DefaultTextColor}" Text=" kb / "/>
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource SCB_DefaultTextColor}" Text="{Binding FileSize, FallbackValue=15000}"/>
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource SCB_DefaultTextColor}" Text=" kb"/>
+
+            <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource SCB_DefaultTextColor}" Text="{Binding DisplayText, FallbackValue=displaytext}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DisplayText, Converter={StaticResource IsNullConverter}}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
         </StackPanel>
     </Grid>
 </Window>

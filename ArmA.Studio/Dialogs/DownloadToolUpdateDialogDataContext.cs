@@ -27,6 +27,9 @@ namespace ArmA.Studio.Dialogs
         public bool OKButtonEnabled { get { return this._OkButtonEnabled; } set { this._OkButtonEnabled = value; this.RaisePropertyChanged(); } }
         private bool _OkButtonEnabled;
 
+        public string DisplayText { get { return this._DisplayText; } set { this._DisplayText = value; this.RaisePropertyChanged(); } }
+        private string _DisplayText;
+
         public double ProgressValue { get { return this._ProgressValue; } set { this._ProgressValue = value; this.RaisePropertyChanged(); } }
         private double _ProgressValue;
 
@@ -52,12 +55,18 @@ namespace ArmA.Studio.Dialogs
                 this.FileSize = t.Item2;
                 this.ProgressValue = (((double)t.Item1) / t.Item2);
             }));
-            this.CmdOKButtonPressed = new RelayCommand((p) =>
+            this.CmdOKButtonPressed = new RelayCommandAsync(async (p) =>
             {
                 if (ConfigHost.App.UseInDevBuild)
                 {
                     var dir = string.Concat(file, "DIR");
-                    System.IO.Compression.ZipFile.ExtractToDirectory(file, dir);
+                    if (Directory.Exists(dir))
+                    {
+                        App.Current.Dispatcher.Invoke(() => this.DisplayText = "Preparing Space");
+                        Directory.Delete(dir);
+                    }
+                    App.Current.Dispatcher.Invoke(() => this.DisplayText = "Unzipping");
+                    await Task.Run(() => System.IO.Compression.ZipFile.ExtractToDirectory(file, dir));
                     Process.Start("cmd.exe", $"/c echo Update Shell Script & echo Please wait until the tool is closed & pause & xcopy /s \"{dir}\" \"{App.ExecutablePath}\" /Y");
                     this.DialogResult = true;
                 }
