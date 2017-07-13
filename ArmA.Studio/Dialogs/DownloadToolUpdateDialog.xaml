@@ -16,7 +16,7 @@
                 <Style TargetType="TextBlock">
                     <Setter Property="Visibility" Value="Visible"/>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding DisplayText, Converter={StaticResource IsNullConverter}}" Value="True">
+                        <DataTrigger Binding="{Binding DisplayText, Converter={StaticResource IsNullConverter}}" Value="False">
                             <Setter Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
                     </Style.Triggers>
@@ -30,10 +30,10 @@
             <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource SCB_DefaultTextColor}" Text="{Binding DisplayText, FallbackValue=displaytext}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
-                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Setter Property="Visibility" Value="Visible"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding DisplayText, Converter={StaticResource IsNullConverter}}" Value="False">
-                                <Setter Property="Visibility" Value="Visible"/>
+                            <DataTrigger Binding="{Binding DisplayText, Converter={StaticResource IsNullConverter}}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

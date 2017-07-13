@@ -63,11 +63,26 @@ namespace ArmA.Studio.Dialogs
                     if (Directory.Exists(dir))
                     {
                         App.Current.Dispatcher.Invoke(() => this.DisplayText = "Preparing Space");
-                        Directory.Delete(dir);
+                        try
+                        {
+                            foreach (var it in Directory.GetFiles(dir, "*", SearchOption.AllDirectories))
+                            {
+                                File.Delete(it);
+                            }
+                            foreach(var it in Directory.GetDirectories(dir))
+                            {
+                                Directory.Delete(it);
+                            }
+                            Directory.Delete(dir);
+                        }
+                        catch(Exception ex)
+                        {
+                            App.ShowOperationFailedMessageBox(ex);
+                        }
                     }
                     App.Current.Dispatcher.Invoke(() => this.DisplayText = "Unzipping");
                     await Task.Run(() => System.IO.Compression.ZipFile.ExtractToDirectory(file, dir));
-                    Process.Start("cmd.exe", $"/c echo Update Shell Script & echo Please wait until the tool is closed & pause & xcopy /s \"{dir}\" \"{App.ExecutablePath}\" /Y");
+                    Process.Start("cmd.exe", $"/c echo Update Shell Script & echo Please wait until the tool is closed & pause & xcopy /s \"{dir}\" \"{App.ExecutablePath}\" /Y & echo Done! You can close this window now. & pause");
                     this.DialogResult = true;
                 }
                 else
