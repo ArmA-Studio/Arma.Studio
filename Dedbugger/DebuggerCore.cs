@@ -135,8 +135,8 @@ namespace Dedbugger
             {
                 this.Perform(EOperation.Continue);
             }
-            this.ClearBreakpoints();
             this.OnConnectionClosed?.Invoke(this, new OnConnectionClosedEventArgs());
+            this.ClearBreakpoints();
             this.Pipe.Close();
             if (this.PipeReadThread.IsAlive)
             {
@@ -267,7 +267,15 @@ namespace Dedbugger
             var str = node.ToString();
             Logger.Log(NLog.LogLevel.Info, string.Format("SEND {0}", str));
             var bytes = Encoding.UTF8.GetBytes(str);
-            this.Pipe.Write(bytes, 0, bytes.Length);
+            try
+            {
+                this.Pipe.Write(bytes, 0, bytes.Length);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+                this.Detach();
+            }
         }
 
         
