@@ -181,21 +181,13 @@ namespace ArmA.Studio.Data
         /// </summary>
         /// <param name="armaPath">ArmA Path of the <see cref="ProjectFile"/> to find.</param>
         /// <returns>The correct <see cref="ProjectFile"/> instance or null if no corresponding file was found.</returns>
-        public ProjectFile GetProjectFileFolderFromArmAPath(string armaPath)
+        public ProjectFile GetProjectFileFromArmAPath(string armaPath)
         {
             foreach (var project in this.Projects)
             {
-                if (armaPath.StartsWith(project.ArmAPath, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    foreach (var pff in project)
-                    {
-                        if (armaPath.Equals(pff.ArmAPath, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            return pff;
-                        }
-                    }
-                    break;
-                }
+                var pff = project.GetFileFromArmAPath(armaPath);
+                if (pff != null)
+                    return pff;
             }
             return null;
         }

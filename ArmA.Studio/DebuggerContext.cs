@@ -182,7 +182,7 @@ namespace ArmA.Studio
 
                 Application.Current.MainWindow.Activate();
 
-                var pff = Workspace.Instance.Solution.GetProjectFileFolderFromArmAPath(e.DocumentPath);
+                var pff = Workspace.Instance.Solution.GetProjectFileFromArmAPath(e.DocumentPath);
                 DocumentBase doc;
                 if (pff == null)
                 {

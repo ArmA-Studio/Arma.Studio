@@ -220,6 +220,38 @@ namespace ArmA.Studio.Data
             }
         }
 
+        internal object GetFileFromArmAPath(string armaPath)
+        {
+            if (this.ProjectType == EProjectType.Addon)
+            {
+                if (!armaPath.StartsWith(this.ArmAPath, StringComparison.InvariantCultureIgnoreCase))
+                    return null;
+                foreach (var pff in this.Children)
+                {
+                    if (armaPath.StartsWith(pff.ArmAPath, StringComparison.InvariantCultureIgnoreCase))
+                        return pff;
+                }
+                return null;
+            }
+            else if (this.ProjectType == EProjectType.Mission)
+            {
+                //ToDo: https://github.com/ArmA-Studio/ArmA.Studio/issues/20
+                //Right now just a copy of the above
+                if (!armaPath.StartsWith(this.ArmAPath, StringComparison.InvariantCultureIgnoreCase))
+                    return null;
+                foreach (var pff in this.Children)
+                {
+                    if (armaPath.StartsWith(pff.ArmAPath, StringComparison.InvariantCultureIgnoreCase))
+                        return pff;
+                }
+                return null;
+            }
+            else
+            {
+                throw new Exception("NOT IMPLEMENTED TYPE");
+            }
+        }
+
         public ProjectFile AddFile(string projectRelativePath)
         {
             var pf = new ProjectFile(projectRelativePath) { OwningProject = this, OwningSolution = this.OwningSolution };
