@@ -47,6 +47,17 @@ namespace ArmA.Studio.Dialogs
             this._OkButtonEnabled = false;
         }
 
+        
+        private static void RunBatchScript(string targetDir)
+        {
+            var psi = new ProcessStartInfo();
+            psi.FileName = "cmd.exe";
+            psi.Arguments = $"/c echo Update Shell Script & echo Please wait until the tool is closed & pause & xcopy /s \"{targetDir}\" \"{App.ExecutablePath}\" /Y & echo Done! You can close this window now. & pause";
+            psi.Verb = "runas";
+            var p = new Process();
+            p.StartInfo = psi;
+            p.Start();
+        }
         public async Task Window_Initialized()
         {
             var file = await UpdateHelper.DownloadFileAsync(this.DownloadInfo, new Progress<Tuple<long, long>>((t) =>
@@ -82,7 +93,7 @@ namespace ArmA.Studio.Dialogs
                     }
                     App.Current.Dispatcher.Invoke(() => this.DisplayText = "Unzipping");
                     await Task.Run(() => System.IO.Compression.ZipFile.ExtractToDirectory(file, dir));
-                    Process.Start("cmd.exe", $"/c echo Update Shell Script & echo Please wait until the tool is closed & pause & xcopy /s \"{dir}\" \"{App.ExecutablePath}\" /Y & echo Done! You can close this window now. & pause");
+                    RunBatchScript(dir);
                     this.DialogResult = true;
                 }
                 else
