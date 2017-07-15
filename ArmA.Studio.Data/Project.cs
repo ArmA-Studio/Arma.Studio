@@ -220,7 +220,7 @@ namespace ArmA.Studio.Data
             }
         }
 
-        internal object GetFileFromArmAPath(string armaPath)
+        internal ProjectFile GetFileFromArmAPath(string armaPath)
         {
             if (this.ProjectType == EProjectType.Addon)
             {
