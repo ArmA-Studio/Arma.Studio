@@ -3023,9 +3023,9 @@
       <Project>{C5BD46BE-607F-41D5-8C6A-F2EEF8706E24}</Project>
       <Name>ArmA.Studio.Plugin</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ArmAClassParser\ArmAClassParser.csproj">
+    <ProjectReference Include="..\ArmAClassParser\RealVirtuality.Config.Parser.csproj">
       <Project>{2e1b48ad-1de2-457e-ae85-8230969296bf}</Project>
-      <Name>ArmAClassParser</Name>
+      <Name>RealVirtuality.Config.Parser</Name>
     </ProjectReference>
     <ProjectReference Include="..\ArmASQFLinter\ArmASQFLinter.csproj">
       <Project>{c335388f-c062-4612-86c9-6f326b6e7e29}</Project>

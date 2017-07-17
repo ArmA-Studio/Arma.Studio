@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmAClassParser", "ArmAClassParser\ArmAClassParser.csproj", "{2E1B48AD-1DE2-457E-AE85-8230969296BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealVirtuality.Config.Parser", "ArmAClassParser\RealVirtuality.Config.Parser.csproj", "{2E1B48AD-1DE2-457E-AE85-8230969296BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealVirtuality", "RealVirtuality\RealVirtuality.csproj", "{391819A9-BAF2-4C1D-BA57-3050B6565123}"
 EndProject
