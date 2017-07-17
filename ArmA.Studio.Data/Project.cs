@@ -289,6 +289,10 @@ namespace ArmA.Studio.Data
         private FileSystemWatcher FSWatcher;
         private void PrepareFileSystemWatcher()
         {
+            if(!Directory.Exists(this.FilePath))
+            {
+                Directory.CreateDirectory(this.FilePath);
+            }
             this.FSWatcher = new FileSystemWatcher(this.FilePath);
             this.FSWatcher.Changed += FileSystemWatcher_Changed;
             this.FSWatcher.Created += FileSystemWatcher_Created;
