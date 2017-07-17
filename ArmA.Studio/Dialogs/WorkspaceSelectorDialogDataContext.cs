@@ -78,14 +78,14 @@ namespace ArmA.Studio.Dialogs
             var dlgResult = cofd.ShowDialog();
             if (dlgResult == CommonFileDialogResult.Ok)
             {
-                if (System.IO.Path.GetPathRoot(cofd.FileName) == cofd.FileName)
-                {
-                    MessageBox.Show(Properties.Localization.MessageBoxWorkspaceCannotBeRoot_Body, Properties.Localization.MessageBoxWorkspaceCannotBeRoot_Title, MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
+                //if (System.IO.Path.GetPathRoot(cofd.FileName) == cofd.FileName)
+                //{
+                //    MessageBox.Show(Properties.Localization.MessageBoxWorkspaceCannotBeRoot_Body, Properties.Localization.MessageBoxWorkspaceCannotBeRoot_Title, MessageBoxButton.OK, //MessageBoxImage.Information);
+                //}
+                //else
+                //{
                     this.CurrentPath = cofd.FileName;
-                }
+                //}
             }
         }
     }
