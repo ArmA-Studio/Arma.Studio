@@ -97,7 +97,7 @@ namespace ArmA.Studio.Data.UI
             var info = await this.OnHoverInformationsAsync(offset);
             if (string.IsNullOrWhiteSpace(info))
             {
-                var linterInfo = this.Linter.LinterInfo.FirstOrDefault((li) => li.StartOffset <= offset && li.EndOffset >= offset);
+                var linterInfo = this.Linter.LinterInfo?.FirstOrDefault((li) => li.StartOffset <= offset && li.EndOffset >= offset);
                 if (linterInfo == null)
                     return;
                 HighlightPopup.DataContext = linterInfo;
