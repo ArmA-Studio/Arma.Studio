@@ -467,7 +467,7 @@ namespace ArmA.Studio
                 }
                 catch(Exception ex)
                 {
-                    App.ShowOperationFailedMessageBox(ex);
+                    Logger.Error(ex);
                 }
             }
             return doShutdown;
