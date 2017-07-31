@@ -65,6 +65,9 @@
     <Compile Include="Config\Control\TextBox.cs" />
     <Compile Include="Config\Control\ToolBox.cs" />
     <Compile Include="Config\Control\TreeView.cs" />
+    <Compile Include="Lang\Preprocessing\PreProcessedInfo.cs" />
+    <Compile Include="Lang\Preprocessing\PreProcessingDirective.cs" />
+    <Compile Include="Lang\Preprocessing\PreProcessingStream.cs" />
     <Compile Include="Media\Drawing\PAA\MipMap.cs" />
     <Compile Include="Media\Drawing\PAA\PAAImage.cs" />
     <Compile Include="Media\Drawing\PAA\Palette.cs" />
