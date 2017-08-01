@@ -4,9 +4,73 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Test"
+        xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Button Click="Button_Click"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <TextBox Name="source" Grid.Row="0" Grid.Column="0" AcceptsReturn="True" AcceptsTab="True" Text="#define test1 testee&#x0a;#define test2(TTT) test1 TTT&#x0a;#define test3(TTT) my##test2(TTT)&#x0a;test1&#x0a;test2(asd)&#x0a;test3(dsa)"/>
+        <TextBox Name="target" IsReadOnly="True" Grid.Row="0" Grid.Column="1" AcceptsReturn="True" AcceptsTab="True"/>
+        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Black" Grid.Column="1" Grid.Row="0" Opacity="0.15" IsHitTestVisible="False"/>
+        <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="5" ResizeBehavior="PreviousAndNext" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="BurlyWood"/>
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Macros" TextAlignment="Center"/>
+            <ListBox Grid.Row="1" ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=Macros}" DisplayMemberPath="Name">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="ev:MouseDoubleClick.Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=MacrosDoubleClick}"/>
+                        <Setter Property="ev:MouseDoubleClick.CommandParameter" Value="{Binding}"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Infos" TextAlignment="Center"/>
+            <ListBox Grid.Row="1" ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=Infos}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="ev:MouseDoubleClick.Command" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=InfosDoubleClick}"/>
+                        <Setter Property="ev:MouseDoubleClick.CommandParameter" Value="{Binding}"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Margin" Value="4 0"/>
+                                </Style>
+                            </Grid.Resources>
+                            <TextBlock Text="{Binding Line}" Grid.Column="0"/>
+                            <TextBlock Text="{Binding Column}" Grid.Column="1"/>
+                            <TextBlock Text="{Binding Directive.Name}" Grid.Column="2"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <Button Grid.ColumnSpan="2" Click="Button_Click" Grid.Row="3" Content="act"/>
     </Grid>
 </Window>

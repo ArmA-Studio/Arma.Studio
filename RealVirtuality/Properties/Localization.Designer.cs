@@ -61,6 +61,42 @@ namespace RealVirtuality.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown Error.
+        /// </summary>
+        public static string PP_PARSE_E0_Unknown {
+            get {
+                return ResourceManager.GetString("PP_PARSE_E0_Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command is not matching any known.
+        /// </summary>
+        public static string PP_PARSE_E1_UnknownDirective {
+            get {
+                return ResourceManager.GetString("PP_PARSE_E1_UnknownDirective", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expected end of command, got more content.
+        /// </summary>
+        public static string PP_PARSE_E2_UnexpectedAdittionalContent {
+            get {
+                return ResourceManager.GetString("PP_PARSE_E2_UnexpectedAdittionalContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The identifier provided is not matching any previous.
+        /// </summary>
+        public static string PP_PARSE_E3_NoMatchingDefine {
+            get {
+                return ResourceManager.GetString("PP_PARSE_E3_NoMatchingDefine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EOF Reached.
         /// </summary>
         public static string SQF_PARSE_E0_EOFReached {

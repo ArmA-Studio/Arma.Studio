@@ -166,6 +166,20 @@ namespace Utility
             return -1;
         }
         #endregion
+        #region IndexOfAny
+        public static int IndexOfAny<T>(this IEnumerable<T> enumerable, params T[] any)
+        {
+            var eit = enumerable.GetEnumerator();
+            for (int i = 0; eit.MoveNext(); i++)
+            {
+                if (any.Contains(eit.Current))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        #endregion
         #region Second
         public static T Second<T>(this IEnumerable<T> enumerable)
         {

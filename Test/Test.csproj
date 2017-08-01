@@ -55,8 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Parser.cs" />
-    <Compile Include="Scanner.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -96,6 +94,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ArmA.Studio.Data\ArmA.Studio.Data.csproj">
+      <Project>{dc5bb018-6ca3-4f0a-864a-425cef2f454b}</Project>
+      <Name>ArmA.Studio.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ArmAClassParser\RealVirtuality.Config.Parser.csproj">
+      <Project>{2e1b48ad-1de2-457e-ae85-8230969296bf}</Project>
+      <Name>RealVirtuality.Config.Parser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RealVirtuality\RealVirtuality.csproj">
+      <Project>{391819a9-baf2-4c1d-ba57-3050b6565123}</Project>
+      <Name>RealVirtuality</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

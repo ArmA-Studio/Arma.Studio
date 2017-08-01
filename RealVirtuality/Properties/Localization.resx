@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="PP_PARSE_E0_Unknown" xml:space="preserve">
+    <value>Unknown Error</value>
+  </data>
+  <data name="PP_PARSE_E1_UnknownDirective" xml:space="preserve">
+    <value>Command is not matching any known</value>
+  </data>
+  <data name="PP_PARSE_E2_UnexpectedAdittionalContent" xml:space="preserve">
+    <value>Expected end of command, got more content</value>
+  </data>
+  <data name="PP_PARSE_E3_NoMatchingDefine" xml:space="preserve">
+    <value>The identifier provided is not matching any previous</value>
+  </data>
   <data name="SQF_PARSE_E0_EOFReached" xml:space="preserve">
     <value>EOF Reached</value>
   </data>

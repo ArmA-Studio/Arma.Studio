@@ -67,6 +67,7 @@
     <Compile Include="Config\Control\TreeView.cs" />
     <Compile Include="Lang\Preprocessing\PreProcessedInfo.cs" />
     <Compile Include="Lang\Preprocessing\PreProcessingDirective.cs" />
+    <Compile Include="Lang\Preprocessing\PreProcessingError.cs" />
     <Compile Include="Lang\Preprocessing\PreProcessingStream.cs" />
     <Compile Include="Media\Drawing\PAA\MipMap.cs" />
     <Compile Include="Media\Drawing\PAA\PAAImage.cs" />
@@ -93,6 +94,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Localization.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{e95cb476-aa64-429d-9349-64290b8164bb}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
