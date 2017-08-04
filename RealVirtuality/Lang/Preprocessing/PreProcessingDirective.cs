@@ -31,8 +31,8 @@ namespace RealVirtuality.Lang.Preprocessing
             text = Regex.Replace(text, @"#(.+?\b)", "\"$1\"");
             for (var i = 0; i < this._Parameters.Length; i++)
             {
-                string arg = args[i];
-                if (args.Length > i)
+                string arg = string.Empty;
+                if (args.Length < i)
                 {
                     arg = args[i];
                 }

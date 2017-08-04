@@ -65,6 +65,7 @@
     <Compile Include="Config\Control\TextBox.cs" />
     <Compile Include="Config\Control\ToolBox.cs" />
     <Compile Include="Config\Control\TreeView.cs" />
+    <Compile Include="Lang\Preprocessing\OnIncludeLookupEventArgs.cs" />
     <Compile Include="Lang\Preprocessing\PreProcessedInfo.cs" />
     <Compile Include="Lang\Preprocessing\PreProcessingDirective.cs" />
     <Compile Include="Lang\Preprocessing\PreProcessingError.cs" />

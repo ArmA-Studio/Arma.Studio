@@ -97,6 +97,51 @@ namespace RealVirtuality.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to else operation is missing opening tag.
+        /// </summary>
+        public static string PP_PARSE_E4_ElseMissingOpenTag {
+            get {
+                return ResourceManager.GetString("PP_PARSE_E4_ElseMissingOpenTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to endif operation is missing opening tag.
+        /// </summary>
+        public static string PP_PARSE_E5_EndifMissingOpenTag {
+            get {
+                return ResourceManager.GetString("PP_PARSE_E5_EndifMissingOpenTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to if operation lacks an identifier to check.
+        /// </summary>
+        public static string PP_PARSE_E5_MissingIdentifier {
+            get {
+                return ResourceManager.GetString("PP_PARSE_E5_MissingIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not locate any file matching provided path.
+        /// </summary>
+        public static string PP_PARSE_E6_IncludeNotFound {
+            get {
+                return ResourceManager.GetString("PP_PARSE_E6_IncludeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to include file: {0}.
+        /// </summary>
+        public static string PP_PARSE_E7_FailedToInclude {
+            get {
+                return ResourceManager.GetString("PP_PARSE_E7_FailedToInclude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EOF Reached.
         /// </summary>
         public static string SQF_PARSE_E0_EOFReached {

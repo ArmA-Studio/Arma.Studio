@@ -129,6 +129,21 @@
   <data name="PP_PARSE_E3_NoMatchingDefine" xml:space="preserve">
     <value>The identifier provided is not matching any previous</value>
   </data>
+  <data name="PP_PARSE_E4_ElseMissingOpenTag" xml:space="preserve">
+    <value>else operation is missing opening tag</value>
+  </data>
+  <data name="PP_PARSE_E5_EndifMissingOpenTag" xml:space="preserve">
+    <value>endif operation is missing opening tag</value>
+  </data>
+  <data name="PP_PARSE_E5_MissingIdentifier" xml:space="preserve">
+    <value>if operation lacks an identifier to check</value>
+  </data>
+  <data name="PP_PARSE_E6_IncludeNotFound" xml:space="preserve">
+    <value>Could not locate any file matching provided path</value>
+  </data>
+  <data name="PP_PARSE_E7_FailedToInclude" xml:space="preserve">
+    <value>Failed to include file: {0}</value>
+  </data>
   <data name="SQF_PARSE_E0_EOFReached" xml:space="preserve">
     <value>EOF Reached</value>
   </data>

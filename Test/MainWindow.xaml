@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Test"
         xmlns:ev="clr-namespace:ArmA.Studio.Data.UI.Eventing;assembly=ArmA.Studio.Data"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525" Closing="Window_Closing" Initialized="Window_Initialized">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -17,8 +17,9 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <TextBox Name="source" Grid.Row="0" Grid.Column="0" AcceptsReturn="True" AcceptsTab="True" Text="#define test1 testee&#x0a;#define test2(TTT) test1 TTT&#x0a;#define test3(TTT) my##test2(TTT)&#x0a;test1&#x0a;test2(asd)&#x0a;test3(dsa)"/>
+        <TextBox Name="source" Grid.Row="0" Grid.Column="0" AcceptsReturn="True" AcceptsTab="True"/>
         <TextBox Name="target" IsReadOnly="True" Grid.Row="0" Grid.Column="1" AcceptsReturn="True" AcceptsTab="True"/>
         <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Black" Grid.Column="1" Grid.Row="0" Opacity="0.15" IsHitTestVisible="False"/>
         <GridSplitter Grid.Row="1" Grid.ColumnSpan="2" Height="5" ResizeBehavior="PreviousAndNext" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="BurlyWood"/>
@@ -71,6 +72,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-        <Button Grid.ColumnSpan="2" Click="Button_Click" Grid.Row="3" Content="act"/>
+        <ListBox ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=IncludePaths}" ev:MouseDoubleClick.Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=IncludePathsDoubleClick}" Grid.Row="3" Grid.ColumnSpan="2" MinHeight="16"/>
+        <Button Grid.ColumnSpan="2" Click="Button_Click" Grid.Row="4" Content="act"/>
     </Grid>
 </Window>

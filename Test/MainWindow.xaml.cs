@@ -13,7 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Test
 {
@@ -26,11 +27,13 @@ namespace Test
         {
             this.Macros = new ObservableCollection<RealVirtuality.Lang.Preprocessing.PreProcessingDirective>();
             this.Infos = new ObservableCollection<RealVirtuality.Lang.Preprocessing.PreProcessedInfo>();
+            this.IncludePaths = new ObservableCollection<string>();
             InitializeComponent();
         }
 
         public ObservableCollection<RealVirtuality.Lang.Preprocessing.PreProcessingDirective> Macros { get; private set; }
         public ObservableCollection<RealVirtuality.Lang.Preprocessing.PreProcessedInfo> Infos { get; private set; }
+        public ObservableCollection<string> IncludePaths { get; private set; }
 
         public ICommand InfosDoubleClick => new ArmA.Studio.Data.UI.Commands.RelayCommand((p) =>
         {
@@ -52,6 +55,19 @@ namespace Test
             builder.AppendLine($"Content: {ppd.UnparsedText}");
             MessageBox.Show(builder.ToString());
         });
+        public ICommand IncludePathsDoubleClick => new ArmA.Studio.Data.UI.Commands.RelayCommand((p) =>
+        {
+            var ofd = new CommonOpenFileDialog()
+            {
+                IsFolderPicker = true,
+                Multiselect = false
+            };
+            var ofd_res = ofd.ShowDialog();
+            if (ofd_res == CommonFileDialogResult.Ok)
+            {
+                IncludePaths.Add(ofd.FileName);
+            }
+        });
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -62,6 +78,17 @@ namespace Test
                 writer.Flush();
                 stream.Seek(0, SeekOrigin.Begin);
                 var ppstream = new RealVirtuality.Lang.Preprocessing.PreProcessingStream(stream);
+                ppstream.OnIncludeLookup += (pps_sender, pps_e) =>
+                {
+                    foreach (var dir in this.IncludePaths)
+                    {
+                        if (File.Exists(Path.Combine(dir, pps_e.IncludePath)))
+                        {
+                            pps_e.SetFile(new Uri(Path.Combine(dir, pps_e.IncludePath), UriKind.Absolute));
+                            return;
+                        }
+                    }
+                };
                 target.Text = new StreamReader(ppstream).ReadToEnd();
                 this.Macros.Clear();
                 foreach (var it in ppstream.PreProcessingDirectives)
@@ -73,6 +100,60 @@ namespace Test
                 {
                     this.Infos.Add(it);
                 }
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                using (var writer = new StreamWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ArmA.Studio.TestSaveFile.file")))
+                {
+                    foreach(var it in this.IncludePaths)
+                    {
+                        writer.Write(0);
+                        writer.WriteLine(it);
+                    }
+                    writer.WriteLine(1);
+                    writer.Write(this.source.Text);
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var reader = new StreamReader(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ArmA.Studio.TestSaveFile.file")))
+                {
+                    string line;
+                    bool flag = true;
+                    while (flag && !string.IsNullOrWhiteSpace((line = reader.ReadLine())))
+                    {
+                        if (line.Length == 0)
+                        {
+                            continue;
+                        }
+                        switch (line[0])
+                        {
+                            case '0':
+                                this.IncludePaths.Add(line.Substring(1));
+                                break;
+                            case '1':
+                                flag = false;
+                                break;
+                        }
+                    }
+                    this.source.Text = reader.ReadToEnd();
+                }
+            }
+            catch
+            {
+
             }
         }
     }

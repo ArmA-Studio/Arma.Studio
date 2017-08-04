@@ -10,12 +10,19 @@ namespace RealVirtuality.Lang.Preprocessing
 {
     public class PreProcessingStream : Stream
     {
-        public event EventHandler<EventArgs> OnIncludeLookup;
+        public event EventHandler<OnIncludeLookupEventArgs> OnIncludeLookup;
+
         protected enum EIfDefMode
         {
             NA,
-            IF,
-            ELSE
+            WRITE,
+            HIDE
+        }
+        protected enum ECommentMode
+        {
+            Off,
+            LineComment,
+            BlockComment
         }
         private readonly Stream InnerStream;
         private StringBuilder PPBuffer;
@@ -29,11 +36,12 @@ namespace RealVirtuality.Lang.Preprocessing
         private bool IsWhitespaceCleaning;
         private bool IsEscapedNewLine;
         private bool IsInPreProcessingMode;
+        private ECommentMode CommentMode;
         private int CurrentLineOffset;
         private int PPModeOffset;
 
-        protected List<EIfDefMode> IfDefStack;
-        private List<StreamReader> IncludeFiles;
+        protected Stack<EIfDefMode> IfDefStack;
+        private Stack<StreamReader> IncludeFiles;
 
         public int LineCount { get; private set; }
 
@@ -53,7 +61,6 @@ namespace RealVirtuality.Lang.Preprocessing
         /// <exception cref="ArgumentException">Will be thrown if provided stream is not supporting read operations (indicated via the CanRead property)</exception>
         public PreProcessingStream(Stream s)
         {
-            var x = 12;
             this.InnerStream = s;
             if (!s.CanRead)
             {
@@ -66,15 +73,19 @@ namespace RealVirtuality.Lang.Preprocessing
             this._PreProcessedInfos = new List<PreProcessedInfo>();
             this.Position = s.Position;
             this.PeekByte = '\0';
-            this.IfDefStack = new List<EIfDefMode>();
+            this.IfDefStack = new Stack<EIfDefMode>();
             this._Errors = new List<PreProcessingError>();
             this.CurrentLineOffset = 0;
             this.PPModeOffset = 0;
+            this.IncludeFiles = new Stack<StreamReader>();
+            this.CommentMode = ECommentMode.Off;
         }
         public override void Flush() => this.InnerStream.Flush();
         public override long Seek(long offset, SeekOrigin origin) { throw new InvalidOperationException(); }
         public override void SetLength(long value) => this.InnerStream.SetLength(value);
         public override void Write(byte[] buffer, int offset, int count) { throw new InvalidOperationException(); }
+
+        private bool PPIsInHideMode => this.IfDefStack.Count > 0 && (this.IfDefStack.Peek() == EIfDefMode.NA || this.IfDefStack.Peek() == EIfDefMode.HIDE);
         
 
         private int NextByte()
@@ -98,18 +109,50 @@ namespace RealVirtuality.Lang.Preprocessing
                     this.PeekByte = '\0';
                     return tmp;
                 }
-                return this.InnerStream.ReadByte();
+                if (this.IncludeFiles.Count > 0)
+                {
+                    var next = this.IncludeFiles.Peek().Read();
+                    if (next == -1)
+                    {
+                        this.IncludeFiles.Pop();
+                        return this.NextByte();
+                    }
+                    else
+                    {
+                        return next;
+                    }
+                }
+                else
+                {
+                    return this.InnerStream.ReadByte();
+                }
             }
         }
         private int NextBytePeek()
         {
             if (this.PeekByte != '\0')
                 return this.PeekByte;
-            this.PeekByte = this.InnerStream.ReadByte();
-            return this.PeekByte;
+            if (this.IncludeFiles.Count > 0)
+            {
+                var next = this.PeekByte = this.IncludeFiles.Peek().Read();
+                if (next == -1)
+                {
+                    this.IncludeFiles.Pop();
+                    return this.NextByte();
+                }
+                else
+                {
+                    return next;
+                }
+            }
+            else
+            {
+                this.PeekByte = this.InnerStream.ReadByte();
+                return this.PeekByte;
+            }
         }
 
-        private void ParsePreProcessingDirective(string input, int currentpositionoffset)
+        private bool ParsePreProcessingDirective(string input, int currentpositionoffset)
         {
             var endofstartindex = input.IndexOf(char.IsWhiteSpace);
             if (input.Length == 0 || endofstartindex == -1 || char.IsWhiteSpace(input[0]))
@@ -123,28 +166,39 @@ namespace RealVirtuality.Lang.Preprocessing
                     Message = Properties.Localization.PP_PARSE_E0_Unknown,
                     ErrorCode = 0
                 });
-                return;
+                return false;
             }
             var start = input.Substring(0, endofstartindex);
             var content = input.Substring(endofstartindex).Trim();
             var contentStart = content.Length > 0 ? input.IndexOf(content[0]) : 0;
             switch (start)
             {
+                #region define
                 case "define":
                     {
+                        if (this.PPIsInHideMode)
+                        {
+                            break;
+                        }
                         try
                         {
                             var ppd = PreProcessingDirective.CreateNew(this._PreProcessingDirectives, input);
                             this._PreProcessingDirectives.Add(ppd);
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
 
                         }
                     }
                     break;
+                #endregion
+                #region undef
                 case "undef":
                     {
+                        if (this.PPIsInHideMode)
+                        {
+                            break;
+                        }
                         var wsindex = content.IndexOf(char.IsWhiteSpace);
                         if (wsindex != -1)
                         {
@@ -178,16 +232,193 @@ namespace RealVirtuality.Lang.Preprocessing
                         }
                     }
                     break;
+                #endregion
+                #region include
                 case "include":
+                    if (this.PPIsInHideMode)
+                    {
+                        break;
+                    }
+                    var evarg = new OnIncludeLookupEventArgs() { IncludePath = content.Trim(' ', '\t', '"', '\'') };
+                    this.OnIncludeLookup?.Invoke(this, evarg);
+                    if (string.IsNullOrEmpty(evarg.FileSystemPath))
+                    {
+                        this._Errors.Add(new PreProcessingError()
+                        {
+                            Line = this.LineCount,
+                            Column = this.CurrentLineOffset,
+                            StartOffset = this.Position + currentpositionoffset - input.Length,
+                            EndOffset = this.Position + currentpositionoffset,
+                            Message = Properties.Localization.PP_PARSE_E6_IncludeNotFound,
+                            ErrorCode = 6
+                        });
+                    }
+                    else
+                    {
+                        try
+                        {
+                            var reader = new StreamReader(evarg.FileSystemPath);
+                            this.IncludeFiles.Push(reader);
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            this._Errors.Add(new PreProcessingError()
+                            {
+                                Line = this.LineCount,
+                                Column = this.CurrentLineOffset,
+                                StartOffset = this.Position + currentpositionoffset - input.Length,
+                                EndOffset = this.Position + currentpositionoffset,
+                                Message = string.Format(Properties.Localization.PP_PARSE_E7_FailedToInclude, ex),
+                                ErrorCode = 7
+                            });
+                        }
+                    }
                     break;
+                #endregion
+                #region ifdef
                 case "ifdef":
+                    {
+                        if (this.PPIsInHideMode)
+                        {
+                            this.IfDefStack.Push(EIfDefMode.NA);
+                            break;
+                        }
+                        var splittedContent = content.Split(' ', '\t');
+                        if (splittedContent.Length == 0)
+                        {
+                            this._Errors.Add(new PreProcessingError()
+                            {
+                                Line = this.LineCount,
+                                Column = this.CurrentLineOffset,
+                                StartOffset = this.Position + currentpositionoffset - input.Length + contentStart,
+                                EndOffset = this.Position + currentpositionoffset,
+                                Message = Properties.Localization.PP_PARSE_E5_MissingIdentifier,
+                                ErrorCode = 5
+                            });
+                            break;
+                        }
+                        else if (splittedContent.Length > 1)
+                        {
+                            this._Errors.Add(new PreProcessingError()
+                            {
+                                Line = this.LineCount,
+                                Column = this.CurrentLineOffset,
+                                StartOffset = this.Position + currentpositionoffset - input.Length + contentStart,
+                                EndOffset = this.Position + currentpositionoffset,
+                                Message = Properties.Localization.PP_PARSE_E2_UnexpectedAdittionalContent,
+                                ErrorCode = 2
+                            });
+                        }
+                        content = splittedContent[0].Trim();
+                        if (this.PreProcessingDirectives.Any((ppd) => ppd.Name.Equals(content)))
+                        {
+                            this.IfDefStack.Push(EIfDefMode.WRITE);
+                        }
+                        else
+                        {
+                            this.IfDefStack.Push(EIfDefMode.HIDE);
+                        }
+
+                    }
                     break;
+                #endregion
+                #region ifndef
                 case "ifndef":
+                    {
+                        if (this.PPIsInHideMode)
+                        {
+                            this.IfDefStack.Push(EIfDefMode.NA);
+                            break;
+                        }
+                        var splittedContent = content.Split(' ', '\t');
+                        if (splittedContent.Length == 0)
+                        {
+                            this._Errors.Add(new PreProcessingError()
+                            {
+                                Line = this.LineCount,
+                                Column = this.CurrentLineOffset,
+                                StartOffset = this.Position + currentpositionoffset - input.Length + contentStart,
+                                EndOffset = this.Position + currentpositionoffset,
+                                Message = Properties.Localization.PP_PARSE_E5_MissingIdentifier,
+                                ErrorCode = 5
+                            });
+                            break;
+                        }
+                        else if (splittedContent.Length > 1)
+                        {
+                            this._Errors.Add(new PreProcessingError()
+                            {
+                                Line = this.LineCount,
+                                Column = this.CurrentLineOffset,
+                                StartOffset = this.Position + currentpositionoffset - input.Length + contentStart,
+                                EndOffset = this.Position + currentpositionoffset,
+                                Message = Properties.Localization.PP_PARSE_E2_UnexpectedAdittionalContent,
+                                ErrorCode = 2
+                            });
+                        }
+                        content = splittedContent[0].Trim();
+                        if (this.PreProcessingDirectives.Any((ppd) => ppd.Name.Equals(content)))
+                        {
+                            this.IfDefStack.Push(EIfDefMode.HIDE);
+                        }
+                        else
+                        {
+                            this.IfDefStack.Push(EIfDefMode.WRITE);
+                        }
+
+                    }
                     break;
+                #endregion
+                #region else
                 case "else":
+                    if (this.IfDefStack.Count == 0)
+                    {
+                        this._Errors.Add(new PreProcessingError()
+                        {
+                            Line = this.LineCount,
+                            Column = this.CurrentLineOffset,
+                            StartOffset = this.Position + currentpositionoffset - input.Length + contentStart,
+                            EndOffset = this.Position + currentpositionoffset,
+                            Message = Properties.Localization.PP_PARSE_E4_ElseMissingOpenTag,
+                            ErrorCode = 4
+                        });
+                    }
+                    else
+                    {
+                        var cur = this.IfDefStack.Pop();
+                        if (cur == EIfDefMode.NA)
+                        {
+                            this.IfDefStack.Push(EIfDefMode.NA);
+                        }
+                        else
+                        {
+                            this.IfDefStack.Push(cur == EIfDefMode.WRITE ? EIfDefMode.HIDE : EIfDefMode.WRITE);
+                        }
+                    }
                     break;
+                #endregion
+                #region endif
                 case "endif":
+                    if (this.IfDefStack.Count == 0)
+                    {
+                        this._Errors.Add(new PreProcessingError()
+                        {
+                            Line = this.LineCount,
+                            Column = this.CurrentLineOffset,
+                            StartOffset = this.Position + currentpositionoffset - input.Length + contentStart,
+                            EndOffset = this.Position + currentpositionoffset,
+                            Message = Properties.Localization.PP_PARSE_E5_EndifMissingOpenTag,
+                            ErrorCode = 5
+                        });
+                    }
+                    else
+                    {
+                        this.IfDefStack.Pop();
+                    }
                     break;
+                #endregion
+                #region
                 default:
                     this._Errors.Add(new PreProcessingError()
                     {
@@ -199,7 +430,9 @@ namespace RealVirtuality.Lang.Preprocessing
                         ErrorCode = 1
                     });
                     break;
+                    #endregion
             }
+            return false;
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -213,7 +446,17 @@ namespace RealVirtuality.Lang.Preprocessing
                 if (cbyte == -1)
                 {
                     buffer[i] = (byte)'\0';
-                    break;
+                    if (!this.IsInPreprocessingDefinition || !this.ParsePreProcessingDirective(this.PPBuffer.ToString(), i))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        this.CurrentLineOffset = 0;
+                        this.PPBuffer.Clear();
+                        this.IsInPreprocessingDefinition = false;
+                        continue;
+                    }
                 }
                 if (this.IsInPreprocessingDefinition)
                 {
@@ -226,10 +469,13 @@ namespace RealVirtuality.Lang.Preprocessing
                                 break;
                             }
                             this.IsInPreprocessingDefinition = false;
-                            this.ParsePreProcessingDirective(this.PPBuffer.ToString(), i);
+                            var ppdres = this.ParsePreProcessingDirective(this.PPBuffer.ToString(), i);
                             this.LineCount++;
                             this.CurrentLineOffset = 0;
-                            buffer[i++] = (byte)'\n';
+                            if (!ppdres)
+                            {
+                                buffer[i++] = (byte)'\n';
+                            }
                             this.PPBuffer.Clear();
                             break;
                         case '\\':
@@ -255,14 +501,50 @@ namespace RealVirtuality.Lang.Preprocessing
                     switch ((char)cbyte)
                     {
                         case '#':
+                            if(this.CommentMode != ECommentMode.Off)
+                            {
+                                goto default;
+                            }
                             this.IsInPreprocessingDefinition = true;
                             this.PPBuffer.Clear();
                             break;
+                        case '/':
+                            if (this.CommentMode == ECommentMode.Off)
+                            {
+                                var peek = this.NextBytePeek();
+                                if (peek == '/')
+                                {
+                                    this.CommentMode = ECommentMode.LineComment;
+                                }
+                                else if(peek == '*')
+                                {
+                                    this.CommentMode = ECommentMode.BlockComment;
+                                }
+                            }
+                            goto default;
+                        case '*':
+                            if (this.CommentMode == ECommentMode.BlockComment)
+                            {
+                                var peek = this.NextBytePeek();
+                                if (peek == '/')
+                                {
+                                    this.CommentMode = ECommentMode.Off;
+                                }
+                            }
+                            goto default;
                         case '\n':
+                            if (this.CommentMode == ECommentMode.LineComment)
+                            {
+                                this.CommentMode = ECommentMode.Off;
+                            }
                             this.LineCount++;
                             this.CurrentLineOffset = 0;
                             goto default;
                         default:
+                            if ((char)cbyte != '\n' && this.PPIsInHideMode)
+                            {
+                                break;
+                            }
                             if (this.IsInPreProcessingMode)
                             {
                                 buffer[i++] = (byte)cbyte;
