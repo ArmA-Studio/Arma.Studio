@@ -70,9 +70,6 @@
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Antlr4 Include="ANTLR\armaconfig.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>RealVirtuality.Config.Parser.ANTLR</CustomToolNamespace>
@@ -80,6 +77,9 @@
       <Visitor>True</Visitor>
       <TargetLanguage>CSharp</TargetLanguage>
     </Antlr4>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
