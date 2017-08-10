@@ -16,11 +16,7 @@ namespace ArmA.Studio.Data
         public const string CONST_PBOPREFIXFILENAME = "$PBOPREFIX$";
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-#if DEBUG
-        public static readonly List<string> ValidFileExtensions = new List<string>(new[] { ".sqf", ".cpp", ".ext", ".hpp" });
-#else
-        public static readonly List<string> ValidFileExtensions = new List<string>();
-#endif
+        public static readonly HashSet<string> ValidFileExtensions = new HashSet<string>();
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }

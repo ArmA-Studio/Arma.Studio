@@ -17,7 +17,7 @@ namespace ArmA.Studio.DefaultPlugin
         public string Description => Properties.Localization.DefaultPluginDescription;
         public string Name => "ArmA.Studio";
 
-        public static readonly FileType SqfFileType = new FileType((ext) => ext.Equals(".sqf", StringComparison.InvariantCultureIgnoreCase), "SQF", ".sqf") { Linter = new SqfLintHelper(), FileTemplate = @"/*
+        public static readonly FileType SqfFileType = new FileType("SQF", (ext) => true, ".sqf") { Linter = new SqfLintHelper(), FileTemplate = @"/*
  * @Author: 
  * 
  * @Description: 
@@ -28,13 +28,13 @@ namespace ArmA.Studio.DefaultPlugin
 params [];" };
         public static readonly DocumentBase.DocumentDescribor SqfDocumentDescribor = new DocumentBase.DocumentDescribor(new[] { SqfFileType }, "SQF");
 
-        public static readonly FileType ConfigFileType = new FileType((ext) => ext.Equals(".cpp", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".ext", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".hpp", StringComparison.InvariantCultureIgnoreCase), "Config", ".cpp") { Linter = new ConfigLintHelper(), FileTemplate = @"/*
+        public static readonly FileType ConfigFileType = new FileType("Config", (ext) => true, ".cpp", ".hpp", ".ext") { Linter = new ConfigLintHelper(), FileTemplate = @"/*
  * @Author: 
  * 
  * @Purpose: 
  *
  */" };
-        public static readonly FileType ConfigCppFileType = new FileType((ext) => ext.Equals(".cpp", StringComparison.InvariantCultureIgnoreCase), "Config.cpp", ".cpp") { Linter = new ConfigLintHelper(), StaticFileName = "config.cpp", FileTemplate = @"class CfgPatches
+        public static readonly FileType ConfigCppFileType = new FileType("Config.cpp", (ext) => true, ".cpp") { Linter = new ConfigLintHelper(), StaticFileName = "config.cpp", FileTemplate = @"class CfgPatches
 {
     class TAG_ModName
     {
@@ -47,10 +47,10 @@ params [];" };
         url = "";
     };
 };" };
-        public static readonly FileType DescriptionExtFileType = new FileType((ext) => ext.Equals(".cpp", StringComparison.InvariantCultureIgnoreCase) || ext.Equals(".ext", StringComparison.InvariantCultureIgnoreCase), "description.ext", ".ext") { Linter = new ConfigLintHelper(), StaticFileName = "description.ext" };
+        public static readonly FileType DescriptionExtFileType = new FileType("description.ext", (ext) => true, ".ext") { Linter = new ConfigLintHelper(), StaticFileName = "description.ext" };
         public static readonly DocumentBase.DocumentDescribor ConfigDocumentDescribor = new DocumentBase.DocumentDescribor(new[] { ConfigFileType }, "Config");
 
-        public static readonly FileType ImageViewerFileType = new FileType((ext) => new string[] { ".png", ".paa", "jpeg", "jpe", "jpg", "tga" }.Contains(ext.ToLower()), "Image", ".png") { CanCreate = false };
+        public static readonly FileType ImageViewerFileType = new FileType("Image", (ext) => true, ".png", ".paa", "jpeg", "jpe", "jpg", "tga") { CanCreate = false };
         public static readonly DocumentBase.DocumentDescribor ImageViewerDescribor = new DocumentBase.DocumentDescribor(new[] { ImageViewerFileType }, "Image");
 
         public IEnumerable<DataTemplate> DocumentDataTemplates => new[] { TextEditorBaseDataContext.TextEditorBaseDataTemplate, ImageViewerDocument.ImageViewerDocumentDataTemplate };

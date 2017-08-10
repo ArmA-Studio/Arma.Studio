@@ -337,8 +337,8 @@ namespace ArmA.Studio
                 else if (p is IDocumentProviderPlugin)
                 {
                     var dpp = p as IDocumentProviderPlugin;
-                    var extensions = dpp.FileTypes.Select((ft) => ft.DefaultExtension);
-                    Data.Project.ValidFileExtensions.AddRange(extensions);
+                    var extensions = dpp.FileTypes.SelectMany((ft) => ft.Extensions);
+                    Data.Project.ValidFileExtensions.UnionWith(extensions);
                 }
             }
             return false;
