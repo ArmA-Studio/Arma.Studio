@@ -68,6 +68,7 @@
             <MenuItem Header="{x:Static p:Localization.MenuItem_Help}">
                 <MenuItem Header="{x:Static p:Localization.MenuItem_Licenses}" Command="{Binding CmdDisplayLicensesDialog}"/>
                 <MenuItem Header="{x:Static p:Localization.MenuItem_About}" Command="{Binding CmdDisplayAboutDialog}"/>
+                <MenuItem Header="{x:Static p:Localization.MenuItem_Wiki}" Command="{Binding CmdDisplayWikiDialog}"/>
             </MenuItem>
         </Menu>
         <ToolBarTray DockPanel.Dock="Top">
