@@ -24,4 +24,8 @@ For Issues please use [this](https://github.com/X39/ArmA.Studio/blob/master/ISSU
 
 ### Wiki / Documentation
 
-WIP, for now please refer to the Bi-Forum Thread or Discord.
+The Wiki is highly WIP and can be found [here](https://github.com/ArmA-Studio/ArmA.Studio/wiki)
+
+Want to help update our documentation ? Open a Pull-Request to out [Wiki-Repository](https://github.com/ArmA-Studio/ArmA.Studio-wiki).
+
+For any further question please visit our Discord Server. 
