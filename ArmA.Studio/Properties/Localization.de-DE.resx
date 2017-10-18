@@ -262,6 +262,9 @@ Möchten Sie vor dem schließen speichern?</value>
   <data name="MenuItem_Licenses" xml:space="preserve">
     <value>Lizenzen</value>
   </data>
+  <data name="MenuItem_Wiki" xml:space="preserve">
+    <value>Wiki</value>
+  </data>
   <data name="MenuItem_Panels" xml:space="preserve">
     <value>_Fenster</value>
   </data>

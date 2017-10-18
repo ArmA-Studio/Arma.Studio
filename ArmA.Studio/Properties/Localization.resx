@@ -277,6 +277,9 @@ Do you want to save before close?</value>
   <data name="MenuItem_Licenses" xml:space="preserve">
     <value>Licenses</value>
   </data>
+  <data name="MenuItem_Wiki" xml:space="preserve">
+    <value>Wiki</value>
+  </data>
   <data name="MenuItem_Panels" xml:space="preserve">
     <value>_Panels</value>
   </data>
