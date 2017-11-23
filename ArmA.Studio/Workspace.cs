@@ -81,6 +81,11 @@ namespace ArmA.Studio
             var dlg = new Dialogs.AboutDialog();
             var dlgResult = dlg.ShowDialog();
         });
+        public ICommand CmdDisplayWikiDialog => new RelayCommand((p) =>
+        {
+            System.Diagnostics.Process.Start("https://github.com/ArmA-Studio/ArmA.Studio/wiki");
+        });
+
         public ICommand CmdDockingManagerInitialized => new RelayCommand((p) => this.OnAvalonDockingManagerInitialized(p as DockingManager));
         public ICommand CmdMainWindowClosing => new RelayCommand((p) =>
         {
