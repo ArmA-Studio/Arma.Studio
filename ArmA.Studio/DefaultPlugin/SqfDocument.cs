@@ -6,20 +6,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using ArmA.Studio.Data;
-using ArmA.Studio.Data.IntelliSense;
 using ArmA.Studio.Data.Lint;
 using ArmA.Studio.Data.UI;
 using ArmA.Studio.UI;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using Utility;
+using System.Windows.Media.Imaging;
 
 namespace ArmA.Studio.DefaultPlugin
 {
-    public class SqfDocument : CodeEditorBaseDataContext, ILinterHost, IIntelliSenseHost
+    public class SqfDocument : CodeEditorBaseDataContext, ILinterHost
     {
         public SqfDocument() : this(null) { }
         public SqfDocument(ProjectFile fileRef) : base(fileRef)
@@ -56,31 +57,37 @@ namespace ArmA.Studio.DefaultPlugin
             return lintHelper.Lint(stream, f);
         }
 
-        public IEnumerable<IntelliSenseItem> Generate(TextDocument document, Caret caret)
+        public override IEnumerable<ICompletionData> GetAutoCompleteData()
         {
             IEnumerable<string> docIdents = null;
-            string curWord = null;
             int caretOffset = 0;
             Application.Current.Dispatcher.Invoke(() =>
             {
-                caretOffset = caret.Offset;
-                curWord = document.GetWordAround(caret.Offset - 1);
-                docIdents = document.GetAllSqfIdents().ToList();
+                caretOffset = this.EditorInstance.CaretOffset;
+                docIdents = this.EditorInstance.Document.GetAllSqfIdents().ToList();
             });
-            var sqfDefs = from def in ConfigHost.Instance.SqfDefinitions where def.Kind != RealVirtuality.SQF.SqfDefinition.EKind.Type && def.Name.StartsWith(curWord) orderby def.Name select def;
-            docIdents = (from str in docIdents where str.StartsWith(curWord) && !sqfDefs.Any((def) => def.Name.Equals(str, StringComparison.InvariantCultureIgnoreCase)) orderby str select str).Distinct();
+            var sqfDefs = from def in ConfigHost.Instance.SqfDefinitions where def.Kind != RealVirtuality.SQF.SqfDefinition.EKind.Type select def;
+            docIdents = (from str in docIdents where !sqfDefs.Any((def) => def.Name.Equals(str, StringComparison.InvariantCultureIgnoreCase)) select str).Distinct();
 
-
+            var fieldbitmap = BitmapFrame.Create(new Uri(@"pack://application:,,,/Resources/Pictograms/Field/Field_16x.png", UriKind.Absolute));
+            fieldbitmap.Freeze();
             foreach (var it in docIdents)
             {
-                yield return new IntelliSenseItem((td) => td.Insert(caretOffset, it.Remove(0, curWord.Length)), it) { ImageSource = @"/ArmA.Studio;component/Resources/Pictograms/Field/Field_16x.png" };
+                yield return new CompletionData(it)
+                {
+                    Image = fieldbitmap,
+                    Priority = 1
+                };
             }
             var l = new List<string>(sqfDefs.Count());
             foreach (var it in sqfDefs)
             {
                 if (l.Contains(it.Name))
                     continue;
-                yield return new IntelliSenseItem((td) => td.Insert(caretOffset, it.Name.Remove(0, curWord.Length)), it.Name) { Description = it.Description };
+                yield return new CompletionData(it.Name)
+                {
+                    Description = it.Description
+                };
                 l.Add(it.Name);
             }
         }

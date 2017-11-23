@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.AvalonEdit;
 
 namespace Utility
 {
@@ -36,6 +37,29 @@ namespace Utility
             }
             return doc.GetText(start, end - start);
         }
+        public static int GetStartOffset(this TextEditor editor)
+        {
+            var off = editor.CaretOffset;
+            if (off <= 0 || off > editor.Document.TextLength)
+            {
+                return off;
+            }
 
+
+            int start;
+
+            //find start
+            for (start = off - 1; start >= 0; start--)
+            {
+                var c = editor.Document.GetCharAt(start);
+                if (!Char.IsLetterOrDigit(c) && c != '_')
+                {
+                    if(start != off)
+                        start++;
+                    return start;
+                }
+            }
+            return 0;
+        }
     }
 }

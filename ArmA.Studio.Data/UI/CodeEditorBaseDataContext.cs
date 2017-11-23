@@ -11,59 +11,31 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using ArmA.Studio.Data.IntelliSense;
 using ArmA.Studio.Data.Lint;
 using ArmA.Studio.Data.UI.Commands;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using Utility;
+using ICSharpCode.AvalonEdit.CodeCompletion;
 
 namespace ArmA.Studio.Data.UI
 {
     public class CodeEditorBaseDataContext : TextEditorBaseDataContext
     {
-        private sealed class IntelliSenseContainer : INotifyPropertyChanged
-        {
-            public event PropertyChangedEventHandler PropertyChanged;
-            public void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callerName = "") { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callerName)); }
-
-            public int SelectedIndex { get { return this._SelectedIndex; } set { if (this._SelectedIndex == value) return; this._SelectedIndex = value; this.RaisePropertyChanged(); } }
-            private int _SelectedIndex;
-
-            public object SelectedItem { get { return this._SelectedItem; } set { if (this._SelectedItem == value) return; this._SelectedItem = value; this.RaisePropertyChanged(); } }
-            private object _SelectedItem;
-            private readonly CodeEditorBaseDataContext Owner;
-
-            public IEnumerable<IntelliSenseItem> Items { get; private set; }
-
-            public ICommand CmdMouseDoubleClick => new RelayCommand((p) =>
-            {
-                if (this.SelectedItem is IntelliSenseItem)
-                {
-                    ((IntelliSenseItem)this.SelectedItem).Apply(this.Owner.Document);
-                    IntelliSensePopup.IsOpen = false;
-                }
-            });
-
-            public IntelliSenseContainer(CodeEditorBaseDataContext owner, IEnumerable<IntelliSenseItem> items)
-            {
-                this.Items = items;
-                this.Owner = owner;
-            }
-        }
         protected const int CONST_LINTER_UPDATE_TIMEOUT_MS = 200;
         public static readonly Popup HighlightPopup = LoadFromEmbeddedResource<Popup>(typeof(CodeEditorBaseDataContext).Assembly, @"ArmA.Studio.Data.UI.CodeEditorBase_HighlightingPopup.xaml");
-        public static readonly Popup IntelliSensePopup = LoadFromEmbeddedResource<Popup>(typeof(CodeEditorBaseDataContext).Assembly, @"ArmA.Studio.Data.UI.CodeEditorBase_IntelliSensePopup.xaml");
 
         public event EventHandler OnLintingInfoUpdated;
+        protected virtual bool IsAutoCompleteEnabled => true;
 
 
         public ILinterHost Linter => this as ILinterHost;
-        public IIntelliSenseHost IntelliSenseHost => this as IIntelliSenseHost;
 
         public Task WaitTimeoutTask { get; private set; }
         public Task LinterTask { get; private set; }
         public DateTime LastTextChanged { get; private set; }
+
+        private CompletionWindow AutoCompletionWindow;
 
         public CodeEditorBaseDataContext(ProjectFile fileRef) : base(fileRef)
         {
@@ -151,7 +123,6 @@ namespace ArmA.Studio.Data.UI
                 }
             });
         }
-        private bool IntelliSenseCaretOperation;
         protected virtual void OnTextChanged(object sender, EventArgs e)
         {
             //Linting
@@ -170,97 +141,41 @@ namespace ArmA.Studio.Data.UI
 
 
             //IntelliSense
-            var word = this.EditorInstance.Document.GetWordAround(this.EditorInstance.CaretOffset);
-            if (word.Length >= 3)
+            int startoff = this.EditorInstance.GetStartOffset();
+            var txt = this.EditorInstance.Document.GetText(startoff, this.EditorInstance.CaretOffset - startoff);
+            if (txt.Length >= 3)
             {
-                this.DisplayIntelliSensePopup();
-                this.IntelliSenseCaretOperation = true;
+                this.DisplayAutoCompletion();
             }
         }
-
-        private void DisplayIntelliSensePopup()
+        public virtual IEnumerable<ICompletionData> GetAutoCompleteData() { yield break; }
+        public void DisplayAutoCompletion()
         {
-            if (this.EditorInstance != null && this.IntelliSenseHost != null)
+            if (!this.IsAutoCompleteEnabled || this.AutoCompletionWindow != null)
+                return;
+            this.AutoCompletionWindow = new CompletionWindow(this.EditorInstance.TextArea);
+            this.AutoCompletionWindow.Closed += delegate
             {
-                this.IntelliSenseHost.GenerateAsync(this.EditorInstance.Document, this.EditorInstance.TextArea.Caret).ContinueWith((t) =>
-                {
-                    var result = (t as Task<IEnumerable<IntelliSenseItem>>).Result;
-                    if (!result.Any())
-                        return;
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        var pos = this.EditorInstance.TextArea.TextView.GetVisualPosition(this.EditorInstance.TextArea.Caret.Position, ICSharpCode.AvalonEdit.Rendering.VisualYPosition.LineBottom) - this.EditorInstance.TextArea.TextView.ScrollOffset;
-                        IntelliSensePopup.DataContext = new IntelliSenseContainer(this, result);
-                        IntelliSensePopup.PlacementTarget = this.EditorInstance;
-                        IntelliSensePopup.Placement = PlacementMode.Relative;
-                        IntelliSensePopup.HorizontalOffset = pos.X;
-                        IntelliSensePopup.VerticalOffset = pos.Y + 1;
-                        IntelliSensePopup.IsOpen = true;
-                    });
-                });
-            }
-        }
-        protected override void OnCaretPositionChanged(int line, int column, int offset)
-        {
-            base.OnCaretPositionChanged(line, column, offset);
-            if(this.IntelliSenseCaretOperation)
+                this.AutoCompletionWindow = null;
+            };
+            foreach (var cd in this.GetAutoCompleteData())
             {
-                this.IntelliSenseCaretOperation = false;
+                this.AutoCompletionWindow.CompletionList.CompletionData.Add(cd);
             }
-            else
-            {
-                IntelliSensePopup.IsOpen = false;
-            }
+            this.AutoCompletionWindow.StartOffset = this.EditorInstance.GetStartOffset();
+            this.AutoCompletionWindow.EndOffset = this.EditorInstance.CaretOffset;
+            this.AutoCompletionWindow.CloseAutomatically = true;
+            this.AutoCompletionWindow.CompletionList.SelectItem(this.EditorInstance.Document.GetText(this.AutoCompletionWindow.StartOffset, this.AutoCompletionWindow.EndOffset - this.AutoCompletionWindow.StartOffset));
+            this.AutoCompletionWindow.Show();
         }
         protected override void OnPreviewKeyDown(out bool handled)
         {
             handled = false;
             if (Keyboard.IsKeyDown(Key.Space) && (Keyboard.Modifiers & ModifierKeys.Control) > 0)
             {
-                this.DisplayIntelliSensePopup();
+                this.DisplayAutoCompletion();
                 handled = true;
             }
-            else if (IntelliSensePopup.IsOpen)
-            {
-                var container = IntelliSensePopup.DataContext as IntelliSenseContainer;
-                if (container == null)
-                    return;
-                if (Keyboard.IsKeyDown(Key.Escape))
-                {
-                    IntelliSensePopup.IsOpen = false;
-                    handled = true;
-                }
-                else if (Keyboard.IsKeyDown(Key.Down))
-                {
-                    var cur = container.SelectedItem;
-                    container.SelectedIndex++;
-                    if (cur == container.SelectedItem)
-                        container.SelectedIndex--;
-                    handled = true;
-                }
-                else if (Keyboard.IsKeyDown(Key.Up))
-                {
-                    container.SelectedIndex--;
-                    if (container.SelectedIndex < 0)
-                        container.SelectedIndex++;
-                    handled = true;
-                }
-                else if(Keyboard.IsKeyDown(Key.Tab) || Keyboard.IsKeyDown(Key.Enter))
-                {
-                    if(container.SelectedItem is IntelliSenseItem)
-                    {
-                        ((IntelliSenseItem)container.SelectedItem).Apply(this.Document);
-                        IntelliSensePopup.IsOpen = false;
-                        handled = true;
-                    }
-                }
-            }
-        }
-        protected override void OnLostFocus()
-        {
-            base.OnLostFocus();
-            //ToDo: Improve so that clicking the popup is possible
-            IntelliSensePopup.IsOpen = false;
         }
     }
 }

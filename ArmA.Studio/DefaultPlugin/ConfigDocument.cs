@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using ArmA.Studio.Data;
-using ArmA.Studio.Data.IntelliSense;
 using ArmA.Studio.Data.Lint;
 using ArmA.Studio.Data.UI;
 using ArmA.Studio.UI;
