@@ -64,7 +64,7 @@ namespace ArmA.Studio.DefaultPlugin
             Application.Current.Dispatcher.Invoke(() =>
             {
                 caretOffset = this.EditorInstance.CaretOffset;
-                docIdents = this.EditorInstance.Document.GetAllSqfIdents().ToList();
+                docIdents = this.EditorInstance.GetAllSqfIdents().ToList();
             });
             var sqfDefs = from def in ConfigHost.Instance.SqfDefinitions where def.Kind != RealVirtuality.SQF.SqfDefinition.EKind.Type select def;
             docIdents = (from str in docIdents where !sqfDefs.Any((def) => def.Name.Equals(str, StringComparison.InvariantCultureIgnoreCase)) select str).Distinct();

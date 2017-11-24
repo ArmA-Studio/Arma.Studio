@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ArmA.Studio.Data;
 using ArmA.Studio.Data.UI;
 using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.AvalonEdit;
 
 namespace ArmA.Studio
 {
@@ -13,8 +14,9 @@ namespace ArmA.Studio
     {
 
 
-        public static IEnumerable<string> GetAllSqfIdents(this TextDocument doc, int minLength = 2)
+        public static IEnumerable<string> GetAllSqfIdents(this TextEditor editor, int minLength = 2)
         {
+            var doc = editor.Document;
             var builder = new StringBuilder();
             bool isString = false;
             bool isInComment = false;
@@ -22,6 +24,11 @@ namespace ArmA.Studio
             char stringchar = '\0';
             for (int i = 0; i < doc.TextLength; i++)
             {
+                if(i == editor.CaretOffset)
+                {
+                    builder.Clear();
+                    continue;
+                }
                 var c = doc.GetCharAt(i);
                 if (isInMultiLineComment)
                 {
