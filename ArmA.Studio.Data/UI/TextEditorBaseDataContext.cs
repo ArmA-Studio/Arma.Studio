@@ -121,9 +121,20 @@ namespace ArmA.Studio.Data.UI
                 e.Handled = checkResult.HasValue && checkResult.Value;
             }
         }
+        private void TextArea_TextEntering(object sender, TextCompositionEventArgs e)
+        {
+            bool handled;
+            this.OnTextEntering(e, out handled);
+        }
+        private void TextArea_TextEntered(object sender, TextCompositionEventArgs e)
+        {
+            bool handled;
+            this.OnTextEntered(e, out handled);
+        }
+
         #endregion
 
-        
+
         /// <summary>
         /// Sets the text displayed and clears the UndoStack.
         /// Use to create "new" documents/insert the content.
@@ -178,7 +189,11 @@ namespace ArmA.Studio.Data.UI
             editor.TextArea.Caret.PositionChanged += this.Caret_PositionChanged;
             editor.Document.UndoStack.PropertyChanged += this.UndoStack_PropertyChanged;
             editor.PreviewKeyDown += this.Editor_PreviewKeyDown;
+            editor.TextArea.TextEntering += TextArea_TextEntering;
+            editor.TextArea.TextEntered += TextArea_TextEntered;
+
         }
+
 
 
 
@@ -190,7 +205,8 @@ namespace ArmA.Studio.Data.UI
         /// <param name="offset"></param>
         protected virtual void OnCaretPositionChanged(int line, int column, int offset) { }
         protected virtual void OnLostFocus() { }
-
+        protected virtual void OnTextEntering(TextCompositionEventArgs e, out bool handled) { handled = false; }
+        protected virtual void OnTextEntered(TextCompositionEventArgs e, out bool handled) { handled = false; }
         protected virtual void OnPreviewKeyDown(out bool handled) { handled = false; }
 
         public override void RefreshVisuals()

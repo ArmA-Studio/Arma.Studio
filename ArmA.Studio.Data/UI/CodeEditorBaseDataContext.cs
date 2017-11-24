@@ -138,15 +138,6 @@ namespace ArmA.Studio.Data.UI
                     });
                 }
             }
-
-
-            //IntelliSense
-            int startoff = this.EditorInstance.GetStartOffset();
-            var txt = this.EditorInstance.Document.GetText(startoff, this.EditorInstance.CaretOffset - startoff);
-            if (txt.Length >= 3)
-            {
-                this.DisplayAutoCompletion();
-            }
         }
         public virtual IEnumerable<ICompletionData> GetAutoCompleteData() { yield break; }
         public void DisplayAutoCompletion()
@@ -175,6 +166,27 @@ namespace ArmA.Studio.Data.UI
             {
                 this.DisplayAutoCompletion();
                 handled = true;
+            }
+        }
+        protected override void OnTextEntering(TextCompositionEventArgs e, out bool handled)
+        {
+            base.OnTextEntering(e, out handled);
+            if (e.Text.Length > 0 && this.AutoCompletionWindow != null && e.Text[0] == ' ')
+            {
+                // Whenever a space is typed while the completion window is open,
+                // insert the currently selected element.
+                this.AutoCompletionWindow.CompletionList.RequestInsertion(e);
+            }
+        }
+        protected override void OnTextEntered(TextCompositionEventArgs e, out bool handled)
+        {
+            base.OnTextEntered(e, out handled);
+            //IntelliSense
+            int startoff = this.EditorInstance.GetStartOffset();
+            var txt = this.EditorInstance.Document.GetText(startoff, this.EditorInstance.CaretOffset - startoff);
+            if (txt.Length >= 3 && Char.IsLetterOrDigit(e.Text.Last()))
+            {
+                this.DisplayAutoCompletion();
             }
         }
     }
