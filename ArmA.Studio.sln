@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmA.Studio.Data", "ArmA.St
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{C0E1FA7D-3FB3-4D40-81B4-DFC1EEE7F475}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmA.Studio.BuildChain", "ArmA.Studio.BuildChain\ArmA.Studio.BuildChain.csproj", "{EA7FC281-EA1B-4C40-BCE1-EEAF982206E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,6 +185,18 @@ Global
 		{DC5BB018-6CA3-4F0A-864A-425CEF2F454B}.Release|x64.Build.0 = Release|Any CPU
 		{DC5BB018-6CA3-4F0A-864A-425CEF2F454B}.Release|x86.ActiveCfg = Release|Any CPU
 		{DC5BB018-6CA3-4F0A-864A-425CEF2F454B}.Release|x86.Build.0 = Release|Any CPU
+		{EA7FC281-EA1B-4C40-BCE1-EEAF982206E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA7FC281-EA1B-4C40-BCE1-EEAF982206E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA7FC281-EA1B-4C40-BCE1-EEAF982206E8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EA7FC281-EA1B-4C40-BCE1-EEAF982206E8}.Debug|x64.Build.0 = Debug|Any CPU
+		{EA7FC281-EA1B-4C40-BCE1-EEAF982206E8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EA7FC281-EA1B-4C40-BCE1-EEAF982206E8}.Debug|x86.Build.0 = Debug|Any CPU
+		{EA7FC281-EA1B-4C40-BCE1-EEAF982206E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA7FC281-EA1B-4C40-BCE1-EEAF982206E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA7FC281-EA1B-4C40-BCE1-EEAF982206E8}.Release|x64.ActiveCfg = Release|Any CPU
+		{EA7FC281-EA1B-4C40-BCE1-EEAF982206E8}.Release|x64.Build.0 = Release|Any CPU
+		{EA7FC281-EA1B-4C40-BCE1-EEAF982206E8}.Release|x86.ActiveCfg = Release|Any CPU
+		{EA7FC281-EA1B-4C40-BCE1-EEAF982206E8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
