@@ -11,20 +11,24 @@ namespace ArmA.Studio.UiEditor
 {
     public class PluginMain : IPlugin
     {
+        public Version Version => new Version(1, 0, 0);
+        public string Name => Properties.Language.UIEditor_Name;
+
         public Task<IUpdateInfo> CheckForUpdate(CancellationToken cancellationToken) => Task.Run(() => default(IUpdateInfo));
+        public Task Initialize(CancellationToken cancellationToken) => Task.CompletedTask;
         public IEnumerable<DockableInfo> GetAnchorables()
         {
-            throw new NotImplementedException();
+            yield break;
         }
 
         public IEnumerable<DockableInfo> GetDocuments()
         {
-            throw new NotImplementedException();
+            yield return DockableInfo.Create(Properties.Language.UIEditor_Document, "", () => new EditorDataContext());
         }
 
-        public Task Initialize(CancellationToken cancellationToken)
+        public void AddDataTemplates(GenericDataTemplateSelector selector)
         {
-            throw new NotImplementedException();
+            selector.AddAllDataTemplatesInAssembly(typeof(PluginMain).Assembly, (s) => s.StartsWith("ArmA.Studio.UiEditor"));
         }
     }
 }
