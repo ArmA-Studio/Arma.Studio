@@ -79,6 +79,15 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ArmA.Studio.
+        /// </summary>
+        public static string ArmAStudio {
+            get {
+                return ResourceManager.GetString("ArmAStudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to load configuration. Using empty..
         /// </summary>
         public static string Configuration_ExceptionDuringLoad {

@@ -107,13 +107,24 @@ namespace ArmA.Studio.UI.Windows
         });
         public ICommand CmdActiveContentChanged => new RelayCommand((p) => { });
         public ICommand CmdWindowClosed => new RelayCommand((p) => { App.Current.Shutdown(0); });
-        public ICommand CmdWindowInitialized => new RelayCommand((p) => { this.OwningWindow = p as Window; this.Initialized(); });
+        public ICommand CmdWindowInitialized => new RelayCommand<Window>((window) =>
+        {
+            if (this.OwningWindow == null)
+            {
+                this.OwningWindow = window;
+                this.Initialized();
+            }
+            else
+            {
+                this.OwningWindow = window;
+            }
+        });
         public ICommand CmdDockingManagerInitialized => new RelayCommand((p) =>
         {
             this.WindowsDockingManager = p as Xceed.Wpf.AvalonDock.DockingManager;
             this.LoadAvalonDockLayout();
         });
-        public ICommand CmdCreateDocument => new RelayCommand((type) => this.AddDocument((DockableBase)Activator.CreateInstance((Type)type)));
+        public ICommand CmdCreateDocument => new RelayCommand<DockableInfo>((info) => this.AddDocument(info.CreateFunc()));
         public ICommand CmdCreateAnchorable => new RelayCommand((type) =>
         {
             var anch = this.Anchorables.FirstOrDefault((db) => db.GetType().IsEquivalentTo((Type)type));
@@ -133,6 +144,14 @@ namespace ArmA.Studio.UI.Windows
 
         public ObservableCollection<DockableBase> Documents { get { return this._Documents; } set { this._Documents = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<DockableBase> _Documents;
+
+
+        public ObservableCollection<DockableInfo> AnchorablesAvailable { get { return this._AnchorablesAvailable; } set { this._AnchorablesAvailable = value; this.RaisePropertyChanged(); } }
+        private ObservableCollection<DockableInfo> _AnchorablesAvailable;
+
+        public ObservableCollection<DockableInfo> DocumentsAvailable { get { return this._DocumentsAvailable; } set { this._DocumentsAvailable = value; this.RaisePropertyChanged(); } }
+        private ObservableCollection<DockableInfo> _DocumentsAvailable;
+        
 
 
         private Newtonsoft.Json.Linq.JObject LayoutJsonNode;
@@ -241,12 +260,22 @@ namespace ArmA.Studio.UI.Windows
             this.LayoutItemTemplateSelector = new GenericDataTemplateSelector();
             this.Anchorables = new ObservableCollection<DockableBase>();
             this.Documents = new ObservableCollection<DockableBase>();
+            this.AnchorablesAvailable = new ObservableCollection<DockableInfo>();
+            this.DocumentsAvailable = new ObservableCollection<DockableInfo>();
             this.LayoutJsonNode = new Newtonsoft.Json.Linq.JObject(new Newtonsoft.Json.Linq.JProperty(CONST_INI_TYPES_STRING, new Newtonsoft.Json.Linq.JObject()));
         }
         private void Initialized()
         {
-            this.LayoutItemTemplateSelector.AddAllDataTemplatesInAssembly(typeof(MainWindowDataContext).Assembly, (s) => s.StartsWith("AvalonDock_WpfApplication.UI.Anchorable"));
-            this.LayoutItemTemplateSelector.AddAllDataTemplatesInAssembly(typeof(MainWindowDataContext).Assembly, (s) => s.StartsWith("AvalonDock_WpfApplication.UI.Documents"));
+            this.LayoutItemTemplateSelector.AddAllDataTemplatesInAssembly(typeof(MainWindowDataContext).Assembly, (s) => s.StartsWith("ArmA.Studio.UI.Anchorable"));
+            this.LayoutItemTemplateSelector.AddAllDataTemplatesInAssembly(typeof(MainWindowDataContext).Assembly, (s) => s.StartsWith("ArmA.Studio.UI.Documents"));
+            foreach(var it in PluginManager.Instance.Plugins)
+            {
+                it.Plugin.AddDataTemplates(this.LayoutItemTemplateSelector);
+                this.AnchorablesAvailable.AddRange(it.Plugin.GetAnchorables());
+                this.DocumentsAvailable.AddRange(it.Plugin.GetDocuments());
+            }
+
+
         }
         private void Dockable_OnDocumentClosing(object sender, EventArgs e)
         {

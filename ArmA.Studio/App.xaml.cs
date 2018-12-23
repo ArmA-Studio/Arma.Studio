@@ -18,8 +18,8 @@ namespace ArmA.Studio
         public const string CONST_DOCKING_MANAGER_LAYOUT_NAME = "layout.xml";
         public const string CONST_DOCKING_MANAGER_LAYOUT_JSON_NAME = "layout.json";
         public const string CONST_CONFIG_NAME = "config.xml";
-        public const string CONST_VENDOR = "layout.json";
-        public const string CONST_APPLICATIONNAME = "layout.json";
+        public const string CONST_VENDOR = "X39";
+        public const string CONST_APPLICATIONNAME = "ArmA.Studio";
         public const string CONST_PLUGINS = "Plugins";
 
         public static readonly string ExecutableFile = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase.Substring("file:///".Length);
@@ -33,7 +33,7 @@ namespace ArmA.Studio
         public static readonly Version CurrentVersion = typeof(App).Assembly.GetName().Version;
 
         public static readonly string PluginDir_Executable = System.IO.Path.Combine(ExecutablePath, CONST_PLUGINS);
-        public static readonly string PluginDir_RoamingUser = System.IO.Path.Combine(ExecutablePath, CONST_PLUGINS);
+        public static readonly string PluginDir_RoamingUser = System.IO.Path.Combine(CommonApplicationDataPath, CONST_PLUGINS);
         public static readonly string PluginDir_Data = System.IO.Path.Combine(ApplicationDataPath, CONST_PLUGINS);
 
         public static UI.Windows.MainWindowDataContext MWContext => App.Current.MainWindow.DataContext as UI.Windows.MainWindowDataContext;

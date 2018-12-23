@@ -36,6 +36,9 @@
   <PropertyGroup>
     <StartupObject>ArmA.Studio.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -79,6 +82,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Configuration.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="PluginManager.cs" />
     <Compile Include="UI\Windows\SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
@@ -99,7 +103,6 @@
     <Compile Include="UI\AvalonDock\ActiveContentChangedAttached.cs" />
     <Compile Include="UI\AvalonDock\AvalonDockStyleSelector.cs" />
     <Compile Include="UI\AvalonDock\DockableBaseOnDocumentClosingEventArgs.cs" />
-    <Compile Include="UI\AvalonDock\GenericDataTemplateSelector.cs" />
     <Compile Include="UI\AvalonDock\LayoutUpdateStrategy.cs" />
     <Compile Include="UI\Windows\MainWindowDataContext.cs" />
     <Page Include="UI\Windows\MainWindow.xaml">

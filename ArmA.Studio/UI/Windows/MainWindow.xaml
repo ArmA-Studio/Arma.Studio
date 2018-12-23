@@ -13,7 +13,7 @@
         asd:Closed.Command="{Binding CmdWindowClosed}"
         asd:Initialized.Command="{Binding CmdWindowInitialized}"
         asd:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-        Title="Pecuniarius" Height="512" Width="1024" UseLayoutRounding="True">
+        Title="{x:Static p:Language.ArmAStudio}" Height="512" Width="1024" UseLayoutRounding="True">
     <DockPanel>
         <DockPanel.Resources>
         </DockPanel.Resources>
@@ -21,7 +21,14 @@
             <Menu.ItemsSource>
                 <CompositeCollection>
                     <MenuItem Header="{x:Static p:Language.MainWindow_Menu_File}">
-                        <MenuItem Header="{x:Static p:Language.MainWindow_Menu_File_New}">
+                        <MenuItem Header="{x:Static p:Language.MainWindow_Menu_File_New}" ItemsSource="{Binding DocumentsAvailable}">
+                            <MenuItem.ItemContainerStyle>
+                                <Style TargetType="MenuItem">
+                                    <Setter Property="Command" Value="{Binding DataContext.CmdCreateDocument, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"/>
+                                    <Setter Property="CommandParameter" Value="{Binding}"/>
+                                    <Setter Property="Header" Value="{Binding Name}"/>
+                                </Style>
+                            </MenuItem.ItemContainerStyle>
                         </MenuItem>
                         <Separator/>
                         <MenuItem Header="{x:Static p:Language.MainWindow_Menu_File_Quit}" Command="{Binding CmdQuit}">
