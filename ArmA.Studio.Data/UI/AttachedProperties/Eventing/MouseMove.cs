@@ -9,18 +9,18 @@ using System.Windows.Input;
 
 namespace ArmA.Studio.Data.UI.AttachedProperties.Eventing
 {
-    public class MouseRightButtonDown
+    public class MouseMove
     {
         public static DependencyProperty CommandProperty =
             DependencyProperty.RegisterAttached("Command",
             typeof(ICommand),
-            typeof(MouseRightButtonDown),
+            typeof(MouseMove),
             new UIPropertyMetadata(CommandChanged));
 
         public static DependencyProperty CommandParameterProperty =
             DependencyProperty.RegisterAttached("CommandParameter",
                                                 typeof(object),
-                                                typeof(MouseRightButtonDown),
+                                                typeof(MouseMove),
                                                 new UIPropertyMetadata(null));
 
         public static void SetCommand(DependencyObject target, ICommand value)
@@ -39,21 +39,20 @@ namespace ArmA.Studio.Data.UI.AttachedProperties.Eventing
 
         private static void CommandChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
-            var type = target.GetType();
-            var ev = type.GetEvent("MouseRightButtonDown");
-            var method = typeof(MouseRightButtonDown).GetMethod("OnMouseRightButtonDown");
-
-            if ((e.NewValue != null) && (e.OldValue == null))
+            if (target is Control control)
             {
-                ev.AddEventHandler(target, Delegate.CreateDelegate(ev.EventHandlerType, method));
-            }
-            else if ((e.NewValue == null) && (e.OldValue != null))
-            {
-                ev.RemoveEventHandler(target, Delegate.CreateDelegate(ev.EventHandlerType, method));
+                if ((e.NewValue != null) && (e.OldValue == null))
+                {
+                    control.MouseMove += OnMouseMove;
+                }
+                else if ((e.NewValue == null) && (e.OldValue != null))
+                {
+                    control.MouseMove -= OnMouseMove;
+                }
             }
         }
 
-        public static void OnMouseRightButtonDown(object sender, EventArgs e)
+        private static void OnMouseMove(object sender, EventArgs e)
         {
             var control = sender as FrameworkElement;
             var command = (ICommand)control.GetValue(CommandProperty);

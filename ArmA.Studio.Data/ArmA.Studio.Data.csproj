@@ -44,6 +44,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DependencyObjectExtensions.cs" />
     <Compile Include="DockableBase.cs" />
     <Compile Include="DockableBaseOnDocumentClosingEventArgs.cs" />
     <Compile Include="DragDropInfo.cs" />
@@ -62,15 +63,18 @@
     <Compile Include="UI\AttachedProperties\Eventing\Loaded.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\LostFocus.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\LostKeyboardFocus.cs" />
-    <Compile Include="UI\AttachedProperties\Eventing\MouseDoubleClick.cs" />
-    <Compile Include="UI\AttachedProperties\Eventing\MouseDown.cs" />
-    <Compile Include="UI\AttachedProperties\Eventing\MouseLeftButtonDown.cs" />
-    <Compile Include="UI\AttachedProperties\Eventing\MouseRightButtonDown.cs" />
+    <Compile Include="UI\AttachedProperties\Eventing\MouseLeave.cs" />
+    <Compile Include="UI\AttachedProperties\Eventing\MouseMove.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\PreviewKeyDown.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\PreviewMouseDown.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\SelectedItemChanged.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\TextChanged.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\Unloaded.cs" />
+    <Compile Include="UI\AttachedProperties\Attached.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Attached.tt</DependentUpon>
+    </Compile>
     <Compile Include="UI\BreakpointEventArgs.cs" />
     <Compile Include="UI\DockableInfo.cs" />
     <Compile Include="UI\GenericDataTemplateSelector.cs" />
@@ -80,6 +84,15 @@
     <Compile Include="UI\IMainWindow.cs" />
     <Compile Include="UI\RelayCommand.cs" />
     <Compile Include="UI\RelayCommandAsync.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UI\AttachedProperties\Attached.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Attached.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

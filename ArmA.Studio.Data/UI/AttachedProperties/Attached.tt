@@ -1,0 +1,239 @@
+﻿<#@ template debug="true" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="PresentationCore" #>
+<#@ assembly name="PresentationFramework" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Windows" #>
+<#@ import namespace="System.Windows.Controls" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+/*
+	To get this updated properly with local items,
+	Compile once in debug, save the TT, compile again in whatever you want.
+
+	Due to how TT work, this is required.
+*/
+
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Controls.Primitives;
+namespace ArmA.Studio.Data.UI.AttachedProperties
+{
+<# 
+			bool comma = false;
+			var AllEvents = Enumerable.Distinct<System.Reflection.EventInfo>(new Type[] {
+				typeof(Control),
+				typeof(TextBox),
+				typeof(Window),
+				typeof(MenuItem),
+				typeof(ComboBox),
+				typeof(TreeView),
+				typeof(ScrollViewer),
+				typeof(TabControl),
+				typeof(CheckBox),
+				typeof(TabItem)
+			}.SelectMany((t) => t.GetEvents()), new EventInfoComparer()).Where((ei) => !(new String[] {
+				"DpiChanged"
+			}).Contains(ei.Name)).ToArray();
+
+			foreach (var ev in AllEvents)
+			{
+#>
+	public partial interface IOn<#= ev.Name #> { void On<#= ev.Name #>(<#= ev.DeclaringType.Name #> sender, <#= GetFullTypeName(ev.EventHandlerType.GetMethod("Invoke").GetParameters().Last().ParameterType) #> e); }
+<#
+			}
+#>
+    public static class AttachedDataContext
+    {
+        public static DependencyProperty DataContextProperty =
+            DependencyProperty.RegisterAttached("DataContext",
+            typeof(object),
+            typeof(AttachedDataContext),
+            new UIPropertyMetadata(DataContextChanged));
+
+        public static object GetDataContext(DependencyObject target) => (object)target.GetValue(DataContextProperty);
+        public static void SetDataContext(DependencyObject target, object value) => target.SetValue(DataContextProperty, value);
+
+
+        static void DataContextChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
+        {
+            var type = target.GetType();
+
+            if ((e.NewValue != null) && (e.OldValue == null) && e.NewValue != e.OldValue)
+            {
+				SetDataContext(target, e.NewValue);
+				OnAdd(type, target, e);
+            }
+            else if ((e.NewValue == null) && (e.OldValue != null) && e.NewValue != e.OldValue)
+            {
+				OnRemove(type, target, e);
+            }
+        }
+		
+		static void OnAdd(Type type, DependencyObject target, DependencyPropertyChangedEventArgs e)
+		{
+<#
+			foreach (var ev in AllEvents)
+			{
+#>
+			if (e.NewValue is IOn<#= ev.Name #> && typeof(<#= ev.DeclaringType.Name #>).IsAssignableFrom(type))
+			{
+				var evinfo = type.GetEvent("<#= ev.Name #>");
+				if (evinfo != null)
+				{
+					var mtinfo = typeof(AttachedDataContext).GetMethod("On<#= ev.Name #>_<#= ev.DeclaringType.Name #>");
+					evinfo.AddEventHandler(target, Delegate.CreateDelegate(evinfo.EventHandlerType, mtinfo));
+				}
+			}
+<#
+			}
+#>
+		}
+		static void OnRemove(Type type, DependencyObject target, DependencyPropertyChangedEventArgs e)
+		{
+<#
+			foreach (var ev in AllEvents)
+			{
+#>
+			if (e.NewValue is IOn<#= ev.Name #> && typeof(<#= ev.DeclaringType.Name #>).IsAssignableFrom(type))
+			{
+				var evinfo = type.GetEvent("<#= ev.Name #>");
+				if (evinfo != null)
+				{
+					var mtinfo = typeof(AttachedDataContext).GetMethod("On<#= ev.Name #>_<#= ev.DeclaringType.Name #>");
+					evinfo.RemoveEventHandler(target, Delegate.CreateDelegate(evinfo.EventHandlerType, mtinfo));
+				}
+			}
+<#
+			}
+#>
+		}
+<#
+			comma = false;
+			foreach (var ev in AllEvents)
+			{
+#>
+		public static void On<#= ev.Name #>_<#= ev.DeclaringType.Name #>(object sender, <#= GetFullTypeName(ev.EventHandlerType.GetMethod("Invoke").GetParameters().Last().ParameterType) #> e)
+		{
+			if (sender is <#= ev.DeclaringType.Name #> cntrl)
+			{
+				var dc = GetDataContext(cntrl) as IOn<#= ev.Name #>;
+				dc.On<#= ev.Name #>(cntrl, e);
+			}
+		}
+<#
+			}
+#>
+    }
+<#
+			var ExistingNames = new List<string>();
+            var attEvs = from ev in AllEvents /* where !ev.Name.StartsWith("Preview") */ select ev;
+            foreach(var ev in attEvs)
+            {
+				var name = ev.Name;
+				if(ExistingNames.Contains(name))
+				{
+					name = String.Concat(ev.Name, ev.DeclaringType.Name);
+				}
+				ExistingNames.Add(ev.Name);
+#>
+    public class <#= name #>
+    {
+        public static DependencyProperty CommandProperty =
+            DependencyProperty.RegisterAttached("Command",
+            typeof(ICommand),
+            typeof(<#= ev.Name #>),
+            new UIPropertyMetadata(CommandChanged));
+
+        public static DependencyProperty CommandParameterProperty =
+            DependencyProperty.RegisterAttached("CommandParameter",
+                                                typeof(object),
+                                                typeof(<#= ev.Name #>),
+                                                new UIPropertyMetadata(null));
+
+        public static ICommand GetCommand(<#= ev.DeclaringType.Name #> target) => (ICommand)target.GetValue(CommandProperty);
+        public static void SetCommand(<#= ev.DeclaringType.Name #> target, ICommand value) => target.SetValue(CommandProperty, value);
+        public static object GetCommandParameter(<#= ev.DeclaringType.Name #> target) => target.GetValue(CommandParameterProperty);
+        public static void SetCommandParameter(<#= ev.DeclaringType.Name #> target, object value) => target.SetValue(CommandParameterProperty, value);
+
+
+        private static void CommandChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
+        {
+            var type = target.GetType();
+            var ev = type.GetEvent("<#= ev.Name #>");
+            var method = typeof(<#= ev.Name #>).GetMethod("On<#= ev.Name #>");
+
+            if ((e.NewValue != null) && (e.OldValue == null))
+            {
+                ev.AddEventHandler(target, Delegate.CreateDelegate(ev.EventHandlerType, method));
+            }
+            else if ((e.NewValue == null) && (e.OldValue != null))
+            {
+                ev.RemoveEventHandler(target, Delegate.CreateDelegate(ev.EventHandlerType, method));
+            }
+        }
+
+        public static void On<#= ev.Name #>(object sender, EventArgs e)
+        {
+            var control = sender as <#= ev.DeclaringType.Name #>;
+            var command = (ICommand)control.GetValue(CommandProperty);
+            var commandParameter = control.GetValue(CommandParameterProperty);
+            command.Execute(commandParameter);
+        }
+    }
+<#
+			}
+#>
+}
+<#+
+        private string GetFullTypeName(Type t)
+        {
+            var builder = new StringBuilder();
+            builder.Append(t.Namespace);
+            builder.Append('.');
+            if (t.IsGenericType)
+            {
+                builder.Append(t.Name.Substring(0, t.Name.IndexOf('`')));
+                builder.Append('<');
+                bool comma = false;
+                foreach(var generic in t.GenericTypeArguments)
+                {
+                    builder.Append(GetFullTypeName(generic));
+                    if (comma)
+                    {
+                        builder.Append(", ");
+                    }
+                    else
+                    {
+                        comma = true;
+                    }
+                }
+                builder.Append('>');
+            }
+            else
+            {
+                builder.Append(t.Name);
+            }
+            return builder.ToString();
+		}
+#>
+<#+
+class EventInfoComparer : IEqualityComparer<System.Reflection.EventInfo>
+{
+    public bool Equals(System.Reflection.EventInfo l, System.Reflection.EventInfo r)
+    {
+		return l.DeclaringType.IsEquivalentTo(r.DeclaringType) && l.Name.Equals(r.Name);
+    }
+	public int GetHashCode(System.Reflection.EventInfo l)
+	{
+		return 0;
+	}
+}
+#>

@@ -17,6 +17,7 @@ using System.Windows.Markup;
 
 [assembly: XmlnsPrefix("http://schemas.armastudio.io/data", "asd")]
 [assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "ArmA.Studio.Data.UI.AttachedProperties.Eventing")]
+[assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "ArmA.Studio.Data.UI.AttachedProperties")]
 [assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "ArmA.Studio.Data.UI.Converters")]
 [assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "ArmA.Studio.Data.UI")]
 [assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "ArmA.Studio.Data")]
