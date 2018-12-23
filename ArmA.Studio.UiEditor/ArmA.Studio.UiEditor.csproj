@@ -30,10 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Control.cs" />
+    <Compile Include="ControlTypeContainer.cs" />
+    <Compile Include="ControlTypeConverter.cs" />
     <Compile Include="EShadow.cs" />
     <Compile Include="EControlStyle.cs" />
     <Compile Include="EControlType.cs" />
@@ -70,5 +76,14 @@
       <Name>ArmA.Studio.Data</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if not exist "$(SolutionDir)ArmA.Studio\$(OutDir)Plugins" mkdir ""$(SolutionDir)ArmA.Studio\$(OutDir)Plugins""
+xcopy /Y "$(TargetDir)*" "$(SolutionDir)ArmA.Studio\$(OutDir)Plugins"
+del "$(SolutionDir)ArmA.Studio\$(OutDir)Plugins\ArmA.Studio.Data.dll"
+del "$(SolutionDir)ArmA.Studio\$(OutDir)Plugins\ArmA.Studio.Data.pdb"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

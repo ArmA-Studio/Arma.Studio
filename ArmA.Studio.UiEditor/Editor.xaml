@@ -3,5 +3,81 @@
               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
               xmlns:local="clr-namespace:ArmA.Studio.UiEditor;assembly=ArmA.Studio.UiEditor"
               DataType="{x:Type local:EditorDataContext}"
+              xmlns:ae="http://icsharpcode.net/sharpdevelop/avalonedit"
+              xmlns:asd="http://schemas.armastudio.io/data"
               >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ae:TextEditor Grid.Column="0">
+            
+        </ae:TextEditor>
+        <GridSplitter Grid.Column="1"/>
+        <ItemsControl Grid.Column="2" ItemsSource="{Binding Controls}">
+            <ItemsControl.Resources>
+                <local:ControlTypeConverter x:Key="ControlTypeConverter">
+                    <local:ControlTypeConverter.Default>
+                        <DataTemplate DataType="{x:Type local:Control}">
+                            <Rectangle Fill="Purple" Width="{Binding Width}" Height="{Binding Height}"/>
+                        </DataTemplate>
+                    </local:ControlTypeConverter.Default>
+                    <local:ControlTypeConverter.Templates>
+                        <local:ControlTypeContainer Type="CT_STATIC">
+                            <local:ControlTypeContainer.Template>
+                                <DataTemplate DataType="{x:Type local:Control}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Rectangle Grid.RowSpan="2" Fill="Red" Width="{Binding Width}" Height="{Binding Height}"/>
+                                        <TextBlock Text="{Binding PositionX, StringFormat={}X: {0}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Row="1" Text="{Binding PositionY, StringFormat={}Y: {0}}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </local:ControlTypeContainer.Template>
+                        </local:ControlTypeContainer>
+                    </local:ControlTypeConverter.Templates>
+                </local:ControlTypeConverter>
+            </ItemsControl.Resources>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas asd:AttachedDataContext.DataContext="{Binding}"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Top" Value="{Binding PositionY}"/>
+                    <Setter Property="Canvas.Left" Value="{Binding PositionX}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type local:Control}">
+                    <Grid>
+                        <ContentPresenter ContentTemplate="{Binding Type, Converter={StaticResource ControlTypeConverter}}">
+                        </ContentPresenter>
+                        <Border Opacity="0.75"
+                                asd:AttachedDataContext.DataContext="{Binding}"
+                                >
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="BorderThickness" Value="3"/>
+                                            <Setter Property="BorderBrush" Value="Blue"/>
+                                            <Setter Property="Background" Value="#400000ff"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
 </DataTemplate>
