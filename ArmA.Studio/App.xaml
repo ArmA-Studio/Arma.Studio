@@ -1,0 +1,13 @@
+﻿<Application x:Class="ArmA.Studio.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ArmA.Studio"
+             xmlns:cnv="clr-namespace:ArmA.Studio.Data.UI.Converters;assembly=ArmA.Studio.Data"
+             Startup="Application_Startup"
+             ShutdownMode="OnExplicitShutdown"
+             DispatcherUnhandledException="Application_DispatcherUnhandledException"
+             Exit="Application_Exit">
+    <Application.Resources>
+        <cnv:UriToCachedImageConverter x:Key="UriToCachedImageConverter"/>
+    </Application.Resources>
+</Application>

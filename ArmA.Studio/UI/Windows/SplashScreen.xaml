@@ -1,0 +1,32 @@
+﻿<Window x:Class="ArmA.Studio.UI.Windows.SplashScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:asd="http://schemas.armastudio.io/data"
+        xmlns:local="clr-namespace:ArmA.Studio"
+        mc:Ignorable="d"
+        Icon="/ArmA.Studio;component/Resources/Icon.ico"
+        Title="SplashScreen"
+        Height="256"
+        Width="532"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        asd:Loaded.Command="{Binding CmdLoaded}"
+        asd:Loaded.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+        asd:Closed.Command="{Binding CmdClosed}"
+        asd:Closed.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+        >
+    <Canvas>
+        <Canvas.Background>
+            <ImageBrush ImageSource="/ArmA.Studio;component/Resources/SplashScreen.png"/>
+        </Canvas.Background>
+        <ProgressBar Width="532" Height="2" BorderBrush="#872D2D" Foreground="Red" Maximum="1" Minimum="0" Canvas.Top="184" Value="{Binding ProgressValue, FallbackValue=0.5}" IsIndeterminate="{Binding ProgressIndeterminate, FallbackValue=False}"/>
+        <TextBlock Width="532" Foreground="White" TextAlignment="Center" Text="{Binding ProgressText, FallbackValue=Doing Something}" Canvas.Top="200" VerticalAlignment="Top">
+            <TextBlock.Effect>
+                <DropShadowEffect ShadowDepth="1" Color="#872D2D" Opacity="1" RenderingBias="Performance" BlurRadius="0"/>
+            </TextBlock.Effect>
+        </TextBlock>
+    </Canvas>
+</Window>
