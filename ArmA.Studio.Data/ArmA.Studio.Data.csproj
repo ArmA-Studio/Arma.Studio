@@ -73,6 +73,7 @@
     <Compile Include="UI\AttachedProperties\Eventing\Unloaded.cs" />
     <Compile Include="UI\BreakpointEventArgs.cs" />
     <Compile Include="UI\DockableInfo.cs" />
+    <Compile Include="UI\GenericDataTemplateSelector.cs" />
     <Compile Include="UI\IBreakpoint.cs" />
     <Compile Include="UI\Converters\UriToCachedImageConverter.cs" />
     <Compile Include="UI\IBreakpointManager.cs" />

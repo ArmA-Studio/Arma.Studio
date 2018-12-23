@@ -42,6 +42,12 @@ namespace ArmA.Studio.Data
         Task Initialize(CancellationToken cancellationToken);
 
         /// <summary>
+        /// Supposed to add the datatemplates to the <see cref="GenericDataTemplateSelector"/>.
+        /// </summary>
+        /// <param name="selector">The <see cref="GenericDataTemplateSelector"/> instance.</param>
+        void AddDataTemplates(GenericDataTemplateSelector selector);
+
+        /// <summary>
         /// Supposed to return the current plugin version.
         /// </summary>
         Version Version { get; }
