@@ -15,6 +15,10 @@ namespace ArmA.Studio
     /// </summary>
     public class PluginManager
     {
+        public class NoPluginPresentException : InvalidOperationException
+        {
+
+        }
         public struct PluginContainer
         {
             public IPlugin Plugin { get; }
@@ -68,7 +72,7 @@ namespace ArmA.Studio
             }
             else
             {
-                throw new InvalidOperationException();
+                throw new NoPluginPresentException();
             }
         }
     }

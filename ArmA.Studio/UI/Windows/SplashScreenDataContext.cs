@@ -102,6 +102,7 @@ namespace ArmA.Studio.UI.Windows
                     {
                         PluginManager.Instance.LoadPlugin(plugin);
                     }
+                    catch (PluginManager.NoPluginPresentException) { /* EMPTY */ }
                     catch
                     {
                         MessageBox.Show(String.Format(Properties.Language.FailedToLoadPlugin_Body, plugin), Properties.Language.FailedToLoadPlugin_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
