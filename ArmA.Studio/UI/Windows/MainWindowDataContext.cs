@@ -125,12 +125,12 @@ namespace ArmA.Studio.UI.Windows
             this.LoadAvalonDockLayout();
         });
         public ICommand CmdCreateDocument => new RelayCommand<DockableInfo>((info) => this.AddDocument(info.CreateFunc()));
-        public ICommand CmdCreateAnchorable => new RelayCommand((type) =>
+        public ICommand CmdCreateAnchorable => new RelayCommand<DockableInfo>((info) =>
         {
-            var anch = this.Anchorables.FirstOrDefault((db) => db.GetType().IsEquivalentTo((Type)type));
+            var anch = this.Anchorables.FirstOrDefault((db) => db.GetType().IsEquivalentTo(info.Type));
             if (anch == null)
             {
-                this.AddAnchorable((DockableBase)Activator.CreateInstance((Type)type));
+                this.AddAnchorable((DockableBase)Activator.CreateInstance(info.Type));
             }
             else
             {

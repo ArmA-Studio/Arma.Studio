@@ -52,7 +52,14 @@
                         </MenuItem>
                     </MenuItem>
                     <MenuItem Header="{x:Static p:Language.MainWindow_Menu_View}">
-                        <MenuItem Header="{x:Static p:Language.MainWindow_Menu_View_Anchorables}">
+                        <MenuItem Header="{x:Static p:Language.MainWindow_Menu_View_Anchorables}" ItemsSource="{Binding AnchorablesAvailable}">
+                            <MenuItem.ItemContainerStyle>
+                                <Style TargetType="MenuItem">
+                                    <Setter Property="Command" Value="{Binding DataContext.CmdCreateAnchorable, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"/>
+                                    <Setter Property="CommandParameter" Value="{Binding}"/>
+                                    <Setter Property="Header" Value="{Binding Name}"/>
+                                </Style>
+                            </MenuItem.ItemContainerStyle>
                         </MenuItem>
                     </MenuItem>
                 </CompositeCollection>
