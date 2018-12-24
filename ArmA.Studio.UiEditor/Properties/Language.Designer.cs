@@ -61,6 +61,375 @@ namespace ArmA.Studio.UiEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ACTIVETEXT.
+        /// </summary>
+        public static string CT_ACTIVETEXT {
+            get {
+                return ResourceManager.GetString("CT_ACTIVETEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ANIMATED TEXTURE.
+        /// </summary>
+        public static string CT_ANIMATED_TEXTURE {
+            get {
+                return ResourceManager.GetString("CT_ANIMATED_TEXTURE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BUTTON.
+        /// </summary>
+        public static string CT_BUTTON {
+            get {
+                return ResourceManager.GetString("CT_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CHECKBOX.
+        /// </summary>
+        public static string CT_CHECKBOX {
+            get {
+                return ResourceManager.GetString("CT_CHECKBOX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CHECKBOXES.
+        /// </summary>
+        public static string CT_CHECKBOXES {
+            get {
+                return ResourceManager.GetString("CT_CHECKBOXES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to COMBO.
+        /// </summary>
+        public static string CT_COMBO {
+            get {
+                return ResourceManager.GetString("CT_COMBO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CONTEXT MENU.
+        /// </summary>
+        public static string CT_CONTEXT_MENU {
+            get {
+                return ResourceManager.GetString("CT_CONTEXT_MENU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CONTROLS GROUP.
+        /// </summary>
+        public static string CT_CONTROLS_GROUP {
+            get {
+                return ResourceManager.GetString("CT_CONTROLS_GROUP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CONTROLS TABLE.
+        /// </summary>
+        public static string CT_CONTROLS_TABLE {
+            get {
+                return ResourceManager.GetString("CT_CONTROLS_TABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EDIT.
+        /// </summary>
+        public static string CT_EDIT {
+            get {
+                return ResourceManager.GetString("CT_EDIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HITZONES.
+        /// </summary>
+        public static string CT_HITZONES {
+            get {
+                return ResourceManager.GetString("CT_HITZONES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HTML.
+        /// </summary>
+        public static string CT_HTML {
+            get {
+                return ResourceManager.GetString("CT_HTML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ITEMSLOT.
+        /// </summary>
+        public static string CT_ITEMSLOT {
+            get {
+                return ResourceManager.GetString("CT_ITEMSLOT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LINEBREAK.
+        /// </summary>
+        public static string CT_LINEBREAK {
+            get {
+                return ResourceManager.GetString("CT_LINEBREAK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LISTBOX.
+        /// </summary>
+        public static string CT_LISTBOX {
+            get {
+                return ResourceManager.GetString("CT_LISTBOX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LISTNBOX.
+        /// </summary>
+        public static string CT_LISTNBOX {
+            get {
+                return ResourceManager.GetString("CT_LISTNBOX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LISTNBOX CHECKABLE.
+        /// </summary>
+        public static string CT_LISTNBOX_CHECKABLE {
+            get {
+                return ResourceManager.GetString("CT_LISTNBOX_CHECKABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAP.
+        /// </summary>
+        public static string CT_MAP {
+            get {
+                return ResourceManager.GetString("CT_MAP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAP MAIN.
+        /// </summary>
+        public static string CT_MAP_MAIN {
+            get {
+                return ResourceManager.GetString("CT_MAP_MAIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MENU.
+        /// </summary>
+        public static string CT_MENU {
+            get {
+                return ResourceManager.GetString("CT_MENU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MENU STRIP.
+        /// </summary>
+        public static string CT_MENU_STRIP {
+            get {
+                return ResourceManager.GetString("CT_MENU_STRIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OBJECT.
+        /// </summary>
+        public static string CT_OBJECT {
+            get {
+                return ResourceManager.GetString("CT_OBJECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OBJECT CONT ANIM.
+        /// </summary>
+        public static string CT_OBJECT_CONT_ANIM {
+            get {
+                return ResourceManager.GetString("CT_OBJECT_CONT_ANIM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OBJECT CONTAINER.
+        /// </summary>
+        public static string CT_OBJECT_CONTAINER {
+            get {
+                return ResourceManager.GetString("CT_OBJECT_CONTAINER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OBJECT ZOOM.
+        /// </summary>
+        public static string CT_OBJECT_ZOOM {
+            get {
+                return ResourceManager.GetString("CT_OBJECT_ZOOM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PROGRESS.
+        /// </summary>
+        public static string CT_PROGRESS {
+            get {
+                return ResourceManager.GetString("CT_PROGRESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SHORTCUTBUTTON.
+        /// </summary>
+        public static string CT_SHORTCUTBUTTON {
+            get {
+                return ResourceManager.GetString("CT_SHORTCUTBUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SLIDER.
+        /// </summary>
+        public static string CT_SLIDER {
+            get {
+                return ResourceManager.GetString("CT_SLIDER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STATIC.
+        /// </summary>
+        public static string CT_STATIC {
+            get {
+                return ResourceManager.GetString("CT_STATIC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STATIC SKEW.
+        /// </summary>
+        public static string CT_STATIC_SKEW {
+            get {
+                return ResourceManager.GetString("CT_STATIC_SKEW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STRUCTURED TEXT.
+        /// </summary>
+        public static string CT_STRUCTURED_TEXT {
+            get {
+                return ResourceManager.GetString("CT_STRUCTURED_TEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOOLBOX.
+        /// </summary>
+        public static string CT_TOOLBOX {
+            get {
+                return ResourceManager.GetString("CT_TOOLBOX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TREE.
+        /// </summary>
+        public static string CT_TREE {
+            get {
+                return ResourceManager.GetString("CT_TREE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to USER.
+        /// </summary>
+        public static string CT_USER {
+            get {
+                return ResourceManager.GetString("CT_USER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VEHICLE DIRECTION.
+        /// </summary>
+        public static string CT_VEHICLE_DIRECTION {
+            get {
+                return ResourceManager.GetString("CT_VEHICLE_DIRECTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VEHICLETOGGLES.
+        /// </summary>
+        public static string CT_VEHICLETOGGLES {
+            get {
+                return ResourceManager.GetString("CT_VEHICLETOGGLES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XBUTTON.
+        /// </summary>
+        public static string CT_XBUTTON {
+            get {
+                return ResourceManager.GetString("CT_XBUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XCOMBO.
+        /// </summary>
+        public static string CT_XCOMBO {
+            get {
+                return ResourceManager.GetString("CT_XCOMBO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XKEYDESC.
+        /// </summary>
+        public static string CT_XKEYDESC {
+            get {
+                return ResourceManager.GetString("CT_XKEYDESC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XLISTBOX.
+        /// </summary>
+        public static string CT_XLISTBOX {
+            get {
+                return ResourceManager.GetString("CT_XLISTBOX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XSLIDER.
+        /// </summary>
+        public static string CT_XSLIDER {
+            get {
+                return ResourceManager.GetString("CT_XSLIDER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UIEditor.
         /// </summary>
         public static string UIEditor_Document {
@@ -75,6 +444,15 @@ namespace ArmA.Studio.UiEditor.Properties {
         public static string UIEditor_Name {
             get {
                 return ResourceManager.GetString("UIEditor_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toolbox.
+        /// </summary>
+        public static string UIEditor_Toolbox {
+            get {
+                return ResourceManager.GetString("UIEditor_Toolbox", resourceCulture);
             }
         }
     }

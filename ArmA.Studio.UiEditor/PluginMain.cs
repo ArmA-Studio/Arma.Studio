@@ -18,7 +18,7 @@ namespace ArmA.Studio.UiEditor
         public Task Initialize(CancellationToken cancellationToken) => Task.CompletedTask;
         public IEnumerable<DockableInfo> GetAnchorables()
         {
-            yield break;
+            yield return DockableInfo.Create(Properties.Language.UIEditor_Toolbox, "", () => new EditorToolboxDataContext());
         }
 
         public IEnumerable<DockableInfo> GetDocuments()

@@ -117,10 +117,136 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CT_ACTIVETEXT" xml:space="preserve">
+    <value>ACTIVETEXT</value>
+  </data>
+  <data name="CT_ANIMATED_TEXTURE" xml:space="preserve">
+    <value>ANIMATED TEXTURE</value>
+  </data>
+  <data name="CT_BUTTON" xml:space="preserve">
+    <value>BUTTON</value>
+  </data>
+  <data name="CT_CHECKBOX" xml:space="preserve">
+    <value>CHECKBOX</value>
+  </data>
+  <data name="CT_CHECKBOXES" xml:space="preserve">
+    <value>CHECKBOXES</value>
+  </data>
+  <data name="CT_COMBO" xml:space="preserve">
+    <value>COMBO</value>
+  </data>
+  <data name="CT_CONTEXT_MENU" xml:space="preserve">
+    <value>CONTEXT MENU</value>
+  </data>
+  <data name="CT_CONTROLS_GROUP" xml:space="preserve">
+    <value>CONTROLS GROUP</value>
+  </data>
+  <data name="CT_CONTROLS_TABLE" xml:space="preserve">
+    <value>CONTROLS TABLE</value>
+  </data>
+  <data name="CT_EDIT" xml:space="preserve">
+    <value>EDIT</value>
+  </data>
+  <data name="CT_HITZONES" xml:space="preserve">
+    <value>HITZONES</value>
+  </data>
+  <data name="CT_HTML" xml:space="preserve">
+    <value>HTML</value>
+  </data>
+  <data name="CT_ITEMSLOT" xml:space="preserve">
+    <value>ITEMSLOT</value>
+  </data>
+  <data name="CT_LINEBREAK" xml:space="preserve">
+    <value>LINEBREAK</value>
+  </data>
+  <data name="CT_LISTBOX" xml:space="preserve">
+    <value>LISTBOX</value>
+  </data>
+  <data name="CT_LISTNBOX" xml:space="preserve">
+    <value>LISTNBOX</value>
+  </data>
+  <data name="CT_LISTNBOX_CHECKABLE" xml:space="preserve">
+    <value>LISTNBOX CHECKABLE</value>
+  </data>
+  <data name="CT_MAP" xml:space="preserve">
+    <value>MAP</value>
+  </data>
+  <data name="CT_MAP_MAIN" xml:space="preserve">
+    <value>MAP MAIN</value>
+  </data>
+  <data name="CT_MENU" xml:space="preserve">
+    <value>MENU</value>
+  </data>
+  <data name="CT_MENU_STRIP" xml:space="preserve">
+    <value>MENU STRIP</value>
+  </data>
+  <data name="CT_OBJECT" xml:space="preserve">
+    <value>OBJECT</value>
+  </data>
+  <data name="CT_OBJECT_CONTAINER" xml:space="preserve">
+    <value>OBJECT CONTAINER</value>
+  </data>
+  <data name="CT_OBJECT_CONT_ANIM" xml:space="preserve">
+    <value>OBJECT CONT ANIM</value>
+  </data>
+  <data name="CT_OBJECT_ZOOM" xml:space="preserve">
+    <value>OBJECT ZOOM</value>
+  </data>
+  <data name="CT_PROGRESS" xml:space="preserve">
+    <value>PROGRESS</value>
+  </data>
+  <data name="CT_SHORTCUTBUTTON" xml:space="preserve">
+    <value>SHORTCUTBUTTON</value>
+  </data>
+  <data name="CT_SLIDER" xml:space="preserve">
+    <value>SLIDER</value>
+  </data>
+  <data name="CT_STATIC" xml:space="preserve">
+    <value>STATIC</value>
+  </data>
+  <data name="CT_STATIC_SKEW" xml:space="preserve">
+    <value>STATIC SKEW</value>
+  </data>
+  <data name="CT_STRUCTURED_TEXT" xml:space="preserve">
+    <value>STRUCTURED TEXT</value>
+  </data>
+  <data name="CT_TOOLBOX" xml:space="preserve">
+    <value>TOOLBOX</value>
+  </data>
+  <data name="CT_TREE" xml:space="preserve">
+    <value>TREE</value>
+  </data>
+  <data name="CT_USER" xml:space="preserve">
+    <value>USER</value>
+  </data>
+  <data name="CT_VEHICLETOGGLES" xml:space="preserve">
+    <value>VEHICLETOGGLES</value>
+  </data>
+  <data name="CT_VEHICLE_DIRECTION" xml:space="preserve">
+    <value>VEHICLE DIRECTION</value>
+  </data>
+  <data name="CT_XBUTTON" xml:space="preserve">
+    <value>XBUTTON</value>
+  </data>
+  <data name="CT_XCOMBO" xml:space="preserve">
+    <value>XCOMBO</value>
+  </data>
+  <data name="CT_XKEYDESC" xml:space="preserve">
+    <value>XKEYDESC</value>
+  </data>
+  <data name="CT_XLISTBOX" xml:space="preserve">
+    <value>XLISTBOX</value>
+  </data>
+  <data name="CT_XSLIDER" xml:space="preserve">
+    <value>XSLIDER</value>
+  </data>
   <data name="UIEditor_Document" xml:space="preserve">
     <value>UIEditor</value>
   </data>
   <data name="UIEditor_Name" xml:space="preserve">
     <value>ArmA.Studio - UIEditor</value>
+  </data>
+  <data name="UIEditor_Toolbox" xml:space="preserve">
+    <value>Toolbox</value>
   </data>
 </root>

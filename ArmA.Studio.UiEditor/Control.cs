@@ -13,11 +13,7 @@ using System.Windows.Media;
 
 namespace ArmA.Studio.UiEditor
 {
-    public class Control : INotifyPropertyChanged,
-        Data.UI.AttachedProperties.IOnMouseLeftButtonDown,
-        Data.UI.AttachedProperties.IOnMouseLeftButtonUp,
-        Data.UI.AttachedProperties.IOnMouseMove,
-        Data.UI.AttachedProperties.IOnMouseLeave
+    public class Control : INotifyPropertyChanged, IEditorItemContent
     {
         // Most stuff is in https://community.bistudio.com/wiki/Dialog_Control#Controls
         public event PropertyChangedEventHandler PropertyChanged;
@@ -50,26 +46,26 @@ namespace ArmA.Studio.UiEditor
         /// <summary>
         /// the position and size of the control in fractions of screen size.
         /// </summary>
-        public float PositionX { get => this._PositionX; set { this._PositionX = value; this.RaisePropertyChanged(); } }
-        private float _PositionX;
+        public double PositionX { get => this._PositionX; set { if (value < 0) { value = 0; } this._PositionX = value; this.RaisePropertyChanged(); } }
+        private double _PositionX;
 
         /// <summary>
         /// the position and size of the control in fractions of screen size.
         /// </summary>
-        public float PositionY { get => this._PositionY; set { this._PositionY = value; this.RaisePropertyChanged(); } }
-        private float _PositionY;
+        public double PositionY { get => this._PositionY; set { if (value < 0) { value = 0; } this._PositionY = value; this.RaisePropertyChanged(); } }
+        private double _PositionY;
 
         /// <summary>
         /// the position and size of the control in fractions of screen size.
         /// </summary>
-        public float Width { get => this._Width; set { this._Width = value; this.RaisePropertyChanged(); } }
-        private float _Width;
+        public double Width { get => this._Width; set { if (value < 0) { value = 0; } this._Width = value; this.RaisePropertyChanged(); } }
+        private double _Width;
 
         /// <summary>
         /// the position and size of the control in fractions of screen size.
         /// </summary>
-        public float Height { get => this._Height; set { this._Height = value; this.RaisePropertyChanged(); } }
-        private float _Height;
+        public double Height { get => this._Height; set { if (value < 0) { value = 0; } this._Height = value; this.RaisePropertyChanged(); } }
+        private double _Height;
 
         /// <summary>
         /// the font size of text (0..1)
@@ -149,155 +145,5 @@ namespace ArmA.Studio.UiEditor
         private string _URL;
 
 
-        public bool IsSelected
-        {
-            get => this._IsSelected;
-            set
-            {
-                if(this._IsSelected == value)
-                {
-                    return;
-                }
-                this._IsSelected = value;
-                if(value)
-                {
-                    this.Owner.SelectedControls.Add(this);
-                }
-                else
-                {
-                    this.Owner.SelectedControls.Remove(this);
-                }
-                this.RaisePropertyChanged();
-            }
-        }
-        private bool _IsSelected;
-
-        public ICommand CmdMouseLeftClick => new RelayCommand<Border>((border) => {
-        });
-
-
-
-        public bool MouseLeftButtonDown
-        {
-            get => this._MouseLeftButtonDown;
-            set
-            {
-                if (this._MouseLeftButtonDown == value)
-                {
-                    return;
-                }
-                this._MouseLeftButtonDown = value;
-                this.RaisePropertyChanged();
-            }
-        }
-        private bool _MouseLeftButtonDown;
-        public bool MouseDrag
-        {
-            get => this._MouseDrag;
-            set
-            {
-                if (this._MouseDrag == value)
-                {
-                    return;
-                }
-                this._MouseDrag = value;
-                this.RaisePropertyChanged();
-            }
-        }
-        private bool _MouseDrag;
-        public Point MouseDownPosition
-        {
-            get => this._MouseDownPosition;
-            set
-            {
-                if (this._MouseDownPosition == value)
-                {
-                    return;
-                }
-                this._MouseDownPosition = value;
-                this.RaisePropertyChanged();
-            }
-        }
-        private Point _MouseDownPosition;
-
-        public void OnMouseLeftButtonDown(UIElement sender, MouseButtonEventArgs e)
-        {
-            this.MouseLeftButtonDown = true;
-            this.MouseDownPosition = e.GetPosition(sender.FindParent<Canvas>() as IInputElement);
-        }
-
-        public void OnMouseLeftButtonUp(UIElement sender, MouseButtonEventArgs e)
-        {
-            if (!this.MouseDrag)
-            {
-                if (this.IsSelected)
-                {
-                    if (this.Owner.SelectedControls.Count > 1 && !Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
-                    {
-                        foreach (var it in this.Owner.SelectedControls.ToArray())
-                        {
-                            if (it == this)
-                            {
-                                continue;
-                            }
-                            it.IsSelected = false;
-                        }
-                    }
-                    else
-                    {
-                        this.IsSelected = false;
-                    }
-                }
-                else
-                {
-                    if (!Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
-                    {
-                        foreach (var it in this.Owner.SelectedControls.ToArray())
-                        {
-                            it.IsSelected = false;
-                        }
-                    }
-                    this.IsSelected = true;
-                }
-            }
-
-            this.MouseLeftButtonDown = false;
-            this.MouseDrag = false;
-        }
-        public void OnMouseMove(UIElement sender, MouseEventArgs e)
-        {
-            if (!this.MouseLeftButtonDown)
-            {
-                return;
-            }
-            
-            var current = e.GetPosition(sender.FindParent<Canvas>() as IInputElement);
-            var delta = new Point(current.X - this.MouseDownPosition.X, current.Y - this.MouseDownPosition.Y);
-            if (this.MouseDrag || Math.Abs(delta.X) >= SystemParameters.MinimumHorizontalDragDistance ||
-                Math.Abs(delta.Y) >= SystemParameters.MinimumVerticalDragDistance)
-            {
-                this.IsSelected = true;
-                this.MouseDrag = true;
-                foreach (var it in this.Owner.SelectedControls)
-                {
-                    it.PositionX += (float)delta.X;
-                    it.PositionY += (float)delta.Y;
-                }
-                this.MouseDownPosition = current;
-            }
-        }
-
-        public void OnMouseLeave(UIElement sender, MouseEventArgs e)
-        {
-            this.MouseLeftButtonDown = false;
-            this.MouseDrag = false;
-        }
-
-        public EditorDataContext Owner => this.OwnerWeak.TryGetTarget(out var owner) ? owner : null;
-        public readonly WeakReference<EditorDataContext> OwnerWeak;
-        public Control(EditorDataContext owner)
-        {
-            this.OwnerWeak = new WeakReference<EditorDataContext>(owner);
-        }
     }
 }

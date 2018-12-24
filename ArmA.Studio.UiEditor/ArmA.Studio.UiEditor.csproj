@@ -47,12 +47,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditorToolboxDataContext.cs" />
+    <Compile Include="EditorItem.cs" />
     <Compile Include="Control.cs" />
     <Compile Include="ControlTypeContainer.cs" />
     <Compile Include="ControlTypeConverter.cs" />
+    <Compile Include="EditorToolboxItem.cs" />
+    <Compile Include="EEditorMouseMode.cs" />
     <Compile Include="EShadow.cs" />
     <Compile Include="EControlStyle.cs" />
     <Compile Include="EControlType.cs" />
+    <Compile Include="IEditorItemContent.cs" />
     <Compile Include="Properties\Language.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -78,6 +83,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="EditorToolbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
