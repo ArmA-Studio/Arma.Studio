@@ -79,6 +79,10 @@ namespace ArmA.Studio
         }
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            foreach(var dll in System.IO.Directory.GetFiles(App.ExecutablePath, "*.dll"))
+            {
+                PluginManager.Instance.LoadAssemblySafe(dll);
+            }
             Configuration.Load(ConfigPath);
             var splashDataContext = new UI.Windows.SplashScreenDataContext();
             var splash = new UI.Windows.SplashScreen(splashDataContext);

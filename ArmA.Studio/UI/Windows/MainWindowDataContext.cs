@@ -274,8 +274,6 @@ namespace ArmA.Studio.UI.Windows
                 this.AnchorablesAvailable.AddRange(it.Plugin.GetAnchorables());
                 this.DocumentsAvailable.AddRange(it.Plugin.GetDocuments());
             }
-
-
         }
         private void Dockable_OnDocumentClosing(object sender, EventArgs e)
         {

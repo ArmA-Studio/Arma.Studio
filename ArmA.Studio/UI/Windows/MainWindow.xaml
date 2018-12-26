@@ -8,6 +8,7 @@
         xmlns:p="clr-namespace:ArmA.Studio.Properties"
         xmlns:asd="http://schemas.armastudio.io/data"
         xmlns:lad="clr-namespace:ArmA.Studio.UI.AvalonDock"
+        xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         asd:Closing.Command="{Binding CmdWindowClosing}"
         asd:Closed.Command="{Binding CmdWindowClosed}"

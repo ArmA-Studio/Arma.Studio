@@ -73,11 +73,11 @@ namespace ArmA.Studio.UI.Windows
         private bool _ProgressIndeterminate;
         #endregion
 
-        private IEnumerable<string> Files(string path, Func<bool> func = null)
+        private IEnumerable<string> Directories(string path, Func<bool> func = null)
         {
             if (System.IO.Directory.Exists(path) && (func == null || func()))
             {
-                foreach(var it in System.IO.Directory.EnumerateFiles(path))
+                foreach(var it in System.IO.Directory.EnumerateDirectories(path))
                 {
                     yield return it;
                 }
@@ -90,10 +90,9 @@ namespace ArmA.Studio.UI.Windows
 
             // Loading plugins
             {
-                var plugins = Files(App.PluginDir_Executable)
-                    .Concat(Files(App.PluginDir_Data))
-                    .Concat(Files(App.PluginDir_RoamingUser, () => true /* ToDo: Add property to disable plugin loading from user dir */));
-                plugins = plugins.Where((s) => System.IO.Path.GetExtension(s).Equals(".dll", StringComparison.CurrentCultureIgnoreCase));
+                var plugins = Directories(App.PluginDir_Executable)
+                    .Concat(Directories(App.PluginDir_Data))
+                    .Concat(Directories(App.PluginDir_RoamingUser, () => true /* ToDo: Add property to disable plugin loading from user dir */));
                 var pluginCount = plugins.Count();
 
                 foreach (var plugin in plugins)

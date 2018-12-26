@@ -2,10 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace ArmA.Studio
 {
@@ -19,14 +22,24 @@ namespace ArmA.Studio
         {
 
         }
+        [XmlRoot("plugin")]
+        public class PluginFile
+        {
+            [XmlElement("library")]
+            public string Library { get; set; }
+        }
         public struct PluginContainer
         {
             public IPlugin Plugin { get; }
             public Assembly Assembly { get; }
-            public PluginContainer(Assembly ass, IPlugin plugin)
+            public PluginFile InfoFile { get; }
+            public string Folder { get; }
+            public PluginContainer(Assembly ass, PluginFile infoFile, IPlugin plugin, string folder)
             {
                 this.Plugin = plugin;
                 this.Assembly = ass;
+                this.InfoFile = infoFile;
+                this.Folder = folder;
             }
         }
         static PluginManager()
@@ -42,6 +55,31 @@ namespace ArmA.Studio
 
         public ObservableCollection<PluginContainer> Plugins { get; }
 
+        public Assembly LoadAssemblySafe(string path)
+        {
+            var folder = Path.GetDirectoryName(path);
+            var versionInfo = FileVersionInfo.GetVersionInfo(path);
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach(var it in assemblies)
+            {
+                try
+                {
+                    var versioninfoOther = FileVersionInfo.GetVersionInfo(it.Location);
+                    if (versioninfoOther.FileVersion == versionInfo.FileVersion &&
+                        versioninfoOther.FileDescription == versionInfo.FileDescription &&
+                        versioninfoOther.Comments == versionInfo.Comments)
+                    {
+                        return it;
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            return Assembly.LoadFrom(path);
+        }
+
         /// <summary>
         /// Loads provided plugin into the plugin list.
         /// </summary>
@@ -49,13 +87,28 @@ namespace ArmA.Studio
         /// <exception cref="ArgumentException">Thrown when the provided <paramref name="path"/> is not valid.</exception>
         /// <exception cref="InvalidOperationException">Thrown when the provided DLL is not containing any implementation of <see cref="IPlugin"/> OR
         /// the corresponding implementation is not providing a valid empty constructor..</exception>
-        public void LoadPlugin(string path)
+        private IEnumerable<IPlugin> LoadPlugin(PluginFile file, string path)
         {
-            if (!System.IO.File.Exists(path) || !System.IO.Path.GetExtension(path).Equals(".dll", StringComparison.InvariantCultureIgnoreCase))
+            if (!System.IO.Path.GetExtension(path).Equals(".dll", StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new ArgumentException(String.Empty, nameof(path));
             }
-            var ass = Assembly.LoadFrom(path);
+            if (!System.IO.File.Exists(path))
+            {
+                throw new FileNotFoundException(String.Empty, nameof(path));
+            }
+            var folder = Path.GetDirectoryName(path);
+            var files = Directory.GetFiles(folder, "*.dll", SearchOption.TopDirectoryOnly);
+            foreach(var f in files)
+            {
+                if (f == path)
+                {
+                    continue;
+                }
+                LoadAssemblySafe(f);
+            }
+            
+            var ass = LoadAssemblySafe(path);
             var plugins = ass.GetTypes().Where((t) => typeof(IPlugin).IsAssignableFrom(t));
             if (plugins.Any())
             {
@@ -67,12 +120,36 @@ namespace ArmA.Studio
                         throw new InvalidOperationException();
                     }
                     var instance = constructors.First().Invoke(new object[0]) as IPlugin;
-                    this.Plugins.Add(new PluginContainer(ass, instance));
+                    this.Plugins.Add(new PluginContainer(ass, file, instance, folder));
+                    yield return instance;
                 }
             }
             else
             {
                 throw new NoPluginPresentException();
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path">The plugin folder</param>
+        /// <returns></returns>
+        public IEnumerable<IPlugin> LoadPlugin(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                throw new DirectoryNotFoundException(path);
+            }
+            var pluginFile = Path.Combine(path, "plugin.xml");
+            if (!File.Exists(pluginFile))
+            {
+                throw new FileNotFoundException(path);
+            }
+            using (var fstream = File.OpenRead(pluginFile))
+            {
+                var serializer = new XmlSerializer(typeof(PluginFile));
+                var file = serializer.Deserialize(fstream) as PluginFile;
+                return LoadPlugin(file, Path.Combine(path, file.Library)).ToArray();
             }
         }
     }
