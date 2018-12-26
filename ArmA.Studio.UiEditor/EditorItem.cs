@@ -183,54 +183,75 @@ namespace ArmA.Studio.UiEditor
                 {
                     var current = e.GetPosition(sender.FindParent<Canvas>() as IInputElement);
                     var delta = new Point(current.X - this.MouseDownPosition.X, current.Y - this.MouseDownPosition.Y);
-                    if (this.MouseDrag ||
-                        Math.Abs(delta.X) >= DRAGDIST ||
-                        Math.Abs(delta.Y) >= DRAGDIST)
+                    if (this.Owner.SnapToGrid)
+                    {
+                        delta.X -= delta.X % this.Owner.GridSize;
+                        delta.Y -= delta.Y % this.Owner.GridSize;
+                    }
+                    if (this.MouseMode == EEditorMouseMode.Move)
+                    {
+                        if (this.MouseDrag ||
+                            Math.Abs(delta.X) >= DRAGDIST ||
+                            Math.Abs(delta.Y) >= DRAGDIST)
+                        {
+                            this.MouseDrag = true;
+                            this.IsSelected = true;
+                            if (delta.X != 0 || delta.Y != 0)
+                            {
+                                this.MouseDownPosition = current;
+                            }
+                            foreach (var it in this.Owner.SelectedItems)
+                            {
+                                it.Wrapped.PositionX += (float)delta.X * (1 / this.Owner.ScaleFactor);
+                                it.Wrapped.PositionY += (float)delta.Y * (1 / this.Owner.ScaleFactor);
+                            }
+                        }
+                    }
+                    else
                     {
                         this.MouseDrag = true;
                         this.IsSelected = true;
-                        this.MouseDownPosition = current;
+                        if (delta.X != 0 || delta.Y != 0)
+                        {
+                            this.MouseDownPosition = current;
+                        }
                         foreach (var it in this.Owner.SelectedItems)
                         {
                             switch (this.MouseMode)
                             {
-                                case EEditorMouseMode.Move:
-                                    it.Wrapped.PositionX += (float)delta.X;
-                                    it.Wrapped.PositionY += (float)delta.Y;
-                                    break;
                                 case EEditorMouseMode.MoveE:
-                                    it.Wrapped.Width += (float)delta.X;
+                                    it.Wrapped.Width += (float)delta.X * (1 / this.Owner.ScaleFactor);
                                     break;
                                 case EEditorMouseMode.MoveW:
-                                    it.Wrapped.Width -= (float)delta.X;
-                                    it.Wrapped.PositionX += (float)delta.X;
+                                    it.Wrapped.Width -= (float)delta.X * (1 / this.Owner.ScaleFactor);
+                                    it.Wrapped.PositionX += (float)delta.X * (1 / this.Owner.ScaleFactor);
                                     break;
                                 case EEditorMouseMode.MoveS:
-                                    it.Wrapped.Height += (float)delta.Y;
+                                    it.Wrapped.Height += (float)delta.Y * (1 / this.Owner.ScaleFactor);
                                     break;
                                 case EEditorMouseMode.MoveN:
-                                    it.Wrapped.Height -= (float)delta.Y;
-                                    it.Wrapped.PositionY += (float)delta.Y;
+                                    it.Wrapped.Height -= (float)delta.Y * (1 / this.Owner.ScaleFactor);
+                                    it.Wrapped.PositionY += (float)delta.Y * (1 / this.Owner.ScaleFactor);
                                     break;
                                 case EEditorMouseMode.MoveSE:
-                                    it.Wrapped.Height += (float)delta.Y;
-                                    it.Wrapped.Width += (float)delta.X;
+                                    it.Wrapped.Height += (float)delta.Y * (1 / this.Owner.ScaleFactor);
+                                    it.Wrapped.Width += (float)delta.X * (1 / this.Owner.ScaleFactor);
                                     break;
                                 case EEditorMouseMode.MoveSW:
-                                    it.Wrapped.Height += (float)delta.Y;
-                                    it.Wrapped.Width -= (float)delta.X;
-                                    it.Wrapped.PositionX += (float)delta.X;
+                                    it.Wrapped.Height += (float)delta.Y * (1 / this.Owner.ScaleFactor);
+                                    it.Wrapped.Width -= (float)delta.X * (1 / this.Owner.ScaleFactor);
+                                    it.Wrapped.PositionX += (float)delta.X * (1 / this.Owner.ScaleFactor);
                                     break;
                                 case EEditorMouseMode.MoveNE:
-                                    it.Wrapped.Height -= (float)delta.Y;
-                                    it.Wrapped.PositionY += (float)delta.Y;
-                                    it.Wrapped.Width += (float)delta.X;
+                                    it.Wrapped.Height -= (float)delta.Y * (1 / this.Owner.ScaleFactor);
+                                    it.Wrapped.PositionY += (float)delta.Y * (1 / this.Owner.ScaleFactor);
+                                    it.Wrapped.Width += (float)delta.X * (1 / this.Owner.ScaleFactor);
                                     break;
                                 case EEditorMouseMode.MoveNW:
-                                    it.Wrapped.Height -= (float)delta.Y;
-                                    it.Wrapped.PositionY += (float)delta.Y;
-                                    it.Wrapped.Width -= (float)delta.X;
-                                    it.Wrapped.PositionX += (float)delta.X;
+                                    it.Wrapped.Height -= (float)delta.Y * (1 / this.Owner.ScaleFactor);
+                                    it.Wrapped.PositionY += (float)delta.Y * (1 / this.Owner.ScaleFactor);
+                                    it.Wrapped.Width -= (float)delta.X * (1 / this.Owner.ScaleFactor);
+                                    it.Wrapped.PositionX += (float)delta.X * (1 / this.Owner.ScaleFactor);
                                     break;
                             }
                         }

@@ -5,6 +5,7 @@
               DataType="{x:Type local:EditorDataContext}"
               xmlns:ae="http://icsharpcode.net/sharpdevelop/avalonedit"
               xmlns:asd="http://schemas.armastudio.io/data"
+              xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
               >
     <Grid>
         <Grid.ColumnDefinitions>
@@ -15,103 +16,200 @@
         <ae:TextEditor Grid.Column="0">
             
         </ae:TextEditor>
-        <GridSplitter Grid.Column="1"/>
-        <ItemsControl Grid.Column="2" ItemsSource="{Binding Items}">
-            <ItemsControl.Resources>
-                <local:ControlTypeConverter x:Key="ControlTypeConverter">
-                    <local:ControlTypeConverter.Default>
-                        <DataTemplate DataType="{x:Type local:EditorItem}">
-                            <Rectangle Fill="Purple" Width="{Binding Wrapped.Width}" Height="{Binding Wrapped.Height}"/>
-                        </DataTemplate>
-                    </local:ControlTypeConverter.Default>
-                    <local:ControlTypeConverter.Templates>
-                        <local:ControlTypeContainer Type="CT_STATIC">
-                            <local:ControlTypeContainer.Template>
-                                <DataTemplate DataType="{x:Type local:EditorItem}">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Rectangle Grid.RowSpan="2" Fill="Red" Width="{Binding Wrapped.Width}" Height="{Binding Wrapped.Height}"/>
-                                        <TextBlock Text="CT_STATIC" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </local:ControlTypeContainer.Template>
-                        </local:ControlTypeContainer>
-                    </local:ControlTypeConverter.Templates>
-                </local:ControlTypeConverter>
-            </ItemsControl.Resources>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas Background="Transparent" asd:AttachedDataContext.DataContext="{Binding}" AllowDrop="True"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
-                <Style>
-                    <Setter Property="Canvas.Top" Value="{Binding Wrapped.PositionY}"/>
-                    <Setter Property="Canvas.Left" Value="{Binding Wrapped.PositionX}"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                            <Setter Property="Canvas.ZIndex" Value="10000"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type local:EditorItem}">
+        <GridSplitter Grid.Column="1" ResizeBehavior="PreviousAndNext"/>
+        <ScrollViewer
+            Grid.Column="2"
+            Width="Auto"
+            Height="Auto"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Auto"
+            >
+            <ScrollViewer.Template>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
                     <Grid>
-                        <ContentPresenter ContentTemplate="{Binding Wrapped.Type, Converter={StaticResource ControlTypeConverter}}">
-                        </ContentPresenter>
-                        <Border Opacity="0.75" asd:AttachedDataContext.DataContext="{Binding}">
-                            <Border.Style>
-                                <Style TargetType="{x:Type Border}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Column="1" BorderThickness="0,1,1,1">
+                            <ScrollContentPresenter />
+                        </Border>
+                        <ScrollBar
+                            x:Name="PART_VerticalScrollBar"
+                            Value="{TemplateBinding VerticalOffset}"
+                            Maximum="{TemplateBinding ScrollableHeight}"
+                            ViewportSize="{TemplateBinding ViewportHeight}"
+                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                            />
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox
+                                Width="50"
+                                Height="17"
+                                BorderThickness="0"
+                                Grid.Column="0"
+                                FontSize="9"
+                                ItemsSource="{Binding ScaleSource}"
+                                SelectedItem="{Binding SelectedScale}"
+                                DisplayMemberPath="Display"
+                                SelectedValuePath="Value"
+                                />
+                            <CheckBox IsChecked="{Binding SnapToGrid}" Grid.Column="1"/>
+                            <xceed:IntegerUpDown
+                                Value="{Binding GridSize}"
+                                Minimum="0"
+                                Height="17"
+                                Grid.Column="2"
+                                BorderThickness="0"
+                                Margin="1"
+                                Increment="5"
+                                IsEnabled="{Binding SnapToGrid}"/>
+                            <ScrollBar
+                                Grid.Column="3"
+                                x:Name="PART_HorizontalScrollBar"
+                                Orientation="Horizontal"
+                                Value="{TemplateBinding HorizontalOffset}"
+                                Maximum="{TemplateBinding ScrollableWidth}"
+                                ViewportSize="{TemplateBinding ViewportWidth}"
+                                Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                />
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </ScrollViewer.Template>
+            <ItemsControl Grid.Row="0" ItemsSource="{Binding Items}">
+                <ItemsControl.Resources>
+                    <local:ControlTypeConverter x:Key="ControlTypeConverter">
+                        <local:ControlTypeConverter.Default>
+                            <DataTemplate DataType="{x:Type local:EditorItem}">
+                                <Rectangle Fill="Purple" Width="{Binding Wrapped.Width}" Height="{Binding Wrapped.Height}"/>
+                            </DataTemplate>
+                        </local:ControlTypeConverter.Default>
+                        <local:ControlTypeConverter.Templates>
+                            <local:ControlTypeContainer Type="CT_STATIC">
+                                <local:ControlTypeContainer.Template>
+                                    <DataTemplate DataType="{x:Type local:EditorItem}">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Rectangle Grid.RowSpan="2" Fill="Red" Width="{Binding Wrapped.Width}" Height="{Binding Wrapped.Height}"/>
+                                            <TextBlock Text="CT_STATIC" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </local:ControlTypeContainer.Template>
+                            </local:ControlTypeContainer>
+                        </local:ControlTypeConverter.Templates>
+                    </local:ControlTypeConverter>
+                </ItemsControl.Resources>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas asd:AttachedDataContext.DataContext="{Binding}" AllowDrop="True">
+                            <Canvas.LayoutTransform>
+                                <ScaleTransform ScaleX="{Binding ScaleFactor}" ScaleY="{Binding ScaleFactor}"/>
+                            </Canvas.LayoutTransform>
+                            <Canvas.Style>
+                                <Style TargetType="Canvas">
                                     <Setter Property="Background" Value="Transparent"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                            <Setter Property="BorderThickness" Value="4"/>
-                                            <Setter Property="BorderBrush" Value="Blue"/>
-                                            <Setter Property="Background" Value="#400000ff"/>
-                                        </DataTrigger>
-                                        
-                                        <DataTrigger Binding="{Binding MouseMode}" Value="MoveE">
-                                            <Setter Property="Cursor" Value="SizeWE"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding MouseMode}" Value="MoveW">
-                                            <Setter Property="Cursor" Value="SizeWE"/>
-                                        </DataTrigger>
-
-                                        <DataTrigger Binding="{Binding MouseMode}" Value="MoveN">
-                                            <Setter Property="Cursor" Value="SizeNS"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding MouseMode}" Value="MoveS">
-                                            <Setter Property="Cursor" Value="SizeNS"/>
-                                        </DataTrigger>
-
-                                        <DataTrigger Binding="{Binding MouseMode}" Value="MoveNW">
-                                            <Setter Property="Cursor" Value="SizeNWSE"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding MouseMode}" Value="MoveSE">
-                                            <Setter Property="Cursor" Value="SizeNWSE"/>
-                                        </DataTrigger>
-
-                                        <DataTrigger Binding="{Binding MouseMode}" Value="MoveNE">
-                                            <Setter Property="Cursor" Value="SizeNESW"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding MouseMode}" Value="MoveSW">
-                                            <Setter Property="Cursor" Value="SizeNESW"/>
-                                        </DataTrigger>
-                                        
-                                        <DataTrigger Binding="{Binding MouseMode}" Value="Move">
-                                            <Setter Property="Cursor" Value="SizeAll"/>
+                                        <DataTrigger Binding="{Binding SnapToGrid}" Value="True">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <VisualBrush TileMode="Tile" Viewport="{Binding GridRect}" ViewportUnits="Absolute" Viewbox="0,0,10,10" ViewboxUnits="Absolute">
+                                                        <VisualBrush.Visual>
+                                                            <Path Data="M 0 0 L 0 10 M 0 0 L 10 0" Stroke="Black" Opacity="0.2"/>
+                                                        </VisualBrush.Visual>
+                                                    </VisualBrush>
+                                                </Setter.Value>
+                                            </Setter>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </Border.Style>
-                        </Border>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                            </Canvas.Style>
+                        </Canvas>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Canvas.Top" Value="{Binding Wrapped.PositionY}"/>
+                        <Setter Property="Canvas.Left" Value="{Binding Wrapped.PositionX}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="Canvas.ZIndex" Value="10000"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding MouseDrag}" Value="True">
+                                <Setter Property="Canvas.ZIndex" Value="20000"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type local:EditorItem}">
+                        <Grid>
+                            <ContentPresenter ContentTemplate="{Binding Wrapped.Type, Converter={StaticResource ControlTypeConverter}}">
+                            </ContentPresenter>
+                            <Border Opacity="0.75" asd:AttachedDataContext.DataContext="{Binding}">
+                                <Border.Style>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                <Setter Property="BorderThickness" Value="4"/>
+                                                <Setter Property="BorderBrush" Value="Blue"/>
+                                                <Setter Property="Background" Value="#400000ff"/>
+                                            </DataTrigger>
+
+                                            <DataTrigger Binding="{Binding MouseMode}" Value="MoveE">
+                                                <Setter Property="Cursor" Value="SizeWE"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding MouseMode}" Value="MoveW">
+                                                <Setter Property="Cursor" Value="SizeWE"/>
+                                            </DataTrigger>
+
+                                            <DataTrigger Binding="{Binding MouseMode}" Value="MoveN">
+                                                <Setter Property="Cursor" Value="SizeNS"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding MouseMode}" Value="MoveS">
+                                                <Setter Property="Cursor" Value="SizeNS"/>
+                                            </DataTrigger>
+
+                                            <DataTrigger Binding="{Binding MouseMode}" Value="MoveNW">
+                                                <Setter Property="Cursor" Value="SizeNWSE"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding MouseMode}" Value="MoveSE">
+                                                <Setter Property="Cursor" Value="SizeNWSE"/>
+                                            </DataTrigger>
+
+                                            <DataTrigger Binding="{Binding MouseMode}" Value="MoveNE">
+                                                <Setter Property="Cursor" Value="SizeNESW"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding MouseMode}" Value="MoveSW">
+                                                <Setter Property="Cursor" Value="SizeNESW"/>
+                                            </DataTrigger>
+
+                                            <DataTrigger Binding="{Binding MouseMode}" Value="Move">
+                                                <Setter Property="Cursor" Value="SizeAll"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </DataTemplate>
