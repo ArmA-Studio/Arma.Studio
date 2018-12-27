@@ -268,7 +268,6 @@ namespace ArmA.Studio.UiEditor
         }
         public void OnMouseMove(UIElement sender, MouseEventArgs e)
         {
-            const int EDGE = 8;
             const int DRAGDIST = 2;
             var belowCursor = (sender as Canvas).GetChildBelowCursor();
             if (!this.MouseDrag)
@@ -279,6 +278,7 @@ namespace ArmA.Studio.UiEditor
                 }
                 else if (belowCursor.DataContext is IEditorItemContent belowCursorContext)
                 {
+                    int EDGE = (int)(8 * (1 / this.ScaleFactor));
                     var local = e.GetPosition(belowCursor);
                     var leftEdge = local.X < EDGE;
                     var topEdge = local.Y < EDGE;
@@ -323,8 +323,8 @@ namespace ArmA.Studio.UiEditor
                         if (delta.Y != 0) { this.MouseDownY = current.Y; }
                         foreach (var it in this.SelectedItems)
                         {
-                            it.PositionX += (float)delta.X * (1 / this.ScaleFactor);
-                            it.PositionY += (float)delta.Y * (1 / this.ScaleFactor);
+                            it.PositionX += (float)delta.X;
+                            it.PositionY += (float)delta.Y;
                         }
                     }
                 }
@@ -346,52 +346,52 @@ namespace ArmA.Studio.UiEditor
                         {
                             case EEditorMouseMode.MoveE:
                                 {
-                                    width = it.Width + ((float)delta.X * (1 / this.ScaleFactor));
+                                    width = it.Width + ((float)delta.X);
                                 }
                                 break;
                             case EEditorMouseMode.MoveW:
                                 {
-                                    width = it.Width - ((float)delta.X * (1 / this.ScaleFactor));
-                                    positionX = it.PositionX + ((float)delta.X * (1 / this.ScaleFactor));
+                                    width = it.Width - ((float)delta.X);
+                                    positionX = it.PositionX + ((float)delta.X);
                                 }
                                 break;
                             case EEditorMouseMode.MoveS:
                                 {
-                                    height = it.Height + ((float)delta.Y * (1 / this.ScaleFactor));
+                                    height = it.Height + ((float)delta.Y);
                                 }
                                 break;
                             case EEditorMouseMode.MoveN:
                                 {
-                                    height = it.Height - ((float)delta.Y * (1 / this.ScaleFactor));
-                                    positionY = it.PositionY + ((float)delta.Y * (1 / this.ScaleFactor));
+                                    height = it.Height - ((float)delta.Y);
+                                    positionY = it.PositionY + ((float)delta.Y);
                                 }
                                 break;
                             case EEditorMouseMode.MoveSE:
                                 {
-                                    height = it.Height + ((float)delta.Y * (1 / this.ScaleFactor));
-                                    width = it.Width + ((float)delta.X * (1 / this.ScaleFactor));
+                                    height = it.Height + ((float)delta.Y);
+                                    width = it.Width + ((float)delta.X);
                                 }
                                 break;
                             case EEditorMouseMode.MoveSW:
                                 {
-                                    height = it.Height + ((float)delta.Y * (1 / this.ScaleFactor));
-                                    width = it.Width - ((float)delta.X * (1 / this.ScaleFactor));
-                                    positionX = it.PositionX + ((float)delta.X * (1 / this.ScaleFactor));
+                                    height = it.Height + ((float)delta.Y);
+                                    width = it.Width - ((float)delta.X);
+                                    positionX = it.PositionX + ((float)delta.X);
                                 }
                                 break;
                             case EEditorMouseMode.MoveNE:
                                 {
-                                    height = it.Height - ((float)delta.Y * (1 / this.ScaleFactor));
-                                    positionY = it.PositionY + ((float)delta.Y * (1 / this.ScaleFactor));
-                                    width = it.Width + ((float)delta.X * (1 / this.ScaleFactor));
+                                    height = it.Height - ((float)delta.Y);
+                                    positionY = it.PositionY + ((float)delta.Y);
+                                    width = it.Width + ((float)delta.X);
                                 }
                                 break;
                             case EEditorMouseMode.MoveNW:
                                 {
-                                    height = it.Height - ((float)delta.Y * (1 / this.ScaleFactor));
-                                    positionY = it.PositionY + ((float)delta.Y * (1 / this.ScaleFactor));
-                                    width = it.Width - ((float)delta.X * (1 / this.ScaleFactor));
-                                    positionX = it.PositionX + ((float)delta.X * (1 / this.ScaleFactor));
+                                    height = it.Height - ((float)delta.Y);
+                                    positionY = it.PositionY + ((float)delta.Y);
+                                    width = it.Width - ((float)delta.X);
+                                    positionX = it.PositionX + ((float)delta.X);
                                 }
                                 break;
                         }
