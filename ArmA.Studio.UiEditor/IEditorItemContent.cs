@@ -12,5 +12,6 @@ namespace ArmA.Studio.UiEditor
         double PositionY { get; set; }
         double Width { get; set; }
         double Height { get; set; }
+        bool IsSelected { get; set; }
     }
 }

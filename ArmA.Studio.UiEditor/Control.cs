@@ -144,6 +144,8 @@ namespace ArmA.Studio.UiEditor
         public string URL { get => this._URL; set { this._URL = value; this.RaisePropertyChanged(); } }
         private string _URL;
 
+        public bool IsSelected { get => this._IsSelected; set { this._IsSelected = value; this.RaisePropertyChanged(); } }
+        private bool _IsSelected;
 
     }
 }

@@ -65,8 +65,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CanvasExtensions.cs" />
     <Compile Include="EditorToolboxDataContext.cs" />
-    <Compile Include="EditorItem.cs" />
     <Compile Include="Control.cs" />
     <Compile Include="ControlTypeContainer.cs" />
     <Compile Include="ControlTypeConverter.cs" />
