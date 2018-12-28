@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArmA.Studio.Data.UI
+namespace Arma.Studio.Data.Debugging
 {
-    public interface IBreakpoint
+    public interface IBreakpoint : INotifyPropertyChanged
     {
         string File { get; }
 

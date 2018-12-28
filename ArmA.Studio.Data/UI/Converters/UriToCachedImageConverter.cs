@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
-namespace ArmA.Studio.Data.UI.Converters
+namespace Arma.Studio.Data.UI.Converters
 {
     public class UriToCachedImageConverter : IValueConverter
     {

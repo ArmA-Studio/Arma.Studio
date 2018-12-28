@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ArmA.Studio.UiEditor
+namespace Arma.Studio.UiEditor
 {
     public static class CanvasExtensions
     {

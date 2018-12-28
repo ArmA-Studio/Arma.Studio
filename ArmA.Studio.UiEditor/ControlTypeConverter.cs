@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace ArmA.Studio.UiEditor
+namespace Arma.Studio.UiEditor
 {
     public class ControlTypeConverter : IValueConverter
     {

@@ -13,7 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Controls.Primitives;
-namespace ArmA.Studio.Data.UI.AttachedProperties
+namespace Arma.Studio.Data.UI.AttachedProperties
 {
 	public partial interface IOnPreviewMouseDoubleClick { void OnPreviewMouseDoubleClick(Control sender, System.Windows.Input.MouseButtonEventArgs e); }
 	public partial interface IOnMouseDoubleClick { void OnMouseDoubleClick(Control sender, System.Windows.Input.MouseButtonEventArgs e); }

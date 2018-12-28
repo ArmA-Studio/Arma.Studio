@@ -1,4 +1,4 @@
-﻿using ArmA.Studio.Data;
+﻿using Arma.Studio.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Xceed.Wpf.AvalonDock.Layout;
 
-namespace ArmA.Studio.UI.AvalonDock
+namespace Arma.Studio.UI.AvalonDock
 {
     class LayoutUpdateStrategy : ILayoutUpdateStrategy
     {

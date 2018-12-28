@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArmA.Studio.UI.AvalonDock
+namespace Arma.Studio.UI.AvalonDock
 {
     public class DockableBaseOnDocumentClosingEventArgs
     {

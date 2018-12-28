@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArmA.Studio.UiEditor
+namespace Arma.Studio.UiEditor
 {
     public class EditorToolboxItem
     {

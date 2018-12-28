@@ -1,11 +1,12 @@
-﻿using ArmA.Studio.Data.UI;
+﻿using Arma.Studio.Data.Debugging;
+using Arma.Studio.Data.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArmA.Studio.Debugging
+namespace Arma.Studio.Debugging
 {
     public class BreakpointManager : IBreakpointManager
     {

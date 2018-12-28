@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Arma.Studio.Data.Debugging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArmA.Studio.Data.UI
+namespace Arma.Studio.Data.UI
 {
     public class Breakpoint : INotifyPropertyChanged, INotifyPropertyChanging, IBreakpoint
     {

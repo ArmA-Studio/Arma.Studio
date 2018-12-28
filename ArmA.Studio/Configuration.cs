@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace ArmA.Studio
+namespace Arma.Studio
 {
     [XmlRoot("config")]
     public class Configuration

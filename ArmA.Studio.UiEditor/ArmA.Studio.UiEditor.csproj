@@ -7,8 +7,8 @@
     <ProjectGuid>{33E151CC-B3EC-4636-8971-927A1BF595B8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ArmA.Studio.UiEditor</RootNamespace>
-    <AssemblyName>ArmA.Studio.UiEditor</AssemblyName>
+    <RootNamespace>Arma.Studio.UiEditor</RootNamespace>
+    <AssemblyName>Arma.Studio.UiEditor</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -94,9 +94,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ArmA.Studio.Data\ArmA.Studio.Data.csproj">
+    <ProjectReference Include="..\Arma.Studio.Data\Arma.Studio.Data.csproj">
       <Project>{05A55F19-86EE-46A1-875A-15BBFE31A4AB}</Project>
-      <Name>ArmA.Studio.Data</Name>
+      <Name>Arma.Studio.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -111,14 +111,14 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent><![CDATA[
-if not exist "$(SolutionDir)ArmA.Studio\$(OutDir)Plugins" mkdir ""$(SolutionDir)ArmA.Studio\$(OutDir)Plugins""
-if not exist "$(SolutionDir)ArmA.Studio\$(OutDir)Plugins\UiEditor" mkdir ""$(SolutionDir)ArmA.Studio\$(OutDir)Plugins\UiEditor""
-xcopy /Y "$(TargetDir)*" "$(SolutionDir)ArmA.Studio\$(OutDir)Plugins\UiEditor"
+if not exist "$(SolutionDir)Arma.Studio\$(OutDir)Plugins" mkdir ""$(SolutionDir)Arma.Studio\$(OutDir)Plugins""
+if not exist "$(SolutionDir)Arma.Studio\$(OutDir)Plugins\UiEditor" mkdir ""$(SolutionDir)Arma.Studio\$(OutDir)Plugins\UiEditor""
+xcopy /Y "$(TargetDir)*" "$(SolutionDir)Arma.Studio\$(OutDir)Plugins\UiEditor"
 (
     echo ^<plugin^>
     echo     ^<library^>$(TargetFileName)^</library^>
     echo ^</plugin^>
-) > "$(SolutionDir)ArmA.Studio\$(OutDir)Plugins\UiEditor\plugin.xml"
+) > "$(SolutionDir)Arma.Studio\$(OutDir)Plugins\UiEditor\plugin.xml"
 ]]></PostBuildEvent>
   </PropertyGroup>
 </Project>

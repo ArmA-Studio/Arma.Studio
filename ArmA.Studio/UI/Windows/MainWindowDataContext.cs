@@ -1,6 +1,7 @@
-﻿using ArmA.Studio.Data;
-using ArmA.Studio.Data.UI;
-using ArmA.Studio.UI.AvalonDock;
+﻿using Arma.Studio.Data;
+using Arma.Studio.Data.Plugin;
+using Arma.Studio.Data.UI;
+using Arma.Studio.UI.AvalonDock;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +13,7 @@ using System.Windows;
 using System.Windows.Input;
 
 
-namespace ArmA.Studio.UI.Windows
+namespace Arma.Studio.UI.Windows
 {
 
     public class MainWindowDataContext : INotifyPropertyChanged, IMainWindow
@@ -266,13 +267,13 @@ namespace ArmA.Studio.UI.Windows
         }
         private void Initialized()
         {
-            this.LayoutItemTemplateSelector.AddAllDataTemplatesInAssembly(typeof(MainWindowDataContext).Assembly, (s) => s.StartsWith("ArmA.Studio.UI.Anchorable"));
-            this.LayoutItemTemplateSelector.AddAllDataTemplatesInAssembly(typeof(MainWindowDataContext).Assembly, (s) => s.StartsWith("ArmA.Studio.UI.Documents"));
-            foreach(var it in PluginManager.Instance.Plugins)
+            this.LayoutItemTemplateSelector.AddAllDataTemplatesInAssembly(typeof(MainWindowDataContext).Assembly, (s) => s.StartsWith("Arma.Studio.UI.Anchorable"));
+            this.LayoutItemTemplateSelector.AddAllDataTemplatesInAssembly(typeof(MainWindowDataContext).Assembly, (s) => s.StartsWith("Arma.Studio.UI.Documents"));
+            foreach (var it in PluginManager.Instance.GetPlugins<IDockableProvider>())
             {
-                it.Plugin.AddDataTemplates(this.LayoutItemTemplateSelector);
-                this.AnchorablesAvailable.AddRange(it.Plugin.GetAnchorables());
-                this.DocumentsAvailable.AddRange(it.Plugin.GetDocuments());
+                it.AddDataTemplates(this.LayoutItemTemplateSelector);
+                this.AnchorablesAvailable.AddRange(it.GetAnchorables());
+                this.DocumentsAvailable.AddRange(it.GetDocuments());
             }
         }
         private void Dockable_OnDocumentClosing(object sender, EventArgs e)

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ArmA.Studio.Properties
+namespace Arma.Studio.Properties
 {
 
 

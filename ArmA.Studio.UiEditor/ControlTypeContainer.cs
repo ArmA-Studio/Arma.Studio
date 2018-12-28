@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ArmA.Studio.UiEditor
+namespace Arma.Studio.UiEditor
 {
     public class ControlTypeContainer
     {

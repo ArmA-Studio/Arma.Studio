@@ -23,7 +23,7 @@ SOFTWARE.
 */
 using System;
 using System.Windows.Input;
-namespace ArmA.Studio.Data.UI
+namespace Arma.Studio.Data.UI
 {
     public class RelayCommand<T> : ICommand
     {

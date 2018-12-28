@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace ArmA.Studio.UI.AvalonDock
+namespace Arma.Studio.UI.AvalonDock
 {
     public class AvalonDockStyleSelector : StyleSelector
     {

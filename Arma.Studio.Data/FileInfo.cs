@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arma.Studio.Data.UI
+namespace Arma.Studio.Data
 {
-    public class DockableInfo
+    public class FileInfo
     {
         public string Name { get; }
         public string IconSource { get; }
         public Func<DockableBase> CreateFunc { get; }
         public Type Type { get; }
 
-        private DockableInfo(string name, string iconSource, Func<DockableBase> func, Type type)
+        private FileInfo(string name, string iconSource, Func<DockableBase> func, Type type)
         {
             this.Name = name;
             this.IconSource = iconSource;
@@ -21,6 +21,6 @@ namespace Arma.Studio.Data.UI
             this.Type = type;
         }
 
-        public static DockableInfo Create<T>(string name, string iconSource, Func<T> func) where T : DockableBase => new DockableInfo(name, iconSource, func, typeof(T));
+        public static FileInfo Create<T>(string name, string iconSource, Func<T> func) where T : DockableBase, IApp => new FileInfo(name, iconSource, func, typeof(T));
     }
 }

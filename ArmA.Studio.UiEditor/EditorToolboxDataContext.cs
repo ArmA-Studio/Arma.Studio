@@ -1,4 +1,4 @@
-﻿using ArmA.Studio.Data;
+﻿using Arma.Studio.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace ArmA.Studio.UiEditor
+namespace Arma.Studio.UiEditor
 {
     public class EditorToolboxDataContext  :
         DockableBase,

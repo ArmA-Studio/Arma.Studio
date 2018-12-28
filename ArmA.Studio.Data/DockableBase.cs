@@ -1,4 +1,4 @@
-﻿using ArmA.Studio.Data.UI;
+﻿using Arma.Studio.Data.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace ArmA.Studio.Data
+namespace Arma.Studio.Data
 {
     public abstract class DockableBase : INotifyPropertyChanged, IComparable
     {

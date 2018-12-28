@@ -1,20 +1,20 @@
-﻿<Window x:Class="ArmA.Studio.UI.Windows.MainWindow"
+﻿<Window x:Class="Arma.Studio.UI.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
-        xmlns:local="clr-namespace:ArmA.Studio.UI.Windows"
-        xmlns:p="clr-namespace:ArmA.Studio.Properties"
+        xmlns:local="clr-namespace:Arma.Studio.UI.Windows"
+        xmlns:p="clr-namespace:Arma.Studio.Properties"
         xmlns:asd="http://schemas.armastudio.io/data"
-        xmlns:lad="clr-namespace:ArmA.Studio.UI.AvalonDock"
+        xmlns:lad="clr-namespace:Arma.Studio.UI.AvalonDock"
         xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         asd:Closing.Command="{Binding CmdWindowClosing}"
         asd:Closed.Command="{Binding CmdWindowClosed}"
         asd:Initialized.Command="{Binding CmdWindowInitialized}"
         asd:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-        Title="{x:Static p:Language.ArmAStudio}" Height="512" Width="1024" UseLayoutRounding="True">
+        Title="{x:Static p:Language.ArmaStudio}" Height="512" Width="1024" UseLayoutRounding="True">
     <DockPanel>
         <DockPanel.Resources>
         </DockPanel.Resources>
@@ -87,7 +87,7 @@
                             <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}"/>
                             <Setter Property="IsActive" Value="{Binding Model.IsActive, Mode=TwoWay}"/>
                             <Setter Property="Visibility" Value="{Binding Model.CurrentVisibility, Mode=TwoWay}"/>
-                            <Setter Property="IconSource" Value="{Binding Model.IconSource, Converter={StaticResource UriToCachedImageConverter}, ConverterParameter=pack://application:\,\,\,/ArmA.Studio;component/Resources/NoImage/NoImage_Empty.png}"/>
+                            <Setter Property="IconSource" Value="{Binding Model.IconSource, Converter={StaticResource UriToCachedImageConverter}, ConverterParameter=pack://application:\,\,\,/Arma.Studio;component/Resources/NoImage/NoImage_Empty.png}"/>
                             <Setter Property="CloseCommand" Value="{Binding Model.CmdClose}"/>
                         </Style>
                     </lad:AvalonDockStyleSelector.Style>
@@ -100,7 +100,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="{Binding IconSource, Converter={StaticResource UriToCachedImageConverter}, ConverterParameter=pack://application:\,\,\,/ArmA.Studio;component/Resources/NoImage/NoImage_Empty.png}" Height="16" MaxWidth="16" VerticalAlignment="Center" Margin="0 0 4 0"/>
+                        <Image Grid.Column="0" Source="{Binding IconSource, Converter={StaticResource UriToCachedImageConverter}, ConverterParameter=pack://application:\,\,\,/Arma.Studio;component/Resources/NoImage/NoImage_Empty.png}" Height="16" MaxWidth="16" VerticalAlignment="Center" Margin="0 0 4 0"/>
                         <TextBlock Grid.Column="1" Text="{Binding Title}"/>
                     </Grid>
                 </DataTemplate>
@@ -112,7 +112,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="{Binding IconSource, Converter={StaticResource UriToCachedImageConverter}, ConverterParameter=pack://application:\,\,\,/ArmA.Studio;component/Resources/NoImage/NoImage_Empty.png}" Height="16" MaxWidth="16" VerticalAlignment="Center" Margin="0 0 4 0"/>
+                        <Image Grid.Column="0" Source="{Binding IconSource, Converter={StaticResource UriToCachedImageConverter}, ConverterParameter=pack://application:\,\,\,/Arma.Studio;component/Resources/NoImage/NoImage_Empty.png}" Height="16" MaxWidth="16" VerticalAlignment="Center" Margin="0 0 4 0"/>
                         <TextBlock Grid.Column="1" Text="{Binding Title}"/>
                     </Grid>
                 </DataTemplate>

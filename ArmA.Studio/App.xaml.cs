@@ -1,5 +1,5 @@
-﻿using ArmA.Studio.Data;
-using ArmA.Studio.Data.UI;
+﻿using Arma.Studio.Data;
+using Arma.Studio.Data.UI;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ArmA.Studio
+namespace Arma.Studio
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -19,7 +19,7 @@ namespace ArmA.Studio
         public const string CONST_DOCKING_MANAGER_LAYOUT_JSON_NAME = "layout.json";
         public const string CONST_CONFIG_NAME = "config.xml";
         public const string CONST_VENDOR = "X39";
-        public const string CONST_APPLICATIONNAME = "ArmA.Studio";
+        public const string CONST_APPLICATIONNAME = "Arma.Studio";
         public const string CONST_PLUGINS = "Plugins";
 
         public static readonly string ExecutableFile = System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase.Substring("file:///".Length);
@@ -46,7 +46,7 @@ namespace ArmA.Studio
         /// <param name="ex">Exception to display.</param>
         public static void DisplayOperationFailed(Exception ex)
         {
-            Current.Dispatcher.Invoke(() => MessageBox.Show(String.Format(ArmA.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), ArmA.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
+            Current.Dispatcher.Invoke(() => MessageBox.Show(String.Format(Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
         }
         /// <summary>
         /// Displays generic error messagebox for given exception.
@@ -56,7 +56,7 @@ namespace ArmA.Studio
         /// <param name="body">The Text to display in front of the exception.</param>
         public static void DisplayOperationFailed(Exception ex, string body)
         {
-            App.Current.Dispatcher.Invoke(() => MessageBox.Show(String.Concat(body, '\n', String.Format(ArmA.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Body, ex.Message, ex.GetType().FullName, ex.StackTrace)), ArmA.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
+            App.Current.Dispatcher.Invoke(() => MessageBox.Show(String.Concat(body, '\n', String.Format(Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Body, ex.Message, ex.GetType().FullName, ex.StackTrace)), Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
         }
         void IApp.DisplayOperationFailed(Exception ex) => DisplayOperationFailed(ex);
         void IApp.DisplayOperationFailed(Exception ex, string body) => DisplayOperationFailed(ex, body);

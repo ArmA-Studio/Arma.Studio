@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using Xceed.Wpf.AvalonDock;
 
-namespace ArmA.Studio.UI.AvalonDock
+namespace Arma.Studio.UI.AvalonDock
 {
     public class ActiveContentChangedAttached
     {

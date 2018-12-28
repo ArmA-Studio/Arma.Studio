@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ArmA.Studio.Properties {
+namespace Arma.Studio.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ArmA.Studio.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ArmA.Studio.Properties.Language", typeof(Language).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Arma.Studio.Properties.Language", typeof(Language).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -79,11 +79,11 @@ namespace ArmA.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ArmA.Studio.
+        ///   Looks up a localized string similar to Arma.Studio.
         /// </summary>
-        public static string ArmAStudio {
+        public static string ArmaStudio {
             get {
-                return ResourceManager.GetString("ArmAStudio", resourceCulture);
+                return ResourceManager.GetString("ArmaStudio", resourceCulture);
             }
         }
         

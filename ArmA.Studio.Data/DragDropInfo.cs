@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArmA.Studio.Data
+namespace Arma.Studio.Data
 {
     public class DragDropInfo : ICollection<object>
     {

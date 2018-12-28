@@ -1,5 +1,5 @@
-﻿using ArmA.Studio.Data;
-using ArmA.Studio.Data.UI;
+﻿using Arma.Studio.Data;
+using Arma.Studio.Data.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace ArmA.Studio.UiEditor
+namespace Arma.Studio.UiEditor
 {
     public class Control : INotifyPropertyChanged, IEditorItemContent
     {

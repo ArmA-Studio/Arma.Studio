@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ArmA.Studio.Data.UI
+namespace Arma.Studio.Data.UI
 {
     public interface IMainWindow
     {

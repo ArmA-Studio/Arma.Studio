@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ArmA.Studio.Data.UI.AttachedProperties.Eventing
+namespace Arma.Studio.Data.UI.AttachedProperties.Eventing
 {
     public class TextChanged
     {

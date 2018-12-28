@@ -1,6 +1,6 @@
-﻿using ArmA.Studio;
-using ArmA.Studio.Data.UI;
-using ArmA.Studio.UI.Windows;
+﻿using Arma.Studio;
+using Arma.Studio.Data.UI;
+using Arma.Studio.UI.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +12,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace ArmA.Studio.UI.Windows
+namespace Arma.Studio.UI.Windows
 {
     public class SplashScreenDataContext : INotifyPropertyChanged
     {

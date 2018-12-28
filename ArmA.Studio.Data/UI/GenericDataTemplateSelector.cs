@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 
-namespace ArmA.Studio.Data.UI
+namespace Arma.Studio.Data.UI
 {
     public class GenericDataTemplateSelector : DataTemplateSelector
     {

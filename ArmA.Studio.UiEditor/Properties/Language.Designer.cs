@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ArmA.Studio.UiEditor.Properties {
+namespace Arma.Studio.UiEditor.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ArmA.Studio.UiEditor.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ArmA.Studio.UiEditor.Properties.Language", typeof(Language).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Arma.Studio.UiEditor.Properties.Language", typeof(Language).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -439,7 +439,7 @@ namespace ArmA.Studio.UiEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ArmA.Studio - UIEditor.
+        ///   Looks up a localized string similar to Arma.Studio - UIEditor.
         /// </summary>
         public static string UIEditor_Name {
             get {

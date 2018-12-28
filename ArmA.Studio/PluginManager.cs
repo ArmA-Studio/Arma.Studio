@@ -1,4 +1,4 @@
-﻿using ArmA.Studio.Data;
+﻿using Arma.Studio.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace ArmA.Studio
+namespace Arma.Studio
 {
     /// <summary>
     /// Singleton class.
@@ -30,17 +30,20 @@ namespace ArmA.Studio
         }
         public struct PluginContainer
         {
-            public IPlugin Plugin { get; }
+            private readonly IPlugin ActualPlugin;
             public Assembly Assembly { get; }
             public PluginFile InfoFile { get; }
             public string Folder { get; }
             public PluginContainer(Assembly ass, PluginFile infoFile, IPlugin plugin, string folder)
             {
-                this.Plugin = plugin;
+                this.ActualPlugin = plugin;
                 this.Assembly = ass;
                 this.InfoFile = infoFile;
                 this.Folder = folder;
             }
+
+            public IPlugin Plugin() => this.ActualPlugin;
+            public T Plugin<T>() where T : class => this.ActualPlugin as T;
         }
         static PluginManager()
         {
@@ -54,6 +57,7 @@ namespace ArmA.Studio
         }
 
         public ObservableCollection<PluginContainer> Plugins { get; }
+        public IEnumerable<T> GetPlugins<T>() where T : class => this.Plugins.Where((it) => it.Plugin() is T).Select((it) => it.Plugin<T>());
 
         public Assembly LoadAssemblySafe(string path)
         {

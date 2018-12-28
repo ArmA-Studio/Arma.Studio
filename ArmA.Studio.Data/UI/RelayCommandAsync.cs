@@ -25,7 +25,7 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-namespace ArmA.Studio.Data.UI
+namespace Arma.Studio.Data.UI
 {
     public class RelayCommandAsync<T> : ICommand, INotifyPropertyChanged
     {

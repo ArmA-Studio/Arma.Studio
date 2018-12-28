@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ArmA.Studio.Data
+namespace Arma.Studio.Data
 {
     public static class DependencyObjectExtensions
     {
