@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmA.Studio", "ArmA.Studio\ArmA.Studio.csproj", "{AF109F5B-F448-4EAD-902C-58D9BCAD762F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arma.Studio", "Arma.Studio\Arma.Studio.csproj", "{AF109F5B-F448-4EAD-902C-58D9BCAD762F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmA.Studio.Data", "ArmA.Studio.Data\ArmA.Studio.Data.csproj", "{05A55F19-86EE-46A1-875A-15BBFE31A4AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arma.Studio.Data", "Arma.Studio.Data\Arma.Studio.Data.csproj", "{05A55F19-86EE-46A1-875A-15BBFE31A4AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArmA.Studio.UiEditor", "ArmA.Studio.UiEditor\ArmA.Studio.UiEditor.csproj", "{33E151CC-B3EC-4636-8971-927A1BF595B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arma.Studio.UiEditor", "Arma.Studio.UiEditor\Arma.Studio.UiEditor.csproj", "{33E151CC-B3EC-4636-8971-927A1BF595B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
