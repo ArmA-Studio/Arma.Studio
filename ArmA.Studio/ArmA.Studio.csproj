@@ -105,6 +105,206 @@
     <Compile Include="UI\AvalonDock\DockableBaseOnDocumentClosingEventArgs.cs" />
     <Compile Include="UI\AvalonDock\LayoutUpdateStrategy.cs" />
     <Compile Include="UI\Windows\MainWindowDataContext.cs" />
+    <Page Include="Resources\Pause\F12_Pause_36x108.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pause\Pause_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pause\Pause_17x16.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pause\Pause_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pause\Pause_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pause\Pause_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pause\Pause_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pause\Pause_F12.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pause\Pause_grey_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pause\Pause_grey_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pause\Pause_grey_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Pause\Pause_grey_32xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\CurrentRow_15x14.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\F12_Run_24x72.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\F12_Run_36x108.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\RunOutline_gray_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\Run_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\Run_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\Run_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\Run_24x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\Run_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\Run_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\Run_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\Run_5x9.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\Run_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\Run_grey_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\Run_grey_16xMD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\Run_grey_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\Run_grey_32xLG.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\Run_grey_32xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Run\VSO_Run_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\StepIn\F12_StepIn_36x108.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\StepIn\StepIn_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\StepOut\F12_StepOut_36x108.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\StepOut\StepOut_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\StepOver\F12_StepOver_36x108.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\StepOver\StepOver_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Stop\F12_Stop_36x108.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Stop\Stop_12x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Stop\Stop_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Stop\Stop_24x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Stop\Stop_256x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Stop\Stop_32x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Stop\Stop_48x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Stop\Stop_64x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Stop\Stop_disabled_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Stop\Stop_grey_16x.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Stop\Stop_grey_16xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Stop\Stop_grey_32xLG.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Stop\Stop_grey_32xSM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UI\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -145,6 +345,57 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Resources\Pause\F12_Pause_36x108.ai" />
+    <None Include="Resources\Pause\Pause_16x.ai" />
+    <None Include="Resources\Pause\Pause_17x16.ai" />
+    <None Include="Resources\Pause\Pause_256x.ai" />
+    <None Include="Resources\Pause\Pause_32x.ai" />
+    <None Include="Resources\Pause\Pause_48x.ai" />
+    <None Include="Resources\Pause\Pause_64x.ai" />
+    <None Include="Resources\Pause\Pause_grey_16x.ai" />
+    <None Include="Resources\Pause\Pause_grey_16xMD.ai" />
+    <None Include="Resources\Pause\Pause_grey_16xSM.ai" />
+    <None Include="Resources\Pause\Pause_grey_32xSM.ai" />
+    <None Include="Resources\Run\CurrentRow_15x14.ai" />
+    <None Include="Resources\Run\F12_Run_24x72.ai" />
+    <None Include="Resources\Run\F12_Run_36x108.ai" />
+    <None Include="Resources\Run\RunOutline_gray_16x.ai" />
+    <None Include="Resources\Run\RunOutline_gray_32x.ai" />
+    <None Include="Resources\Run\RunOutline_gray_8x.ai" />
+    <None Include="Resources\Run\Run_16x.ai" />
+    <None Include="Resources\Run\Run_16xMD.ai" />
+    <None Include="Resources\Run\Run_16xSM.ai" />
+    <None Include="Resources\Run\Run_24x.ai" />
+    <None Include="Resources\Run\Run_256x.ai" />
+    <None Include="Resources\Run\Run_32x.ai" />
+    <None Include="Resources\Run\Run_48x.ai" />
+    <None Include="Resources\Run\Run_5x9.ai" />
+    <None Include="Resources\Run\Run_64x.ai" />
+    <None Include="Resources\Run\Run_grey_16x.ai" />
+    <None Include="Resources\Run\Run_grey_16xMD.ai" />
+    <None Include="Resources\Run\Run_grey_16xSM.ai" />
+    <None Include="Resources\Run\Run_grey_32xLG.ai" />
+    <None Include="Resources\Run\Run_grey_32xSM.ai" />
+    <None Include="Resources\Run\VSO_Run_16x.ai" />
+    <None Include="Resources\StepIn\F12_StepIn_36x108.ai" />
+    <None Include="Resources\StepIn\StepIn_16x.ai" />
+    <None Include="Resources\StepOut\F12_StepOut_36x108.ai" />
+    <None Include="Resources\StepOut\StepOut_16x.ai" />
+    <None Include="Resources\StepOver\F12_StepOver_36x108.ai" />
+    <None Include="Resources\StepOver\StepOver_16x.ai" />
+    <None Include="Resources\Stop\F12_Stop_36x108.ai" />
+    <None Include="Resources\Stop\Stop_12x.ai" />
+    <None Include="Resources\Stop\Stop_16x.ai" />
+    <None Include="Resources\Stop\Stop_24x.ai" />
+    <None Include="Resources\Stop\Stop_256x.ai" />
+    <None Include="Resources\Stop\Stop_32x.ai" />
+    <None Include="Resources\Stop\Stop_48x.ai" />
+    <None Include="Resources\Stop\Stop_64x.ai" />
+    <None Include="Resources\Stop\Stop_disabled_16x.ai" />
+    <None Include="Resources\Stop\Stop_grey_16x.ai" />
+    <None Include="Resources\Stop\Stop_grey_16xSM.ai" />
+    <None Include="Resources\Stop\Stop_grey_32xLG.ai" />
+    <None Include="Resources\Stop\Stop_grey_32xSM.ai" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -165,6 +416,91 @@
   <ItemGroup>
     <Resource Include="Resources\Icon.ico" />
     <Resource Include="Resources\SplashScreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Run\CurrentRow_15x14.png" />
+    <Resource Include="Resources\Run\Run.ico" />
+    <Resource Include="Resources\Run\RunOutline_gray_16x.png" />
+    <Content Include="Resources\Run\RunOutline_gray_16x.svg" />
+    <Resource Include="Resources\Run\RunOutline_gray_32x.png" />
+    <Resource Include="Resources\Run\RunOutline_gray_8x.png" />
+    <Resource Include="Resources\Run\Run_16x.png" />
+    <Content Include="Resources\Run\Run_16x.svg" />
+    <Resource Include="Resources\Run\Run_16xMD.png" />
+    <Resource Include="Resources\Run\Run_16xSM.png" />
+    <Resource Include="Resources\Run\Run_16x_24.bmp" />
+    <Resource Include="Resources\Run\Run_16x_32.bmp" />
+    <Resource Include="Resources\Run\Run_24x.bmp" />
+    <Resource Include="Resources\Run\Run_24x.png" />
+    <Resource Include="Resources\Run\Run_256x.png" />
+    <Resource Include="Resources\Run\Run_32x.png" />
+    <Resource Include="Resources\Run\Run_48x.png" />
+    <Resource Include="Resources\Run\Run_5x9.png" />
+    <Resource Include="Resources\Run\Run_5x9_24.bmp" />
+    <Resource Include="Resources\Run\Run_64x.png" />
+    <Resource Include="Resources\Run\Run_grey_16x.png" />
+    <Resource Include="Resources\Run\Run_grey_16xMD.png" />
+    <Resource Include="Resources\Run\Run_grey_16xSM.png" />
+    <Resource Include="Resources\Run\Run_grey_32xLG.png" />
+    <Resource Include="Resources\Run\Run_grey_32xSM.png" />
+    <Resource Include="Resources\Run\VSO_Run_16x.png" />
+    <Content Include="Resources\Run\VSO_Run_16x.svg" />
+    <Resource Include="Resources\StepIn\i_stepinBlue_F12.png" />
+    <Resource Include="Resources\StepIn\i_stepinGrey_F12.png" />
+    <Resource Include="Resources\StepIn\i_stepinLtGrey_F12.png" />
+    <Resource Include="Resources\StepIn\StepIn_16x.png" />
+    <Content Include="Resources\StepIn\StepIn_16x.svg" />
+    <Resource Include="Resources\StepIn\StepIn_16x_24.bmp" />
+    <Resource Include="Resources\StepIn\StepIn_16x_32.bmp" />
+    <Resource Include="Resources\StepOut\i_stepoutBlue_F12.png" />
+    <Resource Include="Resources\StepOut\i_stepoutGrey_F12.png" />
+    <Resource Include="Resources\StepOut\i_stepoutLtGrey_F12.png" />
+    <Resource Include="Resources\StepOut\StepOut_16x.png" />
+    <Content Include="Resources\StepOut\StepOut_16x.svg" />
+    <Resource Include="Resources\StepOut\StepOut_16x_24.bmp" />
+    <Resource Include="Resources\StepOut\StepOut_16x_32.bmp" />
+    <Resource Include="Resources\StepOver\i_stepoverBlue_F12.png" />
+    <Resource Include="Resources\StepOver\i_stepoverGrey_F12.png" />
+    <Resource Include="Resources\StepOver\i_stepoverLtGrey_F12.png" />
+    <Resource Include="Resources\StepOver\StepOver_16x.png" />
+    <Content Include="Resources\StepOver\StepOver_16x.svg" />
+    <Resource Include="Resources\StepOver\StepOver_16x_24.bmp" />
+    <Resource Include="Resources\StepOver\StepOver_16x_32.bmp" />
+    <Resource Include="Resources\Stop\F12_Stop_36x108.png" />
+    <Resource Include="Resources\Stop\Stop.ico" />
+    <Resource Include="Resources\Stop\Stop_12x.png" />
+    <Resource Include="Resources\Stop\Stop_16x.png" />
+    <Content Include="Resources\Stop\Stop_16x.svg" />
+    <Resource Include="Resources\Stop\Stop_16x_24.bmp" />
+    <Resource Include="Resources\Stop\Stop_16x_32.bmp" />
+    <Resource Include="Resources\Stop\Stop_24x.png" />
+    <Resource Include="Resources\Stop\Stop_256x.png" />
+    <Resource Include="Resources\Stop\Stop_32x.png" />
+    <Resource Include="Resources\Stop\Stop_48x.png" />
+    <Resource Include="Resources\Stop\Stop_64x.png" />
+    <Resource Include="Resources\Stop\Stop_disabled_16x.png" />
+    <Content Include="Resources\Stop\Stop_disabled_16x.svg" />
+    <Resource Include="Resources\Stop\Stop_disabled_16x_32.bmp" />
+    <Resource Include="Resources\Stop\Stop_grey_16x.png" />
+    <Resource Include="Resources\Stop\Stop_grey_16xSM.png" />
+    <Resource Include="Resources\Stop\Stop_grey_16x_24.bmp" />
+    <Resource Include="Resources\Stop\Stop_grey_32xLG.png" />
+    <Resource Include="Resources\Stop\Stop_grey_32xSM.png" />
+    <Resource Include="Resources\Pause\Pause.ico" />
+    <Resource Include="Resources\Pause\Pause_16x.png" />
+    <Resource Include="Resources\Pause\Pause_16x_24.bmp" />
+    <Resource Include="Resources\Pause\Pause_16x_32.bmp" />
+    <Resource Include="Resources\Pause\Pause_17x16.png" />
+    <Resource Include="Resources\Pause\Pause_256x.png" />
+    <Resource Include="Resources\Pause\Pause_32x.png" />
+    <Resource Include="Resources\Pause\Pause_48x.png" />
+    <Resource Include="Resources\Pause\Pause_64x.png" />
+    <Resource Include="Resources\Pause\Pause_grey_16x.png" />
+    <Content Include="Resources\Pause\Pause_grey_16x.svg" />
+    <Resource Include="Resources\Pause\Pause_grey_16xMD.png" />
+    <Resource Include="Resources\Pause\Pause_grey_16xSM.png" />
+    <Resource Include="Resources\Pause\Pause_grey_32xLG.png" />
+    <Resource Include="Resources\Pause\Pause_grey_32xSM.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

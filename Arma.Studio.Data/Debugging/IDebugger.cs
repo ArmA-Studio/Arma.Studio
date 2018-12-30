@@ -13,6 +13,7 @@ namespace Arma.Studio.Data.Debugging
         /// Supposed to return all actions that are supported by <see cref="Execute(EDebugAction)"/>.
         /// </summary>
         IEnumerable<EDebugAction> SupportedActions { get; }
+
         /// <summary>
         /// Called when the user is clicking a button.
         /// </summary>

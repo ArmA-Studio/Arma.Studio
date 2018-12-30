@@ -97,6 +97,69 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Continue.
+        /// </summary>
+        public static string Debugger_Continue {
+            get {
+                return ResourceManager.GetString("Debugger_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pause.
+        /// </summary>
+        public static string Debugger_Pause_Tooltip {
+            get {
+                return ResourceManager.GetString("Debugger_Pause_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string Debugger_Start {
+            get {
+                return ResourceManager.GetString("Debugger_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step-Into.
+        /// </summary>
+        public static string Debugger_StepInto_Tooltip {
+            get {
+                return ResourceManager.GetString("Debugger_StepInto_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step-Out.
+        /// </summary>
+        public static string Debugger_StepOut_Tooltip {
+            get {
+                return ResourceManager.GetString("Debugger_StepOut_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Step-Over.
+        /// </summary>
+        public static string Debugger_StepOver_Tooltip {
+            get {
+                return ResourceManager.GetString("Debugger_StepOver_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop.
+        /// </summary>
+        public static string Debugger_Stop_Tooltip {
+            get {
+                return ResourceManager.GetString("Debugger_Stop_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to load Plugin {0}.
         /// </summary>
         public static string FailedToLoadPlugin_Body {

@@ -15,9 +15,19 @@
         asd:Initialized.Command="{Binding CmdWindowInitialized}"
         asd:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
         Title="{x:Static p:Language.ArmaStudio}" Height="512" Width="1024" UseLayoutRounding="True">
+    <Window.Resources>
+        <Style x:Key="ButtonDebuggerNotAttachedDisablesStyle" TargetType="{x:Type Button}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Debugger.SupportedActions, Converter={StaticResource ContainsConverter}, ConverterParameter={x:Static asd:EDebugAction.Pause}}" Value="False">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="True">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <DockPanel>
-        <DockPanel.Resources>
-        </DockPanel.Resources>
         <Menu DockPanel.Dock="Top">
             <Menu.ItemsSource>
                 <CompositeCollection>
@@ -66,6 +76,175 @@
                 </CompositeCollection>
             </Menu.ItemsSource>
         </Menu>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBarTray.Resources>
+                <Style TargetType="Image">
+                    <Setter Property="Height" Value="16"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Value="False">
+                            <Setter Property="Opacity" Value="0.25"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ToolBarTray.Resources>
+            <ToolBar x:Name="ToolBar_FileIO">
+                <Button Command="{Binding CmdSave}">
+                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/Save/Save.ico"/>
+                </Button>
+                <Button Command="{Binding CmdSaveAll}">
+                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/SaveAll/SaveAll.ico"/>
+                </Button>
+            </ToolBar>
+            <ToolBar x:Name="ToolBar_Debugger" DataContext="{Binding DebugContext}">
+                <Button Command="{Binding CmdDebuggerAction}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonDebuggerNotAttachedDisablesStyle}">
+                            <Setter Property="CommandParameter" Value="{x:Static asd:EDebugAction.Start}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DebuggerIsRunning}" Value="True">
+                                    <Setter Property="CommandParameter" Value="{x:Static asd:EDebugAction.Resume}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Height="16" Width="16" >
+                            <Rectangle.Style>
+                                <Style TargetType="{x:Type Rectangle}">
+                                    <Setter Property="Fill" Value="{StaticResource DrawingBrushRun}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Debugger.SupportedActions, Converter={StaticResource ContainsConverter}, ConverterParameter={x:Static asd:EDebugAction.Pause}}" Value="False">
+                                            <Setter Property="Fill" Value="{StaticResource DrawingBrushRunGray}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="False">
+                                            <Setter Property="Fill" Value="{StaticResource DrawingBrushRunGray}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Rectangle.Style>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="{x:Static p:Language.Debugger_Start}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsDebuggerAttached}" Value="true">
+                                            <Setter Property="Text" Value="{x:Static p:Language.Debugger_Continue}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                </Button>
+                <Separator/>
+                <Button ToolTip="{x:Static p:Language.Debugger_Pause_Tooltip}"
+                        Command="{Binding CmdDebuggerAction}"
+                        CommandParameter="{x:Static asd:EDebugAction.Pause}"
+                        Style="{StaticResource ButtonDebuggerNotAttachedDisablesStyle}">
+                    <Rectangle Height="16" Width="16" >
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{StaticResource DrawingBrushPause}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Debugger.SupportedActions, Converter={StaticResource ContainsConverter}, ConverterParameter={x:Static asd:EDebugAction.Pause}}" Value="False">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushPauseGray}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="False">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushPauseGray}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
+                <Button ToolTip="{x:Static p:Language.Debugger_Stop_Tooltip}"
+                        Command="{Binding CmdDebuggerAction}"
+                        CommandParameter="{x:Static asd:EDebugAction.Stop}"
+                        Style="{StaticResource ButtonDebuggerNotAttachedDisablesStyle}">
+                    <Rectangle Height="16" Width="16" >
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{StaticResource DrawingBrushStop}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Debugger.SupportedActions, Converter={StaticResource ContainsConverter}, ConverterParameter={x:Static asd:EDebugAction.Stop}}" Value="False">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushStopGray}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="False">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushStopGray}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
+                <Separator/>
+                <Button ToolTip="{x:Static p:Language.Debugger_StepInto_Tooltip}"
+                        Command="{Binding CmdDebuggerAction}"
+                        CommandParameter="{x:Static asd:EDebugAction.StepInto}"
+                        Style="{StaticResource ButtonDebuggerNotAttachedDisablesStyle}">
+                    <Rectangle Height="16" Width="16" >
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{StaticResource DrawingBrushStepIn}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Debugger.SupportedActions, Converter={StaticResource ContainsConverter}, ConverterParameter={x:Static asd:EDebugAction.StepIn}}" Value="False">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushStepInGray}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="False">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushStepInGray}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
+                <Button ToolTip="{x:Static p:Language.Debugger_StepOver_Tooltip}"
+                        Command="{Binding CmdDebuggerAction}"
+                        CommandParameter="{x:Static asd:EDebugAction.StepOver}"
+                        Style="{StaticResource ButtonDebuggerNotAttachedDisablesStyle}">
+                    <Rectangle Height="16" Width="16" >
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{StaticResource DrawingBrushStepOver}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Debugger.SupportedActions, Converter={StaticResource ContainsConverter}, ConverterParameter={x:Static asd:EDebugAction.StepOver}}" Value="False">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushStepOverGray}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="False">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushStepOverGray}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
+                <Button ToolTip="{x:Static p:Language.Debugger_StepOut_Tooltip}"
+                        Command="{Binding CmdDebuggerAction}"
+                        CommandParameter="{x:Static asd:EDebugAction.StepOut}"
+                        Style="{StaticResource ButtonDebuggerNotAttachedDisablesStyle}">
+                    <Rectangle Height="16" Width="16" >
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{StaticResource DrawingBrushStepOut}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Debugger.SupportedActions, Converter={StaticResource ContainsConverter}, ConverterParameter={x:Static asd:EDebugAction.StepOut}}" Value="False">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushStepOutGray}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="False">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushStepOutGray}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
         <ad:DockingManager
             asd:Initialized.Command="{Binding CmdDockingManagerInitialized}"
             asd:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"

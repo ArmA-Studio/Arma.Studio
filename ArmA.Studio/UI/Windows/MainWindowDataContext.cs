@@ -1,4 +1,5 @@
 ﻿using Arma.Studio.Data;
+using Arma.Studio.Data.Debugging;
 using Arma.Studio.Data.Plugin;
 using Arma.Studio.Data.UI;
 using Arma.Studio.UI.AvalonDock;
@@ -95,6 +96,12 @@ namespace Arma.Studio.UI.Windows
         }
         private object _AvalonDockActiveContent;
 
+        public IDebugger Debugger { get { return this._Debugger; } set { this._Debugger = value; this.RaisePropertyChanged(); } }
+        private IDebugger _Debugger;
+
+        public bool DebuggerIsRunning { get { return this._DebuggerIsRunning; } set { this._DebuggerIsRunning = value; this.RaisePropertyChanged(); } }
+        private bool _DebuggerIsRunning;
+
         public string StatusLabel { get { return this._StatusLabel; } set { this._StatusLabel = value; this.RaisePropertyChanged(); } }
         private string _StatusLabel;
 
@@ -146,15 +153,12 @@ namespace Arma.Studio.UI.Windows
         public ObservableCollection<DockableBase> Documents { get { return this._Documents; } set { this._Documents = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<DockableBase> _Documents;
 
-
         public ObservableCollection<DockableInfo> AnchorablesAvailable { get { return this._AnchorablesAvailable; } set { this._AnchorablesAvailable = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<DockableInfo> _AnchorablesAvailable;
 
         public ObservableCollection<DockableInfo> DocumentsAvailable { get { return this._DocumentsAvailable; } set { this._DocumentsAvailable = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<DockableInfo> _DocumentsAvailable;
         
-
-
         private Newtonsoft.Json.Linq.JObject LayoutJsonNode;
         private void LayoutSerializer_LayoutSerializationCallback(object sender, Xceed.Wpf.AvalonDock.Layout.Serialization.LayoutSerializationCallbackEventArgs e)
         {

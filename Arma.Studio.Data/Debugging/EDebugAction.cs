@@ -11,8 +11,8 @@ namespace Arma.Studio.Data.Debugging
         NA,
         Start,
         Stop,
+        Pause,
         Resume,
-        Continue,
         Step,
         StepOver,
         StepInto

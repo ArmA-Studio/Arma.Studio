@@ -129,6 +129,27 @@
   <data name="Configuration_ExceptionDuringLoad" xml:space="preserve">
     <value>Failed to load configuration. Using empty.</value>
   </data>
+  <data name="Debugger_Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Debugger_Pause_Tooltip" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Debugger_Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Debugger_StepInto_Tooltip" xml:space="preserve">
+    <value>Step-Into</value>
+  </data>
+  <data name="Debugger_StepOut_Tooltip" xml:space="preserve">
+    <value>Step-Out</value>
+  </data>
+  <data name="Debugger_StepOver_Tooltip" xml:space="preserve">
+    <value>Step-Over</value>
+  </data>
+  <data name="Debugger_Stop_Tooltip" xml:space="preserve">
+    <value>Stop</value>
+  </data>
   <data name="FailedToLoadPlugin_Body" xml:space="preserve">
     <value>Failed to load Plugin {0}</value>
   </data>
