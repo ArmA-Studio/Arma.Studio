@@ -152,7 +152,9 @@ namespace Dedbugger
                     while (!this.Pipe.IsMessageComplete);
                     if (builder.Length > 0)
                     {
-                        dynamic token = Newtonsoft.Json.Linq.JToken.Parse(builder.ToString());
+                        var msg = builder.ToString();
+                        Logger.Log(NLog.LogLevel.Info, String.Format("RECV {0}", msg));
+                        dynamic token = Newtonsoft.Json.Linq.JToken.Parse(msg);
                         ERecvCommands command = token.command;
                         switch(command)
                         {
