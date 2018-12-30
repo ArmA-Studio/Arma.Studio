@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.IO.Pipes;
 using ArmA.Studio.Debugger;
 using System.Threading;
-using asapJson;
 using ArmA.Studio.Data.Configuration;
 using ArmA.Studio.Plugin;
 using ArmA.Studio.Data;
@@ -20,31 +19,38 @@ namespace Dedbugger
         public enum ESendCommands
         {
             GetVersionInfo = 1,
-            AddBreakpointInfo = 2,
-            RemoveBreakpointInfo = 3,
-            ContinueExecution = 4,
-            TriggerMonitorDump = 5,
-            SetEngineHookEnabled = 6,
-            GetVariable = 7
+            AddBreakpoint,
+            DelBreakpoin,
+            BPContinue,
+            MonitorDump,
+            SetHookEnable,
+            GetVariable,
+            GetCurrentCode,
+            GetAllScriptCommands
         }
         public enum ERecvCommands
         {
             VersionInfo = 1,
-            HaltBreakpointInfo = 2,
-            HaltStep = 3,
-            HaltError = 4,
-            HaltScriptAssert = 5,
-            HaltScriptHalt = 6,
-            HaltPlaceholder = 7,
-            ContinueExecution = 8,
-            VariablesList = 9
+            Halt_breakpoint,
+            Halt_step,
+            Halt_error,
+            Halt_scriptAssert,
+            Halt_scriptHalt,
+            Halt_placeholder,
+            ContinueExecution,
+            VariableReturn
         }
-        public enum EStepType
-        {
-            Continue = 0,
-            StepInto = 1,
-            StepOver = 2,
-            StepOut = 3,
+        [Flags]
+        public enum EVariableScope
+        { //This is a bitflag
+            Invalid = 0,
+            Callstack = 1,
+            Local = 2,
+            MissionNamespace = 4,
+            UiNamespace = 8,
+            ProfileNamespace = 16,
+            ParsingNamespace = 32,
+            All = Invalid | Callstack | Local | MissionNamespace | UiNamespace | ProfileNamespace | ParsingNamespace
         }
         public event EventHandler<OnHaltEventArgs> OnHalt;
         public event EventHandler<OnConnectionClosedEventArgs> OnConnectionClosed;
@@ -54,30 +60,30 @@ namespace Dedbugger
 
         private NamedPipeClientStream Pipe;
         private List<BreakpointInfo> BreakpointInfos;
-        private JsonNode LastCallstack;
+        private dynamic LastCallstack;
         private const int MinimalDebuggerBuild = 23;
 
         public Thread PipeReadThread { get; private set; }
-        public ConcurrentBag<JsonNode> Messages;
+        public ConcurrentBag<dynamic> Messages;
         public string LastError { get; private set; }
 
 
         public string Name => "Debugger Bridge";
 
-        public string Description => "Plugin to connect to the ArmA Debugger.";
+        public string Description => "Plugin to connect to the ArmaDebugEngine.";
 
         private bool IsHalted;
 
         public DebuggerCore()
         {
-            this.Messages = new ConcurrentBag<JsonNode>();
+            this.Messages = new ConcurrentBag<dynamic>();
             this.Pipe = null;
             this.IsHalted = false;
         }
 
         public bool Attach()
         {
-            if(this.Pipe != null && this.Pipe.IsConnected)
+            if (this.Pipe != null && this.Pipe.IsConnected)
             {
                 throw new InvalidOperationException();
             }
@@ -100,29 +106,6 @@ namespace Dedbugger
             {
                 this.LastError = ex.Message;
                 this.Pipe = null;
-                return false;
-            }
-
-            var command = new JsonNode(new Dictionary<string, JsonNode>());
-            command.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.GetVersionInfo);
-            this.WriteMessage(command);
-            var response = this.ReadMessage((node) => (int)(node.GetValue_Object()["command"].GetValue_Number()) == (int)ERecvCommands.VersionInfo);
-
-            if (response.GetValue_Object()["gameType"].GetValueType() == JsonNode.EJType.String) //Might be null if init failed or attached too soon
-            { 
-                var gameType = response.GetValue_Object()["gameType"].GetValue_String();
-            }
-            if (response.GetValue_Object()["gameVersion"].GetValueType() == JsonNode.EJType.String) //Might be null if init failed or attached too soon
-            {
-                var gameVersion = response.GetValue_Object()["gameVersion"].GetValue_String();
-            }
-            var arch = response.GetValue_Object()["arch"].GetValue_String();
-            var build = response.GetValue_Object()["build"].GetValue_Number();
-            var version = response.GetValue_Object()["version"].GetValue_String();
-            if (build < MinimalDebuggerBuild)
-            {
-                this.LastError = "Unsupported Debugger build: " + build +" \nMinimal build required: "+MinimalDebuggerBuild;
-                this.Detach();
                 return false;
             }
             return true;
@@ -164,71 +147,45 @@ namespace Dedbugger
                     do
                     {
                         var ammount = this.Pipe.Read(buffer, 0, buffer.Length);
-                        for (int i = 0; i < ammount; i++)
-                        {
-                            builder.Append((char)buffer[i]);
-                        }
-                    } while (!this.Pipe.IsMessageComplete);
+                        builder.Append(Encoding.Default.GetString(buffer, 0, ammount));
+                    }
+                    while (!this.Pipe.IsMessageComplete);
                     if (builder.Length > 0)
                     {
-                        var node = new JsonNode(builder.ToString(), true);
-                        Logger.Log(NLog.LogLevel.Info, string.Format("RECV {0}", node.ToString()));
-                        if (node.GetValue_Object().ContainsKey("exception"))
+                        dynamic token = Newtonsoft.Json.Linq.JToken.Parse(builder.ToString());
+                        ERecvCommands command = token.command;
+                        switch(command)
                         {
-                            this.OnError?.Invoke(this, new OnErrorEventArgs() { Message = node.GetValue_Object()["exception"].GetValue_String() });
-                        }
-                        else
-                        {
-                            switch ((ERecvCommands)node.GetValue_Object()["command"].GetValue_Number())
-                            {
-                                case ERecvCommands.HaltBreakpointInfo:
-                                case ERecvCommands.HaltStep:
+                            case ERecvCommands.VersionInfo:
+                                break;
+                            case ERecvCommands.ContinueExecution:
+                                this.IsHalted = false;
+                                this.OnContinue?.Invoke(this, new OnContinueEventArgs() { });
+                                break;
+                            case ERecvCommands.Halt_breakpoint:
+                            case ERecvCommands.Halt_step:
+                            case ERecvCommands.Halt_error:
+                            case ERecvCommands.Halt_scriptAssert:
+                            case ERecvCommands.Halt_scriptHalt:
+                                {
+                                    this.LastCallstack = token.callstack;
+                                    string filename = "";
+                                    int line = 0;
+                                    try
                                     {
-                                        var callstack = this.LastCallstack = node.GetValue_Object()["callstack"];
-                                        var instruction = node.GetValue_Object()["instruction"];
-                                        var fileOffsetNode = instruction.GetValue_Object()["fileOffset"];
-                                        var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
-                                        var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
-                                        this.IsHalted = true;
-                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs(instruction.GetValue_Object()["filename"].GetValue_String(), null, line, col));
+                                        filename = token.instruction.filename;
+                                        line = token.instruction.fileOffsetNode[0];
                                     }
-                                    break;
-                                case ERecvCommands.HaltError:
-                                    {
-                                        var callstack = this.LastCallstack = node.GetValue_Object()["callstack"];
-                                        var error = node.GetValue_Object()["error"];
-                                        var fileOffsetNode = error.GetValue_Object()["fileOffset"];
-                                        var errorMessage = error.GetValue_Object()["message"];//ToDo: display to user
-                                        var fileContent = error.GetValue_Object()["content"];//File content in case we don't have that file
-                                        var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
-                                        var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
-                                        this.IsHalted = true;
-                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs(error.GetValue_Object()["filename"].GetValue_String(), fileContent.GetValue_String(), line, col));
-                                    }
-                                    break;
-                                case ERecvCommands.HaltScriptAssert:
-                                case ERecvCommands.HaltScriptHalt:
-                                    {
-                                        var callstack = this.LastCallstack = node.GetValue_Object()["callstack"];
-                                        var halt = node.GetValue_Object()["halt"];
-                                        var fileOffsetNode = halt.GetValue_Object()["fileOffset"];
-                                        var fileContent = halt.GetValue_Object()["content"];//File content in case we don't have that file
-                                        var line = (int)fileOffsetNode.GetValue_Array()[0].GetValue_Number();
-                                        var col = (int)fileOffsetNode.GetValue_Array()[2].GetValue_Number();
-                                        this.IsHalted = true;
-                                        this.OnHalt?.Invoke(this, new OnHaltEventArgs(halt.GetValue_Object()["filename"].GetValue_String(), null, line, col));
-                                    }
-                                    break;
-                                case ERecvCommands.ContinueExecution:
-                                    {
-                                        this.IsHalted = false;
-                                        this.OnContinue?.Invoke(this, new OnContinueEventArgs() { });
-                                    }
-                                    break;
-                                default:
-                                    this.Messages.Add(node);
-                                    break;
-                            }
+                                    catch { }
+                                    this.IsHalted = true;
+                                    this.OnHalt?.Invoke(this, new OnHaltEventArgs(filename, token.callstack.contentSample, line, 0));
+                                }
+                                break;
+                            case ERecvCommands.Halt_placeholder:
+                                break;
+                            case ERecvCommands.VariableReturn:
+                                this.Messages.Add(token);
+                                break;
                         }
                     }
                     Thread.Sleep(10);
@@ -238,77 +195,31 @@ namespace Dedbugger
             catch (Exception ex) { Virtual.ShowOperationFailedMessageBox(ex); }
         }
 
-        public JsonNode ReadMessage(Func<JsonNode, bool> cond)
-        {
-            while(true)
-            {
-                SpinWait.SpinUntil(() => this.Messages.Count > 0);
-                var temp = new List<JsonNode>();
-                JsonNode y = null;
-                while (!this.Messages.IsEmpty) //Would be more efficient to use a ConcurrentSet
-                {
-                    this.Messages.TryTake(out y);
-                    if (cond.Invoke(y))
-                    {
-                        break;
-                    }
-                    temp.Add(y);
-                }
-                foreach (var item in temp)
-                {
-                    this.Messages.Add(item); //Add back Items that didn't match
-                }
-                if (y != null)
-                    return y;
-            }
-        }
-        public void WriteMessage(JsonNode node)
-        {
-            var str = node.ToString();
-            Logger.Log(NLog.LogLevel.Info, string.Format("SEND {0}", str));
-            var bytes = Encoding.UTF8.GetBytes(str);
-            try
-            {
-                this.Pipe.Write(bytes, 0, bytes.Length);
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex);
-                this.Detach();
-            }
-        }
-
-        
         public void AddBreakpoint(BreakpointInfo b)
         {
             this.BreakpointInfos.Add(b);
+            var node = new Newtonsoft.Json.Linq.JObject
             {
-                var command = new JsonNode(new Dictionary<string, JsonNode>());
-                command.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.AddBreakpointInfo);
-                command.GetValue_Object()["data"] = b.Serialize();
-                this.WriteMessage(command);
-            }
+                { "command", (int)ESendCommands.AddBreakpoint },
+                { "data", b.AsJToken() }
+            };
+            this.WriteMessage(node);
         }
 
         public void RemoveBreakpoint(BreakpointInfo b)
         {
             this.BreakpointInfos.Remove(b);
+            var node = new Newtonsoft.Json.Linq.JObject
             {
-                var command = new JsonNode(new Dictionary<string, JsonNode>());
-                command.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.RemoveBreakpointInfo);
-                command.GetValue_Object()["data"] = b.Serialize();
-                this.WriteMessage(command);
-            }
+                { "command", (int)ESendCommands.DelBreakpoin },
+                { "data", b.AsJToken() }
+            };
+            this.WriteMessage(node);
         }
 
         public void UpdateBreakpoint(BreakpointInfo b)
         {
-            {
-                var command = new JsonNode(new Dictionary<string, JsonNode>());
-                command.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.AddBreakpointInfo);
-                command.GetValue_Object()["data"] = b.Serialize();
-                this.WriteMessage(command);
-            }
+            throw new NotSupportedException();
         }
 
         public void ClearBreakpoints()
@@ -320,45 +231,75 @@ namespace Dedbugger
             }
         }
 
-        private static string VariableArrayToString(JsonNode jsonNode)
+        private static string VariableArrayToString(dynamic value)
         {
-            var value = "[";
-            if (jsonNode.GetValueType() == JsonNode.EJType.Array) //Might be null if EMPTY
-                foreach (var val in jsonNode.GetValue_Array())
+            var builder = new StringBuilder("[");
+            if (value is Newtonsoft.Json.Linq.JArray)//Might be null if EMPTY
+            {
+                bool comma = false;
+                foreach (var val in value)
                 {
-                    if (val.GetValue_Object()["type"].GetValue_String() == "array") //Small workaround to allow 2D arrays
+                    if(comma)
                     {
-                        value += VariableArrayToString(val.GetValue_Object()["value"]);
+                        builder.Append(",");
                     }
                     else
                     {
-                        value += val.GetValue_Object()["value"].GetValue_String();
+                        comma = true;
                     }
-                    value += ",";
+                    if(val.type == "array")
+                    {
+                        builder.Append(VariableArrayToString(val));
+                    }
+                    else
+                    {
+                        builder.Append(val.value);
+                    }
                 }
-            value = value.TrimEnd(',');
-            value += "]";
-            return value;
+            }
+            builder.Append("]");
+            return builder.ToString();
         }
 
         public IEnumerable<Variable> GetVariables(EVariableNamespace scope, params string[] names)
         {
-            var command = new JsonNode(new Dictionary<string, JsonNode>());
-            command.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.GetVariable);
-            var data = command.GetValue_Object()["data"] = new JsonNode(new Dictionary<string, JsonNode>());
-            data.GetValue_Object()["name"] = new JsonNode(names.Select(name => new JsonNode(name)));
-            data.GetValue_Object()["scope"] = new JsonNode((int)scope);
-            this.WriteMessage(command);
-            
-
-            var response = this.ReadMessage((node) => (int)(node.GetValue_Object()["command"].GetValue_Number()) == (int)ERecvCommands.VariablesList);
-            
-            var variables = response.GetValue_Object()["data"];
-            if (variables.GetValueType() == JsonNode.EJType.Array) //Might be null if no variables found
-            foreach (var variable in variables.GetValue_Array())
+            var node = new Newtonsoft.Json.Linq.JObject
             {
-                var name = variable.GetValue_Object()["name"].GetValue_String();
-                var type = variable.GetValue_Object()["type"].GetValue_String();
+                { "command", (int)ESendCommands.GetVariable },
+                { "name", new Newtonsoft.Json.Linq.JArray(names.Select((name) => new Newtonsoft.Json.Linq.JValue(name))) },
+                { "scope", 0 }
+            };
+            switch (scope)
+            {
+                case EVariableNamespace.All:
+                    node["scope"] = (int)EVariableScope.All;
+                    break;
+                case EVariableNamespace.Callstack:
+                    node["scope"] = (int)EVariableScope.Callstack;
+                    break;
+                case EVariableNamespace.LocalEvaluator:
+                    node["scope"] = (int)EVariableScope.Local;
+                    break;
+                case EVariableNamespace.MissionNamespace:
+                    node["scope"] = (int)EVariableScope.MissionNamespace;
+                    break;
+                case EVariableNamespace.ParsingNamespace:
+                    node["scope"] = (int)EVariableScope.ParsingNamespace;
+                    break;
+                case EVariableNamespace.ProfileNamespace:
+                    node["scope"] = (int)EVariableScope.ProfileNamespace;
+                    break;
+                case EVariableNamespace.UiNamespace:
+                    node["scope"] = (int)EVariableScope.UiNamespace;
+                    break;
+            }
+            this.WriteMessage(node);
+            var response = this.ReadMessage((n) => n.command == (int)ERecvCommands.VariableReturn);
+
+            foreach (var variable in response.data)
+            {
+                string name = variable.name;
+                string type = variable.type;
                 var value = "";
                 switch (type)
                 {
@@ -385,22 +326,71 @@ namespace Dedbugger
 
         public void SetVariable(Variable v)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public IEnumerable<CallstackItem> GetCallstack()
         {
-            if (this.LastCallstack == null || this.LastCallstack.GetValueType() != JsonNode.EJType.Array)
-                yield break;
-            foreach (var node in this.LastCallstack.GetValue_Array())
+            if (this.LastCallstack == null)
             {
-                if (!node.GetValue_Object().ContainsKey("lastInstruction")) //Not every callstackItem has instructions
-                    continue;
-                var line = (int)node.GetValue_Object()["lastInstruction"].GetValue_Object()["fileOffset"].GetValue_Array()[0].GetValue_Number();
-                var col = (int)node.GetValue_Object()["lastInstruction"].GetValue_Object()["fileOffset"].GetValue_Array()[2].GetValue_Number();
-                var sample = node.GetValue_Object()["contentSample"].GetValue_String();
-                var file = node.GetValue_Object()["lastInstruction"].GetValue_Object()["filename"].GetValue_String();
-                yield return new CallstackItem() { FileName = file, Column = col, ContentSample = sample, Line = line };
+                yield break;
+            }
+
+            foreach (var node in this.LastCallstack.callstack.compiled)
+            {
+                string filename = "";
+                string sample = "";
+                int line = 0;
+                try
+                {
+                    filename = node.filename;
+                    line = node.fileOffset[0];
+                    sample = (string)node.name + (string)node.type;
+                }
+                catch { }
+                yield return new CallstackItem() { FileName = filename, Line = line, ContentSample = sample };
+            }
+        }
+
+        public dynamic ReadMessage(Func<dynamic, bool> cond)
+        {
+            while (true)
+            {
+                SpinWait.SpinUntil(() => this.Messages.Count > 0);
+                var temp = new List<dynamic>();
+                dynamic y = null;
+                while (!this.Messages.IsEmpty) // Would be more efficient to use a ConcurrentSet
+                {
+                    this.Messages.TryTake(out y);
+                    if (cond.Invoke(y))
+                    {
+                        break;
+                    }
+                    temp.Add(y);
+                }
+                foreach (var item in temp)
+                {
+                    this.Messages.Add(item); // Add back Items that didn't match
+                }
+                if (y != null)
+                {
+                    return y;
+                }
+            }
+        }
+        public void WriteMessage(Newtonsoft.Json.Linq.JToken node)
+        {
+            var str = node.ToString();
+            Logger.Log(NLog.LogLevel.Info, String.Format("SEND {0}", str));
+            var bytes = Encoding.UTF8.GetBytes(str);
+            try
+            {
+                this.Pipe.Write(bytes, 0, bytes.Length);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+                this.Detach();
             }
         }
 
@@ -409,34 +399,15 @@ namespace Dedbugger
             switch (op)
             {
                 case EOperation.Continue:
-                    {
-                        var node = new JsonNode(new Dictionary<string, JsonNode>());
-                        node.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.ContinueExecution);
-                        node.GetValue_Object()["data"] = new JsonNode((int)EStepType.Continue);
-                        this.WriteMessage(node);
-                        return true;
-                    }
                 case EOperation.StepInto:
-                    {
-                        var node = new JsonNode(new Dictionary<string, JsonNode>());
-                        node.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.ContinueExecution);
-                        node.GetValue_Object()["data"] = new JsonNode((int)EStepType.StepInto);
-                        this.WriteMessage(node);
-                        return true;
-                    }
                 case EOperation.StepOver:
-                    {
-                        var node = new JsonNode(new Dictionary<string, JsonNode>());
-                        node.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.ContinueExecution);
-                        node.GetValue_Object()["data"] = new JsonNode((int)EStepType.StepOver);
-                        this.WriteMessage(node);
-                        return true;
-                    }
                 case EOperation.StepOut:
                     {
-                        var node = new JsonNode(new Dictionary<string, JsonNode>());
-                        node.GetValue_Object()["command"] = new JsonNode((int)ESendCommands.ContinueExecution);
-                        node.GetValue_Object()["data"] = new JsonNode((int)EStepType.StepOut);
+                        var node = new Newtonsoft.Json.Linq.JObject
+                        {
+                            { "command", (int)ESendCommands.BPContinue },
+                            { "data", op == EOperation.Continue ? 0 : op == EOperation.StepInto ? 1 : op == EOperation.StepOver ? 2 : 3 }
+                        };
                         this.WriteMessage(node);
                         return true;
                     }
@@ -449,13 +420,13 @@ namespace Dedbugger
         public string GetLastError()
         {
             var str = this.LastError;
-            this.LastError = string.Empty;
+            this.LastError = String.Empty;
             return str;
         }
 
         public string GetDocumentContent(string armapath)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
 }
