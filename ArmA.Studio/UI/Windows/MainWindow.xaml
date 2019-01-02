@@ -87,15 +87,7 @@
                     </Style.Triggers>
                 </Style>
             </ToolBarTray.Resources>
-            <ToolBar x:Name="ToolBar_FileIO">
-                <Button Command="{Binding CmdSave}">
-                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/Save/Save.ico"/>
-                </Button>
-                <Button Command="{Binding CmdSaveAll}">
-                    <Image Source="/ArmA.Studio;component/Resources/Pictograms/SaveAll/SaveAll.ico"/>
-                </Button>
-            </ToolBar>
-            <ToolBar x:Name="ToolBar_Debugger" DataContext="{Binding DebugContext}">
+            <ToolBar DataContext="{Binding DebugContext}">
                 <Button Command="{Binding CmdDebuggerAction}">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonDebuggerNotAttachedDisablesStyle}">
@@ -192,7 +184,7 @@
                             <Style TargetType="{x:Type Rectangle}">
                                 <Setter Property="Fill" Value="{StaticResource DrawingBrushStepIn}"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Debugger.SupportedActions, Converter={StaticResource ContainsConverter}, ConverterParameter={x:Static asd:EDebugAction.StepIn}}" Value="False">
+                                    <DataTrigger Binding="{Binding Debugger.SupportedActions, Converter={StaticResource ContainsConverter}, ConverterParameter={x:Static asd:EDebugAction.StepInto}}" Value="False">
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushStepInGray}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="False">

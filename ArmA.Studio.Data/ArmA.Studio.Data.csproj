@@ -52,6 +52,14 @@
     <Compile Include="DragEventArgsExtensions.cs" />
     <Compile Include="Debugging\EDebugAction.cs" />
     <Compile Include="Debugging\IDebugger.cs" />
+    <Compile Include="IO\File.cs" />
+    <Compile Include="IO\FileFolderBase.cs" />
+    <Compile Include="IO\Folder.cs" />
+    <Compile Include="IO\IFileManagement.cs" />
+    <Compile Include="IO\PBO.cs" />
+    <Compile Include="TextEditor\Enclosure.cs" />
+    <Compile Include="TextEditor\KeywordCollection.cs" />
+    <Compile Include="TextEditor\SyntaxFile.cs" />
     <Compile Include="TextEditor\TextEditorInfo.cs" />
     <Compile Include="IUpdateInfo.cs" />
     <Compile Include="IPlugin.cs" />
@@ -106,5 +114,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

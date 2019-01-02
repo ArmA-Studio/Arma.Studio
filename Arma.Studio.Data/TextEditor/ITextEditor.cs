@@ -8,5 +8,7 @@ namespace Arma.Studio.Data.TextEditor
 {
     public interface ITextEditor
     {
+        SyntaxFile SyntaxFile { get; }
+        bool ShowLineNumbers { get; }
     }
 }

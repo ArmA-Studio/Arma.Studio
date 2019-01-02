@@ -40,6 +40,9 @@
     <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -83,7 +86,13 @@
     </ApplicationDefinition>
     <Compile Include="Configuration.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="FileManager.cs" />
     <Compile Include="PluginManager.cs" />
+    <Compile Include="UI\BreakPointMargin.cs" />
+    <Compile Include="UI\LineHighlighterBackgroundRenderer.cs" />
+    <Compile Include="UI\RuntimeExecutionMargin.cs" />
+    <Compile Include="UI\TextEditorDataContext.cs" />
+    <Compile Include="UI\UnderlineBackgroundRenderer.cs" />
     <Compile Include="UI\Windows\SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
@@ -305,6 +314,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <EmbeddedResource Include="UI\TextEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Page Include="UI\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

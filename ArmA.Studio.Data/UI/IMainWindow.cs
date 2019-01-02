@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Arma.Studio.Data.IO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Arma.Studio.Data.UI
     public interface IMainWindow
     {
         Window OwningWindow { get; }
+        IFileManagement FileManagement { get; }
         DockableBase SelectedDockable { get; set; }
         void SetStatusLabel(string s);
         DockableBase FirstDocumentOrDefault(Func<DockableBase, bool> predicate);

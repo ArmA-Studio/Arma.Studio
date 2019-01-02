@@ -1,5 +1,6 @@
 ﻿using Arma.Studio.Data;
 using Arma.Studio.Data.Debugging;
+using Arma.Studio.Data.IO;
 using Arma.Studio.Data.Plugin;
 using Arma.Studio.Data.UI;
 using Arma.Studio.UI.AvalonDock;
@@ -80,8 +81,8 @@ namespace Arma.Studio.UI.Windows
             }
             return null;
         }
+        public IFileManagement FileManagement { get; }
         #endregion
-
 
         public object AvalonDockActiveContent
         {
@@ -101,6 +102,8 @@ namespace Arma.Studio.UI.Windows
 
         public bool DebuggerIsRunning { get { return this._DebuggerIsRunning; } set { this._DebuggerIsRunning = value; this.RaisePropertyChanged(); } }
         private bool _DebuggerIsRunning;
+
+        public ICommand CmdDebuggerAction => new RelayCommand<EDebugAction>((p) => { });
 
         public string StatusLabel { get { return this._StatusLabel; } set { this._StatusLabel = value; this.RaisePropertyChanged(); } }
         private string _StatusLabel;
@@ -267,12 +270,12 @@ namespace Arma.Studio.UI.Windows
             this.Documents = new ObservableCollection<DockableBase>();
             this.AnchorablesAvailable = new ObservableCollection<DockableInfo>();
             this.DocumentsAvailable = new ObservableCollection<DockableInfo>();
+            this.FileManagement = new FileManager();
             this.LayoutJsonNode = new Newtonsoft.Json.Linq.JObject(new Newtonsoft.Json.Linq.JProperty(CONST_INI_TYPES_STRING, new Newtonsoft.Json.Linq.JObject()));
         }
         private void Initialized()
         {
-            this.LayoutItemTemplateSelector.AddAllDataTemplatesInAssembly(typeof(MainWindowDataContext).Assembly, (s) => s.StartsWith("Arma.Studio.UI.Anchorable"));
-            this.LayoutItemTemplateSelector.AddAllDataTemplatesInAssembly(typeof(MainWindowDataContext).Assembly, (s) => s.StartsWith("Arma.Studio.UI.Documents"));
+            this.LayoutItemTemplateSelector.AddAllDataTemplatesInAssembly(typeof(MainWindowDataContext).Assembly, (s) => s.StartsWith("Arma.Studio.UI"));
             foreach (var it in PluginManager.Instance.GetPlugins<IDockableProvider>())
             {
                 it.AddDataTemplates(this.LayoutItemTemplateSelector);

@@ -15,6 +15,7 @@ namespace Arma.Studio.Data.Debugging
         Resume,
         Step,
         StepOver,
+        StepOut,
         StepInto
     }
 }
