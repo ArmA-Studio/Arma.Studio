@@ -1,4 +1,5 @@
-﻿using Arma.Studio.Data.IO;
+﻿using Arma.Studio.Data.Debugging;
+using Arma.Studio.Data.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Arma.Studio.Data.UI
     {
         Window OwningWindow { get; }
         IFileManagement FileManagement { get; }
+        IBreakpointManager BreakpointManager { get; }
         DockableBase SelectedDockable { get; set; }
         void SetStatusLabel(string s);
         DockableBase FirstDocumentOrDefault(Func<DockableBase, bool> predicate);

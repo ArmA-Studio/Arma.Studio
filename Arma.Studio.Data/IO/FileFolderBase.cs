@@ -13,10 +13,32 @@ namespace Arma.Studio.Data.IO
         protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
 
 
+        public string Name
+        {
+            get => this._Name;
+            set
+            {
+                this._Name = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private string _Name;
+
         public FileFolderBase Parent
         {
             get => this.ParentWeak.TryGetTarget(out var target) ? target : null;
-            set { this.ParentWeak.SetTarget(value); this.RaisePropertyChanged(); }
+            set
+            {
+                this.ParentWeak.SetTarget(value);
+                this.RaisePropertyChanged();
+                if (this is IEnumerable<FileFolderBase> ffbs)
+                {
+                    foreach (var ffb in ffbs)
+                    {
+                        ffb.Parent = ffb.Parent;
+                    }
+                }
+            }
         }
         private readonly WeakReference<FileFolderBase> ParentWeak;
         public FileFolderBase()

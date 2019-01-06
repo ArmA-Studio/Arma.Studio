@@ -7,17 +7,22 @@ using System.Threading.Tasks;
 
 namespace Arma.Studio.Data.IO
 {
-    public class Folder : FileFolderBase, ICollection<File>
+    public class Folder : FileFolderBase, ICollection<FileFolderBase>
     {
-        private readonly List<File> Inner;
-        #region ICollection<File>
+        private readonly List<FileFolderBase> Inner;
+        #region ICollection<FileFolderBase>
         public int Count => this.Inner.Count;
 
-        public bool IsReadOnly => ((ICollection<File>)this.Inner).IsReadOnly;
+        public bool IsReadOnly => ((ICollection<FileFolderBase>)this.Inner).IsReadOnly;
 
-        public void Add(File item)
+        public void Add(FileFolderBase item)
         {
+            if (item.Parent != null)
+            {
+                (item.Parent as ICollection<FileFolderBase>).Remove(item);
+            }
             this.Inner.Add(item);
+            item.Parent = this;
         }
 
         public void Clear()
@@ -25,29 +30,33 @@ namespace Arma.Studio.Data.IO
             this.Inner.Clear();
         }
 
-        public bool Contains(File item)
+        public bool Contains(FileFolderBase item)
         {
             return this.Inner.Contains(item);
         }
 
-        public void CopyTo(File[] array, int arrayIndex)
+        public void CopyTo(FileFolderBase[] array, int arrayIndex)
         {
             this.Inner.CopyTo(array, arrayIndex);
         }
 
-        public IEnumerator<File> GetEnumerator()
+        public IEnumerator<FileFolderBase> GetEnumerator()
         {
-            return ((ICollection<File>)this.Inner).GetEnumerator();
+            return ((ICollection<FileFolderBase>)this.Inner).GetEnumerator();
         }
 
-        public bool Remove(File item)
+        public bool Remove(FileFolderBase item)
         {
+            if (item.Parent == this)
+            {
+                item.Parent = null;
+            }
             return this.Inner.Remove(item);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((ICollection<File>)this.Inner).GetEnumerator();
+            return ((ICollection<FileFolderBase>)this.Inner).GetEnumerator();
         }
         #endregion
     }

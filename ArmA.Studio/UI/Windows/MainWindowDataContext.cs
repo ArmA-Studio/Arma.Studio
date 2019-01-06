@@ -81,8 +81,11 @@ namespace Arma.Studio.UI.Windows
             }
             return null;
         }
-        public IFileManagement FileManagement { get; }
+        public IFileManagement FileManagement => this.Solution.FileManager;
+        public IBreakpointManager BreakpointManager => this.Solution.BreakpointManager;
         #endregion
+
+        public Solution Solution { get; }
 
         public object AvalonDockActiveContent
         {
@@ -270,7 +273,7 @@ namespace Arma.Studio.UI.Windows
             this.Documents = new ObservableCollection<DockableBase>();
             this.AnchorablesAvailable = new ObservableCollection<DockableInfo>();
             this.DocumentsAvailable = new ObservableCollection<DockableInfo>();
-            this.FileManagement = new FileManager();
+            this.Solution = new Solution();
             this.LayoutJsonNode = new Newtonsoft.Json.Linq.JObject(new Newtonsoft.Json.Linq.JProperty(CONST_INI_TYPES_STRING, new Newtonsoft.Json.Linq.JObject()));
         }
         private void Initialized()
