@@ -171,18 +171,12 @@ namespace Dedbugger
                             case ERecvCommands.Halt_scriptHalt:
                                 {
                                     this.LastCallstack = token.callstack;
-                                    string filename = "";
-                                    int line = 0;
-                                    string sample = "";
-                                    try
-                                    {
-                                        filename = token.halt.filename;
-                                        line = token.halt.fileOffsetNode[0];
-                                        sample = token.halt.content;
-                                    }
-                                    catch { }
+                                    string filename; try { filename = token.halt.filename; } catch { filename = string.Empty; }
+                                    int line; try { line = token.halt.fileOffset[0]; } catch { line = 0; }
+                                    int col; try { col = token.halt.fileOffset[2]; } catch { col = 0; }
+                                    string sample; try { sample = token.halt.content; } catch { sample = string.Empty; }
                                     this.IsHalted = true;
-                                    this.OnHalt?.Invoke(this, new OnHaltEventArgs(filename, sample, line, 0));
+                                    this.OnHalt?.Invoke(this, new OnHaltEventArgs(filename, sample, line, col));
                                 }
                                 break;
                             case ERecvCommands.Halt_placeholder:
@@ -270,8 +264,10 @@ namespace Dedbugger
             var node = new Newtonsoft.Json.Linq.JObject
             {
                 { "command", (int)ESendCommands.GetVariable },
-                { "name", new Newtonsoft.Json.Linq.JArray(names.Select((name) => new Newtonsoft.Json.Linq.JValue(name))) },
-                { "scope", 0 }
+                { "data", new Newtonsoft.Json.Linq.JObject {
+                        { "name", new Newtonsoft.Json.Linq.JArray(names.Select((name) => new Newtonsoft.Json.Linq.JValue(name))) },
+                        { "scope", 0 }
+                } }
             };
             switch (scope)
             {

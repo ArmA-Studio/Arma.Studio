@@ -26,6 +26,10 @@ namespace Utility
                     break;
                 }
             }
+            if(start < 0)
+            {
+                start = 0;
+            }
             //find end
             for (end = start; end < doc.TextLength; end++)
             {
