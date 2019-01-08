@@ -66,7 +66,15 @@ namespace ArmA.Studio.Data.UI
                 return;
             var textViewPos = textViewPosQ.Value;
             var offset = this.Document.GetOffset(textViewPos.Location);
-            var info = await this.OnHoverInformationsAsync(offset);
+            string info;
+            try
+            {
+                info = await this.OnHoverInformationsAsync(offset);
+            }
+            catch (Exception ex)
+            {
+                info = $"Error: {ex.Message}";
+            }
             if (string.IsNullOrWhiteSpace(info))
             {
                 var linterInfo = this.Linter.LinterInfo?.FirstOrDefault((li) => li.StartOffset <= offset && li.EndOffset >= offset);

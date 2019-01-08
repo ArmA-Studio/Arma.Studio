@@ -273,25 +273,25 @@ namespace Dedbugger
             switch (scope)
             {
                 case EVariableNamespace.All:
-                    node["scope"] = (int)EVariableScope.All;
+                    node["data"]["scope"] = (int)EVariableScope.All;
                     break;
                 case EVariableNamespace.Callstack:
-                    node["scope"] = (int)EVariableScope.Callstack;
+                    node["data"]["scope"] = (int)EVariableScope.Callstack;
                     break;
                 case EVariableNamespace.LocalEvaluator:
-                    node["scope"] = (int)EVariableScope.Local;
+                    node["data"]["scope"] = (int)EVariableScope.Local;
                     break;
                 case EVariableNamespace.MissionNamespace:
-                    node["scope"] = (int)EVariableScope.MissionNamespace;
+                    node["data"]["scope"] = (int)EVariableScope.MissionNamespace;
                     break;
                 case EVariableNamespace.ParsingNamespace:
-                    node["scope"] = (int)EVariableScope.ParsingNamespace;
+                    node["data"]["scope"] = (int)EVariableScope.ParsingNamespace;
                     break;
                 case EVariableNamespace.ProfileNamespace:
-                    node["scope"] = (int)EVariableScope.ProfileNamespace;
+                    node["data"]["scope"] = (int)EVariableScope.ProfileNamespace;
                     break;
                 case EVariableNamespace.UiNamespace:
-                    node["scope"] = (int)EVariableScope.UiNamespace;
+                    node["data"]["scope"] = (int)EVariableScope.UiNamespace;
                     break;
             }
             this.WriteMessage(node);
@@ -309,15 +309,15 @@ namespace Dedbugger
                         break;
                     case "array":
                         {
-                            value = VariableArrayToString(variable.GetValue_Object()["value"]);
-                            var ns = (EVariableNamespace)variable.GetValue_Object()["ns"].GetValue_Number();//Namespace the variable comes from
+                            value = VariableArrayToString(variable.value);
+                            var ns = (EVariableNamespace)variable.ns;//Namespace the variable comes from
                             yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.ARRAY, Namespace = ns };
                         }
                         break;
                     default:
                         {
-                            value = variable.GetValue_Object()["value"].GetValue_String();
-                            var ns = (EVariableNamespace)variable.GetValue_Object()["ns"].GetValue_Number();//Namespace the variable comes from
+                            value = variable.value;
+                            var ns = (EVariableNamespace)variable.ns;//Namespace the variable comes from
                             yield return new Variable() { Name = name, Value = value, VariableType = Variable.ValueType.Parse(type), Namespace = ns };
                         }
                         break;

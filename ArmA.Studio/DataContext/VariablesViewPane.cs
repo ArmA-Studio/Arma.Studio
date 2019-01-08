@@ -61,15 +61,15 @@ namespace ArmA.Studio.DataContext
                 case nameof(DebuggerContext.IsPaused):
                     if (Workspace.Instance.DebugContext.IsPaused)
                     {
-                        this.IsAvailable = false;
-                    }
-                    else
-                    {
                         this.IsAvailable = true;
                         foreach (var it in this.Variables)
                         {
                             it.UpdateValue();
                         }
+                    }
+                    else
+                    {
+                        this.IsAvailable = false;
                     }
                     break;
                 case nameof(DebuggerContext.IsDebuggerAttached):
