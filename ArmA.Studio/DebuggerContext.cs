@@ -29,7 +29,15 @@ namespace ArmA.Studio
         public bool IsPaused { get { return this._IsPaused; } set { this._IsPaused = value; this.RaisePropertyChanged(); } }
         private bool _IsPaused;
 
-        public IEnumerable<CallstackItem> CallStack { get { return this._CallStack; } set { this._CallStack = value; this.RaisePropertyChanged(); } }
+        public IEnumerable<CallstackItem> CallStack
+        {
+            get { return this._CallStack; }
+            set
+            {
+                this._CallStack = value;
+                this.RaisePropertyChanged();
+            }
+        }
         private IEnumerable<CallstackItem> _CallStack;
 
         public IDebuggerPlugin DebuggerInstance { get; private set; }

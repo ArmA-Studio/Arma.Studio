@@ -112,6 +112,7 @@ namespace ArmA.Studio.Data
             this.Children = new ObservableSortedCollection<ProjectFile>();
             this.WeakOwningSolution = new WeakReference<Solution>(null);
             this.Name = string.Empty;
+            this._ArmAPath = string.Empty;
         }
 
 

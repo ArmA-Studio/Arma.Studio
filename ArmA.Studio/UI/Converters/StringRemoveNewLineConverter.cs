@@ -12,7 +12,7 @@ namespace ArmA.Studio.UI.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var str = value is string ? value as string : value.ToString();
+            var str = System.Convert.ToString(value);
             return str.Replace('\n', ' ').Replace("\r", string.Empty);
         }
 

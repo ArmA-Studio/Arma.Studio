@@ -173,14 +173,16 @@ namespace Dedbugger
                                     this.LastCallstack = token.callstack;
                                     string filename = "";
                                     int line = 0;
+                                    string sample = "";
                                     try
                                     {
-                                        filename = token.instruction.filename;
-                                        line = token.instruction.fileOffsetNode[0];
+                                        filename = token.halt.filename;
+                                        line = token.halt.fileOffsetNode[0];
+                                        sample = token.halt.content;
                                     }
                                     catch { }
                                     this.IsHalted = true;
-                                    this.OnHalt?.Invoke(this, new OnHaltEventArgs(filename, token.callstack.contentSample, line, 0));
+                                    this.OnHalt?.Invoke(this, new OnHaltEventArgs(filename, sample, line, 0));
                                 }
                                 break;
                             case ERecvCommands.Halt_placeholder:
@@ -331,6 +333,7 @@ namespace Dedbugger
             throw new NotSupportedException();
         }
 
+        
         public IEnumerable<CallstackItem> GetCallstack()
         {
             if (this.LastCallstack == null)
@@ -338,19 +341,13 @@ namespace Dedbugger
                 yield break;
             }
 
-            foreach (var node in this.LastCallstack.callstack.compiled)
+            foreach (var node in this.LastCallstack)
             {
-                string filename = "";
-                string sample = "";
-                int line = 0;
-                try
-                {
-                    filename = node.filename;
-                    line = node.fileOffset[0];
-                    sample = (string)node.name + (string)node.type;
-                }
-                catch { }
-                yield return new CallstackItem() { FileName = filename, Line = line, ContentSample = sample };
+                string filename; try { filename = node.fileName; } catch { try { filename = node.filename; } catch { filename = ""; } }
+                string sample; try { sample = node.contentSample; } catch { sample = ""; }
+                int line; try { line = node.lastInstruction.fileOffset[0]; } catch { line = 0; }
+                int col; try { col = node.lastInstruction.fileOffset[2]; } catch { col = 0; }
+                yield return new CallstackItem() { FileName = filename, Line = line, ContentSample = sample, Column = col };
             }
         }
 
