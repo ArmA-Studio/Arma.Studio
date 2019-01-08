@@ -29,6 +29,9 @@ namespace Arma.Studio.Data.UI
         public int HitCount { get => this._HitCount; set { if (this._HitCount == value) { return; } this.RaisePropertyChanging(); this._HitCount = value; this.RaisePropertyChanged(); } }
         private int _HitCount;
 
+        public EBreakpointKind Kind { get => this._Kind; set { if (this._Kind == value) { return; } this.RaisePropertyChanging(); this._Kind = value; this.RaisePropertyChanged(); } }
+        private EBreakpointKind _Kind;
+
         public Breakpoint(string file)
         {
             this.File = file;

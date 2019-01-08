@@ -150,6 +150,7 @@ namespace Arma.Studio
 
                 xmlreader.ReadEndElement();
             }
+            return solution;
         }
         public Solution Serialize(string path)
         {

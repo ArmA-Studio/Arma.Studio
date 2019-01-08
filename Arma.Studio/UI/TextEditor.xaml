@@ -5,6 +5,7 @@
               xmlns:asd="http://schemas.armastudio.io/data"
               xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
               xmlns:text="clr-namespace:System.Text;assembly=mscorlib"
+              xmlns:local="clr-namespace:Arma.Studio.UI;assembly=Arma.Studio"
               DataType="{x:Type local:TextEditorDataContext}"
               >
     <Grid>

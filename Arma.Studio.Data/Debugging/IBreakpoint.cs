@@ -10,10 +10,10 @@ namespace Arma.Studio.Data.Debugging
     public interface IBreakpoint : INotifyPropertyChanged
     {
         string File { get; }
-
         int Line { get; set; }
         int Column { get; set; }
         bool IsActive { get; set; }
         int HitCount { get; set; }
+        EBreakpointKind Kind { get; set; }
     }
 }

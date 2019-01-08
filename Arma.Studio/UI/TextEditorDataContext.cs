@@ -1,4 +1,6 @@
-﻿using Arma.Studio.Data.TextEditor;
+﻿using Arma.Studio.Data.IO;
+using Arma.Studio.Data.Linting;
+using Arma.Studio.Data.TextEditor;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
@@ -124,18 +126,32 @@ namespace Arma.Studio.UI
                 }
             }
         }
+        
+        public File File
+        {
+            get => this._File;
+            set { this._File = value; this.RaisePropertyChanged(); }
+        }
+        private File _File;
 
         public void OnInitialized(FrameworkElement sender, EventArgs e)
         {
             if (sender is TextEditor textEditor)
             {
                 this.TextEditorControl = textEditor;
-                var bpm = new BreakPointMargin();
+                var bpm = new BreakPointMargin(this);
                 textEditor.TextArea.TextView.BackgroundRenderers.Add(new UnderlineBackgroundRenderer(this));
                 textEditor.TextArea.TextView.BackgroundRenderers.Add(bpm);
                 textEditor.TextArea.LeftMargins.Insert(0, bpm);
                 textEditor.TextArea.LeftMargins.Insert(1, new RuntimeExecutionMargin(this));
+
+                // this.ThisView?.InvalidateLayer(KnownLayer.Selection) => Lint info update
             }
+        }
+
+        public IEnumerable<LintInfo> GetLintInfos()
+        {
+            yield break;
         }
     }
 }

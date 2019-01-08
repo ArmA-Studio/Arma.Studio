@@ -7,33 +7,51 @@ using System.Windows.Media;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
-using Arma.Studio.DataContext;
-using Arma.Studio.Data.Lint;
 using Arma.Studio.Data;
 using Arma.Studio.Data.UI;
+using Arma.Studio.Data.Debugging;
+using Arma.Studio.Data.Linting;
 
 namespace Arma.Studio.UI
 {
-    internal class UnderlineBackgroundRenderer : IBackgroundRenderer
+    public class UnderlineBackgroundRenderer : IBackgroundRenderer
     {
-        private TextView ThisView;
-        private CodeEditorBaseDataContext EditorDataContext;
+        public TextEditorDataContext Owner => this.OwnerWeak.TryGetTarget(out var target) ? target : null;
+        private readonly WeakReference<TextEditorDataContext> OwnerWeak;
 
-        public UnderlineBackgroundRenderer(CodeEditorBaseDataContext cebdc)
+        protected static readonly Pen PenError;
+        protected static readonly Pen PenWarning;
+        protected static readonly Pen PenInfo;
+
+        static UnderlineBackgroundRenderer()
         {
-            this.EditorDataContext = cebdc;
-            cebdc.OnLintingInfoUpdated += this.Cebdc_OnLintingInfoUpdated;
+            PenError = new Pen(Brushes.Green, 1);
+            PenError.Freeze();
+            PenWarning = new Pen(Brushes.Orange, 1);
+            PenWarning.Freeze();
+            PenInfo = new Pen(Brushes.Red, 1);
+            PenInfo.Freeze();
         }
 
-        private void Cebdc_OnLintingInfoUpdated(object sender, EventArgs e)
+        /// <summary>
+        /// Creates a new <see cref="UnderlineBackgroundRenderer"/> instance
+        /// with the provided <see cref="TextEditorDataContext"/> as owner;
+        /// </summary>
+        /// <param name="owner"></param>
+        public UnderlineBackgroundRenderer(TextEditorDataContext owner)
         {
-            Application.Current.Dispatcher.Invoke(() => this.ThisView?.InvalidateLayer(KnownLayer.Selection));
+            this.OwnerWeak = new WeakReference<TextEditorDataContext>(owner);
         }
 
         public KnownLayer Layer => KnownLayer.Selection;
 
-        public IEnumerable<LintInfo> SyntaxErrors => this.EditorDataContext.Linter.LinterInfo;
-
+        /// <summary>
+        /// Helper method to get the points that represent a curly line.
+        /// </summary>
+        /// <param name="rect"></param>
+        /// <param name="offset"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         private IEnumerable<Point> GetPoints(Rect rect, double offset, int count)
         {
             for (int i = 0; i < count; i++)
@@ -45,26 +63,10 @@ namespace Arma.Studio.UI
 
         public void Draw(TextView textView, DrawingContext drawingContext)
         {
-            this.ThisView = textView;
-            if (this.SyntaxErrors == null)
-                return;
-            var colorError = new SolidColorBrush(ConfigHost.Coloring.EditorUnderlining.ErrorColor);
-            colorError.Freeze();
-            var colorWarning = new SolidColorBrush(ConfigHost.Coloring.EditorUnderlining.WarningColor);
-            colorWarning.Freeze();
-            var colorInfo = new SolidColorBrush(ConfigHost.Coloring.EditorUnderlining.InfoColor);
-            colorInfo.Freeze();
-
-            var penError = new Pen(colorError, 1);
-            penError.Freeze();
-            var penWarning = new Pen(colorWarning, 1);
-            penWarning.Freeze();
-            var penInfo = new Pen(colorInfo, 1);
-            penInfo.Freeze();
             textView.EnsureVisualLines();
-            foreach(var segment in this.SyntaxErrors)
+            foreach (var lintInfo in this.Owner.GetLintInfos())
             {
-                foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))
+                foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, lintInfo.GetSegment()))
                 {
                     var geometry = new StreamGeometry();
                     const double vOffset = 2.5;
@@ -77,19 +79,21 @@ namespace Arma.Studio.UI
                     }
                     geometry.Freeze();
                     Pen pen;
-                    switch (segment.Severity)
+                    switch (lintInfo.Severity)
                     {
                         case ESeverity.Error:
-                            pen = penError;
+                            pen = PenError;
                             break;
                         case ESeverity.Warning:
-                            pen = penWarning;
+                            pen = PenWarning;
                             break;
                         case ESeverity.Info:
-                            pen = penInfo;
+                            pen = PenInfo;
                             break;
                         default:
+#if DEBUG
                             System.Diagnostics.Debugger.Break();
+#endif
                             throw new NotImplementedException();
                     }
                     if (geometry != null)

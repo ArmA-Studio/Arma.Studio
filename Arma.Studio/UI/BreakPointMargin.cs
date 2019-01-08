@@ -11,20 +11,39 @@ using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 using Arma.Studio.Data;
+using Arma.Studio.Data.Debugging;
 
 namespace Arma.Studio.UI
 {
     public class BreakPointMargin : AbstractMargin, IBackgroundRenderer
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-
-        private readonly ProjectFile FileFolderRef;
-        public BreakPointMargin(ProjectFile pff)
+        protected static readonly SolidColorBrush LineBackgroundFillBrush;
+        protected static readonly Pen LineBackgroundBorderPen;
+        protected static readonly SolidColorBrush BreakpointFillActiveBrush;
+        protected static readonly SolidColorBrush BreakpointFillInactiveBrush;
+        protected static readonly Pen BreakpointBorderPen;
+        static BreakPointMargin()
         {
-            this.FileFolderRef = pff;
+            LineBackgroundFillBrush = new SolidColorBrush(Color.FromRgb(0x76, 0x2C, 0x2C));
+            LineBackgroundFillBrush.Freeze();
+            LineBackgroundBorderPen = new Pen(Brushes.White, 1);
+            LineBackgroundBorderPen.Freeze();
+
+            BreakpointFillActiveBrush = Brushes.Red;
+            BreakpointFillInactiveBrush = new SolidColorBrush(Color.FromRgb(0x80, 0x00, 0x00));
+            BreakpointFillInactiveBrush.Freeze();
+            BreakpointBorderPen = new Pen(Brushes.White, 1);
+            BreakpointBorderPen.Freeze();
         }
 
+        public TextEditorDataContext Owner => this.OwnerWeak.TryGetTarget(out var target) ? target : null;
+        private readonly WeakReference<TextEditorDataContext> OwnerWeak;
 
+        public BreakPointMargin(TextEditorDataContext owner)
+        {
+            this.OwnerWeak = new WeakReference<TextEditorDataContext>(owner);
+        }
 
         protected override void OnTextViewChanged(TextView oldTextView, TextView newTextView)
         {
@@ -49,98 +68,129 @@ namespace Arma.Studio.UI
 
         protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
         {
-            //accept clicks even when clicking on the background
+            // accept clicks even when clicking on the background
             return new PointHitTestResult(this, hitTestParameters.HitPoint);
         }
 
-        protected override Size MeasureOverride(Size availableSize)
-        {
-            return new Size(18, 0);
-        }
+        protected override Size MeasureOverride(Size availableSize) => new Size(18, 0);
 
+        /// <summary>
+        /// Renders the actual breakpoint margin and the corresponding
+        /// breakpoint "dots"
+        /// </summary>
+        /// <param name="drawingContext"></param>
         protected override void OnRender(DrawingContext drawingContext)
         {
-            if (this.FileFolderRef == null)
-                return;
+            const double rectSize = 12;
+
+
             var view = this.TextView;
             if (view == null || !view.VisualLinesValid)
+            {
                 return;
+            }
+            
+            // Draw along the margin
             drawingContext.DrawRectangle(Brushes.LightGray, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
-            var colorActive = new SolidColorBrush(ConfigHost.Coloring.BreakPoint.MainColor);
-            colorActive.Freeze();
-            var colorInactive = new SolidColorBrush(ConfigHost.Coloring.BreakPoint.MainColorInactive);
-            colorInactive.Freeze();
-            var pen = new Pen(new SolidColorBrush(ConfigHost.Coloring.BreakPoint.BorderColor), 1);
-            pen.Freeze();
+
+            // Draw the different breakpoints
             foreach (var line in view.VisualLines)
             {
                 var lineNumber = this.GetLineNumber(line);
 
-                var bp = Workspace.Instance.BreakpointManager.GetBreakpoint(this.FileFolderRef, lineNumber);
-                if (bp.IsDefault())
+                var breakpoints = App.MWContext.BreakpointManager.GetBreakpoints(this.Owner.File, (bp) => bp.Line == lineNumber);
+                if (!breakpoints.Any())
                 {
                     continue;
                 }
+
                 var lineTop = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextTop) - view.VerticalOffset;
                 var lineBot = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextBottom) - view.VerticalOffset;
-                //drawingContext.DrawRoundedRectangle(color, pen, new Rect((18 - 12) / 2, lineTop, 12, 12), 5, 5);
-                const double rectSize = 12;
 
-                drawingContext.DrawRectangle(bp.IsEnabled ? colorActive : colorInactive, pen, new Rect((18 - rectSize) / 2, lineTop + (18 - rectSize) / 4, rectSize, rectSize));
-                //ToDo: Enable Actions for breakpoints
-                //drawingContext.DrawEllipse(bp.IsEnabled ? colorActive : colorInactive, pen, new Point(18 / 2, lineTop + 15 / 2), rectSize, rectSize);
-                if (!string.IsNullOrWhiteSpace(bp.SqfCondition))
+                EBreakpointKind? kind = breakpoints.First().Kind;
+                kind = breakpoints.All((bp) => bp.Kind == kind) ? kind : null;
+                bool? isEnabled = breakpoints.First().IsActive;
+                isEnabled = breakpoints.All((bp) => bp.IsActive) ? (bool?)true : null;
+
+                var brush = !isEnabled.HasValue || isEnabled.Value ? BreakpointFillActiveBrush : BreakpointFillInactiveBrush;
+                drawingContext.DrawRectangle(brush, BreakpointBorderPen, new Rect((18 - rectSize) / 2, lineTop + (18 - rectSize) / 4, rectSize, rectSize));
+
+                switch (kind)
                 {
-                    drawingContext.DrawEllipse(null, pen, new Point(18 / 2, lineTop + 15 / 2), rectSize / 4, rectSize / 4);
+                    case EBreakpointKind.Normal:
+                        // Nothing
+                        break;
+                    case EBreakpointKind.Hitcount:
+                        // ToDo: Create proper display thingy for this
+                        drawingContext.DrawEllipse(Brushes.White, BreakpointBorderPen, new Point(18 / 2, lineTop + 15 / 2), rectSize / 4, rectSize / 4);
+                        break;
                 }
             }
 
         }
+        /// <summary>
+        /// Renders the line background for breakpoints.
+        /// </summary>
+        /// <param name="textView"></param>
+        /// <param name="drawingContext"></param>
+        public void Draw(TextView textView, DrawingContext drawingContext)
+        {
+            textView.EnsureVisualLines();
+            var breakpoints = App.MWContext.BreakpointManager.GetBreakpoints(this.Owner.File, (bp) => true);
+            foreach (var bp in breakpoints)
+            {
+                if (!bp.IsActive)
+                {
+                    continue;
+                }
+                if (bp.Line >= this.Document.LineCount)
+                {
+                    continue;
+                }
+                var line = this.Document.GetLineByNumber(bp.Line);
+                var segment = new TextSegment { StartOffset = line.Offset, EndOffset = line.EndOffset };
+                foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))
+                {
+                    drawingContext.DrawRectangle(LineBackgroundFillBrush, LineBackgroundBorderPen, new Rect(rect.Location, new Size(textView.ActualWidth, rect.Height)));
+                }
+            }
+        }
+
+
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
-            if (this.FileFolderRef == null)
-                return;
             var view = this.TextView;
             if (view == null || !view.VisualLinesValid)
+            {
                 return;
+            }
+            // Get clicked line
             var pos = e.MouseDevice.GetPosition(view);
             var line = this.GetLineFromPoint(view, pos);
             if (line == null)
+            {
                 return;
-            var lineNumber = this.GetLineNumber(this.GetLineFromPoint(view, e.GetPosition(this)));
-            var bp = Workspace.Instance.BreakpointManager.GetBreakpoint(this.FileFolderRef, lineNumber);
-
-            if (bp.IsDefault())
-            {
-                if (e.LeftButton != MouseButtonState.Pressed)
-                    return;
-                Workspace.Instance.BreakpointManager.SetBreakpoint(this.FileFolderRef, new BreakpointInfo() { Line = lineNumber, IsEnabled = true, FileRef = this.FileFolderRef, SqfCondition = string.Empty });
             }
-            else
+            var lineNumber = this.GetLineNumber(this.GetLineFromPoint(view, e.GetPosition(this)));
+
+            // Get the related breakpoints on provided line
+            var breakpoints = App.MWContext.BreakpointManager.GetBreakpoints(this.Owner.File, (bp) => bp.Line == lineNumber);
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (e.LeftButton == MouseButtonState.Pressed)
+                if (breakpoints.Any())
                 {
-                    Workspace.Instance.BreakpointManager.RemoveBreakpoint(bp);
+                    App.MWContext.BreakpointManager.RemoveBreakpoints(this.Owner.File, breakpoints);
                 }
-                else if (e.RightButton == MouseButtonState.Pressed)
+                else
                 {
-                    //ToDo: Create context menu containing basic breakpoint-related operations. Examples: Delete, Disable, Edit
-
-                    var dlgdc = new Dialogs.EditBreakpointDialogDataContext(bp);
-                    var dlg = new Dialogs.EditBreakpointDialog(dlgdc);
-                    dlg.ShowDialog();
-                    var bp2 = dlgdc.GetUpdatedBPI();
-                    if (!bp2.Equals(bp))
-                    {
-                        if (bp.Line != bp2.Line)
-                        {
-                            Workspace.Instance.BreakpointManager.RemoveBreakpoint(bp);
-                        }
-                        Workspace.Instance.BreakpointManager.SetBreakpoint(bp2);
-                    }
-
+                    var bp = App.MWContext.BreakpointManager.CreateBreakpoint(this.Owner.File);
+                    bp.Line = lineNumber;
                 }
-
+            }
+            else if (e.RightButton == MouseButtonState.Pressed && breakpoints.Any())
+            {
+                // ToDo: Breakpoint Context Menu
+                // ToDo: Breakpoint Dialog
             }
             this.InvalidateVisual();
             this.TextView.InvalidateVisual();
@@ -157,30 +207,6 @@ namespace Arma.Studio.UI
         }
         public KnownLayer Layer => KnownLayer.Background;
 
-        public void Draw(TextView textView, DrawingContext drawingContext)
-        {
-            if (this.FileFolderRef == null)
-                return;
-            textView.EnsureVisualLines();
-            var color = new SolidColorBrush(ConfigHost.Coloring.BreakPoint.TextHighlightColor);
-            color.Freeze();
-            foreach (var bp in Workspace.Instance.BreakpointManager[this.FileFolderRef])
-            {
-                if (!bp.IsEnabled)
-                    continue;
-                if (bp.Line >= this.Document.LineCount)
-                {
-                    Workspace.Instance.BreakpointManager.RemoveBreakpoint(bp);
-                    continue;
-                }
-                var line = this.Document.GetLineByNumber(bp.Line);
-                var segment = new TextSegment { StartOffset = line.Offset, EndOffset = line.EndOffset };
-                foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))
-                {
-                    drawingContext.DrawRectangle(color, null, new Rect(rect.Location, new Size(textView.ActualWidth, rect.Height)));
-                }
-            }
-        }
 
     }
 }

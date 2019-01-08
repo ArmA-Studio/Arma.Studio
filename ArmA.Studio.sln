@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arma.Studio.Data", "Arma.St
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arma.Studio.UiEditor", "Arma.Studio.UiEditor\Arma.Studio.UiEditor.csproj", "{33E151CC-B3EC-4636-8971-927A1BF595B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arma.Studio.SqfEditor", "Arma.Studio.SqfEditor\Arma.Studio.SqfEditor.csproj", "{964752A6-16DA-4755-8351-D2CE5FC087A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{094C7162-5575-4781-A174-116E78B5B04B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{FBB77DFA-AA5F-4150-A566-A41D45E35630}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,9 +33,19 @@ Global
 		{33E151CC-B3EC-4636-8971-927A1BF595B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33E151CC-B3EC-4636-8971-927A1BF595B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33E151CC-B3EC-4636-8971-927A1BF595B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{964752A6-16DA-4755-8351-D2CE5FC087A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{964752A6-16DA-4755-8351-D2CE5FC087A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{964752A6-16DA-4755-8351-D2CE5FC087A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{964752A6-16DA-4755-8351-D2CE5FC087A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AF109F5B-F448-4EAD-902C-58D9BCAD762F} = {FBB77DFA-AA5F-4150-A566-A41D45E35630}
+		{05A55F19-86EE-46A1-875A-15BBFE31A4AB} = {FBB77DFA-AA5F-4150-A566-A41D45E35630}
+		{33E151CC-B3EC-4636-8971-927A1BF595B8} = {094C7162-5575-4781-A174-116E78B5B04B}
+		{964752A6-16DA-4755-8351-D2CE5FC087A6} = {094C7162-5575-4781-A174-116E78B5B04B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70BCA3AD-C46B-45A2-A847-960793B49531}

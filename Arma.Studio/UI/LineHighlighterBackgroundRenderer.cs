@@ -7,13 +7,25 @@ using ICSharpCode.AvalonEdit.Rendering;
 
 namespace Arma.Studio.UI
 {
-    internal class LineHighlighterBackgroundRenderer : IBackgroundRenderer
+    public class LineHighlighterBackgroundRenderer : IBackgroundRenderer
     {
-        private TextEditor Editor;
+        protected static readonly SolidColorBrush BackgroundFill;
+        protected static readonly Pen BorderPen;
+        static LineHighlighterBackgroundRenderer()
+        {
+            BackgroundFill = new SolidColorBrush(Color.FromArgb(0x10, 0x00, 0x00, 0x00));
+            BackgroundFill.Freeze();
+            var tmpBrush = new SolidColorBrush(Color.FromArgb(0x20, 0x00, 0x00, 0x00));
+            tmpBrush.Freeze();
+            BorderPen = new Pen(tmpBrush, 1);
+            BorderPen.Freeze();
+        }
 
+        public TextEditor Editor => this.EditorWeak.TryGetTarget(out var target) ? target : null;
+        private readonly WeakReference<TextEditor> EditorWeak;
         public LineHighlighterBackgroundRenderer(TextEditor editor)
         {
-            this.Editor = editor;
+            this.EditorWeak = new WeakReference<TextEditor>(editor);
             this.Editor.TextArea.Caret.PositionChanged += this.Caret_PositionChanged;
         }
 
@@ -27,17 +39,17 @@ namespace Arma.Studio.UI
         public void Draw(TextView textView, DrawingContext drawingContext)
         {
             if (this.Editor.Document == null)
+            {
                 return;
+            }
+
             textView.EnsureVisualLines();
+            
             var line = this.Editor.Document.GetLineByOffset(this.Editor.CaretOffset);
             var segment = new TextSegment { StartOffset = line.Offset, EndOffset = line.EndOffset };
-            var color = new SolidColorBrush(ConfigHost.Coloring.SelectedLine.Background);
-            color.Freeze();
-            var pen = new Pen(new SolidColorBrush(ConfigHost.Coloring.SelectedLine.Border), 1);
-            pen.Freeze();
             foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))
             {
-                drawingContext.DrawRectangle(color, pen, new Rect(rect.Location, new Size(textView.ActualWidth, rect.Height)));
+                drawingContext.DrawRectangle(BackgroundFill, BorderPen, new Rect(rect.Location, new Size(textView.ActualWidth, rect.Height)));
             }
         }
     }

@@ -16,6 +16,5 @@ namespace Arma.Studio.Data.Debugging
         IBreakpoint AddBreakpoint(string file);
         void RemoveBreakpoint(string file, IBreakpoint bp);
         IEnumerable<IBreakpoint> GetBreakpoints(string file, Func<IBreakpoint, bool> condition);
-
     }
 }

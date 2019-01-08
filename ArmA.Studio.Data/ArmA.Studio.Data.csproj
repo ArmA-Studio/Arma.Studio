@@ -44,7 +44,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebuggingExtensions.cs" />
+    <Compile Include="Debugging\EBreakpointKind.cs" />
     <Compile Include="Debugging\EDebugState.cs" />
+    <Compile Include="Debugging\HaltInfo.cs" />
     <Compile Include="DependencyObjectExtensions.cs" />
     <Compile Include="DockableBase.cs" />
     <Compile Include="DockableBaseOnDocumentClosingEventArgs.cs" />
@@ -57,6 +60,8 @@
     <Compile Include="IO\Folder.cs" />
     <Compile Include="IO\IFileManagement.cs" />
     <Compile Include="IO\PBO.cs" />
+    <Compile Include="Linting\ESeverity.cs" />
+    <Compile Include="Linting\LintInfo.cs" />
     <Compile Include="TextEditor\Enclosure.cs" />
     <Compile Include="TextEditor\KeywordCollection.cs" />
     <Compile Include="TextEditor\SyntaxFile.cs" />

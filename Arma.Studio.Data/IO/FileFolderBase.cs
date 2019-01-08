@@ -20,9 +20,12 @@ namespace Arma.Studio.Data.IO
             {
                 this._Name = value;
                 this.RaisePropertyChanged();
+                this.RaisePropertyChanged(nameof(this.FullPath));
             }
         }
         private string _Name;
+
+        public string FullPath => this.ParentWeak.TryGetTarget(out var parent) ? System.IO.Path.Combine(parent.Name, this.Name) : this.Name;
 
         public FileFolderBase Parent
         {

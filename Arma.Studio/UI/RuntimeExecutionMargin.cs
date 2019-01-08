@@ -15,36 +15,54 @@ namespace Arma.Studio.UI
 {
     public class RuntimeExecutionMargin : AbstractMargin
     {
-        private readonly Data.UI.CodeEditorBaseDataContext CodeEditorDataContext;
-        public RuntimeExecutionMargin(Data.UI.CodeEditorBaseDataContext cebdc)
+        public TextEditorDataContext Owner => this.OwnerWeak.TryGetTarget(out var target) ? target : null;
+        private readonly WeakReference<TextEditorDataContext> OwnerWeak;
+
+        /// <summary>
+        /// Creates a new <see cref="RuntimeExecutionMargin"/> instance
+        /// with the provided <see cref="TextEditorDataContext"/> as owner;
+        /// </summary>
+        /// <param name="owner"></param>
+        public RuntimeExecutionMargin(TextEditorDataContext owner)
         {
             this.IsHitTestVisible = false;
-            this.CodeEditorDataContext = cebdc;
+            this.OwnerWeak = new WeakReference<TextEditorDataContext>(owner);
         }
 
+        /// <summary>
+        /// Renders the <see cref="RuntimeExecutionMargin"/> onto provided DrawingContext.
+        /// </summary>
+        /// <param name="drawingContext">The drawing context to work with</param>
         protected override void OnRender(DrawingContext drawingContext)
         {
             var view = this.TextView;
-            if (view == null || !view.VisualLinesValid)
-                return;
-            if (!Workspace.Instance.DebugContext.IsDebuggerAttached)
-                return;
-            if (!Workspace.Instance.DebugContext.IsPaused)
-                return;
-
-            if (this.CodeEditorDataContext != Workspace.Instance.DebugContext.CurrentDocument)
+            if (view == null ||
+                !view.VisualLinesValid ||
+                !App.MWContext.DebuggerIsRunning ||
+                App.MWContext.Debugger.State == Data.Debugging.EDebugState.Running)
             {
-
+                return;
             }
 
-            var color = new SolidColorBrush(ConfigHost.Coloring.ExecutionMarker.MainColor);
+            var color = new SolidColorBrush(Color.FromRgb(0xFF, 0xD8, 0x00));
             color.Freeze();
-            var pen = new Pen(new SolidColorBrush(ConfigHost.Coloring.ExecutionMarker.BorderColor), 1);
-            pen.Freeze();
+            var pen = new Pen(Brushes.Black, 1);
 
-            var line = view.GetVisualLine(Workspace.Instance.DebugContext.CurrentLine);
-            if (line == null)
+            var haltInfo = App.MWContext.Debugger.GetHaltInfos().FirstOrDefault((hi) => hi.File == this.Owner.File.FullPath);
+            if (haltInfo == null)
+            {
                 return;
+            }
+            var line = view.GetVisualLine(haltInfo.Line);
+            if (line == null)
+            {
+                return;
+            }
+
+
+            // Actual Drawing starts here.
+            // Unless something is wrong with the actual arrow geometry (not color),
+            // Avoid changing stuff here.
             var lineTop = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextTop) - view.VerticalOffset;
             var lineBot = line.GetTextLineVisualYPosition(line.TextLines[0], VisualYPosition.TextBottom) - view.VerticalOffset;
             var geo = new StreamGeometry();
