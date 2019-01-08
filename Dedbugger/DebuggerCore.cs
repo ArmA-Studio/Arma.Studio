@@ -101,6 +101,7 @@ namespace Dedbugger
                 this.Pipe.ReadMode = PipeTransmissionMode.Message;
                 this.PipeReadThread = new Thread(this.Thread_ReadPipeMessage);
                 this.PipeReadThread.Start();
+                this.WriteMessage(new Newtonsoft.Json.Linq.JObject { { "command", (int)ESendCommands.GetVersionInfo } });
             }
             catch (TimeoutException ex)
             {
