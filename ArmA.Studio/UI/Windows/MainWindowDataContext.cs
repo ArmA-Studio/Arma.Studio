@@ -1,7 +1,8 @@
 ﻿using Arma.Studio.Data;
 using Arma.Studio.Data.Debugging;
+using Arma.Studio.Data.Dockable;
 using Arma.Studio.Data.IO;
-using Arma.Studio.Data.Plugin;
+using Arma.Studio.Data.TextEditor;
 using Arma.Studio.Data.UI;
 using Arma.Studio.UI.AvalonDock;
 using System;
@@ -138,7 +139,21 @@ namespace Arma.Studio.UI.Windows
             this.WindowsDockingManager = p as Xceed.Wpf.AvalonDock.DockingManager;
             this.LoadAvalonDockLayout();
         });
-        public ICommand CmdCreateDocument => new RelayCommand<DockableInfo>((info) => this.AddDocument(info.CreateFunc()));
+        public ICommand CmdCreateDocument => new RelayCommand((info) =>
+        {
+            if(info is DockableInfo dinfo)
+            {
+                this.AddDocument(dinfo.CreateFunc());
+            }
+            else if(info is TextEditorInfo teinfo)
+            {
+                this.AddDocument(new TextEditorDataContext(teinfo.CreateFunc()));
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+        });
         public ICommand CmdCreateAnchorable => new RelayCommand<DockableInfo>((info) =>
         {
             var anch = this.Anchorables.FirstOrDefault((db) => db.GetType().IsEquivalentTo(info.Type));
@@ -164,6 +179,9 @@ namespace Arma.Studio.UI.Windows
 
         public ObservableCollection<DockableInfo> DocumentsAvailable { get { return this._DocumentsAvailable; } set { this._DocumentsAvailable = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<DockableInfo> _DocumentsAvailable;
+
+        public ObservableCollection<TextEditorInfo> TextEditorsAvailable { get { return this._TextEditorsAvailable; } set { this._TextEditorsAvailable = value; this.RaisePropertyChanged(); } }
+        private ObservableCollection<TextEditorInfo> _TextEditorsAvailable;
         
         private Newtonsoft.Json.Linq.JObject LayoutJsonNode;
         private void LayoutSerializer_LayoutSerializationCallback(object sender, Xceed.Wpf.AvalonDock.Layout.Serialization.LayoutSerializationCallbackEventArgs e)
@@ -271,6 +289,7 @@ namespace Arma.Studio.UI.Windows
             this.LayoutItemTemplateSelector = new GenericDataTemplateSelector();
             this.Anchorables = new ObservableCollection<DockableBase>();
             this.Documents = new ObservableCollection<DockableBase>();
+            this.TextEditorsAvailable = new ObservableCollection<TextEditorInfo>();
             this.AnchorablesAvailable = new ObservableCollection<DockableInfo>();
             this.DocumentsAvailable = new ObservableCollection<DockableInfo>();
             this.Solution = new Solution();
@@ -282,8 +301,12 @@ namespace Arma.Studio.UI.Windows
             foreach (var it in PluginManager.Instance.GetPlugins<IDockableProvider>())
             {
                 it.AddDataTemplates(this.LayoutItemTemplateSelector);
-                this.AnchorablesAvailable.AddRange(it.GetAnchorables());
-                this.DocumentsAvailable.AddRange(it.GetDocuments());
+                this.AnchorablesAvailable.AddRange(it.Dockables.Where((di) => di.IsAnchorable));
+                this.DocumentsAvailable.AddRange(it.Dockables.Where((di) => di.IsDocument));
+            }
+            foreach (var it in PluginManager.Instance.GetPlugins<ITextEditorProvider>())
+            {
+                this.TextEditorsAvailable.AddRange(it.TextEditorInfos);
             }
         }
         private void Dockable_OnDocumentClosing(object sender, EventArgs e)

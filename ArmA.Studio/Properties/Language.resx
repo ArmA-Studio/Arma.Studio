@@ -171,7 +171,10 @@
   <data name="MainWindow_Menu_View_Anchorables" xml:space="preserve">
     <value>Anchorables</value>
   </data>
+  <data name="SplashScreen_InitializingPlugin_0Name" xml:space="preserve">
+    <value>Initializing Plugin '{0}'</value>
+  </data>
   <data name="SplashScreen_LoadingPlugins" xml:space="preserve">
-    <value />
+    <value>Loading Plugins</value>
   </data>
 </root>

@@ -10,7 +10,7 @@ using ICSharpCode.AvalonEdit.Rendering;
 using Arma.Studio.Data;
 using Arma.Studio.Data.UI;
 using Arma.Studio.Data.Debugging;
-using Arma.Studio.Data.Linting;
+using Arma.Studio.Data.TextEditor;
 
 namespace Arma.Studio.UI
 {
@@ -25,11 +25,11 @@ namespace Arma.Studio.UI
 
         static UnderlineBackgroundRenderer()
         {
-            PenError = new Pen(Brushes.Green, 1);
+            PenError = new Pen(Brushes.Red, 1);
             PenError.Freeze();
             PenWarning = new Pen(Brushes.Orange, 1);
             PenWarning.Freeze();
-            PenInfo = new Pen(Brushes.Red, 1);
+            PenInfo = new Pen(Brushes.Green, 1);
             PenInfo.Freeze();
         }
 
@@ -64,9 +64,9 @@ namespace Arma.Studio.UI
         public void Draw(TextView textView, DrawingContext drawingContext)
         {
             textView.EnsureVisualLines();
-            foreach (var lintInfo in this.Owner.GetLintInfos())
+            foreach (var lintInfo in this.Owner.GetLintInfos().Where((it) => textView.Document.LineCount >= it.Line))
             {
-                foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, lintInfo.GetSegment()))
+                foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, lintInfo.GetSegment(textView.Document)))
                 {
                     var geometry = new StreamGeometry();
                     const double vOffset = 2.5;

@@ -22,6 +22,7 @@ namespace Arma.Studio.UI.Windows
         public SplashScreenDataContext()
         {
             this.ProgressIndeterminate = true;
+            this.Source = new CancellationTokenSource();
         }
 
         #region BindableProperties
@@ -73,6 +74,8 @@ namespace Arma.Studio.UI.Windows
         private bool _ProgressIndeterminate;
         #endregion
 
+        public CancellationTokenSource Source { get; }
+
         private IEnumerable<string> Directories(string path, Func<bool> func = null)
         {
             if (System.IO.Directory.Exists(path) && (func == null || func()))
@@ -90,6 +93,8 @@ namespace Arma.Studio.UI.Windows
 
             // Loading plugins
             {
+                this.ProgressIndeterminate = true;
+                this.ProgressText = Properties.Language.SplashScreen_LoadingPlugins;
                 var plugins = Directories(App.PluginDir_Executable)
                     .Concat(Directories(App.PluginDir_Data))
                     .Concat(Directories(App.PluginDir_RoamingUser, () => true /* ToDo: Add property to disable plugin loading from user dir */));
@@ -106,6 +111,17 @@ namespace Arma.Studio.UI.Windows
                     {
                         MessageBox.Show(String.Format(Properties.Language.FailedToLoadPlugin_Body, plugin), Properties.Language.FailedToLoadPlugin_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
+                }
+                var count = PluginManager.Instance.Plugins.Count;
+                int num = 0;
+                this.ProgressValue = 0;
+                this.ProgressIndeterminate = false;
+                foreach (var plugin in PluginManager.Instance.Plugins)
+                {
+                    var actualPlugin = plugin.Plugin();
+                    this.ProgressValue = (num++ / (double)count);
+                    this.ProgressText = String.Format(Properties.Language.SplashScreen_InitializingPlugin_0Name, actualPlugin.Name);
+                    await actualPlugin.Initialize(plugin.Folder, this.Source.Token);
                 }
             }
         }

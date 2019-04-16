@@ -21,6 +21,12 @@ namespace Arma.Studio.Data.TextEditor
             this.IsBold = isBold;
         }
 
+        public KeywordCollection AddRange(IEnumerable<string> item)
+        {
+            this.Inner.AddRange(item);
+            return this;
+        }
+
         #region ICollection<string>
         public int Count => this.Inner.Count;
 

@@ -14,7 +14,12 @@
         asd:Closed.Command="{Binding CmdWindowClosed}"
         asd:Initialized.Command="{Binding CmdWindowInitialized}"
         asd:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-        Title="{x:Static p:Language.ArmaStudio}" Height="512" Width="1024" UseLayoutRounding="True">
+        Title="{x:Static p:Language.ArmaStudio}"
+        Height="512"
+        Width="1024"
+        UseLayoutRounding="True"
+        x:Name="Wnd"
+        >
     <Window.Resources>
         <Style x:Key="ButtonDebuggerNotAttachedDisablesStyle" TargetType="{x:Type Button}">
             <Style.Triggers>
@@ -32,7 +37,18 @@
             <Menu.ItemsSource>
                 <CompositeCollection>
                     <MenuItem Header="{x:Static p:Language.MainWindow_Menu_File}">
-                        <MenuItem Header="{x:Static p:Language.MainWindow_Menu_File_New}" ItemsSource="{Binding DocumentsAvailable}">
+                        <MenuItem Header="{x:Static p:Language.MainWindow_Menu_File_New}">
+                            <MenuItem.Resources>
+                                <CollectionViewSource x:Key="TextEditorsAvailable" Source="{Binding TextEditorsAvailable}"/>
+                                <CollectionViewSource x:Key="DocumentsAvailable" Source="{Binding DocumentsAvailable}"/>
+                            </MenuItem.Resources>
+                            <MenuItem.ItemsSource>
+                                <CompositeCollection>
+                                    <CollectionContainer Collection="{Binding Source={StaticResource TextEditorsAvailable}}"/>
+                                    <Separator/>
+                                    <CollectionContainer Collection="{Binding Source={StaticResource DocumentsAvailable}}"/>
+                                </CompositeCollection>
+                            </MenuItem.ItemsSource>
                             <MenuItem.ItemContainerStyle>
                                 <Style TargetType="MenuItem">
                                     <Setter Property="Command" Value="{Binding DataContext.CmdCreateDocument, RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"/>
@@ -87,7 +103,7 @@
                     </Style.Triggers>
                 </Style>
             </ToolBarTray.Resources>
-            <ToolBar DataContext="{Binding DebugContext}">
+            <ToolBar DataContext="{Binding DebugContext}" ToolBarTray.IsLocked="True">
                 <Button Command="{Binding CmdDebuggerAction}">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonDebuggerNotAttachedDisablesStyle}">

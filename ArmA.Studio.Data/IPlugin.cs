@@ -27,7 +27,7 @@ namespace Arma.Studio.Data
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> that may cancel the asynchronous operation.</param>
         /// <returns>Awaitable <see cref="Task"/> or <see cref="Task.CompletedTask"/></returns>
-        Task Initialize(CancellationToken cancellationToken);
+        Task Initialize(string pluginPath, CancellationToken cancellationToken);
 
         /// <summary>
         /// Supposed to return the current plugin version.

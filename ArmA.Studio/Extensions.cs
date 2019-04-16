@@ -1,4 +1,4 @@
-﻿using Arma.Studio.Data.Linting;
+﻿using Arma.Studio.Data.TextEditor;
 using ICSharpCode.AvalonEdit.Document;
 using System;
 using System.Collections.Generic;
@@ -24,11 +24,15 @@ namespace Arma.Studio
             public int Length { get; set; }
             public int EndOffset { get; set; }
         }
-        public static ISegment GetSegment(this LintInfo lintInfo) => new Segment
+        public static ISegment GetSegment(this LintInfo lintInfo, TextDocument document)
         {
-            Offset = lintInfo.Offset,
-            Length = lintInfo.Length,
-            EndOffset = lintInfo.Offset + lintInfo.Length
-        };
+            var offset = document.GetOffset(lintInfo.Line, lintInfo.Column);
+            return new Segment
+            {
+                Offset = offset,
+                Length = lintInfo.Length,
+                EndOffset = offset + lintInfo.Length
+            };
+        }
     }
 }

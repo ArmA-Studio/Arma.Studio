@@ -5,23 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arma.Studio.Data.Plugin
+namespace Arma.Studio.Data.Dockable
 {
     public interface IDockableProvider
     {
         /// <summary>
         /// Called at program start.
-        /// Is expected to return all documents a user can open.
+        /// Is expected to contain all documents and anchorables a user can open.
         /// </summary>
         /// <returns>DockableInfos that contain the documents a user can open.</returns>
-        IEnumerable<DockableInfo> GetDocuments();
+        IEnumerable<DockableInfo> Dockables { get; }
         /// <summary>
         /// Called at program start.
-        /// Is expected to return all anchorables a user can open.
-        /// </summary>
-        /// <returns>DockableInfos that contain the anchorables a user can open.</returns>
-        IEnumerable<DockableInfo> GetAnchorables();
-        /// <summary>
         /// Supposed to add the datatemplates to the <see cref="GenericDataTemplateSelector"/>.
         /// </summary>
         /// <param name="selector">The <see cref="GenericDataTemplateSelector"/> instance.</param>

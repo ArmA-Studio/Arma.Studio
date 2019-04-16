@@ -25,13 +25,13 @@ namespace Arma.Studio.UI
         protected static readonly Pen BreakpointBorderPen;
         static BreakPointMargin()
         {
-            LineBackgroundFillBrush = new SolidColorBrush(Color.FromRgb(0x76, 0x2C, 0x2C));
+            LineBackgroundFillBrush = new SolidColorBrush(Color.FromArgb(0x40, 0x76, 0x2C, 0x2C));
             LineBackgroundFillBrush.Freeze();
             LineBackgroundBorderPen = new Pen(Brushes.White, 1);
             LineBackgroundBorderPen.Freeze();
 
             BreakpointFillActiveBrush = Brushes.Red;
-            BreakpointFillInactiveBrush = new SolidColorBrush(Color.FromRgb(0x80, 0x00, 0x00));
+            BreakpointFillInactiveBrush = new SolidColorBrush(Color.FromArgb(0x40, 0x80, 0x00, 0x00));
             BreakpointFillInactiveBrush.Freeze();
             BreakpointBorderPen = new Pen(Brushes.White, 1);
             BreakpointBorderPen.Freeze();
@@ -143,7 +143,7 @@ namespace Arma.Studio.UI
                 {
                     continue;
                 }
-                if (bp.Line >= this.Document.LineCount)
+                if (bp.Line > this.Document.LineCount)
                 {
                     continue;
                 }

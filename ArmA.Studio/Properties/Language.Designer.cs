@@ -223,7 +223,16 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Initializing Plugin &apos;{0}&apos;.
+        /// </summary>
+        public static string SplashScreen_InitializingPlugin_0Name {
+            get {
+                return ResourceManager.GetString("SplashScreen_InitializingPlugin_0Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading Plugins.
         /// </summary>
         public static string SplashScreen_LoadingPlugins {
             get {

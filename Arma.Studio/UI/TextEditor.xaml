@@ -13,7 +13,7 @@
             Grid.Column="0"
             Document="{Binding TextDocument}"
             ShowLineNumbers="{Binding TextEditorInstance.ShowLineNumbers}"
-            CaretOffset="{Binding CaretOffset}"
+            SyntaxHighlighting="{Binding SyntaxHighlightingDefinition}"
             Encoding="{x:Static text:Encoding.UTF8}"
             IsReadOnly="{Binding IsReadOnly}"
             FontFamily="Consolas"

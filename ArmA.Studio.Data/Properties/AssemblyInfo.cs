@@ -16,13 +16,15 @@ using System.Windows.Markup;
 [assembly: AssemblyCulture("")]
 
 [assembly: XmlnsPrefix("http://schemas.armastudio.io/data", "asd")]
-[assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "Arma.Studio.Data.UI.AttachedProperties.Eventing")]
-[assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "Arma.Studio.Data.UI.AttachedProperties")]
-[assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "Arma.Studio.Data.UI.Converters")]
-[assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "Arma.Studio.Data.UI")]
 [assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "Arma.Studio.Data")]
 [assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "Arma.Studio.Data.Debugging")]
-[assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "Arma.Studio.Data.Plugin")]
+[assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "Arma.Studio.Data.Dockable")]
+[assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "Arma.Studio.Data.IO")]
+[assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "Arma.Studio.Data.TextEditor")]
+[assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "Arma.Studio.Data.UI")]
+[assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "Arma.Studio.Data.UI.AttachedProperties")]
+[assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "Arma.Studio.Data.UI.AttachedProperties.Eventing")]
+[assembly: XmlnsDefinition("http://schemas.armastudio.io/data", "Arma.Studio.Data.UI.Converters")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

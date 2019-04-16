@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arma.Studio.Data.Linting
+namespace Arma.Studio.Data.TextEditor
 {
     public enum ESeverity
     {

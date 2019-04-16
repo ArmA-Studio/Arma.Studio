@@ -11,26 +11,107 @@ namespace Arma.Studio.Data.UI
     public class Breakpoint : INotifyPropertyChanged, INotifyPropertyChanging, IBreakpoint
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
+        protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "")
+        {
+            this.PreChangeCopy = this.FlatCopy();
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
+        }
         public event PropertyChangingEventHandler PropertyChanging;
-        protected void RaisePropertyChanging([System.Runtime.CompilerServices.CallerMemberName]string callee = "") => this.PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(callee));
+        protected void RaisePropertyChanging([System.Runtime.CompilerServices.CallerMemberName]string callee = "")
+        {
+            this.PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(callee));
+            this.PreChangeCopy = null;
+        }
 
         public string File { get; }
 
-        public int Line { get => this._Line; set { if (this._Line == value) { return; } this.RaisePropertyChanging(); this._Line = value; this.RaisePropertyChanged(); } }
+        public int Line
+        {
+            get => this._Line;
+            set
+            {
+                if (this._Line == value)
+                {
+                    return;
+                }
+                this.RaisePropertyChanging();
+                this._Line = value;
+                this.RaisePropertyChanged();
+            }
+        }
         private int _Line;
 
-        public int Column { get => this._Column; set { if (this._Column == value) { return; } this.RaisePropertyChanging(); this._Column = value; this.RaisePropertyChanged(); } }
+        public int Column
+        {
+            get => this._Column;
+            set
+            {
+                if (this._Column == value)
+                {
+                    return;
+                }
+                this.RaisePropertyChanging();
+                this._Column = value;
+                this.RaisePropertyChanged();
+            }
+        }
         private int _Column;
 
-        public bool IsActive { get => this._IsActive; set { if (this._IsActive == value) { return; } this.RaisePropertyChanging(); this._IsActive = value; this.RaisePropertyChanged(); } }
+        public bool IsActive
+        {
+            get => this._IsActive;
+            set
+            {
+                if (this._IsActive == value)
+                {
+                    return;
+                }
+                this.RaisePropertyChanging();
+                this._IsActive = value;
+                this.RaisePropertyChanged();
+            }
+        }
         private bool _IsActive;
 
-        public int HitCount { get => this._HitCount; set { if (this._HitCount == value) { return; } this.RaisePropertyChanging(); this._HitCount = value; this.RaisePropertyChanged(); } }
+        public int HitCount
+        {
+            get => this._HitCount;
+            set
+            {
+                if (this._HitCount == value)
+                {
+                    return;
+                }
+                this.RaisePropertyChanging();
+                this._HitCount = value;
+                this.RaisePropertyChanged();
+            }
+        }
         private int _HitCount;
 
-        public EBreakpointKind Kind { get => this._Kind; set { if (this._Kind == value) { return; } this.RaisePropertyChanging(); this._Kind = value; this.RaisePropertyChanged(); } }
+        public EBreakpointKind Kind
+        {
+            get => this._Kind;
+            set
+            {
+                if (this._Kind == value)
+                {
+                    return;
+                }
+                this.RaisePropertyChanging();
+                this._Kind = value;
+                this.RaisePropertyChanged();
+            }
+        }
         private EBreakpointKind _Kind;
+
+        /// <summary>
+        /// Will contain a copy of the breakpoint before the actual change happened.
+        /// Only available during <see cref="PropertyChanged"/> event.
+        /// </summary>
+        internal Breakpoint PreChangeCopy { get; private set; }
+
+        public Breakpoint FlatCopy() => this.MemberwiseClone() as Breakpoint;
 
         public Breakpoint(string file)
         {

@@ -9,6 +9,7 @@ namespace Arma.Studio.Data.Debugging
     public interface IBreakpointManager
     {
         event EventHandler<BreakpointEventArgs> BreakpointAdded;
+        event EventHandler<BreakpointUpdatedEventArgs> BreakpointUpdated;
         event EventHandler<BreakpointEventArgs> BreakpointRemoved;
 
         IEnumerable<IBreakpoint> Breakpoints { get; }

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DebuggingExtensions.cs" />
+    <Compile Include="Debugging\BreakpointUpdatedEventArgs.cs" />
     <Compile Include="Debugging\EBreakpointKind.cs" />
     <Compile Include="Debugging\EDebugState.cs" />
     <Compile Include="Debugging\HaltInfo.cs" />
@@ -60,17 +61,25 @@
     <Compile Include="IO\Folder.cs" />
     <Compile Include="IO\IFileManagement.cs" />
     <Compile Include="IO\PBO.cs" />
-    <Compile Include="Linting\ESeverity.cs" />
-    <Compile Include="Linting\LintInfo.cs" />
+    <Compile Include="TextEditor\ESeverity.cs" />
+    <Compile Include="TextEditor\FoldingInfo.cs" />
+    <Compile Include="TextEditor\IFoldable.cs" />
+    <Compile Include="TextEditor\ILintable.cs" />
+    <Compile Include="TextEditor\LintInfo.cs" />
+    <Compile Include="Dockable\DockableInfoDrawingBrush.cs" />
+    <Compile Include="Dockable\DockableInfoIcon.cs" />
+    <Compile Include="Dockable\ECreationMode.cs" />
+    <Compile Include="TextEditor\TextEditorInfo.cs" />
+    <Compile Include="TextEditor\TextEditorInfoDrawingBrush.cs" />
+    <Compile Include="TextEditor\TextEditorInfoIcon.cs" />
     <Compile Include="TextEditor\Enclosure.cs" />
     <Compile Include="TextEditor\KeywordCollection.cs" />
     <Compile Include="TextEditor\SyntaxFile.cs" />
-    <Compile Include="TextEditor\TextEditorInfo.cs" />
     <Compile Include="IUpdateInfo.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="IApp.cs" />
-    <Compile Include="Plugin\ITextEditorProvider.cs" />
-    <Compile Include="Plugin\IDockableProvider.cs" />
+    <Compile Include="TextEditor\ITextEditorProvider.cs" />
+    <Compile Include="Dockable\IDockableProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextEditor\ITextEditor.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\Checked.cs" />
@@ -101,7 +110,7 @@
     <Compile Include="UI\Converters\BoolOrMultiConverter.cs" />
     <Compile Include="UI\Converters\IsNullConverter.cs" />
     <Compile Include="UI\Converters\ContainsConverter.cs" />
-    <Compile Include="UI\DockableInfo.cs" />
+    <Compile Include="Dockable\DockableInfo.cs" />
     <Compile Include="UI\GenericDataTemplateSelector.cs" />
     <Compile Include="Debugging\IBreakpoint.cs" />
     <Compile Include="UI\Converters\UriToCachedImageConverter.cs" />
