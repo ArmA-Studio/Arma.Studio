@@ -1,0 +1,2591 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SqfDefinitionsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <binary left="CONTROL" right="SCALAR" precedence="4">lnbsetcurselrow</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">removemenuitem</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">removemenuitem</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">curatorcoef</binary>
+  <binary left="OBJECT" right="ARRAY,OBJECT" precedence="4">getreldir</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menucollapse</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetfontheighth6</binary>
+  <binary left="STRING" right="CONFIG" precedence="4">configclasses</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">findemptyposition</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menusetdata</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">setwaypointtype</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">vectordistance</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetcolor</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetcolorright</binary>
+  <binary left="ARRAY,OBJECT" right="STRING" precedence="4">say3d</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">say3d</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">forceflagtexture</binary>
+  <binary left="GROUP" right="OBJECT" precedence="4">addvehicle</binary>
+  <binary left="FOR" right="SCALAR" precedence="4">from</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enablereload</binary>
+  <binary left="FOR" right="SCALAR" precedence="4">to</binary>
+  <binary left="ARRAY" right="SCALAR" precedence="4">resize</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">setpilotlight</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">setvisibleiftreecollapsed</binary>
+  <binary left="ARRAY" right="ANY" precedence="4">isequaltypeall</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">camconstuctionsetparams</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY,OBJECT" precedence="4">commandsuppressivefire</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvtext</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">switchlight</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">camsettarget</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">camsettarget</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setanimspeedcoef</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setposaslw</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">camsetfocus</binary>
+  <binary left="STRING" right="STRING" precedence="4">setmarkershapelocal</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfontp</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetfontp</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfont</binary>
+  <binary left="ARRAY" right="BOOL" precedence="4">allowgetin</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfonth4b</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvdata</binary>
+  <binary left="TASK" right="ARRAY" precedence="4">setsimpletaskdescription</binary>
+  <binary left="TASK" right="ARRAY" precedence="4">sendtaskresult</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">directsay</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlsetforegroundcolor</binary>
+  <binary left="SCALAR" right="ARRAY" precedence="4">setforcegeneratorrtd</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menusetvalue</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">worldtomodel</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">sethitindex</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">hideobject</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">setmarkerpos</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">get3denattribute</binary>
+  <binary left="GROUP" right="STRING" precedence="4">get3denattribute</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">get3denattribute</binary>
+  <binary left="STRING" right="STRING" precedence="4">get3denattribute</binary>
+  <binary left="SCALAR" right="STRING" precedence="4">get3denattribute</binary>
+  <binary left="ARRAY,OBJECT" right="OBJECT" precedence="4">dofollow</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">disableconversation</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">camsetdive</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsetselectcolor</binary>
+  <binary left="ARRAY" right="CODE" precedence="4">apply</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setweaponreloadingtime</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">enableai</binary>
+  <binary left="OBJECT" right="ARRAY,STRING" precedence="4">removemagazine</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">remotecontrol</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">additem</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">!=</binary>
+  <binary left="STRING" right="STRING" precedence="4">!=</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">!=</binary>
+  <binary left="GROUP" right="GROUP" precedence="4">!=</binary>
+  <binary left="SIDE" right="SIDE" precedence="4">!=</binary>
+  <binary left="TEXT" right="TEXT" precedence="4">!=</binary>
+  <binary left="CONFIG" right="CONFIG" precedence="4">!=</binary>
+  <binary left="DISPLAY" right="DISPLAY" precedence="4">!=</binary>
+  <binary left="CONTROL" right="CONTROL" precedence="4">!=</binary>
+  <binary left="TEAM_MEMBER" right="TEAM_MEMBER" precedence="4">!=</binary>
+  <binary left="NetObject" right="NetObject" precedence="4">!=</binary>
+  <binary left="TASK" right="TASK" precedence="4">!=</binary>
+  <binary left="LOCATION" right="LOCATION" precedence="4">!=</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addmpeventhandler</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">actionparams</binary>
+  <binary left="TEAM_MEMBER" right="BOOL" precedence="4">setfromeditor</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">selectweaponturret</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menuurl</binary>
+  <binary left="SIDE" right="SIDE" precedence="4">getfriend</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">deleteeditorobject</binary>
+  <binary left="TEAM_MEMBER" right="STRING" precedence="4">registertask</binary>
+  <binary left="ARRAY" right="ANY" precedence="4">pushbackunique</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">synchronizeobjectsadd</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">disabletiequipment</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setparticlerandom</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">targetsquery</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetselectcolorright</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">animatepylon</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enableuavwaypoints</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY,OBJECT" precedence="4">distancesqr</binary>
+  <binary left="LOCATION" right="LOCATION" precedence="4">distancesqr</binary>
+  <binary left="LOCATION" right="ARRAY" precedence="4">distancesqr</binary>
+  <binary left="ARRAY" right="LOCATION" precedence="4">distancesqr</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setspeaker</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setammoonpylon</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setcustomweightrtd</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">&lt;=</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">isuavconnectable</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">playaction</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlsetangle</binary>
+  <binary left="TASK" right="STRING" precedence="4">setsimpletasktype</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">triggerattachobject</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">animationsourcephase</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsetvalue</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">loadmagazine</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetmodel</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">loadstatus</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">removempeventhandler</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setlightbrightness</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">swimindepth</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">addrating</binary>
+  <binary left="ARRAY,OBJECT" right="SCALAR" precedence="4">nearobjectsready</binary>
+  <binary left="ANY" right="ANY" precedence="4">isequaltype</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">setwaypointposition</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">controlsgroupctrl</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvpictureright</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlsettooltipcolorshade</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">saveidentity</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enablestamina</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setammo</binary>
+  <binary left="STRING" right="STRING" precedence="4">setmarkerbrushlocal</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">removeownedmine</binary>
+  <binary left="LOCATION" right="STRING" precedence="4">settype</binary>
+  <binary left="LOCATION" right="OBJECT" precedence="4">attachobject</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setunitability</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">additemtouniform</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">htmlload</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">setvehiclereceiveremotetargets</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enableweapondisassembly</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">assignasgunner</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setunitrecoilcoefficient</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menuchecked</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">sethitpointdamage</binary>
+  <binary left="CONTROL" right="BOOL" precedence="4">allow3dmode</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">limitspeed</binary>
+  <binary left="CONTROL" right="CONFIG" precedence="4">loadoverlay</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">campreload</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">removeitemfrombackpack</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">settriggertype</binary>
+  <binary left="STRING" right="SCALAR" precedence="4">ppeffectcommit</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">ppeffectcommit</binary>
+  <binary left="ARRAY" right="SCALAR" precedence="4">ppeffectcommit</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">updatedrawicon</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">setwinddir</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlremovealleventhandlers</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">assignascargo</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setvehicleid</binary>
+  <binary left="STRING" right="STRING" precedence="4">setmarkertypelocal</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">groupradio</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">slidersetrange</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsettext</binary>
+  <binary left="SCALAR" right="SCALAR,ARRAY" precedence="4">setfog</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setvectorup</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setunittrait</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">forcewalk</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addweaponcargo</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addweaponcargoglobal</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsetpictureright</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setlightintensity</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">customradio</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">currentmagazinedetailturret</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">settitleeffect</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsettextright</binary>
+  <binary left="ARRAY,OBJECT" right="OBJECT" precedence="4">commandfollow</binary>
+  <binary left="CONTROL" right="BOOL" precedence="4">allowfileoperations</binary>
+  <binary left="ANY" right="ARRAY" precedence="4">param</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetpicturecolordisabled</binary>
+  <binary left="GROUP" right="ARRAY" precedence="4">setcurrentwaypoint</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">removeitemfromuniform</binary>
+  <binary left="BOOL" right="BOOL" precedence="4">and</binary>
+  <binary left="BOOL" right="CODE" precedence="4">and</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">vectormodeltoworld</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">setlightnings</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsortbyvalue</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsetpicture</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsetdata</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setpylonloadout</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">removeprimaryweaponitem</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">selecteditorobject</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">setobjectarguments</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setflagtexture</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">removeitemfromvest</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">gethitindex</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">forcefollowroad</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">removeaction</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addplayerscores</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setposworld</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">creatediarysubject</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">joinstring</binary>
+  <binary left="OBJECT,GROUP" right="OBJECT" precedence="4">knowsabout</binary>
+  <binary left="SIDE" right="OBJECT" precedence="4">knowsabout</binary>
+  <binary left="ANY" right="ARRAY" precedence="4">in</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">in</binary>
+  <binary left="ARRAY" right="LOCATION" precedence="4">in</binary>
+  <binary left="TEAM_MEMBER" right="ARRAY" precedence="4">sendtask</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsetpicturecolorselectedright</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">enablepersonturret</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctsetvalue</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">setwaypointscript</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetvalue</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">playmove</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">currentweaponturret</binary>
+  <binary left="OBJECT" right="SCALAR,STRING" precedence="4">ammoonpylon</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfontpb</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">lockcamerato</binary>
+  <binary left="ARRAY,OBJECT" right="STRING" precedence="4">commandradio</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">removeweaponturret</binary>
+  <binary left="STRING" right="SCALAR" precedence="4">cutfadeout</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">cutfadeout</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">removeallmpeventhandlers</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">inpolygon</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsettext</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">set3denobjecttype</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">triggerdynamicsimulation</binary>
+  <binary left="STRING" right="STRING" precedence="4">setmarkertextlocal</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addmagazinecargo</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addmagazinecargoglobal</binary>
+  <binary left="OBJECT" right="SIDE" precedence="4">minedetectedby</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbtext</binary>
+  <binary left="BOOL" right="BOOL" precedence="4">&amp;</binary>
+  <binary left="BOOL" right="CODE" precedence="4">&amp;</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">isvehiclesensorenabled</binary>
+  <binary left="FOR" right="SCALAR" precedence="4">step</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsetdata</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlsetbackgroundcolor</binary>
+  <binary left="OBJECT" right="ARRAY,STRING" precedence="4">canadditemtobackpack</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setposasl</binary>
+  <binary left="OBJECT,GROUP" right="OBJECT" precedence="4">reveal</binary>
+  <binary left="OBJECT,GROUP" right="ARRAY" precedence="4">reveal</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsettooltip</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">vehicleradio</binary>
+  <binary left="CONTROL" right="BOOL" precedence="4">show3dicons</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlsetdisabledcolor</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enablevehiclecargo</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbdata</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">lbadd</binary>
+  <binary left="STRING" right="STRING" precedence="4">get3denmissionattribute</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">isflashlighton</binary>
+  <binary left="ANY" right="STRING" precedence="4">execfsm</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">setcollisionlight</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setvectordir</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setobjectmaterialglobal</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setdropinterval</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlsettooltipcolortext</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">lbtext</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">switchmove</binary>
+  <binary left="BOOL" right="BOOL" precedence="4">||</binary>
+  <binary left="BOOL" right="CODE" precedence="4">||</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">additemcargo</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">neartargets</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">addgoggles</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">lbpicture</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsetpicturecolor</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">allowcuratorlogicignoreareas</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">assignascommander</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">showwaypoint</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY,OBJECT" precedence="4">getdir</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsettextright</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlremoveeventhandler</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlanimationphasemodel</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">addmagazine</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addmagazine</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">disablenvgequipment</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">targetknowledge</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">lbdata</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">lbdelete</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">campreparefov</binary>
+  <binary left="CONTROL" right="CONFIG" precedence="4">newoverlay</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">respawnvehicle</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">camsetfov</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">cutobj</binary>
+  <binary left="SCALAR" right="ARRAY" precedence="4">cutobj</binary>
+  <binary left="TASK" right="BOOL" precedence="4">setsimpletaskalwaysvisible</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">turretunit</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">kbaddtopic</binary>
+  <binary left="LOCATION" right="ARRAY" precedence="4">setposition</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setformationtask</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">campreparebank</binary>
+  <binary left="OBJECT" right="TASK" precedence="4">setcurrenttask</binary>
+  <binary left="IF" right="CODE" precedence="4">then</binary>
+  <binary left="IF" right="ARRAY" precedence="4">then</binary>
+  <binary left="CONTROL" right="BOOL" precedence="4">cbsetchecked</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsort</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setuseractiontext</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setsuppression</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetpicturerightcolor</binary>
+  <binary left="STRING" right="STRING" precedence="4">setmarkertext</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">weaponsturret</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">removeitems</binary>
+  <binary left="SCALAR" right="STRING" precedence="4">radiochannelsetcallsign</binary>
+  <binary left="CONTROL" right="BOOL" precedence="4">ctrlsetchecked</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlsetchecked</binary>
+  <binary left="OBJECT,GROUP" right="ARRAY" precedence="4">setgroupid</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">moveto</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvexpand</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">vectorworldtomodelvisual</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvadd</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">moveinturret</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">kbadddatabase</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">infopanelcomponentenabled</binary>
+  <binary left="GROUP" right="ARRAY" precedence="4">create3denentity</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetpicturerightcolorselected</binary>
+  <binary left="TEAM_MEMBER" right="ARRAY" precedence="4">deleteresources</binary>
+  <binary left="ANY" right="CODE" precedence="4">try</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">ropedetach</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enablesimulationglobal</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfonth1b</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setwantedrpmrtd</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvcount</binary>
+  <binary left="TEAM_MEMBER" right="STRING" precedence="4">unregistertask</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">camcreate</binary>
+  <binary left="ARRAY,OBJECT" right="STRING" precedence="4">say</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">say</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">set</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">atan2</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetscale</binary>
+  <binary left="STRING" right="BOOL" precedence="4">ppeffectenable</binary>
+  <binary left="ARRAY" right="BOOL" precedence="4">ppeffectenable</binary>
+  <binary left="SCALAR" right="BOOL" precedence="4">ppeffectenable</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">intersect</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">removehandgunitem</binary>
+  <binary left="ARRAY,OBJECT" right="OBJECT" precedence="4">dofire</binary>
+  <binary left="EXCEPTION" right="CODE" precedence="4">catch</binary>
+  <binary left="ANY" right="ARRAY" precedence="4">set3denattribute</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetselected</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">setdebriefingtext</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetfade</binary>
+  <binary left="OBJECT" right="GROUP" precedence="4">hcgroupparams</binary>
+  <binary left="ARRAY,OBJECT" right="STRING" precedence="4">sideradio</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">countenemy</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">progresssetposition</binary>
+  <binary left="ARRAY" right="SCALAR" precedence="4">#</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setdammage</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">moveinany</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">lnbdeletecolumn</binary>
+  <binary left="DISPLAY" right="ARRAY" precedence="4">displayaddeventhandler</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsettooltip</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">camcommit</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setshotparents</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">modeltoworldvisual</binary>
+  <binary left="STRING,TEXT" right="ARRAY" precedence="4">setattributes</binary>
+  <binary left="GROUP" right="SCALAR" precedence="4">getgroupicon</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvdelete</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">mod</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfonth5b</binary>
+  <binary left="STRING" right="BOOL" precedence="4">enableaifeature</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">addmenuitem</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enablesimulation</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">allowdamage</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">%</binary>
+  <binary left="ANY" right="STRING" precedence="4">execvm</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setlightcolor</binary>
+  <binary left="ARRAY" right="SCALAR" precedence="4">setwaypointhouseposition</binary>
+  <binary left="SIDE" right="ARRAY" precedence="4">setfriend</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addcuratoreditingarea</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">attachto</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">cutrsc</binary>
+  <binary left="SCALAR" right="ARRAY" precedence="4">cutrsc</binary>
+  <binary left="OBJECT" right="SCALAR,BOOL" precedence="4">setcaptive</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">editorseteventhandler</binary>
+  <binary left="SCALAR" right="STRING" precedence="4">radiochannelsetlabel</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">lockedcargo</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">turretlocal</binary>
+  <binary left="OBJECT,GROUP" right="ARRAY" precedence="4">setgroupidglobal</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">kbtell</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setidentity</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menuenabled</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">doorphase</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY,OBJECT" precedence="4">lookat</binary>
+  <binary left="GROUP" right="OBJECT" precedence="4">selectleader</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">backpackspacefor</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">animatesource</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">drawicon</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setunitloadout</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setunitloadout</binary>
+  <binary left="OBJECT" right="CONFIG" precedence="4">setunitloadout</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctdata</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">removecuratoraddons</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">playgesture</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">campreparetarget</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">campreparetarget</binary>
+  <binary left="CONTROL" right="CONFIG" precedence="4">ctsetheadertemplate</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">setvehiclereportownposition</binary>
+  <binary left="STRING" right="SCALAR" precedence="4">setmarkerdirlocal</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">animationphase</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">lockturret</binary>
+  <binary left="ANY" right="ARRAY" precedence="4">remoteexec</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">removeweaponglobal</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">*</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">createsite</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">==</binary>
+  <binary left="STRING" right="STRING" precedence="4">==</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">==</binary>
+  <binary left="GROUP" right="GROUP" precedence="4">==</binary>
+  <binary left="SIDE" right="SIDE" precedence="4">==</binary>
+  <binary left="TEXT" right="TEXT" precedence="4">==</binary>
+  <binary left="CONFIG" right="CONFIG" precedence="4">==</binary>
+  <binary left="DISPLAY" right="DISPLAY" precedence="4">==</binary>
+  <binary left="CONTROL" right="CONTROL" precedence="4">==</binary>
+  <binary left="TEAM_MEMBER" right="TEAM_MEMBER" precedence="4">==</binary>
+  <binary left="NetObject" right="NetObject" precedence="4">==</binary>
+  <binary left="TASK" right="TASK" precedence="4">==</binary>
+  <binary left="LOCATION" right="LOCATION" precedence="4">==</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">setrainbow</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setfatigue</binary>
+  <binary left="OBJECT" right="SCALAR,ARRAY" precedence="4">setdamage</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addmagazineturret</binary>
+  <binary left="SIDE" right="ARRAY" precedence="4">countside</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctfindrowheader</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setparticleparams</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">drawrectangle</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbaddrow</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">+</binary>
+  <binary left="STRING" right="STRING" precedence="4">+</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">+</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsetpicturecolorselected</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">drawline</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">posscreentoworld</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">sethidebehind</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">turretowner</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setface</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">fadesound</binary>
+  <binary left="STRING" right="STRING" precedence="4">splitstring</binary>
+  <binary left="CODE" right="ARRAY" precedence="4">count</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">-</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">-</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">setwaypointformation</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">disableuavconnectability</binary>
+  <binary left="ARRAY,OBJECT" right="SCALAR" precedence="4">nearroads</binary>
+  <binary left="DISPLAY" right="SCALAR" precedence="4">displayctrl</binary>
+  <binary left="CODE" right="ARRAY" precedence="4">foreach</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">set3denmissionattribute</binary>
+  <binary left="OBJECT,GROUP" right="SCALAR" precedence="4">setformdir</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfontsecondary</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">lockcargo</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">lockcargo</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">camcommitprepared</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setnamesound</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">modeltoworldvisualworld</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">doartilleryfire</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">isuniformallowed</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">skill</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">creatediaryrecord</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">/</binary>
+  <binary left="CONFIG" right="STRING" precedence="4">/</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">addweapon</binary>
+  <binary left="ARRAY" right="OBJECT" precedence="4">waypointattachvehicle</binary>
+  <binary left="OBJECT,GROUP" right="BOOL" precedence="4">lockwp</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addmagazineammocargo</binary>
+  <binary left="DISPLAY" right="ARRAY" precedence="4">displayseteventhandler</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">addmagazineglobal</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setunitposweak</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlsettextcolor</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">addlivestats</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">forceadduniform</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">canvehiclecargo</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">removeitem</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">vectorworldtomodel</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">setrandomlip</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">setwppos</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">findeditorobject</binary>
+  <binary left="CONTROL" right="ANY" precedence="4">findeditorobject</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addforce</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">lockedturret</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">lbpictureright</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctsetdata</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlmapcursor</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">drawlink</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">addcuratorpoints</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">assignasturret</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">sendsimplecommand</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsort</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlsetposition</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">removecuratoreditingarea</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">setwaypointspeed</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">createunit</binary>
+  <binary left="GROUP" right="ARRAY" precedence="4">createunit</binary>
+  <binary left="STRING" right="SCALAR" precedence="4">setdynamicsimulationdistance</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setcuratorcameraareaceiling</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addtorque</binary>
+  <binary left="ANY" right="STRING,CODE" precedence="4">onmapsingleclick</binary>
+  <binary left="OBJECT" right="SCALAR,ARRAY" precedence="4">setmass</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">kbadddatabasetargets</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">posworldtoscreen</binary>
+  <binary left="OBJECT" right="ARRAY,STRING" precedence="4">selectionposition</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">updatemenuitem</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addweaponturret</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">setwindforce</binary>
+  <binary left="SCALAR" right="ARRAY,STRING" precedence="4">getfsmvariable</binary>
+  <binary left="TEAM_MEMBER" right="ARRAY" precedence="4">addresources</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addaction</binary>
+  <binary left="TASK" right="ARRAY" precedence="4">setsimpletaskcustomdata</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">vectoradd</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">drawpolygon</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menushortcut</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">camsetrelpos</binary>
+  <binary left="DISPLAY" right="ARRAY" precedence="4">ctrlcreate</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">useaudiotimeformoves</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">addscore</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">enablevehiclesensor</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">assigncurator</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">buildingexit</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setfuel</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">ppeffectadjust</binary>
+  <binary left="SCALAR" right="ARRAY" precedence="4">ppeffectadjust</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">magazineturretammo</binary>
+  <binary left="CONTROL" right="SCALAR,STRING" precedence="4">nmenuitems</binary>
+  <binary left="SCALAR" right="STRING,OBJECT" precedence="4">preloadobject</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlsetmodeldirandup</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbpictureright</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">setwaypointcombatmode</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">flyinheightasl</binary>
+  <binary left="DISPLAY" right="STRING" precedence="4">creatempcampaigndisplay</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enabledynamicsimulation</binary>
+  <binary left="GROUP" right="BOOL" precedence="4">enabledynamicsimulation</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setposatl</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">setdrawicon</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">globalradio</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">seteditormode</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvtooltip</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsettext</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">vectordistancesqr</binary>
+  <binary left="ARRAY,OBJECT" right="STRING" precedence="4">sidechat</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">enableuavconnectability</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">addweaponglobal</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlcommit</binary>
+  <binary left="ARRAY" right="CODE" precedence="4">findif</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">nearestobject</binary>
+  <binary left="ARRAY" right="SCALAR" precedence="4">nearestobject</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">setlightdaylight</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">lightattachobject</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setcenterofmass</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">hcsetgroup</binary>
+  <binary left="STRING" right="STRING" precedence="4">setmarkercolor</binary>
+  <binary left="SCALAR,OBJECT" right="SIDE" precedence="4">setairportside</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setunitrank</binary>
+  <binary left="SWITCH" right="CODE" precedence="4">:</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setobjecttextureglobal</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">getrelpos</binary>
+  <binary left="TASK" right="ARRAY" precedence="4">setsimpletasktarget</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">synchronizewaypoint</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">synchronizewaypoint</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsettext</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">append</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">lnbdeleterow</binary>
+  <binary left="IF" right="ANY" precedence="4">throw</binary>
+  <binary left="ARRAY,OBJECT" right="SCALAR,ARRAY" precedence="4">nearsupplies</binary>
+  <binary left="GROUP" right="GROUP" precedence="4">copywaypoints</binary>
+  <binary left="TEAM_MEMBER" right="TEAM_MEMBER" precedence="4">setleader</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvvalue</binary>
+  <binary left="GROUP" right="SCALAR" precedence="4">unitsbelowheight</binary>
+  <binary left="ARRAY" right="SCALAR" precedence="4">unitsbelowheight</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">disableai</binary>
+  <binary left="LOCATION" right="SCALAR" precedence="4">setdirection</binary>
+  <binary left="STRING" right="STRING" precedence="4">servercommand</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">&lt;</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">settriggertimeout</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">lbisselected</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">campreparedir</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetdata</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">camsetdir</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setposasl2</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">camsetbank</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">action</binary>
+  <binary left="ANY" right="CODE" precedence="4">spawn</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">removemagazineturret</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">selectweapon</binary>
+  <binary left="TEAM_MEMBER" right="ARRAY" precedence="4">createtask</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">addeditorobject</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">&gt;</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">enableinfopanelcomponent</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">linkitem</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">seteditorobjectscope</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsetpicturecolordisabled</binary>
+  <binary left="CONTROL" right="BOOL" precedence="4">showlegend</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setdir</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">setobjectproxy</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">setmarkersizelocal</binary>
+  <binary left="ARRAY" right="BOOL" precedence="4">ordergetin</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctremoverows</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">getunittrait</binary>
+  <binary left="OBJECT" right="GROUP" precedence="4">hcremovegroup</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">arrayintersect</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetpictureright</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menusize</binary>
+  <binary left="DISPLAY" right="ARRAY" precedence="4">setvariable</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">setvariable</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setvariable</binary>
+  <binary left="GROUP" right="ARRAY" precedence="4">setvariable</binary>
+  <binary left="NAMESPACE" right="ARRAY" precedence="4">setvariable</binary>
+  <binary left="TEAM_MEMBER" right="ARRAY" precedence="4">setvariable</binary>
+  <binary left="TASK" right="ARRAY" precedence="4">setvariable</binary>
+  <binary left="LOCATION" right="ARRAY" precedence="4">setvariable</binary>
+  <binary left="OBJECT" right="SIDE" precedence="4">issensortargetconfirmed</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setusermfdvalue</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">getsoundcontroller</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enablemimics</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfonth2b</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setcustomaimcoef</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setairplanethrottle</binary>
+  <binary left="ARRAY" right="ANY" precedence="4">find</binary>
+  <binary left="STRING" right="STRING" precedence="4">find</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setunitpos</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">animatedoor</binary>
+  <binary left="ANY" right="ARRAY" precedence="4">isequaltypeparams</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctfindheaderrows</binary>
+  <binary left="LOCATION" right="ARRAY" precedence="4">setsize</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">gethit</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">drawarrow</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setvehicleposition</binary>
+  <binary left="CONTROL" right="BOOL" precedence="4">ctrlshow</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">removemagazineglobal</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setlightflaremaxdistance</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">playmovenow</binary>
+  <binary left="ARRAY,OBJECT" right="OBJECT" precedence="4">commandfire</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">domove</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">forcespeed</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetpicturerightcolordisabled</binary>
+  <binary left="STRING" right="STRING" precedence="4">setmarkerbrush</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setvelocitytransformation</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">enablecollisionwith</binary>
+  <binary left="DISPLAY" right="ARRAY" precedence="4">displayremoveeventhandler</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addmagazines</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menuaction</binary>
+  <binary left="STRING" right="STRING" precedence="4">setmarkertype</binary>
+  <binary left="GROUP" right="BOOL" precedence="4">deletegroupwhenempty</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">isflatempty</binary>
+  <binary left="CONTROL" right="TEXT" precedence="4">ctrlsetstructuredtext</binary>
+  <binary left="TEAM_MEMBER" right="TEAM_MEMBER" precedence="4">addteammember</binary>
+  <binary left="SIDE" right="OBJECT" precedence="4">revealmine</binary>
+  <binary left="SIDE" right="ARRAY" precedence="4">reportremotetarget</binary>
+  <binary left="ARRAY,OBJECT" right="STRING" precedence="4">setmusiceffect</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">switchgesture</binary>
+  <binary left="OBJECT,GROUP" right="STRING" precedence="4">setformation</binary>
+  <binary left="TEAM_MEMBER" right="STRING" precedence="4">setformation</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">vectorcos</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">commandwatch</binary>
+  <binary left="ARRAY,OBJECT" right="OBJECT" precedence="4">commandwatch</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">lbcolor</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">targets</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addcuratorcameraarea</binary>
+  <binary left="ANY" right="CODE" precedence="4">call</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfonth6b</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">setmarkerposlocal</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setpilotcamerarotation</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">fire</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">fire</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">setautonomous</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setusermfdtext</binary>
+  <binary left="OBJECT" right="CONFIG" precedence="4">getsoundcontrollerresult</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setvehiclevarname</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctvalue</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">hasweapon</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsettextsecondary</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setvehicletipars</binary>
+  <binary left="OBJECT" right="SIDE" precedence="4">setflagside</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrowcontrols</binary>
+  <binary left="OBJECT,GROUP" right="STRING" precedence="4">setspeedmode</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">removeeventhandler</binary>
+  <binary left="ARRAY" right="SCALAR,OBJECT" precedence="4">waypointattachobject</binary>
+  <binary left="ARRAY" right="OBJECT,GROUP" precedence="4">joinsilent</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsortbyvalue</binary>
+  <binary left="STRING" right="SCALAR" precedence="4">setmarkerdir</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">deletevehiclecrew</binary>
+  <binary left="CONTROL" right="BOOL" precedence="4">ctrlsetautoscrollrewind</binary>
+  <binary left="CODE" right="CODE" precedence="4">else</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetpicturecolor</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">buildingpos</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">setwaypointstatements</binary>
+  <binary left="ARRAY" right="BOOL" precedence="4">setwaypointforcebehaviour</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setmimic</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">engineon</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">setwindstr</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">&gt;=</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">lbtextright</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">allowsprint</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">additemtobackpack</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetautoscrollspeed</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">hideselection</binary>
+  <binary left="CONFIG" right="STRING" precedence="4">&gt;&gt;</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">removedrawlinks</binary>
+  <binary left="ARRAY" right="SCALAR" precedence="4">setwaypointcompletionradius</binary>
+  <binary left="GROUP" right="ARRAY" precedence="4">setgroupiconparams</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">lbcolorright</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">setcuratoreditingareatype</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">confirmsensortarget</binary>
+  <binary left="DISPLAY" right="ARRAY,STRING" precedence="4">getvariable</binary>
+  <binary left="CONTROL" right="ARRAY,STRING" precedence="4">getvariable</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">getvariable</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">getvariable</binary>
+  <binary left="GROUP" right="STRING" precedence="4">getvariable</binary>
+  <binary left="GROUP" right="ARRAY" precedence="4">getvariable</binary>
+  <binary left="NAMESPACE" right="STRING" precedence="4">getvariable</binary>
+  <binary left="NAMESPACE" right="ARRAY" precedence="4">getvariable</binary>
+  <binary left="TEAM_MEMBER" right="STRING" precedence="4">getvariable</binary>
+  <binary left="TEAM_MEMBER" right="ARRAY" precedence="4">getvariable</binary>
+  <binary left="TASK" right="STRING" precedence="4">getvariable</binary>
+  <binary left="TASK" right="ARRAY" precedence="4">getvariable</binary>
+  <binary left="LOCATION" right="STRING" precedence="4">getvariable</binary>
+  <binary left="LOCATION" right="ARRAY" precedence="4">getvariable</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">forceweaponfire</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setlightambient</binary>
+  <binary left="OBJECT" right="TASK" precedence="4">removesimpletask</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setdestination</binary>
+  <binary left="ARRAY" right="ANY" precedence="4">pushback</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menupicture</binary>
+  <binary left="CONTROL" right="BOOL" precedence="4">ctrlenable</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">groupchat</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">setrain</binary>
+  <binary left="SCALAR" right="STRING" precedence="4">add3denlayer</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">getspeed</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addweaponitem</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">cuttext</binary>
+  <binary left="SCALAR" right="ARRAY" precedence="4">cuttext</binary>
+  <binary left="TASK" right="STRING" precedence="4">settaskstate</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">triggerattachvehicle</binary>
+  <binary left="BOOL" right="SCALAR" precedence="4">setcamuseti</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addcuratoraddons</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addbackpackcargo</binary>
+  <binary left="ARRAY" right="OBJECT,GROUP" precedence="4">join</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY,OBJECT" precedence="4">glanceat</binary>
+  <binary left="DISPLAY" right="STRING" precedence="4">displayremovealleventhandlers</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlmapscreentoworld</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">setwaypointname</binary>
+  <binary left="OBJECT" right="ARRAY,STRING" precedence="4">canadd</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">counttype</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">moveobjecttoend</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">removemagazinesturret</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsetcolor</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menuenable</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctheadercontrols</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">suppressfor</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlsettextcolorsecondary</binary>
+  <binary left="LOCATION" right="BOOL" precedence="4">setrectangular</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">inserteditorobject</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">set3denlogictype</binary>
+  <binary left="STRING" right="SCALAR" precedence="4">setdynamicsimulationdistancecoef</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">fadespeech</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setpylonspriority</binary>
+  <binary left="DISPLAY" right="SCALAR" precedence="4">closedisplay</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menuvalue</binary>
+  <binary left="TASK" right="ARRAY" precedence="4">settaskresult</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">setlightuseflare</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setvelocity</binary>
+  <binary left="ANY" right="STRING" precedence="4">breakout</binary>
+  <binary left="ANY" right="ARRAY" precedence="4">isequaltypeany</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">drawtriangle</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetselectcolor</binary>
+  <binary left="CONTROL" right="BOOL" precedence="4">mapcenteroncamera</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetpicture</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setammocargo</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addbackpackcargoglobal</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY,OBJECT" precedence="4">distance2d</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">createsimpletask</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">commandfsm</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setcamerainterest</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">switchaction</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">animate</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setcuratorwaypointcost</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">diarysubjectexists</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">selectrandomweighted</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">setslingload</binary>
+  <binary left="SCALAR" right="SCALAR,ARRAY" precedence="4">random</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetfontheight</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlchecked</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsettooltip</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setfaceanimation</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setflaganimationphase</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">addhandgunitem</binary>
+  <binary left="ARRAY" right="SCALAR" precedence="4">setwaypointloiterradius</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">setpipeffect</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">playactionnow</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">weapondirection</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetautoscrolldelay</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">countunknown</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlmapworldtoscreen</binary>
+  <binary left="ARRAY" right="OBJECT" precedence="4">ropeattachto</binary>
+  <binary left="STRING" right="CODE" precedence="4">addpublicvariableeventhandler</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">addpublicvariableeventhandler</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">getpos</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">tofixed</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlsetactivecolor</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">moveincargo</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">moveincargo</binary>
+  <binary left="OBJECT" right="ARRAY,STRING" precedence="4">canadditemtouniform</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setbleedingremaining</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setlightflaresize</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">removemagazines</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">vectormodeltoworldvisual</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY,OBJECT" precedence="4">distance</binary>
+  <binary left="LOCATION" right="LOCATION" precedence="4">distance</binary>
+  <binary left="LOCATION" right="ARRAY" precedence="4">distance</binary>
+  <binary left="ARRAY" right="LOCATION" precedence="4">distance</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">execeditorscript</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setparticleclass</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setparticlecircle</binary>
+  <binary left="CODE" right="TEAM_MEMBER" precedence="4">foreachmember</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setvelocitymodelspace</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">animatebay</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">findcover</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">vectorfromto</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfonth1</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlsettooltipcolorbox</binary>
+  <binary left="CONTROL" right="LOCATION" precedence="4">drawlocation</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">setwaypointdescription</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menusetpicture</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">additemcargoglobal</binary>
+  <binary left="SCALAR" right="ARRAY" precedence="4">radiochannelremove</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">removedrawicon</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setlightattenuation</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfonth2</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setname</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setname</binary>
+  <binary left="LOCATION" right="STRING" precedence="4">setname</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">lbvalue</binary>
+  <binary left="GROUP" right="ARRAY" precedence="4">addgroupicon</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menuexpand</binary>
+  <binary left="SCALAR" right="BOOL" precedence="4">ppeffectforceinnvg</binary>
+  <binary left="GROUP" right="SCALAR" precedence="4">setgroupowner</binary>
+  <binary left="IF" right="CODE" precedence="4">exitwith</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setvehiclearmor</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">addmenu</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">savestatus</binary>
+  <binary left="ARRAY" right="SCALAR" precedence="4">vectormultiply</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlmapanimadd</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setstamina</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfonth3</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">setwaves</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">slidersetposition</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">campreparerelpos</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setconvoyseparation</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enablefatigue</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">moveindriver</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">selectdiarysubject</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">canslingload</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetpixelprecision</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetpixelprecision</binary>
+  <binary left="ARRAY" right="BOOL" precedence="4">sort</binary>
+  <binary left="DISPLAY" right="STRING" precedence="4">createmissiondisplay</binary>
+  <binary left="DISPLAY" right="ARRAY" precedence="4">createmissiondisplay</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setfuelcargo</binary>
+  <binary left="ARRAY,OBJECT" right="OBJECT" precedence="4">dotarget</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">addvest</binary>
+  <binary left="ANY" right="ARRAY" precedence="4">remoteexeccall</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfonth4</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">kbreact</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">vectordiff</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">land</binary>
+  <binary left="OBJECT,GROUP" right="STRING" precedence="4">enablegunlights</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setowner</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfonth5</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsetpictureright</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctremoveheaders</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">switchcamera</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setunloadincombat</binary>
+  <binary left="ARRAY,OBJECT" right="OBJECT" precedence="4">inarea</binary>
+  <binary left="ARRAY,OBJECT" right="STRING" precedence="4">inarea</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">inarea</binary>
+  <binary left="OBJECT" right="LOCATION" precedence="4">inarea</binary>
+  <binary left="ARRAY" right="LOCATION" precedence="4">inarea</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">skillfinal</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">loadidentity</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">addsecondaryweaponitem</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfonth6</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">removecuratorcameraarea</binary>
+  <binary left="TEAM_MEMBER" right="TEAM_MEMBER" precedence="4">removeteammember</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">buttonsetaction</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menudelete</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">joinassilent</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">^</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">modeltoworldworld</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbcolorright</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvcollapse</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">inflame</binary>
+  <binary left="BOOL" right="BOOL" precedence="4">or</binary>
+  <binary left="BOOL" right="CODE" precedence="4">or</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsetcolumnspos</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlanimatemodel</binary>
+  <binary left="ARRAY,OBJECT" right="STRING" precedence="4">say2d</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">say2d</binary>
+  <binary left="ARRAY,OBJECT" right="STRING" precedence="4">commandchat</binary>
+  <binary left="STRING" right="STRING" precedence="4">hintc</binary>
+  <binary left="STRING" right="TEXT" precedence="4">hintc</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">hintc</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setplatenumber</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsetcursel</binary>
+  <binary left="ARRAY" right="BOOL" precedence="4">setwaypointvisible</binary>
+  <binary left="ANY" right="ANY" precedence="4">isequalto</binary>
+  <binary left="ARRAY,OBJECT" right="SCALAR,ARRAY" precedence="4">nearobjects</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">vectorcrossproduct</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">hideobjectglobal</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbcolor</binary>
+  <binary left="TASK" right="ARRAY" precedence="4">setsimpletaskdestination</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">commandartilleryfire</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setvehicleradar</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY,OBJECT" precedence="4">dosuppressivefire</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">assignteam</binary>
+  <binary left="STRING" right="STRING" precedence="4">callextension</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">callextension</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">kbhastopic</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menutext</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">lnbaddcolumn</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">settriggeractivation</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">additemtovest</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">assignitem</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">adduniform</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">globalchat</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menushortcuttext</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ctrlsetfonth3b</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">stop</binary>
+  <binary left="ARRAY" right="SCALAR" precedence="4">select</binary>
+  <binary left="ARRAY" right="BOOL" precedence="4">select</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">select</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">select</binary>
+  <binary left="ARRAY" right="CODE" precedence="4">select</binary>
+  <binary left="CONFIG" right="SCALAR" precedence="4">select</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setvehicleammo</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsetpicture</binary>
+  <binary left="OBJECT,GROUP" right="STRING" precedence="4">setcombatmode</binary>
+  <binary left="TEAM_MEMBER" right="STRING" precedence="4">setcombatmode</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsetvalue</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setobjecttexture</binary>
+  <binary left="OBJECT" right="SCALAR,OBJECT" precedence="4">assigntoairport</binary>
+  <binary left="OBJECT,GROUP" right="BOOL" precedence="4">enableattack</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">createmenu</binary>
+  <binary left="SCALAR" right="BOOL" precedence="4">debugfsm</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">camsetfovrange</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">synchronizeobjectsremove</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menudata</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">modeltoworld</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">checkvisibility</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">kbremovetopic</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">settriggerarea</binary>
+  <binary left="LOCATION" right="STRING" precedence="4">settext</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">campreparedive</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">setwaypointtimeout</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enableaimprecision</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">assignascargoindex</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">emptypositions</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">createvehicle</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">commandmove</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">ammo</binary>
+  <binary left="CONTROL" right="CONFIG" precedence="4">ctsetrowtemplate</binary>
+  <binary left="OBJECT,GROUP" right="SCALAR" precedence="4">allowfleeing</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">setflagowner</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">targetsaggregate</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">gethitpointdamage</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">leavevehicle</binary>
+  <binary left="GROUP" right="OBJECT" precedence="4">leavevehicle</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">unassignitem</binary>
+  <binary left="LOCATION" right="STRING" precedence="4">setspeech</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">addheadgear</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setfeaturetype</binary>
+  <binary left="ANY" right="SCALAR" precedence="4">set3denlayer</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setvectordirandup</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsetpicturecolor</binary>
+  <binary left="ARRAY,OBJECT" right="OBJECT" precedence="4">commandtarget</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">flyinheight</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">lockdriver</binary>
+  <binary left="GROUP" right="ARRAY" precedence="4">addwaypoint</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">settriggertext</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">max</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">synchronizetrigger</binary>
+  <binary left="SCALAR,NaN" right="SCALAR,NaN" precedence="4">min</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">vectordotproduct</binary>
+  <binary left="LOCATION" right="SIDE" precedence="4">setside</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">getobjectargument</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addeventhandler</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">sethit</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsetpicturerightcolorselected</binary>
+  <binary left="ANY" right="STRING" precedence="4">exec</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">setovercast</binary>
+  <binary left="ARRAY" right="SCALAR" precedence="4">deleteat</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">getcargoindex</binary>
+  <binary left="SCALAR" right="STRING" precedence="4">setradiomsg</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">setvehiclereportremotetargets</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menusetaction</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">setsoundeffect</binary>
+  <binary left="STRING" right="STRING" precedence="4">objstatus</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">geteditorobjectscope</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">customchat</binary>
+  <binary left="OBJECT,GROUP" right="ARRAY" precedence="4">move</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setrotorbrakertd</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctsetcursel</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">inrangeofartillery</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">listobjects</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">connectterminaltouav</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setwingforcescalertd</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">deleterange</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrladdeventhandler</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setparticlefire</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lbsetpicturecolorselected</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setskill</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setskill</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">removeweaponcargo</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">unlinkitem</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">currentmagazineturret</binary>
+  <binary left="OBJECT,GROUP" right="OBJECT" precedence="4">forgettarget</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setbrakesrtd</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">worldtomodelvisual</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">faderadio</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setoxygenremaining</binary>
+  <binary left="STRING" right="STRING" precedence="4">iskindof</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">iskindof</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">iskindof</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">getobjectchildren</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">countfriendly</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">camcommand</binary>
+  <binary left="GROUP" right="SCALAR" precedence="4">removegroupicon</binary>
+  <binary left="SCALAR" right="STRING" precedence="4">publicvariableclient</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">vehiclechat</binary>
+  <binary left="SCALAR" right="ARRAY" precedence="4">radiochanneladd</binary>
+  <binary left="LOCATION" right="SCALAR" precedence="4">setimportance</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetmodelscale</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbpicture</binary>
+  <binary left="WHILE" right="CODE" precedence="4">do</binary>
+  <binary left="WITH" right="CODE" precedence="4">do</binary>
+  <binary left="FOR" right="CODE" precedence="4">do</binary>
+  <binary left="SWITCH" right="CODE" precedence="4">do</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">findemptypositionready</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enableautotrimrtd</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">assignasdriver</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enablecopilot</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menuadd</binary>
+  <binary left="OBJECT" right="SCALAR,OBJECT" precedence="4">landat</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">onshownewobject</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">setwaypointloitertype</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">allowcrewinimmobile</binary>
+  <binary left="STRING" right="STRING" precedence="4">setmarkercolorlocal</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">settriggerstatements</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">setgusts</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setrank</binary>
+  <binary left="STRING" right="STRING" precedence="4">setmarkershape</binary>
+  <binary left="ANY" right="STRING" precedence="4">clear3denattribute</binary>
+  <binary left="OBJECT,GROUP" right="BOOL" precedence="4">enableirlasers</binary>
+  <binary left="SCALAR" right="BOOL" precedence="4">enablechannel</binary>
+  <binary left="SCALAR" right="ARRAY" precedence="4">enablechannel</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">getenvsoundcontroller</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbtextright</binary>
+  <binary left="OBJECT" right="ARRAY,STRING" precedence="4">canadditemtovest</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsetpicturerightcolor</binary>
+  <binary left="SIDE" right="SCALAR" precedence="4">addscoreside</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enableropeattach</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setvehicleammodef</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">enableautostartuprtd</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setmagazineturretammo</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">gethidefrom</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">ondoubleclick</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">removeweaponattachmentcargo</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setrepaircargo</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">setunconscious</binary>
+  <binary left="GROUP" right="ARRAY" precedence="4">setgroupicon</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">setwaypointbehaviour</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">slidersetspeed</binary>
+  <binary left="ARRAY" right="OBJECT" precedence="4">inareaarray</binary>
+  <binary left="ARRAY" right="STRING" precedence="4">inareaarray</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">inareaarray</binary>
+  <binary left="ARRAY" right="LOCATION" precedence="4">inareaarray</binary>
+  <binary left="DISPLAY" right="STRING" precedence="4">createdisplay</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbvalue</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvpicture</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setcuratorcoef</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsetpicturecolorselected</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">addcuratoreditableobjects</binary>
+  <binary left="ARRAY,OBJECT" right="STRING" precedence="4">infopanelcomponents</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">addbackpackglobal</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">kbwassaid</binary>
+  <binary left="OBJECT" right="SCALAR,STRING" precedence="4">getcompatiblepylonmagazines</binary>
+  <binary left="STRING" right="SCALAR,STRING" precedence="4">getcompatiblepylonmagazines</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">evalobjectargument</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">hcselectgroup</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menusetcheck</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">removecuratoreditableobjects</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">createvehiclelocal</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsetcolorright</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">addbackpack</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetfontheightsecondary</binary>
+  <binary left="SCALAR" right="ARRAY" precedence="4">setfsmvariable</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">campreparefovrange</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">moveincommander</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">groupselectunit</binary>
+  <binary left="CODE" right="TEAM_MEMBER" precedence="4">foreachmemberagent</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsetcolor</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">fireattarget</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">ctrlseteventhandler</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setdriveonpath</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setenginerpmrtd</binary>
+  <binary left="CODE" right="TEAM_MEMBER" precedence="4">foreachmemberteam</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">addownedmine</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">showneweditorobject</binary>
+  <binary left="ANY" right="ARRAY" precedence="4">params</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">cameraeffect</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">setvehiclecargo</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">getartilleryeta</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lookatpos</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">dofsm</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setobjectmaterial</binary>
+  <binary left="SCALAR" right="SCALAR" precedence="4">fademusic</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">removealleventhandlers</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">camsetpos</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">joinas</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">moveingunner</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">campreparepos</binary>
+  <binary left="STRING" right="SCALAR" precedence="4">setmarkeralphalocal</binary>
+  <binary left="OBJECT" right="OBJECT" precedence="4">disablecollisionwith</binary>
+  <binary left="ARRAY" right="ARRAY" precedence="4">isequaltypearray</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">setvehiclelock</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">addprimaryweaponitem</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">lbsetcursel</binary>
+  <binary left="ARRAY,OBJECT" right="STRING" precedence="4">seteffectcondition</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">aimedattarget</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">drawellipse</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setactualcollectivertd</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setpos</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">editobject</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">lnbsetpicturecolorright</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">allowdammage</binary>
+  <binary left="OBJECT,GROUP" right="STRING" precedence="4">setbehaviour</binary>
+  <binary left="OBJECT" right="ARRAY,OBJECT" precedence="4">findnearestenemy</binary>
+  <binary left="ARRAY,OBJECT" right="ARRAY" precedence="4">dowatch</binary>
+  <binary left="ARRAY,OBJECT" right="OBJECT" precedence="4">dowatch</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">isirlaseron</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetfontheighth1</binary>
+  <binary left="STRING" right="ARRAY" precedence="4">setmarkersize</binary>
+  <binary left="ARRAY,OBJECT" right="SCALAR,ARRAY" precedence="4">nearentities</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">tvsetpicturerightcolordisabled</binary>
+  <binary left="OBJECT" right="BOOL" precedence="4">lock</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">lock</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">weaponaccessories</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">magazinesturret</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetfontheighth2</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">campreparefocus</binary>
+  <binary left="OBJECT" right="SCALAR" precedence="4">setpitch</binary>
+  <binary left="STRING" right="SCALAR" precedence="4">setmarkeralpha</binary>
+  <binary left="CONTROL" right="STRING" precedence="4">getobjectproxy</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">settaskmarkeroffset</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">setpilotcameradirection</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetfontheighth3</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">settargetage</binary>
+  <binary left="OBJECT" right="ARRAY,OBJECT" precedence="4">setpilotcameratarget</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">removesecondaryweaponitem</binary>
+  <binary left="OBJECT" right="ARRAY" precedence="4">weaponaccessoriescargo</binary>
+  <binary left="OBJECT" right="STRING" precedence="4">removeweapon</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetfontheighth4</binary>
+  <binary left="CONTROL" right="ARRAY" precedence="4">menusort</binary>
+  <binary left="CONTROL" right="SCALAR" precedence="4">ctrlsetfontheighth5</binary>
+  <unary right="BOOL">showradio</unary>
+  <unary right="OBJECT">vectorup</unary>
+  <unary right="ARRAY">lnbsetcurselrow</unary>
+  <unary right="OBJECT">currentzeroing</unary>
+  <unary right="ARRAY,OBJECT">isonroad</unary>
+  <unary right="OBJECT">triggerarea</unary>
+  <unary right="STRING">get3dengrid</unary>
+  <unary right="ARRAY">settrafficspeed</unary>
+  <unary right="STRING">supportinfo</unary>
+  <unary right="ARRAY">menucollapse</unary>
+  <unary right="OBJECT">animationnames</unary>
+  <unary right="TASK">taskdescription</unary>
+  <unary right="OBJECT">isautohoveron</unary>
+  <unary right="CONTROL">ctrlangle</unary>
+  <unary right="ARRAY">menusetdata</unary>
+  <unary right="ARRAY">moonphase</unary>
+  <unary right="STRING,CODE">onplayerdisconnected</unary>
+  <unary right="CONTROL">isshowing3dicons</unary>
+  <unary right="ARRAY">lbsetcolor</unary>
+  <unary right="OBJECT">getallhitpointsdamage</unary>
+  <unary right="ARRAY">lbsetcolorright</unary>
+  <unary right="OBJECT">triggertext</unary>
+  <unary right="OBJECT">getfatigue</unary>
+  <unary right="CONTROL">ctrlshown</unary>
+  <unary right="OBJECT">eyedirection</unary>
+  <unary right="CONTROL">ctrlmodel</unary>
+  <unary right="ARRAY">tvtext</unary>
+  <unary right="ARRAY">ropeunwind</unary>
+  <unary right="OBJECT">fillweaponsfrompool</unary>
+  <unary right="OBJECT">hcselected</unary>
+  <unary right="ARRAY">asltoagl</unary>
+  <unary right="OBJECT">isobjectrtd</unary>
+  <unary right="BOOL">enabletraffic</unary>
+  <unary right="OBJECT">roledescription</unary>
+  <unary right="OBJECT">simpletasks</unary>
+  <unary right="OBJECT">getammocargo</unary>
+  <unary right="OBJECT">flagowner</unary>
+  <unary right="GROUP">deletegroup</unary>
+  <unary right="CONFIG">isclass</unary>
+  <unary right="ARRAY">tvdata</unary>
+  <unary right="OBJECT">getenginetargetrpmrtd</unary>
+  <unary right="ARRAY">waypointattachedvehicle</unary>
+  <unary right="OBJECT">speed</unary>
+  <unary right="ARRAY">menusetvalue</unary>
+  <unary right="OBJECT">reloadenabled</unary>
+  <unary right="OBJECT">rating</unary>
+  <unary right="OBJECT">hideobject</unary>
+  <unary right="OBJECT">primaryweapon</unary>
+  <unary right="ARRAY">addtoremainscollector</unary>
+  <unary right="SCALAR">uisleep</unary>
+  <unary right="CONTROL">ctrlmodelscale</unary>
+  <unary right="OBJECT">curatorcameraareaceiling</unary>
+  <unary right="BOOL">useaiopermapobstructiontest</unary>
+  <unary right="OBJECT">removevest</unary>
+  <unary right="CONTROL">gearslotdata</unary>
+  <unary right="OBJECT">formationposition</unary>
+  <unary right="OBJECT">gettrimoffsetrtd</unary>
+  <unary right="ARRAY,STRING">getmissionconfigvalue</unary>
+  <unary right="ARRAY">simulcloudocclusion</unary>
+  <unary right="OBJECT">movetofailed</unary>
+  <unary right="ARRAY">playmission</unary>
+  <unary right="OBJECT">rankid</unary>
+  <unary right="BOOL">showgps</unary>
+  <unary right="ARRAY">synchronizedtriggers</unary>
+  <unary right="OBJECT">removeallitemswithmagazines</unary>
+  <unary right="ARRAY">setaperturenew</unary>
+  <unary right="ARRAY">setinfopanel</unary>
+  <unary right="ARRAY">simulinclouds</unary>
+  <unary right="ARRAY">menuurl</unary>
+  <unary right="CONFIG">isarray</unary>
+  <unary right="ARRAY">leaderboardsrequestuploadscorekeepbest</unary>
+  <unary right="OBJECT">removebackpackglobal</unary>
+  <unary right="STRING">exportjipmessages</unary>
+  <unary right="CONTROL">ctrlhtmlloaded</unary>
+  <unary right="STRING">getmarkercolor</unary>
+  <unary right="STRING">markeralpha</unary>
+  <unary right="OBJECT">face</unary>
+  <unary right="ARRAY">lbsetselectcolorright</unary>
+  <unary right="OBJECT">getvehiclecargo</unary>
+  <unary right="LOCATION">deletelocation</unary>
+  <unary right="SCALAR,NaN">ceil</unary>
+  <unary right="ARRAY">waypointvisible</unary>
+  <unary right="BOOL">enablesatnormalondetail</unary>
+  <unary right="OBJECT">getposatl</unary>
+  <unary right="OBJECT">objectcurators</unary>
+  <unary right="STRING">activatekey</unary>
+  <unary right="BOOL">disableremotesensors</unary>
+  <unary right="OBJECT,GROUP">attackenabled</unary>
+  <unary right="OBJECT">curatoreditingarea</unary>
+  <unary right="STRING">playmusic</unary>
+  <unary right="ARRAY">playmusic</unary>
+  <unary right="OBJECT">assignedteam</unary>
+  <unary right="OBJECT">vectordirvisual</unary>
+  <unary right="ARRAY">lnbsetvalue</unary>
+  <unary right="OBJECT">triggeractivated</unary>
+  <unary right="ARRAY">set3denmissionattributes</unary>
+  <unary right="OBJECT">unassignvehicle</unary>
+  <unary right="OBJECT">boundingbox</unary>
+  <unary right="ARRAY">ppeffectcreate</unary>
+  <unary right="OBJECT">movetime</unary>
+  <unary right="ARRAY">waypointspeed</unary>
+  <unary right="ARRAY">tvpictureright</unary>
+  <unary right="BOOL">if</unary>
+  <unary right="CONTROL">ctrltext</unary>
+  <unary right="SCALAR">ctrltext</unary>
+  <unary right="CONTROL">ctrlclassname</unary>
+  <unary right="OBJECT">getcustomsoundcontrollercount</unary>
+  <unary right="STRING">actionname</unary>
+  <unary right="OBJECT">animationstate</unary>
+  <unary right="STRING">markertype</unary>
+  <unary right="ARRAY">menuchecked</unary>
+  <unary right="ARRAY">lineintersectsobjs</unary>
+  <unary right="OBJECT">weaponcargo</unary>
+  <unary right="BOOL">enableweapondisassembly</unary>
+  <unary right="CONTROL">buttonaction</unary>
+  <unary right="SCALAR">buttonaction</unary>
+  <unary right="ARRAY">set3deniconsvisible</unary>
+  <unary right="BOOL">hcshowbar</unary>
+  <unary right="ARRAY">drop</unary>
+  <unary right="OBJECT">isturnedout</unary>
+  <unary right="ARRAY">addweaponpool</unary>
+  <unary right="OBJECT">camtarget</unary>
+  <unary right="OBJECT">issimpleobject</unary>
+  <unary right="ARRAY">setwinddir</unary>
+  <unary right="ARRAY">reverse</unary>
+  <unary right="OBJECT">getcameraviewdirection</unary>
+  <unary right="ARRAY">set3denattributes</unary>
+  <unary right="ARRAY">slidersetrange</unary>
+  <unary right="ARRAY">textlogformat</unary>
+  <unary right="STRING">deletemarkerlocal</unary>
+  <unary right="ARRAY">lnbsettext</unary>
+  <unary right="SCALAR,NaN">exp</unary>
+  <unary right="ARRAY">waypointstatements</unary>
+  <unary right="OBJECT">scudstate</unary>
+  <unary right="CONTROL">sliderrange</unary>
+  <unary right="SCALAR">sliderrange</unary>
+  <unary right="OBJECT">isautotrimonrtd</unary>
+  <unary right="OBJECT">boundingboxreal</unary>
+  <unary right="ARRAY">terrainintersect</unary>
+  <unary right="OBJECT">ropedestroy</unary>
+  <unary right="ARRAY">tvsetpictureright</unary>
+  <unary right="ARRAY">createteam</unary>
+  <unary right="SCALAR,NaN">floor</unary>
+  <unary right="ARRAY">lnbsettextright</unary>
+  <unary right="ARRAY">param</unary>
+  <unary right="ARRAY">lbsetpicturecolordisabled</unary>
+  <unary right="ARRAY">setcamshakeparams</unary>
+  <unary right="ARRAY">lognetwork</unary>
+  <unary right="SCALAR,NaN">abs</unary>
+  <unary right="STRING">debriefingtext</unary>
+  <unary right="ARRAY">lnbsortbyvalue</unary>
+  <unary right="OBJECT">istouchingground</unary>
+  <unary right="OBJECT">taskmarkeroffset</unary>
+  <unary right="ARRAY">aisfinishheal</unary>
+  <unary right="ARRAY">tvsetpicture</unary>
+  <unary right="OBJECT">vest</unary>
+  <unary right="OBJECT">headgear</unary>
+  <unary right="ARRAY">lnbsetdata</unary>
+  <unary right="OBJECT">fuel</unary>
+  <unary right="ARRAY">agltoasl</unary>
+  <unary right="OBJECT">weaponsitemscargo</unary>
+  <unary right="ARRAY">linearconversion</unary>
+  <unary right="ARRAY">removemissioneventhandler</unary>
+  <unary right="OBJECT">damage</unary>
+  <unary right="OBJECT">getmodelinfo</unary>
+  <unary right="ANY">str</unary>
+  <unary right="ARRAY">tostring</unary>
+  <unary right="ARRAY,OBJECT">dogetout</unary>
+  <unary right="OBJECT">getbleedingremaining</unary>
+  <unary right="OBJECT">squadparams</unary>
+  <unary right="STRING">groupfromnetid</unary>
+  <unary right="OBJECT">leader</unary>
+  <unary right="GROUP">leader</unary>
+  <unary right="TEAM_MEMBER">leader</unary>
+  <unary right="SCALAR">settrafficdistance</unary>
+  <unary right="OBJECT">currentthrowable</unary>
+  <unary right="CONTROL">ctaddrow</unary>
+  <unary right="BOOL">enableengineartillery</unary>
+  <unary right="ARRAY">terrainintersectasl</unary>
+  <unary right="ANY">debuglog</unary>
+  <unary right="ARRAY">lnbsetpicturecolorselectedright</unary>
+  <unary right="ARRAY">lnbaddarray</unary>
+  <unary right="STRING">savevar</unary>
+  <unary right="STRING">onbriefingteamswitch</unary>
+  <unary right="ARRAY">lbsetvalue</unary>
+  <unary right="STRING">edit3denmissionattributes</unary>
+  <unary right="OBJECT">uniformitems</unary>
+  <unary right="OBJECT">getcustomaimcoef</unary>
+  <unary right="ARRAY">ingameuiseteventhandler</unary>
+  <unary right="STRING">leaderboardrequestrowsfriends</unary>
+  <unary right="STRING">showcommandingmenu</unary>
+  <unary right="OBJECT">unitrecoilcoefficient</unary>
+  <unary right="OBJECT">unassigncurator</unary>
+  <unary right="ARRAY,STRING">actionkeysnames</unary>
+  <unary right="OBJECT">objectparent</unary>
+  <unary right="OBJECT">clearmagazinecargo</unary>
+  <unary right="ARRAY">hostmission</unary>
+  <unary right="OBJECT">canmove</unary>
+  <unary right="STRING">getstatvalue</unary>
+  <unary right="ARRAY">tvsettext</unary>
+  <unary right="ARRAY">positioncameratoworld</unary>
+  <unary right="OBJECT">getwingsorientationrtd</unary>
+  <unary right="OBJECT">isstaminaenabled</unary>
+  <unary right="OBJECT">getusermfdtext</unary>
+  <unary right="OBJECT">weaponsitems</unary>
+  <unary right="ARRAY">vectornormalized</unary>
+  <unary right="OBJECT">unitbackpack</unary>
+  <unary right="SCALAR,NaN">finite</unary>
+  <unary right="ARRAY">lnbtext</unary>
+  <unary right="TEAM_MEMBER">teamname</unary>
+  <unary right="OBJECT">pickweaponpool</unary>
+  <unary right="ARRAY">surfaceiswater</unary>
+  <unary right="OBJECT">getslingload</unary>
+  <unary right="OBJECT">reload</unary>
+  <unary right="ARRAY">tvsetdata</unary>
+  <unary right="CONTROL">allvariables</unary>
+  <unary right="TEAM_MEMBER">allvariables</unary>
+  <unary right="NAMESPACE">allvariables</unary>
+  <unary right="OBJECT">allvariables</unary>
+  <unary right="GROUP">allvariables</unary>
+  <unary right="TASK">allvariables</unary>
+  <unary right="LOCATION">allvariables</unary>
+  <unary right="SCALAR">setterraingrid</unary>
+  <unary right="OBJECT">speaker</unary>
+  <unary right="ARRAY">lbsettooltip</unary>
+  <unary right="OBJECT">weapons</unary>
+  <unary right="CONTROL">selectededitorobjects</unary>
+  <unary right="STRING">removeall3deneventhandlers</unary>
+  <unary right="ARRAY">leaderboardsrequestuploadscore</unary>
+  <unary right="ARRAY">lnbdata</unary>
+  <unary right="OBJECT">unitisuav</unary>
+  <unary right="ARRAY">lbadd</unary>
+  <unary right="CONTROL">lnbclear</unary>
+  <unary right="SCALAR">lnbclear</unary>
+  <unary right="OBJECT">assignedtarget</unary>
+  <unary right="BOOL">cameraeffectenablehud</unary>
+  <unary right="STRING">execfsm</unary>
+  <unary right="OBJECT">attachedto</unary>
+  <unary right="BOOL">showuavfeed</unary>
+  <unary right="STRING">querymagazinepool</unary>
+  <unary right="OBJECT">effectivecommander</unary>
+  <unary right="STRING">sizeof</unary>
+  <unary right="OBJECT">landresult</unary>
+  <unary right="CONTROL">cbchecked</unary>
+  <unary right="STRING,CODE">onhcgroupselectionchanged</unary>
+  <unary right="CONTROL">ctrlscale</unary>
+  <unary right="SCALAR,NaN">asin</unary>
+  <unary right="ARRAY">lbtext</unary>
+  <unary right="OBJECT">clearweaponcargoglobal</unary>
+  <unary right="OBJECT">assigneddriver</unary>
+  <unary right="DISPLAY">allcontrols</unary>
+  <unary right="TASK">taskresult</unary>
+  <unary right="ARRAY">lbpicture</unary>
+  <unary right="STRING">do3denaction</unary>
+  <unary right="ARRAY">numbertodate</unary>
+  <unary right="STRING">leaderboardstate</unary>
+  <unary right="ARRAY">tvsetpicturecolor</unary>
+  <unary right="OBJECT">secondaryweaponmagazine</unary>
+  <unary right="OBJECT">flaganimationphase</unary>
+  <unary right="SCALAR">setaperture</unary>
+  <unary right="BOOL">showpad</unary>
+  <unary right="CONTROL">ctrlidc</unary>
+  <unary right="OBJECT">getdir</unary>
+  <unary right="OBJECT">uniformcontainer</unary>
+  <unary right="CONTROL">lbsortbyvalue</unary>
+  <unary right="SCALAR">lbsortbyvalue</unary>
+  <unary right="OBJECT">isplayer</unary>
+  <unary right="BOOL">buldozer_enableroaddiag</unary>
+  <unary right="OBJECT">campreloaded</unary>
+  <unary right="ARRAY">terrainintersectatasl</unary>
+  <unary right="OBJECT">local</unary>
+  <unary right="GROUP">local</unary>
+  <unary right="ARRAY">drawicon3d</unary>
+  <unary right="ARRAY">surfacetype</unary>
+  <unary right="ARRAY">lbdata</unary>
+  <unary right="ARRAY">lbdelete</unary>
+  <unary right="OBJECT">boundingcenter</unary>
+  <unary right="BOOL">enablediaglegend</unary>
+  <unary right="DISPLAY">ctrlidd</unary>
+  <unary right="OBJECT">fleeing</unary>
+  <unary right="GROUP">getgroupiconparams</unary>
+  <unary right="ARRAY">cutobj</unary>
+  <unary right="OBJECT">iscopilotenabled</unary>
+  <unary right="OBJECT">uniform</unary>
+  <unary right="ARRAY">delete3denentities</unary>
+  <unary right="ARRAY,OBJECT">commandgetout</unary>
+  <unary right="SIDE">wfsidetext</unary>
+  <unary right="OBJECT">wfsidetext</unary>
+  <unary right="GROUP">wfsidetext</unary>
+  <unary right="SCALAR">tvexpandall</unary>
+  <unary right="CONTROL">tvexpandall</unary>
+  <unary right="OBJECT">velocitymodelspace</unary>
+  <unary right="STRING,CODE">onpreloadstarted</unary>
+  <unary right="OBJECT">flagtexture</unary>
+  <unary right="OBJECT">getfuelcargo</unary>
+  <unary right="GROUP">groupid</unary>
+  <unary right="OBJECT">rotorsrpmrtd</unary>
+  <unary right="ARRAY">waypointloiterradius</unary>
+  <unary right="ARRAY">modparams</unary>
+  <unary right="OBJECT">getallownedmines</unary>
+  <unary right="LOCATION">size</unary>
+  <unary right="OBJECT">captivenum</unary>
+  <unary right="ARRAY">waypointtimeout</unary>
+  <unary right="ARRAY">tvsort</unary>
+  <unary right="CONTROL">lbselection</unary>
+  <unary right="OBJECT">position</unary>
+  <unary right="LOCATION">position</unary>
+  <unary right="OBJECT">canunloadincombat</unary>
+  <unary right="OBJECT">attachedobjects</unary>
+  <unary right="OBJECT">netid</unary>
+  <unary right="GROUP">netid</unary>
+  <unary right="ARRAY">waypointcompletionradius</unary>
+  <unary right="OBJECT">removeallassigneditems</unary>
+  <unary right="OBJECT">selectionnames</unary>
+  <unary right="OBJECT">ropeunwound</unary>
+  <unary right="ARRAY">waypointposition</unary>
+  <unary right="SCALAR">isdlcavailable</unary>
+  <unary right="ARRAY">waypointtype</unary>
+  <unary right="OBJECT">addswitchableunit</unary>
+  <unary right="CONTROL">closeoverlay</unary>
+  <unary right="ARRAY">tvexpand</unary>
+  <unary right="ARRAY">getartilleryammo</unary>
+  <unary right="ARRAY">tvadd</unary>
+  <unary right="OBJECT">owner</unary>
+  <unary right="SCALAR">progressloadingscreen</unary>
+  <unary right="SCALAR">estimatedtimeleft</unary>
+  <unary right="OBJECT">driver</unary>
+  <unary right="DISPLAY">displayparent</unary>
+  <unary right="SCALAR">sleep</unary>
+  <unary right="ARRAY">create3denentity</unary>
+  <unary right="OBJECT">primaryweaponmagazine</unary>
+  <unary right="CONTROL">ctrlparentcontrolsgroup</unary>
+  <unary right="ARRAY,STRING">actionkeysimages</unary>
+  <unary right="BOOL">enablesentences</unary>
+  <unary right="SCALAR,NaN">sin</unary>
+  <unary right="CODE">while</unary>
+  <unary right="CODE">try</unary>
+  <unary right="OBJECT">curatoreditableobjects</unary>
+  <unary right="STRING">entities</unary>
+  <unary right="ARRAY">entities</unary>
+  <unary right="ARRAY">tvcount</unary>
+  <unary right="BOOL">setgroupiconsselectable</unary>
+  <unary right="BOOL">showwarrant</unary>
+  <unary right="OBJECT">assigneditems</unary>
+  <unary right="STRING">copytoclipboard</unary>
+  <unary right="BOOL">!</unary>
+  <unary right="OBJECT">groupselectedunits</unary>
+  <unary right="SCALAR">titlefadeout</unary>
+  <unary right="ARRAY">atltoasl</unary>
+  <unary right="OBJECT">loaduniform</unary>
+  <unary right="OBJECT">islaseron</unary>
+  <unary right="OBJECT">someammo</unary>
+  <unary right="STRING">toarray</unary>
+  <unary right="ARRAY">setwind</unary>
+  <unary right="GROUP">groupowner</unary>
+  <unary right="OBJECT">isweaponrested</unary>
+  <unary right="OBJECT">isaimprecisionenabled</unary>
+  <unary right="TEAM_MEMBER">isagent</unary>
+  <unary right="OBJECT">commander</unary>
+  <unary right="STRING">markerpos</unary>
+  <unary right="STRING">leaderboardinit</unary>
+  <unary right="TASK">taskcustomdata</unary>
+  <unary right="ARRAY">lnbdeletecolumn</unary>
+  <unary right="OBJECT">incapacitatedstate</unary>
+  <unary right="SCALAR">opensteamapp</unary>
+  <unary right="CONTROL">saveoverlay</unary>
+  <unary right="OBJECT">magazinesallturrets</unary>
+  <unary right="OBJECT">collectivertd</unary>
+  <unary right="ARRAY">tvdelete</unary>
+  <unary right="ARRAY">format</unary>
+  <unary right="STRING">infopanel</unary>
+  <unary right="OBJECT">getpylonmagazines</unary>
+  <unary right="TASK">taskcompleted</unary>
+  <unary right="ARRAY">playsound3d</unary>
+  <unary right="OBJECT">getanimaimprecision</unary>
+  <unary right="STRING">execvm</unary>
+  <unary right="ARRAY">waypointformation</unary>
+  <unary right="OBJECT">cantriggerdynamicsimulation</unary>
+  <unary right="ANY">get3denconnections</unary>
+  <unary right="STRING,CODE">ongroupiconoverenter</unary>
+  <unary right="OBJECT">backpackmagazines</unary>
+  <unary right="ARRAY">cutrsc</unary>
+  <unary right="STRING">comment</unary>
+  <unary right="OBJECT">weaponlowered</unary>
+  <unary right="OBJECT">handshit</unary>
+  <unary right="ARRAY">selectbestplaces</unary>
+  <unary right="OBJECT">removeallcuratorcameraareas</unary>
+  <unary right="TASK">taskparent</unary>
+  <unary right="OBJECT">triggertype</unary>
+  <unary right="OBJECT">hidebody</unary>
+  <unary right="ARRAY">menuenabled</unary>
+  <unary right="BOOL">showchat</unary>
+  <unary right="ANY">case</unary>
+  <unary right="OBJECT">getpilotcameratarget</unary>
+  <unary right="SIDE">scoreside</unary>
+  <unary right="OBJECT">behaviour</unary>
+  <unary right="OBJECT">getmagazinecargo</unary>
+  <unary right="ARRAY">nearestterrainobjects</unary>
+  <unary right="OBJECT">lifestate</unary>
+  <unary right="OBJECT">issprintallowed</unary>
+  <unary right="LOCATION">classname</unary>
+  <unary right="STRING">difficultyoption</unary>
+  <unary right="DISPLAY">getfieldmanualstartpage</unary>
+  <unary right="STRING">islocalized</unary>
+  <unary right="OBJECT">triggertimeout</unary>
+  <unary right="ARRAY">remoteexec</unary>
+  <unary right="CONTROL">ctcursel</unary>
+  <unary right="GROUP">units</unary>
+  <unary right="OBJECT">units</unary>
+  <unary right="OBJECT">removeallcontainers</unary>
+  <unary right="GROUP">hcleader</unary>
+  <unary right="STRING">systemchat</unary>
+  <unary right="SIDE">detectedmines</unary>
+  <unary right="OBJECT">getobjecttype</unary>
+  <unary right="OBJECT">ropeattachedto</unary>
+  <unary right="ARRAY">diag_codeperformance</unary>
+  <unary right="STRING">inputaction</unary>
+  <unary right="STRING,CODE">oncommandmodechanged</unary>
+  <unary right="OBJECT">movetocompleted</unary>
+  <unary right="STRING">requiredversion</unary>
+  <unary right="ARRAY">lnbaddrow</unary>
+  <unary right="SCALAR,NaN">+</unary>
+  <unary right="ARRAY">+</unary>
+  <unary right="ANY">textlog</unary>
+  <unary right="STRING">openyoutubevideo</unary>
+  <unary right="OBJECT,GROUP">combatmode</unary>
+  <unary right="SCALAR">ppeffectdestroy</unary>
+  <unary right="ARRAY">ppeffectdestroy</unary>
+  <unary right="ARRAY">add3deneventhandler</unary>
+  <unary right="OBJECT">canstand</unary>
+  <unary right="ARRAY">vectormagnitude</unary>
+  <unary right="OBJECT">rotorsforcesrtd</unary>
+  <unary right="ARRAY">count</unary>
+  <unary right="STRING">count</unary>
+  <unary right="CONFIG">count</unary>
+  <unary right="SCALAR,NaN">-</unary>
+  <unary right="OBJECT">formationleader</unary>
+  <unary right="OBJECT">getplatenumber</unary>
+  <unary right="ARRAY">radiochannelcreate</unary>
+  <unary right="OBJECT">enginestorquertd</unary>
+  <unary right="OBJECT">isengineon</unary>
+  <unary right="ARRAY">add3denconnection</unary>
+  <unary right="STRING">for</unary>
+  <unary right="ARRAY">for</unary>
+  <unary right="OBJECT">getforcedflagtexture</unary>
+  <unary right="CONTROL">collapseobjecttree</unary>
+  <unary right="ARRAY">waypointhouseposition</unary>
+  <unary right="OBJECT">getplayerscores</unary>
+  <unary right="BOOL">enableradio</unary>
+  <unary right="SCRIPT">scriptdone</unary>
+  <unary right="OBJECT">skill</unary>
+  <unary right="SCALAR">settimemultiplier</unary>
+  <unary right="GROUP">waypointtimeoutcurrent</unary>
+  <unary right="OBJECT">magazinecargo</unary>
+  <unary right="ARRAY">ropecut</unary>
+  <unary right="ARRAY">creatediarylink</unary>
+  <unary right="OBJECT">backpack</unary>
+  <unary right="CONTROL">ctrlmapanimcommit</unary>
+  <unary right="ARRAY">mapanimadd</unary>
+  <unary right="ARRAY">surfacenormal</unary>
+  <unary right="ARRAY">lineintersectswith</unary>
+  <unary right="OBJECT">hcremoveallgroups</unary>
+  <unary right="CODE">waituntil</unary>
+  <unary right="OBJECT">getposworld</unary>
+  <unary right="STRING">toupper</unary>
+  <unary right="BOOL">showwatch</unary>
+  <unary right="CONFIG">configsourcemodlist</unary>
+  <unary right="ARRAY">createtrigger</unary>
+  <unary right="OBJECT">getstamina</unary>
+  <unary right="ARRAY">waypointshow</unary>
+  <unary right="CONTROL">ctrltype</unary>
+  <unary right="OBJECT">getmass</unary>
+  <unary right="OBJECT">weaponstate</unary>
+  <unary right="ARRAY">weaponstate</unary>
+  <unary right="ARRAY">lbpictureright</unary>
+  <unary right="OBJECT">load</unary>
+  <unary right="OBJECT">loadabs</unary>
+  <unary right="OBJECT">removeswitchableunit</unary>
+  <unary right="CONFIG">inheritsfrom</unary>
+  <unary right="ARRAY">lnbsort</unary>
+  <unary right="OBJECT">islighton</unary>
+  <unary right="OBJECT">simulationenabled</unary>
+  <unary right="OBJECT">currentmagazinedetail</unary>
+  <unary right="STRING,CODE">onmapsingleclick</unary>
+  <unary right="OBJECT">unitaimpositionvisual</unary>
+  <unary right="OBJECT">everybackpack</unary>
+  <unary right="ARRAY">asltoatl</unary>
+  <unary right="STRING">screenshot</unary>
+  <unary right="OBJECT">actionids</unary>
+  <unary right="OBJECT">vehiclereceiveremotetargets</unary>
+  <unary right="OBJECT">listvehiclesensors</unary>
+  <unary right="ARRAY">sethudmovementlevels</unary>
+  <unary right="ARRAY">set3denmodelsvisible</unary>
+  <unary right="OBJECT">currentmuzzle</unary>
+  <unary right="CONTROL">ctrlautoscrollspeed</unary>
+  <unary right="OBJECT">currentweaponmode</unary>
+  <unary right="OBJECT">getwingspositionrtd</unary>
+  <unary right="ARRAY">waypointloitertype</unary>
+  <unary right="OBJECT">name</unary>
+  <unary right="LOCATION">name</unary>
+  <unary right="STRING">onbriefinggroup</unary>
+  <unary right="LOCATION">locationposition</unary>
+  <unary right="LOCATION">importance</unary>
+  <unary right="OBJECT">captive</unary>
+  <unary right="OBJECT">isweapondeployed</unary>
+  <unary right="ARRAY">menushortcut</unary>
+  <unary right="BOOL">assert</unary>
+  <unary right="SCALAR">keyimage</unary>
+  <unary right="OBJECT">removeallweapons</unary>
+  <unary right="ARRAY">titleobj</unary>
+  <unary right="CONTROL">lbsort</unary>
+  <unary right="ARRAY">lbsort</unary>
+  <unary right="SCALAR">lbsort</unary>
+  <unary right="OBJECT">vehiclevarname</unary>
+  <unary right="OBJECT">triggertimeoutcurrent</unary>
+  <unary right="CONTROL">ctrlmodeldirandup</unary>
+  <unary right="OBJECT">assignedgunner</unary>
+  <unary right="ARRAY">setmouseposition</unary>
+  <unary right="SCRIPT">terminate</unary>
+  <unary right="OBJECT">soldiermagazines</unary>
+  <unary right="STRING">getmarkerpos</unary>
+  <unary right="STRING">endmission</unary>
+  <unary right="ARRAY">leaderboardrequestrowsglobal</unary>
+  <unary right="OBJECT">magazinesammo</unary>
+  <unary right="OBJECT">removeuniform</unary>
+  <unary right="OBJECT">faction</unary>
+  <unary right="CONTROL">ctrltextsecondary</unary>
+  <unary right="ARRAY">clear3deninventory</unary>
+  <unary right="ARRAY">lnbpictureright</unary>
+  <unary right="STRING">servercommandavailable</unary>
+  <unary right="CONTROL">geteditormode</unary>
+  <unary right="OBJECT">removeallprimaryweaponitems</unary>
+  <unary right="STRING">diag_lightnewload</unary>
+  <unary right="CONTROL">menuhover</unary>
+  <unary right="SCALAR">menuhover</unary>
+  <unary right="STRING">verifysignature</unary>
+  <unary right="OBJECT">group</unary>
+  <unary right="ARRAY">allturrets</unary>
+  <unary right="OBJECT">allturrets</unary>
+  <unary right="CONTROL">restarteditorcamera</unary>
+  <unary right="OBJECT">camcommitted</unary>
+  <unary right="ARRAY">tvtooltip</unary>
+  <unary right="ARRAY">startloadingscreen</unary>
+  <unary right="ARRAY">ctrlsettext</unary>
+  <unary right="SIDE">listremotetargets</unary>
+  <unary right="OBJECT">currenttask</unary>
+  <unary right="OBJECT">flagside</unary>
+  <unary right="OBJECT">isinremainscollector</unary>
+  <unary right="ARRAY">nearestobject</unary>
+  <unary right="OBJECT">magazinesammocargo</unary>
+  <unary right="OBJECT">setplayable</unary>
+  <unary right="STRING">unlockachievement</unary>
+  <unary right="ARRAY">lbsettext</unary>
+  <unary right="OBJECT">isautonomous</unary>
+  <unary right="ARRAY">additempool</unary>
+  <unary right="SCALAR,STRING">getmissionlayerentities</unary>
+  <unary right="ARRAY">lnbdeleterow</unary>
+  <unary right="ANY">throw</unary>
+  <unary right="STRING">dissolveteam</unary>
+  <unary right="STRING">publicvariableserver</unary>
+  <unary right="OBJECT">handgunmagazine</unary>
+  <unary right="OBJECT">getoxygenremaining</unary>
+  <unary right="CONTROL">progressposition</unary>
+  <unary right="ARRAY">tvvalue</unary>
+  <unary right="OBJECT">vehicle</unary>
+  <unary right="STRING">buldozer_loadnewroads</unary>
+  <unary right="OBJECT">removeallactions</unary>
+  <unary right="ARRAY">vectormagnitudesqr</unary>
+  <unary right="CONFIG">getnumber</unary>
+  <unary right="STRING">servercommand</unary>
+  <unary right="LOCATION">attachedobject</unary>
+  <unary right="OBJECT">everycontainer</unary>
+  <unary right="CONTROL">ctrlautoscrollrewind</unary>
+  <unary right="OBJECT">stopenginertd</unary>
+  <unary right="STRING">preprocessfilelinenumbers</unary>
+  <unary right="OBJECT">gunner</unary>
+  <unary right="ARRAY">lbsetdata</unary>
+  <unary right="OBJECT">isvehiclecargo</unary>
+  <unary right="TEAM_MEMBER">agent</unary>
+  <unary right="ARRAY">openmap</unary>
+  <unary right="BOOL">openmap</unary>
+  <unary right="STRING">playsound</unary>
+  <unary right="ARRAY">playsound</unary>
+  <unary right="ARRAY,OBJECT">dostop</unary>
+  <unary right="STRING,CODE">oneachframe</unary>
+  <unary right="OBJECT">lightdetachobject</unary>
+  <unary right="OBJECT">getpersonuseddlcs</unary>
+  <unary right="GROUP">getgroupicons</unary>
+  <unary right="ARRAY">getwppos</unary>
+  <unary right="SCALAR">setsimulweatherlayers</unary>
+  <unary right="OBJECT">getdescription</unary>
+  <unary right="OBJECT">ropeendposition</unary>
+  <unary right="STRING">text</unary>
+  <unary right="LOCATION">text</unary>
+  <unary right="OBJECT">items</unary>
+  <unary right="BOOL">showcinemaborder</unary>
+  <unary right="CONTROL">ctrlautoscrolldelay</unary>
+  <unary right="STRING,CODE">onpreloadfinished</unary>
+  <unary right="ARRAY">nearestlocation</unary>
+  <unary right="OBJECT">getrepaircargo</unary>
+  <unary right="ARRAY">titlersc</unary>
+  <unary right="SCALAR">setcurrentchannel</unary>
+  <unary right="ARRAY">lbsetpictureright</unary>
+  <unary right="ARRAY">menusize</unary>
+  <unary right="OBJECT">pitch</unary>
+  <unary right="STRING">onbriefingplan</unary>
+  <unary right="OBJECT">isvehicleradaron</unary>
+  <unary right="ARRAY">formattext</unary>
+  <unary right="OBJECT">camerainterest</unary>
+  <unary right="OBJECT">removeheadgear</unary>
+  <unary right="OBJECT">side</unary>
+  <unary right="GROUP">side</unary>
+  <unary right="LOCATION">side</unary>
+  <unary right="SCALAR">completedfsm</unary>
+  <unary right="SIDE">playableslotsnumber</unary>
+  <unary right="STRING">servercommandexecutable</unary>
+  <unary right="BOOL,ARRAY">enablesaving</unary>
+  <unary right="ARRAY">remove3denconnection</unary>
+  <unary right="STRING">queryitemspool</unary>
+  <unary right="OBJECT">isformationleader</unary>
+  <unary right="OBJECT">numberofenginesrtd</unary>
+  <unary right="OBJECT">velocity</unary>
+  <unary right="SCALAR">setplayerrespawntime</unary>
+  <unary right="STRING">preloadsound</unary>
+  <unary right="SCALAR">setviewdistance</unary>
+  <unary right="SCALAR,NaN">rad</unary>
+  <unary right="OBJECT">getallsoundcontrollers</unary>
+  <unary right="ARRAY">getcustomsoundcontroller</unary>
+  <unary right="ARRAY,OBJECT">infopanels</unary>
+  <unary right="STRING">getmarkertype</unary>
+  <unary right="OBJECT">magazinesdetail</unary>
+  <unary right="STRING">markersize</unary>
+  <unary right="ARRAY">ctrlshow</unary>
+  <unary right="ARRAY">waypointattachedobject</unary>
+  <unary right="OBJECT">ishidden</unary>
+  <unary right="ARRAY">preloadtitleobj</unary>
+  <unary right="SCALAR">tvcollapseall</unary>
+  <unary right="CONTROL">tvcollapseall</unary>
+  <unary right="CONTROL">ctrlparent</unary>
+  <unary right="STRING">diag_dynamicsimulationend</unary>
+  <unary right="TEAM_MEMBER">registeredtasks</unary>
+  <unary right="CONTROL">ctheadercount</unary>
+  <unary right="SCALAR,NaN">deg</unary>
+  <unary right="ARRAY">forceatpositionrtd</unary>
+  <unary right="ARRAY,STRING">actionkeysnamesarray</unary>
+  <unary right="ARRAY">titlecut</unary>
+  <unary right="ARRAY">menuaction</unary>
+  <unary right="BOOL">disableuserinput</unary>
+  <unary right="ARRAY">set3denlinesvisible</unary>
+  <unary right="OBJECT">aimpos</unary>
+  <unary right="CONFIG">configsourceaddonlist</unary>
+  <unary right="TASK">cancelsimpletaskdestination</unary>
+  <unary right="OBJECT">clearweaponcargo</unary>
+  <unary right="BOOL,ARRAY">enableenvironment</unary>
+  <unary right="STRING">markercolor</unary>
+  <unary right="ARRAY">createsimpleobject</unary>
+  <unary right="SCALAR,OBJECT">airportside</unary>
+  <unary right="OBJECT">assignedvehiclerole</unary>
+  <unary right="CONTROL">lnbgetcolumnsposition</unary>
+  <unary right="SCALAR">lnbgetcolumnsposition</unary>
+  <unary right="BOOL">enableteamswitch</unary>
+  <unary right="ARRAY">waypointforcebehaviour</unary>
+  <unary right="OBJECT">precision</unary>
+  <unary right="OBJECT">ropes</unary>
+  <unary right="ARRAY">lbcolor</unary>
+  <unary right="ARRAY">settrafficdensity</unary>
+  <unary right="CODE">call</unary>
+  <unary right="ARRAY">createsoundsource</unary>
+  <unary right="OBJECT">backpackcontainer</unary>
+  <unary right="OBJECT">vectorupvisual</unary>
+  <unary right="CONFIG">istext</unary>
+  <unary right="ARRAY">leaderboardrequestrowsglobalarounduser</unary>
+  <unary right="OBJECT">vectordir</unary>
+  <unary right="OBJECT">clearbackpackcargoglobal</unary>
+  <unary right="SCALAR">getdlcusagetime</unary>
+  <unary right="TEAM_MEMBER">members</unary>
+  <unary right="ARRAY">worldtoscreen</unary>
+  <unary right="TEAM_MEMBER">teamtype</unary>
+  <unary right="OBJECT">removeallhandgunitems</unary>
+  <unary right="ARRAY,STRING">private</unary>
+  <unary right="OBJECT">curatoreditingareatype</unary>
+  <unary right="OBJECT">magazinesdetailbackpack</unary>
+  <unary right="NAMESPACE">with</unary>
+  <unary right="ARRAY">allsimpleobjects</unary>
+  <unary right="CONTROL">ctrlmapscale</unary>
+  <unary right="STRING">createdialog</unary>
+  <unary right="GROUP">currentwaypoint</unary>
+  <unary right="ARRAY">createmarker</unary>
+  <unary right="OBJECT">magazinesammofull</unary>
+  <unary right="STRING,TEXT">hint</unary>
+  <unary right="OBJECT">putweaponpool</unary>
+  <unary right="OBJECT">getobjectdlc</unary>
+  <unary right="ARRAY">enabledebriefingstats</unary>
+  <unary right="STRING">goto</unary>
+  <unary right="ARRAY">deletewaypoint</unary>
+  <unary right="SCALAR">setshadowdistance</unary>
+  <unary right="ARRAY">tvsortbyvalue</unary>
+  <unary right="OBJECT">lockidentity</unary>
+  <unary right="OBJECT">typeof</unary>
+  <unary right="OBJECT">score</unary>
+  <unary right="ARRAY">lbsetpicturecolor</unary>
+  <unary right="CONTROL">nextmenuitemindex</unary>
+  <unary right="OBJECT">lasertarget</unary>
+  <unary right="ARRAY,OBJECT">unitready</unary>
+  <unary right="BOOL">showmap</unary>
+  <unary right="STRING">deletemarker</unary>
+  <unary right="OBJECT">isautostartupenabledrtd</unary>
+  <unary right="STRING">allmissionobjects</unary>
+  <unary right="OBJECT">getcenterofmass</unary>
+  <unary right="OBJECT">stance</unary>
+  <unary right="OBJECT">curatorpoints</unary>
+  <unary right="ARRAY">lbtextright</unary>
+  <unary right="OBJECT">alive</unary>
+  <unary right="ARRAY">getterrainheightasl</unary>
+  <unary right="OBJECT">crew</unary>
+  <unary right="OBJECT">triggerattachedvehicle</unary>
+  <unary right="OBJECT">rank</unary>
+  <unary right="OBJECT">getrotorbrakertd</unary>
+  <unary right="OBJECT">itemswithmagazines</unary>
+  <unary right="ARRAY">selectmax</unary>
+  <unary right="ARRAY">selectmin</unary>
+  <unary right="OBJECT">isbleeding</unary>
+  <unary right="CONTROL">isrealtime</unary>
+  <unary right="CONTROL">ctrlactivate</unary>
+  <unary right="SCALAR,NaN">acos</unary>
+  <unary right="STRING">processdiarylink</unary>
+  <unary right="ARRAY">lbcolorright</unary>
+  <unary right="ARRAY">menupicture</unary>
+  <unary right="OBJECT">namesound</unary>
+  <unary right="STRING,CODE">isnil</unary>
+  <unary right="OBJECT">locked</unary>
+  <unary right="ARRAY">ctrlenable</unary>
+  <unary right="STRING">getdlcassetsusagebyname</unary>
+  <unary right="OBJECT">clearbackpackcargo</unary>
+  <unary right="ARRAY">cuttext</unary>
+  <unary right="OBJECT">formationdirection</unary>
+  <unary right="ARRAY,SIDE">creategroup</unary>
+  <unary right="ARRAY">preloadtitlersc</unary>
+  <unary right="OBJECT">getweaponcargo</unary>
+  <unary right="OBJECT">isabletobreathe</unary>
+  <unary right="OBJECT">getassignedcuratorunit</unary>
+  <unary right="CONTROL">ctrlcommitted</unary>
+  <unary right="SCALAR">get3denentity</unary>
+  <unary right="CONTROL">ctrlmapanimdone</unary>
+  <unary right="ARRAY">setgroupiconsvisible</unary>
+  <unary right="CONTROL">gearslotammocount</unary>
+  <unary right="OBJECT">enginespowerrtd</unary>
+  <unary right="STRING">markerbrush</unary>
+  <unary right="SCALAR">sethorizonparallaxcoef</unary>
+  <unary right="STRING">echo</unary>
+  <unary right="OBJECT">dynamicsimulationenabled</unary>
+  <unary right="GROUP">dynamicsimulationenabled</unary>
+  <unary right="OBJECT">hcallgroups</unary>
+  <unary right="ARRAY">setcamshakedefparams</unary>
+  <unary right="ANY">diag_log</unary>
+  <unary right="ARRAY">screentoworld</unary>
+  <unary right="CODE">default</unary>
+  <unary right="ARRAY">menuenable</unary>
+  <unary right="OBJECT">currentcommand</unary>
+  <unary right="CONTROL">sliderposition</unary>
+  <unary right="SCALAR">sliderposition</unary>
+  <unary right="OBJECT">unitpos</unary>
+  <unary right="SCALAR">finddisplay</unary>
+  <unary right="OBJECT">itemcargo</unary>
+  <unary right="OBJECT">getusermfdvalue</unary>
+  <unary right="OBJECT">secondaryweaponitems</unary>
+  <unary right="ARRAY">menuvalue</unary>
+  <unary right="ARRAY">createmarkerlocal</unary>
+  <unary right="SCALAR,NaN">round</unary>
+  <unary right="STRING">deleteidentity</unary>
+  <unary right="OBJECT">getaimingcoef</unary>
+  <unary right="STRING">breakout</unary>
+  <unary right="OBJECT">ropeattachedobjects</unary>
+  <unary right="ARRAY">lbsetselectcolor</unary>
+  <unary right="OBJECT">mineactive</unary>
+  <unary right="BOOL">enablestressdamage</unary>
+  <unary right="CONTROL">mapcenteroncamera</unary>
+  <unary right="CONTROL">ctaddheader</unary>
+  <unary right="ARRAY">lbsetpicture</unary>
+  <unary right="OBJECT">handgunweapon</unary>
+  <unary right="ARRAY">activateaddons</unary>
+  <unary right="ARRAY">addmagazinepool</unary>
+  <unary right="OBJECT">synchronizedwaypoints</unary>
+  <unary right="ARRAY">synchronizedwaypoints</unary>
+  <unary right="OBJECT">vehiclecargoenabled</unary>
+  <unary right="ARRAY">save3deninventory</unary>
+  <unary right="STRING">compilefinal</unary>
+  <unary right="SCALAR,NaN">cos</unary>
+  <unary right="ARRAY">taskhint</unary>
+  <unary right="OBJECT">moveout</unary>
+  <unary right="ARRAY">setstatvalue</unary>
+  <unary right="TEAM_MEMBER">deleteteam</unary>
+  <unary right="STRING">get3denactionstate</unary>
+  <unary right="ARRAY">createagent</unary>
+  <unary right="CONTROL">importallgroups</unary>
+  <unary right="ARRAY">selectrandomweighted</unary>
+  <unary right="OBJECT">assignedvehicle</unary>
+  <unary right="OBJECT">expecteddestination</unary>
+  <unary right="OBJECT">goggles</unary>
+  <unary right="OBJECT">removeallcuratoraddons</unary>
+  <unary right="ARRAY">random</unary>
+  <unary right="SCALAR,NaN">random</unary>
+  <unary right="STRING">objectfromnetid</unary>
+  <unary right="CONTROL">ctrlchecked</unary>
+  <unary right="ARRAY">tvsettooltip</unary>
+  <unary right="OBJECT">isburning</unary>
+  <unary right="OBJECT">getobjectmaterials</unary>
+  <unary right="OBJECT">getplayeruid</unary>
+  <unary right="OBJECT">airplanethrottle</unary>
+  <unary right="OBJECT">binocular</unary>
+  <unary right="OBJECT">getweaponsway</unary>
+  <unary right="CODE">collect3denhistory</unary>
+  <unary right="OBJECT">handgunitems</unary>
+  <unary right="OBJECT">removeallcuratoreditingareas</unary>
+  <unary right="SCALAR">skiptime</unary>
+  <unary right="OBJECT">getpos</unary>
+  <unary right="LOCATION">getpos</unary>
+  <unary right="OBJECT">curatorcameraarea</unary>
+  <unary right="ARRAY">enableaudiofeature</unary>
+  <unary right="STRING">publicvariable</unary>
+  <unary right="ARRAY">create3dencomposition</unary>
+  <unary right="SCALAR">showscoretable</unary>
+  <unary right="SCALAR">tofixed</unary>
+  <unary right="OBJECT">backpackcargo</unary>
+  <unary right="OBJECT">getobjecttextures</unary>
+  <unary right="OBJECT">vestmagazines</unary>
+  <unary right="OBJECT">curatoraddons</unary>
+  <unary right="STRING">dynamicsimulationdistancecoef</unary>
+  <unary right="OBJECT">secondaryweapon</unary>
+  <unary right="SCALAR,NaN">atan</unary>
+  <unary right="SCALAR">get3denlayerentities</unary>
+  <unary right="ARRAY">nearestobjects</unary>
+  <unary right="OBJECT">getposvisual</unary>
+  <unary right="OBJECT">deletecollection</unary>
+  <unary right="OBJECT">triggerstatements</unary>
+  <unary right="ANY">switch</unary>
+  <unary right="TASK">priority</unary>
+  <unary right="ARRAY">menusetpicture</unary>
+  <unary right="ARRAY">setlocalwindparams</unary>
+  <unary right="ARRAY">lbvalue</unary>
+  <unary right="SIDE">createcenter</unary>
+  <unary right="ARRAY">menuexpand</unary>
+  <unary right="OBJECT">getposaslw</unary>
+  <unary right="SCALAR,NaN">atg</unary>
+  <unary right="ARRAY">lineintersectssurfaces</unary>
+  <unary right="STRING,CODE">ongroupiconoverleave</unary>
+  <unary right="OBJECT">camdestroy</unary>
+  <unary right="OBJECT">curatorwaypointcost</unary>
+  <unary right="ARRAY">slidersetposition</unary>
+  <unary right="OBJECT">ismarkedforcollection</unary>
+  <unary right="OBJECT">getassignedcuratorlogic</unary>
+  <unary right="STRING">diag_setlightnew</unary>
+  <unary right="OBJECT">triggeractivation</unary>
+  <unary right="CONTROL">ctrldelete</unary>
+  <unary right="STRING">parsetext</unary>
+  <unary right="OBJECT">teammember</unary>
+  <unary right="STRING">actionkeys</unary>
+  <unary right="ARRAY">waypointbehaviour</unary>
+  <unary right="ARRAY">preloadcamera</unary>
+  <unary right="STRING">parsenumber</unary>
+  <unary right="BOOL">parsenumber</unary>
+  <unary right="SIDE">deletecenter</unary>
+  <unary right="ARRAY">remoteexeccall</unary>
+  <unary right="STRING">setstaminascheme</unary>
+  <unary right="STRING">parsesimplearray</unary>
+  <unary right="LOCATION">rectangular</unary>
+  <unary right="ARRAY">move3dencamera</unary>
+  <unary right="ARRAY">addmusiceventhandler</unary>
+  <unary right="OBJECT">resetsubgroupdirection</unary>
+  <unary right="SCALAR">channelenabled</unary>
+  <unary right="ARRAY">lnbsetpictureright</unary>
+  <unary right="GROUP">cleargroupicons</unary>
+  <unary right="SCALAR">lognetworkterminate</unary>
+  <unary right="ARRAY">setcustomsoundcontroller</unary>
+  <unary right="TASK">taskdestination</unary>
+  <unary right="TASK">taskalwaysvisible</unary>
+  <unary right="OBJECT">vestitems</unary>
+  <unary right="SCALAR,NaN">log</unary>
+  <unary right="OBJECT">switchcamera</unary>
+  <unary right="ARRAY">setcustommissiondata</unary>
+  <unary right="STRING">ppeffectcommitted</unary>
+  <unary right="SCALAR">ppeffectcommitted</unary>
+  <unary right="ARRAY">buttonsetaction</unary>
+  <unary right="ARRAY">menudelete</unary>
+  <unary right="TEAM_MEMBER">fromeditor</unary>
+  <unary right="OBJECT">waypointsenableduav</unary>
+  <unary right="ARRAY">lnbcolorright</unary>
+  <unary right="ARRAY">tvcollapse</unary>
+  <unary right="SCALAR">airdensityrtd</unary>
+  <unary right="SCALAR">keyname</unary>
+  <unary right="SCALAR">closedialog</unary>
+  <unary right="ARRAY">lnbsetcolumnspos</unary>
+  <unary right="ARRAY,OBJECT">commandstop</unary>
+  <unary right="STRING">scriptname</unary>
+  <unary right="OBJECT">list</unary>
+  <unary right="ARRAY">disablemapindicators</unary>
+  <unary right="STRING">hintc</unary>
+  <unary right="SCALAR,NaN">tan</unary>
+  <unary right="OBJECT">detach</unary>
+  <unary right="OBJECT">needreload</unary>
+  <unary right="ARRAY">waypointdescription</unary>
+  <unary right="STRING">image</unary>
+  <unary right="ARRAY">tvsetcursel</unary>
+  <unary right="SCALAR">tvclear</unary>
+  <unary right="CONTROL">tvclear</unary>
+  <unary right="OBJECT">isnull</unary>
+  <unary right="GROUP">isnull</unary>
+  <unary right="SCRIPT">isnull</unary>
+  <unary right="CONFIG">isnull</unary>
+  <unary right="DISPLAY">isnull</unary>
+  <unary right="CONTROL">isnull</unary>
+  <unary right="NetObject">isnull</unary>
+  <unary right="TASK">isnull</unary>
+  <unary right="LOCATION">isnull</unary>
+  <unary right="SCALAR">setacctime</unary>
+  <unary right="SCALAR">remove3denlayer</unary>
+  <unary right="OBJECT">removebackpack</unary>
+  <unary right="OBJECT">hideobjectglobal</unary>
+  <unary right="ARRAY">lnbcolor</unary>
+  <unary right="CONTROL">lnbcurselrow</unary>
+  <unary right="SCALAR">lnbcurselrow</unary>
+  <unary right="OBJECT">getbackpackcargo</unary>
+  <unary right="ANY">typename</unary>
+  <unary right="OBJECT">curatorregisteredobjects</unary>
+  <unary right="CONTROL">ctrlenabled</unary>
+  <unary right="SCALAR">ctrlenabled</unary>
+  <unary right="STRING">removeallmusiceventhandlers</unary>
+  <unary right="OBJECT">getshotparents</unary>
+  <unary right="SIDE">playersnumber</unary>
+  <unary right="STRING,CODE">onplayerconnected</unary>
+  <unary right="ARRAY">menutext</unary>
+  <unary right="ARRAY">lnbaddcolumn</unary>
+  <unary right="ARRAY">menushortcuttext</unary>
+  <unary right="ARRAY,OBJECT">mapgridposition</unary>
+  <unary right="OBJECT">ropeattachenabled</unary>
+  <unary right="OBJECT">firstbackpack</unary>
+  <unary right="ARRAY">lnbsetpicture</unary>
+  <unary right="OBJECT">getitemcargo</unary>
+  <unary right="ARRAY">tvsetvalue</unary>
+  <unary right="ARRAY">removemusiceventhandler</unary>
+  <unary right="CONFIG">gettext</unary>
+  <unary right="OBJECT">getburningvalue</unary>
+  <unary right="OBJECT,GROUP">formation</unary>
+  <unary right="TEAM_MEMBER">formation</unary>
+  <unary right="ARRAY">simulclouddensity</unary>
+  <unary right="STRING">tolower</unary>
+  <unary right="STRING">localize</unary>
+  <unary right="OBJECT">loadbackpack</unary>
+  <unary right="OBJECT">unassignteam</unary>
+  <unary right="ARRAY">menudata</unary>
+  <unary right="OBJECT">removeallownedmines</unary>
+  <unary right="OBJECT">ropelength</unary>
+  <unary right="OBJECT">getanimspeedcoef</unary>
+  <unary right="OBJECT">fullcrew</unary>
+  <unary right="ARRAY">fullcrew</unary>
+  <unary right="ARRAY">createvehicle</unary>
+  <unary right="OBJECT">formationmembers</unary>
+  <unary right="ARRAY">addcamshake</unary>
+  <unary right="STRING">markertext</unary>
+  <unary right="STRING">getcontainermaxload</unary>
+  <unary right="TASK">type</unary>
+  <unary right="LOCATION">type</unary>
+  <unary right="ARRAY">lnbsetpicturecolor</unary>
+  <unary right="OBJECT">visibleposition</unary>
+  <unary right="OBJECT,GROUP">speedmode</unary>
+  <unary right="OBJECT">vestcontainer</unary>
+  <unary right="OBJECT">getpilotcameradirection</unary>
+  <unary right="TEAM_MEMBER">currenttasks</unary>
+  <unary right="STRING">markerdir</unary>
+  <unary right="BOOL">showhud</unary>
+  <unary right="ARRAY">showhud</unary>
+  <unary right="OBJECT">getposasl</unary>
+  <unary right="BOOL">showcuratorcompass</unary>
+  <unary right="BOOL">forcemap</unary>
+  <unary right="OBJECT">inflamed</unary>
+  <unary right="STRING">loadfile</unary>
+  <unary right="BOOL">calculateplayervisibilitybyfriendly</unary>
+  <unary right="OBJECT,GROUP">waypoints</unary>
+  <unary right="STRING">scopename</unary>
+  <unary right="ARRAY">menusetaction</unary>
+  <unary right="OBJECT">weaponinertia</unary>
+  <unary right="OBJECT">isdamageallowed</unary>
+  <unary right="OBJECT">isforcedwalk</unary>
+  <unary right="OBJECT">currentvisionmode</unary>
+  <unary right="BOOL">enablecaustics</unary>
+  <unary right="ARRAY">selectrandom</unary>
+  <unary right="STRING">deactivatekey</unary>
+  <unary right="OBJECT">haspilotcamera</unary>
+  <unary right="ARRAY">setdate</unary>
+  <unary right="OBJECT">direction</unary>
+  <unary right="LOCATION">direction</unary>
+  <unary right="SCALAR">admin</unary>
+  <unary right="STRING">dynamicsimulationdistance</unary>
+  <unary right="SCALAR">ppeffectenabled</unary>
+  <unary right="SCALAR">getdlcs</unary>
+  <unary right="OBJECT">getsuppression</unary>
+  <unary right="ARRAY">lbsetpicturecolorselected</unary>
+  <unary right="ARRAY">settrafficgap</unary>
+  <unary right="BOOL">camusenvg</unary>
+  <unary right="CONTROL">ctclear</unary>
+  <unary right="TEAM_MEMBER">resources</unary>
+  <unary right="CONFIG">getarray</unary>
+  <unary right="STRING,TEXT">hintsilent</unary>
+  <unary right="OBJECT">assignedcommander</unary>
+  <unary right="TASK">taskchildren</unary>
+  <unary right="CONTROL">updateobjecttree</unary>
+  <unary right="BOOL">showcompass</unary>
+  <unary right="CONFIG">isnumber</unary>
+  <unary right="ARRAY">lnbpicture</unary>
+  <unary right="ARRAY">waypointname</unary>
+  <unary right="OBJECT">deletesite</unary>
+  <unary right="OBJECT">nearestbuilding</unary>
+  <unary right="ARRAY">nearestbuilding</unary>
+  <unary right="ARRAY">addforcegeneratorrtd</unary>
+  <unary right="SCALAR">forcegeneratorrtd</unary>
+  <unary right="OBJECT">getposatlvisual</unary>
+  <unary right="ARRAY">getallenvsoundcontrollers</unary>
+  <unary right="BOOL">enabledynamicsimulationsystem</unary>
+  <unary right="OBJECT">clearitemcargoglobal</unary>
+  <unary right="STRING">getmissionconfig</unary>
+  <unary right="SCALAR,NaN">sqrt</unary>
+  <unary right="CONTROL">ctrltextheight</unary>
+  <unary right="OBJECT">removegoggles</unary>
+  <unary right="BOOL">showsubtitles</unary>
+  <unary right="OBJECT">getplayerchannel</unary>
+  <unary right="ARRAY">menuadd</unary>
+  <unary right="OBJECT">clearitemcargo</unary>
+  <unary right="ARRAY">sendudpmessage</unary>
+  <unary right="STRING">checkaifeature</unary>
+  <unary right="OBJECT">uavcontrol</unary>
+  <unary right="OBJECT">iswalking</unary>
+  <unary right="STRING">compile</unary>
+  <unary right="TASK">tasktype</unary>
+  <unary right="OBJECT">flag</unary>
+  <unary right="ARRAY">composetext</unary>
+  <unary right="OBJECT">formleader</unary>
+  <unary right="OBJECT">stopped</unary>
+  <unary right="OBJECT">clearallitemsfrombackpack</unary>
+  <unary right="STRING">leaderboardgetrows</unary>
+  <unary right="ARRAY">nearestlocations</unary>
+  <unary right="ARRAY">addmissioneventhandler</unary>
+  <unary right="STRING,CODE">ongroupiconclick</unary>
+  <unary right="OBJECT">hmd</unary>
+  <unary right="SCALAR">setobjectviewdistance</unary>
+  <unary right="ARRAY">setobjectviewdistance</unary>
+  <unary right="ARRAY">remove3deneventhandler</unary>
+  <unary right="ARRAY">waypointscript</unary>
+  <unary right="ARRAY">lnbtextright</unary>
+  <unary right="OBJECT">magazinesdetailuniform</unary>
+  <unary right="ARRAY">tvsetpicturerightcolor</unary>
+  <unary right="STRING,TEXT">hintcadet</unary>
+  <unary right="CONTROL">ctrowcount</unary>
+  <unary right="ARRAY">set3dengrid</unary>
+  <unary right="OBJECT">roadsconnectedto</unary>
+  <unary right="CONTROL">lbcursel</unary>
+  <unary right="SCALAR">lbcursel</unary>
+  <unary right="OBJECT">canfire</unary>
+  <unary right="ARRAY">creategeardialog</unary>
+  <unary right="ARRAY">slidersetspeed</unary>
+  <unary right="ARRAY">configproperties</unary>
+  <unary right="ARRAY">sendaumessage</unary>
+  <unary right="STRING">iskeyactive</unary>
+  <unary right="OBJECT">isobjecthidden</unary>
+  <unary right="CONFIG">configsourcemod</unary>
+  <unary right="ARRAY">lnbvalue</unary>
+  <unary right="ARRAY">tvpicture</unary>
+  <unary right="OBJECT">underwater</unary>
+  <unary right="BOOL">showwaypoints</unary>
+  <unary right="CONTROL">sliderspeed</unary>
+  <unary right="SCALAR">sliderspeed</unary>
+  <unary right="CONFIG">confighierarchy</unary>
+  <unary right="ARRAY">setmusiceventhandler</unary>
+  <unary right="OBJECT">unitaimposition</unary>
+  <unary right="CONTROL">lnbsize</unary>
+  <unary right="SCALAR">lnbsize</unary>
+  <unary right="ARRAY">ropecreate</unary>
+  <unary right="STRING">deletestatus</unary>
+  <unary right="ARRAY">lnbsetpicturecolorselected</unary>
+  <unary right="OBJECT">morale</unary>
+  <unary right="CONTROL">ctrlfade</unary>
+  <unary right="OBJECT">selectplayer</unary>
+  <unary right="ARRAY">menusetcheck</unary>
+  <unary right="ARRAY">createlocation</unary>
+  <unary right="CONTROL">menuclear</unary>
+  <unary right="SCALAR">menuclear</unary>
+  <unary right="STRING">failmission</unary>
+  <unary right="ARRAY">lnbsetcolorright</unary>
+  <unary right="STRING">preprocessfile</unary>
+  <unary right="ARRAY">setcompassoscillation</unary>
+  <unary right="OBJECT">iscollisionlighton</unary>
+  <unary right="STRING">removeallmissioneventhandlers</unary>
+  <unary right="SCALAR">ctrlvisible</unary>
+  <unary right="OBJECT">formationtask</unary>
+  <unary right="OBJECT">ismanualfire</unary>
+  <unary right="SCALAR">opendlcpage</unary>
+  <unary right="SCALAR,NaN">ln</unary>
+  <unary right="OBJECT">wingsforcesrtd</unary>
+  <unary right="ARRAY">setdefaultcamera</unary>
+  <unary right="ARRAY">removefromremainscollector</unary>
+  <unary right="ARRAY">playscriptedmission</unary>
+  <unary right="ARRAY">lnbsetcolor</unary>
+  <unary right="OBJECT">deletevehicle</unary>
+  <unary right="STRING,CODE">onteamswitch</unary>
+  <unary right="ARRAY">lineintersects</unary>
+  <unary right="OBJECT">isuavconnected</unary>
+  <unary right="CONTROL">ctrlposition</unary>
+  <unary right="CONTROL">lbsize</unary>
+  <unary right="SCALAR">lbsize</unary>
+  <unary right="ARRAY,OBJECT">getunitloadout</unary>
+  <unary right="STRING">getunitloadout</unary>
+  <unary right="CONFIG">getunitloadout</unary>
+  <unary right="OBJECT">getpilotcamerarotation</unary>
+  <unary right="ARRAY,OBJECT">roadat</unary>
+  <unary right="ARRAY">createguardedpoint</unary>
+  <unary right="CONTROL">commitoverlay</unary>
+  <unary right="ARRAY">params</unary>
+  <unary right="OBJECT">currentweapon</unary>
+  <unary right="OBJECT">getdirvisual</unary>
+  <unary right="CONTROL">ctrlmapmouseover</unary>
+  <unary right="ARRAY">drawline3d</unary>
+  <unary right="CONTROL">ctrlmapanimclear</unary>
+  <unary right="STRING">leaderboarddeinit</unary>
+  <unary right="CONTROL">clearoverlay</unary>
+  <unary right="OBJECT">enginesrpmrtd</unary>
+  <unary right="ARRAY">datetonumber</unary>
+  <unary right="SCALAR">setsystemofunits</unary>
+  <unary right="STRING">breakto</unary>
+  <unary right="STRING">difficultyenabled</unary>
+  <unary right="OBJECT">clearmagazinecargoglobal</unary>
+  <unary right="GROUP">isgroupdeletedwhenempty</unary>
+  <unary right="OBJECT">synchronizedobjects</unary>
+  <unary right="SCALAR,NaN">tg</unary>
+  <unary right="OBJECT">getdammage</unary>
+  <unary right="ARRAY">lbsetcursel</unary>
+  <unary right="SCALAR">setarmorypoints</unary>
+  <unary right="OBJECT">weightrtd</unary>
+  <unary right="OBJECT">loadvest</unary>
+  <unary right="SCALAR">gearidcammocount</unary>
+  <unary right="CONTROL">ctrltextwidth</unary>
+  <unary right="BOOL">useaisteeringcomponent</unary>
+  <unary right="ARRAY">nearestlocationwithdubbing</unary>
+  <unary right="ARRAY">createmine</unary>
+  <unary right="ARRAY">lnbsetpicturecolorright</unary>
+  <unary right="STRING">getmarkersize</unary>
+  <unary right="OBJECT">getposaslvisual</unary>
+  <unary right="OBJECT">eyepos</unary>
+  <unary right="OBJECT">removeallitems</unary>
+  <unary right="OBJECT">vehiclereportownposition</unary>
+  <unary right="OBJECT">createvehiclecrew</unary>
+  <unary right="OBJECT">uniformmagazines</unary>
+  <unary right="BOOL">enablecamshake</unary>
+  <unary right="SCALAR">tvcursel</unary>
+  <unary right="CONTROL">tvcursel</unary>
+  <unary right="ARRAY">setdetailmapblendpars</unary>
+  <unary right="STRING">onbriefingnotes</unary>
+  <unary right="STRING">markershape</unary>
+  <unary right="OBJECT">backpackitems</unary>
+  <unary right="OBJECT">magazines</unary>
+  <unary right="ARRAY">waypointcombatmode</unary>
+  <unary right="OBJECT">enginesisonrtd</unary>
+  <unary right="STRING">queryweaponpool</unary>
+  <unary right="OBJECT">didjipowner</unary>
+  <unary right="OBJECT">primaryweaponitems</unary>
+  <unary right="OBJECT">visiblepositionasl</unary>
+  <unary right="ARRAY">set3denselected</unary>
+  <unary right="STRING">get3denselected</unary>
+  <unary right="OBJECT">lightison</unary>
+  <unary right="OBJECT">assignedcargo</unary>
+  <unary right="OBJECT">currentmagazine</unary>
+  <unary right="OBJECT">vehiclereportremotetargets</unary>
+  <unary right="TASK">taskstate</unary>
+  <unary right="OBJECT">magazinesdetailvest</unary>
+  <unary right="BOOL">not</unary>
+  <unary right="CONTROL">lbclear</unary>
+  <unary right="SCALAR">lbclear</unary>
+  <unary right="OBJECT">forcerespawn</unary>
+  <unary right="ARRAY">titletext</unary>
+  <unary right="OBJECT">getconnecteduav</unary>
+  <unary right="CONTROL">geteditorcamera</unary>
+  <unary right="CONFIG">configname</unary>
+  <unary right="ARRAY">menusort</unary>
+  <unary right="ANY">get3denentityid</unary>
+  <unary right="OBJECT">lockeddriver</unary>
+  <unary right="CONTROL">ctrlsetfocus</unary>
+  <unary right="STRING">unitaddons</unary>
+  <unary right="OBJECT">getpilotcameraposition</unary>
+  <nular>sideenemy</nular>
+  <nular>safezonex</nular>
+  <nular>pixelh</nular>
+  <nular>slingloadassistantshown</nular>
+  <nular>windstr</nular>
+  <nular>isinstructorfigureenabled</nular>
+  <nular>clearmagazinepool</nular>
+  <nular>getmusicplayedtime</nular>
+  <nular>safezoney</nular>
+  <nular>getclientstatenumber</nular>
+  <nular>getclientstate</nular>
+  <nular>date</nular>
+  <nular>getelevationoffset</nular>
+  <nular>current3denoperation</nular>
+  <nular>getterraingrid</nular>
+  <nular>player</nular>
+  <nular>exit</nular>
+  <nular>mapanimclear</nular>
+  <nular>halt</nular>
+  <nular>missiondifficulty</nular>
+  <nular>nextweatherchange</nular>
+  <nular>allsites</nular>
+  <nular>teamswitchenabled</nular>
+  <nular>blufor</nular>
+  <nular>visiblescoretable</nular>
+  <nular>is3denmultiplayer</nular>
+  <nular>worldname</nular>
+  <nular>ismultiplayersolo</nular>
+  <nular>isremoteexecuted</nular>
+  <nular>curatorcamera</nular>
+  <nular>resistance</nular>
+  <nular>displaynull</nular>
+  <nular>diag_frameno</nular>
+  <nular>currentnamespace</nular>
+  <nular>armorypoints</nular>
+  <nular>pixelgrid</nular>
+  <nular>configfile</nular>
+  <nular>markasfinishedonsteam</nular>
+  <nular>getcalculateplayervisibilitybyfriendly</nular>
+  <nular>visiblewatch</nular>
+  <nular>estimatedendservertime</nular>
+  <nular>diag_activemissionfsms</nular>
+  <nular>hudmovementlevels</nular>
+  <nular>sidelogic</nular>
+  <nular>controlnull</nular>
+  <nular>opfor</nular>
+  <nular>endl</nular>
+  <nular>rainbow</nular>
+  <nular>cansuspend</nular>
+  <nular>servertime</nular>
+  <nular>teams</nular>
+  <nular>all3denentities</nular>
+  <nular>librarycredits</nular>
+  <nular>shownwarrant</nular>
+  <nular>allmines</nular>
+  <nular>getshadowdistance</nular>
+  <nular>alldisplays</nular>
+  <nular>isautotest</nular>
+  <nular>viewdistance</nular>
+  <nular>sideambientlife</nular>
+  <nular>allmapmarkers</nular>
+  <nular>worldsize</nular>
+  <nular>rain</nular>
+  <nular>didjip</nular>
+  <nular>missionstart</nular>
+  <nular>airdensitycurvertd</nular>
+  <nular>environmentenabled</nular>
+  <nular>sunormoon</nular>
+  <nular>false</nular>
+  <nular>safezonewabs</nular>
+  <nular>profilename</nular>
+  <nular>difficultyenabledrtd</nular>
+  <nular>allairports</nular>
+  <nular>savegame</nular>
+  <nular>hasinterface</nular>
+  <nular>runinitscript</nular>
+  <nular>getartillerycomputersettings</nular>
+  <nular>visiblemap</nular>
+  <nular>forceweatherchange</nular>
+  <nular>shownchat</nular>
+  <nular>clearitempool</nular>
+  <nular>mapanimdone</nular>
+  <nular>resetcamshake</nular>
+  <nular>showncompass</nular>
+  <nular>winddir</nular>
+  <nular>pixelgridbase</nular>
+  <nular>currentchannel</nular>
+  <nular>ispipenabled</nular>
+  <nular>gettotaldlcusagetime</nular>
+  <nular>get3denlinesvisible</nular>
+  <nular>sidefriendly</nular>
+  <nular>endloadingscreen</nular>
+  <nular>profilenamesteam</nular>
+  <nular>playableunits</nular>
+  <nular>opencuratorinterface</nular>
+  <nular>gusts</nular>
+  <nular>missionconfigfile</nular>
+  <nular>overcastforecast</nular>
+  <nular>dynamicsimulationsystemenabled</nular>
+  <nular>commandingmenu</nular>
+  <nular>cheatsenabled</nular>
+  <nular>distributionregion</nular>
+  <nular>windrtd</nular>
+  <nular>allcurators</nular>
+  <nular>benchmark</nular>
+  <nular>getmissiondlcs</nular>
+  <nular>istuthintsenabled</nular>
+  <nular>shownartillerycomputer</nular>
+  <nular>scriptnull</nular>
+  <nular>isfilepatchingenabled</nular>
+  <nular>missionname</nular>
+  <nular>nil</nular>
+  <nular>true</nular>
+  <nular>issteammission</nular>
+  <nular>isremoteexecutedjip</nular>
+  <nular>linebreak</nular>
+  <nular>language</nular>
+  <nular>diag_fps</nular>
+  <nular>acctime</nular>
+  <nular>enableenddialog</nular>
+  <nular>clearweaponpool</nular>
+  <nular>safezoneh</nular>
+  <nular>allunitsuav</nular>
+  <nular>shownradio</nular>
+  <nular>allplayers</nular>
+  <nular>clearforcesrtd</nular>
+  <nular>clearradio</nular>
+  <nular>disabledebriefingstats</nular>
+  <nular>logentities</nular>
+  <nular>pixelw</nular>
+  <nular>visiblecompass</nular>
+  <nular>locationnull</nular>
+  <nular>shownwatch</nular>
+  <nular>playerside</nular>
+  <nular>lightnings</nular>
+  <nular>simulweathersync</nular>
+  <nular>shownmap</nular>
+  <nular>shownpad</nular>
+  <nular>independent</nular>
+  <nular>campaignconfigfile</nular>
+  <nular>clientowner</nular>
+  <nular>getobjectviewdistance</nular>
+  <nular>overcast</nular>
+  <nular>safezonexabs</nular>
+  <nular>forceend</nular>
+  <nular>diag_activesqfscripts</nular>
+  <nular>remoteexecutedowner</nular>
+  <nular>objnull</nular>
+  <nular>selectnoplayer</nular>
+  <nular>getdlcassetsusage</nular>
+  <nular>diag_activesqsscripts</nular>
+  <nular>wind</nular>
+  <nular>servername</nular>
+  <nular>freelook</nular>
+  <nular>sideempty</nular>
+  <nular>humidity</nular>
+  <nular>hcshownbar</nular>
+  <nular>diag_ticktime</nular>
+  <nular>visiblegps</nular>
+  <nular>pi</nular>
+  <nular>shownuavfeed</nular>
+  <nular>ismultiplayer</nular>
+  <nular>productversion</nular>
+  <nular>missionnamespace</nular>
+  <nular>isdedicated</nular>
+  <nular>pixelgridnouiscale</nular>
+  <nular>alldeadmen</nular>
+  <nular>diag_fpsmin</nular>
+  <nular>showncuratorcompass</nular>
+  <nular>saveprofilenamespace</nular>
+  <nular>finishmissioninit</nular>
+  <nular>fog</nular>
+  <nular>buldozer_isenabledroaddiag</nular>
+  <nular>userinputdisabled</nular>
+  <nular>netobjnull</nular>
+  <nular>loadgame</nular>
+  <nular>forcedmap</nular>
+  <nular>isuicontext</nular>
+  <nular>cameraview</nular>
+  <nular>moonintensity</nular>
+  <nular>isserver</nular>
+  <nular>reversedmousey</nular>
+  <nular>librarydisclaimers</nular>
+  <nular>getremotesensorsdisabled</nular>
+  <nular>get3dencamera</nular>
+  <nular>profilenamespace</nular>
+  <nular>cadetmode</nular>
+  <nular>tasknull</nular>
+  <nular>cameraon</nular>
+  <nular>allgroups</nular>
+  <nular>agents</nular>
+  <nular>briefingname</nular>
+  <nular>shownscoretable</nular>
+  <nular>copyfromclipboard</nular>
+  <nular>cursorobject</nular>
+  <nular>east</nular>
+  <nular>teamswitch</nular>
+  <nular>diag_activescripts</nular>
+  <nular>isstressdamageenabled</nular>
+  <nular>fogparams</nular>
+  <nular>time</nular>
+  <nular>shownhud</nular>
+  <nular>switchableunits</nular>
+  <nular>playerrespawntime</nular>
+  <nular>groupiconsvisible</nular>
+  <nular>initambientlife</nular>
+  <nular>allcutlayers</nular>
+  <nular>curatormouseover</nular>
+  <nular>get3denmouseover</nular>
+  <nular>civilian</nular>
+  <nular>missionversion</nular>
+  <nular>activatedaddons</nular>
+  <nular>showngps</nular>
+  <nular>getcursorobjectparams</nular>
+  <nular>cursortarget</nular>
+  <nular>sideunknown</nular>
+  <nular>difficulty</nular>
+  <nular>fogforecast</nular>
+  <nular>savejoysticks</nular>
+  <nular>buldozer_reloadopermap</nular>
+  <nular>getmissionlayers</nular>
+  <nular>is3den</nular>
+  <nular>systemofunits</nular>
+  <nular>dialog</nular>
+  <nular>radiovolume</nular>
+  <nular>savingenabled</nular>
+  <nular>particlesquality</nular>
+  <nular>west</nular>
+  <nular>mapanimcommit</nular>
+  <nular>vehicles</nular>
+  <nular>curatorselected</nular>
+  <nular>parsingnamespace</nular>
+  <nular>musicvolume</nular>
+  <nular>waves</nular>
+  <nular>disableserialization</nular>
+  <nular>daytime</nular>
+  <nular>grpnull</nular>
+  <nular>teammembernull</nular>
+  <nular>soundvolume</nular>
+  <nular>alldead</nular>
+  <nular>getresolution</nular>
+  <nular>timemultiplier</nular>
+  <nular>safezonew</nular>
+  <nular>allunits</nular>
+  <nular>getmouseposition</nular>
+  <nular>groupiconselectable</nular>
+  <nular>uinamespace</nular>
+  <nular>get3deniconsvisible</nular>
+  <nular>isstreamfriendlyuienabled</nular>
+  <nular>confignull</nular>
+</SqfDefinitionsFile>

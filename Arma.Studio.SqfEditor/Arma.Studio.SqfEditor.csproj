@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="clrBridge">
+      <HintPath>..\..\SQFvm\clrBridge\Release\clrBridge.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -48,6 +51,8 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="SqfDefinitionsFile.cs" />
+    <Compile Include="SqfEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Arma.Studio.Data\Arma.Studio.Data.csproj">
@@ -61,17 +66,22 @@
       <LastGenOutput>Language.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="sqf_definitions.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
 if not exist "$(SolutionDir)Arma.Studio\$(OutDir)Plugins" mkdir ""$(SolutionDir)Arma.Studio\$(OutDir)Plugins""
-if not exist "$(SolutionDir)Arma.Studio\$(OutDir)Plugins\UiEditor" mkdir ""$(SolutionDir)Arma.Studio\$(OutDir)Plugins\UiEditor""
-xcopy /Y "$(TargetDir)*" "$(SolutionDir)Arma.Studio\$(OutDir)Plugins\UiEditor"
+if not exist "$(SolutionDir)Arma.Studio\$(OutDir)Plugins\SqfEditor" mkdir ""$(SolutionDir)Arma.Studio\$(OutDir)Plugins\SqfEditor""
+xcopy /Y "$(TargetDir)*" "$(SolutionDir)Arma.Studio\$(OutDir)Plugins\SqfEditor"
 (
     echo ^&lt;plugin^&gt;
     echo     ^&lt;library^&gt;$(TargetFileName)^&lt;/library^&gt;
     echo ^&lt;/plugin^&gt;
-) &gt; "$(SolutionDir)Arma.Studio\$(OutDir)Plugins\UiEditor\plugin.xml"
+) &gt; "$(SolutionDir)Arma.Studio\$(OutDir)Plugins\SqfEditor\plugin.xml"
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

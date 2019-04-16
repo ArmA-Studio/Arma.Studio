@@ -61,6 +61,15 @@ namespace Arma.Studio.SqfEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SQF Document.
+        /// </summary>
+        public static string SqfEditor_Document {
+            get {
+                return ResourceManager.GetString("SqfEditor_Document", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Arma.Studio - SQFEditor.
         /// </summary>
         public static string SqfEditor_Name {
