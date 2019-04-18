@@ -86,7 +86,6 @@
     <Compile Include="UI\AttachedProperties\Eventing\Closed.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\ContextMenuOpening.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\Expanded.cs" />
-    <Compile Include="UI\AttachedProperties\Eventing\Initialized.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\KeyDown.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\Loaded.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\LostFocus.cs" />
@@ -104,10 +103,14 @@
       <DependentUpon>Attached.tt</DependentUpon>
     </Compile>
     <Compile Include="Debugging\BreakpointEventArgs.cs" />
+    <Compile Include="UI\AttachedProperties\LooseFocusOnKeyAttached.cs" />
+    <Compile Include="UI\AttachedProperties\SelectAllOnFocusAttached.cs" />
+    <Compile Include="UI\AttachedProperties\SelectFileNameOnFocusAttached.cs" />
     <Compile Include="UI\Converters\AllFalseMultiConverter.cs" />
     <Compile Include="UI\Converters\AllTrueMultiConverter.cs" />
     <Compile Include="UI\Converters\BoolAndMultiConverter.cs" />
     <Compile Include="UI\Converters\BoolOrMultiConverter.cs" />
+    <Compile Include="UI\Converters\StaggeredThicknessConverter.cs" />
     <Compile Include="UI\Converters\IsNullConverter.cs" />
     <Compile Include="UI\Converters\ContainsConverter.cs" />
     <Compile Include="Dockable\DockableInfo.cs" />

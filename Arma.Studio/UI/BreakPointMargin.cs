@@ -93,6 +93,10 @@ namespace Arma.Studio.UI
             // Draw along the margin
             drawingContext.DrawRectangle(Brushes.LightGray, null, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
 
+            if (this.Owner.File == null)
+            {
+                return;
+            }
             // Draw the different breakpoints
             foreach (var line in view.VisualLines)
             {
@@ -135,6 +139,10 @@ namespace Arma.Studio.UI
         /// <param name="drawingContext"></param>
         public void Draw(TextView textView, DrawingContext drawingContext)
         {
+            if (this.Owner.File == null)
+            {
+                return;
+            }
             textView.EnsureVisualLines();
             var breakpoints = App.MWContext.BreakpointManager.GetBreakpoints(this.Owner.File, (bp) => true);
             foreach (var bp in breakpoints)

@@ -26,40 +26,10 @@ namespace Arma.Studio.SqfEditor
         public async Task Initialize(string pluginPath, CancellationToken cancellationToken)
         {
             var sqfdefinitions = System.IO.Path.Combine(pluginPath, SqfDefinitionsFileName);
-            if (System.IO.File.Exists(sqfdefinitions))
+            using (var file = new System.IO.StreamReader(sqfdefinitions))
             {
-                using (var file = new System.IO.StreamReader(sqfdefinitions))
-                {
-                    var serializer = new XmlSerializer(typeof(SqfDefinitionsFile));
-                    SqfDefinitionsFile = await Task.Run(() => serializer.Deserialize(file) as SqfDefinitionsFile);
-                }
-            }
-            else
-            {
-                SqfDefinitionsFile = new SqfDefinitionsFile()
-                {
-                    Binaries =
-                    {
-                        new SqfDefinitionsFile.Binary { Name = "select", Left = "scalar", Right = "scalar" }
-                    },
-                    Unaries =
-                    {
-                        new SqfDefinitionsFile.Unary { Name = "floor", Right = "scalar" }
-                    },
-                    Nulars =
-                    {
-                        new SqfDefinitionsFile.Nular { Name = "player" }
-                    },
-                    Groups =
-                    {
-                        new SqfDefinitionsFile.Group() { Name = "group", Blue = 0, Green = 127, Red = 255, IsBold = false }
-                    }
-                };
-                using (var file = new System.IO.StreamWriter(sqfdefinitions))
-                {
-                    var serializer = new XmlSerializer(typeof(SqfDefinitionsFile));
-                    await Task.Run(() => serializer.Serialize(file, SqfDefinitionsFile));
-                }
+                var serializer = new XmlSerializer(typeof(SqfDefinitionsFile));
+                SqfDefinitionsFile = await Task.Run(() => serializer.Deserialize(file) as SqfDefinitionsFile);
             }
         }
         #endregion

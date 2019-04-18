@@ -29,7 +29,13 @@ namespace Arma.Studio.UI
         public ITextEditor TextEditorInstance
         {
             get => this._TextEditorInstance;
-            set { this._TextEditorInstance = value; this.CreateHighlightingDefinition(value.SyntaxFile); this.RaisePropertyChanged(); }
+            set
+            {
+                this._TextEditorInstance = value;
+                this.CreateHighlightingDefinition(value.SyntaxFile);
+                value.File = this.File;
+                this.RaisePropertyChanged();
+            }
         }
         private ITextEditor _TextEditorInstance;
         public TextEditor TextEditorControl
@@ -58,7 +64,7 @@ namespace Arma.Studio.UI
         private Task LintingTask { get; set; }
         private CancellationTokenSource FoldingCancellationTokenSource { get; set; }
         private Task FoldingTask { get; set; }
-        public TextEditorDataContext(ITextEditor textEditor)
+        private TextEditorDataContext()
         {
             this.LintingCancellationTokenSource = new CancellationTokenSource();
             this.FoldingCancellationTokenSource = new CancellationTokenSource();
@@ -69,23 +75,48 @@ namespace Arma.Studio.UI
             this.TextChangedTimer.Interval = LintTimeout;
             this.TextDocument = new TextDocument();
             this.TextDocument.Changed += this.TextDocument_Changed;
+        }
+        public TextEditorDataContext(ITextEditor textEditor) : this()
+        {
             this.TextEditorInstance = textEditor;
-            this.File = new File() { Name = "tmp" };
-            this.TextDocument.Text =
-                new string('a', 15) + "\n" +
-                new string('b', 15) + "\n" +
-                new string('c', 15) + "\n" +
-                new string('d', 15) + "\n" +
-                new string('e', 15) + "\n" +
-                new string('f', 15) + "\n" +
-                new string('g', 15) + "\n" +
-                new string('h', 15) + "\n" +
-                new string('i', 15) + "\n" +
-                new string('j', 15) + "\n" +
-                new string('k', 15) + "\n" +
-                new string('l', 15) + "\n" +
-                new string('m', 15) + "\n" +
-                new string('n', 15) + "\n";
+        }
+        public override void LayoutSaveCallback(dynamic section)
+        {
+            section.file = this.File.FullPath;
+            section.type = this.TextEditorInstance.GetType().FullName;
+        }
+        public override void LayoutLoadCallback(dynamic section)
+        {
+            this.File = (File)App.MWContext.FileManagement[section.file as string];
+            var type = section.type as string;
+
+            if (System.IO.File.Exists(this.File.FullPath))
+            {
+                using (var reader = new System.IO.StreamReader(this.File.FullPath))
+                {
+                    this.TextDocument.Text = reader.ReadToEnd();
+                    this.TextDocument.UndoStack.ClearAll();
+                }
+            }
+            else
+            {
+                MessageBox.Show(this.File.FullPath, "File Not Found", MessageBoxButton.OK, MessageBoxImage.Warning);
+                this.Close();
+                return;
+            }
+
+            var textEditor = App.MWContext.TextEditorsAvailable.FirstOrDefault((tei) => tei.Type.FullName == type);
+            if (textEditor.IsAsync)
+            {
+                textEditor.CreateAsyncFunc().ContinueWith((t) =>
+                {
+                    this.TextEditorInstance = t.Result;
+                });
+            }
+            else
+            {
+                this.TextEditorInstance = textEditor.CreateFunc();
+            }
         }
 
         private LintInfo[] LastLintInfos = new LintInfo[0];
@@ -154,10 +185,13 @@ namespace Arma.Studio.UI
                 var count = e.InsertedText.Text.Count((c) => c == '\n');
                 var line = this.TextDocument.GetLineByOffset(e.Offset);
                 var lineNumber = line.LineNumber;
-                var breakpoints = App.MWContext.BreakpointManager.GetBreakpoints(this.File, (bp) => bp.Line > lineNumber);
-                foreach (var bp in breakpoints)
+                if (this.File != null)
                 {
-                    bp.Line += count;
+                    var breakpoints = App.MWContext.BreakpointManager.GetBreakpoints(this.File, (bp) => bp.Line > lineNumber);
+                    foreach (var bp in breakpoints)
+                    {
+                        bp.Line += count;
+                    }
                 }
             }
             if (e.RemovedText.Text.Contains('\n'))
@@ -165,16 +199,19 @@ namespace Arma.Studio.UI
                 var count = e.RemovedText.Text.Count((c) => c == '\n');
                 var line = this.TextDocument.GetLineByOffset(e.Offset);
                 var lineNumber = line.LineNumber;
-                var breakpoints = App.MWContext.BreakpointManager.GetBreakpoints(this.File, (bp) => bp.Line > lineNumber);
-                foreach (var bp in breakpoints)
+                if (this.File != null)
                 {
-                    if (bp.Line <= lineNumber + count)
+                    var breakpoints = App.MWContext.BreakpointManager.GetBreakpoints(this.File, (bp) => bp.Line > lineNumber);
+                    foreach (var bp in breakpoints)
                     {
-                        App.MWContext.BreakpointManager.RemoveBreakpoint(this.File, bp);
-                    }
-                    else
-                    {
-                        bp.Line -= count;
+                        if (bp.Line <= lineNumber + count)
+                        {
+                            App.MWContext.BreakpointManager.RemoveBreakpoint(this.File, bp);
+                        }
+                        else
+                        {
+                            bp.Line -= count;
+                        }
                     }
                 }
             }
@@ -250,7 +287,15 @@ namespace Arma.Studio.UI
         public File File
         {
             get => this._File;
-            set { this._File = value; this.RaisePropertyChanged(); }
+            set
+            {
+                this._File = value;
+                if (this.TextEditorInstance != null)
+                {
+                    this.TextEditorInstance.File = value;
+                }
+                this.RaisePropertyChanged();
+            }
         }
         private File _File;
 

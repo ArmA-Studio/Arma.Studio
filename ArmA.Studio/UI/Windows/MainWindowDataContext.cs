@@ -200,7 +200,7 @@ namespace Arma.Studio.UI.Windows
                 e.Cancel = true;
                 return;
             }
-            var dockable = Activator.CreateInstance(type) as DockableBase;
+            var dockable = Activator.CreateInstance(type, true) as DockableBase;
             e.Content = dockable;
             dockable.ContentId = e.Model.ContentId;
 

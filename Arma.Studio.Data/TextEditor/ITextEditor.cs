@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Arma.Studio.Data.IO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Arma.Studio.Data.TextEditor
     public interface ITextEditor
     {
         SyntaxFile SyntaxFile { get; }
+        File File { get; set; }
         bool ShowLineNumbers { get; }
     }
 }

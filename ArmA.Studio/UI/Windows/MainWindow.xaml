@@ -287,7 +287,22 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="{Binding IconSource, Converter={StaticResource UriToCachedImageConverter}, ConverterParameter=pack://application:\,\,\,/Arma.Studio;component/Resources/NoImage/NoImage_Empty.png}" Height="16" MaxWidth="16" VerticalAlignment="Center" Margin="0 0 4 0"/>
+                        <Image Grid.Column="0"
+                               Source="{Binding IconSource}"
+                               Height="16"
+                               MaxWidth="16"
+                               VerticalAlignment="Center"
+                               Margin="0 0 4 0">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Content.IconSourceSpecified}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                         <TextBlock Grid.Column="1" Text="{Binding Title}"/>
                     </Grid>
                 </DataTemplate>
@@ -299,7 +314,22 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="{Binding IconSource, Converter={StaticResource UriToCachedImageConverter}, ConverterParameter=pack://application:\,\,\,/Arma.Studio;component/Resources/NoImage/NoImage_Empty.png}" Height="16" MaxWidth="16" VerticalAlignment="Center" Margin="0 0 4 0"/>
+                        <Image Grid.Column="0"
+                               Source="{Binding IconSource}"
+                               Height="16"
+                               MaxWidth="16"
+                               VerticalAlignment="Center"
+                               Margin="0 0 4 0">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Content.IconSourceSpecified}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
                         <TextBlock Grid.Column="1" Text="{Binding Title}"/>
                     </Grid>
                 </DataTemplate>

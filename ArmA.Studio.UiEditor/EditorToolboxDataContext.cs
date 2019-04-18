@@ -21,6 +21,9 @@ namespace Arma.Studio.UiEditor
         public EditorToolboxItem SelectedItem { get => this._SelectedItem; set { this._SelectedItem = value; this.RaisePropertyChanged(); } }
         private EditorToolboxItem _SelectedItem;
 
+
+        public override string Title { get => Properties.Language.UIEditor_Toolbox; set { throw new NotSupportedException(); } }
+
         public EditorToolboxDataContext()
         {
             this.Items = new ObservableCollection<EditorToolboxItem>()

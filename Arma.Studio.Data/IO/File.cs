@@ -8,5 +8,10 @@ namespace Arma.Studio.Data.IO
 {
     public class File : FileFolderBase
     {
+        public string Extension => System.IO.Path.GetExtension(this.Name);
+        protected override void OnNameChanged()
+        {
+            this.RaisePropertyChanged(nameof(this.Extension));
+        }
     }
 }

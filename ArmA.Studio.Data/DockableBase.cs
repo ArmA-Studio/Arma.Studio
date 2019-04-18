@@ -55,9 +55,11 @@ namespace Arma.Studio.Data
             {
                 this._IconSource = value;
                 this.RaisePropertyChanged();
+                this.RaisePropertyChanged(nameof(this.IconSourceSpecified));
             }
         }
         private string _IconSource;
+        public bool IconSourceSpecified => !String.IsNullOrWhiteSpace(this.IconSource);
         public bool IsSelected
         {
             get => this._IsSelected;

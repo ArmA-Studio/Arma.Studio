@@ -46,6 +46,9 @@ namespace Arma.Studio
         /// <param name="ex">Exception to display.</param>
         public static void DisplayOperationFailed(Exception ex)
         {
+#if DEBUG
+            System.Diagnostics.Debugger.Break();
+#endif
             Current.Dispatcher.Invoke(() => MessageBox.Show(String.Format(Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
         }
         /// <summary>

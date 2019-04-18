@@ -11,12 +11,6 @@ namespace Arma.Studio.UI.AvalonDock
 {
     public class ActiveContentChangedAttached
     {
-        public enum EInputType
-        {
-            NA,
-            Numeric
-        }
-
         public static readonly DependencyProperty CommandProperty = DependencyProperty.RegisterAttached("Command", typeof(ICommand), typeof(ActiveContentChangedAttached), new FrameworkPropertyMetadata(null, CommandPropertyPropertyChanged));
 
         public static ICommand GetCommand(DockingManager control)

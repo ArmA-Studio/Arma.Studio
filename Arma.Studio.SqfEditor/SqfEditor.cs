@@ -1,4 +1,5 @@
-﻿using Arma.Studio.Data.TextEditor;
+﻿using Arma.Studio.Data.IO;
+using Arma.Studio.Data.TextEditor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,17 @@ namespace Arma.Studio.SqfEditor
 {
     public class SqfEditor : ITextEditor, ILintable, IFoldable
     {
+        private class UsageContainer
+        {
+            sqfvm.SqfNode Node { get; set; }
+            int Usage { get; set; }
+            public UsageContainer(sqfvm.SqfNode node)
+            {
+                this.Node = node;
+                this.Usage = 0;
+            }
+        }
+
         #region ITextEditor
         private IEnumerable<KeywordCollection> Helper_KeywordCollection()
         {
@@ -26,7 +38,7 @@ namespace Arma.Studio.SqfEditor
                 yield return new KeywordCollection(Color.FromRgb(group.Red, group.Green, group.Blue), group.IsBold).AddRange(items.Select((it) => it.Name));
             }
         }
-
+        public File File { get; set; }
         public SyntaxFile SyntaxFile
         {
             get
@@ -54,7 +66,7 @@ namespace Arma.Studio.SqfEditor
         {
             return await Task.Run(() => {
                 var vm = new sqfvm.ClrVirtualmachine();
-                var cst = vm.CreateSqfCst(text, "");
+                var cst = vm.CreateSqfCst(text, this.File?.FullPath ?? "");
                 var errors = vm.ErrorContents();
                 var warnings = vm.WarningContents();
                 var output = vm.InfoContents();
@@ -94,8 +106,30 @@ namespace Arma.Studio.SqfEditor
                         }
                     }
                 }
+                else
+                {
+                    var usage = new Dictionary<string, UsageContainer>();
+                    DetermineUsage(cst, usage);
+                }
                 return lintInfos;
             });
+        }
+        private static void DetermineUsage(sqfvm.SqfNode node, Dictionary<string, UsageContainer> usage)
+        {
+            switch (node.GetNodeType())
+            {
+                case sqfvm.SqfNodeType.ASSIGNMENT:
+                    break;
+                case sqfvm.SqfNodeType.VARIABLE:
+
+                    break;
+                default:
+                    foreach (var it in node.GetChildren())
+                    {
+                        DetermineUsage(it, usage);
+                    }
+                    break;
+            }
         }
         #endregion
         #region IFoldable
@@ -103,7 +137,7 @@ namespace Arma.Studio.SqfEditor
         {
             return await Task.Run(() => {
                 var vm = new sqfvm.ClrVirtualmachine();
-                var cst = vm.CreateSqfCst(text, "");
+                var cst = vm.CreateSqfCst(text, this.File?.FullPath ?? "");
                 var errors = vm.ErrorContents();
                 var warnings = vm.WarningContents();
                 var output = vm.InfoContents();
