@@ -34,6 +34,10 @@ namespace Arma.Studio.Data.TextEditor
         /// The actual type of the <see cref="ITextEditor"/>.
         /// </summary>
         public Type Type { get; }
+        /// <summary>
+        /// The file extensions supported by this <see cref="ITextEditor"/> per default.
+        /// </summary>
+        public string[] Extensions { get; }
 
         /// <summary>
         /// Creates a new <see cref="TextEditorInfo"/> instance.
@@ -41,12 +45,13 @@ namespace Arma.Studio.Data.TextEditor
         /// <param name="name">The localized name of the dockable to describe</param>
         /// <param name="func">The method to create the actual <see cref="ITextEditor"/>.</param>
         /// <param name="type">The actual type of the <see cref="ITextEditor"/>.</param>
-        internal TextEditorInfo(string name, Func<ITextEditor> func, Type type)
+        internal TextEditorInfo(string name, Func<ITextEditor> func, Type type, params string[] extensions)
         {
             this.Name = name;
             this.CreateFunc = func;
             this.IsAsync = false;
             this.Type = type;
+            this.Extensions = extensions;
         }
 
         /// <summary>
@@ -55,12 +60,14 @@ namespace Arma.Studio.Data.TextEditor
         /// <param name="name">The localized name of the dockable to describe</param>
         /// <param name="func">The method to create the actual <see cref="ITextEditor"/>.</param>
         /// <param name="type">The actual type of the <see cref="ITextEditor"/>.</param>
-        internal TextEditorInfo(string name, Func<Task<ITextEditor>> func, Type type)
+        /// <param name="extensions">The extensions supported by default.</param>
+        internal TextEditorInfo(string name, Func<Task<ITextEditor>> func, Type type, params string[] extensions)
         {
             this.Name = name;
             this.CreateAsyncFunc = func;
             this.IsAsync = true;
             this.Type = type;
+            this.Extensions = extensions;
         }
 
         /// <summary>
@@ -69,18 +76,21 @@ namespace Arma.Studio.Data.TextEditor
         /// <param name="name">The localized name of the dockable to describe</param>
         /// <param name="creationMode">The types this <see cref="TextEditorInfo"/> can create.</param>
         /// <param name="func">The method to create the actual <see cref="ITextEditor"/>.</param>
+        /// <param name="extensions">The extensions supported by default.</param>
         /// <returns>The created <see cref="TextEditorInfo"/> instance.</returns>
-        public static TextEditorInfo Create<T>(string name, Func<T> func) where T : ITextEditor =>
-            new TextEditorInfo(name, () => func() as ITextEditor, typeof(T));
+        public static TextEditorInfo Create<T>(string name, Func<T> func, params string[] extensions) where T : ITextEditor =>
+            new TextEditorInfo(name, () => func() as ITextEditor, typeof(T), extensions);
 
         /// <summary>
         /// Creates a new <see cref="TextEditorInfo"/> instance.
         /// </summary>
         /// <param name="name">The localized name of the dockable to describe</param>
         /// <param name="func">The method to create the actual <see cref="ITextEditor"/>.</param>
+        /// <param name="extensions">The extensions supported by default.</param>
         /// <returns>The created <see cref="TextEditorInfo"/> instance.</returns>
-        public static TextEditorInfo Create<T>(string name, Func<Task<T>> func) where T : ITextEditor =>
-            new TextEditorInfo(name, async () => await func(), typeof(T));
+        public static TextEditorInfo Create<T>(string name, Func<Task<T>> func, params string[] extensions) where T : ITextEditor =>
+            new TextEditorInfo(name, async () => await func(), typeof(T), extensions);
+
 
         /// <summary>
         /// Creates a new <see cref="TextEditorInfo"/> instance.

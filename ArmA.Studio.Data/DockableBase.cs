@@ -138,6 +138,12 @@ namespace Arma.Studio.Data
             if (this is IDisposable disposable) { disposable.Dispose(); }
             this.IsCloseInProgress = false;
         }
+        public void Focus()
+        {
+            this.IsActive = true;
+            this.IsSelected = true;
+            this.CurrentVisibility = Visibility.Visible;
+        }
 
         public DockableBase(string title = "", string iconsource = "")
         {

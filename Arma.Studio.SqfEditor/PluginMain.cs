@@ -35,7 +35,7 @@ namespace Arma.Studio.SqfEditor
         #endregion
         #region ITextEditorProvider
         public IEnumerable<TextEditorInfo> TextEditorInfos => new TextEditorInfo[] {
-            TextEditorInfo.Create(Properties.Language.SqfEditor_Document, () => new SqfEditor())
+            TextEditorInfo.Create(Properties.Language.SqfEditor_Document, () => new SqfEditor(), ".sqf")
         };
         #endregion
     }

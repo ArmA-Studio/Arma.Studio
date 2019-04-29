@@ -94,7 +94,6 @@
     </ApplicationDefinition>
     <Compile Include="Configuration.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="FileManager.cs" />
     <Compile Include="PluginManager.cs" />
     <Compile Include="Solution.cs" />
     <Compile Include="UI\BreakPointMargin.cs" />

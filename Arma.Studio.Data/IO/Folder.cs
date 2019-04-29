@@ -10,6 +10,11 @@ namespace Arma.Studio.Data.IO
     public class Folder : FileFolderBase, ICollection<FileFolderBase>
     {
         private readonly List<FileFolderBase> Inner;
+        public Folder()
+        {
+            this.Inner = new List<FileFolderBase>();
+        }
+
         #region ICollection<FileFolderBase>
         public int Count => this.Inner.Count;
 

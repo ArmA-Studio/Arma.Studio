@@ -13,6 +13,12 @@ namespace Arma.Studio.SqfEditor
 {
     public class SqfEditor : ITextEditor, ILintable, IFoldable
     {
+
+        private sqfvm.ClrVirtualmachine Virtualmachine { get; }
+        public SqfEditor()
+        {
+            this.Virtualmachine = new sqfvm.ClrVirtualmachine();
+        }
         private class UsageContainer
         {
             sqfvm.SqfNode Node { get; set; }
@@ -65,12 +71,17 @@ namespace Arma.Studio.SqfEditor
         public async Task<IEnumerable<LintInfo>> GetLintInfos(string text, CancellationToken cancellationToken)
         {
             return await Task.Run(() => {
-                var vm = new sqfvm.ClrVirtualmachine();
-                var cst = vm.CreateSqfCst(text, this.File?.FullPath ?? "");
-                var errors = vm.ErrorContents();
-                var warnings = vm.WarningContents();
-                var output = vm.InfoContents();
                 var lintInfos = new List<LintInfo>();
+                string errors, warnings, output;
+                sqfvm.SqfNode cst;
+                lock (this.Virtualmachine)
+                {
+                    var preproc = this.Virtualmachine.PreProcess(text, this.File?.FullPath ?? "");
+                    cst = this.Virtualmachine.CreateSqfCst(preproc, this.File?.FullPath ?? "");
+                    errors = this.Virtualmachine.ErrorContents();
+                    warnings = this.Virtualmachine.WarningContents();
+                    output = this.Virtualmachine.InfoContents();
+                }
                 if (errors.Length > 0)
                 {
                     using (var reader = new System.IO.StringReader(errors))
@@ -136,16 +147,44 @@ namespace Arma.Studio.SqfEditor
         public async Task<IEnumerable<FoldingInfo>> GetFoldings(string text, CancellationToken cancellationToken)
         {
             return await Task.Run(() => {
-                var vm = new sqfvm.ClrVirtualmachine();
-                var cst = vm.CreateSqfCst(text, this.File?.FullPath ?? "");
-                var errors = vm.ErrorContents();
-                var warnings = vm.WarningContents();
-                var output = vm.InfoContents();
-                return FindAllCodeNodes(cst).Select((node) => new FoldingInfo
+                var resList = new List<FoldingInfo>();
+                int offset = 0;
+                void recursive()
                 {
-                    StartOffset = (int)node.GetOffset(),
-                    Length = (int)node.GetLength()
-                });
+                    char string_char = '\0';
+                    for (; offset < text.Length; offset++)
+                    {
+                        char c = text[offset];
+                        if (string_char != '\0')
+                        {
+                            if (c == string_char)
+                            {
+                                string_char = '\0';
+                            }
+                        }
+                        else if (c == '"' || c == '\'')
+                        {
+                            string_char = c;
+                        }
+                        else if (c == '{')
+                        {
+                            var finfo = new FoldingInfo
+                            {
+                                StartOffset = offset
+                            };
+                            offset++;
+                            recursive();
+                            finfo.Length = offset - finfo.StartOffset.Value + 1;
+                            resList.Add(finfo);
+                        }
+                        else if (c == '}')
+                        {
+                            return;
+                        }
+                    }
+                }
+                recursive();
+                return resList;
             });
         }
         private static IEnumerable<sqfvm.SqfNode> FindAllCodeNodes(sqfvm.SqfNode node)

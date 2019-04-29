@@ -20,7 +20,7 @@ using System.Windows.Threading;
 
 namespace Arma.Studio.UI
 {
-    public class TextEditorDataContext : DockableBase, INotifyPropertyChanged, Data.UI.AttachedProperties.IOnInitialized
+    public class TextEditorDataContext : DockableBase, INotifyPropertyChanged, Data.UI.AttachedProperties.IOnInitialized, IDisposable
     {
         private static readonly TimeSpan LintTimeout = new TimeSpan(0, 0, 0, 0, 200);
 
@@ -76,9 +76,11 @@ namespace Arma.Studio.UI
             this.TextDocument = new TextDocument();
             this.TextDocument.Changed += this.TextDocument_Changed;
         }
-        public TextEditorDataContext(ITextEditor textEditor) : this()
+        public TextEditorDataContext(ITextEditor textEditor, File file) : this()
         {
             this.TextEditorInstance = textEditor;
+            this.File = file;
+            this.Title = this.File.Name;
         }
         public override void LayoutSaveCallback(dynamic section)
         {
@@ -122,6 +124,46 @@ namespace Arma.Studio.UI
         private LintInfo[] LastLintInfos = new LintInfo[0];
         private FoldingInfo[] LastFoldingInfos = new FoldingInfo[0];
         public IEnumerable<LintInfo> GetLintInfos() => this.LastLintInfos;
+
+        #region Property: LastChangeTimestamp (System.DateTime)
+        public DateTime LastChangeTimestamp
+        {
+            get => this._LastChangeTimestamp;
+            set { this._LastChangeTimestamp = value; this.RaisePropertyChanged(); }
+        }
+        private DateTime _LastChangeTimestamp;
+        #endregion
+        #region Property: File (Arma.Studio.Data.IO.File)
+        public File File
+        {
+            get => this._File;
+            set
+            {
+                if (this._File != null)
+                {
+                    this._File.PropertyChanged -= this.File_PropertyChanged;
+                }
+                this._File = value;
+                if (this._File != null)
+                {
+                    this._File.PropertyChanged += this.File_PropertyChanged;
+                }
+                if (this.TextEditorInstance != null)
+                {
+                    this.TextEditorInstance.File = value;
+                }
+                this.RaisePropertyChanged();
+            }
+        }
+        private File _File;
+        #endregion
+        #region Property: FoldingManager (ICSharpCode.AvalonEdit.Folding.FoldingManager)
+        public FoldingManager FoldingManager { get; private set; }
+        #endregion
+        #region Field: TextChangedTimer [readonly] (System.Windows.Threading.DispatcherTimer)
+        private readonly DispatcherTimer TextChangedTimer;
+        #endregion
+
         private void TextChangedTimer_Tick(object sender, EventArgs e)
         {
             this.TextChangedTimer.Stop();
@@ -150,22 +192,26 @@ namespace Arma.Studio.UI
                 {
                     var res = await foldable.GetFoldings(App.Current.Dispatcher.Invoke(() => this.TextDocument.Text), this.FoldingCancellationTokenSource.Token);
                     this.LastFoldingInfos = res.ToArray();
-                    App.Current.Dispatcher.Invoke(() => this.FoldingManager.UpdateFoldings(
-                        this.LastFoldingInfos
-                        .Where((it) => it.StartOffset >= 0 && it.EndOffset <= this.TextDocument.TextLength)
-                        .Select((it) => new NewFolding { StartOffset = it.StartOffset, EndOffset = it.EndOffset }), -1));
+                    var foldings = new List<NewFolding>(this.LastFoldingInfos.Length);
+                    foreach (var it in this.LastFoldingInfos)
+                    {
+                        if (it.StartOffset.HasValue)
+                        {
+                            foldings.Add(new NewFolding { StartOffset = it.StartOffset.Value, EndOffset = it.StartOffset.Value + it.Length });
+                        }
+                        else
+                        {
+                            var off = App.Current.Dispatcher.Invoke(() => this.TextDocument.GetOffset(it.LineStart.Value, it.ColumnStart.Value));
+                            foldings.Add(new NewFolding { StartOffset = off, EndOffset = off + it.Length });
+                        }
+                    }
+                    foldings.Sort((l, r) => l.StartOffset.CompareTo(r.StartOffset));
+                    App.Current.Dispatcher.Invoke(() => this.FoldingManager.UpdateFoldings(foldings, -1));
                 });
             }
         }
 
-        public DateTime LastChangeTimestamp
-        {
-            get => this._LastChangeTimestamp;
-            set { this._LastChangeTimestamp = value; this.RaisePropertyChanged(); }
-        }
-        private DateTime _LastChangeTimestamp;
 
-        private readonly DispatcherTimer TextChangedTimer;
 
         private void TextDocument_Changed(object sender, DocumentChangeEventArgs e)
         {
@@ -283,23 +329,13 @@ namespace Arma.Studio.UI
                 }
             }
         }
-        
-        public File File
-        {
-            get => this._File;
-            set
-            {
-                this._File = value;
-                if (this.TextEditorInstance != null)
-                {
-                    this.TextEditorInstance.File = value;
-                }
-                this.RaisePropertyChanged();
-            }
-        }
-        private File _File;
 
-        public FoldingManager FoldingManager { get; private set; }
+
+        private void File_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this.Title = this.File.Name;
+        }
+
 
 
         public void OnInitialized(FrameworkElement sender, EventArgs e)
@@ -316,6 +352,32 @@ namespace Arma.Studio.UI
                 this.FoldingManager = ICSharpCode.AvalonEdit.Folding.FoldingManager.Install(textEditor.TextArea);
             }
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposedValue)
+            {
+                if (disposing)
+                {
+                    this.FoldingTask?.Dispose();
+                    this.LintingTask?.Dispose();
+                    (this.TextEditorInstance as IDisposable)?.Dispose();
+                    this.File.PropertyChanged -= this.File_PropertyChanged;
+                }
+
+
+                this.disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
 
     }
 }

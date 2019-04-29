@@ -30,6 +30,15 @@ namespace Arma.Studio.SolutionExplorer
         private object _InRenameMode;
 
         public ICommand CmdReleaseRename => new RelayCommand(() => this.InRenameMode = null);
+        public ICommand CmdOpen => new RelayCommand<FileFolderBase>((ffb) =>
+        {
+            if (ffb is File file)
+            {
+                (Application.Current as IApp).MainWindow.OpenFile(file);
+            }
+        });
         public override string Title { get => Properties.Language.SolutionExplorer; set { throw new NotSupportedException(); } }
+
+        public IFileManagement FileManagement => (Application.Current as IApp).MainWindow.FileManagement;
     }
 }

@@ -11,6 +11,10 @@ namespace Arma.Studio.Data.IO
     {
         private readonly List<FileFolderBase> Inner;
 
+        public PBO()
+        {
+            this.Inner = new List<FileFolderBase>();
+        }
 
 
         public void Add(string text)

@@ -36,7 +36,7 @@ namespace Arma.Studio
         public static readonly string PluginDir_RoamingUser = System.IO.Path.Combine(CommonApplicationDataPath, CONST_PLUGINS);
         public static readonly string PluginDir_Data = System.IO.Path.Combine(ApplicationDataPath, CONST_PLUGINS);
 
-        public static UI.Windows.MainWindowDataContext MWContext => App.Current.MainWindow.DataContext as UI.Windows.MainWindowDataContext;
+        public static UI.Windows.MainWindowDataContext MWContext { get; set; }
 
         IMainWindow IApp.MainWindow => MWContext;
 

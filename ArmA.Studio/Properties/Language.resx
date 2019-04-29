@@ -192,4 +192,7 @@
   <data name="SplashScreen_LoadingPlugins" xml:space="preserve">
     <value>Loading Plugins</value>
   </data>
+  <data name="SplashScreen_PreparingUserInterface" xml:space="preserve">
+    <value>Preparing User-Interface</value>
+  </data>
 </root>

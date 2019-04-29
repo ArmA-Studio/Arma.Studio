@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Arma.Studio.Data.IO
 {
-    public interface IFileManagement
+    public interface IFileManagement : ICollection<PBO>
     {
-        IEnumerable<PBO> PBOs { get; }
         FileFolderBase this[string key] { get; set; }
-        void Add(PBO pbo);
     }
 }

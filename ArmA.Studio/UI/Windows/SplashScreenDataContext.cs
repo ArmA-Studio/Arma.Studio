@@ -28,33 +28,27 @@ namespace Arma.Studio.UI.Windows
         #region BindableProperties
         public Version CurrentVersion => App.CurrentVersion;
         private bool IsValidClose = false;
-        public ICommand CmdLoaded => new RelayCommand((p) =>
+        public ICommand CmdLoaded => new RelayCommandAsync<Window>(async (window) =>
         {
-            var task = Task.Run(() => this.RunSplash());
-            task.ContinueWith((t) =>
+            try
             {
-                var window = p as Window;
-                App.DisplayOperationFailed(t.Exception);
-                App.Current.Dispatcher.Invoke(() => window.Close());
-            }, TaskContinuationOptions.OnlyOnFaulted);
-            task.ContinueWith((t) =>
-            {
-                var window = p as Window;
-                this.IsValidClose = true;
-                if (t.IsFaulted)
-                {
-                    App.DisplayOperationFailed(t.Exception);
-                    App.Current.Shutdown(-1);
-                    return;
-                }
-                App.Current.Dispatcher.Invoke(() => window.Close());
+                App.MWContext = new MainWindowDataContext();
+                await this.RunSplash();
+                var mw = App.Current.Dispatcher.Invoke(() => new MainWindow(App.MWContext));
+                this.ProgressText = Properties.Language.SplashScreen_PreparingUserInterface;
+                this.ProgressIndeterminate = true;
                 App.Current.Dispatcher.Invoke(() =>
                 {
-                    var mwdc = new MainWindowDataContext();
-                    var mw = new MainWindow(mwdc);
+                    this.IsValidClose = true;
+                    window.Close();
                     mw.Show();
                 });
-            }, TaskContinuationOptions.OnlyOnRanToCompletion);
+            }
+            catch (Exception ex)
+            {
+                App.DisplayOperationFailed(ex);
+                App.Current.Dispatcher.Invoke(() => App.Current.Shutdown(-1));
+            }
         });
         public ICommand CmdClosed => new RelayCommand((p) =>
         {
@@ -95,9 +89,9 @@ namespace Arma.Studio.UI.Windows
             {
                 this.ProgressIndeterminate = true;
                 this.ProgressText = Properties.Language.SplashScreen_LoadingPlugins;
-                var plugins = Directories(App.PluginDir_Executable)
-                    .Concat(Directories(App.PluginDir_Data))
-                    .Concat(Directories(App.PluginDir_RoamingUser, () => true /* ToDo: Add property to disable plugin loading from user dir */));
+                var plugins = this.Directories(App.PluginDir_Executable)
+                    .Concat(this.Directories(App.PluginDir_Data))
+                    .Concat(this.Directories(App.PluginDir_RoamingUser, () => true /* ToDo: Add property to disable plugin loading from user dir */));
                 var pluginCount = plugins.Count();
 
                 foreach (var plugin in plugins)

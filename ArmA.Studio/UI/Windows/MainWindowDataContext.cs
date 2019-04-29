@@ -19,7 +19,7 @@ using System.Windows.Input;
 namespace Arma.Studio.UI.Windows
 {
 
-    public class MainWindowDataContext : INotifyPropertyChanged, IMainWindow
+    public class MainWindowDataContext : INotifyPropertyChanged, IMainWindow, IDisposable
     {
         private const string CONST_INI_TYPES_STRING = "Types";
         public event PropertyChangedEventHandler PropertyChanged;
@@ -82,8 +82,36 @@ namespace Arma.Studio.UI.Windows
             }
             return null;
         }
-        public IFileManagement FileManagement => this.Solution.FileManager;
+        public IFileManagement FileManagement => this.Solution;
         public IBreakpointManager BreakpointManager => this.Solution.BreakpointManager;
+        
+        public void OpenFile(File file)
+        {
+            var doc = this.Documents.Where((d) => d is TextEditorDataContext).Cast<TextEditorDataContext>().FirstOrDefault((d) => d.File.Equals(file));
+            if (doc != null)
+            {
+                doc.Focus();
+                return;
+            }
+            var ext = file.Extension;
+            var editorInfo = this.TextEditorsAvailable.FirstOrDefault((tei) => tei.Extensions.Any((s) => s.Equals(ext, StringComparison.InvariantCultureIgnoreCase)));
+            if (editorInfo == null)
+            {
+                throw new NotImplementedException();
+            }
+            if (editorInfo.IsAsync)
+            {
+                Task.Run(async () =>
+                {
+                    var cntxt = await editorInfo.CreateAsyncFunc();
+                    this.AddDocument(new TextEditorDataContext(cntxt, file));
+                });
+            }
+            else
+            {
+                this.AddDocument(new TextEditorDataContext(editorInfo.CreateFunc(), file));
+            }
+        }
         #endregion
 
         public Solution Solution { get; }
@@ -147,7 +175,7 @@ namespace Arma.Studio.UI.Windows
             }
             else if(info is TextEditorInfo teinfo)
             {
-                this.AddDocument(new TextEditorDataContext(teinfo.CreateFunc()));
+                this.AddDocument(new TextEditorDataContext(teinfo.CreateFunc(), new File()));
             }
             else
             {
@@ -294,6 +322,16 @@ namespace Arma.Studio.UI.Windows
             this.DocumentsAvailable = new ObservableCollection<DockableInfo>();
             this.Solution = new Solution();
             this.LayoutJsonNode = new Newtonsoft.Json.Linq.JObject(new Newtonsoft.Json.Linq.JProperty(CONST_INI_TYPES_STRING, new Newtonsoft.Json.Linq.JObject()));
+
+            // ToDo: Replace with proper loading mechanism
+            var file1 = new File { Name = "File1.sqf" };
+            var file2 = new File { Name = "File2.sqf" };
+            var folder = new Folder { Name = "folder" };
+            var pbo = new PBO { Name = "pbo" };
+            this.Solution.Add(pbo);
+            pbo.Add(folder);
+            pbo.Add(file1);
+            folder.Add(file2);
         }
         private void Initialized()
         {
@@ -330,5 +368,31 @@ namespace Arma.Studio.UI.Windows
                 catch (NullReferenceException) { } //AvalonDock ...
             }
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this.Solution.Dispose();
+                    this.Debugger?.Dispose();
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }

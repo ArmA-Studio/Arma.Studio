@@ -284,5 +284,14 @@ namespace Arma.Studio.Properties {
                 return ResourceManager.GetString("SplashScreen_LoadingPlugins", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preparing User-Interface.
+        /// </summary>
+        public static string SplashScreen_PreparingUserInterface {
+            get {
+                return ResourceManager.GetString("SplashScreen_PreparingUserInterface", resourceCulture);
+            }
+        }
     }
 }

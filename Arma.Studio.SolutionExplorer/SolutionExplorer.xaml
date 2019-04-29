@@ -77,11 +77,12 @@
                 </MenuItem.Icon>
             </MenuItem>
         </Menu>
-        <TreeView Grid.Row="2" ItemsSource="{Binding TreeViewItemsSource}">
+        <TreeView Grid.Row="2" ItemsSource="{Binding FileManagement}">
             <TreeView.Resources>
                 <util:IsHitMultiConverter x:Key="IsHitMultiConverter"/>
+                <asd:EqualMultiConverter x:Key="EqualMultiConverter"/>
                 <HierarchicalDataTemplate DataType="{x:Type asd:PBO}" ItemsSource="{Binding}">
-                    <Grid>
+                        <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
@@ -104,7 +105,13 @@
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.InRenameMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Value="{Binding}">
+                                        <DataTrigger Value="True">
+                                            <DataTrigger.Binding>
+                                                <MultiBinding Converter="{StaticResource EqualMultiConverter}">
+                                                    <Binding Path="DataContext.InRenameMode" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=TreeView}"/>
+                                                    <Binding/>
+                                                </MultiBinding>
+                                            </DataTrigger.Binding>
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -115,7 +122,7 @@
                                  Text="{Binding Name, UpdateSourceTrigger=LostFocus}"
                                  asd:LooseFocusOnKeyAttached.Key="Return"
                                  asd:SelectAllOnFocusAttached.Attach="True"
-                                 asd:LostKeyboardFocus.Command="{Binding DataContext.CmdReleaseRename, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}"
+                                 asd:LostKeyboardFocus.Command="{Binding DataContext.CmdReleaseRename, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TreeView}}"
                                  Height="16"
                                  Padding="0"
                                  BorderThickness="0"
@@ -124,7 +131,13 @@
                                 <Style TargetType="TextBox">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.InRenameMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Value="{Binding}">
+                                        <DataTrigger Value="True">
+                                            <DataTrigger.Binding>
+                                                <MultiBinding Converter="{StaticResource EqualMultiConverter}">
+                                                    <Binding Path="DataContext.InRenameMode" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=TreeView}"/>
+                                                    <Binding/>
+                                                </MultiBinding>
+                                            </DataTrigger.Binding>
                                             <Setter Property="Visibility" Value="Visible"/>
                                             <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource Self}}"/>
                                         </DataTrigger>
@@ -132,18 +145,6 @@
                                 </Style>
                             </TextBox.Style>
                         </TextBox>
-                        <TextBlock Grid.Column="2" Text="{Binding Wrapped.Id, StringFormat=({0}), Converter={StaticResource OnEqualsConverterLocal}, ConverterParameter=-1|local}" FontStyle="Italic" Opacity="0.5" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Right">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.InRenameMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Value="{Binding}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
                     </Grid>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type asd:Folder}" ItemsSource="{Binding}">
@@ -170,7 +171,13 @@
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.InRenameMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Value="{Binding}">
+                                        <DataTrigger Value="True">
+                                            <DataTrigger.Binding>
+                                                <MultiBinding Converter="{StaticResource EqualMultiConverter}">
+                                                    <Binding Path="DataContext.InRenameMode" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=TreeView}"/>
+                                                    <Binding/>
+                                                </MultiBinding>
+                                            </DataTrigger.Binding>
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -181,7 +188,7 @@
                                  Text="{Binding Name, UpdateSourceTrigger=LostFocus}"
                                  asd:LooseFocusOnKeyAttached.Key="Return"
                                  asd:SelectAllOnFocusAttached.Attach="True"
-                                 asd:LostKeyboardFocus.Command="{Binding DataContext.CmdReleaseRename, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}"
+                                 asd:LostKeyboardFocus.Command="{Binding DataContext.CmdReleaseRename, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TreeView}}"
                                  Height="16"
                                  Padding="0"
                                  BorderThickness="0"
@@ -190,7 +197,13 @@
                                 <Style TargetType="TextBox">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.InRenameMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Value="{Binding}">
+                                        <DataTrigger Value="True">
+                                            <DataTrigger.Binding>
+                                                <MultiBinding Converter="{StaticResource EqualMultiConverter}">
+                                                    <Binding Path="DataContext.InRenameMode" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=TreeView}"/>
+                                                    <Binding/>
+                                                </MultiBinding>
+                                            </DataTrigger.Binding>
                                             <Setter Property="Visibility" Value="Visible"/>
                                             <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource Self}}"/>
                                         </DataTrigger>
@@ -198,18 +211,6 @@
                                 </Style>
                             </TextBox.Style>
                         </TextBox>
-                        <TextBlock Grid.Column="2" Text="{Binding Wrapped.Id, StringFormat=({0}), Converter={StaticResource OnEqualsConverterLocal}, ConverterParameter=-1|local}" FontStyle="Italic" Opacity="0.5" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Right">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.InRenameMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Value="{Binding}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
                     </Grid>
                 </HierarchicalDataTemplate>
                 <DataTemplate DataType="{x:Type asd:File}">
@@ -230,7 +231,13 @@
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.InRenameMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Value="{Binding}">
+                                        <DataTrigger Value="True">
+                                            <DataTrigger.Binding>
+                                                <MultiBinding Converter="{StaticResource EqualMultiConverter}">
+                                                    <Binding Path="DataContext.InRenameMode" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=TreeView}"/>
+                                                    <Binding/>
+                                                </MultiBinding>
+                                            </DataTrigger.Binding>
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -241,7 +248,7 @@
                                  Text="{Binding Name, UpdateSourceTrigger=LostFocus}"
                                  asd:LooseFocusOnKeyAttached.Key="Return"
                                  asd:SelectAllOnFocusAttached.Attach="True"
-                                 asd:LostKeyboardFocus.Command="{Binding DataContext.CmdReleaseRename, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}"
+                                 asd:LostKeyboardFocus.Command="{Binding DataContext.CmdReleaseRename, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TreeView}}"
                                  Height="16"
                                  Padding="0"
                                  BorderThickness="0"
@@ -250,7 +257,13 @@
                                 <Style TargetType="TextBox">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DataContext.InRenameMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Value="{Binding}">
+                                        <DataTrigger Value="True">
+                                            <DataTrigger.Binding>
+                                                <MultiBinding Converter="{StaticResource EqualMultiConverter}">
+                                                    <Binding Path="DataContext.InRenameMode" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=TreeView}"/>
+                                                    <Binding/>
+                                                </MultiBinding>
+                                            </DataTrigger.Binding>
                                             <Setter Property="Visibility" Value="Visible"/>
                                             <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource Self}}"/>
                                         </DataTrigger>
@@ -261,32 +274,14 @@
                     </Grid>
                 </DataTemplate>
             </TreeView.Resources>
-            <TreeView.Style>
-                <Style TargetType="TreeView">
-                    <Setter Property="AllowDrop" Value="True"/>
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsPollingSuccess}" Value="true">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsPolling}" Value="true">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TreeView.Style>
             <TreeView.ContextMenu>
                 <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
                 </ContextMenu>
             </TreeView.ContextMenu>
             <TreeView.ItemContainerStyle>
                 <Style TargetType="TreeViewItem" BasedOn="{StaticResource FullRowTVI}">
-                    <Setter Property="AllowDrop" Value="True"/>
-                    <Setter Property="asd:AttachedDataContext.DataContext" Value="{Binding}"/>
-                    <Setter Property="asd:MouseDoubleClick.Command" Value="{Binding CmdOpen}"/>
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
-                    <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
-                    <Setter Property="Tag" Value="{Binding}"/>
+                    <Setter Property="asd:MouseDoubleClick.Command" Value="{Binding DataContext.CmdOpen, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeView}}}"/>
+                    <Setter Property="asd:MouseDoubleClick.CommandParameter" Value="{Binding}"/>
                     <Setter Property="ContextMenu">
                         <Setter.Value>
                             <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">

@@ -315,7 +315,7 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type TreeViewItem}">
                                     <ControlTemplate.Resources>
-                                        <asd:StaggeredThicknessConverter Left="True" Length="19" x:Key="TVIStaggeredThicknessConverter" EndType="{x:Type TreeView}"/>
+                                        <asd:StaggeredThicknessConverter Left="True" Length="10" x:Key="TVIStaggeredThicknessConverter" EndType="{x:Type TreeView}"/>
                                     </ControlTemplate.Resources>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
