@@ -306,7 +306,15 @@ namespace Arma.Studio.UI.Windows
                 e.Cancel = true;
                 return;
             }
-            var type = Type.GetType(typestring, false);
+            var type = Type.GetType(typestring,
+                throwOnError: false,
+                ignoreCase: false,
+                assemblyResolver: (assemblyName) =>
+                {
+                    var plugin = PluginManager.Instance.Plugins.First((it) => it.Assembly.FullName == assemblyName.FullName);
+                    return plugin.Assembly;
+                },
+                typeResolver: (assembly, typename, caseSensitiveSearch) => assembly.GetType(typename, false, caseSensitiveSearch));
             if (type == null || !typeof(DockableBase).IsAssignableFrom(type))
             {
                 e.Cancel = true;
@@ -380,7 +388,7 @@ namespace Arma.Studio.UI.Windows
             foreach (var it in this.Anchorables.Concat(this.Documents))
             {
                 var token = types.GetOrCreateProperty(it.ContentId);
-                types[it.ContentId] = new Newtonsoft.Json.Linq.JValue(it.GetType().FullName);
+                types[it.ContentId] = new Newtonsoft.Json.Linq.JValue(it.GetType().AssemblyQualifiedName);
                 it.LayoutSaveCallback(this.LayoutJsonNode.GetOrCreateProperty(it.ContentId));
             }
 

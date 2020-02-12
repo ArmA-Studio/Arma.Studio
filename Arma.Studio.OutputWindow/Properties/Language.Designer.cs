@@ -97,6 +97,15 @@ namespace Arma.Studio.OutputWindow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toggle Autoscroll.
+        /// </summary>
+        public static string ToggleAutoScroll_ToolTip {
+            get {
+                return ResourceManager.GetString("ToggleAutoScroll_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Toggle Word Wrap.
         /// </summary>
         public static string ToggleWordWrap_ToolTip {

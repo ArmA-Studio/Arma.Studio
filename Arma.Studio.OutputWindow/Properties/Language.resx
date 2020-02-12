@@ -129,6 +129,9 @@
   <data name="ShowOutputFromSource" xml:space="preserve">
     <value>Show output from:</value>
   </data>
+  <data name="ToggleAutoScroll_ToolTip" xml:space="preserve">
+    <value>Toggle Autoscroll</value>
+  </data>
   <data name="ToggleWordWrap_ToolTip" xml:space="preserve">
     <value>Toggle Word Wrap</value>
   </data>

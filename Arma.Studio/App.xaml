@@ -32,6 +32,18 @@
                             </DrawingGroup>
                         </DrawingBrush.Drawing>
                     </DrawingBrush>
+                    <DrawingBrush x:Key="DrawingBrushScrollbar">
+                        <DrawingBrush.Drawing>
+                            <DrawingGroup>
+                                <DrawingGroup.Children>
+                                    <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M4,16L13,16 13,0 4,0z" />
+                                    <GeometryDrawing Brush="#FF424242" Geometry="F1M7,12L8.5,13.5 10,12z M5,10L12,10 12,15 5,15z M10,4L8.5,2.5 7,4z M12,6L5,6 5,1 12,1z M5,7L12,7 12,8 5,8z" />
+                                    <GeometryDrawing Brush="#FFEFEFF0" Geometry="F1M8.5,13.5L11,11 6,11z M11,5L6,5 8.5,2.5z" />
+                                </DrawingGroup.Children>
+                            </DrawingGroup>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
                     <DrawingBrush x:Key="DrawingBrushWordWrap">
                         <DrawingBrush.Drawing>
                             <DrawingGroup>

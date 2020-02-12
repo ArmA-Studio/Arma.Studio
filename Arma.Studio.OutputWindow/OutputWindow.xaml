@@ -28,7 +28,15 @@
             <ToggleButton IsChecked="{Binding IsWordWrapToggled, Mode=TwoWay}" ToolTip="{x:Static p:Language.ToggleWordWrap_ToolTip}">
                 <Rectangle Fill="{StaticResource DrawingBrushWordWrap}" Width="16" Height="16"/>
             </ToggleButton>
+            <ToggleButton IsChecked="{Binding AutoScroll, Mode=TwoWay}" ToolTip="{x:Static p:Language.ToggleAutoScroll_ToolTip}">
+                <Rectangle Fill="{StaticResource DrawingBrushScrollbar}" Width="16" Height="16"/>
+            </ToggleButton>
         </ToolBar>
-        <ics:TextEditor Grid.Row="1" Document="{Binding SelectedOutputTarget.TextDocument}" IsReadOnly="True" FontFamily="Consolas" WordWrap="{Binding IsWordWrapToggled}"/>
+        <ics:TextEditor Grid.Row="1"
+                        Document="{Binding SelectedOutputTarget.TextDocument}"
+                        IsReadOnly="True"
+                        FontFamily="Consolas"
+                        WordWrap="{Binding IsWordWrapToggled}"
+                        local:AvalonEditAttachedProperties.Autoscroll="{Binding AutoScroll}"/>
     </Grid>
 </DataTemplate>

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -80,6 +81,39 @@ namespace Arma.Studio.SqfVmDebugger
             Logger.Diagnostic($"async Task Execute(action: {nameof(EDebugAction)}.{Enum.GetName(typeof(EDebugAction), action)})");
             await Task.Run(() =>
             {
+                void printLog()
+                {
+                    var infoContents = this.Virtualmachine.InfoContents();
+                    var warnContents = this.Virtualmachine.WarningContents();
+                    var errContents = this.Virtualmachine.ErrorContents();
+
+                    if (infoContents.Length > 0 || warnContents.Length > 0 || errContents.Length > 0)
+                    {
+                        var builder = new StringBuilder();
+                        builder.AppendLine("Execution Result:");
+                        if (infoContents.Length > 0)
+                        {
+                            builder.AppendLine("--- INFO ---");
+                            builder.AppendLine(infoContents);
+                        }
+                        if (warnContents.Length > 0)
+                        {
+                            builder.AppendLine("--- WARNING ---");
+                            builder.AppendLine(warnContents);
+                        }
+                        if (errContents.Length > 0)
+                        {
+                            builder.AppendLine("--- ERROR ---");
+                            builder.AppendLine(errContents);
+                        }
+                        Logger.Info(builder);
+                    }
+                    else
+                    {
+                        Logger.Info("Executed without any result.");
+                    }
+                }
+                bool execResult = false;
                 switch (action)
                 {
                     case EDebugAction.Start:
@@ -92,28 +126,39 @@ namespace Arma.Studio.SqfVmDebugger
                         var text = textEditorDocuments.GetContents();
                         this.Virtualmachine.ParseSqf(text, textEditorDocuments.TextEditorInstance.File.FullPath);
                         this.State = EDebugState.Running;
-                        this.Virtualmachine.Start();
+                        execResult = this.Virtualmachine.Start();
+                        Logger.Diagnostic($"Result of Start: {execResult}");
+                        printLog();
+                        // ToDo: Determine wether we are really "halted" or actually "NA" (stopped)
                         this.State = EDebugState.Halted;
                         break;
                     case EDebugAction.Stop:
-                        this.Virtualmachine.Abort();
+                        execResult = this.Virtualmachine.Abort();
+                        Logger.Diagnostic($"Result of Abort: {execResult}");
                         break;
                     case EDebugAction.Pause:
-                        this.Virtualmachine.Stop();
+                        execResult = this.Virtualmachine.Stop();
+                        Logger.Diagnostic($"Result of Stop: {execResult}");
                         break;
                     case EDebugAction.Resume:
                         this.State = EDebugState.Running;
-                        this.Virtualmachine.Start();
+                        execResult = this.Virtualmachine.Start();
+                        Logger.Diagnostic($"Result of Start: {execResult}");
+                        printLog();
                         this.State = EDebugState.Halted;
                         break;
                     case EDebugAction.StepOut:
                         this.State = EDebugState.Running;
-                        this.Virtualmachine.LeaveScope();
+                        execResult = this.Virtualmachine.LeaveScope();
+                        Logger.Diagnostic($"Result of LeaveScope: {execResult}");
+                        printLog();
                         this.State = EDebugState.Halted;
                         break;
                     case EDebugAction.StepInto:
                         this.State = EDebugState.Running;
-                        this.Virtualmachine.AssemblyStep();
+                        execResult = this.Virtualmachine.AssemblyStep();
+                        Logger.Diagnostic($"Result of AssemblyStep: {execResult}");
+                        printLog();
                         this.State = EDebugState.Halted;
                         break;
 

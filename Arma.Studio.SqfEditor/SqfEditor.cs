@@ -90,6 +90,10 @@ namespace Arma.Studio.SqfEditor
                         {
                             var l2_markings = reader.ReadLine();
                             var l3_message = reader.ReadLine();
+                            if (l2_markings is null || l3_message is null)
+                            {
+                                break;
+                            }
 
                             var matches = Regex.Matches(l3_message, @"\[[a-zA-Z0-9]+\]\[L([0-9]+)\|C([0-9]+)(\]|\|(.*?)\])(.*)");
                             foreach (Match match in matches)

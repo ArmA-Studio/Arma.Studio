@@ -8,15 +8,13 @@
               xmlns:local="clr-namespace:Arma.Studio.UI;assembly=Arma.Studio"
               DataType="{x:Type local:TextEditorDataContext}"
               >
-    <ae:TextEditor
-            Document="{Binding TextDocument}"
-            ShowLineNumbers="{Binding TextEditorInstance.ShowLineNumbers}"
-            SyntaxHighlighting="{Binding SyntaxHighlightingDefinition}"
-            Encoding="{x:Static text:Encoding.UTF8}"
-            IsReadOnly="{Binding IsReadOnly}"
-            FontFamily="Consolas"
-            asd:AttachedDataContext.DataContext="{Binding}"
-            >
+    <ae:TextEditor  Document="{Binding TextDocument}"
+                    ShowLineNumbers="{Binding TextEditorInstance.ShowLineNumbers}"
+                    SyntaxHighlighting="{Binding SyntaxHighlightingDefinition}"
+                    Encoding="{x:Static text:Encoding.UTF8}"
+                    IsReadOnly="{Binding IsReadOnly}"
+                    FontFamily="Consolas"
+                    asd:AttachedDataContext.DataContext="{Binding}">
 
     </ae:TextEditor>
 </DataTemplate>

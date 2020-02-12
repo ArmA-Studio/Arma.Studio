@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:ae="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:local="clr-namespace:Arma.Studio.UI.Windows"
         xmlns:p="clr-namespace:Arma.Studio.Properties"
         xmlns:asd="http://schemas.armastudio.io/data"
@@ -97,7 +98,10 @@
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="CommandParameter" Value="{x:Static asd:EDebugAction.Start}"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding DebuggerIsRunning}" Value="True">
+                                <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.Running}">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.Halted}">
                                     <Setter Property="CommandParameter" Value="{x:Static asd:EDebugAction.Resume}"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="True">
@@ -127,6 +131,9 @@
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Fill" Value="{StaticResource DrawingBrushRunGray}"/>
                                         </MultiDataTrigger>
+                                        <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.Running}">
+                                            <Setter Property="Fill" Value="{StaticResource DrawingBrushRunGray}"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Rectangle.Style>
@@ -137,6 +144,9 @@
                                     <Setter Property="Text" Value="{x:Static p:Language.Debugger_Start}"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.Running}">
+                                            <Setter Property="Text" Value="{x:Static p:Language.Debugger_Continue}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.Halted}">
                                             <Setter Property="Text" Value="{x:Static p:Language.Debugger_Continue}"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="True">

@@ -29,6 +29,7 @@ namespace Arma.Studio.OutputWindow
             {
                 this.Title = title;
                 this.TextDocument = new ICSharpCode.AvalonEdit.Document.TextDocument();
+                this.TextDocument.UndoStack.SizeLimit = 0;
             }
             public void OnLog(object sender, LogEventArgs e)
             {
@@ -40,10 +41,10 @@ namespace Arma.Studio.OutputWindow
                     ESeverity.Warning => "[WRN]  ",
                     ESeverity.Error => "[ERR]  ",
                     _ => throw new NotImplementedException()
-                }, e.Message);
+                }, e.Message, Environment.NewLine);
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    this.TextDocument.Insert(this.TextDocument.TextLength, e.Message);
+                    this.TextDocument.Insert(this.TextDocument.TextLength, message);
                     var ex = e.Exception;
                     while (ex != null)
                     {
@@ -71,11 +72,12 @@ namespace Arma.Studio.OutputWindow
                         {
                             this.TextDocument.Insert(this.TextDocument.TextLength, new string('-', 32));
                         }
+                        
                     }
                 });
             }
         }
-        #region Property: IsWordWrapToggled (System.Nullable<System.Boolean>)
+        #region Property: SelectedOutputTarget (OutputTarget)
         public OutputTarget SelectedOutputTarget
         {
             get => this._SelectedOutputTarget;
@@ -99,6 +101,18 @@ namespace Arma.Studio.OutputWindow
         }
         private bool? _IsWordWrapToggled;
         #endregion
+        #region Property: IsWordWrapToggled (System.Nullable<System.Boolean>)
+        public bool? AutoScroll
+        {
+            get => this._AutoScroll;
+            set
+            {
+                this._AutoScroll = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private bool? _AutoScroll;
+        #endregion
 
         #region Collection: AvailableOutputTargets
         public ObservableCollection<OutputTarget> AvailableOutputTargets { get; }
@@ -119,6 +133,8 @@ namespace Arma.Studio.OutputWindow
                 logger.OnLog += outputTarget.OnLog;
             }
             this.SelectedOutputTarget = this.AvailableOutputTargets.Any() ? this.AvailableOutputTargets.First() : NullTarget;
+            this._IsWordWrapToggled = true;
+            this._AutoScroll = true;
         }
 
         public ICommand CmdClearOutputWindow => new RelayCommand(() => Application.Current.Dispatcher.Invoke(() => this.SelectedOutputTarget.TextDocument.Text = string.Empty));

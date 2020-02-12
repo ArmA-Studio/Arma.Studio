@@ -195,15 +195,21 @@ namespace Arma.Studio.UI
                     var foldings = new List<NewFolding>(this.LastFoldingInfos.Length);
                     foreach (var it in this.LastFoldingInfos)
                     {
+                        NewFolding folding;
                         if (it.StartOffset.HasValue)
                         {
-                            foldings.Add(new NewFolding { StartOffset = it.StartOffset.Value, EndOffset = it.StartOffset.Value + it.Length });
+                            folding = new NewFolding { StartOffset = it.StartOffset.Value, EndOffset = it.StartOffset.Value + it.Length };
                         }
                         else
                         {
                             var off = App.Current.Dispatcher.Invoke(() => this.TextDocument.GetOffset(it.LineStart.Value, it.ColumnStart.Value));
-                            foldings.Add(new NewFolding { StartOffset = off, EndOffset = off + it.Length });
+                            folding = new NewFolding { StartOffset = off, EndOffset = off + it.Length };
                         }
+                        if (folding.EndOffset >= this.TextDocument.TextLength)
+                        {
+                            folding.EndOffset = this.TextDocument.TextLength;
+                        }
+                        foldings.Add(folding);
                     }
                     foldings.Sort((l, r) => l.StartOffset.CompareTo(r.StartOffset));
                     App.Current.Dispatcher.Invoke(() => this.FoldingManager.UpdateFoldings(foldings, 0));
