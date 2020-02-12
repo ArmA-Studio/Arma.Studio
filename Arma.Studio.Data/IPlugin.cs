@@ -22,7 +22,7 @@ namespace Arma.Studio.Data
         /// <returns>The <see cref="Task"/> promising the <see cref="IUpdateInfo"/> or a <see cref="Task"/> containing null.</returns>
         Task<IUpdateInfo> CheckForUpdate(CancellationToken cancellationToken);
         /// <summary>
-        /// Called at program start.
+        /// Called at program start, and after any possible `Set` method of other plugin interfaces (eg. <see cref="Log.ILogger.SetLogger(Log.Logger)"/>) have been executed.
         /// Supposed to do whatever is required to initialize the plugin.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> that may cancel the asynchronous operation.</param>

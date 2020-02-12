@@ -8,9 +8,7 @@
               xmlns:local="clr-namespace:Arma.Studio.UI;assembly=Arma.Studio"
               DataType="{x:Type local:TextEditorDataContext}"
               >
-    <Grid>
-        <ae:TextEditor
-            Grid.Column="0"
+    <ae:TextEditor
             Document="{Binding TextDocument}"
             ShowLineNumbers="{Binding TextEditorInstance.ShowLineNumbers}"
             SyntaxHighlighting="{Binding SyntaxHighlightingDefinition}"
@@ -20,6 +18,5 @@
             asd:AttachedDataContext.DataContext="{Binding}"
             >
 
-        </ae:TextEditor>
-    </Grid>
+    </ae:TextEditor>
 </DataTemplate>

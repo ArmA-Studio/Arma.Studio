@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,7 +31,7 @@ namespace Arma.Studio.UI.Windows
         public void SetStatusLabel(string s) => App.Current.Dispatcher.Invoke(() => this.StatusLabel = s);
         public DockableBase FirstDocumentOrDefault(Func<DockableBase, bool> predicate) => this.Documents.FirstOrDefault((it) => predicate(it));
         public DockableBase FirstAnchorableOrDefault(Func<DockableBase, bool> predicate) => this.Anchorables.FirstOrDefault((it) => predicate(it));
-        public DockableBase SelectedDockable { get => this.AvalonDockActiveContent as DockableBase; set => this.AvalonDockActiveContent = value; }
+        public DockableBase ActiveDockable { get => this.AvalonDockActiveContent as DockableBase; set => this.AvalonDockActiveContent = value; }
         public void AddDocument(DockableBase dockableBase)
         {
             App.Current.Dispatcher.Invoke(() =>
@@ -124,18 +125,101 @@ namespace Arma.Studio.UI.Windows
                 if (this._AvalonDockActiveContent == value) { return; }
                 this._AvalonDockActiveContent = value;
                 this.RaisePropertyChanged();
-                this.RaisePropertyChanged(nameof(this.SelectedDockable));
+                this.RaisePropertyChanged(nameof(this.ActiveDockable));
             }
         }
         private object _AvalonDockActiveContent;
 
-        public IDebugger Debugger { get { return this._Debugger; } set { this._Debugger = value; this.RaisePropertyChanged(); } }
+        public IDebugger Debugger
+        {
+            get => this._Debugger;
+            set
+            {
+                if (this._Debugger != null)
+                {
+                    this._Debugger.PropertyChanged -= this.Debugger_PropertyChanged;
+                    this.BreakpointManager.BreakpointAdded -= this.Debugger_BreakpointManager_BreakpointAdded;
+                    this.BreakpointManager.BreakpointRemoved -= this.Debugger_BreakpointManager_BreakpointRemoved;
+                    this.BreakpointManager.BreakpointUpdated -= this.Debugger_BreakpointManager_BreakpointUpdated;
+                    foreach (var breakpoint in this.BreakpointManager.Breakpoints)
+                    {
+                        this._Debugger.RemoveBreakpoint(breakpoint);
+                    }
+                }
+                this._Debugger = value;
+                if (this._Debugger != null)
+                {
+                    this._Debugger.PropertyChanged += this.Debugger_PropertyChanged;
+                    this.BreakpointManager.BreakpointAdded += this.Debugger_BreakpointManager_BreakpointAdded;
+                    this.BreakpointManager.BreakpointRemoved += this.Debugger_BreakpointManager_BreakpointRemoved;
+                    this.BreakpointManager.BreakpointUpdated += this.Debugger_BreakpointManager_BreakpointUpdated;
+                    foreach (var breakpoint in this.BreakpointManager.Breakpoints)
+                    {
+                        this._Debugger.SetBreakpoint(breakpoint);
+                    }
+                }
+                this.RaisePropertyChanged();
+            }
+        }
+
+        private void Debugger_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            foreach (var it in this.Documents.Where((it) => it is UI.TextEditorDataContext).Cast<UI.TextEditorDataContext>())
+            {
+                if (it.TextEditorInstance != null && it.CurrentVisibility == Visibility.Visible)
+                {
+                    App.Current.Dispatcher.Invoke(() => it.TextEditorControl.InvalidateVisual());
+                }
+            }
+        }
+
+        private void Debugger_BreakpointManager_BreakpointUpdated(object sender, BreakpointUpdatedEventArgs e)
+        {
+            this.Debugger.RemoveBreakpoint(e.BreakpointOld);
+            this.Debugger.SetBreakpoint(e.BreakpointNew);
+        }
+
+        private void Debugger_BreakpointManager_BreakpointRemoved(object sender, BreakpointEventArgs e)
+        {
+            this.Debugger.RemoveBreakpoint(e.Breakpoint);
+        }
+
+        private void Debugger_BreakpointManager_BreakpointAdded(object sender, BreakpointEventArgs e)
+        {
+            this.Debugger.SetBreakpoint(e.Breakpoint);
+        }
+
         private IDebugger _Debugger;
 
         public bool DebuggerIsRunning { get { return this._DebuggerIsRunning; } set { this._DebuggerIsRunning = value; this.RaisePropertyChanged(); } }
         private bool _DebuggerIsRunning;
 
-        public ICommand CmdDebuggerAction => new RelayCommand<EDebugAction>((p) => { });
+        public ICommand CmdDebuggerAction => new RelayCommand<EDebugAction>((p) =>
+        {
+            if (this.Debugger is null)
+            {
+                var debuggerPlugins = PluginManager.Instance.GetPlugins<IDebugger>().ToArray();
+                if (debuggerPlugins.Length > 1)
+                {
+                    // ToDo: Show user a selection and let the user pick it ONCE per session
+                }
+                else if (debuggerPlugins.Length == 1)
+                {
+                    this.Debugger = debuggerPlugins.First();
+                }
+                else
+                {
+                    SystemSounds.Asterisk.Play();
+                    MessageBox.Show("No Debugger Present");
+                    return;
+                }
+            }
+            if (p == EDebugAction.NA)
+            {
+                return;
+            }
+            this.Debugger.Execute(p);
+        });
 
         public string StatusLabel { get { return this._StatusLabel; } set { this._StatusLabel = value; this.RaisePropertyChanged(); } }
         private string _StatusLabel;

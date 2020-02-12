@@ -1,0 +1,34 @@
+﻿<DataTemplate xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:asd="http://schemas.armastudio.io/data"
+              xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
+              xmlns:text="clr-namespace:System.Text;assembly=mscorlib"
+              xmlns:local="clr-namespace:Arma.Studio.OutputWindow;assembly=Arma.Studio.OutputWindow"
+              xmlns:p="clr-namespace:Arma.Studio.OutputWindow.Properties;assembly=Arma.Studio.OutputWindow"
+              xmlns:ics="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
+              DataType="{x:Type local:OutputWindowDataContext}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ToolBar ToolBarTray.IsLocked="True">
+            <TextBlock Text="{x:Static p:Language.ShowOutputFromSource}" VerticalAlignment="Center"/>
+            <ComboBox SelectedItem="{Binding SelectedOutputTarget}" ItemsSource="{Binding AvailableOutputTargets}" DisplayMemberPath="Title" MinWidth="128"/>
+            
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+
+            <Button Command="{Binding CmdClearOutputWindow}" ToolTip="{x:Static p:Language.ClearAll_ToolTip}">
+                <Rectangle Fill="{StaticResource DrawingBrushClearWindowContent}" Width="16" Height="16"/>
+            </Button>
+            
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+
+            <ToggleButton IsChecked="{Binding IsWordWrapToggled, Mode=TwoWay}" ToolTip="{x:Static p:Language.ToggleWordWrap_ToolTip}">
+                <Rectangle Fill="{StaticResource DrawingBrushWordWrap}" Width="16" Height="16"/>
+            </ToggleButton>
+        </ToolBar>
+        <ics:TextEditor Grid.Row="1" Document="{Binding SelectedOutputTarget.TextDocument}" IsReadOnly="True" FontFamily="Consolas" WordWrap="{Binding IsWordWrapToggled}"/>
+    </Grid>
+</DataTemplate>

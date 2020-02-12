@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -61,7 +63,14 @@
     <Compile Include="IO\Folder.cs" />
     <Compile Include="IO\IFileManagement.cs" />
     <Compile Include="IO\PBO.cs" />
-    <Compile Include="TextEditor\ESeverity.cs" />
+    <Compile Include="IAppExtensions.cs" />
+    <Compile Include="IPluginExtensions.cs" />
+    <Compile Include="Log\ILogger.cs" />
+    <Compile Include="Log\ILogHandler.cs" />
+    <Compile Include="Log\LogEventArgs.cs" />
+    <Compile Include="Log\LoggerDictionary.cs" />
+    <Compile Include="Log\Logger.cs" />
+    <Compile Include="ESeverity.cs" />
     <Compile Include="TextEditor\FoldingInfo.cs" />
     <Compile Include="TextEditor\IFoldable.cs" />
     <Compile Include="TextEditor\ILintable.cs" />
@@ -120,6 +129,7 @@
     <Compile Include="UI\Converters\UriToCachedImageConverter.cs" />
     <Compile Include="Debugging\IBreakpointManager.cs" />
     <Compile Include="UI\IMainWindow.cs" />
+    <Compile Include="UI\ITextDocument.cs" />
     <Compile Include="UI\RelayCommand.cs" />
     <Compile Include="UI\RelayCommandAsync.cs" />
   </ItemGroup>

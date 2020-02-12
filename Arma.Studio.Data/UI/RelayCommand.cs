@@ -31,9 +31,6 @@ namespace Arma.Studio.Data.UI
         private readonly Predicate<T> canExecute;
         private event EventHandler CanExecuteChangedInternal;
 
-        public RelayCommand(Action execute) : this((p) => execute(), DefaultCanExecute)
-        {
-        }
         public RelayCommand(Action<T> execute) : this(execute, DefaultCanExecute)
         {
         }
@@ -59,7 +56,8 @@ namespace Arma.Studio.Data.UI
         }
         public bool CanExecute(object parameter)
         {
-            return this.canExecute != null && this.canExecute((T)parameter);
+            var res = parameter is T && this.canExecute != null && this.canExecute((T)(parameter ?? default(T)));
+            return res;
         }
         public void Execute(object parameter)
         {

@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arma.Studio.Data.TextEditor
+namespace Arma.Studio.Data
 {
-    public enum ESeverity
+    public enum ESeverity : sbyte
     {
-        Info,
+        Diagnostic = -2,
+        Trace = -1,
+        Info = 0,
         Warning,
         Error
     }

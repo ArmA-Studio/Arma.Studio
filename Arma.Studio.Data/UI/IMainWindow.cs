@@ -14,7 +14,7 @@ namespace Arma.Studio.Data.UI
         Window OwningWindow { get; }
         IFileManagement FileManagement { get; }
         IBreakpointManager BreakpointManager { get; }
-        DockableBase SelectedDockable { get; set; }
+        DockableBase ActiveDockable { get; set; }
         void SetStatusLabel(string s);
         DockableBase FirstDocumentOrDefault(Func<DockableBase, bool> predicate);
         DockableBase FirstAnchorableOrDefault(Func<DockableBase, bool> predicate);

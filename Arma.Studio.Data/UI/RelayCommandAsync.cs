@@ -34,14 +34,27 @@ namespace Arma.Studio.Data.UI
         private Task awaitable;
         private readonly Predicate<T> canExecute;
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
+        protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "")
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
+        }
 
-        public bool IsRunning { get { return this._IsRunning; } private set { this._IsRunning = value; this.RaisePropertyChanged(); } }
+        public bool IsRunning
+        {
+            get => this._IsRunning;
+            private set
+            {
+                if (value == this._IsRunning)
+                {
+                    return;
+                }
+                this._IsRunning = value;
+                this.RaisePropertyChanged();
+                CommandManager.InvalidateRequerySuggested();
+            }
+        }
         private bool _IsRunning;
 
-        public RelayCommandAsync(Func<Task> execute) : this((p) => execute(), DefaultCanExecute)
-        {
-        }
         public RelayCommandAsync(Func<T, Task> execute) : this(execute, DefaultCanExecute)
         {
         }
@@ -55,7 +68,7 @@ namespace Arma.Studio.Data.UI
         }
         public bool CanExecute(object parameter)
         {
-            return this.canExecute != null && this.canExecute((T)parameter) && (this.awaitable == null || this.awaitable.IsCompleted);
+            return parameter is T && this.canExecute != null && this.canExecute((T)(parameter ?? default(T))) && (this.awaitable == null || this.awaitable.IsCompleted);
         }
         public void Execute(object parameter)
         {
@@ -75,9 +88,25 @@ namespace Arma.Studio.Data.UI
         private Task awaitable;
         private readonly Predicate<object> canExecute;
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
+        protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "")
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
+        }
 
-        public bool IsRunning { get { return this._IsRunning; } private set { this._IsRunning = value; this.RaisePropertyChanged(); } }
+        public bool IsRunning
+        {
+            get => this._IsRunning;
+            private set
+            {
+                if (value == this._IsRunning)
+                {
+                    return;
+                }
+                this._IsRunning = value;
+                this.RaisePropertyChanged();
+                CommandManager.InvalidateRequerySuggested();
+            }
+        }
         private bool _IsRunning;
 
         public RelayCommandAsync(Func<Task> execute) : this((p) => execute(), DefaultCanExecute)

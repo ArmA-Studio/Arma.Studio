@@ -117,88 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="App_GenericOperationFailedMessageBox_Body" xml:space="preserve">
-    <value>Operation Failed</value>
+  <data name="LoggerName" xml:space="preserve">
+    <value>SQF-VM</value>
   </data>
-  <data name="App_GenericOperationFailedMessageBox_Title" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="ArmaStudio" xml:space="preserve">
-    <value>Arma.Studio</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>Back</value>
-  </data>
-  <data name="CollapseAll" xml:space="preserve">
-    <value>CollapseAll</value>
-  </data>
-  <data name="Configuration_ExceptionDuringLoad" xml:space="preserve">
-    <value>Failed to load configuration. Using empty.</value>
-  </data>
-  <data name="Debugger_Continue" xml:space="preserve">
-    <value>Continue</value>
-  </data>
-  <data name="Debugger_Pause_Tooltip" xml:space="preserve">
-    <value>Pause</value>
-  </data>
-  <data name="Debugger_Start" xml:space="preserve">
-    <value>Start</value>
-  </data>
-  <data name="Debugger_StepInto_Tooltip" xml:space="preserve">
-    <value>Step-Into</value>
-  </data>
-  <data name="Debugger_StepOut_Tooltip" xml:space="preserve">
-    <value>Step-Out</value>
-  </data>
-  <data name="Debugger_StepOver_Tooltip" xml:space="preserve">
-    <value>Step-Over</value>
-  </data>
-  <data name="Debugger_Stop_Tooltip" xml:space="preserve">
-    <value>Stop</value>
-  </data>
-  <data name="ExpandAll" xml:space="preserve">
-    <value>ExpandAll</value>
-  </data>
-  <data name="FailedToLoadPlugin_Body" xml:space="preserve">
-    <value>Failed to load Plugin {0}</value>
-  </data>
-  <data name="FailedToLoadPlugin_Title" xml:space="preserve">
-    <value>Loading plugin has Failed.</value>
-  </data>
-  <data name="Forward" xml:space="preserve">
-    <value>Forward</value>
-  </data>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
-  </data>
-  <data name="MainWindow_Menu_File" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="MainWindow_Menu_File_New" xml:space="preserve">
-    <value>New</value>
-  </data>
-  <data name="MainWindow_Menu_File_Quit" xml:space="preserve">
-    <value>Quit</value>
-  </data>
-  <data name="MainWindow_Menu_View" xml:space="preserve">
-    <value>View</value>
-  </data>
-  <data name="MainWindow_Menu_View_Anchorables" xml:space="preserve">
-    <value>Anchorables</value>
-  </data>
-  <data name="SplashScreen_InitializingPlugin_0Name" xml:space="preserve">
-    <value>Initializing Plugin '{0}'</value>
-  </data>
-  <data name="SplashScreen_LoadingPlugins" xml:space="preserve">
-    <value>Loading Plugins</value>
-  </data>
-  <data name="SplashScreen_PreparingUserInterface" xml:space="preserve">
-    <value>Preparing User-Interface</value>
-  </data>
-  <data name="Debugger_Attach" xml:space="preserve">
-    <value>Attach</value>
-  </data>
-  <data name="SplashScreen_PreparingLoggers" xml:space="preserve">
-    <value>Preparing Loggers</value>
+  <data name="SqfVmDebugger_Name" xml:space="preserve">
+    <value>SQF-VM Debugger</value>
   </data>
 </root>

@@ -115,6 +115,15 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Attach.
+        /// </summary>
+        public static string Debugger_Attach {
+            get {
+                return ResourceManager.GetString("Debugger_Attach", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         public static string Debugger_Continue {
@@ -282,6 +291,15 @@ namespace Arma.Studio.Properties {
         public static string SplashScreen_LoadingPlugins {
             get {
                 return ResourceManager.GetString("SplashScreen_LoadingPlugins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preparing Loggers.
+        /// </summary>
+        public static string SplashScreen_PreparingLoggers {
+            get {
+                return ResourceManager.GetString("SplashScreen_PreparingLoggers", resourceCulture);
             }
         }
         

@@ -106,6 +106,24 @@ namespace Arma.Studio.UI.Windows
                         MessageBox.Show(String.Format(Properties.Language.FailedToLoadPlugin_Body, plugin), Properties.Language.FailedToLoadPlugin_Title, MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
+
+                { // Handle Data.Log Plugins setters
+                    this.ProgressText = Properties.Language.SplashScreen_PreparingLoggers;
+                    this.ProgressIndeterminate = true;
+                    var loggersList = new List<Data.Log.Logger>();
+                    foreach (var it in PluginManager.Instance.GetPlugins<Data.Log.ILogger>())
+                    {
+                        var logger = new Data.Log.Logger(it);
+                        it.SetLogger(logger);
+                        loggersList.Add(logger);
+                    }
+                    var loggersReadOnlyCollection = new Data.Log.LoggerCollection(loggersList);
+                    foreach (var it in PluginManager.Instance.GetPlugins<Data.Log.ILogHandler>())
+                    {
+                        it.SetLogCollection(loggersReadOnlyCollection);
+                    }
+                }
+
                 var count = PluginManager.Instance.Plugins.Count;
                 int num = 0;
                 this.ProgressValue = 0;
@@ -115,6 +133,7 @@ namespace Arma.Studio.UI.Windows
                     var actualPlugin = plugin.Plugin();
                     this.ProgressValue = (num++ / (double)count);
                     this.ProgressText = String.Format(Properties.Language.SplashScreen_InitializingPlugin_0Name, actualPlugin.Name);
+
                     await actualPlugin.Initialize(plugin.Folder, this.Source.Token);
                 }
             }

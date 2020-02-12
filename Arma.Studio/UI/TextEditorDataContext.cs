@@ -20,7 +20,7 @@ using System.Windows.Threading;
 
 namespace Arma.Studio.UI
 {
-    public class TextEditorDataContext : DockableBase, INotifyPropertyChanged, Data.UI.AttachedProperties.IOnInitialized, IDisposable
+    public class TextEditorDataContext : DockableBase, Data.UI.ITextDocument, INotifyPropertyChanged, Data.UI.AttachedProperties.IOnInitialized, IDisposable
     {
         private static readonly TimeSpan LintTimeout = new TimeSpan(0, 0, 0, 0, 200);
 
@@ -206,7 +206,7 @@ namespace Arma.Studio.UI
                         }
                     }
                     foldings.Sort((l, r) => l.StartOffset.CompareTo(r.StartOffset));
-                    App.Current.Dispatcher.Invoke(() => this.FoldingManager.UpdateFoldings(foldings, -1));
+                    App.Current.Dispatcher.Invoke(() => this.FoldingManager.UpdateFoldings(foldings, 0));
                 });
             }
         }
@@ -379,5 +379,10 @@ namespace Arma.Studio.UI
         }
         #endregion
 
+
+        public string GetContents()
+        {
+            return App.Current.Dispatcher.Invoke(() => this.TextDocument.Text);
+        }
     }
 }

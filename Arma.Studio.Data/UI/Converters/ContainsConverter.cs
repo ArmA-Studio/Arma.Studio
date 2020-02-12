@@ -28,7 +28,7 @@ namespace Arma.Studio.Data.UI.Converters
                     if (t == null)
                     {
                         t = it.GetType();
-                        para = tc.ConvertTo(parameter, t);
+                        para = parameter.GetType().IsEquivalentTo(t) ? parameter : tc.ConvertTo(parameter, t);
                     }
                     if (it?.Equals(para) ?? false)
                     {

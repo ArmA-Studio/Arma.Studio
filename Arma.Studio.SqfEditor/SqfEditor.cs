@@ -1,4 +1,5 @@
-﻿using Arma.Studio.Data.IO;
+﻿using Arma.Studio.Data;
+using Arma.Studio.Data.IO;
 using Arma.Studio.Data.TextEditor;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,6 @@ namespace Arma.Studio.SqfEditor
 {
     public class SqfEditor : ITextEditor, ILintable, IFoldable
     {
-
         private sqfvm.ClrVirtualmachine Virtualmachine { get; }
         public SqfEditor()
         {
