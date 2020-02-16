@@ -42,6 +42,7 @@ namespace Arma.Studio.OutputWindow
                     ESeverity.Error => "[ERR]  ",
                     _ => throw new NotImplementedException()
                 }, e.Message, Environment.NewLine);
+                Thread.Sleep(10);
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     this.TextDocument.Insert(this.TextDocument.TextLength, message);

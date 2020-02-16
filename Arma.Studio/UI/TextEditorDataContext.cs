@@ -89,10 +89,13 @@ namespace Arma.Studio.UI
         }
         public override void LayoutLoadCallback(dynamic section)
         {
-            this.File = (File)App.MWContext.FileManagement[section.file as string];
+            if (App.MWContext.FileManagement.ContainsKey(section.file as string))
+            {
+                this.File = (File)App.MWContext.FileManagement[section.file as string];
+            }
             var type = section.type as string;
 
-            if (System.IO.File.Exists(this.File.FullPath))
+            if (this.File?.FullPath != null &&System.IO.File.Exists(this.File.FullPath))
             {
                 using (var reader = new System.IO.StreamReader(this.File.FullPath))
                 {
@@ -102,7 +105,7 @@ namespace Arma.Studio.UI
             }
             else
             {
-                MessageBox.Show(this.File.FullPath, "File Not Found", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(this.File?.FullPath?.ToString() ?? "NULL", "File Not Found", MessageBoxButton.OK, MessageBoxImage.Warning);
                 this.Close();
                 return;
             }
@@ -371,7 +374,10 @@ namespace Arma.Studio.UI
                     this.FoldingTask?.Dispose();
                     this.LintingTask?.Dispose();
                     (this.TextEditorInstance as IDisposable)?.Dispose();
-                    this.File.PropertyChanged -= this.File_PropertyChanged;
+                    if (this.File != null)
+                    {
+                        this.File.PropertyChanged -= this.File_PropertyChanged;
+                    }
                 }
 
 

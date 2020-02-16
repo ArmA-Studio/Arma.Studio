@@ -70,6 +70,25 @@ namespace Arma.Studio
                 }
             }
         }
+        public bool ContainsKey(string fullkey)
+        {
+            if (string.IsNullOrWhiteSpace(fullkey))
+            {
+                return false;
+            }
+            var keys = fullkey.Split('/', '\\');
+            string tmpkey = keys.First();
+            FileFolderBase ffb = this._PBOs.First((it) => it.Name.Equals(tmpkey, StringComparison.InvariantCultureIgnoreCase));
+            foreach (var key in keys.Skip(1))
+            {
+                if (ffb is ICollection<FileFolderBase> collection)
+                {
+                    ffb = collection.First((it) => it.Name.Equals(key, StringComparison.InvariantCultureIgnoreCase));
+                }
+                return false;
+            }
+            return true;
+        }
         private readonly ObservableCollection<PBO> _PBOs;
 
         public void Add(PBO item)
@@ -278,5 +297,6 @@ namespace Arma.Studio
         {
             throw new NotImplementedException();
         }
+
     }
 }

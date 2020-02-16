@@ -9,5 +9,6 @@ namespace Arma.Studio.Data.IO
     public interface IFileManagement : ICollection<PBO>
     {
         FileFolderBase this[string key] { get; set; }
+        bool ContainsKey(string key);
     }
 }

@@ -24,8 +24,36 @@ namespace Arma.Studio.SqfVmDebugger
         public Task Initialize(string pluginPath, CancellationToken cancellationToken)
         {
             Logger.Trace($"Creating Virtualmachine.");
-            this.Virtualmachine = new sqfvm.ClrVirtualmachine();
+            this.Virtualmachine = new SqfVm.ClrVirtualmachine();
+            this.Virtualmachine.OnLog += this.Virtualmachine_OnLog;
             return Task.CompletedTask;
+        }
+
+        private void Virtualmachine_OnLog(object sender, SqfVm.LogEventArgs eventArgs)
+        {
+            switch (eventArgs.Severity)
+            {
+                case SqfVm.ESeverity.Fatal:
+                    Logger.Log(ESeverity.Error, eventArgs.Message);
+                    break;
+                case SqfVm.ESeverity.Error:
+                    Logger.Log(ESeverity.Error, eventArgs.Message);
+                    break;
+                case SqfVm.ESeverity.Warning:
+                    Logger.Log(ESeverity.Warning, eventArgs.Message);
+                    break;
+                case SqfVm.ESeverity.Info:
+                    Logger.Log(ESeverity.Info, eventArgs.Message);
+                    break;
+                case SqfVm.ESeverity.Verbose:
+                    Logger.Log(ESeverity.Trace, eventArgs.Message);
+                    break;
+                case SqfVm.ESeverity.Trace:
+                    Logger.Log(ESeverity.Diagnostic, eventArgs.Message);
+                    break;
+                default:
+                    break;
+            }
         }
         #endregion
         #region IDebugger
@@ -60,7 +88,7 @@ namespace Arma.Studio.SqfVmDebugger
         private EDebugState _State;
         #endregion
         #region Property: Virtualmachine (sqfvm.ClrVirtualmachine)
-        public sqfvm.ClrVirtualmachine Virtualmachine
+        public SqfVm.ClrVirtualmachine Virtualmachine
         {
             get => this._Virtualmachine;
             set
@@ -73,7 +101,7 @@ namespace Arma.Studio.SqfVmDebugger
                 this.RaisePropertyChanged();
             }
         }
-        private sqfvm.ClrVirtualmachine _Virtualmachine;
+        private SqfVm.ClrVirtualmachine _Virtualmachine;
         #endregion
 
         public async Task Execute(EDebugAction action)
@@ -81,38 +109,6 @@ namespace Arma.Studio.SqfVmDebugger
             Logger.Diagnostic($"async Task Execute(action: {nameof(EDebugAction)}.{Enum.GetName(typeof(EDebugAction), action)})");
             await Task.Run(() =>
             {
-                void printLog()
-                {
-                    var infoContents = this.Virtualmachine.InfoContents();
-                    var warnContents = this.Virtualmachine.WarningContents();
-                    var errContents = this.Virtualmachine.ErrorContents();
-
-                    if (infoContents.Length > 0 || warnContents.Length > 0 || errContents.Length > 0)
-                    {
-                        var builder = new StringBuilder();
-                        builder.AppendLine("Execution Result:");
-                        if (infoContents.Length > 0)
-                        {
-                            builder.AppendLine("--- INFO ---");
-                            builder.AppendLine(infoContents);
-                        }
-                        if (warnContents.Length > 0)
-                        {
-                            builder.AppendLine("--- WARNING ---");
-                            builder.AppendLine(warnContents);
-                        }
-                        if (errContents.Length > 0)
-                        {
-                            builder.AppendLine("--- ERROR ---");
-                            builder.AppendLine(errContents);
-                        }
-                        Logger.Info(builder);
-                    }
-                    else
-                    {
-                        Logger.Info("Executed without any result.");
-                    }
-                }
                 bool execResult = false;
                 switch (action)
                 {
@@ -128,9 +124,6 @@ namespace Arma.Studio.SqfVmDebugger
                         this.State = EDebugState.Running;
                         execResult = this.Virtualmachine.Start();
                         Logger.Diagnostic($"Result of Start: {execResult}");
-                        printLog();
-                        // ToDo: Determine wether we are really "halted" or actually "NA" (stopped)
-                        this.State = EDebugState.Halted;
                         break;
                     case EDebugAction.Stop:
                         execResult = this.Virtualmachine.Abort();
@@ -144,22 +137,16 @@ namespace Arma.Studio.SqfVmDebugger
                         this.State = EDebugState.Running;
                         execResult = this.Virtualmachine.Start();
                         Logger.Diagnostic($"Result of Start: {execResult}");
-                        printLog();
-                        this.State = EDebugState.Halted;
                         break;
                     case EDebugAction.StepOut:
                         this.State = EDebugState.Running;
                         execResult = this.Virtualmachine.LeaveScope();
                         Logger.Diagnostic($"Result of LeaveScope: {execResult}");
-                        printLog();
-                        this.State = EDebugState.Halted;
                         break;
                     case EDebugAction.StepInto:
                         this.State = EDebugState.Running;
                         execResult = this.Virtualmachine.AssemblyStep();
                         Logger.Diagnostic($"Result of AssemblyStep: {execResult}");
-                        printLog();
-                        this.State = EDebugState.Halted;
                         break;
 
 
@@ -168,6 +155,7 @@ namespace Arma.Studio.SqfVmDebugger
                     default:
                         throw new NotSupportedException();
                 }
+                this.State = this.Virtualmachine.IsVirtualmachineRunning ? EDebugState.Running : this.Virtualmachine.IsVirtualmachineDone ? EDebugState.NA : EDebugState.Halted;
             });
         }
 
@@ -187,13 +175,15 @@ namespace Arma.Studio.SqfVmDebugger
         public Task RemoveBreakpoint(IBreakpoint breakpoint)
         {
             Logger.Diagnostic($"Task RemoveBreakpoint(breakpoint: {{{breakpoint}}})");
-            throw new NotSupportedException();
+            this.Virtualmachine.RemoveBreakpoint(breakpoint.Line, breakpoint.File);
+            return Task.CompletedTask;
         }
 
         public Task SetBreakpoint(IBreakpoint breakpoint)
         {
             Logger.Diagnostic($"Task SetBreakpoint(breakpoint: {{{breakpoint}}})");
-            throw new NotSupportedException();
+            this.Virtualmachine.SetBreakpoint(breakpoint.Line, breakpoint.File);
+            return Task.CompletedTask;
         }
 
         #endregion

@@ -311,8 +311,8 @@ namespace Arma.Studio.UI.Windows
                 ignoreCase: false,
                 assemblyResolver: (assemblyName) =>
                 {
-                    var plugin = PluginManager.Instance.Plugins.First((it) => it.Assembly.FullName == assemblyName.FullName);
-                    return plugin.Assembly;
+                    var plugin = PluginManager.Instance.Plugins.FirstOrDefault((it) => it.Assembly.FullName == assemblyName.FullName);
+                    return plugin.Assembly ?? Type.GetType(typestring, throwOnError: false, ignoreCase: false).Assembly;
                 },
                 typeResolver: (assembly, typename, caseSensitiveSearch) => assembly.GetType(typename, false, caseSensitiveSearch));
             if (type == null || !typeof(DockableBase).IsAssignableFrom(type))

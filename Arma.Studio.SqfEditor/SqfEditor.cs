@@ -14,16 +14,16 @@ namespace Arma.Studio.SqfEditor
 {
     public class SqfEditor : ITextEditor, ILintable, IFoldable
     {
-        private sqfvm.ClrVirtualmachine Virtualmachine { get; }
+        private SqfVm.ClrVirtualmachine Virtualmachine { get; }
         public SqfEditor()
         {
-            this.Virtualmachine = new sqfvm.ClrVirtualmachine();
+            this.Virtualmachine = new SqfVm.ClrVirtualmachine();
         }
         private class UsageContainer
         {
-            sqfvm.SqfNode Node { get; set; }
+            SqfVm.SqfNode Node { get; set; }
             int Usage { get; set; }
-            public UsageContainer(sqfvm.SqfNode node)
+            public UsageContainer(SqfVm.SqfNode node)
             {
                 this.Node = node;
                 this.Usage = 0;
@@ -73,32 +73,63 @@ namespace Arma.Studio.SqfEditor
             return await Task.Run(() => {
                 var lintInfos = new List<LintInfo>();
                 string errors, warnings, output;
-                sqfvm.SqfNode cst;
+                SqfVm.SqfNode cst;
                 lock (this.Virtualmachine)
                 {
-                    var preproc = this.Virtualmachine.PreProcess(text, this.File?.FullPath ?? "");
-                    cst = this.Virtualmachine.CreateSqfCst(preproc, this.File?.FullPath ?? "");
-                    errors = this.Virtualmachine.ErrorContents();
-                    warnings = this.Virtualmachine.WarningContents();
-                    output = this.Virtualmachine.InfoContents();
+                    var errorsBuilder = new StringBuilder();
+                    var warningsBuilder = new StringBuilder();
+                    var outputBuilder = new StringBuilder();
+                    void Virtualmachine_OnLog(object sender, SqfVm.LogEventArgs eventArgs)
+                    {
+                        switch (eventArgs.Severity)
+                        {
+                            case SqfVm.ESeverity.Fatal:
+                                errorsBuilder.AppendLine(eventArgs.Message);
+                                break;
+                            case SqfVm.ESeverity.Error:
+                                errorsBuilder.AppendLine(eventArgs.Message);
+                                break;
+                            case SqfVm.ESeverity.Warning:
+                                warningsBuilder.AppendLine(eventArgs.Message);
+                                break;
+                            case SqfVm.ESeverity.Info:
+                                outputBuilder.AppendLine(eventArgs.Message);
+                                break;    
+                            case SqfVm.ESeverity.Verbose:
+                                outputBuilder.AppendLine(eventArgs.Message);
+                                break;
+                            case SqfVm.ESeverity.Trace:
+                                outputBuilder.AppendLine(eventArgs.Message);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    try
+                    {
+                        this.Virtualmachine.OnLog += Virtualmachine_OnLog;
+                        var preproc = this.Virtualmachine.PreProcess(text, this.File?.FullPath ?? "");
+                        cst = this.Virtualmachine.CreateSqfCst(preproc, this.File?.FullPath ?? "");
+                    }
+                    finally
+                    {
+                        this.Virtualmachine.OnLog -= Virtualmachine_OnLog;
+                    }
+                    errors = errorsBuilder.ToString();
+                    warnings = warningsBuilder.ToString();
+                    output = outputBuilder.ToString();
                 }
                 if (errors.Length > 0)
                 {
                     using (var reader = new System.IO.StringReader(errors))
                     {
-                        while (!String.IsNullOrWhiteSpace(reader.ReadLine()))
+                        string logline;
+                        while (!String.IsNullOrWhiteSpace(logline = reader.ReadLine()))
                         {
-                            var l2_markings = reader.ReadLine();
-                            var l3_message = reader.ReadLine();
-                            if (l2_markings is null || l3_message is null)
-                            {
-                                break;
-                            }
-
-                            var matches = Regex.Matches(l3_message, @"\[[a-zA-Z0-9]+\]\[L([0-9]+)\|C([0-9]+)(\]|\|(.*?)\])(.*)");
+                            var matches = Regex.Matches(logline, @"\[L([0-9]+)\|C([0-9]+)\|(.+?)\](.+)");
                             foreach (Match match in matches)
                             {
-                                if (match.Groups.Count != 6)
+                                if (match.Groups.Count != 5)
                                 {
                                     continue;
                                 }
@@ -106,12 +137,12 @@ namespace Arma.Studio.SqfEditor
                                 {
                                     var line = Convert.ToInt32(match.Groups[1].Value);
                                     var column = Convert.ToInt32(match.Groups[2].Value);
-                                    var file = Convert.ToString(match.Groups[4].Value);
-                                    var message = Convert.ToString(match.Groups[5].Value);
-                                    var length = l2_markings.Count((c) => c == '^');
+                                    var file = Convert.ToString(match.Groups[3].Value);
+                                    var message = Convert.ToString(match.Groups[4].Value);
+                                    //var length = l2_markings.Count((c) => c == '^');
                                     lintInfos.Add(new LintInfo
                                     {
-                                        Length = length,
+                                        Length = 1,
                                         Line = line,
                                         Column = column,
                                         Severity = ESeverity.Error
@@ -129,13 +160,14 @@ namespace Arma.Studio.SqfEditor
                 return lintInfos;
             });
         }
-        private static void DetermineUsage(sqfvm.SqfNode node, Dictionary<string, UsageContainer> usage)
+
+        private static void DetermineUsage(SqfVm.SqfNode node, Dictionary<string, UsageContainer> usage)
         {
             switch (node.GetNodeType())
             {
-                case sqfvm.SqfNodeType.ASSIGNMENT:
+                case SqfVm.SqfNodeType.ASSIGNMENT:
                     break;
-                case sqfvm.SqfNodeType.VARIABLE:
+                case SqfVm.SqfNodeType.VARIABLE:
 
                     break;
                 default:
@@ -191,9 +223,9 @@ namespace Arma.Studio.SqfEditor
                 return resList;
             });
         }
-        private static IEnumerable<sqfvm.SqfNode> FindAllCodeNodes(sqfvm.SqfNode node)
+        private static IEnumerable<SqfVm.SqfNode> FindAllCodeNodes(SqfVm.SqfNode node)
         {
-            if (node.GetNodeType() == sqfvm.SqfNodeType.CODE)
+            if (node.GetNodeType() == SqfVm.SqfNodeType.CODE)
             {
                 yield return node;
             }
