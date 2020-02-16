@@ -49,11 +49,33 @@ namespace Arma.Studio.Data.Debugging
         /// <param name="breakpoint">The breakpoint that got set.</param>
         /// <returns>Awaitable <see cref="Task"/> or <see cref="Task.CompletedTask"/>.</returns>
         Task RemoveBreakpoint(IBreakpoint breakpoint);
+        /// <summary>
+        /// Changes the variable with the <paramref name="variableName"/> to the provided
+        /// <paramref name="data"/>. Data will be changed to whatever real data it is.
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="data"></param>
+        /// <param name="namespace"></param>
+        /// <returns></returns>
+        bool SetVariable(string variableName, string data, ENamespace @namespace);
+        /// <summary>
+        /// Returns the desired variable or NULL if no variable is available.
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="namespace"></param>
+        /// <returns></returns>
+        VariableInfo GetVariable(string variableName, ENamespace @namespace);
 
         /// <summary>
         /// Supposed to return the different <see cref="HaltInfo"/>s available at given time.
         /// </summary>
         /// <returns></returns>
         IEnumerable<HaltInfo> GetHaltInfos();
+
+        /// <summary>
+        /// Should return the currently deemed "local" variables at curren point of execution
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<VariableInfo> GetLocalVariables();
     }
 }

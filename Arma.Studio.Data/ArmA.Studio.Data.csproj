@@ -50,7 +50,9 @@
     <Compile Include="Debugging\BreakpointUpdatedEventArgs.cs" />
     <Compile Include="Debugging\EBreakpointKind.cs" />
     <Compile Include="Debugging\EDebugState.cs" />
+    <Compile Include="Debugging\ENamespace.cs" />
     <Compile Include="Debugging\HaltInfo.cs" />
+    <Compile Include="Debugging\VariableInfo.cs" />
     <Compile Include="DependencyObjectExtensions.cs" />
     <Compile Include="DockableBase.cs" />
     <Compile Include="DockableBaseOnDocumentClosingEventArgs.cs" />

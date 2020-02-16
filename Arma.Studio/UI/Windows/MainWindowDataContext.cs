@@ -162,14 +162,26 @@ namespace Arma.Studio.UI.Windows
             }
         }
 
+        public event EventHandler<EventArgs> DebuggerStateChanged;
+
         private void Debugger_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             foreach (var it in this.Documents.Where((it) => it is UI.TextEditorDataContext).Cast<UI.TextEditorDataContext>())
             {
                 if (it.TextEditorInstance != null && it.CurrentVisibility == Visibility.Visible)
                 {
-                    App.Current.Dispatcher.Invoke(() => it.TextEditorControl.InvalidateVisual());
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        foreach (var leftMargin in it.TextEditorControl.TextArea.LeftMargins)
+                        {
+                            leftMargin.InvalidateVisual();
+                        }
+                    });
                 }
+            }
+            if (e.PropertyName == nameof(IDebugger.State))
+            {
+                this.DebuggerStateChanged?.Invoke(sender, new EventArgs());
             }
         }
 
@@ -190,9 +202,6 @@ namespace Arma.Studio.UI.Windows
         }
 
         private IDebugger _Debugger;
-
-        public bool DebuggerIsRunning { get { return this._DebuggerIsRunning; } set { this._DebuggerIsRunning = value; this.RaisePropertyChanged(); } }
-        private bool _DebuggerIsRunning;
 
         public ICommand CmdDebuggerAction => new RelayCommand<EDebugAction>((p) =>
         {

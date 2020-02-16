@@ -38,7 +38,7 @@ namespace Arma.Studio.UI
             var view = this.TextView;
             if (view == null ||
                 !view.VisualLinesValid ||
-                !App.MWContext.DebuggerIsRunning ||
+                App.MWContext.Debugger is null ||
                 App.MWContext.Debugger.State == Data.Debugging.EDebugState.Running)
             {
                 return;

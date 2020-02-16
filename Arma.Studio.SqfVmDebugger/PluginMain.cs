@@ -186,6 +186,54 @@ namespace Arma.Studio.SqfVmDebugger
             return Task.CompletedTask;
         }
 
+        public IEnumerable<VariableInfo> GetLocalVariables()
+        {
+            Logger.Diagnostic($"IEnumerable<VariableInfo> GetLocalVariables()");
+            return this.Virtualmachine.GetLocalVariables().Select((it) => new VariableInfo
+            {
+                Data = it.Data,
+                DataType = it.DataType,
+                ScopeIndex = it.ScopeIndex,
+                ScopeName = it.ScopeName,
+                VariableName = it.VariableName
+            });
+        }
+
+        public bool SetVariable(string variableName, string data, ENamespace @namespace)
+        {
+            Logger.Diagnostic($"bool SetVariable(variableName: {{{variableName}}}, data: {{{data}}}, @namespace: {{{@namespace}}})");
+            return this.Virtualmachine.SetVariable(variableName, data, @namespace switch
+            {
+                ENamespace.Default => "",
+                ENamespace.MissionNamespace => "missionNamespace",
+                ENamespace.ParsingNamespace => "parsingNamespace",
+                ENamespace.ProfileNamespace => "profileNamespace",
+                ENamespace.UINamespace => "uiNamespace",
+                _ => throw new NotImplementedException()
+            });
+        }
+
+        public VariableInfo GetVariable(string variableName, ENamespace @namespace)
+        {
+            Logger.Diagnostic($"bool VariableInfo(variableName: {{{variableName}}}, @namespace: {{{@namespace}}})");
+            var varref = this.Virtualmachine.GetVariable(variableName, @namespace switch {
+                ENamespace.Default => "",
+                ENamespace.MissionNamespace => "missionNamespace",
+                ENamespace.ParsingNamespace => "parsingNamespace",
+                ENamespace.ProfileNamespace => "profileNamespace",
+                ENamespace.UINamespace => "uiNamespace",
+                _ => throw new NotImplementedException()
+            });
+            return new VariableInfo
+            {
+                Data = varref.Data,
+                DataType = varref.DataType,
+                ScopeIndex = varref.ScopeIndex,
+                ScopeName = varref.ScopeName,
+                VariableName = varref.VariableName
+            };
+        }
+
         #endregion
         #region ILogger
         internal static Logger Logger { get; private set; }

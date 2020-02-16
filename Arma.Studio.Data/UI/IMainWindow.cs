@@ -11,6 +11,8 @@ namespace Arma.Studio.Data.UI
 {
     public interface IMainWindow
     {
+        event EventHandler<EventArgs> DebuggerStateChanged;
+        IDebugger Debugger { get; }
         Window OwningWindow { get; }
         IFileManagement FileManagement { get; }
         IBreakpointManager BreakpointManager { get; }
