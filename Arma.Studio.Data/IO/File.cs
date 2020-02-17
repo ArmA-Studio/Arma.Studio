@@ -8,6 +8,18 @@ namespace Arma.Studio.Data.IO
 {
     public class File : FileFolderBase
     {
+        public PBO PBO
+        {
+            get
+            {
+                FileFolderBase ffb = this;
+                while (ffb != null && !(ffb is PBO))
+                {
+                    ffb = ffb.Parent;
+                }
+                return ffb as PBO;
+            }
+        }
         public string Extension => System.IO.Path.GetExtension(this.Name);
         protected override void OnNameChanged()
         {

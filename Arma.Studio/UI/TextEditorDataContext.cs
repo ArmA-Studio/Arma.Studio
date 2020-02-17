@@ -82,10 +82,13 @@ namespace Arma.Studio.UI
             this.TextEditorInstance = textEditor;
             this.File = file;
             this.Title = this.File.Name;
-            using (var reader = new System.IO.StreamReader(this.File.FullPath))
+            if (this.File.FullPath != null)
             {
-                this.TextDocument.Text = reader.ReadToEnd();
-                this.TextDocument.UndoStack.ClearAll();
+                using (var reader = new System.IO.StreamReader(this.File.FullPath))
+                {
+                    this.TextDocument.Text = reader.ReadToEnd();
+                    this.TextDocument.UndoStack.ClearAll();
+                }
             }
         }
         public override void LayoutSaveCallback(dynamic section)

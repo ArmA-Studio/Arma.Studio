@@ -12,6 +12,19 @@ namespace Arma.Studio.Data.IO
     {
         private readonly List<FileFolderBase> Inner;
 
+        /// <summary>
+        /// The PBO Prefix
+        /// </summary>
+        public string Prefix
+        {
+            get => this._Prefix;
+            set
+            {
+                this._Prefix = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private string _Prefix;
         public PBO()
         {
             this.Inner = new List<FileFolderBase>();
@@ -103,19 +116,27 @@ namespace Arma.Studio.Data.IO
             var files = System.IO.Directory.GetFiles(this.FullPath, "*.*", System.IO.SearchOption.AllDirectories);
             for (var i = 0; i < files.Length; i++)
             {
-                var file = files[i];
-                file = file.Substring(this.FullPath.Length);
-                var extension = System.IO.Path.GetExtension(file);
-                switch(extension.ToLower())
+                var path = files[i];
+                var relativePath = path.Substring(this.FullPath.Length);
+                var extension = System.IO.Path.GetExtension(relativePath);
+                var name = System.IO.Path.GetFileName(relativePath);
+                if (name == "$PBOPREFIX$")
                 {
-                    default:
-                        continue;
-                    case ".sqf":
-                    case ".cpp":
-                    case ".ext":
-                    case ".hpp":
-                        filesHit.Add(this.Add(file));
-                        break;
+                    this.Prefix = System.IO.File.ReadAllText(path);
+                }
+                else
+                {
+                    switch (extension.ToLower())
+                    {
+                        default:
+                            continue;
+                        case ".sqf":
+                        case ".cpp":
+                        case ".ext":
+                        case ".hpp":
+                            filesHit.Add(this.Add(relativePath));
+                            break;
+                    }
                 }
             }
 

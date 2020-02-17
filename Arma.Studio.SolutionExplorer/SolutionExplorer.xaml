@@ -244,6 +244,15 @@
                             <Rectangle.Style>
                                 <Style TargetType="Rectangle">
                                     <Setter Property="Fill" Value="{StaticResource DrawingBrushFile}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Name, Converter={StaticResource StringEndsWithConverter}, ConverterParameter='.sqf'}" Value="True">
+                                            <Setter Property="Fill">
+                                                <Setter.Value>
+                                                    <ImageBrush ImageSource="/Arma.Studio.SolutionExplorer;component/Resources/SQF_16x.png"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
                                 </Style>
                             </Rectangle.Style>
                         </Rectangle>

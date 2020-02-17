@@ -125,6 +125,7 @@
     <Compile Include="UI\Converters\AllFalseMultiConverter.cs" />
     <Compile Include="UI\Converters\AllTrueMultiConverter.cs" />
     <Compile Include="UI\Converters\BoolAndMultiConverter.cs" />
+    <Compile Include="UI\Converters\StringEndsWithConverter.cs" />
     <Compile Include="UI\Converters\EqualMultiConverter.cs" />
     <Compile Include="UI\Converters\BoolOrMultiConverter.cs" />
     <Compile Include="UI\Converters\IsAssignableFromConverter.cs" />

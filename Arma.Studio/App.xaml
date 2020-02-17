@@ -19,6 +19,7 @@
                     <asd:BoolOrMultiConverter x:Key="BoolOrMultiConverter"/>
                     <asd:BoolAndMultiConverter x:Key="BoolAndMultiConverter"/>
                     <asd:IsAssignableFromConverter x:Key="IsAssignableFromConverter"/>
+                    <asd:StringEndsWithConverter x:Key="StringEndsWithConverter"/>
                 </ResourceDictionary>
                 <ResourceDictionary>
                     <DrawingBrush x:Key="DrawingBrushClearWindowContent">
