@@ -105,13 +105,16 @@ namespace Arma.Studio.SqfEditor
                                 break;
                         }
                     }
-                    if (this.File.PBO.Prefix is null && !this.Virtualmachine.PhysicalBoundaries.Any((it) => it.Equals(this.File.PBO.FullPath)))
+                    if (this.File.PBO != null)
                     {
-                        this.Virtualmachine.AddPhysicalBoundary(this.File.PBO.FullPath);
-                    }
-                    else if (this.File.PBO.Prefix != null && !this.Virtualmachine.VirtualPaths.Any((it) => it.Equals(this.File.PBO.Prefix)))
-                    {
-                        this.Virtualmachine.AddVirtualMapping(this.File.PBO.Prefix, this.File.PBO.FullPath);
+                        if (this.File.PBO.Prefix is null && !this.Virtualmachine.PhysicalBoundaries.Any((it) => it.Equals(this.File.PBO.FullPath)))
+                        {
+                            this.Virtualmachine.AddPhysicalBoundary(this.File.PBO.FullPath);
+                        }
+                        else if (this.File.PBO.Prefix != null && !this.Virtualmachine.VirtualPaths.Any((it) => it.Equals(this.File.PBO.Prefix)))
+                        {
+                            this.Virtualmachine.AddVirtualMapping(this.File.PBO.Prefix, this.File.PBO.FullPath);
+                        }
                     }
                     try
                     {

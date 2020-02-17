@@ -13,6 +13,7 @@ namespace Arma.Studio.Data.Debugging
         Stop,
         Pause,
         Resume,
+        Step,
         StepOver,
         StepOut,
         StepInto

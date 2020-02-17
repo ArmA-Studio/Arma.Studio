@@ -136,6 +136,14 @@ namespace Arma.Studio.UI.Windows
 
                     await actualPlugin.Initialize(plugin.Folder, this.Source.Token);
                 }
+
+                {
+                    // Receive TextEditor Providers
+                    foreach (var it in PluginManager.Instance.GetPlugins<Data.TextEditor.ITextEditorProvider>())
+                    {
+                        App.MWContext.TextEditorsAvailable.AddRange(it.TextEditorInfos);
+                    }
+                }
             }
         }
 

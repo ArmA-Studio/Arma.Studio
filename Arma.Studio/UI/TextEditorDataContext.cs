@@ -207,7 +207,7 @@ namespace Arma.Studio.UI
                 {
                     var res = await lintable.GetLintInfos(App.Current.Dispatcher.Invoke(() => this.TextDocument.Text), this.LintingCancellationTokenSource.Token);
                     this.LastLintInfos = res.ToArray();
-                    App.Current.Dispatcher.Invoke(() => this.TextEditorControl.TextArea.TextView.InvalidateLayer(ICSharpCode.AvalonEdit.Rendering.KnownLayer.Background));
+                    App.Current.Dispatcher.Invoke(() => this.TextEditorControl?.TextArea.TextView.InvalidateLayer(ICSharpCode.AvalonEdit.Rendering.KnownLayer.Background));
                 });
             }
             if (this.TextEditorInstance is IFoldable foldable)
@@ -396,6 +396,7 @@ namespace Arma.Studio.UI
                 textEditor.TextArea.TextView.BackgroundRenderers.Add(new UnderlineBackgroundRenderer(this));
                 textEditor.TextArea.TextView.BackgroundRenderers.Add(bpm);
                 textEditor.TextArea.TextView.BackgroundRenderers.Add(new LineHighlighterBackgroundRenderer(textEditor));
+                textEditor.TextArea.TextView.BackgroundRenderers.Add(new RuntimeBackgroundRenderer(this, textEditor));
                 textEditor.TextArea.LeftMargins.Insert(0, bpm);
                 textEditor.TextArea.LeftMargins.Insert(1, new RuntimeExecutionMargin(this));
                 this.FoldingManager = ICSharpCode.AvalonEdit.Folding.FoldingManager.Install(textEditor.TextArea);

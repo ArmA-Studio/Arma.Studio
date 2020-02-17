@@ -67,6 +67,7 @@ namespace Arma.Studio.SqfVmDebugger
         }
         public IEnumerable<EDebugAction> SupportedActions => new EDebugAction[] {
             EDebugAction.Start,
+            EDebugAction.Step,
             EDebugAction.StepInto,
             EDebugAction.Resume,
             EDebugAction.Pause,
@@ -160,6 +161,11 @@ namespace Arma.Studio.SqfVmDebugger
                     case EDebugAction.StepOut:
                         this.State = EDebugState.Running;
                         execResult = this.Virtualmachine.LeaveScope();
+                        Logger.Diagnostic($"Result of LeaveScope: {execResult}");
+                        break;
+                    case EDebugAction.Step:
+                        this.State = EDebugState.Running;
+                        execResult = this.Virtualmachine.AssemblyStep();
                         Logger.Diagnostic($"Result of LeaveScope: {execResult}");
                         break;
                     case EDebugAction.StepInto:

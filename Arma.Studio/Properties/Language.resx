@@ -201,4 +201,7 @@
   <data name="SplashScreen_PreparingLoggers" xml:space="preserve">
     <value>Preparing Loggers</value>
   </data>
+  <data name="Debugger_Next_Tooltip" xml:space="preserve">
+    <value>Next Instruction</value>
+  </data>
 </root>

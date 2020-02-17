@@ -179,6 +179,7 @@ namespace Arma.Studio.UI.Windows
                 {
                     App.Current.Dispatcher.Invoke(() =>
                     {
+                        it.TextEditorControl.TextArea.TextView.InvalidateVisual();
                         foreach (var leftMargin in it.TextEditorControl.TextArea.LeftMargins)
                         {
                             leftMargin.InvalidateVisual();
@@ -456,10 +457,6 @@ namespace Arma.Studio.UI.Windows
                 it.AddDataTemplates(this.LayoutItemTemplateSelector);
                 this.AnchorablesAvailable.AddRange(it.Dockables.Where((di) => di.IsAnchorable));
                 this.DocumentsAvailable.AddRange(it.Dockables.Where((di) => di.IsDocument));
-            }
-            foreach (var it in PluginManager.Instance.GetPlugins<ITextEditorProvider>())
-            {
-                this.TextEditorsAvailable.AddRange(it.TextEditorInfos);
             }
         }
         private void Dockable_OnDocumentClosing(object sender, EventArgs e)

@@ -133,6 +133,15 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Next Instruction.
+        /// </summary>
+        public static string Debugger_Next_Tooltip {
+            get {
+                return ResourceManager.GetString("Debugger_Next_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pause.
         /// </summary>
         public static string Debugger_Pause_Tooltip {
