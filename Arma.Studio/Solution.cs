@@ -25,17 +25,11 @@ namespace Arma.Studio
         {
             get
             {
-                var keys = fullkey.Split('/', '\\');
-                string tmpkey = keys.First();
-                FileFolderBase ffb = this._PBOs.First((it) => it.Name.Equals(tmpkey, StringComparison.InvariantCultureIgnoreCase));
-                foreach (var key in keys.Skip(1))
+                if (this.TryGetValue(fullkey, out var ffb))
                 {
-                    if (!(ffb is ICollection<FileFolderBase> collection) || (ffb = collection.FirstOrDefault((it) => it.Name.Equals(key, StringComparison.InvariantCultureIgnoreCase))) == null)
-                    {
-                        throw new KeyNotFoundException();
-                    }
+                    return ffb;
                 }
-                return ffb;
+                throw new KeyNotFoundException();
             }
             set
             {
@@ -69,27 +63,45 @@ namespace Arma.Studio
                 }
             }
         }
-        public bool ContainsKey(string fullkey)
+        public bool TryGetValue(string fullkey, out FileFolderBase fileFolderBase)
         {
             if (string.IsNullOrWhiteSpace(fullkey))
             {
+                fileFolderBase = default;
                 return false;
+            }
+            fileFolderBase = this._PBOs.FirstOrDefault((it) => fullkey.StartsWith(it.Name, StringComparison.InvariantCultureIgnoreCase));
+            if (fileFolderBase == null)
+            {
+                fileFolderBase = this._PBOs.FirstOrDefault((it) => fullkey.StartsWith(it.Prefix, StringComparison.InvariantCultureIgnoreCase));
+                if (fileFolderBase == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    fullkey = fullkey.Substring((fileFolderBase as PBO).Prefix.Length);
+                }
+            }
+            else
+            {
+                fullkey = fullkey.Substring(fileFolderBase.Name.Length);
             }
             var keys = fullkey.Split('/', '\\');
-            string tmpkey = keys.First();
-            FileFolderBase ffb = this._PBOs.FirstOrDefault((it) => it.Name.Equals(tmpkey, StringComparison.InvariantCultureIgnoreCase));
-            if (ffb is null)
-            {
-                return false;
-            }
             foreach (var key in keys.Skip(1))
             {
-                if (!(ffb is ICollection<FileFolderBase> collection) || (ffb = collection.FirstOrDefault((it) => it.Name.Equals(key, StringComparison.InvariantCultureIgnoreCase))) == null)
+                if (!(fileFolderBase is ICollection<FileFolderBase> collection) ||
+                    (fileFolderBase = collection.FirstOrDefault((it) => it.Name.Equals(key, StringComparison.InvariantCultureIgnoreCase))) == null)
                 {
+                    fileFolderBase = default;
                     return false;
                 }
             }
             return true;
+        }
+        public bool ContainsKey(string fullkey)
+        {
+            return this.TryGetValue(fullkey, out _);
         }
         private readonly ObservableCollection<PBO> _PBOs;
 

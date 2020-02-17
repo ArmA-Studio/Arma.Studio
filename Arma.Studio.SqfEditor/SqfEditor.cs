@@ -109,7 +109,7 @@ namespace Arma.Studio.SqfEditor
                     {
                         this.Virtualmachine.AddPhysicalBoundary(this.File.PBO.FullPath);
                     }
-                    else if (!this.Virtualmachine.VirtualPaths.Any((it) => it.Equals(this.File.PBO.Prefix)))
+                    else if (this.File.PBO.Prefix != null && !this.Virtualmachine.VirtualPaths.Any((it) => it.Equals(this.File.PBO.Prefix)))
                     {
                         this.Virtualmachine.AddVirtualMapping(this.File.PBO.Prefix, this.File.PBO.FullPath);
                     }
@@ -164,7 +164,10 @@ namespace Arma.Studio.SqfEditor
                 else
                 {
                     var usage = new Dictionary<string, UsageContainer>();
-                    DetermineUsage(cst, usage);
+                    if (cst != null)
+                    {
+                        DetermineUsage(cst, usage);
+                    }
                 }
                 return lintInfos;
             });

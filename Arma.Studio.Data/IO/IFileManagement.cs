@@ -10,5 +10,6 @@ namespace Arma.Studio.Data.IO
     {
         FileFolderBase this[string key] { get; set; }
         bool ContainsKey(string key);
+        bool TryGetValue(string fullkey, out FileFolderBase fileFolderBase);
     }
 }

@@ -13,6 +13,9 @@ namespace Arma.Studio.SqfVmDebugger
 {
     public class PluginMain : IPlugin, IDebugger, ILogger
     {
+        public Data.IO.IFileManagement FileManagement => this.GetApplication().MainWindow.FileManagement;
+
+
         #region IPlugin
         public Version Version => new Version(1, 0, 0);
         public string Name => Properties.Language.SqfVmDebugger_Name;
@@ -104,8 +107,24 @@ namespace Arma.Studio.SqfVmDebugger
         private SqfVm.ClrVirtualmachine _Virtualmachine;
         #endregion
 
+        private readonly Dictionary<Data.IO.PBO, bool> IsPboAdded = new Dictionary<Data.IO.PBO, bool>();
         public async Task Execute(EDebugAction action)
         {
+            foreach (var pbo in this.FileManagement.Where((it) => it is Data.IO.PBO).Cast<Data.IO.PBO>())
+            {
+                if (!this.IsPboAdded.ContainsKey(pbo))
+                {
+                    if (pbo.Prefix is null)
+                    {
+                        this.Virtualmachine.AddPhysicalBoundary(pbo.FullPath);
+                    }
+                    else
+                    {
+                        this.Virtualmachine.AddVirtualMapping(pbo.Prefix, pbo.FullPath);
+                    }
+                    this.IsPboAdded[pbo] = true;
+                }
+            }
             Logger.Diagnostic($"async Task Execute(action: {nameof(EDebugAction)}.{Enum.GetName(typeof(EDebugAction), action)})");
             await Task.Run(() =>
             {
@@ -113,14 +132,14 @@ namespace Arma.Studio.SqfVmDebugger
                 switch (action)
                 {
                     case EDebugAction.Start:
-                        var textEditorDocuments = this.GetApplication().MainWindow.ActiveDockable as Data.UI.ITextDocument;
-                        if (textEditorDocuments == null)
+                        if (!(this.GetApplication().MainWindow.ActiveDockable is Data.UI.ITextDocument textEditorDocuments))
                         {
                             Logger.Error($"Failed to receive TextDocument via this.GetApplication().MainWindow.ActiveDockable.");
                             throw new NotSupportedException();
                         }
                         var text = textEditorDocuments.GetContents();
-                        this.Virtualmachine.ParseSqf(text, textEditorDocuments.TextEditorInstance.File.FullPath);
+                        var preprocessed = this.Virtualmachine.PreProcess(text, textEditorDocuments.TextEditorInstance.File.FullPath);
+                        this.Virtualmachine.ParseSqf(preprocessed, textEditorDocuments.TextEditorInstance.File.FullPath);
                         this.State = EDebugState.Running;
                         execResult = this.Virtualmachine.Start();
                         Logger.Diagnostic($"Result of Start: {execResult}");
@@ -145,17 +164,28 @@ namespace Arma.Studio.SqfVmDebugger
                         break;
                     case EDebugAction.StepInto:
                         this.State = EDebugState.Running;
-                        execResult = this.Virtualmachine.AssemblyStep();
+                        execResult = this.Virtualmachine.LineStep();
                         Logger.Diagnostic($"Result of AssemblyStep: {execResult}");
                         break;
-
-
                     case EDebugAction.NA:
                     case EDebugAction.StepOver:
                     default:
                         throw new NotSupportedException();
                 }
                 this.State = this.Virtualmachine.IsVirtualmachineRunning ? EDebugState.Running : this.Virtualmachine.IsVirtualmachineDone ? EDebugState.NA : EDebugState.Halted;
+                if (this.State == EDebugState.Halted)
+                {
+                    var callstack = this.Virtualmachine.GetCallstack();
+                    var firstCallstackItem = callstack.First();
+                    if (this.FileManagement.ContainsKey(firstCallstackItem.File))
+                    {
+                        var file = this.FileManagement[callstack.First().File] as Data.IO.File;
+                        this.GetApplication().MainWindow.OpenFile(file).ContinueWith((textDocument) =>
+                        {
+                            textDocument.Result.ScrollToLine((int)firstCallstackItem.Line);
+                        }, TaskContinuationOptions.OnlyOnRanToCompletion);
+                    }
+                }
             });
         }
 

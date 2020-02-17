@@ -15,8 +15,14 @@ namespace Arma.Studio.UI
 {
     public class RuntimeExecutionMargin : AbstractMargin
     {
+        protected override void ParentLayoutInvalidated(UIElement child)
+        {
+            base.ParentLayoutInvalidated(child);
+            this.InvalidateVisual();
+        }
         public TextEditorDataContext Owner => this.OwnerWeak.TryGetTarget(out var target) ? target : null;
         private readonly WeakReference<TextEditorDataContext> OwnerWeak;
+
 
         /// <summary>
         /// Creates a new <see cref="RuntimeExecutionMargin"/> instance
@@ -27,6 +33,15 @@ namespace Arma.Studio.UI
         {
             this.IsHitTestVisible = false;
             this.OwnerWeak = new WeakReference<TextEditorDataContext>(owner);
+        }
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+            this.TextView.ScrollOffsetChanged += this.TextView_ScrollOffsetChanged;
+        }
+        private void TextView_ScrollOffsetChanged(object sender, EventArgs e)
+        {
+            this.InvalidateVisual();
         }
 
         /// <summary>

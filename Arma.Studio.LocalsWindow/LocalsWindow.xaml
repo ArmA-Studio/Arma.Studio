@@ -7,29 +7,13 @@
               xmlns:local="clr-namespace:Arma.Studio.LocalsWindow;assembly=Arma.Studio.LocalsWindow"
               xmlns:p="clr-namespace:Arma.Studio.LocalsWindow.Properties;assembly=Arma.Studio.LocalsWindow"
               DataType="{x:Type local:LocalsWindowDataContext}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <ToolBar ToolBarTray.IsLocked="True">
-        </ToolBar>
-        <DataGrid ItemsSource="{Binding LocalVariables}" AutoGenerateColumns="False" CanUserAddRows="False">
-            <DataGrid.Resources>
-                <Style TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="Background" Value="White"/>
-                    <Setter Property="BorderThickness" Value="1 0 0 0"/>
-                    <Setter Property="BorderBrush" Value="LightGray"/>
-                    <Setter Property="Padding" Value="4 1 0 1"/>
-                </Style>
-            </DataGrid.Resources>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static p:Language.ScopeIndex}" IsReadOnly="True" Width="*" Binding="{Binding ScopeIndex}"/>
-                <DataGridTextColumn Header="{x:Static p:Language.ScopeName}" IsReadOnly="True" Width="*" Binding="{Binding ScopeName}"/>
-                <DataGridTextColumn Header="{x:Static p:Language.VariableName}" IsReadOnly="True" Width="*" Binding="{Binding VariableName}"/>
-                <DataGridTextColumn Header="{x:Static p:Language.Data}" IsReadOnly="False" Width="*" Binding="{Binding Data}"/>
-                <DataGridTextColumn Header="{x:Static p:Language.DataType}" IsReadOnly="True" Width="*" Binding="{Binding DataType}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+    <DataGrid Grid.Row="1" ItemsSource="{Binding LocalVariables}" AutoGenerateColumns="False" CanUserAddRows="False">
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="{x:Static p:Language.ScopeIndex}" IsReadOnly="True" Width="*" Binding="{Binding ScopeIndex}"/>
+            <DataGridTextColumn Header="{x:Static p:Language.ScopeName}" IsReadOnly="True" Width="*" Binding="{Binding ScopeName}"/>
+            <DataGridTextColumn Header="{x:Static p:Language.VariableName}" IsReadOnly="True" Width="*" Binding="{Binding VariableName}"/>
+            <DataGridTextColumn Header="{x:Static p:Language.Data}" IsReadOnly="False" Width="*" Binding="{Binding Data}"/>
+            <DataGridTextColumn Header="{x:Static p:Language.DataType}" IsReadOnly="True" Width="*" Binding="{Binding DataType}"/>
+        </DataGrid.Columns>
+    </DataGrid>
 </DataTemplate>

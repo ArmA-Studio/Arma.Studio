@@ -41,9 +41,20 @@ namespace Arma.Studio.UI
         public TextEditor TextEditorControl
         {
             get => this._TextEditorControl;
-            set { this._TextEditorControl = value; this.RaisePropertyChanged(); }
+            set
+            {
+                this._TextEditorControl = value;
+                this.RaisePropertyChanged();
+                if (this._TextEditorControl_ScrollToLine > 0)
+                {
+                    int line = this._TextEditorControl_ScrollToLine;
+                    App.Current.Dispatcher.InvokeAsync(() => this.TextEditorControl.ScrollToLine(line), DispatcherPriority.Render);
+                    this._TextEditorControl_ScrollToLine = 0;
+                }
+            }
         }
         private TextEditor _TextEditorControl;
+        private int _TextEditorControl_ScrollToLine;
         //IHighlightingDefinition
 
         public bool IsReadOnly
@@ -284,6 +295,20 @@ namespace Arma.Studio.UI
                         }
                     }
                 }
+            }
+        }
+
+        public void ScrollToLine(int line)
+        {
+            if (this.TextEditorControl is null)
+            {
+                this._TextEditorControl_ScrollToLine = line;
+            }
+            else
+            {
+                App.Current.Dispatcher.Invoke(() => {
+                    this.TextEditorControl.ScrollToLine(line);
+                }, DispatcherPriority.Render);
             }
         }
 

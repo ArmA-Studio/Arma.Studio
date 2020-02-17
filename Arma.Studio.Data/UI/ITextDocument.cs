@@ -13,5 +13,6 @@ namespace Arma.Studio.Data.UI
         DateTime LastChangeTimestamp { get; }
         bool IsReadOnly { get; set; }
         string GetContents();
+        void ScrollToLine(int line);
     }
 }

@@ -86,13 +86,13 @@ namespace Arma.Studio.UI.Windows
         public IFileManagement FileManagement => this.Solution;
         public IBreakpointManager BreakpointManager => this.Solution.BreakpointManager;
         
-        public void OpenFile(File file)
+        public Task<Data.UI.ITextDocument> OpenFile(File file)
         {
             var doc = this.Documents.Where((d) => d is TextEditorDataContext).Cast<TextEditorDataContext>().FirstOrDefault((d) => d.File.Equals(file));
             if (doc != null)
             {
                 doc.Focus();
-                return;
+                return Task.FromResult<Data.UI.ITextDocument>(doc);
             }
             var ext = file.Extension;
             var editorInfo = this.TextEditorsAvailable.FirstOrDefault((tei) => tei.Extensions.Any((s) => s.Equals(ext, StringComparison.InvariantCultureIgnoreCase)));
@@ -100,19 +100,23 @@ namespace Arma.Studio.UI.Windows
             {
                 // ToDo: Localize
                 MessageBox.Show("File extension unknown");
-                return;
+                return Task.FromException<Data.UI.ITextDocument>(new Exception());
             }
             if (editorInfo.IsAsync)
             {
-                Task.Run(async () =>
+                return Task.Run(async () =>
                 {
                     var cntxt = await editorInfo.CreateAsyncFunc();
-                    this.AddDocument(new TextEditorDataContext(cntxt, file));
+                    var docActual = App.Current.Dispatcher.Invoke(() => new TextEditorDataContext(cntxt, file));
+                    this.AddDocument(docActual);
+                    return docActual as Data.UI.ITextDocument;
                 });
             }
             else
             {
-                this.AddDocument(new TextEditorDataContext(editorInfo.CreateFunc(), file));
+                var docActual = App.Current.Dispatcher.Invoke(() => new TextEditorDataContext(editorInfo.CreateFunc(), file));
+                this.AddDocument(docActual);
+                return Task.FromResult<Data.UI.ITextDocument>(docActual);
             }
         }
         #endregion
@@ -170,6 +174,7 @@ namespace Arma.Studio.UI.Windows
         {
             foreach (var it in this.Documents.Where((it) => it is UI.TextEditorDataContext).Cast<UI.TextEditorDataContext>())
             {
+                // Update Left-Margins
                 if (it.TextEditorInstance != null && it.CurrentVisibility == Visibility.Visible)
                 {
                     App.Current.Dispatcher.Invoke(() =>
