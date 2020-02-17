@@ -61,12 +61,12 @@ namespace Arma.Studio.UI
             }
             textView.EnsureVisualLines();
             var line = this.Editor.Document.GetLineByNumber(haltInfo.Line);
-            var restLine = this.Editor.Document.GetText(line.Offset, line.Length - haltInfo.Column);
-            var spaceIndex = restLine.IndexOfAny(new char[] { ' ', '\t' });
+            var restLine = this.Editor.Document.GetText(line.Offset + haltInfo.Column, line.Length - haltInfo.Column);
+            var spaceIndex = restLine.IndexOfAny(new char[] { ' ', '\t', ',', ']', '[', ')', '(', '}', '{' });
             var segment = new TextSegment
             {
                 StartOffset = line.Offset + haltInfo.Column,
-                EndOffset = spaceIndex == -1 ? line.EndOffset : (line.Offset + spaceIndex)
+                EndOffset = spaceIndex == -1 ? line.Offset + haltInfo.Column + 1 : (line.Offset + haltInfo.Column + spaceIndex)
             };
             foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))
             {
