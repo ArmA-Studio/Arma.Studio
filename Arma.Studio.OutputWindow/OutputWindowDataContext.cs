@@ -33,6 +33,10 @@ namespace Arma.Studio.OutputWindow
             }
             public void OnLog(object sender, LogEventArgs e)
             {
+                if (e.Severity < ESeverity.Info)
+                {
+                    return;
+                }
                 var message = String.Concat(e.Severity switch
                 {
                     ESeverity.Diagnostic => "[DGN]  ",
