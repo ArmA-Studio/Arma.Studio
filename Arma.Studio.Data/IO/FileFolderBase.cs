@@ -27,7 +27,7 @@ namespace Arma.Studio.Data.IO
         private string _Name;
         protected virtual void OnNameChanged() { }
 
-        public string FullPath => this.ParentWeak.TryGetTarget(out var parent) ? System.IO.Path.Combine(parent.Name, this.Name) : this.Name;
+        public string FullPath => this.ParentWeak.TryGetTarget(out var parent) ? System.IO.Path.Combine(parent.FullPath, this.Name) : this.Name;
 
         public FileFolderBase Parent
         {

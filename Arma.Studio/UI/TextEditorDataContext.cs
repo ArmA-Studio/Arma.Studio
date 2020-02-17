@@ -66,6 +66,7 @@ namespace Arma.Studio.UI
         private Task FoldingTask { get; set; }
         private TextEditorDataContext()
         {
+            this.File = new File();
             this.LintingCancellationTokenSource = new CancellationTokenSource();
             this.FoldingCancellationTokenSource = new CancellationTokenSource();
             this.LintingTask = Task.CompletedTask;
@@ -81,19 +82,30 @@ namespace Arma.Studio.UI
             this.TextEditorInstance = textEditor;
             this.File = file;
             this.Title = this.File.Name;
+            using (var reader = new System.IO.StreamReader(this.File.FullPath))
+            {
+                this.TextDocument.Text = reader.ReadToEnd();
+                this.TextDocument.UndoStack.ClearAll();
+            }
         }
         public override void LayoutSaveCallback(dynamic section)
         {
-            section.file = this.File.FullPath;
+            section.fullpath = this.File.FullPath;
+            section.name = this.File.Name;
             section.type = this.TextEditorInstance.GetType().FullName;
         }
         public override void LayoutLoadCallback(dynamic section)
         {
-            if (App.MWContext.FileManagement.ContainsKey(section.file as string))
+            if (App.MWContext.FileManagement.ContainsKey((string)section.fullpath))
             {
-                this.File = (File)App.MWContext.FileManagement[section.file as string];
+                this.File = (File)App.MWContext.FileManagement[(string)section.fullpath];
             }
-            var type = section.type as string;
+            else
+            {
+                this.File = new File { Name = (string)section.fullpath };
+            }
+            this.Title = this.File.Name;
+            var type = (string)section.type;
 
             if (this.File?.FullPath != null &&System.IO.File.Exists(this.File.FullPath))
             {

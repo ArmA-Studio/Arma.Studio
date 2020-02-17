@@ -13,5 +13,14 @@ namespace Arma.Studio.Data.IO
         {
             this.RaisePropertyChanged(nameof(this.Extension));
         }
+
+        public string PhysicalPath
+        {
+            get
+            {
+                // ToDo: Introduce virtual paths and change this to always return the physical one
+                return this.FullPath;
+            }
+        }
     }
 }

@@ -73,6 +73,11 @@
     <Compile Include="Log\LoggerDictionary.cs" />
     <Compile Include="Log\Logger.cs" />
     <Compile Include="ESeverity.cs" />
+    <Compile Include="Properties\Language.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Language.resx</DependentUpon>
+    </Compile>
     <Compile Include="TextEditor\FoldingInfo.cs" />
     <Compile Include="TextEditor\IFoldable.cs" />
     <Compile Include="TextEditor\ILintable.cs" />
@@ -122,6 +127,7 @@
     <Compile Include="UI\Converters\BoolAndMultiConverter.cs" />
     <Compile Include="UI\Converters\EqualMultiConverter.cs" />
     <Compile Include="UI\Converters\BoolOrMultiConverter.cs" />
+    <Compile Include="UI\Converters\IsAssignableFromConverter.cs" />
     <Compile Include="UI\Converters\StaggeredThicknessConverter.cs" />
     <Compile Include="UI\Converters\IsNullConverter.cs" />
     <Compile Include="UI\Converters\ContainsConverter.cs" />
@@ -144,6 +150,11 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Language.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Language.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

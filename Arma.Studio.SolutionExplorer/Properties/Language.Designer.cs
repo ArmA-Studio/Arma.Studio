@@ -88,6 +88,24 @@ namespace Arma.Studio.SolutionExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file &apos;{0}&apos; could not be load as the software was not able to locate it..
+        /// </summary>
+        public static string FileNotFound_Body_0filename {
+            get {
+                return ResourceManager.GetString("FileNotFound_Body_0filename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File not found.
+        /// </summary>
+        public static string FileNotFound_Header {
+            get {
+                return ResourceManager.GetString("FileNotFound_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forward.
         /// </summary>
         public static string Forward {
@@ -115,11 +133,47 @@ namespace Arma.Studio.SolutionExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string SolutionExplorer_ContextMenu_Add {
+            get {
+                return ResourceManager.GetString("SolutionExplorer_ContextMenu_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PBO.
+        /// </summary>
+        public static string SolutionExplorer_ContextMenu_Add_PBO {
+            get {
+                return ResourceManager.GetString("SolutionExplorer_ContextMenu_Add_PBO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rescan.
+        /// </summary>
+        public static string SolutionExplorer_ContextMenu_RescanPbo {
+            get {
+                return ResourceManager.GetString("SolutionExplorer_ContextMenu_RescanPbo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Arma-Studio - Solution Explorer.
         /// </summary>
         public static string SolutionExplorer_Name {
             get {
                 return ResourceManager.GetString("SolutionExplorer_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select your project folder..
+        /// </summary>
+        public static string SolutionExplorer_PleaseSelectYourProjectFolder {
+            get {
+                return ResourceManager.GetString("SolutionExplorer_PleaseSelectYourProjectFolder", resourceCulture);
             }
         }
     }

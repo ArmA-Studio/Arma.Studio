@@ -98,7 +98,9 @@ namespace Arma.Studio.UI.Windows
             var editorInfo = this.TextEditorsAvailable.FirstOrDefault((tei) => tei.Extensions.Any((s) => s.Equals(ext, StringComparison.InvariantCultureIgnoreCase)));
             if (editorInfo == null)
             {
-                throw new NotImplementedException();
+                // ToDo: Localize
+                MessageBox.Show("File extension unknown");
+                return;
             }
             if (editorInfo.IsAsync)
             {
@@ -332,9 +334,25 @@ namespace Arma.Studio.UI.Windows
             var dockable = Activator.CreateInstance(type, true) as DockableBase;
             e.Content = dockable;
             dockable.ContentId = e.Model.ContentId;
-
-
-            dockable.LayoutLoadCallback(this.LayoutJsonNode[contentid]);
+            bool close = false;
+            void OnDockableClose(object sender, EventArgs e)
+            {
+                close = true;
+            }
+            try
+            {
+                dockable.OnDockableClose += OnDockableClose;
+                dockable.LayoutLoadCallback(this.LayoutJsonNode[contentid]);
+            }
+            finally
+            {
+                dockable.OnDockableClose -= OnDockableClose;
+            }
+            if (close)
+            {
+                e.Cancel = true;
+                return;
+            }
 
             if (e.Model is Xceed.Wpf.AvalonDock.Layout.LayoutAnchorable)
             {
@@ -345,6 +363,7 @@ namespace Arma.Studio.UI.Windows
                 this.AddDocument(dockable);
             }
         }
+
         private void LoadAvalonDockLayout()
         {
             if (System.IO.File.Exists(App.LayoutConfigFilePath))
@@ -423,16 +442,6 @@ namespace Arma.Studio.UI.Windows
             this.DocumentsAvailable = new ObservableCollection<DockableInfo>();
             this.Solution = new Solution();
             this.LayoutJsonNode = new Newtonsoft.Json.Linq.JObject(new Newtonsoft.Json.Linq.JProperty(CONST_INI_TYPES_STRING, new Newtonsoft.Json.Linq.JObject()));
-
-            // ToDo: Replace with proper loading mechanism
-            var file1 = new File { Name = "File1.sqf" };
-            var file2 = new File { Name = "File2.sqf" };
-            var folder = new Folder { Name = "folder" };
-            var pbo = new PBO { Name = "pbo" };
-            this.Solution.Add(pbo);
-            pbo.Add(folder);
-            pbo.Add(file1);
-            folder.Add(file2);
         }
         private void Initialized()
         {

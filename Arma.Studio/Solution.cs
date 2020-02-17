@@ -30,11 +30,10 @@ namespace Arma.Studio
                 FileFolderBase ffb = this._PBOs.First((it) => it.Name.Equals(tmpkey, StringComparison.InvariantCultureIgnoreCase));
                 foreach (var key in keys.Skip(1))
                 {
-                    if (ffb is ICollection<FileFolderBase> collection)
+                    if (!(ffb is ICollection<FileFolderBase> collection) || (ffb = collection.FirstOrDefault((it) => it.Name.Equals(key, StringComparison.InvariantCultureIgnoreCase))) == null)
                     {
-                        ffb = collection.First((it) => it.Name.Equals(key, StringComparison.InvariantCultureIgnoreCase));
+                        throw new KeyNotFoundException();
                     }
-                    throw new KeyNotFoundException();
                 }
                 return ffb;
             }
@@ -78,14 +77,17 @@ namespace Arma.Studio
             }
             var keys = fullkey.Split('/', '\\');
             string tmpkey = keys.First();
-            FileFolderBase ffb = this._PBOs.First((it) => it.Name.Equals(tmpkey, StringComparison.InvariantCultureIgnoreCase));
+            FileFolderBase ffb = this._PBOs.FirstOrDefault((it) => it.Name.Equals(tmpkey, StringComparison.InvariantCultureIgnoreCase));
+            if (ffb is null)
+            {
+                return false;
+            }
             foreach (var key in keys.Skip(1))
             {
-                if (ffb is ICollection<FileFolderBase> collection)
+                if (!(ffb is ICollection<FileFolderBase> collection) || (ffb = collection.FirstOrDefault((it) => it.Name.Equals(key, StringComparison.InvariantCultureIgnoreCase))) == null)
                 {
-                    ffb = collection.First((it) => it.Name.Equals(key, StringComparison.InvariantCultureIgnoreCase));
+                    return false;
                 }
-                return false;
             }
             return true;
         }

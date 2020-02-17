@@ -15,6 +15,17 @@ namespace Arma.Studio.Data.IO
             this.Inner = new List<FileFolderBase>();
         }
 
+        public void Sort() => this.Inner.Sort((left, right) =>
+        {
+            if ((left is File && right is File) || (left is Folder && right is Folder))
+            {
+                return left.Name.CompareTo(right.Name);
+            }
+            else
+            {
+                return left is File ? 1 : -1;
+            }
+        });
         #region ICollection<FileFolderBase>
         public int Count => this.Inner.Count;
 

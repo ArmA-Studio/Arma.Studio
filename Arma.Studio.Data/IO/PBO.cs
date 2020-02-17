@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Arma.Studio.Data.IO
@@ -15,16 +16,38 @@ namespace Arma.Studio.Data.IO
         {
             this.Inner = new List<FileFolderBase>();
         }
-
-
-        public void Add(string text)
+        public void Sort() => this.Inner.Sort((left, right) =>
         {
+            if ((left is File && right is File) || (left is Folder && right is Folder))
+            {
+                return left.Name.CompareTo(right.Name);
+            }
+            else
+            {
+                return left is File ? 1 : -1;
+            }
+        });
+
+        public File Add(string text)
+        {
+            if (this.TryAdd(text, out var file))
+            {
+                return file;
+            }
+            else
+            {
+                throw new Exception("Cannot add to file.");
+            }
+        }
+        public bool TryAdd(string text, out File f)
+        {
+            text = text.TrimStart('\\', '/');
             var elements = text.Split('\\', '/');
             var ffb = this.FirstOrDefault((it) => it.Name == elements[0]);
             if (elements.Length == 1)
             {
-                this.Add(new File { Name = elements[0] });
-                return;
+                this.Add(f = new File { Name = elements[0] });
+                return true;
             }
             Folder folder;
             if (ffb == null)
@@ -34,7 +57,8 @@ namespace Arma.Studio.Data.IO
             }
             else if (ffb is File)
             {
-                throw new Exception("Cannot add to file.");
+                f = default;
+                return false;
             }
             else
             {
@@ -51,14 +75,79 @@ namespace Arma.Studio.Data.IO
                 }
                 else if (ffb is File)
                 {
-                    throw new Exception("Cannot add to file.");
+                    if (i == elements.Length - 1)
+                    {
+                        f = ffb as File;
+                        return true;
+                    }
+                    f = default;
+                    return false;
                 }
                 else
                 {
                     folder = ffb as Folder;
                 }
             }
-            folder.Add(new File { Name = elements.Last() });
+            folder.Add(f = new File { Name = elements.Last() });
+            return true;
+        }
+
+        public delegate void RescanProgressReporter(string message, bool isIntermediate, double progress);
+        /// <summary>
+        /// Performs a scan of this <see cref="PBO"/>s folder
+        /// and removes/adds all file changes.
+        /// </summary>
+        public void Rescan()
+        {
+            var filesHit = new List<File>();
+            var files = System.IO.Directory.GetFiles(this.FullPath, "*.*", System.IO.SearchOption.AllDirectories);
+            for (var i = 0; i < files.Length; i++)
+            {
+                var file = files[i];
+                file = file.Substring(this.FullPath.Length);
+                var extension = System.IO.Path.GetExtension(file);
+                switch(extension.ToLower())
+                {
+                    default:
+                        continue;
+                    case ".sqf":
+                    case ".cpp":
+                    case ".ext":
+                    case ".hpp":
+                        filesHit.Add(this.Add(file));
+                        break;
+                }
+            }
+
+            // Remove all unhit files
+            bool recursive(FileFolderBase ffb)
+            {
+                switch (ffb)
+                {
+                    case File file:
+                        return filesHit.Contains(file);
+                    case Folder folder:
+                        foreach (var it in folder.ToArray())
+                        {
+                            if (!recursive(it))
+                            {
+                                folder.Remove(it);
+                            }
+                        }
+                        folder.Sort();
+                        return folder.Any();
+                    default:
+                        throw new Exception("Error Unknown. Expected File or Folder.");
+                }
+            }
+            foreach (var it in this.ToArray())
+            {
+                if (!recursive(it))
+                {
+                    this.Remove(it);
+                }
+            }
+            this.Sort();
         }
 
         #region ICollection<FileFolderBase>

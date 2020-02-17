@@ -111,6 +111,7 @@ namespace Arma.Studio.SqfEditor
                         var preproc = this.Virtualmachine.PreProcess(text, this.File?.FullPath ?? "");
                         cst = this.Virtualmachine.CreateSqfCst(preproc, this.File?.FullPath ?? "");
                     }
+                    catch { cst = default; }
                     finally
                     {
                         this.Virtualmachine.OnLog -= Virtualmachine_OnLog;

@@ -117,43 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Back" xml:space="preserve">
-    <value>Back</value>
-  </data>
-  <data name="CollapseAll" xml:space="preserve">
-    <value>CollapseAll</value>
-  </data>
-  <data name="ExpandAll" xml:space="preserve">
-    <value>ExpandAll</value>
-  </data>
-  <data name="FileNotFound_Body_0filename" xml:space="preserve">
-    <value>The file '{0}' could not be load as the software was not able to locate it.</value>
-  </data>
-  <data name="FileNotFound_Header" xml:space="preserve">
-    <value>File not found</value>
-  </data>
-  <data name="Forward" xml:space="preserve">
-    <value>Forward</value>
-  </data>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
-  </data>
-  <data name="SolutionExplorer" xml:space="preserve">
-    <value>Solution-Explorer</value>
-  </data>
-  <data name="SolutionExplorer_ContextMenu_Add" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="SolutionExplorer_ContextMenu_Add_PBO" xml:space="preserve">
-    <value>PBO</value>
-  </data>
-  <data name="SolutionExplorer_ContextMenu_RescanPbo" xml:space="preserve">
-    <value>Rescan</value>
-  </data>
-  <data name="SolutionExplorer_Name" xml:space="preserve">
-    <value>Arma-Studio - Solution Explorer</value>
-  </data>
-  <data name="SolutionExplorer_PleaseSelectYourProjectFolder" xml:space="preserve">
-    <value>Please select your project folder.</value>
-  </data>
 </root>
