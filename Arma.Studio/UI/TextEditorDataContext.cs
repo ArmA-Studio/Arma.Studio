@@ -45,16 +45,16 @@ namespace Arma.Studio.UI
             {
                 this._TextEditorControl = value;
                 this.RaisePropertyChanged();
-                if (this._TextEditorControl_ScrollToLine > 0)
+                if (this._TextEditorControl_ScrollToLine != null)
                 {
-                    int line = this._TextEditorControl_ScrollToLine;
-                    App.Current.Dispatcher.InvokeAsync(() => this.TextEditorControl.ScrollToLine(line), DispatcherPriority.Render);
-                    this._TextEditorControl_ScrollToLine = 0;
+                    var val = this._TextEditorControl_ScrollToLine;
+                    App.Current.Dispatcher.InvokeAsync(() => this.TextEditorControl.ScrollTo(val.Item1, val.Item2), DispatcherPriority.Render);
+                    this._TextEditorControl_ScrollToLine = null;
                 }
             }
         }
         private TextEditor _TextEditorControl;
-        private int _TextEditorControl_ScrollToLine;
+        private Tuple<int, int> _TextEditorControl_ScrollToLine;
         //IHighlightingDefinition
 
         public bool IsReadOnly
@@ -298,16 +298,16 @@ namespace Arma.Studio.UI
             }
         }
 
-        public void ScrollToLine(int line)
+        public void ScrollTo(int line, int column)
         {
             if (this.TextEditorControl is null)
             {
-                this._TextEditorControl_ScrollToLine = line;
+                this._TextEditorControl_ScrollToLine = new Tuple<int, int>(line, column);
             }
             else
             {
                 App.Current.Dispatcher.Invoke(() => {
-                    this.TextEditorControl.ScrollToLine(line);
+                    this.TextEditorControl.ScrollTo(line, column);
                 }, DispatcherPriority.Render);
             }
         }

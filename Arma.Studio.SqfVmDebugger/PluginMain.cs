@@ -188,7 +188,7 @@ namespace Arma.Studio.SqfVmDebugger
                         var file = this.FileManagement[callstack.First().File] as Data.IO.File;
                         this.GetApplication().MainWindow.OpenFile(file).ContinueWith((textDocument) =>
                         {
-                            textDocument.Result.ScrollToLine((int)firstCallstackItem.Line);
+                            textDocument.Result.ScrollTo((int)firstCallstackItem.Line, (int)firstCallstackItem.Column);
                         }, TaskContinuationOptions.OnlyOnRanToCompletion);
                     }
                 }
