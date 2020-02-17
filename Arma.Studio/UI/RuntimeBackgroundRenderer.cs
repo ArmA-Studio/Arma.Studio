@@ -10,16 +10,26 @@ namespace Arma.Studio.UI
 {
     public class RuntimeBackgroundRenderer : IBackgroundRenderer
     {
-        protected static readonly SolidColorBrush BackgroundFill;
-        protected static readonly Pen BorderPen;
+        protected static readonly SolidColorBrush BackgroundFill_Spot;
+        protected static readonly Pen BorderPen_Spot;
+
+        protected static readonly SolidColorBrush BackgroundFill_Highlight;
+        protected static readonly Pen BorderPen_Highlight;
         static RuntimeBackgroundRenderer()
         {
-            BackgroundFill = new SolidColorBrush(Color.FromArgb(0x60, 0xFF, 0xFF, 0x00));
-            BackgroundFill.Freeze();
+            BackgroundFill_Spot = new SolidColorBrush(Color.FromArgb(0x60, 0xFF, 0xFF, 0x00));
+            BackgroundFill_Spot.Freeze();
             var tmpBrush = new SolidColorBrush(Color.FromArgb(0x80, 0xFF, 0xA5, 0x00));
             tmpBrush.Freeze();
-            BorderPen = new Pen(tmpBrush, 1);
-            BorderPen.Freeze();
+            BorderPen_Spot = new Pen(tmpBrush, 1);
+            BorderPen_Spot.Freeze();
+
+            BackgroundFill_Highlight = new SolidColorBrush(Color.FromArgb(0x20, 0xFF, 0xFF, 0x00));
+            BackgroundFill_Highlight.Freeze();
+            tmpBrush = new SolidColorBrush(Color.FromArgb(0x30, 0xFF, 0xA5, 0x00));
+            tmpBrush.Freeze();
+            BorderPen_Highlight = new Pen(tmpBrush, 1);
+            BorderPen_Highlight.Freeze();
         }
 
         public TextEditor Editor => this.EditorWeak.TryGetTarget(out var target) ? target : null;
@@ -43,14 +53,7 @@ namespace Arma.Studio.UI
                 return;
             }
 
-            // textView.EnsureVisualLines();
-            // var line = this.Editor.Document.GetLineByOffset(this.Editor.CaretOffset);
-            // var segment = new TextSegment { StartOffset = line.Offset, EndOffset = line.EndOffset };
-            // foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))
-            // {
-            //     drawingContext.DrawRectangle(BackgroundFill, BorderPen, new Rect(rect.Location, new Size(textView.ActualWidth, rect.Height)));
-            // }
-
+            // First draw the actual runtime position
             var haltInfo = App.MWContext.Debugger.GetHaltInfos().FirstOrDefault((hi) => hi.File == this.Owner.File.FullPath);
             if (haltInfo == null)
             {
@@ -67,7 +70,15 @@ namespace Arma.Studio.UI
             };
             foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))
             {
-                drawingContext.DrawRectangle(BackgroundFill, BorderPen, rect);
+                drawingContext.DrawRectangle(BackgroundFill_Spot, BorderPen_Spot, rect);
+            }
+            // Now highlight the line
+
+            line = this.Editor.Document.GetLineByNumber(haltInfo.Line);
+            segment = new TextSegment { StartOffset = line.Offset, EndOffset = line.EndOffset };
+            foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment))
+            {
+                drawingContext.DrawRectangle(BackgroundFill_Highlight, BorderPen_Highlight, new Rect(rect.Location, new Size(textView.ActualWidth, rect.Height)));
             }
         }
     }
