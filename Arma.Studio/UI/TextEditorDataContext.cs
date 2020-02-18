@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace Arma.Studio.UI
@@ -25,6 +26,7 @@ namespace Arma.Studio.UI
         Data.UI.ITextDocument,
         INotifyPropertyChanged,
         Data.UI.AttachedProperties.IOnInitialized,
+        Data.UI.AttachedProperties.IOnPreviewKeyDown,
         IDisposable,
         IInteractionSave,
         IInteractionUndoRedo
@@ -464,18 +466,25 @@ namespace Arma.Studio.UI
 
         public Task Save(CancellationToken cancellationToken)
         {
+            this.DoSave();
+            return Task.CompletedTask;
+        }
+        private void DoSave()
+        {
             if (this.TextDocument.UndoStack.IsOriginalFile)
             {
-                return Task.CompletedTask;
+                return;
             }
             var directory = System.IO.Path.GetDirectoryName(this.File.FullPath);
             if (!System.IO.Directory.Exists(directory))
             {
                 System.IO.Directory.CreateDirectory(directory);
             }
-            System.IO.File.WriteAllText(this.File.FullPath, this.TextDocument.Text, Encoding.UTF8);
-            this.TextDocument.UndoStack.MarkAsOriginalFile();
-            return Task.CompletedTask;
+            System.IO.File.WriteAllText(this.File.FullPath, App.Current.Dispatcher.Invoke(() => this.TextDocument.Text), Encoding.UTF8);
+            App.Current.Dispatcher.Invoke(() => this.TextDocument.UndoStack.MarkAsOriginalFile());
+            this.RaisePropertyChanged(nameof(this.Title));
+            this.RaisePropertyChanged(nameof(this.UndoAvailable));
+            this.RaisePropertyChanged(nameof(this.RedoAvailable));
         }
 
 
@@ -484,14 +493,33 @@ namespace Arma.Studio.UI
         public bool RedoAvailable => this.TextDocument.UndoStack.CanRedo;
         public Task Undo(CancellationToken cancellationToken)
         {
-            this.TextDocument.UndoStack.Undo();
+            App.Current.Dispatcher.Invoke(() => this.TextDocument.UndoStack.Undo());
             return Task.CompletedTask;
         }
 
         public Task Redo(CancellationToken cancellationToken)
         {
-            this.TextDocument.UndoStack.Redo();
+            App.Current.Dispatcher.Invoke(() => this.TextDocument.UndoStack.Redo());
             return Task.CompletedTask;
+        }
+
+        public void OnPreviewKeyDown(UIElement sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.W when Keyboard.Modifiers == ModifierKeys.Control:
+                    {
+                        this.Close();
+                    }
+                    break;
+                case Key.S when Keyboard.Modifiers == ModifierKeys.Control:
+                    {
+                        this.DoSave();
+                        e.Handled = true;
+                    }
+                    break;
+
+            }
         }
     }
 }
