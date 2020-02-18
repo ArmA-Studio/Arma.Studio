@@ -1,6 +1,7 @@
 ﻿using Arma.Studio.Data;
 using Arma.Studio.Data.IO;
 using Arma.Studio.Data.TextEditor;
+using Arma.Studio.Data.UI;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
@@ -20,7 +21,13 @@ using System.Windows.Threading;
 
 namespace Arma.Studio.UI
 {
-    public class TextEditorDataContext : DockableBase, Data.UI.ITextDocument, INotifyPropertyChanged, Data.UI.AttachedProperties.IOnInitialized, IDisposable
+    public class TextEditorDataContext : DockableBase,
+        Data.UI.ITextDocument,
+        INotifyPropertyChanged,
+        Data.UI.AttachedProperties.IOnInitialized,
+        IDisposable,
+        IInteractionSave,
+        IInteractionUndoRedo
     {
         private static readonly TimeSpan LintTimeout = new TimeSpan(0, 0, 0, 0, 200);
 
@@ -79,6 +86,8 @@ namespace Arma.Studio.UI
         private Task LintingTask { get; set; }
         private CancellationTokenSource FoldingCancellationTokenSource { get; set; }
         private Task FoldingTask { get; set; }
+
+        public override string Title { get => this.TextDocument.UndoStack.IsOriginalFile ? this.File.Name : String.Concat(this.File.Name, '*'); set => throw new InvalidOperationException(); }
         private TextEditorDataContext()
         {
             this.File = new File();
@@ -96,13 +105,14 @@ namespace Arma.Studio.UI
         {
             this.TextEditorInstance = textEditor;
             this.File = file;
-            this.Title = this.File.Name;
+            this.RaisePropertyChanged(nameof(this.Title));
             if (this.File.FullPath != null)
             {
                 using (var reader = new System.IO.StreamReader(this.File.FullPath))
                 {
                     this.TextDocument.Text = reader.ReadToEnd();
                     this.TextDocument.UndoStack.ClearAll();
+                    this.TextDocument.UndoStack.MarkAsOriginalFile();
                 }
             }
         }
@@ -122,7 +132,7 @@ namespace Arma.Studio.UI
             {
                 this.File = new File { Name = (string)section.fullpath };
             }
-            this.Title = this.File.Name;
+            this.RaisePropertyChanged(nameof(this.Title));
             var type = (string)section.type;
 
             if (this.File?.FullPath != null &&System.IO.File.Exists(this.File.FullPath))
@@ -131,6 +141,7 @@ namespace Arma.Studio.UI
                 {
                     this.TextDocument.Text = reader.ReadToEnd();
                     this.TextDocument.UndoStack.ClearAll();
+                    this.TextDocument.UndoStack.MarkAsOriginalFile();
                 }
             }
             else
@@ -238,9 +249,10 @@ namespace Arma.Studio.UI
                             var off = App.Current.Dispatcher.Invoke(() => this.TextDocument.GetOffset(it.LineStart.Value, it.ColumnStart.Value));
                             folding = new NewFolding { StartOffset = off, EndOffset = off + it.Length };
                         }
-                        if (folding.EndOffset >= this.TextDocument.TextLength)
+                        var textLength = App.Current.Dispatcher.Invoke(() => this.TextDocument.TextLength);
+                        if (folding.EndOffset >= textLength)
                         {
-                            folding.EndOffset = this.TextDocument.TextLength;
+                            folding.EndOffset = textLength;
                         }
                         foldings.Add(folding);
                     }
@@ -300,6 +312,13 @@ namespace Arma.Studio.UI
                     }
                 }
             }
+
+            App.Current.Dispatcher.InvokeAsync(() =>
+            {
+                this.RaisePropertyChanged(nameof(this.Title));
+                this.RaisePropertyChanged(nameof(this.UndoAvailable));
+                this.RaisePropertyChanged(nameof(this.RedoAvailable));
+            }, DispatcherPriority.Input);
         }
 
         public void ScrollTo(int line, int column)
@@ -387,7 +406,7 @@ namespace Arma.Studio.UI
 
         private void File_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            this.Title = this.File.Name;
+            this.RaisePropertyChanged(nameof(this.Title));
         }
 
 
@@ -441,6 +460,38 @@ namespace Arma.Studio.UI
         public string GetContents()
         {
             return App.Current.Dispatcher.Invoke(() => this.TextDocument.Text);
+        }
+
+        public Task Save(CancellationToken cancellationToken)
+        {
+            if (this.TextDocument.UndoStack.IsOriginalFile)
+            {
+                return Task.CompletedTask;
+            }
+            var directory = System.IO.Path.GetDirectoryName(this.File.FullPath);
+            if (!System.IO.Directory.Exists(directory))
+            {
+                System.IO.Directory.CreateDirectory(directory);
+            }
+            System.IO.File.WriteAllText(this.File.FullPath, this.TextDocument.Text, Encoding.UTF8);
+            this.TextDocument.UndoStack.MarkAsOriginalFile();
+            return Task.CompletedTask;
+        }
+
+
+        public bool UndoAvailable => this.TextDocument.UndoStack.CanUndo;
+
+        public bool RedoAvailable => this.TextDocument.UndoStack.CanRedo;
+        public Task Undo(CancellationToken cancellationToken)
+        {
+            this.TextDocument.UndoStack.Undo();
+            return Task.CompletedTask;
+        }
+
+        public Task Redo(CancellationToken cancellationToken)
+        {
+            this.TextDocument.UndoStack.Redo();
+            return Task.CompletedTask;
         }
     }
 }

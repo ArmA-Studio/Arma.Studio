@@ -204,4 +204,16 @@
   <data name="Debugger_Next_Tooltip" xml:space="preserve">
     <value>Next Instruction</value>
   </data>
+  <data name="Util_SaveDocument_Tooltip" xml:space="preserve">
+    <value>Saves the current document</value>
+  </data>
+  <data name="Util_SaveAllDocuments_Tooltip" xml:space="preserve">
+    <value>Saves all documents and the layout</value>
+  </data>
+  <data name="Util_Undo_Tooltip" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="Util_Redo_Tooltip" xml:space="preserve">
+    <value>Redo</value>
+  </data>
 </root>

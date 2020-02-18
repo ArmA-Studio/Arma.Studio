@@ -93,6 +93,116 @@
                 </Style>
             </ToolBarTray.Resources>
             <ToolBar ToolBarTray.IsLocked="True">
+                <Button ToolTip="{x:Static p:Language.Util_SaveDocument_Tooltip}"
+                        Command="{Binding CmdSaveDocument}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ActiveDockable,
+                                                                   Converter={StaticResource IsAssignableFromConverter},
+                                                                   ConverterParameter={x:Type asd:IInteractionSave}}" Value="True">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Rectangle Height="16" Width="16" >
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{StaticResource DrawingBrushSaveGrey}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ActiveDockable,
+                                                                   Converter={StaticResource IsAssignableFromConverter},
+                                                                   ConverterParameter={x:Type asd:IInteractionSave}}" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushSave}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
+                <Button ToolTip="{x:Static p:Language.Util_SaveAllDocuments_Tooltip}"
+                        Command="{Binding CmdSaveAllDocuments}">
+                    <Rectangle Height="16" Width="16" Fill="{StaticResource DrawingBrushSaveAll}"/>
+                </Button>
+                <Separator/>
+                <Button ToolTip="{x:Static p:Language.Util_Undo_Tooltip}"
+                        Command="{Binding CmdUndo}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ActiveDockable,
+                                                               Converter={StaticResource IsAssignableFromConverter},
+                                                               ConverterParameter={x:Type asd:IInteractionUndoRedo}}" Value="True"/>
+                                        <Condition Binding="{Binding ActiveDockable.RedoAvailable}" Value="True"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Rectangle Height="16" Width="16" >
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{StaticResource DrawingBrushUndoGray}"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ActiveDockable,
+                                                               Converter={StaticResource IsAssignableFromConverter},
+                                                               ConverterParameter={x:Type asd:IInteractionUndoRedo}}" Value="True"/>
+                                            <Condition Binding="{Binding ActiveDockable.UndoAvailable}" Value="True"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushUndo}"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
+                <Button ToolTip="{x:Static p:Language.Util_Redo_Tooltip}"
+                        Command="{Binding CmdRedo}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ActiveDockable,
+                                                               Converter={StaticResource IsAssignableFromConverter},
+                                                               ConverterParameter={x:Type asd:IInteractionUndoRedo}}" Value="True"/>
+                                        <Condition Binding="{Binding ActiveDockable.RedoAvailable}" Value="True"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Rectangle Height="16" Width="16" >
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{StaticResource DrawingBrushRedoGray}"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ActiveDockable,
+                                                               Converter={StaticResource IsAssignableFromConverter},
+                                                               ConverterParameter={x:Type asd:IInteractionUndoRedo}}" Value="True"/>
+                                            <Condition Binding="{Binding ActiveDockable.RedoAvailable}" Value="True"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushRedo}"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
+            </ToolBar>
+            <ToolBar ToolBarTray.IsLocked="True">
                 <Button Command="{Binding CmdDebuggerAction}">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">

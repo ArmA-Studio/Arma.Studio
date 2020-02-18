@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Media;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -295,6 +296,34 @@ namespace Arma.Studio.UI.Windows
             {
                 anch.IsActive = true;
                 anch.IsSelected = true;
+            }
+        });
+
+        public ICommand CmdUndo => new RelayCommand(() => {
+            if (this.ActiveDockable is IInteractionUndoRedo interactionUndoRedo)
+            {
+                Task.Run(() => interactionUndoRedo.Undo(CancellationToken.None));
+            }
+        });
+        public ICommand CmdRedo => new RelayCommand(() => {
+            if (this.ActiveDockable is IInteractionUndoRedo interactionUndoRedo)
+            {
+                Task.Run(() => interactionUndoRedo.Redo(CancellationToken.None));
+            }
+        });
+        public ICommand CmdSaveDocument => new RelayCommand(() => {
+            if (this.ActiveDockable is IInteractionSave interactionSave)
+            {
+                Task.Run(() => interactionSave.Save(CancellationToken.None));
+            }
+        });
+        public ICommand CmdSaveAllDocuments => new RelayCommand(() => {
+            foreach (var it in this.Documents)
+            {
+                if (it is IInteractionSave interactionSave)
+                {
+                    Task.Run(() => interactionSave.Save(CancellationToken.None));
+                }
             }
         });
 

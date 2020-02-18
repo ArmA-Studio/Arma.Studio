@@ -137,6 +137,8 @@
     <Compile Include="Debugging\IBreakpoint.cs" />
     <Compile Include="UI\Converters\UriToCachedImageConverter.cs" />
     <Compile Include="Debugging\IBreakpointManager.cs" />
+    <Compile Include="UI\IInteractionUndoRedo.cs" />
+    <Compile Include="UI\IInteractionSave.cs" />
     <Compile Include="UI\IMainWindow.cs" />
     <Compile Include="UI\ITextDocument.cs" />
     <Compile Include="UI\RelayCommand.cs" />

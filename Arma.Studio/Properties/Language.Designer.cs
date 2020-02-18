@@ -320,5 +320,41 @@ namespace Arma.Studio.Properties {
                 return ResourceManager.GetString("SplashScreen_PreparingUserInterface", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redo.
+        /// </summary>
+        public static string Util_Redo_Tooltip {
+            get {
+                return ResourceManager.GetString("Util_Redo_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saves all documents and the layout.
+        /// </summary>
+        public static string Util_SaveAllDocuments_Tooltip {
+            get {
+                return ResourceManager.GetString("Util_SaveAllDocuments_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saves the current document.
+        /// </summary>
+        public static string Util_SaveDocument_Tooltip {
+            get {
+                return ResourceManager.GetString("Util_SaveDocument_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undo.
+        /// </summary>
+        public static string Util_Undo_Tooltip {
+            get {
+                return ResourceManager.GetString("Util_Undo_Tooltip", resourceCulture);
+            }
+        }
     }
 }
