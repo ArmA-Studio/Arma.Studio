@@ -83,13 +83,30 @@ namespace Arma.Studio.UI
             var geo = new StreamGeometry();
             using (var context = geo.Open())
             {
-                context.BeginFigure(new Point(2, 5), true, true);
-                context.LineTo(new Point(6, 5), true, false);
+                // Simple arrow
+                context.BeginFigure(new Point(2, 2), true, true);
                 context.LineTo(new Point(6, 2), true, false);
-                context.LineTo(new Point(10, 6.5), true, false);
-                context.LineTo(new Point(6, 11), true, false);
-                context.LineTo(new Point(6, 8), true, false);
-                context.LineTo(new Point(2, 8), true, false);
+                context.LineTo(new Point(6, 0), true, false);
+                context.LineTo(new Point(7, 0), true, false);
+                context.LineTo(new Point(10, 3.5), true, false);
+                context.LineTo(new Point(7, 7), true, false);
+                context.LineTo(new Point(6, 7), true, false);
+                context.LineTo(new Point(6, 5), true, false);
+                context.LineTo(new Point(2, 5), true, false);
+
+                // Other arrow
+
+                // context.BeginFigure(new Point(6, 2), true, true);
+                // context.LineTo(new Point(6, 0), true, false);
+                // context.LineTo(new Point(7, 0), true, false);
+                // context.LineTo(new Point(10, 3.5), true, false);
+                // context.LineTo(new Point(7, 7), true, false);
+                // context.LineTo(new Point(6, 7), true, false);
+                // context.LineTo(new Point(6, 5), true, false);
+                // context.LineTo(new Point(2, 5), true, false);
+                // context.BezierTo(new Point(2, 5), new Point(0, 3), new Point(0, 0), true, false);
+                // context.BezierTo(new Point(0, 0), new Point(2, 2), new Point(3, 2), true, false);
+
             }
             var transgroup = new TransformGroup();
             Transform t;
