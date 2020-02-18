@@ -48,7 +48,11 @@ namespace Arma.Studio.UI
                 if (this._TextEditorControl_ScrollToLine != null)
                 {
                     var val = this._TextEditorControl_ScrollToLine;
-                    App.Current.Dispatcher.InvokeAsync(() => this.TextEditorControl.ScrollTo(val.Item1, val.Item2), DispatcherPriority.Render);
+                    App.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        this.TextEditorControl.ScrollTo(val.Item1, val.Item2);
+                        this.TextEditorControl.CaretOffset = this.TextDocument.GetOffset(val.Item1, val.Item2);
+                    }, DispatcherPriority.Render);
                     this._TextEditorControl_ScrollToLine = null;
                 }
             }
@@ -308,6 +312,7 @@ namespace Arma.Studio.UI
             {
                 App.Current.Dispatcher.Invoke(() => {
                     this.TextEditorControl.ScrollTo(line, column);
+                    this.TextEditorControl.CaretOffset = this.TextDocument.GetOffset(line, column);
                 }, DispatcherPriority.Render);
             }
         }
