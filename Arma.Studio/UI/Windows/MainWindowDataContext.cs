@@ -23,6 +23,7 @@ namespace Arma.Studio.UI.Windows
     public class MainWindowDataContext : INotifyPropertyChanged, IMainWindow, IDisposable
     {
         private const string CONST_INI_TYPES_STRING = "Types";
+        private const string CONST_INI_PBOPATHS_STRING = "PBO-Paths";
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
 
@@ -386,6 +387,17 @@ namespace Arma.Studio.UI.Windows
                     App.DisplayOperationFailed(ex);
                 }
             }
+            if (this.LayoutJsonNode.ContainsKey(CONST_INI_PBOPATHS_STRING))
+            {
+                var jarray = (Newtonsoft.Json.Linq.JArray)this.LayoutJsonNode[CONST_INI_PBOPATHS_STRING];
+                var pboPaths = jarray.Values<string>();
+                foreach (var pboPath in pboPaths)
+                {
+                    var pbo = new PBO { Name = pboPath };
+                    pbo.Rescan();
+                    this.Solution.Add(pbo);
+                }
+            }
             if (!System.IO.File.Exists(App.LayoutFilePath))
             {
                 return;
@@ -416,7 +428,11 @@ namespace Arma.Studio.UI.Windows
                 var layoutSerializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer(this.WindowsDockingManager);
                 layoutSerializer.Serialize(writer);
             }
-            this.LayoutJsonNode = new Newtonsoft.Json.Linq.JObject(new Newtonsoft.Json.Linq.JProperty(CONST_INI_TYPES_STRING, new Newtonsoft.Json.Linq.JObject()));
+            this.LayoutJsonNode = new Newtonsoft.Json.Linq.JObject
+            {
+                new Newtonsoft.Json.Linq.JProperty(CONST_INI_TYPES_STRING, new Newtonsoft.Json.Linq.JObject()),
+                { CONST_INI_PBOPATHS_STRING, new Newtonsoft.Json.Linq.JArray(this.Solution.Where((it)=> it is PBO).Cast<PBO>().Select((pbo) => pbo.FullPath)) }
+            };
             var types = this.LayoutJsonNode[CONST_INI_TYPES_STRING];
 
             foreach (var it in this.Anchorables.Concat(this.Documents))
