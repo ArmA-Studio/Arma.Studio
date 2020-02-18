@@ -308,3 +308,6 @@ $RECYCLE.BIN/
 *.old
 ArmaClassParser/SQF/ClassParser/Generated/Scanner.cs.old
 dead/
+
+
+!/Arma.Studio.Data/Log
