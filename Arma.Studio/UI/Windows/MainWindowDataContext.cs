@@ -406,19 +406,65 @@ namespace Arma.Studio.UI.Windows
 
         private void LoadAvalonDockLayout()
         {
-            if (System.IO.File.Exists(App.LayoutConfigFilePath))
+            if (!System.IO.File.Exists(App.LayoutConfigFilePath))
             {
-                try
+                System.IO.File.WriteAllText(App.LayoutConfigFilePath, @"{
+  ""Types"": {
+    ""bbf6042f-4675-48d9-97cf-7396bf45d407"": ""Arma.Studio.CallstackWindow.CallstackWindowDataContext, Arma.Studio.CallstackWindow, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"",
+    ""8327bf63-354e-4de4-b70b-c6ff2f6e2a43"": ""Arma.Studio.LocalsWindow.LocalsWindowDataContext, Arma.Studio.LocalsWindow, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"",
+    ""9a8ff5b9-8c6c-4d4e-8666-0ed9ef0b549e"": ""Arma.Studio.OutputWindow.OutputWindowDataContext, Arma.Studio.OutputWindow, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"",
+    ""bcf81bff-3d6c-4d33-8464-3351484011ff"": ""Arma.Studio.SolutionExplorer.SolutionExplorerDataContext, Arma.Studio.SolutionExplorer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null""
+  },
+  ""PBO-Paths"": [],
+  ""bbf6042f-4675-48d9-97cf-7396bf45d407"": {},
+  ""8327bf63-354e-4de4-b70b-c6ff2f6e2a43"": {},
+  ""9a8ff5b9-8c6c-4d4e-8666-0ed9ef0b549e"": {},
+  ""bcf81bff-3d6c-4d33-8464-3351484011ff"": {}
+}");
+            }
+            if (!System.IO.File.Exists(App.LayoutFilePath))
+            {
+                System.IO.File.WriteAllText(App.LayoutFilePath, @"<?xml version=""1.0""?>
+<LayoutRoot>
+  <RootPanel Orientation=""Horizontal"">
+    <LayoutPanel Orientation=""Vertical"">
+      <LayoutPanel Orientation=""Horizontal"" DockHeight=""25*"">
+        <LayoutPanel Orientation=""Horizontal"">
+          <LayoutDocumentPane />
+        </LayoutPanel>
+      </LayoutPanel>
+      <LayoutAnchorablePaneGroup Orientation=""Horizontal"" DockWidth=""200"" DockHeight=""221"" FloatingWidth=""210"" FloatingHeight=""974"" FloatingLeft=""952"" FloatingTop=""1014"">
+        <LayoutAnchorablePane DockHeight=""221"" FloatingWidth=""210"" FloatingHeight=""974"" FloatingLeft=""823"" FloatingTop=""922"">
+          <LayoutAnchorable AutoHideMinWidth=""100"" AutoHideMinHeight=""100"" Title=""Output Window"" IsSelected=""True"" ContentId=""9a8ff5b9-8c6c-4d4e-8666-0ed9ef0b549e"" FloatingLeft=""823"" FloatingTop=""922"" FloatingWidth=""210"" FloatingHeight=""974"" CanClose=""False"" LastActivationTimeStamp=""02/18/2020 21:20:30"" PreviousContainerId=""4cdc16d9-4d60-4f82-b06e-e9cc2928346b"" PreviousContainerIndex=""2"" />
+        </LayoutAnchorablePane>
+        <LayoutAnchorablePane Id=""4cdc16d9-4d60-4f82-b06e-e9cc2928346b"" DockHeight=""221"" FloatingWidth=""210"" FloatingHeight=""974"" FloatingLeft=""952"" FloatingTop=""1014"">
+          <LayoutAnchorable AutoHideMinWidth=""100"" AutoHideMinHeight=""100"" Title=""Callstack"" IsSelected=""True"" ContentId=""bbf6042f-4675-48d9-97cf-7396bf45d407"" FloatingLeft=""952"" FloatingTop=""1014"" FloatingWidth=""210"" FloatingHeight=""974"" CanClose=""False"" LastActivationTimeStamp=""02/18/2020 21:20:28"" />
+          <LayoutAnchorable AutoHideMinWidth=""100"" AutoHideMinHeight=""100"" Title=""Locals"" ContentId=""8327bf63-354e-4de4-b70b-c6ff2f6e2a43"" FloatingLeft=""952"" FloatingTop=""1014"" FloatingWidth=""210"" FloatingHeight=""974"" CanClose=""False"" LastActivationTimeStamp=""02/18/2020 21:20:10"" />
+        </LayoutAnchorablePane>
+      </LayoutAnchorablePaneGroup>
+    </LayoutPanel>
+    <LayoutAnchorablePane DockWidth=""198"" DockHeight=""482"" FloatingWidth=""210"" FloatingHeight=""974"" FloatingLeft=""1885"" FloatingTop=""547"">
+      <LayoutAnchorable AutoHideMinWidth=""100"" AutoHideMinHeight=""100"" Title=""Solution-Explorer"" IsSelected=""True"" ContentId=""bcf81bff-3d6c-4d33-8464-3351484011ff"" FloatingLeft=""1885"" FloatingTop=""547"" FloatingWidth=""210"" FloatingHeight=""974"" CanClose=""False"" LastActivationTimeStamp=""02/18/2020 21:20:25"" PreviousContainerId=""4cdc16d9-4d60-4f82-b06e-e9cc2928346b"" PreviousContainerIndex=""3"" />
+    </LayoutAnchorablePane>
+  </RootPanel>
+  <TopSide />
+  <RightSide />
+  <LeftSide />
+  <BottomSide />
+  <FloatingWindows />
+  <Hidden />
+</LayoutRoot>");
+            }
+            try
+            {
+                using (var reader = System.IO.File.OpenRead(App.LayoutConfigFilePath))
                 {
-                    using (var reader = System.IO.File.OpenRead(App.LayoutConfigFilePath))
-                    {
-                        this.LayoutJsonNode = Newtonsoft.Json.JsonConvert.DeserializeObject(new System.IO.StreamReader(reader).ReadToEnd()) as Newtonsoft.Json.Linq.JObject;
-                    }
+                    this.LayoutJsonNode = Newtonsoft.Json.JsonConvert.DeserializeObject(new System.IO.StreamReader(reader).ReadToEnd()) as Newtonsoft.Json.Linq.JObject;
                 }
-                catch (Exception ex)
-                {
-                    App.DisplayOperationFailed(ex);
-                }
+            }
+            catch (Exception ex)
+            {
+                App.DisplayOperationFailed(ex);
             }
             if (this.LayoutJsonNode.ContainsKey(CONST_INI_PBOPATHS_STRING))
             {
