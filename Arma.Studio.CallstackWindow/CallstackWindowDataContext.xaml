@@ -7,18 +7,18 @@
               xmlns:local="clr-namespace:Arma.Studio.CallstackWindow;assembly=Arma.Studio.CallstackWindow"
               xmlns:p="clr-namespace:Arma.Studio.CallstackWindow.Properties;assembly=Arma.Studio.CallstackWindow"
               DataType="{x:Type local:CallstackWindowDataContext}">
-    <DataGrid Grid.Row="1" ItemsSource="{Binding Callstack}" AutoGenerateColumns="False" CanUserAddRows="False">
+    <DataGrid Grid.Row="1" ItemsSource="{Binding Callstack}" AutoGenerateColumns="False" CanUserAddRows="False" RowHeight="20">
         <DataGrid.Resources>
             <Style TargetType="DataGridRow">
                 <Setter Property="asd:AttachedDataContext.DataContext" Value="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
             </Style>
         </DataGrid.Resources>
         <DataGrid.Columns>
-            <DataGridTextColumn Header="{x:Static p:Language.Line}" IsReadOnly="True" Width="*" Binding="{Binding Line}"/>
-            <DataGridTextColumn Header="{x:Static p:Language.Column}" IsReadOnly="True" Width="*" Binding="{Binding Column}"/>
-            <DataGridTextColumn Header="{x:Static p:Language.File}" IsReadOnly="True" Width="*" Binding="{Binding File}"/>
-            <DataGridTextColumn Header="{x:Static p:Language.Reason}" IsReadOnly="True" Width="*" Binding="{Binding Reason}"/>
-            <DataGridTextColumn Header="{x:Static p:Language.Content}" IsReadOnly="True" Width="*" Binding="{Binding Content}"/>
+            <DataGridTextColumn Header="{x:Static p:Language.Line}" IsReadOnly="True" Binding="{Binding Line}"/>
+            <DataGridTextColumn Header="{x:Static p:Language.Column}" IsReadOnly="True" Binding="{Binding Column}"/>
+            <DataGridTextColumn Header="{x:Static p:Language.File}" IsReadOnly="True" Binding="{Binding File}"/>
+            <DataGridTextColumn Header="{x:Static p:Language.Content}" IsReadOnly="True" Binding="{Binding Content}"/>
+            <DataGridTextColumn Header="{x:Static p:Language.Reason}" IsReadOnly="True" Binding="{Binding Reason}"/>
         </DataGrid.Columns>
     </DataGrid>
 </DataTemplate>
