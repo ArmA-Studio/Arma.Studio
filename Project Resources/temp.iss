@@ -2,16 +2,16 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Arma.Studio"
-#define MyAppVersion "1.5"
-#define MyAppPublisher "X39"
-#define MyAppURL "http://www.example.com/"
+#define MyAppVersion "0.1"
+#define MyAppPublisher "X39"    
+#define MyAppURL "https://x39.io/projects?project=ArmA.Studio"
 #define MyAppExeName "Arma.Studio.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
-; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{7A1FA175-71D9-40DC-BA4C-8ACD14457D59}
+; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)           
+AppId={{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -23,7 +23,9 @@ DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
 OutputBaseFilename=setup
 Compression=lzma
-SolidCompression=yes
+SolidCompression=yes    
+SetupIconFile=Logo_V1.ico
+
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"

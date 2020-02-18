@@ -1,0 +1,50 @@
+﻿<asd:DialogWindow x:Class="Arma.Studio.UI.Windows.AboutDialog"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:app="clr-namespace:Arma.Studio"
+                  xmlns:p="clr-namespace:Arma.Studio.Properties"
+                  xmlns:asd="http://schemas.armastudio.io/data"
+                  mc:Ignorable="d"
+                  Title="{x:Static p:Language.AboutDialog_Title}"
+                  Header="{x:Static p:Language.AboutDialog_Header}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Background="White" BorderThickness="1" BorderBrush="#FF99B4D1" Padding="4">
+            <StackPanel Orientation="Vertical">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin" Value="4 0 0 0"/>
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock Text="{Binding ToolVersion, StringFormat={}Version {0}}" Margin="0"/>
+                <TextBlock Text="{x:Static p:Language.AboutDialog_ContributorsNote}" Margin="0"/>
+                <!-- Feel free to add yourself if you do contribute. -->
+                <TextBlock Text="- X39, Maintainer"/>
+            </StackPanel>
+        </Border>
+        <GridSplitter Grid.Column="1" Width="5" ResizeBehavior="PreviousAndNext"/>
+        <Border Grid.Column="2" Background="White" BorderThickness="1" BorderBrush="#FF99B4D1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="{x:Static p:Language.AboutDialog_LoadedPlugins}" Margin="4"/>
+                <ListView Grid.Row="1" ItemsSource="{Binding Plugins}" BorderThickness="0">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="{x:Static p:Language.Name}" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="{x:Static p:Language.Description}" DisplayMemberBinding="{Binding Description}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </Border>
+    </Grid>
+</asd:DialogWindow>

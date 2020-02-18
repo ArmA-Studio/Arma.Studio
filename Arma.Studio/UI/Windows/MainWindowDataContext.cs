@@ -294,8 +294,7 @@ namespace Arma.Studio.UI.Windows
             }
             else
             {
-                anch.IsActive = true;
-                anch.IsSelected = true;
+                anch.Focus();
             }
         });
 
@@ -316,6 +315,11 @@ namespace Arma.Studio.UI.Windows
             {
                 Task.Run(() => interactionSave.Save(CancellationToken.None));
             }
+        });
+        public ICommand CmdShowAbout => new RelayCommand(() => {
+            var dlgdc = new AboutDialogDataContext();
+            var dlg = new AboutDialog(dlgdc);
+            dlg.ShowDialog();
         });
         public ICommand CmdSaveAllDocuments => new RelayCommand(() => {
             foreach (var it in this.Documents)
@@ -508,6 +512,7 @@ namespace Arma.Studio.UI.Windows
         {
             var dockable = sender as DockableBase;
             dockable.OnDockableClose -= this.Dockable_OnDocumentClosing;
+            var wasActive = dockable.IsActive;
             if (this.Documents.Contains(dockable))
             {
                 try
@@ -523,6 +528,15 @@ namespace Arma.Studio.UI.Windows
                     this.Anchorables.Remove(dockable);
                 }
                 catch (NullReferenceException) { } //AvalonDock ...
+            }
+            if (wasActive && this.AvalonDockActiveContent == dockable)
+            {
+                this.AvalonDockActiveContent = this.Documents.FirstOrDefault((it) => it.IsActive);
+                if (this.AvalonDockActiveContent is null)
+                {
+                    AvalonDockActiveContent = dockable = this.Documents.FirstOrDefault();
+                    dockable?.Focus();
+                }
             }
         }
 

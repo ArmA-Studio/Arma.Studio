@@ -47,7 +47,10 @@ namespace Arma.Studio
         public static void DisplayOperationFailed(Exception ex)
         {
 #if DEBUG
-            System.Diagnostics.Debugger.Break();
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                System.Diagnostics.Debugger.Break();
+            }
 #endif
             Current.Dispatcher.Invoke(() => MessageBox.Show(String.Format(Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
         }
@@ -69,9 +72,7 @@ namespace Arma.Studio
         /// </summary>
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-#if DEBUG
-            System.Diagnostics.Debugger.Break();
-#endif
+            DisplayOperationFailed(e.Exception);
         }
         /// <summary>
         /// https://msdn.microsoft.com/en-us/library/system.windows.application.exit(v=vs.110).aspx

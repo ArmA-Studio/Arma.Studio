@@ -15,6 +15,7 @@ namespace Arma.Studio.LocalsWindow
         #region IPlugin
         public Version Version => new Version(1, 0, 0, 0);
         public string Name => Properties.Language.LocalsWindow_Name;
+        public string Description => String.Empty;
         public Task<IUpdateInfo> CheckForUpdate(CancellationToken cancellationToken) => Task.Run(() => default(IUpdateInfo));
         public Task Initialize(string pluginPath, CancellationToken cancellationToken) => Task.CompletedTask;
         #endregion

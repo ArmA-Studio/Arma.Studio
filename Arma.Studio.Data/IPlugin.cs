@@ -38,5 +38,10 @@ namespace Arma.Studio.Data
         /// Supposed to return the localized plugin name.
         /// </summary>
         string Name { get; }
+
+        /// <summary>
+        /// Supposed to return the some basic, short infos about the plugin.
+        /// </summary>
+        string Description { get; }
     }
 }

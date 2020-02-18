@@ -216,4 +216,28 @@
   <data name="Util_Redo_Tooltip" xml:space="preserve">
     <value>Redo</value>
   </data>
+  <data name="MainWindow_Menu_Help_About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="MainWindow_Menu_Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="AboutDialog_ContributorsNote" xml:space="preserve">
+    <value>Proudly made by:</value>
+  </data>
+  <data name="AboutDialog_LoadedPlugins" xml:space="preserve">
+    <value>Plugins in use</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="AboutDialog_Title" xml:space="preserve">
+    <value>About Arma.Studio</value>
+  </data>
+  <data name="AboutDialog_Header" xml:space="preserve">
+    <value>Arma.Studio</value>
+  </data>
 </root>

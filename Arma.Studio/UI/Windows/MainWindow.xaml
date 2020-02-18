@@ -78,6 +78,10 @@
                             </MenuItem.ItemContainerStyle>
                         </MenuItem>
                     </MenuItem>
+                    <MenuItem Header="{x:Static p:Language.MainWindow_Menu_Help}">
+                        <MenuItem Header="{x:Static p:Language.MainWindow_Menu_Help_About}"
+                                  Command="{Binding CmdShowAbout}"/>
+                    </MenuItem>
                 </CompositeCollection>
             </Menu.ItemsSource>
         </Menu>
@@ -99,7 +103,7 @@
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="IsEnabled" Value="False"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding ActiveDockable,
+                                <DataTrigger Binding="{Binding AvalonDockActiveContent,
                                                                    Converter={StaticResource IsAssignableFromConverter},
                                                                    ConverterParameter={x:Type asd:IInteractionSave}}" Value="True">
                                     <Setter Property="IsEnabled" Value="True"/>
@@ -112,7 +116,7 @@
                             <Style TargetType="{x:Type Rectangle}">
                                 <Setter Property="Fill" Value="{StaticResource DrawingBrushSaveGrey}"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ActiveDockable,
+                                    <DataTrigger Binding="{Binding AvalonDockActiveContent,
                                                                    Converter={StaticResource IsAssignableFromConverter},
                                                                    ConverterParameter={x:Type asd:IInteractionSave}}" Value="True">
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushSave}"/>
@@ -135,10 +139,10 @@
                             <Style.Triggers>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding ActiveDockable,
+                                        <Condition Binding="{Binding AvalonDockActiveContent,
                                                                Converter={StaticResource IsAssignableFromConverter},
                                                                ConverterParameter={x:Type asd:IInteractionUndoRedo}}" Value="True"/>
-                                        <Condition Binding="{Binding ActiveDockable.RedoAvailable}" Value="True"/>
+                                        <Condition Binding="{Binding AvalonDockActiveContent.RedoAvailable}" Value="True"/>
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="IsEnabled" Value="True"/>
                                 </MultiDataTrigger>
@@ -152,10 +156,10 @@
                                 <Style.Triggers>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding ActiveDockable,
+                                            <Condition Binding="{Binding AvalonDockActiveContent,
                                                                Converter={StaticResource IsAssignableFromConverter},
                                                                ConverterParameter={x:Type asd:IInteractionUndoRedo}}" Value="True"/>
-                                            <Condition Binding="{Binding ActiveDockable.UndoAvailable}" Value="True"/>
+                                            <Condition Binding="{Binding AvalonDockActiveContent.UndoAvailable}" Value="True"/>
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushUndo}"/>
                                     </MultiDataTrigger>
@@ -172,10 +176,10 @@
                             <Style.Triggers>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding ActiveDockable,
+                                        <Condition Binding="{Binding AvalonDockActiveContent,
                                                                Converter={StaticResource IsAssignableFromConverter},
                                                                ConverterParameter={x:Type asd:IInteractionUndoRedo}}" Value="True"/>
-                                        <Condition Binding="{Binding ActiveDockable.RedoAvailable}" Value="True"/>
+                                        <Condition Binding="{Binding AvalonDockActiveContent.RedoAvailable}" Value="True"/>
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="IsEnabled" Value="True"/>
                                 </MultiDataTrigger>
@@ -189,10 +193,10 @@
                                 <Style.Triggers>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding ActiveDockable,
+                                            <Condition Binding="{Binding AvalonDockActiveContent,
                                                                Converter={StaticResource IsAssignableFromConverter},
                                                                ConverterParameter={x:Type asd:IInteractionUndoRedo}}" Value="True"/>
-                                            <Condition Binding="{Binding ActiveDockable.RedoAvailable}" Value="True"/>
+                                            <Condition Binding="{Binding AvalonDockActiveContent.RedoAvailable}" Value="True"/>
                                         </MultiDataTrigger.Conditions>
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushRedo}"/>
                                     </MultiDataTrigger>

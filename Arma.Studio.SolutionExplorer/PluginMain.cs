@@ -16,6 +16,7 @@ namespace Arma.Studio.SolutionExplorer
         public Version Version => new Version(1, 0, 0, 0);
 
         public string Name => Properties.Language.SolutionExplorer_Name;
+        public string Description => String.Empty;
 
 
         public Task<IUpdateInfo> CheckForUpdate(CancellationToken cancellationToken) => Task.Run(() => default(IUpdateInfo));

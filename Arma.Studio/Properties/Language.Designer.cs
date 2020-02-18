@@ -61,6 +61,42 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proudly made by:.
+        /// </summary>
+        public static string AboutDialog_ContributorsNote {
+            get {
+                return ResourceManager.GetString("AboutDialog_ContributorsNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arma.Studio.
+        /// </summary>
+        public static string AboutDialog_Header {
+            get {
+                return ResourceManager.GetString("AboutDialog_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugins in use.
+        /// </summary>
+        public static string AboutDialog_LoadedPlugins {
+            get {
+                return ResourceManager.GetString("AboutDialog_LoadedPlugins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About Arma.Studio.
+        /// </summary>
+        public static string AboutDialog_Title {
+            get {
+                return ResourceManager.GetString("AboutDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operation Failed.
         /// </summary>
         public static string App_GenericOperationFailedMessageBox_Body {
@@ -196,6 +232,15 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ExpandAll.
         /// </summary>
         public static string ExpandAll {
@@ -268,6 +313,24 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Help.
+        /// </summary>
+        public static string MainWindow_Menu_Help {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string MainWindow_Menu_Help_About {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Help_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View.
         /// </summary>
         public static string MainWindow_Menu_View {
@@ -282,6 +345,15 @@ namespace Arma.Studio.Properties {
         public static string MainWindow_Menu_View_Anchorables {
             get {
                 return ResourceManager.GetString("MainWindow_Menu_View_Anchorables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
             }
         }
         

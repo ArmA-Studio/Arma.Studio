@@ -19,6 +19,7 @@ namespace Arma.Studio.SqfVmDebugger
         #region IPlugin
         public Version Version => new Version(1, 0, 0);
         public string Name => Properties.Language.SqfVmDebugger_Name;
+        public string Description => String.Empty;
         public Task<IUpdateInfo> CheckForUpdate(CancellationToken cancellationToken)
         {
             return Task.FromResult(default(IUpdateInfo));
@@ -136,7 +137,7 @@ namespace Arma.Studio.SqfVmDebugger
                         if (!(this.GetApplication().MainWindow.ActiveDockable is Data.UI.ITextDocument textEditorDocuments))
                         {
                             Logger.Error($"Failed to receive TextDocument via this.GetApplication().MainWindow.ActiveDockable.");
-                            throw new NotSupportedException();
+                            return;
                         }
                         var text = textEditorDocuments.GetContents();
                         var preprocessed = this.Virtualmachine.PreProcess(text, textEditorDocuments.TextEditorInstance.File.FullPath);

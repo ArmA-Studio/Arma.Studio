@@ -22,6 +22,7 @@ namespace Arma.Studio.SqfEditor
         #region IPlugin
         public Version Version => new Version(1, 0, 0);
         public string Name => Properties.Language.SqfEditor_Name;
+        public string Description => String.Empty;
         public Task<IUpdateInfo> CheckForUpdate(CancellationToken cancellationToken) => Task.Run(() => default(IUpdateInfo));
         public async Task Initialize(string pluginPath, CancellationToken cancellationToken)
         {

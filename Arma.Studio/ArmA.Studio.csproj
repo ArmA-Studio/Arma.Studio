@@ -102,6 +102,10 @@
     <Compile Include="UI\RuntimeExecutionMargin.cs" />
     <Compile Include="UI\TextEditorDataContext.cs" />
     <Compile Include="UI\UnderlineBackgroundRenderer.cs" />
+    <Compile Include="UI\Windows\AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Windows\AboutDialogDataContext.cs" />
     <Compile Include="UI\Windows\SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
@@ -127,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Page Include="UI\Windows\AboutDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

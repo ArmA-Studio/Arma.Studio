@@ -133,6 +133,7 @@
     <Compile Include="UI\Converters\IsNullConverter.cs" />
     <Compile Include="UI\Converters\ContainsConverter.cs" />
     <Compile Include="Dockable\DockableInfo.cs" />
+    <Compile Include="UI\DialogWindow.cs" />
     <Compile Include="UI\GenericDataTemplateSelector.cs" />
     <Compile Include="Debugging\IBreakpoint.cs" />
     <Compile Include="UI\Converters\UriToCachedImageConverter.cs" />
@@ -158,6 +159,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Language.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\DialogWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
