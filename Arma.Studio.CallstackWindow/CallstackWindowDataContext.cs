@@ -4,11 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Arma.Studio.CallstackWindow
 {
-    public class CallstackWindowDataContext : DockableBase, IDisposable
+    public class CallstackWindowDataContext : DockableBase, IDisposable, Data.UI.AttachedProperties.IOnMouseDoubleClick
     {
         #region Collection: Callstack (ObservableCollection<SqfVm.VariableReference>)
         public ObservableCollection<HaltInfo> Callstack
@@ -54,6 +57,22 @@ namespace Arma.Studio.CallstackWindow
         }
 
         public override string Title { get => Properties.Language.CallstackWindow; set => throw new NotSupportedException(); }
+
+
+        public void OnMouseDoubleClick(Control sender, MouseButtonEventArgs e)
+        {
+            if (sender is DataGridRow dataGridRow && dataGridRow.DataContext is HaltInfo haltInfo)
+            {
+                if ((Application.Current as IApp).MainWindow.FileManagement.ContainsKey(haltInfo.File))
+                {
+                    var file = (Application.Current as IApp).MainWindow.FileManagement[haltInfo.File] as Data.IO.File;
+                    (Application.Current as IApp).MainWindow.OpenFile(file).ContinueWith((textDocument) =>
+                    {
+                        textDocument.Result.ScrollTo((int)haltInfo.Line, (int)haltInfo.Column);
+                    }, TaskContinuationOptions.OnlyOnRanToCompletion);
+                }
+            }
+        }
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls

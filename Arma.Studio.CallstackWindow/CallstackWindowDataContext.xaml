@@ -8,6 +8,11 @@
               xmlns:p="clr-namespace:Arma.Studio.CallstackWindow.Properties;assembly=Arma.Studio.CallstackWindow"
               DataType="{x:Type local:CallstackWindowDataContext}">
     <DataGrid Grid.Row="1" ItemsSource="{Binding Callstack}" AutoGenerateColumns="False" CanUserAddRows="False">
+        <DataGrid.Resources>
+            <Style TargetType="DataGridRow">
+                <Setter Property="asd:AttachedDataContext.DataContext" Value="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+            </Style>
+        </DataGrid.Resources>
         <DataGrid.Columns>
             <DataGridTextColumn Header="{x:Static p:Language.Line}" IsReadOnly="True" Width="*" Binding="{Binding Line}"/>
             <DataGridTextColumn Header="{x:Static p:Language.Column}" IsReadOnly="True" Width="*" Binding="{Binding Column}"/>
