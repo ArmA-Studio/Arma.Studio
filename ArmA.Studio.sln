@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arma.Studio.LocalsWindow", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arma.Studio.CallstackWindow", "Arma.Studio.CallstackWindow\Arma.Studio.CallstackWindow.csproj", "{CC899ACD-E1A8-406C-AF70-22A6FE5228A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arma.Studio.ImmediateWindow", "Arma.Studio.ImmediateWindow\Arma.Studio.ImmediateWindow.csproj", "{5CB6E39A-BD21-4819-B2A2-5F2456B726FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -143,6 +145,18 @@ Global
 		{CC899ACD-E1A8-406C-AF70-22A6FE5228A0}.Release|x64.Build.0 = Release|Any CPU
 		{CC899ACD-E1A8-406C-AF70-22A6FE5228A0}.Release|x86.ActiveCfg = Release|Any CPU
 		{CC899ACD-E1A8-406C-AF70-22A6FE5228A0}.Release|x86.Build.0 = Release|Any CPU
+		{5CB6E39A-BD21-4819-B2A2-5F2456B726FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CB6E39A-BD21-4819-B2A2-5F2456B726FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CB6E39A-BD21-4819-B2A2-5F2456B726FB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5CB6E39A-BD21-4819-B2A2-5F2456B726FB}.Debug|x64.Build.0 = Debug|Any CPU
+		{5CB6E39A-BD21-4819-B2A2-5F2456B726FB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5CB6E39A-BD21-4819-B2A2-5F2456B726FB}.Debug|x86.Build.0 = Debug|Any CPU
+		{5CB6E39A-BD21-4819-B2A2-5F2456B726FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CB6E39A-BD21-4819-B2A2-5F2456B726FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CB6E39A-BD21-4819-B2A2-5F2456B726FB}.Release|x64.ActiveCfg = Release|Any CPU
+		{5CB6E39A-BD21-4819-B2A2-5F2456B726FB}.Release|x64.Build.0 = Release|Any CPU
+		{5CB6E39A-BD21-4819-B2A2-5F2456B726FB}.Release|x86.ActiveCfg = Release|Any CPU
+		{5CB6E39A-BD21-4819-B2A2-5F2456B726FB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -157,6 +171,7 @@ Global
 		{3EE8624F-1707-4F49-BF6E-1EC361C2AC7B} = {094C7162-5575-4781-A174-116E78B5B04B}
 		{B978950C-CB04-4F70-BF10-DDE1AE83CA05} = {094C7162-5575-4781-A174-116E78B5B04B}
 		{CC899ACD-E1A8-406C-AF70-22A6FE5228A0} = {094C7162-5575-4781-A174-116E78B5B04B}
+		{5CB6E39A-BD21-4819-B2A2-5F2456B726FB} = {094C7162-5575-4781-A174-116E78B5B04B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70BCA3AD-C46B-45A2-A847-960793B49531}
