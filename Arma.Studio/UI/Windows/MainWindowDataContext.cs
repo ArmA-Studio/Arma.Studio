@@ -406,6 +406,10 @@ namespace Arma.Studio.UI.Windows
 
         private void LoadAvalonDockLayout()
         {
+            if (!System.IO.Directory.Exists(System.IO.Path.GetDirectoryName(App.LayoutConfigFilePath)))
+            {
+                System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(App.LayoutConfigFilePath));
+            }
             if (!System.IO.File.Exists(App.LayoutConfigFilePath))
             {
                 System.IO.File.WriteAllText(App.LayoutConfigFilePath, @"{
@@ -421,6 +425,10 @@ namespace Arma.Studio.UI.Windows
   ""9a8ff5b9-8c6c-4d4e-8666-0ed9ef0b549e"": {},
   ""bcf81bff-3d6c-4d33-8464-3351484011ff"": {}
 }");
+            }
+            if (!System.IO.Directory.Exists(System.IO.Path.GetDirectoryName(App.LayoutFilePath)))
+            {
+                System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(App.LayoutFilePath));
             }
             if (!System.IO.File.Exists(App.LayoutFilePath))
             {
