@@ -9,14 +9,14 @@ namespace Arma.Studio.UI.Windows
 {
     public class AboutDialogDataContext
     {
-        public string ToolVersion => App.CurrentVersion.ToString();
+        public string ToolVersion => App.GetReleaseInfos();
 
 
         public IPlugin[] Plugins { get; }
         public AboutDialogDataContext()
         {
 
-            this.Plugins = PluginManager.Instance.Plugins.Select((it) => it.Plugin()).ToArray();
+            this.Plugins = PluginManager.Instance.Plugins.Select((it) => it.Plugin()).OrderBy((it) => it.Name).ToArray();
         }
     }
 }
