@@ -73,7 +73,7 @@ namespace Arma.Studio.Data.UI
         public void Execute(object parameter)
         {
             this.IsRunning = true;
-            this.awaitable = this.execute((T)parameter).ContinueWith((t) => this.IsRunning = false);
+            this.awaitable = Task.Run(() => this.execute((T)parameter)).ContinueWith((t) => this.IsRunning = false);
         }
 
         private static bool DefaultCanExecute(T parameter)

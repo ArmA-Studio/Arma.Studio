@@ -34,6 +34,20 @@ namespace Arma.Studio
         public static readonly string PluginDir_RoamingUser = System.IO.Path.Combine(CommonApplicationDataPath, CONST_PLUGINS);
         public static readonly string PluginDir_Data = System.IO.Path.Combine(ApplicationDataPath, CONST_PLUGINS);
 
+        static App()
+        {
+
+            using (var stream = typeof(App).Assembly.GetManifestResourceStream(typeof(App).Assembly.GetName().Name + ".git-version.txt"))
+            using (var reader = new System.IO.StreamReader(stream))
+            {
+                var text = reader.ReadToEnd().Trim();
+                var split = text.Split('\n');
+                GitCommitId = split[0];
+                GitCommitNumber = split[1];
+            }
+        }
+        public static string GitCommitId { get; }
+        public static string GitCommitNumber { get; }
         public static UI.Windows.MainWindowDataContext MWContext { get; set; }
 
         IMainWindow IApp.MainWindow => MWContext;
@@ -72,6 +86,20 @@ namespace Arma.Studio
             }
             Current.Dispatcher.Invoke(() => MessageBox.Show(String.Format(Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
         }
+
+        public static void Update(UpdateHelper.DownloadInfo downloadInfo)
+        {
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                var dlgdc = new UI.Windows.UpdateDialogDataContext(downloadInfo);
+                var dlg = new UI.Windows.UpdateDialog(dlgdc);
+                dlg.ShowDialog();
+                (App.Current as App).Sentry?.Dispose();
+                (App.Current as App).Sentry = null;
+                App.Current.Shutdown();
+            });
+        }
+
         /// <summary>
         /// Displays generic error messagebox for given exception.
         /// Will display the <paramref name="body"/> in front of the exception.
@@ -163,7 +191,10 @@ namespace Arma.Studio
         {
             var builder = new StringBuilder();
             builder.Append("Arma.Studio ");
-            builder.Append(GetLinkerTime(typeof(App).Assembly, TimeZoneInfo.Utc).ToString(@"yyyyMMdd-HH\:mm\:ss\:fffffff"));
+            builder.Append(GitCommitId);
+            builder.Append(" (");
+            builder.Append(GitCommitNumber);
+            builder.Append(")");
             return builder.ToString();
         }
 
@@ -172,7 +203,11 @@ namespace Arma.Studio
             this.Sentry = SentrySdk.Init((sentryOptions) => {
                 sentryOptions.Dsn = new Dsn("https://76551f4da2934dc5b5553184ca3ebc03@sentry.io/2670888");
                 sentryOptions.Release = GetReleaseInfos();
-                sentryOptions.Environment = "InDev";
+#if DEBUG
+                sentryOptions.Environment = $"Debug-{(System.Environment.Is64BitProcess ? "x64" : "x86")}";
+#else
+                sentryOptions.Environment = $"Release-{(System.Environment.Is64BitProcess ? "x64" : "x86")}";
+#endif
                 sentryOptions.SendDefaultPii = true;
             });
             foreach (string dll in System.IO.Directory.GetFiles(App.ExecutablePath, "*.dll"))

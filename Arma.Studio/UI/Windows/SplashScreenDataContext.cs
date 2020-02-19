@@ -33,16 +33,22 @@ namespace Arma.Studio.UI.Windows
             try
             {
                 App.MWContext = new MainWindowDataContext();
-                await this.RunSplash();
-                var mw = App.Current.Dispatcher.Invoke(() => new MainWindow(App.MWContext));
-                this.ProgressText = Properties.Language.SplashScreen_PreparingUserInterface;
-                this.ProgressIndeterminate = true;
-                App.Current.Dispatcher.Invoke(() =>
+                if (await this.RunSplash())
                 {
-                    this.IsValidClose = true;
+                    var mw = App.Current.Dispatcher.Invoke(() => new MainWindow(App.MWContext));
+                    this.ProgressText = Properties.Language.SplashScreen_PreparingUserInterface;
+                    this.ProgressIndeterminate = true;
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        this.IsValidClose = true;
+                        window.Close();
+                        mw.Show();
+                    });
+                }
+                else
+                {
                     window.Close();
-                    mw.Show();
-                });
+                }
             }
             catch (Exception ex)
             {
@@ -80,11 +86,32 @@ namespace Arma.Studio.UI.Windows
                 }
             }
         }
-        private async Task RunSplash()
+        private async Task<bool> RunSplash()
         {
-            // ToDo: Implement auto-update-check and remove this
-            await Task.Delay(100);
-
+            // Check for updates
+            if (true) // (ConfigHost.App.EnableAutoToolUpdates)
+            {
+                this.ProgressIndeterminate = true;
+                this.ProgressText = Properties.Language.SplashScreen_CheckingForUpdates;
+                var downloadInfo = UpdateHelper.GetDownloadInfoAsync().Result;
+                if (downloadInfo.available)
+                {
+                    this.ProgressIndeterminate = false;
+                    this.ProgressValue = 1;
+                    this.ProgressText = Properties.Language.SplashScreen_UpdateAvailable;
+                    var msgboxresult = Application.Current.Dispatcher.Invoke(() => MessageBox.Show(
+                            Properties.Language.SoftwareUpdateAvailable_Body,
+                            Properties.Language.SoftwareUpdateAvailable_Caption,
+                            MessageBoxButton.YesNo,
+                            MessageBoxImage.Information
+                    ));
+                    if (msgboxresult == MessageBoxResult.Yes)
+                    {
+                        App.Update(downloadInfo);
+                        return false;
+                    }
+                }
+            }
             // Loading plugins
             {
                 this.ProgressIndeterminate = true;
@@ -145,7 +172,7 @@ namespace Arma.Studio.UI.Windows
                     }
                 }
             }
+            return true;
         }
-
     }
 }

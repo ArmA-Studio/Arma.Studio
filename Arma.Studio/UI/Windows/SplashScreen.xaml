@@ -22,7 +22,14 @@
         <Canvas.Background>
             <ImageBrush ImageSource="/Arma.Studio;component/Resources/SplashScreen.png"/>
         </Canvas.Background>
-        <ProgressBar Width="532" Height="2" BorderBrush="#872D2D" Foreground="Red" Maximum="1" Minimum="0" Canvas.Top="184" Value="{Binding ProgressValue, FallbackValue=0.5}" IsIndeterminate="{Binding ProgressIndeterminate, FallbackValue=False}"/>
+        <ProgressBar Width="532" Height="2"
+                     BorderBrush="#872D2D"
+                     Foreground="Red"
+                     Maximum="1"
+                     Minimum="0"
+                     Canvas.Top="184"
+                     Value="{Binding ProgressValue, FallbackValue=0.5}"
+                     IsIndeterminate="{Binding ProgressIndeterminate, FallbackValue=False}"/>
         <TextBlock Width="532" Foreground="White" TextAlignment="Center" Text="{Binding ProgressText, FallbackValue=Doing Something}" Canvas.Top="200" VerticalAlignment="Top">
             <TextBlock.Effect>
                 <DropShadowEffect ShadowDepth="1" Color="#872D2D" Opacity="1" RenderingBias="Performance" BlurRadius="0"/>

@@ -67,6 +67,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
       <Private>True</Private>
@@ -128,6 +129,12 @@
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Windows\SplashScreenDataContext.cs" />
+    <Compile Include="UI\Windows\UpdateDialog.xaml.cs">
+      <DependentUpon>UpdateDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Windows\UpdateDialogDataContext.cs" />
+    <Compile Include="UpdateHelper.cs" />
+    <Compile Include="Updating\AppVeyorXmlClasses.cs" />
     <EmbeddedResource Include="Properties\Language.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Language.Designer.cs</LastGenOutput>
@@ -168,6 +175,10 @@
     <Page Include="UI\Windows\SplashScreen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Windows\UpdateDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -214,5 +225,12 @@
     <Resource Include="Resources\Icon.ico" />
     <Resource Include="Resources\SplashScreen.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="git-version.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>git rev-parse HEAD &gt; "$(ProjectDir)\git-version.txt"
+git rev-list --count HEAD  &gt;&gt; "$(ProjectDir)\git-version.txt"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

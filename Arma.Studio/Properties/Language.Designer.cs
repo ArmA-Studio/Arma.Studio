@@ -133,7 +133,7 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CollapseAll.
+        ///   Looks up a localized string similar to Collapse All.
         /// </summary>
         public static string CollapseAll {
             get {
@@ -169,7 +169,7 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next Instruction.
+        ///   Looks up a localized string similar to Next instruction.
         /// </summary>
         public static string Debugger_Next_Tooltip {
             get {
@@ -241,7 +241,7 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ExpandAll.
+        ///   Looks up a localized string similar to Expand All.
         /// </summary>
         public static string ExpandAll {
             get {
@@ -250,7 +250,7 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to load Plugin {0}.
+        ///   Looks up a localized string similar to Failed to load plugin {0}.
         /// </summary>
         public static string FailedToLoadPlugin_Body {
             get {
@@ -259,7 +259,7 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loading plugin has Failed..
+        ///   Looks up a localized string similar to Loading plugin has failed..
         /// </summary>
         public static string FailedToLoadPlugin_Title {
             get {
@@ -358,6 +358,34 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is a new update available for ArmA.Studio.
+        ///Do you want to update now?.
+        /// </summary>
+        public static string SoftwareUpdateAvailable_Body {
+            get {
+                return ResourceManager.GetString("SoftwareUpdateAvailable_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Software update available.
+        /// </summary>
+        public static string SoftwareUpdateAvailable_Caption {
+            get {
+                return ResourceManager.GetString("SoftwareUpdateAvailable_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checking for updates.
+        /// </summary>
+        public static string SplashScreen_CheckingForUpdates {
+            get {
+                return ResourceManager.GetString("SplashScreen_CheckingForUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Initializing Plugin &apos;{0}&apos;.
         /// </summary>
         public static string SplashScreen_InitializingPlugin_0Name {
@@ -367,7 +395,7 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loading Plugins.
+        ///   Looks up a localized string similar to Loading plugins.
         /// </summary>
         public static string SplashScreen_LoadingPlugins {
             get {
@@ -376,7 +404,7 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preparing Loggers.
+        ///   Looks up a localized string similar to Preparing loggers.
         /// </summary>
         public static string SplashScreen_PreparingLoggers {
             get {
@@ -385,11 +413,56 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preparing User-Interface.
+        ///   Looks up a localized string similar to Preparing user-interface.
         /// </summary>
         public static string SplashScreen_PreparingUserInterface {
             get {
                 return ResourceManager.GetString("SplashScreen_PreparingUserInterface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update available.
+        /// </summary>
+        public static string SplashScreen_UpdateAvailable {
+            get {
+                return ResourceManager.GetString("SplashScreen_UpdateAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading {0}.
+        /// </summary>
+        public static string UpdateDialog_Downloading_0name {
+            get {
+                return ResourceManager.GetString("UpdateDialog_Downloading_0name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install Update.
+        /// </summary>
+        public static string UpdateDialog_InstallUpdate {
+            get {
+                return ResourceManager.GetString("UpdateDialog_InstallUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deflating update.
+        /// </summary>
+        public static string UpdateDialog_Unzipping {
+            get {
+                return ResourceManager.GetString("UpdateDialog_Unzipping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating {0}.
+        /// </summary>
+        public static string UpdateDialog_Updating_0name {
+            get {
+                return ResourceManager.GetString("UpdateDialog_Updating_0name", resourceCulture);
             }
         }
         

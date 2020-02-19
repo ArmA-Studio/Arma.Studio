@@ -130,7 +130,7 @@
     <value>Back</value>
   </data>
   <data name="CollapseAll" xml:space="preserve">
-    <value>CollapseAll</value>
+    <value>Collapse All</value>
   </data>
   <data name="Configuration_ExceptionDuringLoad" xml:space="preserve">
     <value>Failed to load configuration. Using empty.</value>
@@ -157,13 +157,13 @@
     <value>Stop</value>
   </data>
   <data name="ExpandAll" xml:space="preserve">
-    <value>ExpandAll</value>
+    <value>Expand All</value>
   </data>
   <data name="FailedToLoadPlugin_Body" xml:space="preserve">
-    <value>Failed to load Plugin {0}</value>
+    <value>Failed to load plugin {0}</value>
   </data>
   <data name="FailedToLoadPlugin_Title" xml:space="preserve">
-    <value>Loading plugin has Failed.</value>
+    <value>Loading plugin has failed.</value>
   </data>
   <data name="Forward" xml:space="preserve">
     <value>Forward</value>
@@ -190,19 +190,19 @@
     <value>Initializing Plugin '{0}'</value>
   </data>
   <data name="SplashScreen_LoadingPlugins" xml:space="preserve">
-    <value>Loading Plugins</value>
+    <value>Loading plugins</value>
   </data>
   <data name="SplashScreen_PreparingUserInterface" xml:space="preserve">
-    <value>Preparing User-Interface</value>
+    <value>Preparing user-interface</value>
   </data>
   <data name="Debugger_Attach" xml:space="preserve">
     <value>Attach</value>
   </data>
   <data name="SplashScreen_PreparingLoggers" xml:space="preserve">
-    <value>Preparing Loggers</value>
+    <value>Preparing loggers</value>
   </data>
   <data name="Debugger_Next_Tooltip" xml:space="preserve">
-    <value>Next Instruction</value>
+    <value>Next instruction</value>
   </data>
   <data name="Util_SaveDocument_Tooltip" xml:space="preserve">
     <value>Saves the current document</value>
@@ -239,5 +239,30 @@
   </data>
   <data name="AboutDialog_Header" xml:space="preserve">
     <value>Arma.Studio</value>
+  </data>
+  <data name="UpdateDialog_Downloading_0name" xml:space="preserve">
+    <value>Downloading {0}</value>
+  </data>
+  <data name="UpdateDialog_Updating_0name" xml:space="preserve">
+    <value>Updating {0}</value>
+  </data>
+  <data name="UpdateDialog_InstallUpdate" xml:space="preserve">
+    <value>Install Update</value>
+  </data>
+  <data name="UpdateDialog_Unzipping" xml:space="preserve">
+    <value>Deflating update</value>
+  </data>
+  <data name="SplashScreen_UpdateAvailable" xml:space="preserve">
+    <value>Update available</value>
+  </data>
+  <data name="SplashScreen_CheckingForUpdates" xml:space="preserve">
+    <value>Checking for updates</value>
+  </data>
+  <data name="SoftwareUpdateAvailable_Body" xml:space="preserve">
+    <value>There is a new update available for ArmA.Studio.
+Do you want to update now?</value>
+  </data>
+  <data name="SoftwareUpdateAvailable_Caption" xml:space="preserve">
+    <value>Software update available</value>
   </data>
 </root>

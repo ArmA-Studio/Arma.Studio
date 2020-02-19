@@ -8,7 +8,8 @@
                   xmlns:asd="http://schemas.armastudio.io/data"
                   mc:Ignorable="d"
                   Title="{x:Static p:Language.AboutDialog_Title}"
-                  Header="{x:Static p:Language.AboutDialog_Header}">
+                  Header="{x:Static p:Language.AboutDialog_Header}"
+                  Icon="/Arma.Studio;component/Resources/Icon.ico">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>

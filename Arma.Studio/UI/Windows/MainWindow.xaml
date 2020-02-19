@@ -20,7 +20,7 @@
         Width="1024"
         UseLayoutRounding="True"
         x:Name="Wnd"
-        >
+        Icon="/Arma.Studio;component/Resources/Icon.ico">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <Menu.ItemsSource>

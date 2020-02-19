@@ -1,0 +1,57 @@
+﻿<asd:DialogWindow x:Class="Arma.Studio.UI.Windows.UpdateDialog"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:local="clr-namespace:Arma.Studio.UI.Windows"
+                  xmlns:asd="http://schemas.armastudio.io/data"
+                  xmlns:p="clr-namespace:Arma.Studio.Properties"
+                  mc:Ignorable="d"
+                  Title="{Binding Title}"
+                  Header="{Binding Header}"
+                  OKButtonEnabled="{Binding OKButtonEnabled}"
+                  OKButtonText="{x:Static p:Language.UpdateDialog_InstallUpdate}"
+                  Height="210"
+                  ResizeMode="NoResize"
+                  asd:AttachedDataContext.DataContext="{Binding}"
+                  Icon="/Arma.Studio;component/Resources/Icon.ico">
+    <Grid>
+        <ProgressBar Maximum="1" Minimum="0"
+                     Value="{Binding ProgressValue, FallbackValue=0.5}"
+                     Background="#872D2D"
+                     Foreground="Red"
+                     VerticalAlignment="Center"
+                     Height="24"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding DisplayText, Converter={StaticResource IsNullConverter}}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Text="{Binding CurrentProgress, FallbackValue=123}"/>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Text=" kb / "/>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Text="{Binding FileSize, FallbackValue=15000}"/>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Text=" kb ("/>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Text="{Binding Speed, FallbackValue=100}"/>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Text=" kb/s)"/>
+            
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Text="{Binding DisplayText, FallbackValue=displaytext}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DisplayText, Converter={StaticResource IsNullConverter}}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</asd:DialogWindow>
