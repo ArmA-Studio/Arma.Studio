@@ -70,6 +70,15 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy release info to clipboard.
+        /// </summary>
+        public static string AboutDialog_CopyReleaseInfo {
+            get {
+                return ResourceManager.GetString("AboutDialog_CopyReleaseInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Arma.Studio.
         /// </summary>
         public static string AboutDialog_Header {

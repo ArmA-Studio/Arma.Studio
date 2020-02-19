@@ -272,4 +272,7 @@ Do you want to update now?</value>
   <data name="MainWindow_FailedToLoad_Caption" xml:space="preserve">
     <value>Type Not Found.</value>
   </data>
+  <data name="AboutDialog_CopyReleaseInfo" xml:space="preserve">
+    <value>Copy release info to clipboard</value>
+  </data>
 </root>

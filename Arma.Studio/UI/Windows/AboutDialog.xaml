@@ -23,7 +23,14 @@
                         <Setter Property="Margin" Value="4 0 0 0"/>
                     </Style>
                 </StackPanel.Resources>
-                <TextBlock Text="{Binding ToolVersion, StringFormat={}Version {0}}" Margin="0"/>
+                <TextBlock Text="{Binding ToolVersion, StringFormat={}Version {0}}" Margin="0">
+                    <TextBlock.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{x:Static p:Language.AboutDialog_CopyReleaseInfo}"
+                                      Command="{Binding CmdCopyReleaseInfo}"/>
+                        </ContextMenu>
+                    </TextBlock.ContextMenu>
+                </TextBlock>
                 <TextBlock Text="{x:Static p:Language.AboutDialog_ContributorsNote}" Margin="0"/>
                 <!-- Feel free to add yourself if you do contribute. -->
                 <TextBlock Text="- X39, Maintainer"/>
