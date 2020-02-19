@@ -79,7 +79,7 @@ namespace Arma.Studio.OutputWindow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Arma-Studio - Output Window.
+        ///   Looks up a localized string similar to Arma.Studio - Output Window.
         /// </summary>
         public static string OutputWindow_Name {
             get {

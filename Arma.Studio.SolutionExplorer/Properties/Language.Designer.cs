@@ -160,7 +160,7 @@ namespace Arma.Studio.SolutionExplorer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Arma-Studio - Solution Explorer.
+        ///   Looks up a localized string similar to Arma.Studio - Solution Explorer.
         /// </summary>
         public static string SolutionExplorer_Name {
             get {

@@ -124,7 +124,7 @@
     <value>Output Window</value>
   </data>
   <data name="OutputWindow_Name" xml:space="preserve">
-    <value>Arma-Studio - Output Window</value>
+    <value>Arma.Studio - Output Window</value>
   </data>
   <data name="ShowOutputFromSource" xml:space="preserve">
     <value>Show output from:</value>

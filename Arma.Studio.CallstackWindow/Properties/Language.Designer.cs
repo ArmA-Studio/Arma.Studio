@@ -70,7 +70,7 @@ namespace Arma.Studio.CallstackWindow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Arma-Studio - Callstack Window.
+        ///   Looks up a localized string similar to Arma.Studio - Callstack Window.
         /// </summary>
         public static string CallstackWindow_Name {
             get {

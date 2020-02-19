@@ -79,7 +79,7 @@ namespace Arma.Studio.ImmediateWindow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Immediate Window.
+        ///   Looks up a localized string similar to Arma.Studio - Immediate Window.
         /// </summary>
         public static string ImmediateWindow_Name {
             get {

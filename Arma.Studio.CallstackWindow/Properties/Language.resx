@@ -121,7 +121,7 @@
     <value>Callstack</value>
   </data>
   <data name="CallstackWindow_Name" xml:space="preserve">
-    <value>Arma-Studio - Callstack Window</value>
+    <value>Arma.Studio - Callstack Window</value>
   </data>
   <data name="Content" xml:space="preserve">
     <value>Content</value>

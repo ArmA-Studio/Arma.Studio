@@ -151,7 +151,7 @@
     <value>Rescan</value>
   </data>
   <data name="SolutionExplorer_Name" xml:space="preserve">
-    <value>Arma-Studio - Solution Explorer</value>
+    <value>Arma.Studio - Solution Explorer</value>
   </data>
   <data name="SolutionExplorer_PleaseSelectYourProjectFolder" xml:space="preserve">
     <value>Please select your project folder.</value>

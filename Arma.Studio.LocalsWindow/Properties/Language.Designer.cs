@@ -88,7 +88,7 @@ namespace Arma.Studio.LocalsWindow.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Arma-Studio - Locals Window.
+        ///   Looks up a localized string similar to Arma.Studio - Locals Window.
         /// </summary>
         public static string LocalsWindow_Name {
             get {
