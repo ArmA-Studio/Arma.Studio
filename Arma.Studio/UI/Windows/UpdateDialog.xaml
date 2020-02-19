@@ -11,6 +11,7 @@
                   Header="{Binding Header}"
                   OKButtonEnabled="{Binding OKButtonEnabled}"
                   OKButtonText="{x:Static p:Language.UpdateDialog_InstallUpdate}"
+                  OKClickCommand="{Binding CmdOKButtonPressed}"
                   Height="210"
                   ResizeMode="NoResize"
                   asd:AttachedDataContext.DataContext="{Binding}"

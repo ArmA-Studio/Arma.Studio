@@ -28,15 +28,6 @@ namespace Arma.Studio.UI.Windows
         }
         private ICommand _CmdOkButtonPressed;
         #endregion
-        public bool? DialogResult
-        {
-            get => this._DialogResult; set
-            {
-                this._DialogResult = value;
-                this.RaisePropertyChanged();
-            }
-        }
-        private bool? _DialogResult;
 
         public string Title => String.Format(Properties.Language.UpdateDialog_Downloading_0name, this.DownloadInfo.name);
         public string Header => String.Format(Properties.Language.UpdateDialog_Updating_0name, Properties.Language.ArmaStudio);
@@ -201,9 +192,8 @@ namespace Arma.Studio.UI.Windows
                             App.DisplayOperationFailed(ex);
                         }
                     }
-                    await Task.Run(() => System.IO.Compression.ZipFile.ExtractToDirectory(file, dir));
+                    System.IO.Compression.ZipFile.ExtractToDirectory(file, dir);
                     RunBatchScript(dir);
-                    this.DialogResult = true;
                 });
                 this.OKButtonEnabled = true;
             });
