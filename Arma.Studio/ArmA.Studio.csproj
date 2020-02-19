@@ -134,7 +134,6 @@
     </Compile>
     <Compile Include="UI\Windows\UpdateDialogDataContext.cs" />
     <Compile Include="UpdateHelper.cs" />
-    <Compile Include="Updating\AppVeyorXmlClasses.cs" />
     <EmbeddedResource Include="Properties\Language.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Language.Designer.cs</LastGenOutput>
