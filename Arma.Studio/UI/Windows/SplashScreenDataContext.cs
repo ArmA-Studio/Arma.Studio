@@ -93,7 +93,12 @@ namespace Arma.Studio.UI.Windows
             {
                 this.ProgressIndeterminate = true;
                 this.ProgressText = Properties.Language.SplashScreen_CheckingForUpdates;
-                var downloadInfo = UpdateHelper.GetDownloadInfoAsync().Result;
+                UpdateHelper.DownloadInfo downloadInfo = default;
+                try
+                {
+                    downloadInfo = UpdateHelper.GetDownloadInfoAsync().Result;
+                }
+                catch { }
                 if (downloadInfo.available)
                 {
                     this.ProgressIndeterminate = false;
