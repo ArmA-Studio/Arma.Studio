@@ -47,20 +47,20 @@ namespace Arma.Studio.UI.Windows
                 }
                 else
                 {
-                    window.Close();
+                    App.Current.Dispatcher.Invoke(() => window.Close());
                 }
             }
             catch (Exception ex)
             {
                 App.DisplayOperationFailed(ex);
-                App.Current.Dispatcher.Invoke(() => App.Current.Shutdown(-1));
+                App.Current.Dispatcher.Invoke(() => App.ShutdownSafe(-1));
             }
         });
         public ICommand CmdClosed => new RelayCommand((p) =>
         {
             if (!this.IsValidClose)
             {
-                App.Current.Shutdown(-1);
+                App.ShutdownSafe(-1);
             }
         });
 

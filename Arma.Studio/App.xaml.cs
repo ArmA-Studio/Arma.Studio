@@ -31,6 +31,14 @@ namespace Arma.Studio
         public static readonly Version CurrentVersion = typeof(App).Assembly.GetName().Version;
 
         public static readonly string PluginDir_Executable = System.IO.Path.Combine(ExecutablePath, CONST_PLUGINS);
+
+        internal static void ShutdownSafe(int v)
+        {
+            (App.Current as App).Sentry?.Dispose();
+            (App.Current as App).Sentry = null;
+            App.Current.Shutdown(v);
+        }
+
         public static readonly string PluginDir_RoamingUser = System.IO.Path.Combine(CommonApplicationDataPath, CONST_PLUGINS);
         public static readonly string PluginDir_Data = System.IO.Path.Combine(ApplicationDataPath, CONST_PLUGINS);
 
