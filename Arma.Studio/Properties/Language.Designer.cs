@@ -286,6 +286,25 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to restore a window with the type:
+        ///&apos;{0}&apos;.
+        /// </summary>
+        public static string MainWindow_FailedToLoad_Body_0typestring {
+            get {
+                return ResourceManager.GetString("MainWindow_FailedToLoad_Body_0typestring", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type Not Found..
+        /// </summary>
+        public static string MainWindow_FailedToLoad_Caption {
+            get {
+                return ResourceManager.GetString("MainWindow_FailedToLoad_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         public static string MainWindow_Menu_File {

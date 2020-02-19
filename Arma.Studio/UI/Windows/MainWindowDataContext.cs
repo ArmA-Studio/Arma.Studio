@@ -363,33 +363,52 @@ namespace Arma.Studio.UI.Windows
                 assemblyResolver: (assemblyName) =>
                 {
                     var plugin = PluginManager.Instance.Plugins.FirstOrDefault((it) => it.Assembly.FullName == assemblyName.FullName);
-                    return plugin.Assembly ?? Type.GetType(typestring, throwOnError: false, ignoreCase: false).Assembly;
+                    return plugin.Assembly ?? Type.GetType(typestring, throwOnError: false, ignoreCase: false)?.Assembly;
                 },
                 typeResolver: (assembly, typename, caseSensitiveSearch) => assembly.GetType(typename, false, caseSensitiveSearch));
             if (type == null || !typeof(DockableBase).IsAssignableFrom(type))
             {
+                MessageBox.Show(
+                    String.Format(Properties.Language.MainWindow_FailedToLoad_Body_0typestring, typestring),
+                    Properties.Language.MainWindow_FailedToLoad_Caption,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
                 e.Cancel = true;
                 return;
             }
-            var dockable = Activator.CreateInstance(type, true) as DockableBase;
-            e.Content = dockable;
-            dockable.ContentId = e.Model.ContentId;
-            bool close = false;
-            void OnDockableClose(object sender, EventArgs e)
-            {
-                close = true;
-            }
+            DockableBase dockable;
             try
             {
-                dockable.OnDockableClose += OnDockableClose;
-                dockable.LayoutLoadCallback(this.LayoutJsonNode[contentid]);
+                dockable = Activator.CreateInstance(type, true) as DockableBase;
+                e.Content = dockable;
+                dockable.ContentId = e.Model.ContentId;
+                bool close = false;
+                void OnDockableClose(object sender, EventArgs e)
+                {
+                    close = true;
+                }
+                try
+                {
+                    dockable.OnDockableClose += OnDockableClose;
+                    dockable.LayoutLoadCallback(this.LayoutJsonNode[contentid]);
+                }
+                finally
+                {
+                    dockable.OnDockableClose -= OnDockableClose;
+                }
+                if (close)
+                {
+                    e.Cancel = true;
+                    return;
+                }
             }
-            finally
+            catch
             {
-                dockable.OnDockableClose -= OnDockableClose;
-            }
-            if (close)
-            {
+                MessageBox.Show(
+                    String.Format(Properties.Language.MainWindow_FailedToLoad_Body_0typestring, typestring),
+                    Properties.Language.MainWindow_FailedToLoad_Caption,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
                 e.Cancel = true;
                 return;
             }
