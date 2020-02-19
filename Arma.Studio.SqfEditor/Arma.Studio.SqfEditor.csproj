@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="clrBridge">
-      <HintPath>..\..\SQFvm\clrBridge\Release\clrBridge.dll</HintPath>
+      <HintPath>..\libraries\clrBridge.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
