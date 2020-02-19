@@ -27,7 +27,7 @@ namespace Arma.Studio.ImmediateWindow
         };
         public void AddDataTemplates(GenericDataTemplateSelector selector)
         {
-            selector.AddAllDataTemplatesInAssembly(typeof(PluginMain).Assembly, (s) => s.StartsWith("Arma.Studio.OutputWindow"));
+            selector.AddAllDataTemplatesInAssembly(typeof(PluginMain).Assembly, (s) => s.StartsWith("Arma.Studio.ImmediateWindow"));
         }
         #endregion
     }

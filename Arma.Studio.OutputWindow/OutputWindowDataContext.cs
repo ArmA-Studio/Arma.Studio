@@ -106,7 +106,7 @@ namespace Arma.Studio.OutputWindow
         }
         private bool? _IsWordWrapToggled;
         #endregion
-        #region Property: IsWordWrapToggled (System.Nullable<System.Boolean>)
+        #region Property: AutoScroll (System.Nullable<System.Boolean>)
         public bool? AutoScroll
         {
             get => this._AutoScroll;

@@ -38,6 +38,8 @@ namespace Arma.Studio.Data.Debugging
         /// <param name="breakpoint">The breakpoint that got set.</param>
         /// <returns>Awaitable <see cref="Task"/> or <see cref="Task.CompletedTask"/>.</returns>
         Task SetBreakpoint(IBreakpoint breakpoint);
+        SqfValue Evaluate(string text);
+
         /// <summary>
         /// Called when a user removes a breakpoint.
         /// If you subscribed to the <see cref="INotifyPropertyChanged.PropertyChanged"/> event,

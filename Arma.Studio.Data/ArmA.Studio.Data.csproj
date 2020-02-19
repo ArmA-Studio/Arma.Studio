@@ -52,6 +52,7 @@
     <Compile Include="Debugging\EDebugState.cs" />
     <Compile Include="Debugging\ENamespace.cs" />
     <Compile Include="Debugging\HaltInfo.cs" />
+    <Compile Include="Debugging\SqfValue.cs" />
     <Compile Include="Debugging\VariableInfo.cs" />
     <Compile Include="DependencyObjectExtensions.cs" />
     <Compile Include="DockableBase.cs" />

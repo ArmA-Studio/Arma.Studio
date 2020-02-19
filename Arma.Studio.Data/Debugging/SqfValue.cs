@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Arma.Studio.Data.Debugging
 {
-    public class VariableInfo : INotifyPropertyChanging, INotifyPropertyChanged
+    public class SqfValue : INotifyPropertyChanging, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event PropertyChangingEventHandler PropertyChanging;
@@ -15,7 +15,6 @@ namespace Arma.Studio.Data.Debugging
         { this.PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(callee)); }
         protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "")
         { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee)); }
-
 
         public string DataType
         {
@@ -39,38 +38,5 @@ namespace Arma.Studio.Data.Debugging
             }
         }
         private string _Data;
-        public int ScopeIndex
-        {
-            get => this._ScopeIndex;
-            set
-            {
-                this.RaisePropertyChanging();
-                this._ScopeIndex = value;
-                this.RaisePropertyChanged();
-            }
-        }
-        private int _ScopeIndex;
-        public string ScopeName
-        {
-            get => this._ScopeName;
-            set
-            {
-                this.RaisePropertyChanging();
-                this._ScopeName = value;
-                this.RaisePropertyChanged();
-            }
-        }
-        private string _ScopeName;
-        public string VariableName
-        {
-            get => this._VariableName;
-            set
-            {
-                this.RaisePropertyChanging();
-                this._VariableName = value;
-                this.RaisePropertyChanged();
-            }
-        }
-        private string _VariableName;
     }
 }

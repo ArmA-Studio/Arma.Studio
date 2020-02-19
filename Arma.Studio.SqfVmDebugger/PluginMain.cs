@@ -271,6 +271,12 @@ namespace Arma.Studio.SqfVmDebugger
             };
         }
 
+        public SqfValue Evaluate(string text)
+        {
+            var res = this.Virtualmachine.Evaluate(text);
+            return new SqfValue { Data = res.Data, DataType = res.DataType };
+        }
+
         #endregion
         #region ILogger
         internal static Logger Logger { get; private set; }

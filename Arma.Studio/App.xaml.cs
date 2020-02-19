@@ -44,26 +44,32 @@ namespace Arma.Studio
         /// <param name="ex">Exception to display.</param>
         public static void DisplayOperationFailed(Exception ex)
         {
-#if DEBUG
-            SentrySdk.WithScope((scope) => {
-                var windowsIdentity = System.Security.Principal.WindowsIdentity.GetCurrent();
-                var userName = windowsIdentity.Name.LastIndexOf('\\') != -1 ?
-                               windowsIdentity.Name.Substring(windowsIdentity.Name.LastIndexOf('\\') + 1) :
-                               windowsIdentity.Name;
-                scope.User = new Sentry.Protocol.User
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                System.Diagnostics.Debugger.Break();
+            }
+            else
+            {
+                SentrySdk.WithScope((scope) =>
                 {
-                    Username = userName,
-                    Other = new Dictionary<string, string>
+                    var windowsIdentity = System.Security.Principal.WindowsIdentity.GetCurrent();
+                    var userName = windowsIdentity.Name.LastIndexOf('\\') != -1 ?
+                                   windowsIdentity.Name.Substring(windowsIdentity.Name.LastIndexOf('\\') + 1) :
+                                   windowsIdentity.Name;
+                    scope.User = new Sentry.Protocol.User
+                    {
+                        Username = userName,
+                        Other = new Dictionary<string, string>
                     {
                         { "OS-Language", System.Globalization.CultureInfo.InstalledUICulture.EnglishName },
                         { "App-Language", System.Globalization.CultureInfo.CurrentUICulture.EnglishName },
                         { "Full-username", windowsIdentity.Name },
                     }
-                };
+                    };
 
-                SentrySdk.CaptureException(ex);
-            });
-#endif
+                    SentrySdk.CaptureException(ex);
+                });
+            }
             Current.Dispatcher.Invoke(() => MessageBox.Show(String.Format(Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
         }
         /// <summary>
