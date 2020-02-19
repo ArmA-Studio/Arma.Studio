@@ -177,6 +177,7 @@ namespace Arma.Studio.UI.Windows
                     }
                     this.CurrentProgress = progress;
                 }));
+                this.ProgressValue = 1;
                 this.CmdOKButtonPressed = new RelayCommandAsync(async (p) =>
                 {
                     string dir = String.Concat(file, "DIR");
