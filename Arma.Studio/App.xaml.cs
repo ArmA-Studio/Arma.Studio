@@ -73,17 +73,21 @@ namespace Arma.Studio
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             DisplayOperationFailed(e.Exception);
+            e.Handled = true;
         }
+        private IDisposable Sentry = null;
         /// <summary>
         /// https://msdn.microsoft.com/en-us/library/system.windows.application.exit(v=vs.110).aspx
         /// </summary>
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             Configuration.Save(ConfigPath);
+            this.Sentry.Dispose();
         }
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            foreach(var dll in System.IO.Directory.GetFiles(App.ExecutablePath, "*.dll"))
+            this.Sentry = global::Sentry.SentrySdk.Init("https://76551f4da2934dc5b5553184ca3ebc03@sentry.io/2670888");
+            foreach (var dll in System.IO.Directory.GetFiles(App.ExecutablePath, "*.dll"))
             {
                 PluginManager.Instance.LoadAssemblySafe(dll);
             }
