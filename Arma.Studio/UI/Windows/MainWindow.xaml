@@ -33,7 +33,7 @@
                             </MenuItem.Resources>
                             <MenuItem.ItemsSource>
                                 <CompositeCollection>
-                                    <CollectionContainer Collection="{Binding Source={StaticResource TextEditorsAvailable}}"/>
+                                    <!--<CollectionContainer Collection="{Binding Source={StaticResource TextEditorsAvailable}}"/>-->
                                     <Separator/>
                                     <CollectionContainer Collection="{Binding Source={StaticResource DocumentsAvailable}}"/>
                                 </CompositeCollection>
