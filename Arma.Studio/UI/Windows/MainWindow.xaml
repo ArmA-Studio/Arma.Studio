@@ -28,7 +28,7 @@
                     <MenuItem Header="{x:Static p:Language.MainWindow_Menu_File}">
                         <MenuItem Header="{x:Static p:Language.MainWindow_Menu_File_New}">
                             <MenuItem.Resources>
-                                <CollectionViewSource x:Key="TextEditorsAvailable" Source="{Binding TextEditorsAvailable}"/>
+                                <!--<CollectionViewSource x:Key="TextEditorsAvailable" Source="{Binding TextEditorsAvailable}"/>-->
                                 <CollectionViewSource x:Key="DocumentsAvailable" Source="{Binding DocumentsAvailable}"/>
                             </MenuItem.Resources>
                             <MenuItem.ItemsSource>
