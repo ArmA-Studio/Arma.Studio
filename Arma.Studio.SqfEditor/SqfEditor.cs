@@ -12,7 +12,7 @@ using System.Windows.Media;
 
 namespace Arma.Studio.SqfEditor
 {
-    public class SqfEditor : ITextEditor, ILintable, IFoldable
+    public class SqfEditor : ITextEditor, ILintable, IFoldable, ICodeCompletable
     {
         private SqfVm.ClrVirtualmachine Virtualmachine { get; }
         public SqfEditor()
@@ -253,6 +253,38 @@ namespace Arma.Studio.SqfEditor
                 }
             }
         }
+
+        #endregion
+        #region ICodeCompletable
+        public IEnumerable<ICodeCompletionInfo> GetAutoCompleteInfos(string text, int caretOffset)
+        {
+            // find start of word
+            var start = caretOffset-1;
+            while (start > 0 && !this.IsSeparatorCharacter(text[start]))
+            {
+                start--;
+            }
+            start++;
+            var word = (start == text.Length || start < 0) ? String.Empty :  text.Substring(start, caretOffset - start);
+            return PluginMain.SqfDefinitionsFile
+                .ConcatAll()
+                .Where((it) => it.Name.StartsWith(word, StringComparison.InvariantCultureIgnoreCase))
+                .Select((it) =>
+                {
+                    switch(it)
+                    {
+                        case SqfDefinitionsFile.Binary binary:
+                            return new WordCompletionInfo(binary.Left, binary.Name, binary.Right, string.Empty);
+                        case SqfDefinitionsFile.Unary unary:
+                            return new WordCompletionInfo(string.Empty, unary.Name, unary.Right, string.Empty);
+                        case SqfDefinitionsFile.Nular nular:
+                            return new WordCompletionInfo(string.Empty, nular.Name, string.Empty, string.Empty);
+                        default:
+                            return new WordCompletionInfo(it.Name);
+                    }
+                });
+        }
+        public bool IsSeparatorCharacter(char c) => char.IsWhiteSpace(c) || new char[] { ',', '(', ')', '[', ']', '{', '}', ';' }.Contains(c);
         #endregion
     }
 }

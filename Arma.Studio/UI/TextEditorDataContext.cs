@@ -3,6 +3,7 @@ using Arma.Studio.Data.IO;
 using Arma.Studio.Data.TextEditor;
 using Arma.Studio.Data.UI;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
@@ -68,6 +69,16 @@ namespace Arma.Studio.UI
         }
         private TextEditor _TextEditorControl;
         private Tuple<int, int> _TextEditorControl_ScrollToLine;
+        public CompletionWindow CompletionWindow
+        {
+            get => this._CompletionWindow;
+            set
+            {
+                this._CompletionWindow = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private CompletionWindow _CompletionWindow;
         //IHighlightingDefinition
 
         public bool IsReadOnly
@@ -426,6 +437,26 @@ namespace Arma.Studio.UI
                 textEditor.TextArea.LeftMargins.Insert(0, bpm);
                 textEditor.TextArea.LeftMargins.Insert(1, new RuntimeExecutionMargin(this));
                 this.FoldingManager = ICSharpCode.AvalonEdit.Folding.FoldingManager.Install(textEditor.TextArea);
+
+                textEditor.TextArea.TextEntering += this.TextArea_TextEntering;
+                textEditor.TextArea.TextEntered += this.TextArea_TextEntered; ;
+            }
+        }
+
+        private void TextArea_TextEntered(object sender, TextCompositionEventArgs e)
+        {
+            this.ShowAutoCompletion();
+        }
+
+        private void TextArea_TextEntering(object sender, TextCompositionEventArgs e)
+        {
+            if (e.Text.Length > 0 && this.CompletionWindow != null)
+            {
+                char c = e.Text[0];
+                if (!char.IsLetterOrDigit(c) && c != '_')
+                {
+                    this.CompletionWindow.CompletionList.RequestInsertion(e);
+                }
             }
         }
 
@@ -518,7 +549,33 @@ namespace Arma.Studio.UI
                         e.Handled = true;
                     }
                     break;
+                case Key.Space when Keyboard.Modifiers == ModifierKeys.Control:
+                    {
+                        this.ShowAutoCompletion();
+                        e.Handled = true;
+                    }
+                    break;
+            }
+        }
 
+        private void ShowAutoCompletion()
+        {
+            if (this.TextEditorInstance is ICodeCompletable codeCompletable)
+            {
+                if (this.CompletionWindow is null)
+                {
+                    this.CompletionWindow = new CompletionWindow(this.TextEditorControl.TextArea);
+                    this.CompletionWindow.Closed += delegate {
+                        this.CompletionWindow = null;
+                    };
+                    this.CompletionWindow.StartOffset = this.TextEditorControl.GetStartOffset(codeCompletable.IsSeparatorCharacter);
+                    this.CompletionWindow.EndOffset = this.TextEditorControl.CaretOffset;
+                    this.CompletionWindow.Show();
+                }
+                this.CompletionWindow.StartOffset = this.TextEditorControl.GetStartOffset(codeCompletable.IsSeparatorCharacter);
+                var data = this.CompletionWindow.CompletionList.CompletionData;
+                data.Clear();
+                data.AddRange(codeCompletable.GetAutoCompleteInfos(this.TextDocument.Text, this.TextEditorControl.CaretOffset).Select((it) => new CompletionData(it)));
             }
         }
     }

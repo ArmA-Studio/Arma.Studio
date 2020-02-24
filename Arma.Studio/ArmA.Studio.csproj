@@ -116,6 +116,7 @@
     <Compile Include="PluginManager.cs" />
     <Compile Include="Solution.cs" />
     <Compile Include="UI\BreakPointMargin.cs" />
+    <Compile Include="UI\CompletionData.cs" />
     <Compile Include="UI\RuntimeBackgroundRenderer.cs" />
     <Compile Include="UI\LineHighlighterBackgroundRenderer.cs" />
     <Compile Include="UI\RuntimeExecutionMargin.cs" />

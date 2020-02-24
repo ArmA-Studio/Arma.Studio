@@ -1,4 +1,5 @@
 ﻿using Arma.Studio.Data.TextEditor;
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using System;
 using System.Collections.Generic;
@@ -34,5 +35,62 @@ namespace Arma.Studio
                 EndOffset = offset + lintInfo.Length
             };
         }
+        public static int GetStartOffset(this TextEditor editor)
+        {
+            int off = editor.CaretOffset;
+            if (off <= 0 || off > editor.Document.TextLength)
+            {
+                return off;
+            }
+
+
+            int start;
+
+            //find start
+            for (start = off - 1; start >= 0; start--)
+            {
+                char c = editor.Document.GetCharAt(start);
+                if (Char.IsWhiteSpace(c))
+                {
+                    start++;
+                    return start;
+                }
+            }
+            return 0;
+        }
+        /// <summary>
+        /// Tries to find the start of a word.
+        /// </summary>
+        /// <param name="editor">A valid <see cref="TextEditor"/> instance.</param>
+        /// <param name="isSeparatorCharacter">The method to be used to test the characters. Should return True unless the char is not valid.</param>
+        /// <returns></returns>
+        public static int GetStartOffset(this TextEditor editor, Func<char, bool> isSeparatorCharacter = null)
+        {
+            if (isSeparatorCharacter == null)
+            {
+                isSeparatorCharacter = Char.IsLetter;
+            }
+            int off = editor.CaretOffset;
+            if (off <= 0 || off > editor.Document.TextLength)
+            {
+                return off;
+            }
+
+
+            int start;
+
+            // find start
+            for (start = off - 1; start >= 0; start--)
+            {
+                char c = editor.Document.GetCharAt(start);
+                if (isSeparatorCharacter(c))
+                {
+                    start++;
+                    return start;
+                }
+            }
+            return 0;
+        }
+
     }
 }
