@@ -564,7 +564,10 @@ namespace Arma.Studio.UI
             {
                 if (this.CompletionWindow is null)
                 {
-                    this.CompletionWindow = new CompletionWindow(this.TextEditorControl.TextArea);
+                    this.CompletionWindow = new CompletionWindow(this.TextEditorControl.TextArea)
+                    {
+                        Width = 350
+                    };
                     this.CompletionWindow.Closed += delegate {
                         this.CompletionWindow = null;
                     };
