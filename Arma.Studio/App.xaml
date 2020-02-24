@@ -18,6 +18,7 @@
                     <asd:AllTrueMultiConverter x:Key="AllTrueMultiConverter"/>
                     <asd:BoolOrMultiConverter x:Key="BoolOrMultiConverter"/>
                     <asd:BoolAndMultiConverter x:Key="BoolAndMultiConverter"/>
+                    <asd:InvertConverter x:Key="InvertConverter"/>
                     <asd:IsAssignableFromConverter x:Key="IsAssignableFromConverter"/>
                     <asd:StringEndsWithConverter x:Key="StringEndsWithConverter"/>
                 </ResourceDictionary>

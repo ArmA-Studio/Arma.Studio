@@ -74,19 +74,29 @@ namespace Arma.Studio
             {
                 SentrySdk.WithScope((scope) =>
                 {
-                    var windowsIdentity = System.Security.Principal.WindowsIdentity.GetCurrent();
-                    var userName = windowsIdentity.Name.LastIndexOf('\\') != -1 ?
-                                   windowsIdentity.Name.Substring(windowsIdentity.Name.LastIndexOf('\\') + 1) :
-                                   windowsIdentity.Name;
+                    // var windowsIdentity = System.Security.Principal.WindowsIdentity.GetCurrent();
+                    // var userName = windowsIdentity.Name.LastIndexOf('\\') != -1 ?
+                    //                windowsIdentity.Name.Substring(windowsIdentity.Name.LastIndexOf('\\') + 1) :
+                    //                windowsIdentity.Name;
+                    // scope.User = new Sentry.Protocol.User
+                    // {
+                    //     Username = userName,
+                    //     Other = new Dictionary<string, string>
+                    //     {
+                    //         { "OS-Language", System.Globalization.CultureInfo.InstalledUICulture.EnglishName },
+                    //         { "App-Language", System.Globalization.CultureInfo.CurrentUICulture.EnglishName },
+                    //         { "Full-username", windowsIdentity.Name },
+                    //     }
+                    // };
                     scope.User = new Sentry.Protocol.User
                     {
-                        Username = userName,
+                        Username = Configuration.Instance.UserGuid.ToString(),
                         Other = new Dictionary<string, string>
-                    {
-                        { "OS-Language", System.Globalization.CultureInfo.InstalledUICulture.EnglishName },
-                        { "App-Language", System.Globalization.CultureInfo.CurrentUICulture.EnglishName },
-                        { "Full-username", windowsIdentity.Name },
-                    }
+                        {
+                            { "OS-Language", System.Globalization.CultureInfo.InstalledUICulture.EnglishName },
+                            { "App-Language", System.Globalization.CultureInfo.CurrentUICulture.EnglishName },
+                            { "UserIdentifier", Configuration.Instance.UserIdentifier }
+                        }
                     };
 
                     SentrySdk.CaptureException(ex);
@@ -206,23 +216,49 @@ namespace Arma.Studio
             return builder.ToString();
         }
 
+        public static void Restart()
+        {
+            Configuration.Save(ConfigPath);
+            (App.Current as App).Sentry?.Dispose();
+            (App.Current as App).Sentry = null;
+            var info = new System.Diagnostics.ProcessStartInfo();
+            info.Arguments = "/C choice /C Y /N /D Y /T 1 & START \"\" \"" + System.Reflection.Assembly.GetEntryAssembly().Location + "\"";
+            info.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            info.CreateNoWindow = true;
+            info.FileName = "cmd.exe";
+            System.Diagnostics.Process.Start(info);
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
+        }
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            this.Sentry = SentrySdk.Init((sentryOptions) => {
-                sentryOptions.Dsn = new Dsn("https://76551f4da2934dc5b5553184ca3ebc03@sentry.io/2670888");
-                sentryOptions.Release = GetReleaseInfos();
+            Configuration.Load(ConfigPath);
+            if (!Configuration.Instance.UserIdentificationDialogWasDisplayed)
+            {
+                var dlgdc = new UI.Windows.UserIdentificationDialogDataContext();
+                var dlg = new UI.Windows.UserIdentificationDialog(dlgdc);
+                dlg.ShowDialog();
+            }
+
+
+            if (!Configuration.Instance.OptOutOfReportingAndUpdates)
+            {
+                this.Sentry = SentrySdk.Init((sentryOptions) =>
+                {
+                    sentryOptions.Dsn = new Dsn("https://76551f4da2934dc5b5553184ca3ebc03@sentry.io/2670888");
+                    sentryOptions.Release = GetReleaseInfos();
 #if DEBUG
-                sentryOptions.Environment = $"Debug-{(System.Environment.Is64BitProcess ? "x64" : "x86")}";
+                    sentryOptions.Environment = $"Debug-{(System.Environment.Is64BitProcess ? "x64" : "x86")}";
 #else
-                sentryOptions.Environment = $"Release-{(System.Environment.Is64BitProcess ? "x64" : "x86")}";
+                    sentryOptions.Environment = $"Release-{(System.Environment.Is64BitProcess ? "x64" : "x86")}";
 #endif
-                sentryOptions.SendDefaultPii = true;
-            });
+                    sentryOptions.SendDefaultPii = true;
+                });
+            }
             foreach (string dll in System.IO.Directory.GetFiles(App.ExecutablePath, "*.dll"))
             {
                 PluginManager.Instance.LoadAssemblySafe(dll);
             }
-            Configuration.Load(ConfigPath);
             var splashDataContext = new UI.Windows.SplashScreenDataContext();
             var splash = new UI.Windows.SplashScreen(splashDataContext);
             splash.Show();

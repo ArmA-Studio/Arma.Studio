@@ -81,6 +81,8 @@
                     <MenuItem Header="{x:Static p:Language.MainWindow_Menu_Help}">
                         <MenuItem Header="{x:Static p:Language.MainWindow_Menu_Help_About}"
                                   Command="{Binding CmdShowAbout}"/>
+                        <MenuItem Header="{x:Static p:Language.MainWindow_Menu_Help_UpdateAndErrorReportingSettings}"
+                                  Command="{Binding CmdUserIdentificationDialog}"/>
                     </MenuItem>
                 </CompositeCollection>
             </Menu.ItemsSource>

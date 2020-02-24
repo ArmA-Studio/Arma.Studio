@@ -359,6 +359,15 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update &amp; Error Reporting Settings.
+        /// </summary>
+        public static string MainWindow_Menu_Help_UpdateAndErrorReportingSettings {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Help_UpdateAndErrorReportingSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View.
         /// </summary>
         public static string MainWindow_Menu_View {
@@ -373,6 +382,24 @@ namespace Arma.Studio.Properties {
         public static string MainWindow_Menu_View_Anchorables {
             get {
                 return ResourceManager.GetString("MainWindow_Menu_View_Anchorables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more changes you made require a restart. Do you want to restart now?.
+        /// </summary>
+        public static string MainWindow_RestartRequired_Body {
+            get {
+                return ResourceManager.GetString("MainWindow_RestartRequired_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restart Required.
+        /// </summary>
+        public static string MainWindow_RestartRequired_Caption {
+            get {
+                return ResourceManager.GetString("MainWindow_RestartRequired_Caption", resourceCulture);
             }
         }
         
@@ -491,6 +518,99 @@ namespace Arma.Studio.Properties {
         public static string UpdateDialog_Updating_0name {
             get {
                 return ResourceManager.GetString("UpdateDialog_Updating_0name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discord Account Name.
+        /// </summary>
+        public static string UserIdentificationDialog_Discord {
+            get {
+                return ResourceManager.GetString("UserIdentificationDialog_Discord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error Reporting.
+        /// </summary>
+        public static string UserIdentificationDialog_ErrorReporting {
+            get {
+                return ResourceManager.GetString("UserIdentificationDialog_ErrorReporting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arma.Studio is supporting automatic updates &amp; error reporting.
+        ///This window is to allow you to change what data is shared during error reporting and offers you a way to opt out of both, error reporting and automatic updates..
+        /// </summary>
+        public static string UserIdentificationDialog_Explaination {
+            get {
+                return ResourceManager.GetString("UserIdentificationDialog_Explaination", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Identification Settings.
+        /// </summary>
+        public static string UserIdentificationDialog_Header {
+            get {
+                return ResourceManager.GetString("UserIdentificationDialog_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I do not want to auto-report errors and auto-updates..
+        /// </summary>
+        public static string UserIdentificationDialog_OptOut {
+            get {
+                return ResourceManager.GetString("UserIdentificationDialog_OptOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you do not want auto updates and do not want to report crashes automatically?
+        ///
+        ///It is highly recommended to NOT opt out of theese two options..
+        /// </summary>
+        public static string UserIdentificationDialog_OptOut_Confirmation_Body {
+            get {
+                return ResourceManager.GetString("UserIdentificationDialog_OptOut_Confirmation_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure?.
+        /// </summary>
+        public static string UserIdentificationDialog_OptOut_Confirmation_Caption {
+            get {
+                return ResourceManager.GetString("UserIdentificationDialog_OptOut_Confirmation_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Identification Settings.
+        /// </summary>
+        public static string UserIdentificationDialog_Title {
+            get {
+                return ResourceManager.GetString("UserIdentificationDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Identifier.
+        /// </summary>
+        public static string UserIdentificationDialog_UserIdentifier {
+            get {
+                return ResourceManager.GetString("UserIdentificationDialog_UserIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user identifier to use in the error reporting tool. Mandatory for reporting..
+        /// </summary>
+        public static string UserIdentificationDialog_UserIdentifier_ToolTip {
+            get {
+                return ResourceManager.GetString("UserIdentificationDialog_UserIdentifier_ToolTip", resourceCulture);
             }
         }
         

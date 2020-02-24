@@ -297,6 +297,25 @@ namespace Arma.Studio.UI.Windows
                 anch.Focus();
             }
         });
+        public ICommand CmdUserIdentificationDialog => new RelayCommand(() =>
+        {
+            var currentOptOut = Configuration.Instance.OptOutOfReportingAndUpdates;
+            var dlgdc = new UI.Windows.UserIdentificationDialogDataContext();
+            var dlg = new UI.Windows.UserIdentificationDialog(dlgdc);
+            dlg.ShowDialog();
+            if (currentOptOut != Configuration.Instance.OptOutOfReportingAndUpdates)
+            {
+                var res = MessageBox.Show(Properties.Language.MainWindow_RestartRequired_Body,
+                    Properties.Language.MainWindow_RestartRequired_Caption,
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Information);
+                if (res == MessageBoxResult.Yes)
+                {
+                    App.Restart();
+                }
+            }
+
+        });
 
         public ICommand CmdUndo => new RelayCommand(() => {
             if (this.ActiveDockable is IInteractionUndoRedo interactionUndoRedo)

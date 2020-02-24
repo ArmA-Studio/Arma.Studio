@@ -123,6 +123,7 @@
     <Compile Include="UI\AttachedProperties\LooseFocusOnKeyAttached.cs" />
     <Compile Include="UI\AttachedProperties\SelectAllOnFocusAttached.cs" />
     <Compile Include="UI\AttachedProperties\SelectFileNameOnFocusAttached.cs" />
+    <Compile Include="UI\Converters\InvertConverter.cs" />
     <Compile Include="UI\Converters\AllFalseMultiConverter.cs" />
     <Compile Include="UI\Converters\AllTrueMultiConverter.cs" />
     <Compile Include="UI\Converters\BoolAndMultiConverter.cs" />

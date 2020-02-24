@@ -89,7 +89,7 @@ namespace Arma.Studio.UI.Windows
         private async Task<bool> RunSplash()
         {
             // Check for updates
-            if (true) // (ConfigHost.App.EnableAutoToolUpdates)
+            if (!Configuration.Instance.OptOutOfReportingAndUpdates)
             {
                 this.ProgressIndeterminate = true;
                 this.ProgressText = Properties.Language.SplashScreen_CheckingForUpdates;

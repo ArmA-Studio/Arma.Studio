@@ -125,6 +125,10 @@
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Windows\AboutDialogDataContext.cs" />
+    <Compile Include="UI\Windows\UserIdentificationDialogDataContext.cs" />
+    <Compile Include="UI\Windows\UserIdentificationDialog.xaml.cs">
+      <DependentUpon>UserIdentificationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Windows\SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
@@ -171,6 +175,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UI\Windows\UserIdentificationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Windows\SplashScreen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -226,6 +234,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="git-version.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\UserIdentificationDialog\UserIdentifier.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

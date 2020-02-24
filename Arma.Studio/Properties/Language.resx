@@ -275,4 +275,46 @@ Do you want to update now?</value>
   <data name="AboutDialog_CopyReleaseInfo" xml:space="preserve">
     <value>Copy release info to clipboard</value>
   </data>
+  <data name="MainWindow_Menu_Help_UpdateAndErrorReportingSettings" xml:space="preserve">
+    <value>Update &amp; Error Reporting Settings</value>
+  </data>
+  <data name="MainWindow_RestartRequired_Body" xml:space="preserve">
+    <value>One or more changes you made require a restart. Do you want to restart now?</value>
+  </data>
+  <data name="MainWindow_RestartRequired_Caption" xml:space="preserve">
+    <value>Restart Required</value>
+  </data>
+  <data name="UserIdentificationDialog_Discord" xml:space="preserve">
+    <value>Discord Account Name</value>
+  </data>
+  <data name="UserIdentificationDialog_ErrorReporting" xml:space="preserve">
+    <value>Error Reporting</value>
+  </data>
+  <data name="UserIdentificationDialog_Explaination" xml:space="preserve">
+    <value>Arma.Studio is supporting automatic updates &amp; error reporting.
+This window is to allow you to change what data is shared during error reporting and offers you a way to opt out of both, error reporting and automatic updates.</value>
+  </data>
+  <data name="UserIdentificationDialog_Header" xml:space="preserve">
+    <value>User Identification Settings</value>
+  </data>
+  <data name="UserIdentificationDialog_OptOut" xml:space="preserve">
+    <value>I do not want to auto-report errors and auto-updates.</value>
+  </data>
+  <data name="UserIdentificationDialog_OptOut_Confirmation_Body" xml:space="preserve">
+    <value>Are you sure you do not want auto updates and do not want to report crashes automatically?
+
+It is highly recommended to NOT opt out of theese two options.</value>
+  </data>
+  <data name="UserIdentificationDialog_OptOut_Confirmation_Caption" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="UserIdentificationDialog_Title" xml:space="preserve">
+    <value>User Identification Settings</value>
+  </data>
+  <data name="UserIdentificationDialog_UserIdentifier" xml:space="preserve">
+    <value>User Identifier</value>
+  </data>
+  <data name="UserIdentificationDialog_UserIdentifier_ToolTip" xml:space="preserve">
+    <value>The user identifier to use in the error reporting tool. Mandatory for reporting.</value>
+  </data>
 </root>

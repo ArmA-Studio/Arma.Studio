@@ -11,6 +11,12 @@ namespace Arma.Studio
     [XmlRoot("config")]
     public class Configuration
     {
+        public bool UserIdentificationDialogWasDisplayed { get; set; } = false;
+        public bool OptOutOfReportingAndUpdates { get; set; } = false;
+        public string UserIdentifier { get; set; } = String.Empty;
+        public Guid UserGuid { get; set; } = default;
+
+
         [XmlIgnore]
         public static Configuration Instance { get; private set; }
         private Configuration()
@@ -40,6 +46,11 @@ namespace Arma.Studio
             {
                 App.DisplayOperationFailed(ex, Properties.Language.Configuration_ExceptionDuringLoad);
                 Instance = new Configuration();
+            }
+            if (Instance.UserGuid == default)
+            {
+                Instance.UserGuid = Guid.NewGuid();
+                Save(fpath);
             }
         }
         public static void Save(string fpath)
