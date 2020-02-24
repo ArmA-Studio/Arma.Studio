@@ -269,6 +269,7 @@ namespace Arma.Studio.SqfEditor
             return PluginMain.SqfDefinitionsFile
                 .ConcatAll()
                 .Where((it) => it.Name.StartsWith(word, StringComparison.InvariantCultureIgnoreCase))
+                .OrderBy((it)=> it.Name)
                 .Select((it) =>
                 {
                     switch(it)
