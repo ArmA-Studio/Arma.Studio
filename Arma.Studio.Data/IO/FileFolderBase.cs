@@ -50,5 +50,10 @@ namespace Arma.Studio.Data.IO
         {
             this.ParentWeak = new WeakReference<FileFolderBase>(null);
         }
+
+        public string GetText()
+        {
+            return System.IO.File.ReadAllText(this.FullPath);
+        }
     }
 }

@@ -105,6 +105,28 @@ namespace Arma.Studio.Data.IO
             return true;
         }
 
+        private static IEnumerable<File> GetAllHelper(ICollection<FileFolderBase> col, Func<File, bool> func)
+        {
+            foreach (var it in col)
+            {
+                if (it is ICollection<FileFolderBase> othercol)
+                {
+                    foreach (var it2 in GetAllHelper(othercol, func))
+                    {
+                        yield return it2;
+                    }
+                }
+                else if (it is File file && func(file))
+                {
+                    yield return file;
+                }
+            }
+        }
+        public IEnumerable<File> GetAll(Func<File, bool> func)
+        {
+            return GetAllHelper(this, func);
+        }
+
         public delegate void RescanProgressReporter(string message, bool isIntermediate, double progress);
         /// <summary>
         /// Performs a scan of this <see cref="PBO"/>s folder

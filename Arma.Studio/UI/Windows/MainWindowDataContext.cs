@@ -4,14 +4,12 @@ using Arma.Studio.Data.Dockable;
 using Arma.Studio.Data.IO;
 using Arma.Studio.Data.TextEditor;
 using Arma.Studio.Data.UI;
-using Arma.Studio.UI.AvalonDock;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,6 +27,8 @@ namespace Arma.Studio.UI.Windows
         protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
 
         #region IMainWindow
+        public IEnumerable<Data.TextEditor.TextEditorInfo> TextEditorInfos => this.TextEditorsAvailable;
+        public BusyContainerManager BusyContainerManager { get; }
         public Window OwningWindow { get; private set; }
         public void SetStatusLabel(string s) => App.Current.Dispatcher.Invoke(() => this.StatusLabel = s);
         public DockableBase FirstDocumentOrDefault(Func<DockableBase, bool> predicate) => this.Documents.FirstOrDefault((it) => predicate(it));
@@ -87,7 +87,7 @@ namespace Arma.Studio.UI.Windows
         }
         public IFileManagement FileManagement => this.Solution;
         public IBreakpointManager BreakpointManager => this.Solution.BreakpointManager;
-        
+
         public Task<Data.UI.ITextDocument> OpenFile(File file)
         {
             var doc = this.Documents.Where((d) => d is TextEditorDataContext).Cast<TextEditorDataContext>().FirstOrDefault((d) => d.File.Equals(file));
@@ -272,11 +272,11 @@ namespace Arma.Studio.UI.Windows
         });
         public ICommand CmdCreateDocument => new RelayCommand((info) =>
         {
-            if(info is DockableInfo dinfo)
+            if (info is DockableInfo dinfo)
             {
                 this.AddDocument(dinfo.CreateFunc());
             }
-            else if(info is TextEditorInfo teinfo)
+            else if (info is TextEditorInfo teinfo)
             {
                 this.AddDocument(new TextEditorDataContext(teinfo.CreateFunc(), new File()));
             }
@@ -317,30 +317,35 @@ namespace Arma.Studio.UI.Windows
 
         });
 
-        public ICommand CmdUndo => new RelayCommand(() => {
+        public ICommand CmdUndo => new RelayCommand(() =>
+        {
             if (this.ActiveDockable is IInteractionUndoRedo interactionUndoRedo)
             {
                 Task.Run(() => interactionUndoRedo.Undo(CancellationToken.None));
             }
         });
-        public ICommand CmdRedo => new RelayCommand(() => {
+        public ICommand CmdRedo => new RelayCommand(() =>
+        {
             if (this.ActiveDockable is IInteractionUndoRedo interactionUndoRedo)
             {
                 Task.Run(() => interactionUndoRedo.Redo(CancellationToken.None));
             }
         });
-        public ICommand CmdSaveDocument => new RelayCommand(() => {
+        public ICommand CmdSaveDocument => new RelayCommand(() =>
+        {
             if (this.ActiveDockable is IInteractionSave interactionSave)
             {
                 Task.Run(() => interactionSave.Save(CancellationToken.None));
             }
         });
-        public ICommand CmdShowAbout => new RelayCommand(() => {
+        public ICommand CmdShowAbout => new RelayCommand(() =>
+        {
             var dlgdc = new AboutDialogDataContext();
             var dlg = new AboutDialog(dlgdc);
             dlg.ShowDialog();
         });
-        public ICommand CmdSaveAllDocuments => new RelayCommand(() => {
+        public ICommand CmdSaveAllDocuments => new RelayCommand(() =>
+        {
             foreach (var it in this.Documents)
             {
                 if (it is IInteractionSave interactionSave)
@@ -364,7 +369,7 @@ namespace Arma.Studio.UI.Windows
 
         public ObservableCollection<TextEditorInfo> TextEditorsAvailable { get { return this._TextEditorsAvailable; } set { this._TextEditorsAvailable = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<TextEditorInfo> _TextEditorsAvailable;
-        
+
         private Newtonsoft.Json.Linq.JObject LayoutJsonNode;
         private void LayoutSerializer_LayoutSerializationCallback(object sender, Xceed.Wpf.AvalonDock.Layout.Serialization.LayoutSerializationCallbackEventArgs e)
         {
@@ -592,6 +597,7 @@ namespace Arma.Studio.UI.Windows
             this.DocumentsAvailable = new ObservableCollection<DockableInfo>();
             this.Solution = new Solution();
             this.LayoutJsonNode = new Newtonsoft.Json.Linq.JObject(new Newtonsoft.Json.Linq.JProperty(CONST_INI_TYPES_STRING, new Newtonsoft.Json.Linq.JObject()));
+            this.BusyContainerManager = new BusyContainerManager();
         }
         private void Initialized()
         {

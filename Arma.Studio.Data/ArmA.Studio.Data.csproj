@@ -47,6 +47,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusyContainer.cs" />
+    <Compile Include="BusyContainerManager.cs" />
+    <Compile Include="BusyContainerRethrowException.cs" />
     <Compile Include="DebuggingExtensions.cs" />
     <Compile Include="Debugging\BreakpointUpdatedEventArgs.cs" />
     <Compile Include="Debugging\EBreakpointKind.cs" />
@@ -80,6 +83,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Language.resx</DependentUpon>
     </Compile>
+    <Compile Include="Instanceable.cs" />
     <Compile Include="TextEditor\ICodeCompletionInfo.cs" />
     <Compile Include="TextEditor\FoldingInfo.cs" />
     <Compile Include="TextEditor\ICodeCompletable.cs" />

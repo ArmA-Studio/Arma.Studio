@@ -16,6 +16,7 @@ namespace Arma.Studio.Data.UI
         Window OwningWindow { get; }
         IFileManagement FileManagement { get; }
         IBreakpointManager BreakpointManager { get; }
+        BusyContainerManager BusyContainerManager { get; }
         DockableBase ActiveDockable { get; set; }
         void SetStatusLabel(string s);
         DockableBase FirstDocumentOrDefault(Func<DockableBase, bool> predicate);
@@ -25,5 +26,6 @@ namespace Arma.Studio.Data.UI
         IEnumerable<T> GetDocuments<T>() where T : DockableBase;
         T GetAnchorable<T>() where T : DockableBase;
         Task<Data.UI.ITextDocument> OpenFile(File file);
+        IEnumerable<TextEditor.TextEditorInfo> TextEditorInfos { get; }
     }
 }

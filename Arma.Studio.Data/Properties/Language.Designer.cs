@@ -59,5 +59,14 @@ namespace Arma.Studio.Data.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to See inner exception.
+        /// </summary>
+        internal static string SeeInnerException {
+            get {
+                return ResourceManager.GetString("SeeInnerException", resourceCulture);
+            }
+        }
     }
 }
