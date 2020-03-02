@@ -67,6 +67,9 @@
       <LastGenOutput>Language.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CfgFunctions.sqf" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if not exist "$(SolutionDir)Arma.Studio\$(OutDir)Plugins" mkdir ""$(SolutionDir)Arma.Studio\$(OutDir)Plugins""

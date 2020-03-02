@@ -13,6 +13,9 @@ namespace Arma.Studio.SqfVmDebugger
 {
     public class PluginMain : IPlugin, IDebugger, ILogger
     {
+        public string CfgFunctionsScript { get; private set; }
+
+
         public Data.IO.IFileManagement FileManagement => this.GetApplication().MainWindow.FileManagement;
 
 
@@ -27,9 +30,13 @@ namespace Arma.Studio.SqfVmDebugger
 
         public Task Initialize(string pluginPath, CancellationToken cancellationToken)
         {
-            Logger.Trace($"Creating Virtualmachine.");
-            this.Virtualmachine = new SqfVm.ClrVirtualmachine();
-            this.Virtualmachine.OnLog += this.Virtualmachine_OnLog;
+            Logger.Trace($"Loading CfgFunctions method.");
+            using (var stream = typeof(PluginMain).Assembly.GetManifestResourceStream(typeof(PluginMain).Assembly.GetName().Name + ".CfgFunctions.sqf"))
+            using (var reader = new System.IO.StreamReader(stream))
+            {
+                var text = reader.ReadToEnd().Trim();
+                this.CfgFunctionsScript = text;
+            }
             return Task.CompletedTask;
         }
 
@@ -108,24 +115,11 @@ namespace Arma.Studio.SqfVmDebugger
         }
         private SqfVm.ClrVirtualmachine _Virtualmachine;
         #endregion
-
-        private readonly Dictionary<Data.IO.PBO, bool> IsPboAdded = new Dictionary<Data.IO.PBO, bool>();
         public async Task Execute(EDebugAction action)
         {
-            foreach (var pbo in this.FileManagement.Where((it) => it is Data.IO.PBO).Cast<Data.IO.PBO>())
+            if ((this.Virtualmachine == null && action != EDebugAction.Start) || (this.Virtualmachine != null && action == EDebugAction.Start))
             {
-                if (!this.IsPboAdded.ContainsKey(pbo))
-                {
-                    if (pbo.Prefix is null)
-                    {
-                        this.Virtualmachine.AddPhysicalBoundary(pbo.FullPath);
-                    }
-                    else
-                    {
-                        this.Virtualmachine.AddVirtualMapping(pbo.Prefix, pbo.FullPath);
-                    }
-                    this.IsPboAdded[pbo] = true;
-                }
+                throw new InvalidOperationException();
             }
             Logger.Diagnostic($"async Task Execute(action: {nameof(EDebugAction)}.{Enum.GetName(typeof(EDebugAction), action)})");
             await Task.Run(() =>
@@ -134,21 +128,67 @@ namespace Arma.Studio.SqfVmDebugger
                 switch (action)
                 {
                     case EDebugAction.Start:
-                        if (!(this.GetApplication().MainWindow.ActiveDockable is Data.UI.ITextDocument textEditorDocuments))
+                        Logger.Trace($"Creating Virtualmachine.");
+                        this.Virtualmachine = new SqfVm.ClrVirtualmachine();
+                        this.Virtualmachine.OnLog += this.Virtualmachine_OnLog;
+                        bool hasConfig = false;
+                        // Prepare all PBO virtual paths
+                        foreach (var pbo in this.FileManagement.Where((it) => it is Data.IO.PBO).Cast<Data.IO.PBO>())
                         {
-                            Logger.Error($"Failed to receive TextDocument via this.GetApplication().MainWindow.ActiveDockable.");
-                            return;
+                            if (pbo.Prefix is null)
+                            {
+                                this.Virtualmachine.AddPhysicalBoundary(pbo.FullPath);
+                            }
+                            else
+                            {
+                                this.Virtualmachine.AddVirtualMapping(pbo.Prefix, pbo.FullPath);
+                            }
+                            // Parse config.cpp/description.ext
+                            var config = pbo.GetAll((file) => file.Name == "config.cpp" || file.Name == "description.ext");
+                            if (config.Any())
+                            {
+                                foreach (var file in config)
+                                {
+                                    var fileContents = file.GetText();
+                                    var filePreprocessed = this.Virtualmachine.PreProcess(fileContents, file.FullPath);
+                                    this.Virtualmachine.ParseConfig(filePreprocessed, file.FullPath);
+                                }
+                                hasConfig = true;
+                            }
+                            else
+                            {
+                                Logger.Warning($"No config file located for PBO {pbo.Name}.");
+                            }
                         }
-                        var text = textEditorDocuments.GetContents();
-                        var preprocessed = this.Virtualmachine.PreProcess(text, textEditorDocuments.TextEditorInstance.File.FullPath);
-                        this.Virtualmachine.ParseSqf(preprocessed, textEditorDocuments.TextEditorInstance.File.FullPath);
-                        this.State = EDebugState.Running;
-                        execResult = this.Virtualmachine.Start();
+                        if (!hasConfig)
+                        {
+                            Logger.Error("No config files available.");
+                            break;
+                        }
+                        // Apply Breakpoints
+                        foreach (var breakpoint in this.GetApplication().MainWindow.BreakpointManager.Breakpoints)
+                        {
+                            this.SetBreakpoint(breakpoint);
+                        }
+                        // Run CfgFunctions script
+                        {
+                            var text = this.CfgFunctionsScript;
+                            var preprocessed = this.Virtualmachine.PreProcess(text, "SqfVmDebugger/CfgFunctions.sqf");
+                            this.Virtualmachine.ParseSqf(preprocessed, "SqfVmDebugger/CfgFunctions.sqf");
+                            this.State = EDebugState.Running;
+                            execResult = this.Virtualmachine.Start();
+                        }
+                        //var text = textEditorDocuments.GetContents();
+                        //var preprocessed = this.Virtualmachine.PreProcess(text, textEditorDocuments.TextEditorInstance.File.FullPath);
+                        //this.Virtualmachine.ParseSqf(preprocessed, textEditorDocuments.TextEditorInstance.File.FullPath);
+                        //this.State = EDebugState.Running;
+                        //execResult = this.Virtualmachine.Start();
                         Logger.Diagnostic($"Result of Start: {execResult}");
                         break;
                     case EDebugAction.Stop:
                         execResult = this.Virtualmachine.Abort();
                         Logger.Diagnostic($"Result of Abort: {execResult}");
+                        SpinWait.SpinUntil(() => !this.Virtualmachine.IsVirtualmachineRunning);
                         break;
                     case EDebugAction.Pause:
                         execResult = this.Virtualmachine.Stop();
@@ -167,7 +207,7 @@ namespace Arma.Studio.SqfVmDebugger
                     case EDebugAction.Step:
                         this.State = EDebugState.Running;
                         execResult = this.Virtualmachine.AssemblyStep();
-                        Logger.Diagnostic($"Result of LeaveScope: {execResult}");
+                        Logger.Diagnostic($"Result of AssemblyStep: {execResult}");
                         break;
                     case EDebugAction.StepInto:
                         this.State = EDebugState.Running;
@@ -179,7 +219,7 @@ namespace Arma.Studio.SqfVmDebugger
                     default:
                         throw new NotSupportedException();
                 }
-                this.State = this.Virtualmachine.IsVirtualmachineRunning ? EDebugState.Running : this.Virtualmachine.IsVirtualmachineDone ? EDebugState.NA : EDebugState.Halted;
+                this.State = (this.Virtualmachine?.IsVirtualmachineRunning ?? false) ? EDebugState.Running : (this.Virtualmachine?.IsVirtualmachineDone ?? true) ? EDebugState.NA : EDebugState.Halted;
                 if (this.State == EDebugState.Halted)
                 {
                     var callstack = this.Virtualmachine.GetCallstack();
@@ -193,11 +233,22 @@ namespace Arma.Studio.SqfVmDebugger
                         }, TaskContinuationOptions.OnlyOnRanToCompletion);
                     }
                 }
+                if (this.State == EDebugState.NA)
+                {
+                    Logger.Trace($"Destroying Virtualmachine.");
+                    this.Virtualmachine.OnLog -= this.Virtualmachine_OnLog;
+                    this.Virtualmachine.Dispose();
+                    this.Virtualmachine = null;
+                }
             });
         }
 
         public IEnumerable<HaltInfo> GetHaltInfos()
         {
+            if (this.Virtualmachine == null)
+            {
+                throw new InvalidOperationException();
+            }
             Logger.Diagnostic($"IEnumerable<HaltInfo> GetHaltInfos()");
             var callstack = this.Virtualmachine.GetCallstack();
             var res = callstack.Select((it) => new HaltInfo(it.File)
@@ -212,19 +263,23 @@ namespace Arma.Studio.SqfVmDebugger
         public Task RemoveBreakpoint(IBreakpoint breakpoint)
         {
             Logger.Diagnostic($"Task RemoveBreakpoint(breakpoint: {{{breakpoint}}})");
-            this.Virtualmachine.RemoveBreakpoint(breakpoint.Line, breakpoint.File);
+            this.Virtualmachine?.RemoveBreakpoint(breakpoint.Line, breakpoint.File);
             return Task.CompletedTask;
         }
 
         public Task SetBreakpoint(IBreakpoint breakpoint)
         {
             Logger.Diagnostic($"Task SetBreakpoint(breakpoint: {{{breakpoint}}})");
-            this.Virtualmachine.SetBreakpoint(breakpoint.Line, breakpoint.File);
+            this.Virtualmachine?.SetBreakpoint(breakpoint.Line, breakpoint.File);
             return Task.CompletedTask;
         }
 
         public IEnumerable<VariableInfo> GetLocalVariables()
         {
+            if (this.Virtualmachine == null)
+            {
+                throw new InvalidOperationException();
+            }
             Logger.Diagnostic($"IEnumerable<VariableInfo> GetLocalVariables()");
             return this.Virtualmachine.GetLocalVariables().Select((it) => new VariableInfo
             {
@@ -238,6 +293,10 @@ namespace Arma.Studio.SqfVmDebugger
 
         public bool SetVariable(string variableName, string data, ENamespace @namespace)
         {
+            if (this.Virtualmachine == null)
+            {
+                throw new InvalidOperationException();
+            }
             Logger.Diagnostic($"bool SetVariable(variableName: {{{variableName}}}, data: {{{data}}}, @namespace: {{{@namespace}}})");
             return this.Virtualmachine.SetVariable(variableName, data, @namespace switch
             {
@@ -252,6 +311,10 @@ namespace Arma.Studio.SqfVmDebugger
 
         public VariableInfo GetVariable(string variableName, ENamespace @namespace)
         {
+            if (this.Virtualmachine == null)
+            {
+                throw new InvalidOperationException();
+            }
             Logger.Diagnostic($"bool VariableInfo(variableName: {{{variableName}}}, @namespace: {{{@namespace}}})");
             var varref = this.Virtualmachine.GetVariable(variableName, @namespace switch {
                 ENamespace.Default => "",
@@ -273,6 +336,10 @@ namespace Arma.Studio.SqfVmDebugger
 
         public SqfValue Evaluate(string text)
         {
+            if (this.Virtualmachine == null)
+            {
+                throw new InvalidOperationException();
+            }
             var res = this.Virtualmachine.Evaluate(text);
             return new SqfValue { Data = res.Data, DataType = res.DataType };
         }
@@ -281,6 +348,7 @@ namespace Arma.Studio.SqfVmDebugger
         #region ILogger
         internal static Logger Logger { get; private set; }
         public string TargetName => Properties.Language.LoggerName;
+
         public void SetLogger(Logger logger)
         {
             Logger = logger;
@@ -299,7 +367,7 @@ namespace Arma.Studio.SqfVmDebugger
                 }
 
                 // free unmanaged resources (unmanaged objects).
-                this.Virtualmachine.Dispose();
+                this.Virtualmachine?.Dispose();
 
                 this.disposedValue = true;
             }

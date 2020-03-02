@@ -282,11 +282,14 @@
                         <Style TargetType="{x:Type Button}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Debugger.SupportedActions,
-                                                                   Converter={StaticResource ContainsConverter},
-                                                                   ConverterParameter={x:Static asd:EDebugAction.Pause}}" Value="False">
+                                                               Converter={StaticResource ContainsConverter},
+                                                               ConverterParameter={x:Static asd:EDebugAction.Pause}}" Value="False">
                                     <Setter Property="IsEnabled" Value="False"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.NA}">
                                     <Setter Property="IsEnabled" Value="False"/>
                                 </DataTrigger>
                             </Style.Triggers>
@@ -303,6 +306,9 @@
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushPauseGray}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushPauseGray}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.NA}">
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushPauseGray}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -324,6 +330,9 @@
                                                                    ConverterParameter={x:Static asd:EDebugAction.Stop}}" Value="False">
                                     <Setter Property="IsEnabled" Value="False"/>
                                 </DataTrigger>
+                                <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.NA}">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
@@ -338,6 +347,9 @@
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushStopGray}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushStopGray}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.NA}">
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushStopGray}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -360,6 +372,9 @@
                                 <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="True">
                                     <Setter Property="IsEnabled" Value="False"/>
                                 </DataTrigger>
+                                <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.NA}">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
@@ -374,6 +389,9 @@
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushNextGray}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushNextGray}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.NA}">
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushNextGray}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -395,6 +413,9 @@
                                                                    ConverterParameter={x:Static asd:EDebugAction.StepInto}}" Value="False">
                                     <Setter Property="IsEnabled" Value="False"/>
                                 </DataTrigger>
+                                <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.NA}">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
@@ -409,6 +430,9 @@
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushStepInGray}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushStepInGray}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.NA}">
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushStepInGray}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -430,6 +454,9 @@
                                                                    ConverterParameter={x:Static asd:EDebugAction.StepOver}}" Value="False">
                                     <Setter Property="IsEnabled" Value="False"/>
                                 </DataTrigger>
+                                <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.NA}">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
@@ -444,6 +471,9 @@
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushStepOverGray}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushStepOverGray}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.NA}">
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushStepOverGray}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -465,6 +495,9 @@
                                                                    ConverterParameter={x:Static asd:EDebugAction.StepOut}}" Value="False">
                                     <Setter Property="IsEnabled" Value="False"/>
                                 </DataTrigger>
+                                <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.NA}">
+                                    <Setter Property="IsEnabled" Value="False"/>
+                                </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Button.Style>
@@ -479,6 +512,9 @@
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushStepOutGray}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Debugger, Converter={StaticResource IsNullConverter}}" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource DrawingBrushStepOutGray}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Debugger.State}" Value="{x:Static asd:EDebugState.NA}">
                                         <Setter Property="Fill" Value="{StaticResource DrawingBrushStepOutGray}"/>
                                     </DataTrigger>
                                 </Style.Triggers>

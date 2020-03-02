@@ -44,7 +44,6 @@ namespace Arma.Studio
 
         static App()
         {
-
             using (var stream = typeof(App).Assembly.GetManifestResourceStream(typeof(App).Assembly.GetName().Name + ".git-version.txt"))
             using (var reader = new System.IO.StreamReader(stream))
             {

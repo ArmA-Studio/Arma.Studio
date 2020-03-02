@@ -151,7 +151,7 @@ namespace Arma.Studio.UI.Windows
                     this.BreakpointManager.BreakpointUpdated -= this.Debugger_BreakpointManager_BreakpointUpdated;
                     foreach (var breakpoint in this.BreakpointManager.Breakpoints)
                     {
-                        this._Debugger.RemoveBreakpoint(breakpoint);
+                        this.Debugger.RemoveBreakpoint(breakpoint);
                     }
                 }
                 this._Debugger = value;
