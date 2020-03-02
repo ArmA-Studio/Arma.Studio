@@ -157,7 +157,9 @@ namespace Arma.Studio.SqfEditor
                                         Length = 1,
                                         Line = line,
                                         Column = column,
-                                        Severity = ESeverity.Error
+                                        Severity = ESeverity.Error,
+                                        File = file,
+                                        Description = message
                                     });
                                 }
                             }

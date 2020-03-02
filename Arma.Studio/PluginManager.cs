@@ -66,6 +66,10 @@ namespace Arma.Studio
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach(var it in assemblies)
             {
+                if (it.IsDynamic)
+                {
+                    continue;
+                }
                 try
                 {
                     var versioninfoOther = FileVersionInfo.GetVersionInfo(it.Location);
