@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arma.Studio.UiEditor
+namespace Arma.Studio.UiEditor.Data
 {
     public enum EControlStyle
     {
+        #region Common Controls Styles
         ST_LEFT = 0x00,
         ST_RIGHT = 0x01,
         ST_CENTER = 0x02,
@@ -32,6 +33,27 @@ namespace Arma.Studio.UiEditor
         ST_SHADOW = 0x0100,
         ST_NO_RECT = 0x0200,
         ST_KEEP_ASPECT_RATIO = 0x0800,
-        ST_TITLE = 0x22
+        ST_TITLE = ST_TITLE_BAR | ST_CENTER,
+        #endregion
+        #region CT_SLIDER Styles
+        SL_VERT = 0x00,
+        SL_HORZ = 0x0400,
+        SL_TEXTURES = 0x10,
+        #endregion
+        #region CT_PROGRESS Styles
+        ST_VERTICAL = 0x01,
+        ST_HORIZONTAL = 0x00,
+        #endregion
+        #region CT_LISTBOX Styles
+        LB_TEXTURES = 0x10,
+        /// <summary>
+        /// Makes CT_LISTBOX multi-selectable (see also lbSetCurSel, lbCurSel, lbSetSelected, lbSelection)
+        /// </summary>
+        LB_MULTI = 0x20,
+        #endregion
+        #region CT_TREE Styles
+        TR_SHOWROOT = 0x01,
+        TR_AUTOCOLLAPSE = 0x02,
+        #endregion
     }
 }

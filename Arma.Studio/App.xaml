@@ -21,6 +21,9 @@
                     <asd:InvertConverter x:Key="InvertConverter"/>
                     <asd:IsAssignableFromConverter x:Key="IsAssignableFromConverter"/>
                     <asd:StringEndsWithConverter x:Key="StringEndsWithConverter"/>
+                    <asd:SingleToCollectionConverter x:Key="SingleToCollectionConverter"/>
+                    <asd:ToCompositeCollectionMultiConverter x:Key="ToCompositeCollectionMultiConverter"/>
+                    <asd:ToRectangleConverter x:Key="ToRectangleConverter"/>
                 </ResourceDictionary>
                 <ResourceDictionary>
                     <DrawingBrush x:Key="DrawingBrushStatusInformation">

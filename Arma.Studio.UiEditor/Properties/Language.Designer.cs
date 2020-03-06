@@ -19,7 +19,7 @@ namespace Arma.Studio.UiEditor.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Language {
@@ -430,6 +430,24 @@ namespace Arma.Studio.UiEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gridsize.
+        /// </summary>
+        public static string UiEditor_CanvasGridSize {
+            get {
+                return ResourceManager.GetString("UiEditor_CanvasGridSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The size of the snap-grid..
+        /// </summary>
+        public static string UiEditor_CanvasGridSize_ToolTip {
+            get {
+                return ResourceManager.GetString("UiEditor_CanvasGridSize_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UIEditor.
         /// </summary>
         public static string UIEditor_Document {
@@ -453,6 +471,24 @@ namespace Arma.Studio.UiEditor.Properties {
         public static string UIEditor_Toolbox {
             get {
                 return ResourceManager.GetString("UIEditor_Toolbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zoom.
+        /// </summary>
+        public static string UiEditor_Zoom {
+            get {
+                return ResourceManager.GetString("UiEditor_Zoom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The zoom value..
+        /// </summary>
+        public static string UiEditor_Zoom_ToolTip {
+            get {
+                return ResourceManager.GetString("UiEditor_Zoom_ToolTip", resourceCulture);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Arma.Studio.Data;
+using Arma.Studio.Data.UI.AttachedProperties;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,14 +14,14 @@ namespace Arma.Studio.UiEditor
 {
     public class EditorDataContext :
         DockableBase,
-        Data.UI.AttachedProperties.IOnDragEnter,
-        Data.UI.AttachedProperties.IOnDragLeave,
-        Data.UI.AttachedProperties.IOnDragOver,
-        Data.UI.AttachedProperties.IOnDrop,
-        Data.UI.AttachedProperties.IOnMouseMove,
-        Data.UI.AttachedProperties.IOnMouseLeftButtonDown,
-        Data.UI.AttachedProperties.IOnMouseLeftButtonUp,
-        Data.UI.AttachedProperties.IOnMouseLeave
+        IOnDragEnter,
+        IOnDragLeave,
+        IOnDragOver,
+        IOnDrop,
+        IOnMouseMove,
+        IOnMouseLeftButtonDown,
+        IOnMouseLeftButtonUp,
+        IOnMouseLeave
     {
         public class ScaleComboboxItem
         {

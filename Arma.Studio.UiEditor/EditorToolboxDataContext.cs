@@ -1,4 +1,5 @@
 ﻿using Arma.Studio.Data;
+using Arma.Studio.Data.UI.AttachedProperties;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,8 +13,8 @@ namespace Arma.Studio.UiEditor
 {
     public class EditorToolboxDataContext  :
         DockableBase,
-        Data.UI.AttachedProperties.IOnMouseMove,
-        Data.UI.AttachedProperties.IOnMouseLeftButtonDown
+        IOnMouseMove,
+        IOnMouseLeftButtonDown
     {
         public ObservableCollection<EditorToolboxItem> Items { get => this._Items; set { this._Items = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<EditorToolboxItem> _Items;

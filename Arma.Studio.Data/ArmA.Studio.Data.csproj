@@ -107,6 +107,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextEditor\ITextEditor.cs" />
     <Compile Include="TextEditor\WordCompletionInfo.cs" />
+    <Compile Include="UI\AttachedProperties\DataRelay.cs" />
+    <Compile Include="UI\AttachedProperties\DataRelayCollection.cs" />
+    <Compile Include="UI\AttachedProperties\DataRelaying.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\Checked.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\Closed.cs" />
     <Compile Include="UI\AttachedProperties\Eventing\ContextMenuOpening.cs" />
@@ -129,12 +132,14 @@
     </Compile>
     <Compile Include="Debugging\BreakpointEventArgs.cs" />
     <Compile Include="UI\AttachedProperties\LooseFocusOnKeyAttached.cs" />
+    <Compile Include="UI\AttachedProperties\ScrollViewerAttached.cs" />
     <Compile Include="UI\AttachedProperties\SelectAllOnFocusAttached.cs" />
     <Compile Include="UI\AttachedProperties\SelectFileNameOnFocusAttached.cs" />
     <Compile Include="UI\Converters\InvertConverter.cs" />
     <Compile Include="UI\Converters\AllFalseMultiConverter.cs" />
     <Compile Include="UI\Converters\AllTrueMultiConverter.cs" />
     <Compile Include="UI\Converters\BoolAndMultiConverter.cs" />
+    <Compile Include="UI\Converters\SingleToCollectionConverter.cs" />
     <Compile Include="UI\Converters\StringEndsWithConverter.cs" />
     <Compile Include="UI\Converters\EqualMultiConverter.cs" />
     <Compile Include="UI\Converters\BoolOrMultiConverter.cs" />
@@ -143,6 +148,8 @@
     <Compile Include="UI\Converters\IsNullConverter.cs" />
     <Compile Include="UI\Converters\ContainsConverter.cs" />
     <Compile Include="Dockable\DockableInfo.cs" />
+    <Compile Include="UI\Converters\ToCompositeCollectionMultiConverter.cs" />
+    <Compile Include="UI\Converters\ToRectangleConverter.cs" />
     <Compile Include="UI\DialogWindow.cs" />
     <Compile Include="UI\GenericDataTemplateSelector.cs" />
     <Compile Include="Debugging\IBreakpoint.cs" />

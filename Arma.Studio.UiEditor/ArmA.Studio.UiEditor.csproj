@@ -66,21 +66,59 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CanvasExtensions.cs" />
+    <Compile Include="Data\ControlActiveText.cs" />
+    <Compile Include="Data\ControlAnimatedTexture.cs" />
+    <Compile Include="Data\ControlBase.cs" />
+    <Compile Include="Data\ControlButton.cs" />
+    <Compile Include="Data\ControlCheckBoxes.cs" />
+    <Compile Include="Data\ControlCombo.cs" />
+    <Compile Include="Data\ControlContextMenu.cs" />
+    <Compile Include="Data\ControlControlsGroup.cs" />
+    <Compile Include="Data\ControlControlsTable.cs" />
+    <Compile Include="Data\ControlEdit.cs" />
+    <Compile Include="Data\ControlHtml.cs" />
+    <Compile Include="Data\ControlLinebreak.cs" />
+    <Compile Include="Data\ControlListBox.cs" />
+    <Compile Include="Data\ControlListNBox.cs" />
+    <Compile Include="Data\ControlMap.cs" />
+    <Compile Include="Data\ControlMapMain.cs" />
+    <Compile Include="Data\ControlMenu.cs" />
+    <Compile Include="Data\ControlMenuStrip.cs" />
+    <Compile Include="Data\ControlObject.cs" />
+    <Compile Include="Data\ControlObjectContainer.cs" />
+    <Compile Include="Data\ControlObjectZoom.cs" />
+    <Compile Include="Data\ControlProgress.cs" />
+    <Compile Include="Data\ControlShortcutButton.cs" />
+    <Compile Include="Data\ControlSlider.cs" />
+    <Compile Include="Data\ControlStatic.cs" />
+    <Compile Include="Data\ControlStructuredText.cs" />
+    <Compile Include="Data\ControlToolBox.cs" />
+    <Compile Include="Data\ControlTree.cs" />
+    <Compile Include="Data\ArmaNameAttribute.cs" />
+    <Compile Include="Data\ControlTypeAttribute.cs" />
+    <Compile Include="Data\ControlUser.cs" />
+    <Compile Include="Data\ControlXCombobox.cs" />
+    <Compile Include="Data\ControlXKeyDescription.cs" />
+    <Compile Include="Data\ControlXListBox.cs" />
+    <Compile Include="Data\ControlXSlider.cs" />
+    <Compile Include="UI\CanvasManager.cs" />
+    <Compile Include="Data\IControlElement.cs" />
     <Compile Include="EditorToolboxDataContext.cs" />
-    <Compile Include="Control.cs" />
     <Compile Include="ControlTypeContainer.cs" />
     <Compile Include="ControlTypeConverter.cs" />
     <Compile Include="EditorToolboxItem.cs" />
     <Compile Include="EEditorMouseMode.cs" />
-    <Compile Include="EShadow.cs" />
-    <Compile Include="EControlStyle.cs" />
-    <Compile Include="EControlType.cs" />
+    <Compile Include="Data\EShadow.cs" />
+    <Compile Include="Data\EControlStyle.cs" />
+    <Compile Include="Data\EControlType.cs" />
     <Compile Include="IEditorItemContent.cs" />
     <Compile Include="Properties\Language.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Language.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\SelectionHelper.cs" />
+    <Compile Include="UI\UiEditorDataContext.cs" />
     <EmbeddedResource Include="Editor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -104,6 +142,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EditorToolbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI\UiEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

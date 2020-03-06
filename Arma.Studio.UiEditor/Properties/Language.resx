@@ -249,4 +249,16 @@
   <data name="UIEditor_Toolbox" xml:space="preserve">
     <value>Toolbox</value>
   </data>
+  <data name="UiEditor_CanvasGridSize" xml:space="preserve">
+    <value>Gridsize</value>
+  </data>
+  <data name="UiEditor_CanvasGridSize_ToolTip" xml:space="preserve">
+    <value>The size of the snap-grid.</value>
+  </data>
+  <data name="UiEditor_Zoom_ToolTip" xml:space="preserve">
+    <value>The zoom value.</value>
+  </data>
+  <data name="UiEditor_Zoom" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
 </root>

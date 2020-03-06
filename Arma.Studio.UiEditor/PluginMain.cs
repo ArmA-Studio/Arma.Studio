@@ -18,7 +18,7 @@ namespace Arma.Studio.UiEditor
 
         public IEnumerable<DockableInfo> Dockables => new DockableInfo[] {
             DockableInfo.Create(Properties.Language.UIEditor_Toolbox, ECreationMode.Anchorable, () => new EditorToolboxDataContext()),
-            DockableInfo.Create(Properties.Language.UIEditor_Document, ECreationMode.Document, () => new EditorDataContext())
+            DockableInfo.Create(Properties.Language.UIEditor_Document, ECreationMode.Document, () => new UI.UiEditorDataContext())
         };
 
         public Task<IUpdateInfo> CheckForUpdate(CancellationToken cancellationToken) => Task.Run(() => default(IUpdateInfo));
