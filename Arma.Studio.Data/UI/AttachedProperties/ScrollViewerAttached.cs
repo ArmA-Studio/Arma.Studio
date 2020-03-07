@@ -49,7 +49,7 @@ namespace Arma.Studio.Data.UI.AttachedProperties
         private static void OnVerticalOffsetPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var scrollViewer = d as ScrollViewer;
-            if (scrollViewer == null)
+            if (scrollViewer == null || double.IsNaN((double)e.NewValue))
             {
                 return;
             }
@@ -116,7 +116,7 @@ namespace Arma.Studio.Data.UI.AttachedProperties
         private static void OnHorizontalOffsetPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var scrollViewer = d as ScrollViewer;
-            if (scrollViewer == null)
+            if (scrollViewer == null || double.IsNaN((double)e.NewValue))
             {
                 return;
             }

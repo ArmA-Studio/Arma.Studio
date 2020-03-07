@@ -101,17 +101,16 @@
     <Compile Include="Data\ControlXKeyDescription.cs" />
     <Compile Include="Data\ControlXListBox.cs" />
     <Compile Include="Data\ControlXSlider.cs" />
+    <Compile Include="Data\InterfaceSize.cs" />
+    <Compile Include="UI\Converters\SizeExToFontSizeMultiConverter.cs" />
+    <Compile Include="UI\EEditorMouseMode.cs" />
     <Compile Include="UI\CanvasManager.cs" />
     <Compile Include="Data\IControlElement.cs" />
     <Compile Include="EditorToolboxDataContext.cs" />
-    <Compile Include="ControlTypeContainer.cs" />
-    <Compile Include="ControlTypeConverter.cs" />
     <Compile Include="EditorToolboxItem.cs" />
-    <Compile Include="EEditorMouseMode.cs" />
     <Compile Include="Data\EShadow.cs" />
     <Compile Include="Data\EControlStyle.cs" />
     <Compile Include="Data\EControlType.cs" />
-    <Compile Include="IEditorItemContent.cs" />
     <Compile Include="Properties\Language.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -119,11 +118,6 @@
     </Compile>
     <Compile Include="UI\SelectionHelper.cs" />
     <Compile Include="UI\UiEditorDataContext.cs" />
-    <EmbeddedResource Include="Editor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <Compile Include="EditorDataContext.cs" />
     <Compile Include="PluginMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Language.resx">
@@ -151,6 +145,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Data\ControlStatic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Data\Controls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\SelectionHelper.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

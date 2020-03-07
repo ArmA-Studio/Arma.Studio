@@ -24,7 +24,7 @@ using System.Windows.Threading;
 namespace Arma.Studio.UI
 {
     public class TextEditorDataContext : DockableBase,
-        Data.UI.ITextDocument,
+        IEditorDocument,
         INotifyPropertyChanged,
         Data.UI.AttachedProperties.IOnInitialized,
         Data.UI.AttachedProperties.IOnPreviewKeyDown,
@@ -213,6 +213,10 @@ namespace Arma.Studio.UI
             }
         }
         private File _File;
+        private void File_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this.RaisePropertyChanged(nameof(this.Title));
+        }
         #endregion
         #region Property: FoldingManager (ICSharpCode.AvalonEdit.Folding.FoldingManager)
         public FoldingManager FoldingManager { get; private set; }
@@ -417,10 +421,6 @@ namespace Arma.Studio.UI
         }
 
 
-        private void File_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            this.RaisePropertyChanged(nameof(this.Title));
-        }
 
 
 

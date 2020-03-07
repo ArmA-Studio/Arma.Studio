@@ -9,6 +9,7 @@ namespace Arma.Studio.UiEditor.Data
 {
     public interface IControlElement : INotifyPropertyChanged
     {
+        int ZIndex { get; set; }
         bool IsSelected { get; set; }
         double Left { get; set; }
         double Top { get; set; }

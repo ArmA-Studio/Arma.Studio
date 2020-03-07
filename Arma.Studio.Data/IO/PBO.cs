@@ -156,6 +156,7 @@ namespace Arma.Studio.Data.IO
                         case ".cpp":
                         case ".ext":
                         case ".hpp":
+                        case ".ui":
                             filesHit.Add(this.Add(relativePath));
                             break;
                     }

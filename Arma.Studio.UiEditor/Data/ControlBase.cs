@@ -25,6 +25,18 @@ namespace Arma.Studio.UiEditor.Data
         private bool _IsSelected;
         #endregion
 
+        #region Property: ZIndex (System.Int32)
+        public int ZIndex
+        {
+            get => this._ZIndex;
+            set
+            {
+                this._ZIndex = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private int _ZIndex;
+        #endregion
 
         #region Property: IDC {idc} (System.Int32)
         /// <summary>
@@ -147,6 +159,8 @@ namespace Arma.Studio.UiEditor.Data
         #region Property: FontSize {sizeEx} (System.Double)
         /// <summary>
         /// the font size of text (0..1)
+        /// 
+        /// Useful to note is that the following should yield the correct sizeEx value: (0.0264 * safeZoneH) * FontSize
         /// </summary>
         [ArmaName("sizeEx")]
         public double FontSize
@@ -154,7 +168,7 @@ namespace Arma.Studio.UiEditor.Data
             get => this._FontSize;
             set
             {
-                if (value < 0 || value > 0)
+                if (value < 0 || 1 < value)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value), value, "Argument out of range. Valid range: 0.0 - 1.0");
                 }
@@ -369,7 +383,7 @@ namespace Arma.Studio.UiEditor.Data
             get => this._Opacity;
             set
             {
-                if (value < 0 || value > 0)
+                if (value < 0 || 1 < value)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value), value, "Argument out of range. Valid range: 0.0 - 1.0");
                 }
@@ -397,5 +411,14 @@ namespace Arma.Studio.UiEditor.Data
         }
         private string _Url;
         #endregion
+
+
+        public ControlBase()
+        {
+            this.ForegroundColor = Colors.Black;
+            this.BackgroundColor = Color.FromArgb(32, 0, 0, 0);
+            this.Shadow = EShadow.DropShadow;
+            this.FontSize = 0.04;
+        }
     }
 }

@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters ="clr-namespace:Arma.Studio.UiEditor.UI.Converters">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Arma.Studio.UiEditor;component/UI/SelectionHelper.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Arma.Studio.UiEditor;component/Data/Controls.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

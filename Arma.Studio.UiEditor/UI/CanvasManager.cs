@@ -1,4 +1,5 @@
-﻿using Arma.Studio.Data.UI.AttachedProperties;
+﻿using Arma.Studio.Data;
+using Arma.Studio.Data.UI.AttachedProperties;
 using Arma.Studio.UiEditor.Data;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,12 @@ namespace Arma.Studio.UiEditor.UI
         IOnMouseUp,
         IOnMouseLeave,
         IOnMouseMove,
-        IOnInitialized
+        IOnInitialized,
+        IOnPreviewMouseWheel,
+        IOnDragEnter,
+        IOnDragLeave,
+        IOnDragOver,
+        IOnDrop
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -76,6 +82,54 @@ namespace Arma.Studio.UiEditor.UI
         }
         private SelectionHelper _SelectionHelper;
         #endregion
+        #region Property: Zoom (System.Double)
+        public double Zoom
+        {
+            get => this._Zoom;
+            set
+            {
+                this._Zoom = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private double _Zoom;
+        #endregion
+        #region Property: HorizontalScrollOffset (System.Double)
+        public double HorizontalScrollOffset
+        {
+            get => this._HorizontalScrollOffset;
+            set
+            {
+                this._HorizontalScrollOffset = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private double _HorizontalScrollOffset;
+        #endregion
+        #region Property: VerticalScrollOffset (System.Double)
+        public double VerticalScrollOffset
+        {
+            get => this._VerticalScrollOffset;
+            set
+            {
+                this._VerticalScrollOffset = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private double _VerticalScrollOffset;
+        #endregion
+        #region Property: Cursor (System.Windows.Input.Cursor)
+        public Cursor Cursor
+        {
+            get => this._Cursor;
+            set
+            {
+                this._Cursor = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private Cursor _Cursor;
+        #endregion
 
         public CanvasManager(UiEditorDataContext owner)
         {
@@ -84,6 +138,10 @@ namespace Arma.Studio.UiEditor.UI
             this.Owner = owner;
             this.ShowGrid = true;
             this.PreMovePositions = new List<Tuple<IControlElement, Point>>();
+            this.Width = 1920;
+            this.Height = 1080;
+            this.Zoom = 0.5;
+            this.Cursor = Cursors.Arrow;
         }
         private readonly UiEditorDataContext Owner;
 
@@ -101,7 +159,11 @@ namespace Arma.Studio.UiEditor.UI
 
         public void SelectAll()
         {
-            foreach (var it in this.Owner.ControlElements)
+            foreach (var it in this.Owner.BackgroundControls)
+            {
+                this.SelectedNodes.Add(it);
+            }
+            foreach (var it in this.Owner.ForegroundControls)
             {
                 this.SelectedNodes.Add(it);
             }
@@ -243,6 +305,18 @@ namespace Arma.Studio.UiEditor.UI
             return new Point(left, top);
         }
 
+        #region Property: EditorMouseMode (EEditorMouseMode)
+        public EEditorMouseMode EditorMouseMode
+        {
+            get => this._EditorMouseMode;
+            set
+            {
+                this._EditorMouseMode = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private EEditorMouseMode _EditorMouseMode;
+        #endregion
         #region Property: IsMouseDown (System.Boolean)
         public bool IsLeftMouseButtonDown
         {
@@ -425,13 +499,13 @@ namespace Arma.Studio.UiEditor.UI
         private List<Tuple<IControlElement, Point>> PreMovePositions;
         public void OnMouseMove(UIElement sender, MouseEventArgs e)
         {
+            var mousePosition = e.GetPosition(this.Canvas);
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 if (this.IsLeftMouseButtonDown)
                 {
-                    var newPos = e.GetPosition(this.Canvas);
-                    var deltaPosX = newPos.X - this.MouseMovePosition.X;
-                    var deltaPosY = newPos.Y - this.MouseMovePosition.Y;
+                    var deltaPosX = mousePosition.X - this.MouseMovePosition.X;
+                    var deltaPosY = mousePosition.Y - this.MouseMovePosition.Y;
                     var isMouseMoveDeltaReached = SystemParameters.MinimumHorizontalDragDistance <= Math.Abs(deltaPosX) ||
                         SystemParameters.MinimumVerticalDragDistance <= Math.Abs(deltaPosY);
                     if (this.IsMouseMoveActive || (isMouseMoveDeltaReached && this.MouseDownHadChildBelow))
@@ -440,19 +514,152 @@ namespace Arma.Studio.UiEditor.UI
                         {
                             this.PreMovePositions = this.SelectedNodes.Select((it) => new Tuple<IControlElement, Point>(it, new Point(it.Left, it.Top))).ToList();
                         }
-                        this.MouseMovePosition = newPos;
+                        this.MouseMovePosition = mousePosition;
                         this.IsMouseMoveActive = true;
                         foreach (var node in this.SelectedNodes)
                         {
-                            var newLeft = node.Left + deltaPosX;
-                            if (newLeft < 0) { newLeft = 0; }
-                            else if (newLeft > this.Width - node.Width) { newLeft = this.Width - node.Width; }
-                            node.Left = newLeft;
+                            switch (this.EditorMouseMode)
+                            {
+                                case EEditorMouseMode.MoveN:
+                                    {
+                                        var newTop = node.Top + deltaPosY;
+                                        if (newTop < 0) { newTop = 0; }
+                                        else if (newTop > this.Height - node.Height) { newTop = this.Height - node.Height; }
+                                        var topDelta = node.Top - newTop;
+                                        var newHeight = node.Height + topDelta;
+                                        node.Height = newHeight < 0 ? 0 : newHeight;
+                                        if (node.Height != 0)
+                                        {
+                                            node.Top = newTop;
+                                        }
+                                    }
+                                    break;
+                                case EEditorMouseMode.MoveE:
+                                    {
+                                        var newWidth = node.Width + deltaPosX;
+                                        if (newWidth < 0) { newWidth = 0; }
+                                        else if (newWidth > this.Width - node.Left) { newWidth = this.Width - node.Left; }
+                                        node.Width = newWidth;
+                                    }
+                                    break;
+                                case EEditorMouseMode.MoveS:
+                                    {
+                                        var newHeight = node.Height + deltaPosY;
+                                        if (newHeight < 0) { newHeight = 0; }
+                                        else if (newHeight > this.Height - node.Top) { newHeight = this.Height - node.Top; }
+                                        node.Height = newHeight;
+                                    }
+                                    break;
+                                case EEditorMouseMode.MoveW:
+                                    {
+                                        var newLeft = node.Left + deltaPosX;
+                                        if (newLeft < 0) { newLeft = 0; }
+                                        else if (newLeft > this.Width - node.Width) { newLeft = this.Width - node.Width; }
+                                        var leftDelta = node.Left - newLeft;
+                                        var newWidth = node.Width + leftDelta;
+                                        node.Width = newWidth < 0 ? 0 : newWidth;
+                                        if (node.Width != 0)
+                                        {
+                                            node.Left = newLeft;
+                                        }
+                                    }
+                                    break;
+                                case EEditorMouseMode.MoveNE:
+                                    {
+                                        var newTop = node.Top + deltaPosY;
+                                        if (newTop < 0) { newTop = 0; }
+                                        else if (newTop > this.Height - node.Height) { newTop = this.Height - node.Height; }
+                                        var topDelta = node.Top - newTop;
+                                        var newHeight = node.Height + topDelta;
+                                        node.Height = newHeight < 0 ? 0 : newHeight;
+                                        if (node.Height != 0)
+                                        {
+                                            node.Top = newTop;
+                                        }
+                                    }
+                                    {
+                                        var newWidth = node.Width + deltaPosX;
+                                        if (newWidth < 0) { newWidth = 0; }
+                                        else if (newWidth > this.Width - node.Left) { newWidth = this.Width - node.Left; }
+                                        node.Width = newWidth;
+                                    }
+                                    break;
+                                case EEditorMouseMode.MoveNW:
+                                    {
+                                        var newTop = node.Top + deltaPosY;
+                                        if (newTop < 0) { newTop = 0; }
+                                        else if (newTop > this.Height - node.Height) { newTop = this.Height - node.Height; }
+                                        var topDelta = node.Top - newTop;
+                                        var newHeight = node.Height + topDelta;
+                                        node.Height = newHeight < 0 ? 0 : newHeight;
+                                        if (node.Height != 0)
+                                        {
+                                            node.Top = newTop;
+                                        }
+                                    }
+                                    {
+                                        var newLeft = node.Left + deltaPosX;
+                                        if (newLeft < 0) { newLeft = 0; }
+                                        else if (newLeft > this.Width - node.Width) { newLeft = this.Width - node.Width; }
+                                        var leftDelta = node.Left - newLeft;
+                                        var newWidth = node.Width + leftDelta;
+                                        node.Width = newWidth < 0 ? 0 : newWidth;
+                                        if (node.Width != 0)
+                                        {
+                                            node.Left = newLeft;
+                                        }
+                                    }
+                                    break;
+                                case EEditorMouseMode.MoveSE:
+                                    {
+                                        var newHeight = node.Height + deltaPosY;
+                                        if (newHeight < 0) { newHeight = 0; }
+                                        else if (newHeight > this.Height - node.Top) { newHeight = this.Height - node.Top; }
+                                        node.Height = newHeight;
+                                    }
+                                    {
+                                        var newWidth = node.Width + deltaPosX;
+                                        if (newWidth < 0) { newWidth = 0; }
+                                        else if (newWidth > this.Width - node.Left) { newWidth = this.Width - node.Left; }
+                                        node.Width = newWidth;
+                                    }
+                                    break;
+                                case EEditorMouseMode.MoveSW:
+                                    {
+                                        var newHeight = node.Height + deltaPosY;
+                                        if (newHeight < 0) { newHeight = 0; }
+                                        else if (newHeight > this.Height - node.Top) { newHeight = this.Height - node.Top; }
+                                        node.Height = newHeight;
+                                    }
+                                    {
+                                        var newLeft = node.Left + deltaPosX;
+                                        if (newLeft < 0) { newLeft = 0; }
+                                        else if (newLeft > this.Width - node.Width) { newLeft = this.Width - node.Width; }
+                                        var leftDelta = node.Left - newLeft;
+                                        var newWidth = node.Width + leftDelta;
+                                        node.Width = newWidth < 0 ? 0 : newWidth;
+                                        if (node.Width != 0)
+                                        {
+                                            node.Left = newLeft;
+                                        }
+                                    }
+                                    break;
+                                case EEditorMouseMode.Move:
+                                case EEditorMouseMode.NA:
+                                default:
+                                    {
+                                        var newLeft = node.Left + deltaPosX;
+                                        if (newLeft < 0) { newLeft = 0; }
+                                        else if (newLeft > this.Width - node.Width) { newLeft = this.Width - node.Width; }
+                                        node.Left = newLeft;
 
-                            var newTop = node.Top + deltaPosY;
-                            if (newTop < 0) { newTop = 0; }
-                            else if (newTop > this.Height - node.Height) { newTop = this.Height - node.Height; }
-                            node.Top = newTop;
+                                        var newTop = node.Top + deltaPosY;
+                                        if (newTop < 0) { newTop = 0; }
+                                        else if (newTop > this.Height - node.Height) { newTop = this.Height - node.Height; }
+                                        node.Top = newTop;
+                                    }
+                                    break;
+                            }
                         }
                     }
                     else if (this.IsMouseSelectionSquareActive || (isMouseMoveDeltaReached && !this.MouseDownHadChildBelow))
@@ -467,7 +674,7 @@ namespace Arma.Studio.UiEditor.UI
                             }
                         }
                         var currentlyInSquare = this.Canvas.GetChildrenInsideTouching(this.SelectionHelper).Where((it) => it.DataContext is IControlElement).ToArray();
-                        this.SelectionHelper.Move(newPos);
+                        this.SelectionHelper.Move(mousePosition);
                         var newlyInSquare = this.Canvas.GetChildrenInsideTouching(this.SelectionHelper).Where((it) => it.DataContext is IControlElement).ToArray();
                         var deltaInSquare = currentlyInSquare.Except(newlyInSquare).Union(newlyInSquare.Except(currentlyInSquare));
                         foreach (var frameworkElement in deltaInSquare)
@@ -475,6 +682,69 @@ namespace Arma.Studio.UiEditor.UI
                             this.MultiSelect(frameworkElement.DataContext as IControlElement);
                         }
                     }
+                }
+            }
+            else
+            {
+                var itemsBelow = this.Canvas.GetChildrenBelowCursor().Select((it) => it.DataContext).Cast<IControlElement>().ToArray();
+                int borderCoef = (int)(6 / this.Zoom);
+                foreach (var it in itemsBelow.Take(1))
+                {
+                    var rect = new Rect(it.Left, it.Top, it.Width, it.Height);
+                    if ((mousePosition.X >= rect.Left && mousePosition.X <= rect.Left + borderCoef) &&
+                        (mousePosition.Y >= rect.Top && mousePosition.Y <= rect.Top + borderCoef))
+                    {
+                        this.Cursor = Cursors.SizeNWSE;
+                        this.EditorMouseMode = EEditorMouseMode.MoveNW;
+                    }
+                    else if ((mousePosition.X >= rect.Left + rect.Width - borderCoef && mousePosition.X <= rect.Left + rect.Width) &&
+                        (mousePosition.Y >= rect.Top + rect.Height - borderCoef && mousePosition.Y <= rect.Top + rect.Height))
+                    {
+                        this.Cursor = Cursors.SizeNWSE;
+                        this.EditorMouseMode = EEditorMouseMode.MoveSE;
+                    }
+                    else if ((mousePosition.X >= rect.Left + rect.Width && mousePosition.X <= rect.Left + rect.Width + borderCoef) &&
+                        (mousePosition.Y >= rect.Top && mousePosition.Y <= rect.Top + borderCoef))
+                    {
+                        this.Cursor = Cursors.SizeNESW;
+                        this.EditorMouseMode = EEditorMouseMode.MoveNE;
+                    }
+                    else if ((mousePosition.X >= rect.Left - borderCoef && mousePosition.X <= rect.Left) &&
+                        (mousePosition.Y >= rect.Top + rect.Height - borderCoef && mousePosition.Y <= rect.Top + rect.Height))
+                    {
+                        this.Cursor = Cursors.SizeNESW;
+                        this.EditorMouseMode = EEditorMouseMode.MoveSW;
+                    }
+                    else if ((mousePosition.X >= rect.Left && mousePosition.X <= rect.Left + borderCoef))
+                    {
+                        this.Cursor = Cursors.SizeWE;
+                        this.EditorMouseMode = EEditorMouseMode.MoveW;
+                    }
+                    else if ((mousePosition.X >= rect.Left + rect.Width - borderCoef && mousePosition.X <= rect.Left + rect.Width))
+                    {
+                        this.Cursor = Cursors.SizeWE;
+                        this.EditorMouseMode = EEditorMouseMode.MoveE;
+                    }
+                    else if ((mousePosition.Y >= rect.Top && mousePosition.Y <= rect.Top + borderCoef))
+                    {
+                        this.Cursor = Cursors.SizeNS;
+                        this.EditorMouseMode = EEditorMouseMode.MoveN;
+                    }
+                    else if ((mousePosition.Y >= rect.Top + rect.Height - borderCoef && mousePosition.Y <= rect.Top + rect.Height))
+                    {
+                        this.Cursor = Cursors.SizeNS;
+                        this.EditorMouseMode = EEditorMouseMode.MoveS;
+                    }
+                    else
+                    {
+                        this.Cursor = Cursors.Hand;
+                        this.EditorMouseMode = EEditorMouseMode.Move;
+                    }
+                }
+                if (!itemsBelow.Any())
+                {
+                    this.Cursor = Cursors.Arrow;
+                    this.EditorMouseMode = EEditorMouseMode.NA;
                 }
             }
         }
@@ -493,5 +763,56 @@ namespace Arma.Studio.UiEditor.UI
             }
         }
 
+        public void OnPreviewMouseWheel(UIElement sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Control && (Application.Current as IApp).MainWindow.ActiveDockable == this.Owner)
+            {
+                e.Handled = true;
+
+                // Get current relative position of mouse
+                var currentMousePosition = e.GetPosition(this.ScrollViewer);
+                var currentDeltaMouseLeft = currentMousePosition.X / this.ScrollViewer.ActualWidth;
+                var currentDeltaMouseTop = currentMousePosition.Y / this.ScrollViewer.ActualHeight;
+
+                // Calculate & apply new zoom level
+                var zoomDelta = e.Delta / 1000.0;
+                var oldZoom = this.Zoom;
+                var newZoom = this.Zoom * (1 + zoomDelta);
+                newZoom = newZoom > 0.1 ? (newZoom < 5 ? newZoom : 5) : 0.1;
+                this.Zoom = newZoom;
+
+                // Force Update on layouts of canvas & ScrollViewer
+                this.Canvas.UpdateLayout();
+                this.ScrollViewer.UpdateLayout();
+
+                // Adjust position of Horizontal- & VerticalOffset according to previous MouseDelta
+                this.ScrollViewer.ScrollToHorizontalOffset(
+                    this.ScrollViewer.HorizontalOffset +
+                    (currentDeltaMouseLeft * this.ScrollViewer.ActualWidth * (newZoom - oldZoom)));
+                this.ScrollViewer.ScrollToVerticalOffset(
+                    this.ScrollViewer.VerticalOffset +
+                    (currentDeltaMouseTop * this.ScrollViewer.ActualHeight * (newZoom - oldZoom)));
+            }
+        }
+
+        public void OnDragEnter(UIElement sender, DragEventArgs e)
+        {
+            this.Owner.OnDragEnter(sender, e);
+        }
+
+        public void OnDragLeave(UIElement sender, DragEventArgs e)
+        {
+            this.Owner.OnDragLeave(sender, e);
+        }
+
+        public void OnDragOver(UIElement sender, DragEventArgs e)
+        {
+            this.Owner.OnDragOver(sender, e);
+        }
+
+        public void OnDrop(UIElement sender, DragEventArgs e)
+        {
+            this.Owner.OnDrop(sender, e);
+        }
     }
 }

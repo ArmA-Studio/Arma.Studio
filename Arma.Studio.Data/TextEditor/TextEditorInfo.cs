@@ -99,8 +99,8 @@ namespace Arma.Studio.Data.TextEditor
         /// <param name="iconSource">An instance of some <see cref="DrawingBrush"/>.</param>
         /// <param name="func">The method to create the actual <see cref="ITextEditor"/>.</param>
         /// <returns>The created <see cref="TextEditorInfo"/> instance.</returns>
-        public static TextEditorInfoDrawingBrush Create<T>(string name, DrawingBrush iconSource, Func<T> func) where T : ITextEditor =>
-            new TextEditorInfoDrawingBrush(name, iconSource, () => func() as ITextEditor, typeof(T));
+        public static TextEditorInfoDrawingBrush Create<T>(string name, DrawingBrush iconSource, Func<T> func, params string[] extensions) where T : ITextEditor =>
+            new TextEditorInfoDrawingBrush(name, iconSource, () => func() as ITextEditor, typeof(T), extensions);
 
         /// <summary>
         /// Creates a new <see cref="TextEditorInfo"/> instance.
@@ -109,8 +109,8 @@ namespace Arma.Studio.Data.TextEditor
         /// <param name="iconSource">An instance of some <see cref="DrawingBrush"/>.</param>
         /// <param name="func">The method to create the actual <see cref="ITextEditor"/>.</param>
         /// <returns>The created <see cref="TextEditorInfo"/> instance.</returns>
-        public static TextEditorInfoDrawingBrush Create<T>(string name, DrawingBrush iconSource, Func<Task<T>> func) where T : ITextEditor =>
-            new TextEditorInfoDrawingBrush(name, iconSource, async () => await func(), typeof(T));
+        public static TextEditorInfoDrawingBrush Create<T>(string name, DrawingBrush iconSource, Func<Task<T>> func, params string[] extensions) where T : ITextEditor =>
+            new TextEditorInfoDrawingBrush(name, iconSource, async () => await func(), typeof(T), extensions);
 
         /// <summary>
         /// Creates a new <see cref="TextEditorInfo"/> instance.
@@ -121,8 +121,8 @@ namespace Arma.Studio.Data.TextEditor
         /// pack://application:,,,/assemblyname;component/path/to/file.png</param>
         /// <param name="func">The method to create the actual <see cref="ITextEditor"/>.</param>
         /// <returns>The created <see cref="TextEditorInfo"/> instance.</returns>
-        public static TextEditorInfoIcon Create<T>(string name, string iconSource, Func<T> func) where T : ITextEditor =>
-            new TextEditorInfoIcon(name, iconSource, () => func() as ITextEditor, typeof(T));
+        public static TextEditorInfoIcon Create<T>(string name, string iconSource, Func<T> func, params string[] extensions) where T : ITextEditor =>
+            new TextEditorInfoIcon(name, iconSource, () => func() as ITextEditor, typeof(T), extensions);
 
         /// <summary>
         /// Creates a new <see cref="TextEditorInfo"/> instance.
@@ -133,7 +133,7 @@ namespace Arma.Studio.Data.TextEditor
         /// pack://application:,,,/assemblyname;component/path/to/file.png</param>
         /// <param name="func">The method to create the actual <see cref="ITextEditor"/>.</param>
         /// <returns>The created <see cref="TextEditorInfo"/> instance.</returns>
-        public static TextEditorInfoIcon Create<T>(string name, string iconSource, Func<Task<T>> func) where T : ITextEditor =>
-            new TextEditorInfoIcon(name, iconSource, async () => await func(), typeof(T));
+        public static TextEditorInfoIcon Create<T>(string name, string iconSource, Func<Task<T>> func, params string[] extensions) where T : ITextEditor =>
+            new TextEditorInfoIcon(name, iconSource, async () => await func(), typeof(T), extensions);
     }
 }

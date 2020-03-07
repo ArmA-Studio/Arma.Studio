@@ -1,4 +1,7 @@
 ﻿using Arma.Studio.Data;
+using Arma.Studio.Data.IO;
+using Arma.Studio.Data.TextEditor;
+using Arma.Studio.Data.UI;
 using Arma.Studio.Data.UI.AttachedProperties;
 using Arma.Studio.UiEditor.Data;
 using System;
@@ -14,7 +17,12 @@ using System.Windows.Input;
 
 namespace Arma.Studio.UiEditor.UI
 {
-    public class UiEditorDataContext : DockableBase, IOnPreviewMouseWheel
+    public class UiEditorDataContext : DockableBase,
+        IOnDragEnter,
+        IOnDragLeave,
+        IOnDragOver,
+        IOnDrop,
+        IEditorDocument
     {
         #region Collection: CanvasManager (CanvasManager)
         public CanvasManager CanvasManager
@@ -31,51 +39,6 @@ namespace Arma.Studio.UiEditor.UI
             }
         }
         private CanvasManager _CanvasManager;
-        #endregion
-        #region Property: Zoom (System.Double)
-        public double Zoom
-        {
-            get => this._Zoom;
-            set
-            {
-                this._Zoom = value;
-                this.RaisePropertyChanged();
-            }
-        }
-        private double _Zoom;
-        #endregion
-        #region Interface: IOnPreviewMouseWheel
-        public void OnPreviewMouseWheel(UIElement sender, MouseWheelEventArgs e)
-        {
-            if (Keyboard.Modifiers == ModifierKeys.Control && (Application.Current as IApp).MainWindow.ActiveDockable == this)
-            {
-                e.Handled = true;
-
-                // Get current relative position of mouse
-                var currentMousePosition = e.GetPosition(this.CanvasManager.ScrollViewer);
-                var currentDeltaMouseLeft = currentMousePosition.X / this.CanvasManager.ScrollViewer.ActualWidth;
-                var currentDeltaMouseTop = currentMousePosition.Y / this.CanvasManager.ScrollViewer.ActualHeight;
-
-                // Calculate & apply new zoom level
-                var zoomDelta = e.Delta / 1000.0;
-                var oldZoom = this.Zoom;
-                var newZoom = this.Zoom * (1 + zoomDelta);
-                newZoom = newZoom > 0.1 ? (newZoom < 5 ? newZoom : 5) : 0.1;
-                this.Zoom = newZoom;
-
-                // Force Update on layouts of canvas & ScrollViewer
-                this.CanvasManager.Canvas.UpdateLayout();
-                this.CanvasManager.ScrollViewer.UpdateLayout();
-
-                // Adjust position of Horizontal- & VerticalOffset according to previous MouseDelta
-                this.CanvasManager.ScrollViewer.ScrollToHorizontalOffset(
-                    this.CanvasManager.ScrollViewer.HorizontalOffset +
-                    (currentDeltaMouseLeft * this.CanvasManager.ScrollViewer.ActualWidth * (newZoom - oldZoom)));
-                this.CanvasManager.ScrollViewer.ScrollToVerticalOffset(
-                    this.CanvasManager.ScrollViewer.VerticalOffset +
-                    (currentDeltaMouseTop * this.CanvasManager.ScrollViewer.ActualHeight * (newZoom - oldZoom)));
-            }
-        }
         #endregion
 
 
@@ -141,13 +104,215 @@ namespace Arma.Studio.UiEditor.UI
         }
         private ObservableCollection<IControlElement> _ForegroundControls;
         #endregion
+        #region Property: InterfaceSize (InterfaceSize)
+        /// <summary>
+        /// Specifies whether the game continues while the dialog is shown or not.
+        /// </summary>
+        public InterfaceSize InterfaceSize
+        {
+            get => this._InterfaceSize;
+            set
+            {
+                this._InterfaceSize = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private InterfaceSize _InterfaceSize;
+        #endregion
 
         public UiEditorDataContext()
         {
-            this._IDD = -1;
-            this._EnableSimulation = true;
-            this._BackgroundControls = new ObservableCollection<IControlElement>();
-            this._ForegroundControls = new ObservableCollection<IControlElement>();
+            this.IDD = -1;
+            this.EnableSimulation = true;
+            this.BackgroundControls = new ObservableCollection<IControlElement>();
+            this.ForegroundControls = new ObservableCollection<IControlElement>();
+            this.CanvasManager = new CanvasManager(this);
+            this.InterfaceSize = InterfaceSize.Small;
+        }
+        public UiEditorDataContext(File file) : this()
+        {
+            this.File = file;
+        }
+        public void OnDragEnter(UIElement sender, DragEventArgs e)
+        {
+            if (e.GetInfo().HasData<EditorToolboxItem>())
+            {
+                e.Effects = DragDropEffects.Move;
+                e.Handled = true;
+            }
+        }
+        public void OnDragOver(UIElement sender, DragEventArgs e)
+        {
+            if (e.GetInfo().HasData<EditorToolboxItem>())
+            {
+                e.Effects = DragDropEffects.Move;
+                e.Handled = true;
+            }
+        }
+        public void OnDrop(UIElement sender, DragEventArgs e)
+        {
+            var data = e.GetInfo().GetDataOrDefault<EditorToolboxItem>();
+            if (data == null)
+            {
+                return;
+            }
+            var position = e.GetPosition(sender);
+            switch (data.Type)
+            {
+                case EControlType.CT_STATIC:
+                    this.ForegroundControls.Add(new ControlStatic()
+                    {
+                        Left = position.X - 25,
+                        Top = position.Y - 25,
+                        Width = 50,
+                        Height = 50,
+                        Text = "ControlStatic"
+                    });
+                    break;
+                case EControlType.CT_BUTTON:
+                case EControlType.CT_EDIT:
+                case EControlType.CT_SLIDER:
+                case EControlType.CT_COMBO:
+                case EControlType.CT_LISTBOX:
+                case EControlType.CT_TOOLBOX:
+                case EControlType.CT_CHECKBOXES:
+                case EControlType.CT_PROGRESS:
+                case EControlType.CT_HTML:
+                case EControlType.CT_STATIC_SKEW:
+                case EControlType.CT_ACTIVETEXT:
+                case EControlType.CT_TREE:
+                case EControlType.CT_STRUCTURED_TEXT:
+                case EControlType.CT_CONTEXT_MENU:
+                case EControlType.CT_CONTROLS_GROUP:
+                case EControlType.CT_SHORTCUTBUTTON:
+                case EControlType.CT_HITZONES:
+                case EControlType.CT_VEHICLETOGGLES:
+                case EControlType.CT_CONTROLS_TABLE:
+                case EControlType.CT_XKEYDESC:
+                case EControlType.CT_XBUTTON:
+                case EControlType.CT_XLISTBOX:
+                case EControlType.CT_XSLIDER:
+                case EControlType.CT_XCOMBO:
+                case EControlType.CT_ANIMATED_TEXTURE:
+                case EControlType.CT_MENU:
+                case EControlType.CT_MENU_STRIP:
+                case EControlType.CT_CHECKBOX:
+                case EControlType.CT_OBJECT:
+                case EControlType.CT_OBJECT_ZOOM:
+                case EControlType.CT_OBJECT_CONTAINER:
+                case EControlType.CT_OBJECT_CONT_ANIM:
+                case EControlType.CT_LINEBREAK:
+                case EControlType.CT_USER:
+                case EControlType.CT_MAP:
+                case EControlType.CT_MAP_MAIN:
+                case EControlType.CT_LISTNBOX:
+                case EControlType.CT_ITEMSLOT:
+                case EControlType.CT_LISTNBOX_CHECKABLE:
+                case EControlType.CT_VEHICLE_DIRECTION:
+                default:
+                    return;
+            }
+
+            e.Handled = true;
+        }
+        public void OnDragLeave(UIElement sender, DragEventArgs e)
+        {
+            if (e.GetInfo().HasData<EditorToolboxItem>())
+            {
+                e.Effects = DragDropEffects.Move;
+                e.Handled = true;
+            }
+        }
+        public override string Title { get => false ? this.File?.Name : String.Concat(this.File?.Name, '*'); set => throw new InvalidOperationException(); }
+
+        #region Interface: IEditorDocument
+        public File File
+        {
+            get => this._File;
+            set
+            {
+                if (this._File != null)
+                {
+                    this._File.PropertyChanged -= this.File_PropertyChanged;
+                }
+                this._File = value;
+                if (this._File != null)
+                {
+                    this._File.PropertyChanged += this.File_PropertyChanged;
+                }
+                if (this.TextEditorInstance != null)
+                {
+                    this.TextEditorInstance.File = value;
+                }
+                this.RaisePropertyChanged();
+            }
+        }
+        private File _File;
+        private void File_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this.RaisePropertyChanged(nameof(this.Title));
+        }
+
+        public ITextEditor TextEditorInstance => null;
+
+        public DateTime LastChangeTimestamp
+        {
+            get => this._LastChangeTimestamp;
+            set
+            {
+                this._LastChangeTimestamp = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private DateTime _LastChangeTimestamp;
+
+        public bool IsReadOnly
+        {
+            get => this._IsReadOnly;
+            set
+            {
+                this._IsReadOnly = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private bool _IsReadOnly;
+
+        public string GetContents() => this.File.GetText();
+        public void ScrollTo(int line, int column) { }
+        #endregion
+
+        public override void LayoutSaveCallback(dynamic section)
+        {
+            section.fullpath = this.File.FullPath;
+            section.name = this.File.Name;
+        }
+        public override void LayoutLoadCallback(dynamic section)
+        {
+            if ((Application.Current as IApp).MainWindow.FileManagement.ContainsKey((string)section.fullpath))
+            {
+                this.File = (File)(Application.Current as IApp).MainWindow.FileManagement[(string)section.fullpath];
+            }
+            else
+            {
+                this.File = new File { Name = (string)section.fullpath };
+            }
+            this.RaisePropertyChanged(nameof(this.Title));
+            var type = (string)section.type;
+
+            if (this.File?.FullPath != null && System.IO.File.Exists(this.File.FullPath))
+            {
+                using (var reader = new System.IO.StreamReader(this.File.FullPath))
+                {
+                    // ToDo: Parse config
+                    //this.TextDocument.Text = reader.ReadToEnd();
+                }
+            }
+            else
+            {
+                MessageBox.Show(this.File?.FullPath?.ToString() ?? "NULL", "File Not Found", MessageBoxButton.OK, MessageBoxImage.Warning);
+                this.Close();
+                return;
+            }
         }
     }
 }

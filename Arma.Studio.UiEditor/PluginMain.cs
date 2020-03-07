@@ -10,15 +10,19 @@ using System.Threading.Tasks;
 
 namespace Arma.Studio.UiEditor
 {
-    public class PluginMain : IPlugin, IDockableProvider
+    public class PluginMain : IPlugin, IDockableProvider, IEditorProvider
     {
         public Version Version => new Version(1, 0, 0);
         public string Name => Properties.Language.UIEditor_Name;
         public string Description => String.Empty;
 
         public IEnumerable<DockableInfo> Dockables => new DockableInfo[] {
-            DockableInfo.Create(Properties.Language.UIEditor_Toolbox, ECreationMode.Anchorable, () => new EditorToolboxDataContext()),
-            DockableInfo.Create(Properties.Language.UIEditor_Document, ECreationMode.Document, () => new UI.UiEditorDataContext())
+            DockableInfo.Create(Properties.Language.UIEditor_Toolbox, ECreationMode.Anchorable, () => new EditorToolboxDataContext())
+        };
+
+        public IEnumerable<EditorInfo> EditorInfos => new EditorInfo[]
+        {
+            EditorInfo.Create(Properties.Language.UIEditor_Document, (file) => new UI.UiEditorDataContext(file), ".ui")
         };
 
         public Task<IUpdateInfo> CheckForUpdate(CancellationToken cancellationToken) => Task.Run(() => default(IUpdateInfo));

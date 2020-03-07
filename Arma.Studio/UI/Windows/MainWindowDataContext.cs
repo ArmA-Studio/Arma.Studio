@@ -27,6 +27,7 @@ namespace Arma.Studio.UI.Windows
         protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
 
         #region IMainWindow
+        public IEnumerable<Data.UI.EditorInfo> EditorInfos => this.EditorsAvailable;
         public IEnumerable<Data.TextEditor.TextEditorInfo> TextEditorInfos => this.TextEditorsAvailable;
         public BusyContainerManager BusyContainerManager { get; }
         public Window OwningWindow { get; private set; }
@@ -88,37 +89,36 @@ namespace Arma.Studio.UI.Windows
         public IFileManagement FileManagement => this.Solution;
         public IBreakpointManager BreakpointManager => this.Solution.BreakpointManager;
 
-        public Task<Data.UI.ITextDocument> OpenFile(File file)
+        public Task<Data.UI.IEditorDocument> OpenFile(File file)
         {
-            var doc = this.Documents.Where((d) => d is TextEditorDataContext).Cast<TextEditorDataContext>().FirstOrDefault((d) => d.File.Equals(file));
+            var doc = this.Documents.Where((d) => d is Data.UI.IEditorDocument).Cast<Data.UI.IEditorDocument>().FirstOrDefault((d) => d.File.Equals(file));
             if (doc != null)
             {
-                doc.Focus();
-                return Task.FromResult<Data.UI.ITextDocument>(doc);
+                (doc as DockableBase).Focus(); ;
+                return Task.FromResult(doc);
             }
             var ext = file.Extension;
-            var editorInfo = this.TextEditorsAvailable.FirstOrDefault((tei) => tei.Extensions.Any((s) => s.Equals(ext, StringComparison.InvariantCultureIgnoreCase)));
+            var editorInfo = this.EditorInfos.FirstOrDefault((tei) => tei.Extensions.Any((s) => s.Equals(ext, StringComparison.InvariantCultureIgnoreCase)));
             if (editorInfo == null)
             {
                 // ToDo: Localize
                 MessageBox.Show("File extension unknown");
-                return Task.FromException<Data.UI.ITextDocument>(new Exception());
+                return Task.FromException<Data.UI.IEditorDocument>(new Exception());
             }
             if (editorInfo.IsAsync)
             {
                 return Task.Run(async () =>
                 {
-                    var cntxt = await editorInfo.CreateAsyncFunc();
-                    var docActual = App.Current.Dispatcher.Invoke(() => new TextEditorDataContext(cntxt, file));
-                    this.AddDocument(docActual);
-                    return docActual as Data.UI.ITextDocument;
+                    var editorDocument = await editorInfo.CreateAsyncFunc(file);
+                    this.AddDocument((DockableBase)editorDocument);
+                    return editorDocument;
                 });
             }
             else
             {
-                var docActual = App.Current.Dispatcher.Invoke(() => new TextEditorDataContext(editorInfo.CreateFunc(), file));
-                this.AddDocument(docActual);
-                return Task.FromResult<Data.UI.ITextDocument>(docActual);
+                var editorDocument = editorInfo.CreateFunc(file);
+                this.AddDocument((DockableBase)editorDocument);
+                return Task.FromResult(editorDocument);
             }
         }
         #endregion
@@ -367,6 +367,8 @@ namespace Arma.Studio.UI.Windows
         public ObservableCollection<DockableInfo> DocumentsAvailable { get { return this._DocumentsAvailable; } set { this._DocumentsAvailable = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<DockableInfo> _DocumentsAvailable;
 
+        public ObservableCollection<EditorInfo> EditorsAvailable { get { return this._EditorsAvailable; } set { this._EditorsAvailable = value; this.RaisePropertyChanged(); } }
+        private ObservableCollection<EditorInfo> _EditorsAvailable;
         public ObservableCollection<TextEditorInfo> TextEditorsAvailable { get { return this._TextEditorsAvailable; } set { this._TextEditorsAvailable = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<TextEditorInfo> _TextEditorsAvailable;
 
@@ -592,6 +594,7 @@ namespace Arma.Studio.UI.Windows
             this.LayoutItemTemplateSelector = new GenericDataTemplateSelector();
             this.Anchorables = new ObservableCollection<DockableBase>();
             this.Documents = new ObservableCollection<DockableBase>();
+            this.EditorsAvailable = new ObservableCollection<EditorInfo>();
             this.TextEditorsAvailable = new ObservableCollection<TextEditorInfo>();
             this.AnchorablesAvailable = new ObservableCollection<DockableInfo>();
             this.DocumentsAvailable = new ObservableCollection<DockableInfo>();

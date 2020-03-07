@@ -25,7 +25,8 @@ namespace Arma.Studio.Data.UI
         void AddAnchorable(DockableBase dockableBase);
         IEnumerable<T> GetDocuments<T>() where T : DockableBase;
         T GetAnchorable<T>() where T : DockableBase;
-        Task<Data.UI.ITextDocument> OpenFile(File file);
-        IEnumerable<TextEditor.TextEditorInfo> TextEditorInfos { get; }
+        Task<Data.UI.IEditorDocument> OpenFile(File file);
+        IEnumerable<EditorInfo> EditorInfos { get; }
+        IEnumerable<Data.TextEditor.TextEditorInfo> TextEditorInfos { get; }
     }
 }

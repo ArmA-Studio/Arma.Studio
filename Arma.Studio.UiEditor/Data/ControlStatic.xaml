@@ -1,0 +1,45 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:local="clr-namespace:Arma.Studio.UiEditor.Data"
+                    xmlns:p="clr-namespace:Arma.Studio.UiEditor.Properties"
+                    xmlns:converters ="clr-namespace:Arma.Studio.UiEditor.UI.Converters">
+    <DataTemplate DataType="{x:Type local:ControlStatic}">
+        <DataTemplate.Resources>
+            <converters:SizeExToFontSizeMultiConverter x:Key="SizeExToFontSizeMultiConverter"/>
+        </DataTemplate.Resources>
+        <Grid>
+            <Rectangle Width="{Binding Width}"
+                       Height="{Binding Height}">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{Binding BackgroundColor}"/>
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock Text="{Binding Text}"
+                       MaxWidth="{Binding Width}"
+                       MaxHeight="{Binding Height}">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{Binding ForegroundColor}"/>
+                </TextBlock.Foreground>
+                <TextBlock.FontSize>
+                    <MultiBinding Converter="{StaticResource SizeExToFontSizeMultiConverter}">
+                        <Binding Path="FontSize"/>
+                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}" Path="DataContext.InterfaceSize"/>
+                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}" Path="DataContext.CanvasManager"/>
+                    </MultiBinding>
+                </TextBlock.FontSize>
+            </TextBlock>
+            <Rectangle Fill="#08019CFF" Stroke="#019CFF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Rectangle.Style>
+                    <Style TargetType="Rectangle">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSelected}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Rectangle.Style>
+            </Rectangle>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

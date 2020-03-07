@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Arma.Studio.Data.TextEditor
+namespace Arma.Studio.Data.UI
 {
-    public class TextEditorInfoIcon : TextEditorInfo
+    public class EditorInfoIcon : EditorInfo
     {
         /// <summary>
         /// The path to an icon for the dockable to describe.
@@ -21,7 +21,7 @@ namespace Arma.Studio.Data.TextEditor
         /// pack://application:,,,/assemblyname;component/path/to/file.png</param>
         /// <param name="func">The method to create the actual <see cref="ITextEditor"/>.</param>
         /// <param name="type">The actual type of the <see cref="ITextEditor"/>.</param>
-        internal TextEditorInfoIcon(string name, string iconSource, Func<ITextEditor> func, Type type, params string[] extensions) : base(name, func, type, extensions)
+        internal EditorInfoIcon(string name, string iconSource, Func<IO.File, IEditorDocument> func, Type type, params string[] extensions) : base(name, func, type, extensions)
         {
             this.IconSource = iconSource;
         }
@@ -35,7 +35,7 @@ namespace Arma.Studio.Data.TextEditor
         /// pack://application:,,,/assemblyname;component/path/to/file.png</param>
         /// <param name="func">The method to create the actual <see cref="ITextEditor"/>.</param>
         /// <param name="type">The actual type of the <see cref="ITextEditor"/>.</param>
-        internal TextEditorInfoIcon(string name, string iconSource, Func<Task<ITextEditor>> func, Type type, params string[] extensions) : base(name, func, type, extensions)
+        internal EditorInfoIcon(string name, string iconSource, Func<IO.File, Task<IEditorDocument>> func, Type type, params string[] extensions) : base(name, func, type, extensions)
         {
             this.IconSource = iconSource;
         }

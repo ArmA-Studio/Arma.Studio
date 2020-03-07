@@ -21,7 +21,7 @@ namespace Arma.Studio.Data.TextEditor
         /// <param name="iconSource">An instance of some <see cref="DrawingBrush"/>.</param>
         /// <param name="func">The method to create the actual <see cref="ITextEditor"/>.</param>
         /// <param name="type">The actual type of the <see cref="ITextEditor"/>.</param>
-        internal TextEditorInfoDrawingBrush(string name, DrawingBrush iconSource, Func<ITextEditor> func, Type type) : base(name, func, type)
+        internal TextEditorInfoDrawingBrush(string name, DrawingBrush iconSource, Func<ITextEditor> func, Type type, params string[] extensions) : base(name, func, type, extensions)
         {
             this.IconSource = iconSource;
         }
@@ -33,7 +33,7 @@ namespace Arma.Studio.Data.TextEditor
         /// <param name="iconSource">An instance of some <see cref="DrawingBrush"/>.</param>
         /// <param name="func">The method to create the actual <see cref="ITextEditor"/>.</param>
         /// <param name="type">The actual type of the <see cref="ITextEditor"/>.</param>
-        internal TextEditorInfoDrawingBrush(string name, DrawingBrush iconSource, Func<Task<ITextEditor>> func, Type type) : base(name, func, type)
+        internal TextEditorInfoDrawingBrush(string name, DrawingBrush iconSource, Func<Task<ITextEditor>> func, Type type, params string[] extensions) : base(name, func, type, extensions)
         {
             this.IconSource = iconSource;
         }

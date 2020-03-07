@@ -158,9 +158,13 @@
     <Compile Include="UI\IInteractionUndoRedo.cs" />
     <Compile Include="UI\IInteractionSave.cs" />
     <Compile Include="UI\IMainWindow.cs" />
-    <Compile Include="UI\ITextDocument.cs" />
+    <Compile Include="UI\IEditorDocument.cs" />
+    <Compile Include="UI\IEditorProvider.cs" />
     <Compile Include="UI\RelayCommand.cs" />
     <Compile Include="UI\RelayCommandAsync.cs" />
+    <Compile Include="UI\EditorInfo.cs" />
+    <Compile Include="UI\EditorInfoDrawingBrush.cs" />
+    <Compile Include="UI\EditorInfoIcon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="UI\AttachedProperties\Attached.tt">

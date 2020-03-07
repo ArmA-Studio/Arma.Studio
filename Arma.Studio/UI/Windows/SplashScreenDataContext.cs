@@ -174,6 +174,68 @@ namespace Arma.Studio.UI.Windows
                     foreach (var it in PluginManager.Instance.GetPlugins<Data.TextEditor.ITextEditorProvider>())
                     {
                         App.MWContext.TextEditorsAvailable.AddRange(it.TextEditorInfos);
+                        App.MWContext.EditorsAvailable.AddRange(it.TextEditorInfos.Select((textEditorInfo) => {
+                            switch(textEditorInfo)
+                            {
+                                case Data.TextEditor.TextEditorInfoDrawingBrush textEditorInfoDrawingBrush:
+                                    if (textEditorInfo.IsAsync)
+                                    {
+                                        return EditorInfo.Create(textEditorInfo.Name, textEditorInfoDrawingBrush.IconSource, async (file) => {
+                                            var cntxt = await textEditorInfo.CreateAsyncFunc();
+                                            var docActual = App.Current.Dispatcher.Invoke(() => new TextEditorDataContext(cntxt, file));
+                                            return docActual;
+                                        }, textEditorInfo.Extensions);
+                                    }
+                                    else
+                                    {
+                                        return EditorInfo.Create(textEditorInfo.Name, textEditorInfoDrawingBrush.IconSource, (file) => {
+                                            var cntxt = textEditorInfo.CreateFunc();
+                                            var docActual = App.Current.Dispatcher.Invoke(() => new TextEditorDataContext(cntxt, file));
+                                            return docActual;
+                                        }, textEditorInfo.Extensions);
+                                    }
+                                case Data.TextEditor.TextEditorInfoIcon textEditorInfoIcon:
+                                    if (textEditorInfo.IsAsync)
+                                    {
+                                        return EditorInfo.Create(textEditorInfo.Name, textEditorInfoIcon.IconSource, async (file) => {
+                                            var cntxt = await textEditorInfo.CreateAsyncFunc();
+                                            var docActual = App.Current.Dispatcher.Invoke(() => new TextEditorDataContext(cntxt, file));
+                                            return docActual;
+                                        }, textEditorInfo.Extensions);
+                                    }
+                                    else
+                                    {
+                                        return EditorInfo.Create(textEditorInfo.Name, textEditorInfoIcon.IconSource, (file) => {
+                                            var cntxt = textEditorInfo.CreateFunc();
+                                            var docActual = App.Current.Dispatcher.Invoke(() => new TextEditorDataContext(cntxt, file));
+                                            return docActual;
+                                        }, textEditorInfo.Extensions);
+                                    }
+                                default:
+                                    if (textEditorInfo.IsAsync)
+                                    {
+                                        return EditorInfo.Create(textEditorInfo.Name, async (file) => {
+                                            var cntxt = await textEditorInfo.CreateAsyncFunc();
+                                            var docActual = App.Current.Dispatcher.Invoke(() => new TextEditorDataContext(cntxt, file));
+                                            return docActual;
+                                        }, textEditorInfo.Extensions);
+                                    }
+                                    else
+                                    {
+                                        return EditorInfo.Create(textEditorInfo.Name, (file) => {
+                                            var cntxt = textEditorInfo.CreateFunc();
+                                            var docActual = App.Current.Dispatcher.Invoke(() => new TextEditorDataContext(cntxt, file));
+                                            return docActual;
+                                        }, textEditorInfo.Extensions);
+                                    }
+                            }
+
+                        }));
+                    }
+                    // Receive Editor Providers
+                    foreach (var it in PluginManager.Instance.GetPlugins<Data.UI.IEditorProvider>())
+                    {
+                        App.MWContext.EditorsAvailable.AddRange(it.EditorInfos);
                     }
                 }
             }

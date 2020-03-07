@@ -2,6 +2,7 @@
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
               xmlns:local="clr-namespace:Arma.Studio.UiEditor.UI;assembly=Arma.Studio.UiEditor"
+              xmlns:data="clr-namespace:Arma.Studio.UiEditor.Data;assembly=Arma.Studio.UiEditor"
               xmlns:p="clr-namespace:Arma.Studio.UiEditor.Properties;assembly=Arma.Studio.UiEditor"
               DataType="{x:Type local:UiEditorDataContext}"
               xmlns:ae="http://icsharpcode.net/sharpdevelop/avalonedit"
@@ -20,15 +21,16 @@
                       VerticalScrollBarVisibility="Visible"
                       Grid.Row="0"
                       asd:AttachedDataContext.DataContext="{Binding CanvasManager}"
-                      asd:ScrollViewerAttached.VerticalOffset="{Binding VerticalScrollOffset}"
-                      asd:ScrollViewerAttached.HorizontalOffset="{Binding HorizontalScrollOffset}">
+                      asd:ScrollViewerAttached.VerticalOffset="{Binding CanvasManager.VerticalScrollOffset}"
+                      asd:ScrollViewerAttached.HorizontalOffset="{Binding CanvasManager.HorizontalScrollOffset}">
             <ItemsControl>
                 <ItemsControl.LayoutTransform>
-                    <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"/>
+                    <ScaleTransform ScaleX="{Binding CanvasManager.Zoom}" ScaleY="{Binding CanvasManager.Zoom}"/>
                 </ItemsControl.LayoutTransform>
                 <ItemsControl.ItemsSource>
                     <MultiBinding Converter="{StaticResource ToCompositeCollectionMultiConverter}">
-                        <Binding Path="ControlElements"/>
+                        <Binding Path="BackgroundControls"/>
+                        <Binding Path="ForegroundControls"/>
                         <Binding Path="CanvasManager.SelectionHelper" Converter="{StaticResource SingleToCollectionConverter}"/>
                     </MultiBinding>
                 </ItemsControl.ItemsSource>
@@ -36,8 +38,11 @@
                 </ItemsControl.Resources>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas Width="{Binding Width}" Height="{Binding Height}"
-                                asd:AttachedDataContext.DataContext="{Binding CanvasManager}">
+                        <Canvas Width="{Binding CanvasManager.Width}"
+                                Height="{Binding CanvasManager.Height}"
+                                asd:AttachedDataContext.DataContext="{Binding CanvasManager}"
+                                AllowDrop="True"
+                                Cursor="{Binding CanvasManager.Cursor}">
                             <Canvas.Style>
                                 <Style TargetType="Canvas">
                                     <Setter Property="Background">
@@ -74,7 +79,7 @@
                         <Setter Property="Canvas.Top" Value="{Binding Top}"/>
                         <Setter Property="Canvas.Left" Value="{Binding Left}"/>
                         <Setter Property="Canvas.ZIndex" Value="{Binding ZIndex}"/>
-                        <Setter Property="asd:DataRelaying.DataRelays">
+                        <!--<Setter Property="asd:DataRelaying.DataRelays">
                             <Setter.Value>
                                 <asd:DataRelayCollection>
                                     <asd:DataRelay Source="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UIElement}}"
@@ -85,7 +90,7 @@
                                                                     RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=FrameworkElement}}"/>
                                 </asd:DataRelayCollection>
                             </Setter.Value>
-                        </Setter>
+                        </Setter>-->
                     </Style>
                 </ItemsControl.ItemContainerStyle>
             </ItemsControl>
@@ -103,18 +108,33 @@
                     <ColumnDefinition Width="4"/>
                     <ColumnDefinition MinWidth="64" Width="*"/>
                 </Grid.ColumnDefinitions>
+                <TextBlock Text="{x:Static p:Language.UiEditor_InterfaceSize}" Grid.Column="0" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{x:Static data:InterfaceSize.InterfaceSizes}" SelectedItem="{Binding InterfaceSize}" Grid.Column="2">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type data:InterfaceSize}">
+                            <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+            <Grid ToolTip="{x:Static p:Language.UiEditor_CanvasGridSize_ToolTip}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="4"/>
+                    <ColumnDefinition MinWidth="64" Width="*"/>
+                </Grid.ColumnDefinitions>
                 <TextBlock Text="{x:Static p:Language.UiEditor_CanvasGridSize}" Grid.Column="0" VerticalAlignment="Center"/>
                 <xceed:DoubleUpDown Value="{Binding CanvasManager.GridSize}" Minimum="10" Increment="1" Grid.Column="2" IsUndoEnabled="False"/>
             </Grid>
 
             <Grid ToolTip="{x:Static p:Language.UiEditor_Zoom_ToolTip}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Zoom"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                     <ColumnDefinition Width="4"/>
                     <ColumnDefinition MinWidth="64" Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="{x:Static p:Language.UiEditor_Zoom}" Grid.Column="0" VerticalAlignment="Center"/>
-                <xceed:DoubleUpDown Value="{Binding Zoom}" Minimum="0.1" Maximum="5" Increment="0.2" Grid.Column="2" IsUndoEnabled="False"/>
+                <xceed:DoubleUpDown Value="{Binding CanvasManager.Zoom}" Minimum="0.1" Maximum="5" Increment="0.2" Grid.Column="2" IsUndoEnabled="False"/>
             </Grid>
         </WrapPanel>
     </Grid>

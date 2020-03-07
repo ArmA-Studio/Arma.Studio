@@ -17,7 +17,6 @@ namespace Arma.Studio.UiEditor
         MoveNW,
         MoveSE,
         MoveSW,
-        Move,
-        Pick
+        Move
     }
 }

@@ -261,4 +261,22 @@
   <data name="UiEditor_Zoom" xml:space="preserve">
     <value>Zoom</value>
   </data>
+  <data name="InterfaceSize_VerySmall" xml:space="preserve">
+    <value>Very Small</value>
+  </data>
+  <data name="InterfaceSize_Small" xml:space="preserve">
+    <value>Small</value>
+  </data>
+  <data name="InterfaceSize_Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="InterfaceSize_Large" xml:space="preserve">
+    <value>Large</value>
+  </data>
+  <data name="InterfaceSize_VeryLarge" xml:space="preserve">
+    <value>Very Large</value>
+  </data>
+  <data name="UiEditor_InterfaceSize" xml:space="preserve">
+    <value>Interface Size</value>
+  </data>
 </root>

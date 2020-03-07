@@ -1,5 +1,6 @@
 ﻿using Arma.Studio.Data;
 using Arma.Studio.Data.UI.AttachedProperties;
+using Arma.Studio.UiEditor.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

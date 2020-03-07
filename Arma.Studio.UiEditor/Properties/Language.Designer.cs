@@ -430,6 +430,51 @@ namespace Arma.Studio.UiEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Large.
+        /// </summary>
+        public static string InterfaceSize_Large {
+            get {
+                return ResourceManager.GetString("InterfaceSize_Large", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normal.
+        /// </summary>
+        public static string InterfaceSize_Normal {
+            get {
+                return ResourceManager.GetString("InterfaceSize_Normal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Small.
+        /// </summary>
+        public static string InterfaceSize_Small {
+            get {
+                return ResourceManager.GetString("InterfaceSize_Small", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Very Large.
+        /// </summary>
+        public static string InterfaceSize_VeryLarge {
+            get {
+                return ResourceManager.GetString("InterfaceSize_VeryLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Very Small.
+        /// </summary>
+        public static string InterfaceSize_VerySmall {
+            get {
+                return ResourceManager.GetString("InterfaceSize_VerySmall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gridsize.
         /// </summary>
         public static string UiEditor_CanvasGridSize {
@@ -453,6 +498,15 @@ namespace Arma.Studio.UiEditor.Properties {
         public static string UIEditor_Document {
             get {
                 return ResourceManager.GetString("UIEditor_Document", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interface Size.
+        /// </summary>
+        public static string UiEditor_InterfaceSize {
+            get {
+                return ResourceManager.GetString("UiEditor_InterfaceSize", resourceCulture);
             }
         }
         
