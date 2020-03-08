@@ -104,10 +104,7 @@ namespace Arma.Studio.SolutionExplorer
 
         public void OnSelectedItemChanged(TreeView sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (e.NewValue is IPropertyHost propertyHost)
-            {
-                (Application.Current as IApp).MainWindow.PropertyHost = propertyHost;
-            }
+            (Application.Current as IApp).MainWindow.PropertyHost = e.NewValue as IPropertyHost;
         }
     }
 }

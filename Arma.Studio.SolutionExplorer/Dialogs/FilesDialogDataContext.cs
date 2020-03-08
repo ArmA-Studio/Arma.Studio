@@ -49,7 +49,7 @@ namespace Arma.Studio.SolutionExplorer.Dialogs
         public bool OKButtonEnabled => !String.IsNullOrWhiteSpace(this.FileName) &&
             this.FileName.IndexOfAny(System.IO.Path.GetInvalidFileNameChars()) == -1 &&
             this.SelectedEditorInfo != null &&
-            !System.IO.Directory.GetFiles(this.basePath, "*", System.IO.SearchOption.TopDirectoryOnly).Any((path) => System.IO.Path.GetFileNameWithoutExtension(path) != System.IO.Path.GetFileNameWithoutExtension(this.FileName));
+            !System.IO.Directory.GetFiles(this.basePath, "*", System.IO.SearchOption.TopDirectoryOnly).Any((path) => System.IO.Path.GetFileNameWithoutExtension(path) == System.IO.Path.GetFileNameWithoutExtension(this.FileName));
 
         private readonly string basePath;
         public FilesDialogDataContext(string basePath)

@@ -43,6 +43,6 @@
             </ListView.ItemTemplate>
         </ListView>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="{x:Static p:Language.FilesDialog_Filename}"/>
-        <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding FileName}"/>
+        <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </asd:DialogWindow>
