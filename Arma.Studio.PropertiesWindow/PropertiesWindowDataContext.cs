@@ -54,6 +54,11 @@ namespace Arma.Studio.PropertiesWindow
         {
             if (propertyHost is null)
             {
+                var groups = Application.Current.Dispatcher.Invoke(() => this.Properties.ToArray());
+                foreach (var it in groups)
+                {
+                    IsExpandedDictionary[it.Title] = it.IsExpanded;
+                }
                 Application.Current.Dispatcher.Invoke(() => this.Properties.Clear());
             }
             else

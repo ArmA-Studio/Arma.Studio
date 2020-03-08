@@ -4,12 +4,12 @@
                     xmlns:containers="clr-namespace:Arma.Studio.PropertiesWindow.PropertyContainers"
                     xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit">
     <DataTemplate DataType="{x:Type containers:PropertyContainerGroup}">
-        <Expander Header="{Binding Title}" IsExpanded="{Binding IsExpanded}">
+        <Expander Header="{Binding Title}" IsExpanded="{Binding IsExpanded}" Margin="2">
             <ItemsControl ItemsSource="{Binding Properties}"/>
         </Expander>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerBoolean}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -20,7 +20,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerByte}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -31,7 +31,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerChar}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -42,7 +42,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerDecimal}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -53,7 +53,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerDouble}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -64,7 +64,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerEnum}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -75,7 +75,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerInt16}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -86,7 +86,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerInt32}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -97,7 +97,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerInt64}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -108,7 +108,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerSByte}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -119,7 +119,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerSingle}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -130,7 +130,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerString}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -141,7 +141,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerUInt16}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -152,7 +152,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerUInt32}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -163,7 +163,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerUInt64}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>
@@ -174,7 +174,7 @@
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerColor}">
-        <Grid ToolTip="{Binding ToolTip}">
+        <Grid ToolTip="{Binding ToolTip}" Margin="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
                 <ColumnDefinition Width="8"/>

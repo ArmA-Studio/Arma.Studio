@@ -26,7 +26,7 @@
                         SnapsToDevicePixels="True">
                     <ScrollViewer Padding="{TemplateBinding Control.Padding}"
                                   Focusable="False">
-                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" Margin="2"/>
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"/>
                     </ScrollViewer>
                 </Border>
             </ControlTemplate>
