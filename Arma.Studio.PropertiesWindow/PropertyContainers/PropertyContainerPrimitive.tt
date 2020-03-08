@@ -1,0 +1,50 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ import namespace="System" #>
+<#@ output extension=".cs" #>
+<#
+	Type[] types = new[]
+	{
+	    typeof(Byte),
+	    typeof(SByte),
+	    typeof(Int32),
+	    typeof(UInt32),
+	    typeof(Int16),
+	    typeof(UInt16),
+	    typeof(Int64),
+	    typeof(UInt64),
+	    typeof(Single),
+	    typeof(Double),
+	    typeof(Char),
+	    typeof(Boolean),
+	    typeof(String),
+	    typeof(Decimal)
+	};
+#>
+using System;
+using System.Reflection;
+namespace Arma.Studio.PropertiesWindow.PropertyContainers
+{
+<# foreach (var type in types) { #>
+    public class PropertyContainer<#= type.Name #> : PropertyContainerBase
+    {
+		public PropertyContainer<#= type.Name #>(string title, string tooltip, object data, string propertyName, Func<object, <#= type.Name #>> getFunc, Action<object, <#= type.Name #>> setFunc) : 
+            base(title, tooltip, data, propertyName, (obj) => getFunc(obj), (obj, val) => setFunc(obj, (<#= type.Name #>)val)) {}
+
+        /// <summary>
+        /// Creates a new <see cref="PropertyContainer<#= type.Name #>"/>.
+        /// </summary>
+        /// <param name="data">The object that relates to the <paramref name="propertyInfo"/>.</param>
+        /// <param name="propertyInfo">The property that is supposed to be represented.</param>
+        /// <returns></returns>
+		public static PropertyContainer<#= type.Name #> Create(object data, PropertyInfo propertyInfo)
+		{
+            var attribute = (Data.UI.PropertyAttribute)propertyInfo.GetCustomAttribute(typeof(Data.UI.PropertyAttribute), true);
+            if (attribute is null)
+            {
+                throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
+            }
+            return new PropertyContainer<#= type.Name #>(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (<#= type.Name #>)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+		}
+    }
+<# } #>
+}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Arma.Studio.Data.UI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Arma.Studio.UiEditor.Data
 {
-    public interface IControlElement : INotifyPropertyChanged
+    public interface IControlElement : INotifyPropertyChanged, IPropertyHost
     {
         int ZIndex { get; set; }
         bool IsSelected { get; set; }

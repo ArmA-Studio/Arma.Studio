@@ -8,7 +8,7 @@
         <DataTemplate.Resources>
             <converters:SizeExToFontSizeMultiConverter x:Key="SizeExToFontSizeMultiConverter"/>
         </DataTemplate.Resources>
-        <Grid>
+        <Grid Opacity="{Binding Opacity}">
             <Rectangle Width="{Binding Width}"
                        Height="{Binding Height}">
                 <Rectangle.Fill>

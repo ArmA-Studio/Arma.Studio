@@ -21,9 +21,9 @@ namespace Arma.Studio.SqfEditor
         }
         private class UsageContainer
         {
-            SqfVm.SqfNode Node { get; set; }
+            SqfVm.Astnode Node { get; set; }
             int Usage { get; set; }
-            public UsageContainer(SqfVm.SqfNode node)
+            public UsageContainer(SqfVm.Astnode node)
             {
                 this.Node = node;
                 this.Usage = 0;
@@ -73,7 +73,7 @@ namespace Arma.Studio.SqfEditor
             return await Task.Run(() => {
                 var lintInfos = new List<LintInfo>();
                 string errors, warnings, output;
-                SqfVm.SqfNode cst;
+                SqfVm.Astnode cst;
                 lock (this.Virtualmachine)
                 {
                     var errorsBuilder = new StringBuilder();
@@ -178,13 +178,13 @@ namespace Arma.Studio.SqfEditor
             });
         }
 
-        private static void DetermineUsage(SqfVm.SqfNode node, Dictionary<string, UsageContainer> usage)
+        private static void DetermineUsage(SqfVm.Astnode node, Dictionary<string, UsageContainer> usage)
         {
-            switch (node.GetNodeType())
+            switch (node.GetSqfNodeType())
             {
-                case SqfVm.SqfNodeType.ASSIGNMENT:
+                case SqfVm.SqfAstnodeType.ASSIGNMENT:
                     break;
-                case SqfVm.SqfNodeType.VARIABLE:
+                case SqfVm.SqfAstnodeType.VARIABLE:
 
                     break;
                 default:
@@ -240,9 +240,9 @@ namespace Arma.Studio.SqfEditor
                 return resList;
             });
         }
-        private static IEnumerable<SqfVm.SqfNode> FindAllCodeNodes(SqfVm.SqfNode node)
+        private static IEnumerable<SqfVm.Astnode> FindAllCodeNodes(SqfVm.Astnode node)
         {
-            if (node.GetNodeType() == SqfVm.SqfNodeType.CODE)
+            if (node.GetSqfNodeType() == SqfVm.SqfAstnodeType.CODE)
             {
                 yield return node;
             }

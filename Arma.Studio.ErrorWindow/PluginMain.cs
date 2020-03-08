@@ -69,7 +69,7 @@ namespace Arma.Studio.ErrorWindow
                                   .GetDocuments<DockableBase>()
                                   .Where((it) => it is IEditorDocument)
                                   .Cast<IEditorDocument>()
-                                  .FirstOrDefault((d) => d.TextEditorInstance.File == file);
+                                  .FirstOrDefault((d) => d.File == file);
                         if (doc != null)
                         {
                             continue;

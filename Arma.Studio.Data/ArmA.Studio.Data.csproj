@@ -65,6 +65,7 @@
     <Compile Include="DragEventArgsExtensions.cs" />
     <Compile Include="Debugging\EDebugAction.cs" />
     <Compile Include="Debugging\IDebugger.cs" />
+    <Compile Include="EnumNameAttribute.cs" />
     <Compile Include="IO\File.cs" />
     <Compile Include="IO\FileFolderBase.cs" />
     <Compile Include="IO\Folder.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="UI\AttachedProperties\ScrollViewerAttached.cs" />
     <Compile Include="UI\AttachedProperties\SelectAllOnFocusAttached.cs" />
     <Compile Include="UI\AttachedProperties\SelectFileNameOnFocusAttached.cs" />
+    <Compile Include="UI\Converters\EnumNameConverter.cs" />
     <Compile Include="UI\Converters\InvertConverter.cs" />
     <Compile Include="UI\Converters\AllFalseMultiConverter.cs" />
     <Compile Include="UI\Converters\AllTrueMultiConverter.cs" />
@@ -155,11 +157,13 @@
     <Compile Include="Debugging\IBreakpoint.cs" />
     <Compile Include="UI\Converters\UriToCachedImageConverter.cs" />
     <Compile Include="Debugging\IBreakpointManager.cs" />
+    <Compile Include="UI\IPropertyHost.cs" />
     <Compile Include="UI\IInteractionUndoRedo.cs" />
     <Compile Include="UI\IInteractionSave.cs" />
     <Compile Include="UI\IMainWindow.cs" />
     <Compile Include="UI\IEditorDocument.cs" />
     <Compile Include="UI\IEditorProvider.cs" />
+    <Compile Include="UI\PropertyAttribute.cs" />
     <Compile Include="UI\RelayCommand.cs" />
     <Compile Include="UI\RelayCommandAsync.cs" />
     <Compile Include="UI\EditorInfo.cs" />

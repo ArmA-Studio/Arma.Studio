@@ -1,0 +1,182 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:p="clr-namespace:Arma.Studio.PropertiesWindow.Properties"
+                    xmlns:containers="clr-namespace:Arma.Studio.PropertiesWindow.PropertyContainers"
+                    xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit">
+    <DataTemplate DataType="{x:Type containers:PropertyContainerBoolean}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <CheckBox Grid.Column="2" IsChecked="{Binding Value, Mode=TwoWay}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerByte}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <xceed:ByteUpDown Grid.Column="2" Value="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerChar}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <TextBox Grid.Column="2" MaxLength="1" Text="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerDecimal}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <xceed:DecimalUpDown Grid.Column="2" Value="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerDouble}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <xceed:DoubleUpDown Grid.Column="2" Value="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerEnum}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <ComboBox Grid.Column="2" SelectedValue="{Binding Value}" ItemsSource="{Binding EnumValues}" DisplayMemberPath="Label" SelectedValuePath="Data"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerInt16}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <xceed:ShortUpDown Grid.Column="2" Value="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerInt32}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <xceed:IntegerUpDown Grid.Column="2" Value="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerInt64}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <xceed:LongUpDown Grid.Column="2" Value="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerSByte}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <xceed:SByteUpDown Grid.Column="2" Value="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerSingle}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <xceed:SingleUpDown Grid.Column="2" Value="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerString}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <TextBox Grid.Column="2" Text="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerUInt16}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <xceed:UShortUpDown Grid.Column="2" Value="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerUInt32}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <xceed:UIntegerUpDown Grid.Column="2" Value="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerUInt64}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <xceed:UIntegerUpDown Grid.Column="2" Value="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type containers:PropertyContainerColor}">
+        <Grid ToolTip="{Binding ToolTip}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
+            <xceed:ColorPicker Grid.Column="2" SelectedColor="{Binding Value}"/>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

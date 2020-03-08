@@ -2,6 +2,7 @@
 using Arma.Studio.Data.IO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using System.Windows;
 
 namespace Arma.Studio.Data.UI
 {
-    public interface IMainWindow
+    public interface IMainWindow : INotifyPropertyChanged
     {
         event EventHandler<EventArgs> DebuggerStateChanged;
         IDebugger Debugger { get; }
@@ -28,5 +29,6 @@ namespace Arma.Studio.Data.UI
         Task<Data.UI.IEditorDocument> OpenFile(File file);
         IEnumerable<EditorInfo> EditorInfos { get; }
         IEnumerable<Data.TextEditor.TextEditorInfo> TextEditorInfos { get; }
+        IPropertyHost PropertyHost { get; set; }
     }
 }

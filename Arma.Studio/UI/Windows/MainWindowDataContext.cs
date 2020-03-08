@@ -27,6 +27,17 @@ namespace Arma.Studio.UI.Windows
         protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
 
         #region IMainWindow
+        public IPropertyHost PropertyHost
+        {
+            get => this._PropertyHost;
+            set
+            {
+                if (this._PropertyHost == value) { return; }
+                this._PropertyHost = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private IPropertyHost _PropertyHost;
         public IEnumerable<Data.UI.EditorInfo> EditorInfos => this.EditorsAvailable;
         public IEnumerable<Data.TextEditor.TextEditorInfo> TextEditorInfos => this.TextEditorsAvailable;
         public BusyContainerManager BusyContainerManager { get; }

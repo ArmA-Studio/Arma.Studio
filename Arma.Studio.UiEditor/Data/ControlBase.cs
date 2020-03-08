@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Arma.Studio.Data.UI;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
 
 namespace Arma.Studio.UiEditor.Data
 {
-    public abstract class ControlBase : IControlElement
+    public abstract class ControlBase : IControlElement, IPropertyHost
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged([CallerMemberName]string callee = "")
@@ -73,14 +74,14 @@ namespace Arma.Studio.UiEditor.Data
         private bool _CanMoveDialog;
         #endregion
         #region Property: ControlType {type} (EControlType)
-        [ArmaName("type")]
+        [ArmaName("type", Display = false)]
         public abstract EControlType ControlType { get; }
         #endregion
         #region Property: ControlStyle {style} (EControlStyle)
         /// <summary>
         /// can be combinatorial: style = "0x400+0x02+0x10";
         /// </summary>
-        [ArmaName("style")]
+        [ArmaName("style", Display = false)]
         public EControlStyle ControlStyle
         {
             get => this._ControlStyle;
@@ -168,10 +169,6 @@ namespace Arma.Studio.UiEditor.Data
             get => this._FontSize;
             set
             {
-                if (value < 0 || 1 < value)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), value, "Argument out of range. Valid range: 0.0 - 1.0");
-                }
                 this._FontSize = value;
                 this.RaisePropertyChanged();
             }
@@ -383,10 +380,6 @@ namespace Arma.Studio.UiEditor.Data
             get => this._Opacity;
             set
             {
-                if (value < 0 || 1 < value)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), value, "Argument out of range. Valid range: 0.0 - 1.0");
-                }
                 this._Opacity = value;
                 this.RaisePropertyChanged();
             }
@@ -419,6 +412,7 @@ namespace Arma.Studio.UiEditor.Data
             this.BackgroundColor = Color.FromArgb(32, 0, 0, 0);
             this.Shadow = EShadow.DropShadow;
             this.FontSize = 0.04;
+            this.Opacity = 1;
         }
     }
 }

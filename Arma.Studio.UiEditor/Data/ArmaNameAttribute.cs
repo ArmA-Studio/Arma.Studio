@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Arma.Studio.Data.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,13 +8,10 @@ using System.Threading.Tasks;
 namespace Arma.Studio.UiEditor.Data
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class ArmaNameAttribute : Attribute
+    public class ArmaNameAttribute : PropertyAttribute
     {
-        public ArmaNameAttribute(string name)
+        public ArmaNameAttribute(string title) : base(title)
         {
-            this.Name = name;
         }
-
-        public string Name { get; }
     }
 }
