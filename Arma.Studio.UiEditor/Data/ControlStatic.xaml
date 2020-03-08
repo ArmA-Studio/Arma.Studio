@@ -9,21 +9,21 @@
             <converters:SizeExToFontSizeMultiConverter x:Key="SizeExToFontSizeMultiConverter"/>
         </DataTemplate.Resources>
         <Grid>
+            <Grid.ToolTip>
+                <ToolTip>
+                    <ToolTip.Foreground>
+                        <SolidColorBrush Color="{Binding ToolTipForegroundColor}"/>
+                    </ToolTip.Foreground>
+                    <ToolTip.Background>
+                        <SolidColorBrush Color="{Binding ToolTipBackgroundColor}"/>
+                    </ToolTip.Background>
+                    <ToolTip.BorderBrush>
+                        <SolidColorBrush Color="{Binding ToolTipBorderColor}"/>
+                    </ToolTip.BorderBrush>
+                    <TextBlock Text="{Binding ToolTip}"/>
+                </ToolTip>
+            </Grid.ToolTip>
             <Grid Opacity="{Binding Opacity}">
-                <Grid.ToolTip>
-                    <ToolTip>
-                        <ToolTip.Foreground>
-                            <SolidColorBrush Color="{Binding ToolTipForegroundColor}"/>
-                        </ToolTip.Foreground>
-                        <ToolTip.Background>
-                            <SolidColorBrush Color="{Binding ToolTipBackgroundColor}"/>
-                        </ToolTip.Background>
-                        <ToolTip.BorderBrush>
-                            <SolidColorBrush Color="{Binding ToolTipBorderColor}"/>
-                        </ToolTip.BorderBrush>
-                        <TextBlock Text="{Binding ToolTip}"/>
-                    </ToolTip>
-                </Grid.ToolTip>
                 <Grid.Style>
                     <Style TargetType="Grid">
                         <Style.Triggers>
