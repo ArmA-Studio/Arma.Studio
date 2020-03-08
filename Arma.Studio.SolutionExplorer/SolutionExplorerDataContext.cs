@@ -67,6 +67,30 @@ namespace Arma.Studio.SolutionExplorer
                 this.FileManagement.Add(pbo);
             }
         });
+
+        public ICommand CmdAddNewItem => new RelayCommand<FileFolderBase>((ffb) =>
+        {
+            if (ffb is ICollection<FileFolderBase> col)
+            {
+
+                var dlgdc = new Dialogs.FilesDialogDataContext(ffb.FullPath);
+                var dlg = new Dialogs.FilesDialog(dlgdc);
+                var res = dlg.ShowDialog();
+                if (res ?? false)
+                {
+                    var filename = dlgdc.FileName;
+                    if (String.IsNullOrWhiteSpace(System.IO.Path.GetExtension(filename)))
+                    {
+                        filename += dlgdc.SelectedEditorInfo.Extensions.First();
+                    }
+                    var fullpath = System.IO.Path.Combine(ffb.FullPath, filename);
+                    System.IO.File.Create(fullpath).Dispose(); // Create empty file
+                    var file = new File { Name = filename, Parent = ffb };
+                    col.Add(file);
+                    (Application.Current as IApp).MainWindow.OpenFile(file);
+                }
+            }
+        });
         public ICommand CmdRescanPbo => new RelayCommand<PBO>((pbo) => { });
 
 

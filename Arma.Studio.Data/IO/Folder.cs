@@ -1,31 +1,49 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Arma.Studio.Data.IO
 {
-    public class Folder : FileFolderBase, ICollection<FileFolderBase>
+    public class Folder : FileFolderBase, ICollection<FileFolderBase>, INotifyCollectionChanged
     {
-        private readonly List<FileFolderBase> Inner;
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+        private readonly ObservableCollection<FileFolderBase> Inner;
         public Folder()
         {
-            this.Inner = new List<FileFolderBase>();
+            this.Inner = new ObservableCollection<FileFolderBase>();
+            this.Inner.CollectionChanged += this.Inner_CollectionChanged;
         }
 
-        public void Sort() => this.Inner.Sort((left, right) =>
+        private void Inner_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if ((left is File && right is File) || (left is Folder && right is Folder))
+            this.CollectionChanged?.Invoke(this, e);
+        }
+
+        public void Sort()
+        {
+            var sortableList = this.Inner.ToList();
+            sortableList.Sort((left, right) =>
             {
-                return left.Name.CompareTo(right.Name);
-            }
-            else
+                if ((left is File && right is File) || (left is Folder && right is Folder))
+                {
+                    return left.Name.CompareTo(right.Name);
+                }
+                else
+                {
+                    return left is File ? 1 : -1;
+                }
+            });
+
+            for (int i = 0; i < sortableList.Count; i++)
             {
-                return left is File ? 1 : -1;
+                this.Inner.Move(this.Inner.IndexOf(sortableList[i]), i);
             }
-        });
+        }
         #region ICollection<FileFolderBase>
         public int Count => this.Inner.Count;
 

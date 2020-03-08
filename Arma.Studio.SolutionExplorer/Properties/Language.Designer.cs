@@ -106,6 +106,33 @@ namespace Arma.Studio.SolutionExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string FilesDialog_Filename {
+            get {
+                return ResourceManager.GetString("FilesDialog_Filename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a file type.
+        /// </summary>
+        public static string FilesDialog_Header {
+            get {
+                return ResourceManager.GetString("FilesDialog_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Item.
+        /// </summary>
+        public static string FilesDialog_Title {
+            get {
+                return ResourceManager.GetString("FilesDialog_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forward.
         /// </summary>
         public static string Forward {
@@ -138,6 +165,15 @@ namespace Arma.Studio.SolutionExplorer.Properties {
         public static string SolutionExplorer_ContextMenu_Add {
             get {
                 return ResourceManager.GetString("SolutionExplorer_ContextMenu_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Item....
+        /// </summary>
+        public static string SolutionExplorer_ContextMenu_Add_NewItem {
+            get {
+                return ResourceManager.GetString("SolutionExplorer_ContextMenu_Add_NewItem", resourceCulture);
             }
         }
         

@@ -18,6 +18,23 @@
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Fill="{StaticResource DrawingBrushGenericNew}"/>
                     </MenuItem.Icon>
+                    <MenuItem Header="{x:Static p:Language.SolutionExplorer_ContextMenu_Add_NewItem}"
+                              Command="{Binding Tag.CmdAddNewItem}"
+                              CommandParameter="{Binding DataContext}">
+                        <MenuItem.Style>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="IsEnabled" Value="True"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding DataContext, Converter={StaticResource IsAssignableFromConverter}, ConverterParameter={x:Type data:PBO}}">
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding DataContext, Converter={StaticResource IsAssignableFromConverter}, ConverterParameter={x:Type data:Folder}}">
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
                     <MenuItem Header="{x:Static p:Language.SolutionExplorer_ContextMenu_Add_PBO}"
                               Command="{Binding Tag.CmdAddPbo}"
                               IsEnabled="{Binding DataContext, Converter={StaticResource IsAssignableFromConverter}, ConverterParameter={x:Type local:SolutionExplorerDataContext}}">
