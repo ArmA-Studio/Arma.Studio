@@ -3,6 +3,11 @@
                     xmlns:p="clr-namespace:Arma.Studio.PropertiesWindow.Properties"
                     xmlns:containers="clr-namespace:Arma.Studio.PropertiesWindow.PropertyContainers"
                     xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit">
+    <DataTemplate DataType="{x:Type containers:PropertyContainerGroup}">
+        <Expander Header="{Binding Title}" IsExpanded="{Binding IsExpanded}">
+            <ItemsControl ItemsSource="{Binding Properties}"/>
+        </Expander>
+    </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerBoolean}">
         <Grid ToolTip="{Binding ToolTip}">
             <Grid.ColumnDefinitions>

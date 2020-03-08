@@ -10,13 +10,14 @@ namespace Arma.Studio.UiEditor.Data
     /// </summary>
     public class ControlStatic : ControlBase
     {
+        public const string PropGroup_CT_Static = "CT_Static";
         public override EControlType ControlType => EControlType.CT_STATIC;
 
         #region Property: Autoplay {autoplay} (System.Boolean)
         /// <summary>
         /// Whether or not to autostart .ogv/.ogg file set as texture
         /// </summary>
-        [ArmaName("autoplay")]
+        [ArmaName("autoplay", Group = PropGroup_CT_Static)]
         public bool Autoplay
         {
             get => this._Autoplay;
@@ -32,7 +33,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// How many times to play video
         /// </summary>
-        [ArmaName("loops")]
+        [ArmaName("loops", Group = PropGroup_CT_Static)]
         public int LoopAmount
         {
             get => this._LoopAmount;
@@ -48,7 +49,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// Line spacing, required if the <see cref="ControlBase.ControlStyle"/> was set to <see cref="EControlStyle.ST_MULTI"/>.
         /// </summary>
-        [ArmaName("lineSpacing")]
+        [ArmaName("lineSpacing", Group = PropGroup_CT_Static)]
         public double LineSpacing
         {
             get => this._LineSpacing;
@@ -64,7 +65,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// Sets color of the shadow under text, when <see cref="ControlBase.Shadow"/> = <see cref="EShadow.DropShadow"/>;
         /// </summary>
-        [ArmaName("colorShadow")]
+        [ArmaName("colorShadow", Group = PropGroup_CT_Static)]
         public Color TextShadowColor
         {
             get => this._TextShadowColor;
@@ -80,7 +81,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// Speed with which control blinks, i.e. smoothly and repeatedly changes opacity from 1 to 0 and back
         /// </summary>
-        [ArmaName("blinkingPeriod")]
+        [ArmaName("blinkingPeriod", Group = PropGroup_CT_Static)]
         public double BlinkingPeriod
         {
             get => this._BlinkingPeriod;

@@ -61,6 +61,15 @@ namespace Arma.Studio.PropertiesWindow.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generic.
+        /// </summary>
+        internal static string Generic {
+            get {
+                return ResourceManager.GetString("Generic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Properties.
         /// </summary>
         internal static string PropertiesWindow {

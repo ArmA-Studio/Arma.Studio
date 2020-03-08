@@ -8,27 +8,52 @@
         <DataTemplate.Resources>
             <converters:SizeExToFontSizeMultiConverter x:Key="SizeExToFontSizeMultiConverter"/>
         </DataTemplate.Resources>
-        <Grid Opacity="{Binding Opacity}">
-            <Rectangle Width="{Binding Width}"
+        <Grid>
+            <Grid Opacity="{Binding Opacity}">
+                <Grid.ToolTip>
+                    <ToolTip>
+                        <ToolTip.Foreground>
+                            <SolidColorBrush Color="{Binding ToolTipForegroundColor}"/>
+                        </ToolTip.Foreground>
+                        <ToolTip.Background>
+                            <SolidColorBrush Color="{Binding ToolTipBackgroundColor}"/>
+                        </ToolTip.Background>
+                        <ToolTip.BorderBrush>
+                            <SolidColorBrush Color="{Binding ToolTipBorderColor}"/>
+                        </ToolTip.BorderBrush>
+                        <TextBlock Text="{Binding ToolTip}"/>
+                    </ToolTip>
+                </Grid.ToolTip>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsShown}" Value="False">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Rectangle Width="{Binding Width}"
                        Height="{Binding Height}">
-                <Rectangle.Fill>
-                    <SolidColorBrush Color="{Binding BackgroundColor}"/>
-                </Rectangle.Fill>
-            </Rectangle>
-            <TextBlock Text="{Binding Text}"
+                    <Rectangle.Fill>
+                        <SolidColorBrush Color="{Binding BackgroundColor}"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock Text="{Binding Text}"
                        MaxWidth="{Binding Width}"
                        MaxHeight="{Binding Height}">
-                <TextBlock.Foreground>
-                    <SolidColorBrush Color="{Binding ForegroundColor}"/>
-                </TextBlock.Foreground>
-                <TextBlock.FontSize>
-                    <MultiBinding Converter="{StaticResource SizeExToFontSizeMultiConverter}">
-                        <Binding Path="FontSize"/>
-                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}" Path="DataContext.InterfaceSize"/>
-                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}" Path="DataContext.CanvasManager"/>
-                    </MultiBinding>
-                </TextBlock.FontSize>
-            </TextBlock>
+                    <TextBlock.Foreground>
+                        <SolidColorBrush Color="{Binding ForegroundColor}"/>
+                    </TextBlock.Foreground>
+                    <TextBlock.FontSize>
+                        <MultiBinding Converter="{StaticResource SizeExToFontSizeMultiConverter}">
+                            <Binding Path="FontSize"/>
+                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}" Path="DataContext.InterfaceSize"/>
+                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}" Path="DataContext.CanvasManager"/>
+                        </MultiBinding>
+                    </TextBlock.FontSize>
+                </TextBlock>
+            </Grid>
             <Rectangle Fill="#08019CFF" Stroke="#019CFF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Rectangle.Style>
                     <Style TargetType="Rectangle">

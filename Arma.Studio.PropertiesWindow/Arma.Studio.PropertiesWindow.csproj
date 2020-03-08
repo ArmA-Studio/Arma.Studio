@@ -71,6 +71,7 @@
     <Compile Include="PropertyContainers\PropertyContainerBase.cs" />
     <Compile Include="PropertyContainers\PropertyContainerColor.cs" />
     <Compile Include="PropertyContainers\PropertyContainerEnum.cs" />
+    <Compile Include="PropertyContainers\PropertyContainerGroup.cs" />
     <Compile Include="PropertyContainers\PropertyContainerPrimitive.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

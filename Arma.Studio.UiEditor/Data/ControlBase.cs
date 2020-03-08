@@ -8,6 +8,9 @@ namespace Arma.Studio.UiEditor.Data
 {
     public abstract class ControlBase : IControlElement, IPropertyHost
     {
+        public const string PropGroup_Visual = "Visual";
+        public const string PropGroup_Behavior = "Behavior";
+        public const string PropGroup_Text = "Text";
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged([CallerMemberName]string callee = "")
         {
@@ -27,6 +30,7 @@ namespace Arma.Studio.UiEditor.Data
         #endregion
 
         #region Property: ZIndex (System.Int32)
+        [Property("Z-Index", Group = PropGroup_Visual)]
         public int ZIndex
         {
             get => this._ZIndex;
@@ -61,7 +65,7 @@ namespace Arma.Studio.UiEditor.Data
         /// (may require "movingEnable" to be 1 in the dialog. In Arma 3 works regardless).
         /// Another way of allowing moving of the dialog is to have control of style ST_TITLE_BAR
         /// </summary>
-        [ArmaName("moving")]
+        [ArmaName("moving", Group = PropGroup_Behavior)]
         public bool CanMoveDialog
         {
             get => this._CanMoveDialog;
@@ -97,7 +101,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// the position and size of the control in fractions of screen size.
         /// </summary>
-        [ArmaName("x")]
+        [ArmaName("x", Group = PropGroup_Visual)]
         public double Left
         {
             get => this._Left;
@@ -113,7 +117,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// the position and size of the control in fractions of screen size.
         /// </summary>
-        [ArmaName("y")]
+        [ArmaName("y", Group = PropGroup_Visual)]
         public double Top
         {
             get => this._Top;
@@ -129,7 +133,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// the position and size of the control in fractions of screen size.
         /// </summary>
-        [ArmaName("w")]
+        [ArmaName("w", Group = PropGroup_Visual)]
         public double Width
         {
             get => this._Width;
@@ -145,7 +149,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// the position and size of the control in fractions of screen size.
         /// </summary>
-        [ArmaName("h")]
+        [ArmaName("h", Group = PropGroup_Visual)]
         public double Height
         {
             get => this._Height;
@@ -163,7 +167,7 @@ namespace Arma.Studio.UiEditor.Data
         /// 
         /// Useful to note is that the following should yield the correct sizeEx value: (0.0264 * safeZoneH) * FontSize
         /// </summary>
-        [ArmaName("sizeEx")]
+        [ArmaName("sizeEx", Group = PropGroup_Text)]
         public double FontSize
         {
             get => this._FontSize;
@@ -179,7 +183,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// the font to use. See the list of available fonts for possible values
         /// </summary>
-        [ArmaName("font")]
+        [ArmaName("font", Group = PropGroup_Text)]
         public string Font
         {
             get => this._Font;
@@ -195,7 +199,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// text color
         /// </summary>
-        [ArmaName("colorText")]
+        [ArmaName("colorText", Group = PropGroup_Text)]
         public Color ForegroundColor
         {
             get => this._ForegroundColor;
@@ -211,7 +215,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// background color
         /// </summary>
-        [ArmaName("colorBackground")]
+        [ArmaName("colorBackground", Group = PropGroup_Visual)]
         public Color BackgroundColor
         {
             get => this._BackgroundColor;
@@ -227,7 +231,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// the text or picture to display
         /// </summary>
-        [ArmaName("text")]
+        [ArmaName("text", Group = PropGroup_Text)]
         public string Text
         {
             get => this._Text;
@@ -243,7 +247,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// can be applied to most controls (0 = no shadow, 1 = drop shadow with soft edges, 2 = stroke).
         /// </summary>
-        [ArmaName("shadow")]
+        [ArmaName("shadow", Group = PropGroup_Text)]
         public EShadow Shadow
         {
             get => this._Shadow;
@@ -259,7 +263,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// Initial visibility of the control
         /// </summary>
-        [ArmaName("show")]
+        [ArmaName("show", Group = PropGroup_Visual)]
         public bool IsShown
         {
             get => this._IsShown;
@@ -277,7 +281,7 @@ namespace Arma.Studio.UiEditor.Data
         /// A tooltip can be added to any control type except CT_STATIC and CT_STRUCTURED_TEXT.
         /// Note: As of Arma 3 v1.48 (approx), most controls now support tooltips.
         /// </summary>
-        [ArmaName("tooltip")]
+        [ArmaName("tooltip", Group = PropGroup_Text)]
         public string ToolTip
         {
             get => this._ToolTip;
@@ -293,7 +297,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// Tooltip text color
         /// </summary>
-        [ArmaName("tooltipColorText")]
+        [ArmaName("tooltipColorText", Group = PropGroup_Text)]
         public Color ToolTipForegroundColor
         {
             get => this._ToolTipForegroundColor;
@@ -309,7 +313,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// Tooltip background color
         /// </summary>
-        [ArmaName("tooltipColorShade")]
+        [ArmaName("tooltipColorShade", Group = PropGroup_Text)]
         public Color ToolTipBackgroundColor
         {
             get => this._ToolTipBackgroundColor;
@@ -325,7 +329,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// Tooltip border color
         /// </summary>
-        [ArmaName("tooltipColorBox")]
+        [ArmaName("tooltipColorBox", Group = PropGroup_Text)]
         public Color ToolTipBorderColor
         {
             get => this._ToolTipBorderColor;
@@ -342,7 +346,7 @@ namespace Arma.Studio.UiEditor.Data
         /// Option for entry fields (e.g. RscEdit) to activate autocompletion.
         /// For known script commands and functions use autocomplete = "scripting".
         /// </summary>
-        [ArmaName("autocomplete")]
+        [ArmaName("autocomplete", Group = PropGroup_Behavior)]
         public string AutoComplete
         {
             get => this._AutoComplete;
@@ -358,7 +362,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// Whether or not control can be deleted by scripts with ctrlDelete command
         /// </summary>
-        [ArmaName("deletable")]
+        [ArmaName("deletable", Group = PropGroup_Behavior)]
         public bool IsDeletable
         {
             get => this._IsDeletable;
@@ -374,7 +378,7 @@ namespace Arma.Studio.UiEditor.Data
         /// <summary>
         /// Initial fade of the control
         /// </summary>
-        [ArmaName("fade")]
+        [ArmaName("fade", Group = PropGroup_Visual)]
         public double Opacity
         {
             get => this._Opacity;
@@ -392,7 +396,7 @@ namespace Arma.Studio.UiEditor.Data
         /// Used on e.g. a button control.
         /// Does not utilize the Steam Overlay browser if enabled, opens the link in the default browser set by the OS.
         /// </summary>
-        [ArmaName("url")]
+        [ArmaName("url", Group = PropGroup_Behavior)]
         public string Url
         {
             get => this._Url;
@@ -413,6 +417,7 @@ namespace Arma.Studio.UiEditor.Data
             this.Shadow = EShadow.DropShadow;
             this.FontSize = 0.04;
             this.Opacity = 1;
+            this.IsShown = true;
         }
     }
 }
