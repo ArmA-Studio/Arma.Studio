@@ -98,7 +98,8 @@
                 </MenuItem.Icon>
             </MenuItem>
         </Menu>
-        <TreeView Grid.Row="2" ItemsSource="{Binding FileManagement}" ContextMenu="{StaticResource SolutionExplorerContextMenu}" Tag="{Binding}">
+        <TreeView Grid.Row="2" ItemsSource="{Binding FileManagement}" ContextMenu="{StaticResource SolutionExplorerContextMenu}" Tag="{Binding}" 
+                  asd:AttachedDataContext.DataContext="{Binding}">
             <TreeView.Resources>
                 <util:IsHitMultiConverter x:Key="IsHitMultiConverter"/>
                 <asd:EqualMultiConverter x:Key="EqualMultiConverter"/>

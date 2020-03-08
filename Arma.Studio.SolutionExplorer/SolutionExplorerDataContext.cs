@@ -18,7 +18,7 @@ using System.Windows.Input;
 
 namespace Arma.Studio.SolutionExplorer
 {
-    public class SolutionExplorerDataContext : DockableBase
+    public class SolutionExplorerDataContext : DockableBase, Data.UI.AttachedProperties.IOnSelectedItemChanged
     {
         public object InRenameMode
         {
@@ -78,5 +78,12 @@ namespace Arma.Studio.SolutionExplorer
 
         public IFileManagement FileManagement => (Application.Current as IApp).MainWindow.FileManagement;
 
+        public void OnSelectedItemChanged(TreeView sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (e.NewValue is IPropertyHost propertyHost)
+            {
+                (Application.Current as IApp).MainWindow.PropertyHost = propertyHost;
+            }
+        }
     }
 }

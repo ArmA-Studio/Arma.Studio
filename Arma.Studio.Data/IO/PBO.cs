@@ -8,20 +8,29 @@ using System.Threading.Tasks;
 
 namespace Arma.Studio.Data.IO
 {
-    public class PBO : FileFolderBase, ICollection<FileFolderBase>
+    public class PBO : FileFolderBase, ICollection<FileFolderBase>, UI.IPropertyHost
     {
         private readonly List<FileFolderBase> Inner;
 
         /// <summary>
         /// The PBO Prefix
         /// </summary>
+        [UI.Property("$PBOPREFIX$")]
         public string Prefix
         {
             get => this._Prefix;
             set
             {
+                if (this._Prefix == value)
+                {
+                    return;
+                }
                 this._Prefix = value;
                 this.RaisePropertyChanged();
+                if (value != null)
+                {
+                    System.IO.File.WriteAllText(System.IO.Path.Combine(this.FullPath, "$PBOPREFIX$"), value);
+                }
             }
         }
         private string _Prefix;
