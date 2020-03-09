@@ -568,7 +568,6 @@ namespace Arma.Studio.UiEditor.UI
                     var armaNameAttribute = armaNameAttributes.First();
                     stream.Write(tabs());
                     stream.Write(armaNameAttribute.Title);
-                    stream.Write(" = ");
                     var value = propertyInfo.GetValue(this, null);
                     if (propertyInfo.PropertyType.IsEquivalentTo(typeof(string)))
                     {
@@ -577,7 +576,7 @@ namespace Arma.Studio.UiEditor.UI
                         stream.Write(value);
                         stream.Write('"');
                     }
-                    if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
+                    else if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
                     {
                         stream.Write("[] = { ");
                         var color = (System.Windows.Media.Color)value;
@@ -604,7 +603,7 @@ namespace Arma.Studio.UiEditor.UI
                 }
 
                 stream.Write(tabs());
-                stream.WriteLine("class " + dlg_controls + " {");
+                stream.WriteLine("class " + dlg_controlsBackground + " {");
                 tabstop++;
                 foreach (var control in this.BackgroundControls)
                 {
@@ -630,7 +629,7 @@ namespace Arma.Studio.UiEditor.UI
                             stream.Write(value);
                             stream.Write('"');
                         }
-                        if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
+                        else if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
                         {
                             stream.Write("[] = { ");
                             var color = (System.Windows.Media.Color)value;
@@ -641,7 +640,7 @@ namespace Arma.Studio.UiEditor.UI
                             stream.Write(color.B / 255.0);
                             stream.Write(", ");
                             stream.Write(color.A / 255.0);
-                            stream.WriteLine(" }");
+                            stream.Write(" }");
                         }
                         else if (propertyInfo.PropertyType.IsEnum)
                         {
@@ -664,7 +663,7 @@ namespace Arma.Studio.UiEditor.UI
                 stream.WriteLine("};");
 
                 stream.Write(tabs());
-                stream.WriteLine("class " + dlg_controlsBackground + " {");
+                stream.WriteLine("class " + dlg_controls + " {");
                 tabstop++;
                 foreach (var control in this.ForegroundControls)
                 {
@@ -681,7 +680,6 @@ namespace Arma.Studio.UiEditor.UI
                         var armaNameAttribute = armaNameAttributes.First();
                         stream.Write(tabs());
                         stream.Write(armaNameAttribute.Title);
-                        stream.Write(" = ");
                         var value = propertyInfo.GetValue(control, null);
                         if (propertyInfo.PropertyType.IsEquivalentTo(typeof(string)))
                         {
@@ -690,7 +688,7 @@ namespace Arma.Studio.UiEditor.UI
                             stream.Write(value);
                             stream.Write('"');
                         }
-                        if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
+                        else if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
                         {
                             stream.Write("[] = { ");
                             var color = (System.Windows.Media.Color)value;
@@ -701,7 +699,7 @@ namespace Arma.Studio.UiEditor.UI
                             stream.Write(color.B / 255.0);
                             stream.Write(", ");
                             stream.Write(color.A / 255.0);
-                            stream.WriteLine(" }");
+                            stream.Write(" }");
                         }
                         else if (propertyInfo.PropertyType.IsEnum)
                         {
@@ -711,7 +709,7 @@ namespace Arma.Studio.UiEditor.UI
                         else
                         {
                             stream.Write(" = ");
-                            stream.Write(value);
+                            stream.Write(Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture));
                         }
                         stream.WriteLine(";");
                     }
