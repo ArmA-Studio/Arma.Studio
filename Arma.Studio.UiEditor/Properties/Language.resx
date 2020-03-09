@@ -294,4 +294,10 @@
   <data name="LoggerName" xml:space="preserve">
     <value>UI-Editor</value>
   </data>
+  <data name="UiEditor_Background" xml:space="preserve">
+    <value>Background</value>
+  </data>
+  <data name="UiEditor_Background_ToolTip" xml:space="preserve">
+    <value>The Background displayed in the canvas area.</value>
+  </data>
 </root>

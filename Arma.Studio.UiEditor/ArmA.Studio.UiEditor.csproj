@@ -172,6 +172,9 @@
   <ItemGroup>
     <EmbeddedResource Include="ParentClasses.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Background.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent><![CDATA[

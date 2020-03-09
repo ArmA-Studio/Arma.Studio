@@ -484,6 +484,24 @@ namespace Arma.Studio.UiEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Background.
+        /// </summary>
+        public static string UiEditor_Background {
+            get {
+                return ResourceManager.GetString("UiEditor_Background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Background displayed in the canvas area..
+        /// </summary>
+        public static string UiEditor_Background_ToolTip {
+            get {
+                return ResourceManager.GetString("UiEditor_Background_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gridsize.
         /// </summary>
         public static string UiEditor_CanvasGridSize {

@@ -45,28 +45,35 @@
                                 Cursor="{Binding CanvasManager.Cursor}">
                             <Canvas.Style>
                                 <Style TargetType="Canvas">
-                                    <Setter Property="Background">
-                                        <Setter.Value>
-                                            <VisualBrush TileMode="Tile"
+                                    <Setter Property="Background" Value="White"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CanvasManager.BackgroundMode}" Value="Arma">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <ImageBrush ImageSource="/Arma.Studio.UiEditor;component/Background.jpg"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding CanvasManager.BackgroundMode}" Value="Grid">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <VisualBrush TileMode="Tile"
                                                          Viewport="{Binding CanvasManager.GridSize, Converter={StaticResource ToRectangleConverter}}"
                                                          ViewportUnits="Absolute"
                                                          Viewbox="0,0,50,50"
                                                          ViewboxUnits="Absolute">
-                                                <VisualBrush.Visual>
-                                                    <Rectangle Stroke="#FF7F7F7F"
+                                                        <VisualBrush.Visual>
+                                                            <Rectangle Stroke="#FF7F7F7F"
                                                                    StrokeThickness="1"
                                                                    StrokeDashArray="0,50,0,50"
                                                                    Fill="White"
                                                                    Width="50"
                                                                    Height="50"
                                                                    RenderSize="50,50"/>
-                                                </VisualBrush.Visual>
-                                            </VisualBrush>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CanvasManager.ShowGrid}" Value="False">
-                                            <Setter Property="Background" Value="White"/>
+                                                        </VisualBrush.Visual>
+                                                    </VisualBrush>
+                                                </Setter.Value>
+                                            </Setter>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -113,6 +120,22 @@
                     <ComboBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type data:InterfaceSize}">
                             <TextBlock Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+            <Grid ToolTip="{x:Static p:Language.UiEditor_Background_ToolTip}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="4"/>
+                    <ColumnDefinition MinWidth="64" Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{x:Static p:Language.UiEditor_Background}" Grid.Column="0" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding Source={x:Type local:CanvasManager+EBackgroundMode}, Converter={StaticResource EnumSourceConverter}}"
+                          SelectedItem="{Binding CanvasManager.BackgroundMode}" Grid.Column="2">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumNameConverter}}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>

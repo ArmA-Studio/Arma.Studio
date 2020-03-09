@@ -29,6 +29,13 @@ namespace Arma.Studio.UiEditor.UI
         IOnDrop
     {
 
+        public enum EBackgroundMode
+        {
+            NA,
+            Grid,
+            Arma
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged([CallerMemberName]string callee = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
         #region Collection: SelectedNodes (System.Collections.ObjectModel.ObservableCollection<Data.IControlElement>)
@@ -143,6 +150,7 @@ namespace Arma.Studio.UiEditor.UI
             this.Height = 1080;
             this.Zoom = 0.5;
             this.Cursor = Cursors.Arrow;
+            this.BackgroundMode = EBackgroundMode.Grid;
         }
         private readonly UiEditorDataContext Owner;
 
@@ -223,6 +231,18 @@ namespace Arma.Studio.UiEditor.UI
             }
         }
         private double _Width;
+        #endregion
+        #region Property: BackgroundMode (EBackgroundMode)
+        public EBackgroundMode BackgroundMode
+        {
+            get => this._BackgroundMode;
+            set
+            {
+                this._BackgroundMode = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private EBackgroundMode _BackgroundMode;
         #endregion
         #region Property: Height (System.Double)
         public double Height

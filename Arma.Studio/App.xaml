@@ -24,6 +24,8 @@
                     <asd:SingleToCollectionConverter x:Key="SingleToCollectionConverter"/>
                     <asd:ToCompositeCollectionMultiConverter x:Key="ToCompositeCollectionMultiConverter"/>
                     <asd:ToRectangleConverter x:Key="ToRectangleConverter"/>
+                    <asd:EnumNameConverter x:Key="EnumNameConverter"/>
+                    <asd:EnumSourceConverter x:Key="EnumSourceConverter"/>
                 </ResourceDictionary>
                 <ResourceDictionary>
                     <DrawingBrush x:Key="DrawingBrushStatusInformation">
