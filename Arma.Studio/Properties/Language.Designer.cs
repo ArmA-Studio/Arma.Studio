@@ -106,16 +106,16 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operation Failed.
+        ///   Looks up a localized string similar to Operation not ran to completion.
         /// </summary>
-        public static string App_GenericOperationFailedMessageBox_Body {
+        public static string App_GenericOperationFailedMessageBox_Header {
             get {
-                return ResourceManager.GetString("App_GenericOperationFailedMessageBox_Body", resourceCulture);
+                return ResourceManager.GetString("App_GenericOperationFailedMessageBox_Header", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error.
+        ///   Looks up a localized string similar to Operation Failed.
         /// </summary>
         public static string App_GenericOperationFailedMessageBox_Title {
             get {
@@ -482,6 +482,15 @@ namespace Arma.Studio.Properties {
         public static string SplashScreen_UpdateAvailable {
             get {
                 return ResourceManager.GetString("SplashScreen_UpdateAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stacktrace.
+        /// </summary>
+        public static string StackTrace {
+            get {
+                return ResourceManager.GetString("StackTrace", resourceCulture);
             }
         }
         

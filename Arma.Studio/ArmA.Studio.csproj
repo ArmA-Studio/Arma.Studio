@@ -122,10 +122,14 @@
     <Compile Include="UI\RuntimeExecutionMargin.cs" />
     <Compile Include="UI\TextEditorDataContext.cs" />
     <Compile Include="UI\UnderlineBackgroundRenderer.cs" />
+    <Compile Include="UI\Windows\ErrorDialog.xaml.cs">
+      <DependentUpon>ErrorDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Windows\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Windows\AboutDialogDataContext.cs" />
+    <Compile Include="UI\Windows\ErrorDialogDataContext.cs" />
     <Compile Include="UI\Windows\UserIdentificationDialogDataContext.cs" />
     <Compile Include="UI\Windows\UserIdentificationDialog.xaml.cs">
       <DependentUpon>UserIdentificationDialog.xaml</DependentUpon>
@@ -160,6 +164,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Page Include="UI\Windows\ErrorDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UI\Windows\AboutDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

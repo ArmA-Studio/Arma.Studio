@@ -101,7 +101,7 @@ namespace Arma.Studio
                     SentrySdk.CaptureException(ex);
                 });
             }
-            Current.Dispatcher.Invoke(() => MessageBox.Show(String.Format(Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Body, ex.Message, ex.GetType().FullName, ex.StackTrace), Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
+            DisplayOperationFailed(ex, ex.Message);
         }
 
         public static void Update(UpdateHelper.DownloadInfo downloadInfo)
@@ -125,7 +125,10 @@ namespace Arma.Studio
         /// <param name="body">The Text to display in front of the exception.</param>
         public static void DisplayOperationFailed(Exception ex, string body)
         {
-            App.Current.Dispatcher.Invoke(() => MessageBox.Show(String.Concat(body, '\n', String.Format(Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Body, ex.Message, ex.GetType().FullName, ex.StackTrace)), Arma.Studio.Properties.Language.App_GenericOperationFailedMessageBox_Title, MessageBoxButton.OK, MessageBoxImage.Warning));
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                UI.Windows.ErrorDialog.DataContextInstance.Add(ex);
+            });
         }
         void IApp.DisplayOperationFailed(Exception ex)
         {
