@@ -1,0 +1,136 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ import namespace="System" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core, Version=4.0.0.0, Culture=neutral" #>
+<#@ Assembly Name="Microsoft.CSharp, Version=4.0.0.0, Culture=neutral" #>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Arma.Studio.Data
+{
+    public static class TypeExtensions
+    {
+        /// <summary>
+        /// Generates a valid C#-Code name from any type, including generics.
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public static string FullName(this Type t)
+        {
+            if (t.IsGenericType)
+            {
+                var builder = new StringBuilder();
+                builder.Append(t.Namespace);
+                builder.Append('.');
+                builder.Append(t.Name.Substring(0, t.Name.IndexOf('`')));
+                builder.Append('<');
+                builder.Append(FullName(t));
+                builder.Append('>');
+                return builder.ToString();
+            }
+            else
+            {
+                return t.FullName;
+            }
+        }
+		
+        /// <summary>
+        /// Creates a default instance of this <see cref="Type"/>.
+        /// Requires parameterless constructor for Value-Types
+        /// </summary>
+        /// <param name="t">The type to create a default value for.</param>
+        /// <returns>A default value, matching the passed type</returns>
+        public static object Default(this Type t)
+        {
+            if (t.IsValueType)
+            {
+                return t.CreateInstance();
+            }
+            return null;
+        }
+
+        public static T CreateInstance<T>(this Type t) => (T)Expression.Lambda(Expression.New(t)).Compile().DynamicInvoke();
+        public static object CreateInstance(this Type t) => Expression.Lambda(Expression.New(t)).Compile().DynamicInvoke();
+<#
+	for (int i = 1; i < 10; i++)
+	{
+		
+#>
+        public static object CreateInstance<<#
+		for (int j = 1; j <= i; j++)
+		{
+			if (j != i)
+			{
+				Write($"TArg{j}, ");
+			}
+			else
+			{
+				Write($"TArg{j}");
+			}
+		}
+		#>>(
+            this Type t<#
+		for (int j = 1; j <= i; j++)
+		{
+			Write($",\r\n            TArg{j} arg{j}");
+		}
+		#>)
+        {
+            var constructor = t.GetConstructor(new Type[] {
+				<#
+		for (int j = 1; j <= i; j++)
+		{
+			Write($"typeof(TArg{j})");
+			if (j != i)
+			{
+				Write(",\r\n                ");
+			}
+			else
+			{
+				Write("\r\n            ");
+			}
+		}
+		#>});
+            if (constructor == null)
+            {
+                var ex = new InvalidOperationException("No matching constructor existing.");
+                ex.Data.Add("Target", t);
+<#
+	for (int j = 1; j <= i; j++)
+	{
+#>
+                ex.Data.Add(typeof(TArg<#=j#>), arg1);
+<#
+	}
+#>
+                throw ex;
+            }
+            var exp_parameters = new Expression[] {
+                <#
+		for (int j = 1; j <= i; j++)
+		{
+			Write($"Expression.Constant(arg{j})");
+			if (j != i)
+			{
+				Write(",\r\n                ");
+			}
+			else
+			{
+				Write("\r\n            ");
+			}
+		}
+		#>};
+            var exp_new = Expression.New(constructor, exp_parameters);
+            var result = Expression.Lambda(exp_new).Compile().DynamicInvoke();
+            return result;
+        }
+<#
+	}
+#>
+    }
+}

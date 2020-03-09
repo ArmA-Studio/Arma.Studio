@@ -409,15 +409,30 @@ namespace Arma.Studio.UiEditor.Data
         private string _Url;
         #endregion
 
+        #region Property: ClassName (System.String)
+        [Property("Classname")]
+        public string ClassName
+        {
+            get => this._ClassName;
+            set
+            {
+                this._ClassName = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private string _ClassName;
+        #endregion
 
         public ControlBase()
         {
             this.ForegroundColor = Colors.Black;
-            this.BackgroundColor = Color.FromArgb(32, 0, 0, 0);
+            this.BackgroundColor = Colors.Transparent;
             this.Shadow = EShadow.DropShadow;
             this.FontSize = 0.04;
             this.Opacity = 1;
             this.IsShown = true;
+            this.Font = "TahomaB";
+            this.ClassName = "MY_" + Enum.GetName(typeof(EControlType), this.ControlType).Substring(3) + "_" + new Random().Next();
         }
     }
 }

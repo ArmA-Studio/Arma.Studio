@@ -9,11 +9,11 @@ namespace Arma.Studio.UiEditor.Data
 {
     public sealed class InterfaceSize
     {
-        public static readonly InterfaceSize VerySmall = new InterfaceSize(Properties.Language.InterfaceSize_VerySmall, 2.12677);
-        public static readonly InterfaceSize Small = new InterfaceSize(Properties.Language.InterfaceSize_Small, 1.81818);
-        public static readonly InterfaceSize Normal = new InterfaceSize(Properties.Language.InterfaceSize_Normal, 1.42857);
-        public static readonly InterfaceSize Large = new InterfaceSize(Properties.Language.InterfaceSize_Large, 1.17647);
-        public static readonly InterfaceSize VeryLarge = new InterfaceSize(Properties.Language.InterfaceSize_VeryLarge, 1);
+        public static readonly InterfaceSize VerySmall = new InterfaceSize("VerySmall", Properties.Language.InterfaceSize_VerySmall, 2.12677);
+        public static readonly InterfaceSize Small = new InterfaceSize("Small", Properties.Language.InterfaceSize_Small, 1.81818);
+        public static readonly InterfaceSize Normal = new InterfaceSize("Normal", Properties.Language.InterfaceSize_Normal, 1.42857);
+        public static readonly InterfaceSize Large = new InterfaceSize("Large", Properties.Language.InterfaceSize_Large, 1.17647);
+        public static readonly InterfaceSize VeryLarge = new InterfaceSize("VeryLarge", Properties.Language.InterfaceSize_VeryLarge, 1);
 
         public static IEnumerable<InterfaceSize> InterfaceSizes => new InterfaceSize[]
         {
@@ -25,13 +25,14 @@ namespace Arma.Studio.UiEditor.Data
         };
 
         public const double SizeExDefaultCoef = 1.7678589107160535731964303392875;
-        private InterfaceSize(string title, double scaleFactor)
+        private InterfaceSize(string key, string title, double scaleFactor)
         {
             this.ScaleFactor = scaleFactor;
             this.SizeExBase = SizeExDefaultCoef * scaleFactor;
             this.Title = title;
+            this.Key = key;
         }
-
+        public string Key { get; }
         public string Title { get; }
         public double ScaleFactor { get; }
         public double SizeExBase { get; }

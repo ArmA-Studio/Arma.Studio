@@ -66,7 +66,7 @@ namespace Arma.Studio.UiEditor.UI
             {
                 this._SelectedNode = value;
                 this.RaisePropertyChanged();
-                (Application.Current as IApp).MainWindow.PropertyHost = value;
+                (Application.Current as IApp).MainWindow.PropertyHost = value is null && this.SelectedNodes.Count == 0 ? (Studio.Data.UI.IPropertyHost)this.Owner : value;
             }
         }
         private IControlElement _SelectedNode;

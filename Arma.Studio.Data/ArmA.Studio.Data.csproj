@@ -108,6 +108,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextEditor\ITextEditor.cs" />
     <Compile Include="TextEditor\WordCompletionInfo.cs" />
+    <Compile Include="TypeExtensions.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TypeExtensions.tt</DependentUpon>
+    </Compile>
     <Compile Include="UI\AttachedProperties\DataRelay.cs" />
     <Compile Include="UI\AttachedProperties\DataRelayCollection.cs" />
     <Compile Include="UI\AttachedProperties\DataRelaying.cs" />
@@ -171,6 +176,10 @@
     <Compile Include="UI\EditorInfoIcon.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TypeExtensions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TypeExtensions.cs</LastGenOutput>
+    </Content>
     <Content Include="UI\AttachedProperties\Attached.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Attached.cs</LastGenOutput>

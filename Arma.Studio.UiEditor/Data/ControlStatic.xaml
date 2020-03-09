@@ -40,8 +40,8 @@
                     </Rectangle.Fill>
                 </Rectangle>
                 <TextBlock Text="{Binding Text}"
-                       MaxWidth="{Binding Width}"
-                       MaxHeight="{Binding Height}">
+                           MaxWidth="{Binding Width}"
+                           MaxHeight="{Binding Height}">
                     <TextBlock.Foreground>
                         <SolidColorBrush Color="{Binding ForegroundColor}"/>
                     </TextBlock.Foreground>
@@ -52,7 +52,28 @@
                             <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}" Path="DataContext.CanvasManager"/>
                         </MultiBinding>
                     </TextBlock.FontSize>
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsImage}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
                 </TextBlock>
+                <Image Source="{Binding Text}">
+                    <Image.Style>
+                        <Style TargetType="Image">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsImage}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
             </Grid>
             <Rectangle Fill="#08019CFF" Stroke="#019CFF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Rectangle.Style>

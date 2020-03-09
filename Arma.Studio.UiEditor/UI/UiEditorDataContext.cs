@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -22,8 +23,16 @@ namespace Arma.Studio.UiEditor.UI
         IOnDragLeave,
         IOnDragOver,
         IOnDrop,
-        IEditorDocument
+        IEditorDocument,
+        Studio.Data.UI.IInteractionSave,
+        IPropertyHost
     {
+        private const string dlg_idd = "idd";
+        private const string dlg_movingEnable = "movingEnable";
+        private const string dlg_enableSimulation = "enableSimulation";
+        private const string dlg_controlsBackground = "controlsBackground";
+        private const string dlg_controls = "controls";
+
         #region Collection: CanvasManager (CanvasManager)
         public CanvasManager CanvasManager
         {
@@ -40,12 +49,11 @@ namespace Arma.Studio.UiEditor.UI
         }
         private CanvasManager _CanvasManager;
         #endregion
-
-
         #region Property: IDD (System.Int32)
         /// <summary>
         /// The unique ID number of this dialog. can be -1 if you don't require access to the dialog itself from within a script.
         /// </summary>
+        [ArmaName("idd")]
         public int IDD
         {
             get => this._IDD;
@@ -61,6 +69,7 @@ namespace Arma.Studio.UiEditor.UI
         /// <summary>
         /// Specifies whether the game continues while the dialog is shown or not.
         /// </summary>
+        [ArmaName("enableSimulation")]
         public bool EnableSimulation
         {
             get => this._EnableSimulation;
@@ -119,6 +128,45 @@ namespace Arma.Studio.UiEditor.UI
         }
         private InterfaceSize _InterfaceSize;
         #endregion
+        #region Property: ClassName (System.String)
+        [Property("Classname")]
+        public string ClassName
+        {
+            get => this._ClassName;
+            set
+            {
+                this._ClassName = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private string _ClassName;
+        #endregion
+        #region SerializationProperties
+        [ArmaName("ArmaStudio_InterfaceSize", Display = false)]
+        public string InterfaceSizeSerialized
+        {
+            get => this.InterfaceSize.Key;
+            set => this.InterfaceSize = InterfaceSize.InterfaceSizes.FirstOrDefault((it) => it.Key == value) ?? InterfaceSize.Small;
+        }
+        [ArmaName("ArmaStudio_GridSize", Display = false)]
+        public int GridSizeSerialized
+        {
+            get => this.CanvasManager.GridSize;
+            set => this.CanvasManager.GridSize = value;
+        }
+        [ArmaName("ArmaStudio_Width", Display = false)]
+        public double WidthSerialized
+        {
+            get => this.CanvasManager.Width;
+            set => this.CanvasManager.Width = value;
+        }
+        [ArmaName("ArmaStudio_Height", Display = false)]
+        public double HeightSerialized
+        {
+            get => this.CanvasManager.Height;
+            set => this.CanvasManager.Height = value;
+        }
+        #endregion
 
         public UiEditorDataContext()
         {
@@ -132,6 +180,8 @@ namespace Arma.Studio.UiEditor.UI
         public UiEditorDataContext(File file) : this()
         {
             this.File = file;
+            this.ClassName = System.IO.Path.GetFileNameWithoutExtension(file.Name);
+            this.Load();
         }
         public void OnDragEnter(UIElement sender, DragEventArgs e)
         {
@@ -299,13 +349,9 @@ namespace Arma.Studio.UiEditor.UI
             this.RaisePropertyChanged(nameof(this.Title));
             var type = (string)section.type;
 
-            if (this.File?.FullPath != null && System.IO.File.Exists(this.File.FullPath))
+            if (this.File?.FullPath != null && System.IO.File.Exists(this.File.PhysicalPath))
             {
-                using (var reader = new System.IO.StreamReader(this.File.FullPath))
-                {
-                    // ToDo: Parse config
-                    //this.TextDocument.Text = reader.ReadToEnd();
-                }
+                this.Load();
             }
             else
             {
@@ -313,6 +359,375 @@ namespace Arma.Studio.UiEditor.UI
                 this.Close();
                 return;
             }
+        }
+
+        public void Load()
+        {
+            var code = System.IO.File.ReadAllText(this.File.PhysicalPath);
+            FileFolderBase ffb = this.File;
+            while (ffb.Parent != null) { ffb = ffb.Parent; }
+            var pbo = ffb as PBO;
+            if (pbo is null)
+            {
+                // ToDo: Localize & enhance message
+                throw new InvalidOperationException("No PBO found.");
+            }
+            using (var vm = new SqfVm.ClrVirtualmachine())
+            {
+                vm.AddVirtualMapping(pbo.Prefix, pbo.FullPath);
+                vm.OnLog += this.ClrVirtualmachine_OnLog;
+                var parentClassesPreproc = vm.PreProcess(PluginMain.ParentClassesConfig, "/Arma.Studio/UiEditor/parentClasses.cpp");
+                var parentClasses = vm.ParseIntoConfig(parentClassesPreproc, "/Arma.Studio/UiEditor/parentClasses.cpp");
+                if (parentClasses is null)
+                {
+                    // unknown cause
+                    throw new Exception();
+                }
+                var preproc = vm.PreProcess(code, this.File.FullPath);
+                var configBin = vm.ParseIntoConfig(preproc, this.File.FullPath);
+                if (configBin is null)
+                {
+                    // parse failed
+                    throw new Exception();
+                }
+                var dialogConfig = configBin.Values.FirstOrDefault((it) =>
+                {
+                    if (it.ContainsKey(dlg_idd) ||
+                        it.ContainsKey(dlg_movingEnable) || 
+                        it.ContainsKey(dlg_enableSimulation) || 
+                        it.ContainsKey(dlg_controls))
+                    {
+                        return true;
+                    }
+                    return false;
+                });
+                if (dialogConfig is null)
+                {
+                    dialogConfig = configBin[configBin.Count - 1];
+                }
+                configBin.MergeWith(parentClasses);
+
+                List<SqfVm.Config> getControls(SqfVm.Config node)
+                {
+                    List<SqfVm.Config> controls;
+                    if (node.NodeType == SqfVm.EConfigNodeType.Array)
+                    {
+                        var arrayList = (System.Collections.ArrayList)node.Value;
+                        controls = new List<SqfVm.Config>(arrayList.Count);
+                        foreach (var it in arrayList)
+                        {
+                            if (it is string str)
+                            {
+                                var sub = dialogConfig[str];
+                                if (sub != null)
+                                {
+                                    controls.Add(sub);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        controls = node.Values.ToList();
+                    }
+                    return controls;
+                }
+
+                this.ClassName = dialogConfig.Name;
+
+                var backgroundControls = dialogConfig[dlg_controlsBackground];
+                var foregroundControls = dialogConfig[dlg_controls];
+                if (backgroundControls != null)
+                {
+                    var controls = getControls(backgroundControls);
+                    foreach(var node in controls)
+                    {
+                        var control = LoadControl(node);
+                        if (control != null)
+                        {
+                            this.BackgroundControls.Add(control);
+                        }
+                    }
+                }
+                if (foregroundControls != null)
+                {
+                    var controls = getControls(foregroundControls);
+                    foreach (var node in controls)
+                    {
+                        var control = LoadControl(node);
+                        if (control != null)
+                        {
+                            this.ForegroundControls.Add(control);
+                        }
+                    }
+                }
+            }
+        }
+        private static ControlBase LoadControl(SqfVm.Config node)
+        {
+            var typeNode = node["type"];
+            if (typeNode is null || typeNode.NodeType != SqfVm.EConfigNodeType.Scalar)
+            {
+                return null;
+            }
+            var type = (EControlType)(int)(double)typeNode.Value;
+            var field = typeof(EControlType).GetField(Enum.GetName(typeof(EControlType), type));
+            var attributes = field.GetCustomAttributes(typeof(ControlTypeAttribute), true).Cast<ControlTypeAttribute>().ToArray();
+            if (!attributes.Any())
+            {
+                return null;
+            }
+            var targetType = attributes.First().TargetType;
+            var instance = targetType.CreateInstance<ControlBase>();
+            foreach (var propertyInfo in targetType.GetProperties().Where((it) => it.SetMethod != null))
+            {
+                var armaNameAttributes = Attribute.GetCustomAttributes(propertyInfo, typeof(ArmaNameAttribute), true).Cast<ArmaNameAttribute>().ToArray();
+                if (!armaNameAttributes.Any())
+                {
+                    continue;
+                }
+                var armaNameAttribute = armaNameAttributes.First();
+                var value = node[armaNameAttribute.Title]?.Value;
+                if (value is null)
+                {
+                    continue;
+                }
+                if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
+                {
+                    var arraylist = value as System.Collections.ArrayList;
+                    propertyInfo.SetValue(instance,
+                        System.Windows.Media.Color.FromArgb(
+                            (byte)(255 * Convert.ToDouble(arraylist.Count < 4 ? 0 : arraylist[3])),
+                            (byte)(255 * Convert.ToDouble(arraylist.Count < 1 ? 0 : arraylist[0])),
+                            (byte)(255 * Convert.ToDouble(arraylist.Count < 2 ? 0 : arraylist[1])),
+                            (byte)(255 * Convert.ToDouble(arraylist.Count < 3 ? 0 : arraylist[2]))
+                            ),
+                        null);
+                }
+                else if (propertyInfo.PropertyType.IsEnum)
+                {
+                    propertyInfo.SetValue(instance, Convert.ToInt32(value), null);
+                }
+                else if (value is string s)
+                {
+                    propertyInfo.SetValue(instance, Convert.ChangeType(s.Trim('"'), propertyInfo.PropertyType), null);
+                }
+                else
+                {
+                    propertyInfo.SetValue(instance, Convert.ChangeType(value, propertyInfo.PropertyType), null);
+                }
+            }
+            return instance;
+        }
+
+        private void ClrVirtualmachine_OnLog(object sender, SqfVm.LogEventArgs eventArgs)
+        {
+            switch (eventArgs.Severity)
+            {
+                case SqfVm.ESeverity.Fatal:
+                    PluginMain.Logger.Log(ESeverity.Error, eventArgs.Message);
+                    break;
+                case SqfVm.ESeverity.Error:
+                    PluginMain.Logger.Log(ESeverity.Error, eventArgs.Message);
+                    break;
+                case SqfVm.ESeverity.Warning:
+                    PluginMain.Logger.Log(ESeverity.Warning, eventArgs.Message);
+                    break;
+                case SqfVm.ESeverity.Info:
+                    PluginMain.Logger.Log(ESeverity.Info, eventArgs.Message);
+                    break;
+                case SqfVm.ESeverity.Verbose:
+                    PluginMain.Logger.Log(ESeverity.Trace, eventArgs.Message);
+                    break;
+                case SqfVm.ESeverity.Trace:
+                    PluginMain.Logger.Log(ESeverity.Diagnostic, eventArgs.Message);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public Task Save(CancellationToken cancellationToken)
+        {
+            using (var stream = new System.IO.StreamWriter(this.File.PhysicalPath))
+            {
+                int tabstop = 0;
+                string tabs() { return new string(' ', tabstop * 4); }
+                stream.Write("class ");
+                stream.Write(this.ClassName);
+                stream.WriteLine(" {");
+                tabstop++;
+
+                foreach (var propertyInfo in typeof(UiEditorDataContext).GetProperties())
+                {
+                    var armaNameAttributes = Attribute.GetCustomAttributes(propertyInfo, typeof(ArmaNameAttribute), true).Cast<ArmaNameAttribute>().ToArray();
+                    if (!armaNameAttributes.Any() && !new string[] { dlg_controls, dlg_controlsBackground }.Contains(propertyInfo.Name))
+                    {
+                        continue;
+                    }
+                    var armaNameAttribute = armaNameAttributes.First();
+                    stream.Write(tabs());
+                    stream.Write(armaNameAttribute.Title);
+                    stream.Write(" = ");
+                    var value = propertyInfo.GetValue(this, null);
+                    if (propertyInfo.PropertyType.IsEquivalentTo(typeof(string)))
+                    {
+                        stream.Write(" = ");
+                        stream.Write('"');
+                        stream.Write(value);
+                        stream.Write('"');
+                    }
+                    if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
+                    {
+                        stream.Write("[] = { ");
+                        var color = (System.Windows.Media.Color)value;
+                        stream.Write(color.R / 255.0);
+                        stream.Write(", ");
+                        stream.Write(color.G / 255.0);
+                        stream.Write(", ");
+                        stream.Write(color.B / 255.0);
+                        stream.Write(", ");
+                        stream.Write(color.A / 255.0);
+                        stream.Write(" }");
+                    }
+                    else if (propertyInfo.PropertyType.IsEnum)
+                    {
+                        stream.Write(" = ");
+                        stream.Write(Convert.ToInt32(value));
+                    }
+                    else
+                    {
+                        stream.Write(" = ");
+                        stream.Write(value);
+                    }
+                    stream.WriteLine(";");
+                }
+
+                stream.Write(tabs());
+                stream.WriteLine("class " + dlg_controls + " {");
+                tabstop++;
+                foreach (var control in this.BackgroundControls)
+                {
+                    stream.Write(tabs());
+                    stream.WriteLine("class " + control.ClassName + " {");
+                    tabstop++;
+                    foreach (var propertyInfo in control.GetType().GetProperties())
+                    {
+                        
+                        var armaNameAttributes = Attribute.GetCustomAttributes(propertyInfo, typeof(ArmaNameAttribute), true).Cast<ArmaNameAttribute>().ToArray();
+                        if (!armaNameAttributes.Any())
+                        {
+                            continue;
+                        }
+                        var armaNameAttribute = armaNameAttributes.First();
+                        stream.Write(tabs());
+                        stream.Write(armaNameAttribute.Title);
+                        var value = propertyInfo.GetValue(control, null);
+                        if (propertyInfo.PropertyType.IsEquivalentTo(typeof(string)))
+                        {
+                            stream.Write(" = ");
+                            stream.Write('"');
+                            stream.Write(value);
+                            stream.Write('"');
+                        }
+                        if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
+                        {
+                            stream.Write("[] = { ");
+                            var color = (System.Windows.Media.Color)value;
+                            stream.Write(color.R / 255.0);
+                            stream.Write(", ");
+                            stream.Write(color.G / 255.0);
+                            stream.Write(", ");
+                            stream.Write(color.B / 255.0);
+                            stream.Write(", ");
+                            stream.Write(color.A / 255.0);
+                            stream.WriteLine(" }");
+                        }
+                        else if (propertyInfo.PropertyType.IsEnum)
+                        {
+                            stream.Write(" = ");
+                            stream.Write(Convert.ToInt32(value));
+                        }
+                        else
+                        {
+                            stream.Write(" = ");
+                            stream.Write(value);
+                        }
+                        stream.WriteLine(";");
+                    }
+                    tabstop--;
+                    stream.Write(tabs());
+                    stream.WriteLine("};");
+                }
+                tabstop--;
+                stream.Write(tabs());
+                stream.WriteLine("};");
+
+                stream.Write(tabs());
+                stream.WriteLine("class " + dlg_controlsBackground + " {");
+                tabstop++;
+                foreach (var control in this.ForegroundControls)
+                {
+                    stream.Write(tabs());
+                    stream.WriteLine("class " + control.ClassName + " {");
+                    tabstop++;
+                    foreach (var propertyInfo in control.GetType().GetProperties())
+                    {
+                        var armaNameAttributes = Attribute.GetCustomAttributes(propertyInfo, typeof(ArmaNameAttribute), true).Cast<ArmaNameAttribute>().ToArray();
+                        if (!armaNameAttributes.Any())
+                        {
+                            continue;
+                        }
+                        var armaNameAttribute = armaNameAttributes.First();
+                        stream.Write(tabs());
+                        stream.Write(armaNameAttribute.Title);
+                        stream.Write(" = ");
+                        var value = propertyInfo.GetValue(control, null);
+                        if (propertyInfo.PropertyType.IsEquivalentTo(typeof(string)))
+                        {
+                            stream.Write(" = ");
+                            stream.Write('"');
+                            stream.Write(value);
+                            stream.Write('"');
+                        }
+                        if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
+                        {
+                            stream.Write("[] = { ");
+                            var color = (System.Windows.Media.Color)value;
+                            stream.Write(color.R / 255.0);
+                            stream.Write(", ");
+                            stream.Write(color.G / 255.0);
+                            stream.Write(", ");
+                            stream.Write(color.B / 255.0);
+                            stream.Write(", ");
+                            stream.Write(color.A / 255.0);
+                            stream.WriteLine(" }");
+                        }
+                        else if (propertyInfo.PropertyType.IsEnum)
+                        {
+                            stream.Write(" = ");
+                            stream.Write(Convert.ToInt32(value));
+                        }
+                        else
+                        {
+                            stream.Write(" = ");
+                            stream.Write(value);
+                        }
+                        stream.WriteLine(";");
+                    }
+                    tabstop--;
+                    stream.Write(tabs());
+                    stream.WriteLine("};");
+                }
+                tabstop--;
+                stream.Write(tabs());
+                stream.WriteLine("};");
+
+                tabstop--;
+                stream.Write(tabs());
+                stream.WriteLine("};");
+            }
+            return Task.CompletedTask;
         }
     }
 }

@@ -95,7 +95,7 @@
                 </ItemsControl.ItemContainerStyle>
             </ItemsControl>
         </ScrollViewer>
-        <WrapPanel Grid.Row="2" Orientation="Horizontal" Grid.IsSharedSizeScope="True">
+        <WrapPanel Grid.Row="2" Orientation="Horizontal">
             <WrapPanel.Resources>
                 <Style TargetType="Grid">
                     <Setter Property="Margin" Value="4 2 4 2"/>
@@ -104,7 +104,7 @@
 
             <Grid ToolTip="{x:Static p:Language.UiEditor_CanvasGridSize_ToolTip}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="4"/>
                     <ColumnDefinition MinWidth="64" Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -119,22 +119,57 @@
             </Grid>
             <Grid ToolTip="{x:Static p:Language.UiEditor_CanvasGridSize_ToolTip}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="4"/>
                     <ColumnDefinition MinWidth="64" Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="{x:Static p:Language.UiEditor_CanvasGridSize}" Grid.Column="0" VerticalAlignment="Center"/>
-                <xceed:DoubleUpDown Value="{Binding CanvasManager.GridSize}" Minimum="10" Increment="1" Grid.Column="2" IsUndoEnabled="False"/>
+                <xceed:DoubleUpDown Value="{Binding CanvasManager.GridSize}"
+                                    Minimum="10"
+                                    Increment="1"
+                                    Grid.Column="2"
+                                    IsUndoEnabled="False"/>
             </Grid>
 
             <Grid ToolTip="{x:Static p:Language.UiEditor_Zoom_ToolTip}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="4"/>
                     <ColumnDefinition MinWidth="64" Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="{x:Static p:Language.UiEditor_Zoom}" Grid.Column="0" VerticalAlignment="Center"/>
-                <xceed:DoubleUpDown Value="{Binding CanvasManager.Zoom}" Minimum="0.1" Maximum="5" Increment="0.2" Grid.Column="2" IsUndoEnabled="False"/>
+                <xceed:DoubleUpDown Value="{Binding CanvasManager.Zoom}"
+                                    Minimum="0.1"
+                                    Maximum="5"
+                                    Increment="0.2"
+                                    Grid.Column="2"
+                                    IsUndoEnabled="False"/>
+            </Grid>
+            <Grid ToolTip="{x:Static p:Language.UiEditor_Width_ToolTip}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="4"/>
+                    <ColumnDefinition MinWidth="64" Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{x:Static p:Language.UiEditor_Width}" Grid.Column="0" VerticalAlignment="Center"/>
+                <xceed:DoubleUpDown Value="{Binding CanvasManager.Width}"
+                                    Minimum="10"
+                                    Increment="1"
+                                    Grid.Column="2"
+                                    IsUndoEnabled="False"/>
+            </Grid>
+            <Grid ToolTip="{x:Static p:Language.UiEditor_Height_ToolTip}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="4"/>
+                    <ColumnDefinition MinWidth="64" Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{x:Static p:Language.UiEditor_Height}" Grid.Column="0" VerticalAlignment="Center"/>
+                <xceed:DoubleUpDown Value="{Binding CanvasManager.Height}"
+                                    Minimum="10"
+                                    Increment="1"
+                                    Grid.Column="2"
+                                    IsUndoEnabled="False"/>
             </Grid>
         </WrapPanel>
     </Grid>

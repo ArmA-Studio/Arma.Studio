@@ -16,5 +16,6 @@ namespace Arma.Studio.UiEditor.Data
         double Top { get; set; }
         double Width { get; set; }
         double Height { get; set; }
+        string ClassName { get; set; }
     }
 }

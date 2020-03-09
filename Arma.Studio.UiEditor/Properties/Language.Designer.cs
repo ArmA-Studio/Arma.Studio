@@ -475,6 +475,15 @@ namespace Arma.Studio.UiEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UI-Editor.
+        /// </summary>
+        public static string LoggerName {
+            get {
+                return ResourceManager.GetString("LoggerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gridsize.
         /// </summary>
         public static string UiEditor_CanvasGridSize {
@@ -502,6 +511,24 @@ namespace Arma.Studio.UiEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Height.
+        /// </summary>
+        public static string UiEditor_Height {
+            get {
+                return ResourceManager.GetString("UiEditor_Height", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Viewport Height.
+        /// </summary>
+        public static string UiEditor_Height_ToolTip {
+            get {
+                return ResourceManager.GetString("UiEditor_Height_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interface Size.
         /// </summary>
         public static string UiEditor_InterfaceSize {
@@ -525,6 +552,24 @@ namespace Arma.Studio.UiEditor.Properties {
         public static string UIEditor_Toolbox {
             get {
                 return ResourceManager.GetString("UIEditor_Toolbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Width.
+        /// </summary>
+        public static string UiEditor_Width {
+            get {
+                return ResourceManager.GetString("UiEditor_Width", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Viewport Width..
+        /// </summary>
+        public static string UiEditor_Width_ToolTip {
+            get {
+                return ResourceManager.GetString("UiEditor_Width_ToolTip", resourceCulture);
             }
         }
         

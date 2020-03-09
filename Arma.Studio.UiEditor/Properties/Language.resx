@@ -279,4 +279,19 @@
   <data name="UiEditor_InterfaceSize" xml:space="preserve">
     <value>Interface Size</value>
   </data>
+  <data name="UiEditor_Height" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="UiEditor_Height_ToolTip" xml:space="preserve">
+    <value>Viewport Height</value>
+  </data>
+  <data name="UiEditor_Width" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="UiEditor_Width_ToolTip" xml:space="preserve">
+    <value>Viewport Width.</value>
+  </data>
+  <data name="LoggerName" xml:space="preserve">
+    <value>UI-Editor</value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Arma.Studio.Data.UI;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
@@ -12,6 +13,28 @@ namespace Arma.Studio.UiEditor.Data
     {
         public const string PropGroup_CT_Static = "CT_Static";
         public override EControlType ControlType => EControlType.CT_STATIC;
+
+        #region Property: Autoplay {autoplay} (System.Boolean)
+        [Property("Is Picutre", Group = PropGroup_CT_Static)]
+        public bool IsPicture
+        {
+            get => (this.ControlStyle & EControlStyle.ST_PICTURE) == EControlStyle.ST_PICTURE;
+            set
+            {
+                if (value)
+                {
+                    this.ControlStyle |= EControlStyle.ST_PICTURE;
+                }
+                else
+                {
+                    this.ControlStyle &= ~EControlStyle.ST_PICTURE;
+                }
+                this.RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
 
         #region Property: Autoplay {autoplay} (System.Boolean)
         /// <summary>
