@@ -67,7 +67,7 @@
                         <Style TargetType="Image">
                             <Setter Property="Visibility" Value="Collapsed"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsImage}" Value="True">
+                                <DataTrigger Binding="{Binding IsPicture}" Value="True">
                                     <Setter Property="Visibility" Value="Visible"/>
                                 </DataTrigger>
                             </Style.Triggers>
