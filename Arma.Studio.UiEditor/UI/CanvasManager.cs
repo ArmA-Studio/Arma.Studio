@@ -685,6 +685,11 @@ namespace Arma.Studio.UiEditor.UI
                     }
                 }
             }
+            else if (this.IsMouseSelectionSquareActive)
+            {
+                this.IsMouseSelectionSquareActive = false;
+                this.SelectionHelper = null;
+            }
             else
             {
                 var itemsBelow = this.Canvas.GetChildrenBelowCursor().Select((it) => it.DataContext).Cast<IControlElement>().ToArray();

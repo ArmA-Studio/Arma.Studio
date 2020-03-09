@@ -374,8 +374,21 @@ namespace Arma.Studio.UiEditor.UI
             }
             using (var vm = new SqfVm.ClrVirtualmachine())
             {
-                vm.AddVirtualMapping(pbo.Prefix, pbo.FullPath);
+                if (!String.IsNullOrWhiteSpace(pbo.Prefix))
+                {
+                    vm.AddVirtualMapping(pbo.Prefix, pbo.FullPath);
+                }
                 vm.OnLog += this.ClrVirtualmachine_OnLog;
+                vm.ParseSqf(
+                    "{ 1 } provide__ ['safezoneW'];" +
+                    "{ 1 } provide__ ['safezoneH'];" +
+                    "{ 0 } provide__ ['safezoneX'];" +
+                    "{ 0 } provide__ ['safezoneY'];" +
+                    "(profilenamespace getvariable ['GUI_BCG_RGB_R',0.13]);" +
+                    "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.54]);" +
+                    "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.21]);",
+                    "__UiEdtior");
+                vm.Start();
                 var parentClassesPreproc = vm.PreProcess(PluginMain.ParentClassesConfig, "/Arma.Studio/UiEditor/parentClasses.cpp");
                 var parentClasses = vm.ParseIntoConfig(parentClassesPreproc, "/Arma.Studio/UiEditor/parentClasses.cpp");
                 if (parentClasses is null)
@@ -442,7 +455,7 @@ namespace Arma.Studio.UiEditor.UI
                     var controls = getControls(backgroundControls);
                     foreach(var node in controls)
                     {
-                        var control = LoadControl(node);
+                        var control = LoadControl(vm, node);
                         if (control != null)
                         {
                             this.BackgroundControls.Add(control);
@@ -454,7 +467,7 @@ namespace Arma.Studio.UiEditor.UI
                     var controls = getControls(foregroundControls);
                     foreach (var node in controls)
                     {
-                        var control = LoadControl(node);
+                        var control = LoadControl(vm, node);
                         if (control != null)
                         {
                             this.ForegroundControls.Add(control);
@@ -463,7 +476,7 @@ namespace Arma.Studio.UiEditor.UI
                 }
             }
         }
-        private static ControlBase LoadControl(SqfVm.Config node)
+        private ControlBase LoadControl(SqfVm.ClrVirtualmachine vm, SqfVm.Config node)
         {
             var typeNode = node["type"];
             if (typeNode is null || typeNode.NodeType != SqfVm.EConfigNodeType.Scalar)
@@ -479,6 +492,7 @@ namespace Arma.Studio.UiEditor.UI
             }
             var targetType = attributes.First().TargetType;
             var instance = targetType.CreateInstance<ControlBase>();
+            instance.ClassName = node.Name;
             foreach (var propertyInfo in targetType.GetProperties().Where((it) => it.SetMethod != null))
             {
                 var armaNameAttributes = Attribute.GetCustomAttributes(propertyInfo, typeof(ArmaNameAttribute), true).Cast<ArmaNameAttribute>().ToArray();
@@ -497,24 +511,51 @@ namespace Arma.Studio.UiEditor.UI
                     var arraylist = value as System.Collections.ArrayList;
                     propertyInfo.SetValue(instance,
                         System.Windows.Media.Color.FromArgb(
-                            (byte)(255 * Convert.ToDouble(arraylist.Count < 4 ? 0 : arraylist[3])),
-                            (byte)(255 * Convert.ToDouble(arraylist.Count < 1 ? 0 : arraylist[0])),
-                            (byte)(255 * Convert.ToDouble(arraylist.Count < 2 ? 0 : arraylist[1])),
-                            (byte)(255 * Convert.ToDouble(arraylist.Count < 3 ? 0 : arraylist[2]))
+                            (byte)(255 * Convert.ToDouble(arraylist.Count < 4 ? 0 : arraylist[3], System.Globalization.CultureInfo.InvariantCulture)),
+                            (byte)(255 * Convert.ToDouble(arraylist.Count < 1 ? 0 : arraylist[0], System.Globalization.CultureInfo.InvariantCulture)),
+                            (byte)(255 * Convert.ToDouble(arraylist.Count < 2 ? 0 : arraylist[1], System.Globalization.CultureInfo.InvariantCulture)),
+                            (byte)(255 * Convert.ToDouble(arraylist.Count < 3 ? 0 : arraylist[2], System.Globalization.CultureInfo.InvariantCulture))
                             ),
                         null);
                 }
                 else if (propertyInfo.PropertyType.IsEnum)
                 {
-                    propertyInfo.SetValue(instance, Convert.ToInt32(value), null);
+                    propertyInfo.SetValue(instance, Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture), null);
                 }
                 else if (value is string s)
                 {
-                    propertyInfo.SetValue(instance, Convert.ChangeType(s.Trim('"'), propertyInfo.PropertyType), null);
+                    if (propertyInfo.PropertyType.IsEquivalentTo(typeof(string)))
+                    {
+                        propertyInfo.SetValue(instance, Convert.ChangeType(s.Trim('"'), propertyInfo.PropertyType, System.Globalization.CultureInfo.InvariantCulture), null);
+                    }
+                    else
+                    {
+                        var res = vm.Evaluate(s);
+                        var resval = Convert.ChangeType(res.Data.Trim('"'), propertyInfo.PropertyType, System.Globalization.CultureInfo.InvariantCulture);
+                        if (new string[] { "x", "y", "w", "h" }.Contains(armaNameAttribute.Title))
+                        {
+                            switch (armaNameAttribute.Title)
+                            {
+                                case "x":
+                                case "w":
+                                    propertyInfo.SetValue(instance, this.CanvasManager.Width * (double)resval, null);
+                                    break;
+                                case "y":
+                                case "h":
+                                    propertyInfo.SetValue(instance, this.CanvasManager.Height * (double)resval, null);
+                                    break;
+                            }
+                            continue;
+                        }
+                        else
+                        {
+                            propertyInfo.SetValue(instance, resval, null);
+                        }
+                    }
                 }
                 else
                 {
-                    propertyInfo.SetValue(instance, Convert.ChangeType(value, propertyInfo.PropertyType), null);
+                    propertyInfo.SetValue(instance, Convert.ChangeType(value, propertyInfo.PropertyType, System.Globalization.CultureInfo.InvariantCulture), null);
                 }
             }
             return instance;
@@ -569,6 +610,25 @@ namespace Arma.Studio.UiEditor.UI
                     stream.Write(tabs());
                     stream.Write(armaNameAttribute.Title);
                     var value = propertyInfo.GetValue(this, null);
+                    if (new string[] { "x", "y", "w", "h" }.Contains(armaNameAttribute.Title))
+                    {
+                        switch (armaNameAttribute.Title)
+                        {
+                            case "x":
+                                stream.WriteLine($" = \"safezoneX + ({value} / 1920) * safezoneW\";");
+                                break;
+                            case "y":
+                                stream.WriteLine($" = \"safezoneY + ({value} / 1920) * safezoneH\";");
+                                break;
+                            case "w":
+                                stream.WriteLine($" = \"({value} / 1920) * safezoneW\";");
+                                break;
+                            case "h":
+                                stream.WriteLine($" = \"({value} / 1920) * safezoneH\";");
+                                break;
+                        }
+                        continue;
+                    }
                     if (propertyInfo.PropertyType.IsEquivalentTo(typeof(string)))
                     {
                         stream.Write(" = ");
@@ -592,7 +652,7 @@ namespace Arma.Studio.UiEditor.UI
                     else if (propertyInfo.PropertyType.IsEnum)
                     {
                         stream.Write(" = ");
-                        stream.Write(Convert.ToInt32(value));
+                        stream.Write(Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture));
                     }
                     else
                     {
@@ -612,7 +672,6 @@ namespace Arma.Studio.UiEditor.UI
                     tabstop++;
                     foreach (var propertyInfo in control.GetType().GetProperties())
                     {
-                        
                         var armaNameAttributes = Attribute.GetCustomAttributes(propertyInfo, typeof(ArmaNameAttribute), true).Cast<ArmaNameAttribute>().ToArray();
                         if (!armaNameAttributes.Any())
                         {
@@ -622,6 +681,25 @@ namespace Arma.Studio.UiEditor.UI
                         stream.Write(tabs());
                         stream.Write(armaNameAttribute.Title);
                         var value = propertyInfo.GetValue(control, null);
+                        if (new string[] { "x", "y", "w", "h" }.Contains(armaNameAttribute.Title))
+                        {
+                            switch (armaNameAttribute.Title)
+                            {
+                                case "x":
+                                    stream.WriteLine($" = \"safezoneX + ({value} / 1920) * safezoneW\";");
+                                    break;
+                                case "y":
+                                    stream.WriteLine($" = \"safezoneY + ({value} / 1920) * safezoneH\";");
+                                    break;
+                                case "w":
+                                    stream.WriteLine($" = \"({value} / 1920) * safezoneW\";");
+                                    break;
+                                case "h":
+                                    stream.WriteLine($" = \"({value} / 1920) * safezoneH\";");
+                                    break;
+                            }
+                            continue;
+                        }
                         if (propertyInfo.PropertyType.IsEquivalentTo(typeof(string)))
                         {
                             stream.Write(" = ");
@@ -645,7 +723,7 @@ namespace Arma.Studio.UiEditor.UI
                         else if (propertyInfo.PropertyType.IsEnum)
                         {
                             stream.Write(" = ");
-                            stream.Write(Convert.ToInt32(value));
+                            stream.Write(Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture));
                         }
                         else
                         {
@@ -681,6 +759,25 @@ namespace Arma.Studio.UiEditor.UI
                         stream.Write(tabs());
                         stream.Write(armaNameAttribute.Title);
                         var value = propertyInfo.GetValue(control, null);
+                        if (new string[] { "x", "y", "w", "h" }.Contains(armaNameAttribute.Title))
+                        {
+                            switch (armaNameAttribute.Title)
+                            {
+                                case "x":
+                                    stream.WriteLine($" = \"safezoneX + ({value} / 1920) * safezoneW\";");
+                                    break;
+                                case "y":
+                                    stream.WriteLine($" = \"safezoneY + ({value} / 1920) * safezoneH\";");
+                                    break;
+                                case "w":
+                                    stream.WriteLine($" = \"({value} / 1920) * safezoneW\";");
+                                    break;
+                                case "h":
+                                    stream.WriteLine($" = \"({value} / 1920) * safezoneH\";");
+                                    break;
+                            }
+                            continue;
+                        }
                         if (propertyInfo.PropertyType.IsEquivalentTo(typeof(string)))
                         {
                             stream.Write(" = ");
@@ -704,7 +801,7 @@ namespace Arma.Studio.UiEditor.UI
                         else if (propertyInfo.PropertyType.IsEnum)
                         {
                             stream.Write(" = ");
-                            stream.Write(Convert.ToInt32(value));
+                            stream.Write(Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture));
                         }
                         else
                         {
