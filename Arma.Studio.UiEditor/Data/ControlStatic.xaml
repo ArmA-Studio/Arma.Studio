@@ -7,6 +7,7 @@
     <DataTemplate DataType="{x:Type local:ControlStatic}">
         <DataTemplate.Resources>
             <converters:SizeExToFontSizeMultiConverter x:Key="SizeExToFontSizeMultiConverter"/>
+            <converters:ControlTextImageConverter x:Key="ControlTextImageConverter"/>
         </DataTemplate.Resources>
         <Grid>
             <Grid.ToolTip>
@@ -34,7 +35,7 @@
                     </Style>
                 </Grid.Style>
                 <Rectangle Width="{Binding Width}"
-                       Height="{Binding Height}">
+                           Height="{Binding Height}">
                     <Rectangle.Fill>
                         <SolidColorBrush Color="{Binding BackgroundColor}"/>
                     </Rectangle.Fill>
@@ -62,7 +63,13 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
-                <Image Source="{Binding Text}">
+                <Image Source="{Binding Text, Converter={StaticResource ControlTextImageConverter}}"
+                       Width="{Binding Width}"
+                       Height="{Binding Height}"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Stretch="Fill"
+                       StretchDirection="Both">
                     <Image.Style>
                         <Style TargetType="Image">
                             <Setter Property="Visibility" Value="Collapsed"/>

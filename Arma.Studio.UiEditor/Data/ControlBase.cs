@@ -379,16 +379,25 @@ namespace Arma.Studio.UiEditor.Data
         /// Initial fade of the control
         /// </summary>
         [ArmaName("fade", Group = PropGroup_Visual)]
-        public double Opacity
+        public double Fade
         {
-            get => this._Opacity;
+            get => this._Fade;
             set
             {
-                this._Opacity = value;
+                this._Fade = value;
                 this.RaisePropertyChanged();
+                this.RaisePropertyChanged(nameof(Opacity));
             }
         }
-        private double _Opacity;
+        private double _Fade;
+        public double Opacity
+        {
+            get => 1 - this._Fade;
+            set
+            {
+                this.Fade = 1 - value;
+            }
+        }
         #endregion
         #region Property: Url {url} (System.String)
         /// <summary>
