@@ -403,6 +403,11 @@ namespace Arma.Studio.UiEditor.UI
                     // parse failed
                     throw new Exception();
                 }
+                if (configBin.Count == 0)
+                {
+                    // empty
+                    return;
+                }
                 var dialogConfig = configBin.Values.FirstOrDefault((it) =>
                 {
                     if (it.ContainsKey(dlg_idd) ||
