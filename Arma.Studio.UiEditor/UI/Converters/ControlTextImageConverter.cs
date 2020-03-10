@@ -17,7 +17,7 @@ namespace Arma.Studio.UiEditor.UI.Converters
             if (value is string str)
             {
                 str = str.TrimStart('\\', '/', ' ', '\t');
-                var pbo = (Application.Current as IApp).MainWindow.FileManagement.FirstOrDefault((it) => str.StartsWith(it.FullPath, StringComparison.InvariantCultureIgnoreCase) || str.StartsWith(it.Prefix, StringComparison.InvariantCultureIgnoreCase));
+                var pbo = (Application.Current as IApp).MainWindow.FileManagement.FirstOrDefault((it) => str.StartsWith(it.FullPath, StringComparison.InvariantCultureIgnoreCase) || (!String.IsNullOrWhiteSpace(it.Prefix) && str.StartsWith(it.Prefix, StringComparison.InvariantCultureIgnoreCase)));
                 if (pbo is null)
                 {
                     return null;
