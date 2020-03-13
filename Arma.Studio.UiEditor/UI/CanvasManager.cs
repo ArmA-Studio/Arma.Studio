@@ -228,6 +228,10 @@ namespace Arma.Studio.UiEditor.UI
             get => this._GridSize;
             set
             {
+                if (value < 0)
+                {
+                    value = 1;
+                }
                 this._GridSize = value;
                 this.RaisePropertyChanged();
             }
@@ -285,12 +289,40 @@ namespace Arma.Studio.UiEditor.UI
         private bool _ShowGrid;
         #endregion
 
-        public void SetPosition(IControlElement node, Point p) => this.SetPosition(node, p.X, p.Y);
-        public void SetPosition(IControlElement node, double left, double top)
+        public Point SnapToGrid(Point p)
         {
-            var p = this.GetPosition(node, left, top);
-            node.Left = p.X;
-            node.Top = p.Y;
+            var gridX = this.GridSize;
+            var gridY = this.GridSize;
+            if (gridX > 0)
+            {
+                // Check if mid is closer to centered-left or centered-right
+                var deltaX = p.X % gridX;
+                if (deltaX > gridX / 2)
+                { // right
+                    // Move left to grid-based left
+                    p.X = ((int)p.X / gridX + 1) * gridX;
+                }
+                else
+                { // left
+                    // Move left to grid-based left
+                    p.X = ((int)p.X / gridX) * gridX;
+                }
+            }
+            if (gridY > 0)
+            {
+                // Check if mid is closer to centered-top or centered-bot
+                var deltaY = p.Y % gridY;
+                if (deltaY > gridY / 2)
+                { // bot
+                    // Move top to grid-based top
+                    p.Y = ((int)p.Y / gridY + 1) * gridY;
+                }
+                else
+                { // top
+                    p.Y = ((int)p.Y / gridY) * gridY;
+                }
+            }
+            return p;
         }
         public Point GetPosition(IControlElement node, double left, double top)
         {
@@ -490,14 +522,21 @@ namespace Arma.Studio.UiEditor.UI
                     else
                     {
                         var newPositions = this.PreMovePositions
-                            .Select((it) => new Tuple<IControlElement, Point>(it.Item1, this.GetPosition(it.Item1, it.Item1.Left, it.Item1.Top)))
-                            .ToDictionary((it) => it.Item1, (it) => it.Item2);
+                            .Select((it) =>
+                            {
+                                var rect = new Rect(it.Item1.Left, it.Item1.Top, it.Item1.Width, it.Item1.Height);
+                                return new Tuple<IControlElement, Point, Point>(it.Item1, this.SnapToGrid(new Point(rect.Left, rect.Top)), this.SnapToGrid(new Point(rect.Right, rect.Bottom)));
+                            })
+                            .ToDictionary((it) => it.Item1, (it) => new { TopLeft = it.Item2, BotomRight = it.Item3 });
                         var selectedNodes = this.SelectedNodes.ToArray();
                         foreach (var node in selectedNodes)
                         {
-                            var pos = newPositions[node];
-                            node.Left = pos.X;
-                            node.Top = pos.Y;
+                            var obj = newPositions[node];
+                            var rect = new Rect(obj.TopLeft, obj.BotomRight);
+                            node.Left = rect.Left;
+                            node.Top = rect.Top;
+                            node.Width = rect.Width;
+                            node.Height = rect.Height;
                         }
                         e.Handled = true;
                     }

@@ -9,12 +9,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 
 namespace Arma.Studio.UiEditor.UI
 {
@@ -142,25 +139,29 @@ namespace Arma.Studio.UiEditor.UI
         private string _ClassName;
         #endregion
         #region SerializationProperties
-        [ArmaName("ArmaStudio_InterfaceSize", Display = false)]
+        private const string InterfaceSizeSerializedKey = "ArmaStudio_InterfaceSize";
+        [ArmaName(InterfaceSizeSerializedKey, Display = false)]
         public string InterfaceSizeSerialized
         {
             get => this.InterfaceSize.Key;
             set => this.InterfaceSize = InterfaceSize.InterfaceSizes.FirstOrDefault((it) => it.Key == value) ?? InterfaceSize.Small;
         }
-        [ArmaName("ArmaStudio_GridSize", Display = false)]
+        private const string GridSizeSerializedKey = "ArmaStudio_GridSize";
+        [ArmaName(GridSizeSerializedKey, Display = false)]
         public int GridSizeSerialized
         {
             get => this.CanvasManager.GridSize;
             set => this.CanvasManager.GridSize = value;
         }
-        [ArmaName("ArmaStudio_Width", Display = false)]
+        private const string WidthSerializedKey = "ArmaStudio_Width";
+        [ArmaName(WidthSerializedKey, Display = false)]
         public double WidthSerialized
         {
             get => this.CanvasManager.Width;
             set => this.CanvasManager.Width = value;
         }
-        [ArmaName("ArmaStudio_Height", Display = false)]
+        private const string HeightSerializedKey = "ArmaStudio_Height";
+        [ArmaName(HeightSerializedKey, Display = false)]
         public double HeightSerialized
         {
             get => this.CanvasManager.Height;
@@ -369,8 +370,8 @@ namespace Arma.Studio.UiEditor.UI
                 var dialogConfig = configBin.Values.FirstOrDefault((it) =>
                 {
                     if (it.ContainsKey(dlg_idd) ||
-                        it.ContainsKey(dlg_movingEnable) || 
-                        it.ContainsKey(dlg_enableSimulation) || 
+                        it.ContainsKey(dlg_movingEnable) ||
+                        it.ContainsKey(dlg_enableSimulation) ||
                         it.ContainsKey(dlg_controls))
                     {
                         return true;
@@ -410,13 +411,22 @@ namespace Arma.Studio.UiEditor.UI
                 }
 
                 this.ClassName = dialogConfig.Name;
+                try
+                {
+                    if (dialogConfig.ContainsKey("idd")) { this.InterfaceSizeSerialized = (string)dialogConfig["idd"].Value; }
+                    if (dialogConfig.ContainsKey(InterfaceSizeSerializedKey)) { this.InterfaceSizeSerialized = (string)dialogConfig[InterfaceSizeSerializedKey].Value; }
+                    if (dialogConfig.ContainsKey(GridSizeSerializedKey)) { this.GridSizeSerialized = (int)dialogConfig[GridSizeSerializedKey].Value; }
+                    if (dialogConfig.ContainsKey(WidthSerializedKey)) { this.WidthSerialized = (double)dialogConfig[WidthSerializedKey].Value; }
+                    if (dialogConfig.ContainsKey(HeightSerializedKey)) { this.HeightSerialized = (double)dialogConfig[HeightSerializedKey].Value; }
+                }
+                catch { }
 
                 var backgroundControls = dialogConfig[dlg_controlsBackground];
                 var foregroundControls = dialogConfig[dlg_controls];
                 if (backgroundControls != null)
                 {
                     var controls = getControls(backgroundControls);
-                    foreach(var node in controls)
+                    foreach (var node in controls)
                     {
                         var control = LoadControl(vm, node);
                         if (control != null)
