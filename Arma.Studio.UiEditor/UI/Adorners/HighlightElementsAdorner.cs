@@ -67,11 +67,14 @@ namespace Arma.Studio.UiEditor.UI.Adorners
             if (e.OldValue is bool oldFlag && oldFlag)
             {
                 var adornerLayer = AdornerLayer.GetAdornerLayer(uiElement);
-                var adorners = adornerLayer.GetAdorners(uiElement);
-                var affected = adorners.FirstOrDefault((it) => it is HighlightElementsAdorner);
-                if (affected != null)
+                if (adornerLayer != null)
                 {
-                    adornerLayer.Remove(affected);
+                    var adorners = adornerLayer.GetAdorners(uiElement);
+                    var affected = adorners.FirstOrDefault((it) => it is HighlightElementsAdorner);
+                    if (affected != null)
+                    {
+                        adornerLayer.Remove(affected);
+                    }
                 }
             }
             if (e.NewValue is bool newFlag && newFlag)
