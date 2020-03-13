@@ -567,108 +567,34 @@ namespace Arma.Studio.UiEditor.UI
             {
                 int tabstop = 0;
                 string tabs() { return new string(' ', tabstop * 4); }
-                stream.Write("class ");
-                stream.Write(this.ClassName);
-                stream.WriteLine(" {");
-                tabstop++;
-
-                foreach (var propertyInfo in typeof(UiEditorDataContext).GetProperties())
+                void WriteOutConfig(Type t, object obj)
                 {
-                    var armaNameAttributes = Attribute.GetCustomAttributes(propertyInfo, typeof(ArmaNameAttribute), true).Cast<ArmaNameAttribute>().ToArray();
-                    if (!armaNameAttributes.Any() && !new string[] { dlg_controls, dlg_controlsBackground }.Contains(propertyInfo.Name))
-                    {
-                        continue;
-                    }
-                    var armaNameAttribute = armaNameAttributes.First();
-                    stream.Write(tabs());
-                    stream.Write(armaNameAttribute.Title);
-                    var value = propertyInfo.GetValue(this, null);
-                    if (new string[] { "x", "y", "w", "h" }.Contains(armaNameAttribute.Title))
-                    {
-                        switch (armaNameAttribute.Title)
-                        {
-                            case "x":
-                                stream.WriteLine($" = \"safezoneX + ({value} / 1920) * safezoneW\";");
-                                break;
-                            case "y":
-                                stream.WriteLine($" = \"safezoneY + ({value} / 1920) * safezoneH\";");
-                                break;
-                            case "w":
-                                stream.WriteLine($" = \"({value} / 1920) * safezoneW\";");
-                                break;
-                            case "h":
-                                stream.WriteLine($" = \"({value} / 1920) * safezoneH\";");
-                                break;
-                        }
-                        continue;
-                    }
-                    if (propertyInfo.PropertyType.IsEquivalentTo(typeof(string)))
-                    {
-                        stream.Write(" = ");
-                        stream.Write('"');
-                        stream.Write(value);
-                        stream.Write('"');
-                    }
-                    else if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
-                    {
-                        stream.Write("[] = { ");
-                        var color = (System.Windows.Media.Color)value;
-                        stream.Write(color.R / 255.0);
-                        stream.Write(", ");
-                        stream.Write(color.G / 255.0);
-                        stream.Write(", ");
-                        stream.Write(color.B / 255.0);
-                        stream.Write(", ");
-                        stream.Write(color.A / 255.0);
-                        stream.Write(" }");
-                    }
-                    else if (propertyInfo.PropertyType.IsEnum)
-                    {
-                        stream.Write(" = ");
-                        stream.Write(Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture));
-                    }
-                    else
-                    {
-                        stream.Write(" = ");
-                        stream.Write(value);
-                    }
-                    stream.WriteLine(";");
-                }
-
-                stream.Write(tabs());
-                stream.WriteLine("class " + dlg_controlsBackground + " {");
-                tabstop++;
-                foreach (var control in this.BackgroundControls)
-                {
-                    stream.Write(tabs());
-                    stream.WriteLine("class " + control.ClassName + " {");
-                    tabstop++;
-                    foreach (var propertyInfo in control.GetType().GetProperties())
+                    foreach (var propertyInfo in t.GetProperties())
                     {
                         var armaNameAttributes = Attribute.GetCustomAttributes(propertyInfo, typeof(ArmaNameAttribute), true).Cast<ArmaNameAttribute>().ToArray();
-                        if (!armaNameAttributes.Any())
+                        if (!armaNameAttributes.Any() && !new string[] { dlg_controls, dlg_controlsBackground }.Contains(propertyInfo.Name))
                         {
                             continue;
                         }
                         var armaNameAttribute = armaNameAttributes.First();
                         stream.Write(tabs());
                         stream.Write(armaNameAttribute.Title);
-                        var value = propertyInfo.GetValue(control, null);
+                        var value = propertyInfo.GetValue(obj, null);
                         if (new string[] { "x", "y", "w", "h" }.Contains(armaNameAttribute.Title))
                         {
                             switch (armaNameAttribute.Title)
                             {
                                 case "x":
-                                    stream.WriteLine($" = \"safezoneX + ({value} / 1920) * safezoneW\";");
+                                    stream.WriteLine($" = \"safezoneX + ({value} / {this.CanvasManager.Width}) * safezoneW\";");
                                     break;
                                 case "y":
-                                    stream.WriteLine($" = \"safezoneY + ({value} / 1920) * safezoneH\";");
+                                    stream.WriteLine($" = \"safezoneY + ({value} / {this.CanvasManager.Height}) * safezoneH\";");
                                     break;
                                 case "w":
-                                    stream.WriteLine($" = \"({value} / 1920) * safezoneW\";");
+                                    stream.WriteLine($" = \"({value} / {this.CanvasManager.Width}) * safezoneW\";");
                                     break;
                                 case "h":
-                                    stream.WriteLine($" = \"({value} / 1920) * safezoneH\";");
+                                    stream.WriteLine($" = \"({value} / {this.CanvasManager.Height}) * safezoneH\";");
                                     break;
                             }
                             continue;
@@ -705,6 +631,25 @@ namespace Arma.Studio.UiEditor.UI
                         }
                         stream.WriteLine(";");
                     }
+                }
+                stream.Write("class ");
+                stream.Write(this.ClassName);
+                stream.WriteLine(" {");
+                tabstop++;
+
+                WriteOutConfig(typeof(UiEditorDataContext), this);
+
+                stream.Write(tabs());
+                stream.WriteLine("class " + dlg_controlsBackground + " {");
+                tabstop++;
+                foreach (var control in this.BackgroundControls)
+                {
+                    stream.Write(tabs());
+                    stream.WriteLine("class " + control.ClassName + " {");
+                    tabstop++;
+
+                    WriteOutConfig(control.GetType(), control);
+
                     tabstop--;
                     stream.Write(tabs());
                     stream.WriteLine("};");
@@ -721,68 +666,9 @@ namespace Arma.Studio.UiEditor.UI
                     stream.Write(tabs());
                     stream.WriteLine("class " + control.ClassName + " {");
                     tabstop++;
-                    foreach (var propertyInfo in control.GetType().GetProperties())
-                    {
-                        var armaNameAttributes = Attribute.GetCustomAttributes(propertyInfo, typeof(ArmaNameAttribute), true).Cast<ArmaNameAttribute>().ToArray();
-                        if (!armaNameAttributes.Any())
-                        {
-                            continue;
-                        }
-                        var armaNameAttribute = armaNameAttributes.First();
-                        stream.Write(tabs());
-                        stream.Write(armaNameAttribute.Title);
-                        var value = propertyInfo.GetValue(control, null);
-                        if (new string[] { "x", "y", "w", "h" }.Contains(armaNameAttribute.Title))
-                        {
-                            switch (armaNameAttribute.Title)
-                            {
-                                case "x":
-                                    stream.WriteLine($" = \"safezoneX + ({value} / 1920) * safezoneW\";");
-                                    break;
-                                case "y":
-                                    stream.WriteLine($" = \"safezoneY + ({value} / 1920) * safezoneH\";");
-                                    break;
-                                case "w":
-                                    stream.WriteLine($" = \"({value} / 1920) * safezoneW\";");
-                                    break;
-                                case "h":
-                                    stream.WriteLine($" = \"({value} / 1920) * safezoneH\";");
-                                    break;
-                            }
-                            continue;
-                        }
-                        if (propertyInfo.PropertyType.IsEquivalentTo(typeof(string)))
-                        {
-                            stream.Write(" = ");
-                            stream.Write('"');
-                            stream.Write(value);
-                            stream.Write('"');
-                        }
-                        else if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
-                        {
-                            stream.Write("[] = { ");
-                            var color = (System.Windows.Media.Color)value;
-                            stream.Write(color.R / 255.0);
-                            stream.Write(", ");
-                            stream.Write(color.G / 255.0);
-                            stream.Write(", ");
-                            stream.Write(color.B / 255.0);
-                            stream.Write(", ");
-                            stream.Write(color.A / 255.0);
-                            stream.Write(" }");
-                        }
-                        else if (propertyInfo.PropertyType.IsEnum)
-                        {
-                            stream.Write(" = ");
-                            stream.Write(Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture));
-                        }
-                        else
-                        {
-                            stream.Write(" = ");
-                            stream.Write(Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture));
-                        }
-                        stream.WriteLine(";");
-                    }
+
+                    WriteOutConfig(control.GetType(), control);
+
                     tabstop--;
                     stream.Write(tabs());
                     stream.WriteLine("};");
