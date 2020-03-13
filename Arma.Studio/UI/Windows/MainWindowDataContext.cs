@@ -640,6 +640,18 @@ namespace Arma.Studio.UI.Windows
             this.LayoutJsonNode = new Newtonsoft.Json.Linq.JObject(new Newtonsoft.Json.Linq.JProperty(CONST_INI_TYPES_STRING, new Newtonsoft.Json.Linq.JObject()));
             this.BusyContainerManager = new BusyContainerManager();
             this.HotkeyManager = new HotkeyManager();
+            this.HotkeyManager.RegisterCallback(new HotkeyManager.Container(() => {
+                if (this.ActiveDockable is IInteractionSave interactionSave)
+                {
+                    Task.Run(() => interactionSave.Save(CancellationToken.None)).ConfigureAwait(false);
+                }
+            })
+            {
+                Key = Key.S,
+                Ctrl = true,
+                Name = Properties.Language.Hotkey_Save_Name,
+                Description = Properties.Language.Hotkey_Save_Description
+            });
             App.Current.Dispatcher.Invoke(() => InputManager.Current.PreProcessInput += this.InputManager_PreProcessInput);
         }
         private void Initialized()

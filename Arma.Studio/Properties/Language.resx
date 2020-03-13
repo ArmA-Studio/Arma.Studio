@@ -320,4 +320,10 @@ It is highly recommended to NOT opt out of theese two options.</value>
   <data name="StackTrace" xml:space="preserve">
     <value>Stacktrace</value>
   </data>
+  <data name="Hotkey_Save_Name" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Hotkey_Save_Description" xml:space="preserve">
+    <value>Saves the currently active document to disk.</value>
+  </data>
 </root>

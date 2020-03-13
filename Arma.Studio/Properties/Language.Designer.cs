@@ -295,6 +295,24 @@ namespace Arma.Studio.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saves the currently active document to disk..
+        /// </summary>
+        public static string Hotkey_Save_Description {
+            get {
+                return ResourceManager.GetString("Hotkey_Save_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Hotkey_Save_Name {
+            get {
+                return ResourceManager.GetString("Hotkey_Save_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to restore a window with the type:
         ///&apos;{0}&apos;.
         /// </summary>
