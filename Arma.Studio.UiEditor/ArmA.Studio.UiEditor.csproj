@@ -113,8 +113,8 @@
     <Compile Include="UI\EEditorMouseMode.cs" />
     <Compile Include="UI\CanvasManager.cs" />
     <Compile Include="Data\IControlElement.cs" />
-    <Compile Include="EditorToolboxDataContext.cs" />
-    <Compile Include="EditorToolboxItem.cs" />
+    <Compile Include="UI\EditorToolboxDataContext.cs" />
+    <Compile Include="UI\EditorToolboxItem.cs" />
     <Compile Include="Data\EShadow.cs" />
     <Compile Include="Data\EControlStyle.cs" />
     <Compile Include="Data\EControlType.cs" />
@@ -142,7 +142,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="EditorToolbox.xaml">
+    <EmbeddedResource Include="UI\EditorToolbox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -180,6 +180,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ComboBox_16x.png" />
+    <Resource Include="Resources\DownArrow.png" />
+    <Resource Include="Resources\TextBlock_16x.png" />
+    <Resource Include="Resources\TextBox_16x.png" />
+    <Resource Include="Resources\UpArrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

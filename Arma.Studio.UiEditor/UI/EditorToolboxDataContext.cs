@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Arma.Studio.UiEditor
+namespace Arma.Studio.UiEditor.UI
 {
     public class EditorToolboxDataContext  :
         DockableBase,
@@ -47,7 +47,7 @@ namespace Arma.Studio.UiEditor
                     };
                 })
                 .Where((obj) => obj != null && obj.Attribute != null)
-                .Select((obj) => new EditorToolboxItem { Name = obj.Name, Type = obj.Value }));
+                .Select((obj) => new EditorToolboxItem { Name = obj.Name, Type = obj.Value, IconPath = obj.Attribute.IconPath }));
         }
 
         public Point MouseDownPosition { get; private set; }

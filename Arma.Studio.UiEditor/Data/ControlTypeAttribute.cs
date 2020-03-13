@@ -13,7 +13,7 @@ namespace Arma.Studio.UiEditor.Data
         {
             this.TargetType = t;
         }
-
+        public string IconPath { get; set; }
         public Type TargetType { get; }
     }
 }

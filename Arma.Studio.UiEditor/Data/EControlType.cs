@@ -9,11 +9,11 @@ namespace Arma.Studio.UiEditor.Data
 {
     public enum EControlType
     {
-        [ControlType(typeof(ControlStatic)), EnumName("CT_STATIC", ResourceName = "CT_STATIC")]
+        [ControlType(typeof(ControlStatic), IconPath = "pack://application:,,,/Arma.Studio.UiEditor;component/Resources/TextBlock_16x.png"), EnumName("CT_STATIC", ResourceName = "CT_STATIC")]
         CT_STATIC = 0x00,
         // [ControlType(typeof(ControlButton)), EnumName("CT_BUTTON", ResourceName = "CT_BUTTON")]
         CT_BUTTON = 0x01,
-        [ControlType(typeof(ControlEdit)), EnumName("CT_EDIT", ResourceName = "CT_EDIT")]
+        [ControlType(typeof(ControlEdit), IconPath = "pack://application:,,,/Arma.Studio.UiEditor;component/Resources/TextBox_16x.png"), EnumName("CT_EDIT", ResourceName = "CT_EDIT")]
         CT_EDIT = 0x02,
         // [ControlType(typeof(ControlSlider)), EnumName("CT_SLIDER", ResourceName = "CT_SLIDER")]
         CT_SLIDER = 0x03,

@@ -18,7 +18,7 @@ namespace Arma.Studio.UiEditor
         public string Description => String.Empty;
 
         public IEnumerable<DockableInfo> Dockables => new DockableInfo[] {
-            DockableInfo.Create(Properties.Language.UIEditor_Toolbox, ECreationMode.Anchorable, () => new EditorToolboxDataContext())
+            DockableInfo.Create(Properties.Language.UIEditor_Toolbox, ECreationMode.Anchorable, () => new UI.EditorToolboxDataContext())
         };
 
         public IEnumerable<EditorInfo> EditorInfos => new EditorInfo[]
