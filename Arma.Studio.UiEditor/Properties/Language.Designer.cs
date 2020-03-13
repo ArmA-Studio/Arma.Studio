@@ -547,6 +547,24 @@ namespace Arma.Studio.UiEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Highlight all.
+        /// </summary>
+        public static string UiEditor_HighlightAll {
+            get {
+                return ResourceManager.GetString("UiEditor_HighlightAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Highlights all control elements by drawing a box around them..
+        /// </summary>
+        public static string UiEditor_HighlightAll_ToolTip {
+            get {
+                return ResourceManager.GetString("UiEditor_HighlightAll_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interface Size.
         /// </summary>
         public static string UiEditor_InterfaceSize {

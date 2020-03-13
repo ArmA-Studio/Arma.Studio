@@ -140,6 +140,18 @@ namespace Arma.Studio.UiEditor.UI
         }
         private Cursor _Cursor;
         #endregion
+        #region Property: HighlightAll (System.Boolean)
+        public bool HighlightAll
+        {
+            get => this._HighlightAll;
+            set
+            {
+                this._HighlightAll = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private bool _HighlightAll;
+        #endregion
 
         public CanvasManager(UiEditorDataContext owner)
         {
@@ -720,46 +732,48 @@ namespace Arma.Studio.UiEditor.UI
                 foreach (var it in itemsBelow.Take(1))
                 {
                     var rect = new Rect(it.Left, it.Top, it.Width, it.Height);
-                    if ((mousePosition.X >= rect.Left && mousePosition.X <= rect.Left + borderCoef) &&
-                        (mousePosition.Y >= rect.Top && mousePosition.Y <= rect.Top + borderCoef))
+                    bool isTop() => mousePosition.Y >= rect.Top && mousePosition.Y <= rect.Top + borderCoef;
+                    bool isBot() => mousePosition.Y >= rect.Bottom - borderCoef && mousePosition.Y <= rect.Bottom;
+                    bool isLeft() => mousePosition.X >= rect.Left && mousePosition.X <= rect.Left + borderCoef;
+                    bool isRight() => mousePosition.X >= rect.Right - borderCoef && mousePosition.X <= rect.Right;
+
+
+                    if (isLeft() && isTop())
                     {
                         this.Cursor = Cursors.SizeNWSE;
                         this.EditorMouseMode = EEditorMouseMode.MoveNW;
                     }
-                    else if ((mousePosition.X >= rect.Left + rect.Width - borderCoef && mousePosition.X <= rect.Left + rect.Width) &&
-                        (mousePosition.Y >= rect.Top + rect.Height - borderCoef && mousePosition.Y <= rect.Top + rect.Height))
-                    {
-                        this.Cursor = Cursors.SizeNWSE;
-                        this.EditorMouseMode = EEditorMouseMode.MoveSE;
-                    }
-                    else if ((mousePosition.X >= rect.Left + rect.Width && mousePosition.X <= rect.Left + rect.Width + borderCoef) &&
-                        (mousePosition.Y >= rect.Top && mousePosition.Y <= rect.Top + borderCoef))
+                    else if (isTop() && isRight())
                     {
                         this.Cursor = Cursors.SizeNESW;
                         this.EditorMouseMode = EEditorMouseMode.MoveNE;
                     }
-                    else if ((mousePosition.X >= rect.Left - borderCoef && mousePosition.X <= rect.Left) &&
-                        (mousePosition.Y >= rect.Top + rect.Height - borderCoef && mousePosition.Y <= rect.Top + rect.Height))
+                    else if (isBot() && isLeft())
                     {
                         this.Cursor = Cursors.SizeNESW;
                         this.EditorMouseMode = EEditorMouseMode.MoveSW;
                     }
-                    else if ((mousePosition.X >= rect.Left && mousePosition.X <= rect.Left + borderCoef))
+                    else if (isBot() && isRight())
+                    {
+                        this.Cursor = Cursors.SizeNWSE;
+                        this.EditorMouseMode = EEditorMouseMode.MoveSE;
+                    }
+                    else if (isLeft())
                     {
                         this.Cursor = Cursors.SizeWE;
                         this.EditorMouseMode = EEditorMouseMode.MoveW;
                     }
-                    else if ((mousePosition.X >= rect.Left + rect.Width - borderCoef && mousePosition.X <= rect.Left + rect.Width))
+                    else if (isRight())
                     {
                         this.Cursor = Cursors.SizeWE;
                         this.EditorMouseMode = EEditorMouseMode.MoveE;
                     }
-                    else if ((mousePosition.Y >= rect.Top && mousePosition.Y <= rect.Top + borderCoef))
+                    else if (isTop())
                     {
                         this.Cursor = Cursors.SizeNS;
                         this.EditorMouseMode = EEditorMouseMode.MoveN;
                     }
-                    else if ((mousePosition.Y >= rect.Top + rect.Height - borderCoef && mousePosition.Y <= rect.Top + rect.Height))
+                    else if (isBot())
                     {
                         this.Cursor = Cursors.SizeNS;
                         this.EditorMouseMode = EEditorMouseMode.MoveS;

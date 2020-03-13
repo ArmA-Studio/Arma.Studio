@@ -91,6 +91,9 @@
                             <DataTrigger Binding="{Binding IsSelected}" Value="True">
                                 <Setter Property="ladorners:SelectedAdorner.Attached" Value="True"/>
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding DataContext.CanvasManager.HighlightAll, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Canvas}}}" Value="True">
+                                <Setter Property="ladorners:HighlightElementsAdorner.Attached" Value="True"/>
+                            </DataTrigger>
                         </Style.Triggers>
                         <!--<Setter Property="asd:DataRelaying.DataRelays">
                             <Setter.Value>
@@ -148,6 +151,15 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+            </Grid>
+            <Grid ToolTip="{x:Static p:Language.UiEditor_HighlightAll_ToolTip}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="4"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{x:Static p:Language.UiEditor_HighlightAll}" Grid.Column="0" VerticalAlignment="Center"/>
+                <CheckBox Grid.Column="2" IsChecked="{Binding CanvasManager.HighlightAll, Mode=TwoWay}" VerticalAlignment="Center"/>
             </Grid>
             <Grid ToolTip="{x:Static p:Language.UiEditor_CanvasGridSize_ToolTip}">
                 <Grid.ColumnDefinitions>

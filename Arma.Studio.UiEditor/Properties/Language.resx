@@ -300,4 +300,10 @@
   <data name="UiEditor_Background_ToolTip" xml:space="preserve">
     <value>The Background displayed in the canvas area.</value>
   </data>
+  <data name="UiEditor_HighlightAll_ToolTip" xml:space="preserve">
+    <value>Highlights all control elements by drawing a box around them.</value>
+  </data>
+  <data name="UiEditor_HighlightAll" xml:space="preserve">
+    <value>Highlight all</value>
+  </data>
 </root>
