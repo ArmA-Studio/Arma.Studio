@@ -13,7 +13,7 @@ namespace Arma.Studio.UiEditor.Data
         CT_STATIC = 0x00,
         // [ControlType(typeof(ControlButton)), EnumName("CT_BUTTON", ResourceName = "CT_BUTTON")]
         CT_BUTTON = 0x01,
-        // [ControlType(typeof(ControlEdit)), EnumName("CT_EDIT", ResourceName = "CT_EDIT")]
+        [ControlType(typeof(ControlEdit)), EnumName("CT_EDIT", ResourceName = "CT_EDIT")]
         CT_EDIT = 0x02,
         // [ControlType(typeof(ControlSlider)), EnumName("CT_SLIDER", ResourceName = "CT_SLIDER")]
         CT_SLIDER = 0x03,

@@ -20,7 +20,6 @@ using System.Windows.Input;
 
 namespace Arma.Studio.UI.Windows
 {
-
     public class MainWindowDataContext : INotifyPropertyChanged, IMainWindow, IDisposable
     {
         private const string CONST_INI_TYPES_STRING = "Types";

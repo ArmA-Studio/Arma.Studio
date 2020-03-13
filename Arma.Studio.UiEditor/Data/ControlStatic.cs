@@ -14,7 +14,20 @@ namespace Arma.Studio.UiEditor.Data
         public const string PropGroup_CT_Static = "CT_Static";
         public override EControlType ControlType => EControlType.CT_STATIC;
 
-        #region Property: Autoplay {autoplay} (System.Boolean)
+        protected override void OnPropertyChanged(string callee)
+        {
+            base.OnPropertyChanged(callee);
+            switch (callee)
+            {
+                case nameof(ControlBase.ControlStyle):
+                    {
+                        this.RaisePropertyChanged(nameof(this.IsPicture));
+                    }
+                    break;
+            }
+        }
+
+        #region Property: IsPicture (System.Boolean)
         [Property("Is Picture", Group = PropGroup_CT_Static)]
         public bool IsPicture
         {

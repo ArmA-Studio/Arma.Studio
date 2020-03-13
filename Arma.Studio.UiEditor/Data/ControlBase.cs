@@ -11,11 +11,20 @@ namespace Arma.Studio.UiEditor.Data
         public const string PropGroup_Visual = "Visual";
         public const string PropGroup_Behavior = "Behavior";
         public const string PropGroup_Text = "Text";
+        public const string PropGroup_Style = "Style";
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged([CallerMemberName]string callee = "")
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
+            this.OnPropertyChanged(callee);
         }
+
+        protected virtual void OnPropertyChanged(string callee)
+        {
+        }
+
+
+
         #region Property: IsSelected (System.Boolean)
         public bool IsSelected
         {
@@ -211,6 +220,22 @@ namespace Arma.Studio.UiEditor.Data
         }
         private Color _ForegroundColor;
         #endregion
+        #region Property: ForegroundColor {colorText} (System.Windows.Media.Color)
+        /// <summary>
+        /// text color when disabled
+        /// </summary>
+        [ArmaName("colorDisabled", Group = PropGroup_Text)]
+        public Color ForegroundColorDisabled
+        {
+            get => this._ForegroundColorDisabled;
+            set
+            {
+                this._ForegroundColorDisabled = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private Color _ForegroundColorDisabled;
+        #endregion
         #region Property: BackgroundColor {colorBackground} (System.Windows.Media.Color)
         /// <summary>
         /// background color
@@ -341,23 +366,6 @@ namespace Arma.Studio.UiEditor.Data
         }
         private Color _ToolTipBorderColor;
         #endregion
-        #region Property: AutoComplete {autocomplete} (System.String)
-        /// <summary>
-        /// Option for entry fields (e.g. RscEdit) to activate autocompletion.
-        /// For known script commands and functions use autocomplete = "scripting".
-        /// </summary>
-        [ArmaName("autocomplete", Group = PropGroup_Behavior)]
-        public string AutoComplete
-        {
-            get => this._AutoComplete;
-            set
-            {
-                this._AutoComplete = value;
-                this.RaisePropertyChanged();
-            }
-        }
-        private string _AutoComplete;
-        #endregion
         #region Property: IsDeletable {deletable} (System.Boolean)
         /// <summary>
         /// Whether or not control can be deleted by scripts with ctrlDelete command
@@ -441,6 +449,7 @@ namespace Arma.Studio.UiEditor.Data
             this.Opacity = 1;
             this.IsShown = true;
             this.Font = "TahomaB";
+            this.Text = "Text";
             this.ClassName = "MY_" + Enum.GetName(typeof(EControlType), this.ControlType).Substring(3) + "_" + new Random().Next();
         }
     }

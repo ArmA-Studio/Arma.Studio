@@ -17,7 +17,8 @@ namespace Arma.Studio.UiEditor.UI.Converters
             {
                 return -1;
             }
-            return interfaceSize.SizeExToFontSize(fontSize, canvasManager.Height);
+            var res = interfaceSize.SizeExToFontSize(fontSize, canvasManager.Height);
+            return res <= 0 ? 1 : res;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

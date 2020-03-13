@@ -24,9 +24,8 @@ namespace Arma.Studio.UiEditor.UI
         IOnDragOver,
         IOnDrop,
         IEditorDocument,
-        Studio.Data.UI.IInteractionSave,
-        IPropertyHost,
-        IOnPreviewKeyDown
+        IInteractionSave,
+        IPropertyHost
     {
         private const string dlg_idd = "idd";
         private const string dlg_movingEnable = "movingEnable";
@@ -208,62 +207,20 @@ namespace Arma.Studio.UiEditor.UI
                 return;
             }
             var position = e.GetPosition(sender);
-            switch (data.Type)
+            var controlTypeAttribute = typeof(EControlType)
+                .GetField(Enum.GetName(typeof(EControlType), data.Type))
+                .GetCustomAttributes(typeof(ControlTypeAttribute), true)
+                .FirstOrDefault() as ControlTypeAttribute;
+            if (controlTypeAttribute is null)
             {
-                case EControlType.CT_STATIC:
-                    this.ForegroundControls.Add(new ControlStatic()
-                    {
-                        Left = position.X - 25,
-                        Top = position.Y - 25,
-                        Width = 50,
-                        Height = 50,
-                        Text = "ControlStatic"
-                    });
-                    break;
-                case EControlType.CT_BUTTON:
-                case EControlType.CT_EDIT:
-                case EControlType.CT_SLIDER:
-                case EControlType.CT_COMBO:
-                case EControlType.CT_LISTBOX:
-                case EControlType.CT_TOOLBOX:
-                case EControlType.CT_CHECKBOXES:
-                case EControlType.CT_PROGRESS:
-                case EControlType.CT_HTML:
-                case EControlType.CT_STATIC_SKEW:
-                case EControlType.CT_ACTIVETEXT:
-                case EControlType.CT_TREE:
-                case EControlType.CT_STRUCTURED_TEXT:
-                case EControlType.CT_CONTEXT_MENU:
-                case EControlType.CT_CONTROLS_GROUP:
-                case EControlType.CT_SHORTCUTBUTTON:
-                case EControlType.CT_HITZONES:
-                case EControlType.CT_VEHICLETOGGLES:
-                case EControlType.CT_CONTROLS_TABLE:
-                case EControlType.CT_XKEYDESC:
-                case EControlType.CT_XBUTTON:
-                case EControlType.CT_XLISTBOX:
-                case EControlType.CT_XSLIDER:
-                case EControlType.CT_XCOMBO:
-                case EControlType.CT_ANIMATED_TEXTURE:
-                case EControlType.CT_MENU:
-                case EControlType.CT_MENU_STRIP:
-                case EControlType.CT_CHECKBOX:
-                case EControlType.CT_OBJECT:
-                case EControlType.CT_OBJECT_ZOOM:
-                case EControlType.CT_OBJECT_CONTAINER:
-                case EControlType.CT_OBJECT_CONT_ANIM:
-                case EControlType.CT_LINEBREAK:
-                case EControlType.CT_USER:
-                case EControlType.CT_MAP:
-                case EControlType.CT_MAP_MAIN:
-                case EControlType.CT_LISTNBOX:
-                case EControlType.CT_ITEMSLOT:
-                case EControlType.CT_LISTNBOX_CHECKABLE:
-                case EControlType.CT_VEHICLE_DIRECTION:
-                default:
-                    return;
+                return;
             }
-
+            var controlBase = controlTypeAttribute.TargetType.CreateInstance<ControlBase>();
+            controlBase.Left = position.X - 25;
+            controlBase.Top = position.Y - 25;
+            controlBase.Width = 50;
+            controlBase.Height = 50;
+            this.ForegroundControls.Add(controlBase);
             e.Handled = true;
         }
         public void OnDragLeave(UIElement sender, DragEventArgs e)
@@ -829,10 +786,6 @@ namespace Arma.Studio.UiEditor.UI
                 stream.WriteLine("};");
             }
             return Task.CompletedTask;
-        }
-
-        public void OnPreviewKeyDown(UIElement sender, KeyEventArgs e)
-        {
         }
     }
 }
