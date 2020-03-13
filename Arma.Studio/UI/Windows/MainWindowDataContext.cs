@@ -10,6 +10,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,9 +26,22 @@ namespace Arma.Studio.UI.Windows
         private const string CONST_INI_TYPES_STRING = "Types";
         private const string CONST_INI_PBOPATHS_STRING = "PBO-Paths";
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
+        protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "")
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(callee));
+        }
 
         #region IMainWindow
+        public IKeyInteractible KeyInteractible
+        {
+            get => this._KeyInteractible;
+            set
+            {
+                this._KeyInteractible = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        private IKeyInteractible _KeyInteractible;
         public IPropertyHost PropertyHost
         {
             get => this._PropertyHost;
@@ -42,9 +57,21 @@ namespace Arma.Studio.UI.Windows
         public IEnumerable<Data.TextEditor.TextEditorInfo> TextEditorInfos => this.TextEditorsAvailable;
         public BusyContainerManager BusyContainerManager { get; }
         public Window OwningWindow { get; private set; }
-        public void SetStatusLabel(string s) => App.Current.Dispatcher.Invoke(() => this.StatusLabel = s);
-        public DockableBase FirstDocumentOrDefault(Func<DockableBase, bool> predicate) => this.Documents.FirstOrDefault((it) => predicate(it));
-        public DockableBase FirstAnchorableOrDefault(Func<DockableBase, bool> predicate) => this.Anchorables.FirstOrDefault((it) => predicate(it));
+        public void SetStatusLabel(string s)
+        {
+            App.Current.Dispatcher.Invoke(() => this.StatusLabel = s);
+        }
+
+        public DockableBase FirstDocumentOrDefault(Func<DockableBase, bool> predicate)
+        {
+            return this.Documents.FirstOrDefault((it) => predicate(it));
+        }
+
+        public DockableBase FirstAnchorableOrDefault(Func<DockableBase, bool> predicate)
+        {
+            return this.Anchorables.FirstOrDefault((it) => predicate(it));
+        }
+
         public DockableBase ActiveDockable { get => this.AvalonDockActiveContent as DockableBase; set => this.AvalonDockActiveContent = value; }
         public void AddDocument(DockableBase dockableBase)
         {
@@ -108,7 +135,7 @@ namespace Arma.Studio.UI.Windows
                 (doc as DockableBase).Focus(); ;
                 return Task.FromResult(doc);
             }
-            var ext = file.Extension;
+            string ext = file.Extension;
             var editorInfo = this.EditorInfos.FirstOrDefault((tei) => tei.Extensions.Any((s) => s.Equals(ext, StringComparison.InvariantCultureIgnoreCase)));
             if (editorInfo == null)
             {
@@ -251,7 +278,7 @@ namespace Arma.Studio.UI.Windows
             this.Debugger.Execute(p);
         });
 
-        public string StatusLabel { get { return this._StatusLabel; } set { this._StatusLabel = value; this.RaisePropertyChanged(); } }
+        public string StatusLabel { get => this._StatusLabel; set { this._StatusLabel = value; this.RaisePropertyChanged(); } }
         private string _StatusLabel;
 
         public Xceed.Wpf.AvalonDock.DockingManager WindowsDockingManager { get; private set; }
@@ -310,7 +337,7 @@ namespace Arma.Studio.UI.Windows
         });
         public ICommand CmdUserIdentificationDialog => new RelayCommand(() =>
         {
-            var currentOptOut = Configuration.Instance.OptOutOfReportingAndUpdates;
+            bool currentOptOut = Configuration.Instance.OptOutOfReportingAndUpdates;
             var dlgdc = new UI.Windows.UserIdentificationDialogDataContext();
             var dlg = new UI.Windows.UserIdentificationDialog(dlgdc);
             dlg.ShowDialog();
@@ -366,27 +393,27 @@ namespace Arma.Studio.UI.Windows
             }
         });
 
-        public ObservableCollection<DockableBase> Anchorables { get { return this._Anchorables; } set { this._Anchorables = value; this.RaisePropertyChanged(); } }
+        public ObservableCollection<DockableBase> Anchorables { get => this._Anchorables; set { this._Anchorables = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<DockableBase> _Anchorables;
 
-        public ObservableCollection<DockableBase> Documents { get { return this._Documents; } set { this._Documents = value; this.RaisePropertyChanged(); } }
+        public ObservableCollection<DockableBase> Documents { get => this._Documents; set { this._Documents = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<DockableBase> _Documents;
 
-        public ObservableCollection<DockableInfo> AnchorablesAvailable { get { return this._AnchorablesAvailable; } set { this._AnchorablesAvailable = value; this.RaisePropertyChanged(); } }
+        public ObservableCollection<DockableInfo> AnchorablesAvailable { get => this._AnchorablesAvailable; set { this._AnchorablesAvailable = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<DockableInfo> _AnchorablesAvailable;
 
-        public ObservableCollection<DockableInfo> DocumentsAvailable { get { return this._DocumentsAvailable; } set { this._DocumentsAvailable = value; this.RaisePropertyChanged(); } }
+        public ObservableCollection<DockableInfo> DocumentsAvailable { get => this._DocumentsAvailable; set { this._DocumentsAvailable = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<DockableInfo> _DocumentsAvailable;
 
-        public ObservableCollection<EditorInfo> EditorsAvailable { get { return this._EditorsAvailable; } set { this._EditorsAvailable = value; this.RaisePropertyChanged(); } }
+        public ObservableCollection<EditorInfo> EditorsAvailable { get => this._EditorsAvailable; set { this._EditorsAvailable = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<EditorInfo> _EditorsAvailable;
-        public ObservableCollection<TextEditorInfo> TextEditorsAvailable { get { return this._TextEditorsAvailable; } set { this._TextEditorsAvailable = value; this.RaisePropertyChanged(); } }
+        public ObservableCollection<TextEditorInfo> TextEditorsAvailable { get => this._TextEditorsAvailable; set { this._TextEditorsAvailable = value; this.RaisePropertyChanged(); } }
         private ObservableCollection<TextEditorInfo> _TextEditorsAvailable;
 
         private Newtonsoft.Json.Linq.JObject LayoutJsonNode;
         private void LayoutSerializer_LayoutSerializationCallback(object sender, Xceed.Wpf.AvalonDock.Layout.Serialization.LayoutSerializationCallbackEventArgs e)
         {
-            var contentid = e.Model.ContentId;
+            string contentid = e.Model.ContentId;
             dynamic types = this.LayoutJsonNode[CONST_INI_TYPES_STRING];
             string typestring = types[contentid];
             if (String.IsNullOrWhiteSpace(typestring))
@@ -537,7 +564,7 @@ namespace Arma.Studio.UI.Windows
             {
                 var jarray = (Newtonsoft.Json.Linq.JArray)this.LayoutJsonNode[CONST_INI_PBOPATHS_STRING];
                 var pboPaths = jarray.Values<string>();
-                foreach (var pboPath in pboPaths)
+                foreach (string pboPath in pboPaths)
                 {
                     var pbo = new PBO { Name = pboPath };
                     pbo.Rescan();
@@ -564,7 +591,7 @@ namespace Arma.Studio.UI.Windows
         }
         private void SaveAvalonDockLayout()
         {
-            var dir = System.IO.Path.GetDirectoryName(App.LayoutFilePath);
+            string dir = System.IO.Path.GetDirectoryName(App.LayoutFilePath);
             if (!System.IO.Directory.Exists(dir))
             {
                 System.IO.Directory.CreateDirectory(dir);
@@ -600,6 +627,7 @@ namespace Arma.Studio.UI.Windows
             }
         }
 
+        public HotkeyManager HotkeyManager { get; }
         public MainWindowDataContext()
         {
             this.LayoutItemTemplateSelector = new GenericDataTemplateSelector();
@@ -612,6 +640,7 @@ namespace Arma.Studio.UI.Windows
             this.Solution = new Solution();
             this.LayoutJsonNode = new Newtonsoft.Json.Linq.JObject(new Newtonsoft.Json.Linq.JProperty(CONST_INI_TYPES_STRING, new Newtonsoft.Json.Linq.JObject()));
             this.BusyContainerManager = new BusyContainerManager();
+            App.Current.Dispatcher.Invoke(() => InputManager.Current.PreProcessInput += this.InputManager_PreProcessInput);
         }
         private void Initialized()
         {
@@ -627,7 +656,7 @@ namespace Arma.Studio.UI.Windows
         {
             var dockable = sender as DockableBase;
             dockable.OnDockableClose -= this.Dockable_OnDocumentClosing;
-            var wasActive = dockable.IsActive;
+            bool wasActive = dockable.IsActive;
             if (this.Documents.Contains(dockable))
             {
                 try
@@ -649,7 +678,7 @@ namespace Arma.Studio.UI.Windows
                 this.AvalonDockActiveContent = this.Documents.FirstOrDefault((it) => it.IsActive);
                 if (this.AvalonDockActiveContent is null)
                 {
-                    AvalonDockActiveContent = dockable = this.Documents.FirstOrDefault();
+                    this.AvalonDockActiveContent = dockable = this.Documents.FirstOrDefault();
                     dockable?.Focus();
                 }
             }
@@ -660,7 +689,7 @@ namespace Arma.Studio.UI.Windows
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!this.disposedValue)
             {
                 if (disposing)
                 {
@@ -671,13 +700,70 @@ namespace Arma.Studio.UI.Windows
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.
 
-                disposedValue = true;
+                this.disposedValue = true;
             }
         }
 
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
+        }
+        #endregion
+        #region Key Handling
+        private readonly Dictionary<Key, bool> InputManager_PreprocessInput_PressedKeys = new Dictionary<Key, bool>();
+        private void InputManager_PreProcessInput(object sender, PreProcessInputEventArgs e)
+        {
+            var inputEvent = e.StagingItem.Input;
+
+            if (inputEvent is KeyEventArgs eventArgs)
+            {
+                if (eventArgs.IsUp)
+                {
+                    this.InputManager_PreprocessInput_PressedKeys[eventArgs.Key] = false;
+                    return;
+                }
+                if (this.InputManager_PreprocessInput_PressedKeys.TryGetValue(eventArgs.Key, out bool flag) && flag)
+                {
+                    return;
+                }
+                else
+                {
+                    this.InputManager_PreprocessInput_PressedKeys[eventArgs.Key] = true;
+                }
+                var kfocused = Keyboard.FocusedElement;
+                if ((kfocused is System.Windows.Controls.TextBox || kfocused is ICSharpCode.AvalonEdit.Editing.TextArea)
+                    && (eventArgs.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || eventArgs.KeyboardDevice.IsKeyDown(Key.RightCtrl))
+                    && (eventArgs.Key == Key.C || eventArgs.Key == Key.V || eventArgs.Key == Key.X))
+                {
+                    return;
+                }
+                if (!(this.KeyInteractible?.KeyDown(eventArgs) ?? false) && !(this.ActiveDockable is IKeyInteractible keyInteractible && keyInteractible.KeyDown(eventArgs)))
+                {
+                    eventArgs.Handled = this.HotkeyManager.KeyDown(eventArgs);
+                }
+            }
+        }
+        #endregion
+        #region DllImport
+        [DllImport("user32.dll")]
+        private static extern uint MapVirtualKey(uint uCode, uint uMapType);
+        [DllImport("user32.dll")]
+        private static extern bool GetKeyboardState(byte[] lpKeyState);
+        [DllImport("user32.dll")]
+        private static extern int ToUnicode(
+            uint wVirtKey,
+            uint wScanCode,
+            byte[] lpKeyState,
+            [Out, MarshalAs(UnmanagedType.LPWStr, SizeParamIndex = 4)]
+            StringBuilder pwszBuff,
+            int cchBuff,
+            uint wFlags);
+        public enum EMapType : uint
+        {
+            MAPVK_VK_TO_VSC = 0x0,
+            MAPVK_VSC_TO_VK = 0x1,
+            MAPVK_VK_TO_CHAR = 0x2,
+            MAPVK_VSC_TO_VK_EX = 0x3,
         }
         #endregion
     }

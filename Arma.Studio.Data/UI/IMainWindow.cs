@@ -30,5 +30,6 @@ namespace Arma.Studio.Data.UI
         IEnumerable<EditorInfo> EditorInfos { get; }
         IEnumerable<Data.TextEditor.TextEditorInfo> TextEditorInfos { get; }
         IPropertyHost PropertyHost { get; set; }
+        IKeyInteractible KeyInteractible { get; set; }
     }
 }

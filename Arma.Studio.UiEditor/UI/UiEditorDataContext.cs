@@ -25,7 +25,8 @@ namespace Arma.Studio.UiEditor.UI
         IOnDrop,
         IEditorDocument,
         Studio.Data.UI.IInteractionSave,
-        IPropertyHost
+        IPropertyHost,
+        IOnPreviewKeyDown
     {
         private const string dlg_idd = "idd";
         private const string dlg_movingEnable = "movingEnable";
@@ -828,6 +829,10 @@ namespace Arma.Studio.UiEditor.UI
                 stream.WriteLine("};");
             }
             return Task.CompletedTask;
+        }
+
+        public void OnPreviewKeyDown(UIElement sender, KeyEventArgs e)
+        {
         }
     }
 }

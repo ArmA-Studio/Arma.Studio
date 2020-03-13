@@ -20,13 +20,15 @@ namespace Arma.Studio.UiEditor.UI
         IOnMouseDown,
         IOnMouseUp,
         IOnMouseLeave,
+        IOnMouseEnter,
         IOnMouseMove,
         IOnInitialized,
         IOnPreviewMouseWheel,
         IOnDragEnter,
         IOnDragLeave,
         IOnDragOver,
-        IOnDrop
+        IOnDrop,
+        Studio.Data.UI.IKeyInteractible
     {
 
         public enum EBackgroundMode
@@ -514,6 +516,7 @@ namespace Arma.Studio.UiEditor.UI
                 this.IsMouseSelectionSquareActive = false;
                 this.SelectionHelper = null;
             }
+            (Application.Current as IApp).MainWindow.KeyInteractible = null;
         }
         #endregion
         #region IOnMouseMove
@@ -839,6 +842,31 @@ namespace Arma.Studio.UiEditor.UI
         public void OnDrop(UIElement sender, DragEventArgs e)
         {
             this.Owner.OnDrop(sender, e);
+        }
+
+        public void OnMouseEnter(UIElement sender, MouseEventArgs e)
+        {
+            (Application.Current as IApp).MainWindow.KeyInteractible = this;
+        }
+
+        public bool KeyDown(KeyEventArgs keyEventArgs)
+        {
+            if (keyEventArgs.Key == Key.Delete)
+            {
+                foreach (var it in this.SelectedNodes)
+                {
+                    if (this.Owner.ForegroundControls.Contains(it))
+                    {
+                        this.Owner.ForegroundControls.Remove(it);
+                    }
+                    else if (this.Owner.BackgroundControls.Contains(it))
+                    {
+                        this.Owner.BackgroundControls.Remove(it);
+                    }
+                }
+                return true;
+            }
+            return false;
         }
     }
 }

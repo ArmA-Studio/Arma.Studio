@@ -163,6 +163,8 @@
     <Compile Include="Debugging\IBreakpoint.cs" />
     <Compile Include="UI\Converters\UriToCachedImageConverter.cs" />
     <Compile Include="Debugging\IBreakpointManager.cs" />
+    <Compile Include="UI\HotkeyManager.cs" />
+    <Compile Include="UI\IKeyInteractible.cs" />
     <Compile Include="UI\IPropertyHost.cs" />
     <Compile Include="UI\IInteractionUndoRedo.cs" />
     <Compile Include="UI\IInteractionSave.cs" />
