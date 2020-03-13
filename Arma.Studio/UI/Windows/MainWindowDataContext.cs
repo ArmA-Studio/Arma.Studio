@@ -640,6 +640,7 @@ namespace Arma.Studio.UI.Windows
             this.Solution = new Solution();
             this.LayoutJsonNode = new Newtonsoft.Json.Linq.JObject(new Newtonsoft.Json.Linq.JProperty(CONST_INI_TYPES_STRING, new Newtonsoft.Json.Linq.JObject()));
             this.BusyContainerManager = new BusyContainerManager();
+            this.HotkeyManager = new HotkeyManager();
             App.Current.Dispatcher.Invoke(() => InputManager.Current.PreProcessInput += this.InputManager_PreProcessInput);
         }
         private void Initialized()

@@ -106,6 +106,7 @@
     <Compile Include="Data\ControlXListBox.cs" />
     <Compile Include="Data\ControlXSlider.cs" />
     <Compile Include="Data\InterfaceSize.cs" />
+    <Compile Include="UI\Adorners\SelectedAdorner.cs" />
     <Compile Include="UI\Converters\ControlTextImageConverter.cs" />
     <Compile Include="UI\Converters\SizeExToFontSizeMultiConverter.cs" />
     <Compile Include="UI\EEditorMouseMode.cs" />
