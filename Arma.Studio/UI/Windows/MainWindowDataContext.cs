@@ -368,11 +368,11 @@ namespace Arma.Studio.UI.Windows
                 Task.Run(() => interactionUndoRedo.Redo(CancellationToken.None));
             }
         });
-        public ICommand CmdSaveDocument => new RelayCommand(() =>
+        public ICommand CmdSaveDocument => new RelayCommandAsync(async () =>
         {
             if (this.ActiveDockable is IInteractionSave interactionSave)
             {
-                Task.Run(() => interactionSave.Save(CancellationToken.None));
+                await interactionSave.Save(CancellationToken.None);
             }
         });
         public ICommand CmdShowAbout => new RelayCommand(() =>
@@ -381,15 +381,17 @@ namespace Arma.Studio.UI.Windows
             var dlg = new AboutDialog(dlgdc);
             dlg.ShowDialog();
         });
-        public ICommand CmdSaveAllDocuments => new RelayCommand(() =>
+        public ICommand CmdSaveAllDocuments => new RelayCommandAsync(async () =>
         {
+            var tasks = new List<Task>(this.Documents.Count((it) => it is IInteractionSave));
             foreach (var it in this.Documents)
             {
                 if (it is IInteractionSave interactionSave)
                 {
-                    Task.Run(() => interactionSave.Save(CancellationToken.None));
+                    tasks.Add(interactionSave.Save(CancellationToken.None));
                 }
             }
+            await Task.WhenAll(tasks);
         });
 
         public ObservableCollection<DockableBase> Anchorables { get => this._Anchorables; set { this._Anchorables = value; this.RaisePropertyChanged(); } }
