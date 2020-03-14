@@ -75,10 +75,13 @@ namespace Arma.Studio.ErrorWindow
                             continue;
                         }
                         var lintinfos = await lintable.GetLintInfos(file.GetText(), CancellationToken.None);
-                        foreach (var it in lintinfos)
+                        System.Windows.Application.Current.Dispatcher.Invoke(() =>
                         {
-                            this.LintInfos.Add(it);
-                        }
+                            foreach (var it in lintinfos)
+                            {
+                                this.LintInfos.Add(it);
+                            }
+                        });
                     }
                 }, String.Format(Properties.Language.PBO_LintingFiles_0file, pbo.Name));
             }
