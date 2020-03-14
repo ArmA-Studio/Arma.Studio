@@ -187,6 +187,15 @@ namespace Arma.Studio.SolutionExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open folder.
+        /// </summary>
+        public static string SolutionExplorer_ContextMenu_OpenFolder {
+            get {
+                return ResourceManager.GetString("SolutionExplorer_ContextMenu_OpenFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rescan.
         /// </summary>
         public static string SolutionExplorer_ContextMenu_RescanPbo {

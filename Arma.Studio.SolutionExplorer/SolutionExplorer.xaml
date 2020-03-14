@@ -47,6 +47,14 @@
                           IsEnabled="{Binding DataContext, Converter={StaticResource IsAssignableFromConverter}, ConverterParameter={x:Type data:PBO}}">
                     
                 </MenuItem>
+                <MenuItem Header="{x:Static p:Language.SolutionExplorer_ContextMenu_OpenFolder}"
+                          Command="{Binding Tag.CmdOpenContainingFolder}"
+                          CommandParameter="{Binding DataContext}"
+                          IsEnabled="{Binding DataContext, Converter={StaticResource IsNullConverter}, ConverterParameter=False}">
+                    <MenuItem.Icon>
+                        <Rectangle Fill="{StaticResource DrawingBrushOpen}" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </ContextMenu>
         </Grid.Resources>
         <Grid.RowDefinitions>

@@ -51,6 +51,21 @@ namespace Arma.Studio.SolutionExplorer
                 }
             }
         });
+        public ICommand CmdOpenContainingFolder => new RelayCommand<FileFolderBase>((ffb) =>
+        {
+            switch (ffb)
+            {
+                case File file:
+                    System.Diagnostics.Process.Start("explorer.exe", string.Format("/select,\"{0}\"", file.PhysicalPath.Replace('/', '\\')));
+                    break;
+                case PBO pbo:
+                    System.Diagnostics.Process.Start("explorer.exe", pbo.FullPath.Replace('/', '\\'));
+                    break;
+                case Folder folder:
+                    System.Diagnostics.Process.Start("explorer.exe", folder.FullPath.Replace('/', '\\'));
+                    break;
+            }
+        });
 
         public ICommand CmdAddPbo => new RelayCommand(() =>
         {

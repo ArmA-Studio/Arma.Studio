@@ -168,4 +168,7 @@
   <data name="FilesDialog_Title" xml:space="preserve">
     <value>Add New Item</value>
   </data>
+  <data name="SolutionExplorer_ContextMenu_OpenFolder" xml:space="preserve">
+    <value>Open folder</value>
+  </data>
 </root>

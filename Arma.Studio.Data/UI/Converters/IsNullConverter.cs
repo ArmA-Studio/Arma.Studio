@@ -18,13 +18,19 @@ namespace Arma.Studio.Data.UI.Converters
         /// <returns>A converted value. If the method returns null, the valid null value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            bool success = true;
+            if (parameter is string para && (para.Equals("true", StringComparison.InvariantCultureIgnoreCase) || para.Equals("false", StringComparison.InvariantCultureIgnoreCase)))
+            {
+                success = System.Convert.ToBoolean(para);
+            }
+
             if (value is string s)
             {
-                return String.IsNullOrWhiteSpace(s);
+                return String.IsNullOrWhiteSpace(s) ? success : !success;
             }
             else
             {
-                return value == null;
+                return value == null ? success : !success;
             }
         }
 
