@@ -80,6 +80,10 @@ namespace Arma.Studio.UiEditor.UI.Adorners
             if (e.NewValue is bool newFlag && newFlag)
             {
                 var adornerLayer = AdornerLayer.GetAdornerLayer(uiElement);
+                if (adornerLayer is null)
+                {
+                    return;
+                }
                 var affected = new HighlightElementsAdorner(uiElement);
                 adornerLayer.Add(affected);
             }
