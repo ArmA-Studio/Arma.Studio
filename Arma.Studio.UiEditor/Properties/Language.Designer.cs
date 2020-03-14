@@ -529,6 +529,24 @@ namespace Arma.Studio.UiEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to load the following classes: {0}.
+        /// </summary>
+        public static string UiEditor_FailedToLoad_Body_0names {
+            get {
+                return ResourceManager.GetString("UiEditor_FailedToLoad_Body_0names", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load all classes.
+        /// </summary>
+        public static string UiEditor_FailedToLoad_Caption {
+            get {
+                return ResourceManager.GetString("UiEditor_FailedToLoad_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Height.
         /// </summary>
         public static string UiEditor_Height {

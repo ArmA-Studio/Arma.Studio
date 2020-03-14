@@ -306,4 +306,10 @@
   <data name="UiEditor_HighlightAll" xml:space="preserve">
     <value>Highlight all</value>
   </data>
+  <data name="UiEditor_FailedToLoad_Body_0names" xml:space="preserve">
+    <value>Failed to load the following classes: {0}</value>
+  </data>
+  <data name="UiEditor_FailedToLoad_Caption" xml:space="preserve">
+    <value>Failed to load all classes</value>
+  </data>
 </root>

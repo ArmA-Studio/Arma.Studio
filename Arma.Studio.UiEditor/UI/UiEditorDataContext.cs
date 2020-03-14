@@ -456,6 +456,7 @@ namespace Arma.Studio.UiEditor.UI
 
                 var backgroundControls = dialogConfig[dlg_controlsBackground];
                 var foregroundControls = dialogConfig[dlg_controls];
+                var failedToLoadList = new List<string>();
                 if (backgroundControls != null)
                 {
                     var controls = getControls(backgroundControls);
@@ -465,6 +466,10 @@ namespace Arma.Studio.UiEditor.UI
                         if (control != null)
                         {
                             this.BackgroundControls.Add(control);
+                        }
+                        else
+                        {
+                            failedToLoadList.Add(node.Name);
                         }
                     }
                 }
@@ -478,7 +483,19 @@ namespace Arma.Studio.UiEditor.UI
                         {
                             this.ForegroundControls.Add(control);
                         }
+                        else
+                        {
+                            failedToLoadList.Add(node.Name);
+                        }
                     }
+                }
+                if (failedToLoadList.Any())
+                {
+                    MessageBox.Show(
+                        String.Format(Properties.Language.UiEditor_FailedToLoad_Body_0names, String.Concat("\n- ", String.Join("\n- ", failedToLoadList))),
+                        Properties.Language.UiEditor_FailedToLoad_Caption,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
                 }
             }
             this.HasChanges = false;
@@ -497,75 +514,82 @@ namespace Arma.Studio.UiEditor.UI
             {
                 return null;
             }
-            var targetType = attributes.First().TargetType;
-            var instance = targetType.CreateInstance<ControlBase>();
-            instance.ClassName = node.Name;
-            foreach (var propertyInfo in targetType.GetProperties().Where((it) => it.SetMethod != null))
+            try
             {
-                var armaNameAttributes = Attribute.GetCustomAttributes(propertyInfo, typeof(ArmaNameAttribute), true).Cast<ArmaNameAttribute>().ToArray();
-                if (!armaNameAttributes.Any())
+                var targetType = attributes.First().TargetType;
+                var instance = targetType.CreateInstance<ControlBase>();
+                instance.ClassName = node.Name;
+                foreach (var propertyInfo in targetType.GetProperties().Where((it) => it.SetMethod != null))
                 {
-                    continue;
-                }
-                var armaNameAttribute = armaNameAttributes.First();
-                var value = node[armaNameAttribute.Title]?.Value;
-                if (value is null)
-                {
-                    continue;
-                }
-                if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
-                {
-                    var arraylist = value as System.Collections.ArrayList;
-                    propertyInfo.SetValue(instance,
-                        System.Windows.Media.Color.FromArgb(
-                            (byte)(255 * Convert.ToDouble(arraylist.Count < 4 ? 0 : arraylist[3], System.Globalization.CultureInfo.InvariantCulture)),
-                            (byte)(255 * Convert.ToDouble(arraylist.Count < 1 ? 0 : arraylist[0], System.Globalization.CultureInfo.InvariantCulture)),
-                            (byte)(255 * Convert.ToDouble(arraylist.Count < 2 ? 0 : arraylist[1], System.Globalization.CultureInfo.InvariantCulture)),
-                            (byte)(255 * Convert.ToDouble(arraylist.Count < 3 ? 0 : arraylist[2], System.Globalization.CultureInfo.InvariantCulture))
-                            ),
-                        null);
-                }
-                else if (propertyInfo.PropertyType.IsEnum)
-                {
-                    propertyInfo.SetValue(instance, Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture), null);
-                }
-                else if (value is string s)
-                {
-                    if (propertyInfo.PropertyType.IsEquivalentTo(typeof(string)))
+                    var armaNameAttributes = Attribute.GetCustomAttributes(propertyInfo, typeof(ArmaNameAttribute), true).Cast<ArmaNameAttribute>().ToArray();
+                    if (!armaNameAttributes.Any())
                     {
-                        propertyInfo.SetValue(instance, Convert.ChangeType(s.Trim('"'), propertyInfo.PropertyType, System.Globalization.CultureInfo.InvariantCulture), null);
+                        continue;
                     }
-                    else
+                    var armaNameAttribute = armaNameAttributes.First();
+                    var value = node[armaNameAttribute.Title]?.Value;
+                    if (value is null)
                     {
-                        var res = vm.Evaluate(s);
-                        var resval = Convert.ChangeType(res.Data.Trim('"'), propertyInfo.PropertyType, System.Globalization.CultureInfo.InvariantCulture);
-                        if (new string[] { "x", "y", "w", "h" }.Contains(armaNameAttribute.Title))
+                        continue;
+                    }
+                    if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
+                    {
+                        var arraylist = value as System.Collections.ArrayList;
+                        propertyInfo.SetValue(instance,
+                            System.Windows.Media.Color.FromArgb(
+                                (byte)(255 * Convert.ToDouble(arraylist.Count < 4 ? 0 : arraylist[3], System.Globalization.CultureInfo.InvariantCulture)),
+                                (byte)(255 * Convert.ToDouble(arraylist.Count < 1 ? 0 : arraylist[0], System.Globalization.CultureInfo.InvariantCulture)),
+                                (byte)(255 * Convert.ToDouble(arraylist.Count < 2 ? 0 : arraylist[1], System.Globalization.CultureInfo.InvariantCulture)),
+                                (byte)(255 * Convert.ToDouble(arraylist.Count < 3 ? 0 : arraylist[2], System.Globalization.CultureInfo.InvariantCulture))
+                                ),
+                            null);
+                    }
+                    else if (propertyInfo.PropertyType.IsEnum)
+                    {
+                        propertyInfo.SetValue(instance, Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture), null);
+                    }
+                    else if (value is string s)
+                    {
+                        if (propertyInfo.PropertyType.IsEquivalentTo(typeof(string)))
                         {
-                            switch (armaNameAttribute.Title)
-                            {
-                                case "x":
-                                case "w":
-                                    propertyInfo.SetValue(instance, this.CanvasManager.Width * (double)resval, null);
-                                    break;
-                                case "y":
-                                case "h":
-                                    propertyInfo.SetValue(instance, this.CanvasManager.Height * (double)resval, null);
-                                    break;
-                            }
-                            continue;
+                            propertyInfo.SetValue(instance, Convert.ChangeType(s.Trim('"'), propertyInfo.PropertyType, System.Globalization.CultureInfo.InvariantCulture), null);
                         }
                         else
                         {
-                            propertyInfo.SetValue(instance, resval, null);
+                            var res = vm.Evaluate(s);
+                            var resval = Convert.ChangeType(res.Data.Trim('"'), propertyInfo.PropertyType, System.Globalization.CultureInfo.InvariantCulture);
+                            if (new string[] { "x", "y", "w", "h" }.Contains(armaNameAttribute.Title))
+                            {
+                                switch (armaNameAttribute.Title)
+                                {
+                                    case "x":
+                                    case "w":
+                                        propertyInfo.SetValue(instance, this.CanvasManager.Width * (double)resval, null);
+                                        break;
+                                    case "y":
+                                    case "h":
+                                        propertyInfo.SetValue(instance, this.CanvasManager.Height * (double)resval, null);
+                                        break;
+                                }
+                                continue;
+                            }
+                            else
+                            {
+                                propertyInfo.SetValue(instance, resval, null);
+                            }
                         }
                     }
+                    else
+                    {
+                        propertyInfo.SetValue(instance, Convert.ChangeType(value, propertyInfo.PropertyType, System.Globalization.CultureInfo.InvariantCulture), null);
+                    }
                 }
-                else
-                {
-                    propertyInfo.SetValue(instance, Convert.ChangeType(value, propertyInfo.PropertyType, System.Globalization.CultureInfo.InvariantCulture), null);
-                }
+                return instance;
             }
-            return instance;
+            catch
+            { // Any conversion exception is a load-fail, return null.
+                return null;
+            }
         }
 
         private void ClrVirtualmachine_OnLog(object sender, SqfVm.LogEventArgs eventArgs)
