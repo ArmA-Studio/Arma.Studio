@@ -450,6 +450,7 @@ namespace Arma.Studio.UiEditor.Data
             this.IsShown = true;
             this.Font = "TahomaB";
             this.Text = "Text";
+            this.IDC = -1;
             this.ClassName = "MY_" + Enum.GetName(typeof(EControlType), this.ControlType).Substring(3) + "_" + new Random().Next();
         }
     }
