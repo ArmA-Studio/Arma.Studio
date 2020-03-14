@@ -182,11 +182,12 @@
                     <ColumnDefinition MinWidth="64" Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="{x:Static p:Language.UiEditor_Zoom}" Grid.Column="0" VerticalAlignment="Center"/>
-                <xceed:DoubleUpDown Value="{Binding CanvasManager.Zoom}"
-                                    Minimum="0.1"
-                                    Maximum="5"
-                                    Increment="0.2"
+                <xceed:DoubleUpDown Value="{Binding CanvasManager.ZoomPercentage}"
+                                    Minimum="10"
+                                    Maximum="500"
+                                    Increment="10"
                                     Grid.Column="2"
+                                    FormatString="{}{0} %"
                                     IsUndoEnabled="False"/>
             </Grid>
             <Grid ToolTip="{x:Static p:Language.UiEditor_Width_ToolTip}">

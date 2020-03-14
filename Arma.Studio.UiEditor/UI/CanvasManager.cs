@@ -100,9 +100,15 @@ namespace Arma.Studio.UiEditor.UI
             {
                 this._Zoom = value;
                 this.RaisePropertyChanged();
+                this.RaisePropertyChanged(nameof(this.ZoomPercentage));
             }
         }
         private double _Zoom;
+        public int ZoomPercentage
+        {
+            get => (int)(this.Zoom * 100);
+            set => this.Zoom = value / 100.0;
+        }
         #endregion
         #region Property: HorizontalScrollOffset (System.Double)
         public double HorizontalScrollOffset
