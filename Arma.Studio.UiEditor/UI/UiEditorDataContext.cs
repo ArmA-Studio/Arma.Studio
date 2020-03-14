@@ -668,13 +668,13 @@ namespace Arma.Studio.UiEditor.UI
                         {
                             await stream.WriteAsync("[] = { ");
                             var color = (System.Windows.Media.Color)value;
-                            await stream.WriteAsync(Convert.ToString(color.R / 255.0));
+                            await stream.WriteAsync(Convert.ToString(color.R / 255.0, System.Globalization.CultureInfo.InvariantCulture));
                             await stream.WriteAsync(", ");
-                            await stream.WriteAsync(Convert.ToString(color.G / 255.0));
+                            await stream.WriteAsync(Convert.ToString(color.G / 255.0, System.Globalization.CultureInfo.InvariantCulture));
                             await stream.WriteAsync(", ");
-                            await stream.WriteAsync(Convert.ToString(color.B / 255.0));
+                            await stream.WriteAsync(Convert.ToString(color.B / 255.0, System.Globalization.CultureInfo.InvariantCulture));
                             await stream.WriteAsync(", ");
-                            await stream.WriteAsync(Convert.ToString(color.A / 255.0));
+                            await stream.WriteAsync(Convert.ToString(color.A / 255.0, System.Globalization.CultureInfo.InvariantCulture));
                             await stream.WriteAsync(" }");
                         }
                         else if (propertyInfo.PropertyType.IsEnum)
@@ -690,7 +690,7 @@ namespace Arma.Studio.UiEditor.UI
                         else
                         {
                             await stream.WriteAsync(" = ");
-                            await stream.WriteAsync(Convert.ToString(value));
+                            await stream.WriteAsync(Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture));
                         }
                         await stream.WriteLineAsync(";");
                     }
