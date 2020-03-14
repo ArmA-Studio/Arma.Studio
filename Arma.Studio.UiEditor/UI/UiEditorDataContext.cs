@@ -169,6 +169,25 @@ namespace Arma.Studio.UiEditor.UI
         }
         #endregion
 
+
+        public override string Title { get => this.HasChanges ? String.Concat(this.File?.Name, '*') : this.File?.Name; set => throw new InvalidOperationException(); }
+        public bool HasChanges
+        {
+            get => this._HasChanges;
+            set
+            {
+                if (this._HasChanges == value)
+                {
+                    return;
+                }
+                this._HasChanges = value;
+                this.RaisePropertyChanged();
+                this.RaisePropertyChanged(nameof(this.Title));
+            }
+        }
+        private bool _HasChanges;
+
+
         public UiEditorDataContext()
         {
             this.IDD = -1;
@@ -177,7 +196,22 @@ namespace Arma.Studio.UiEditor.UI
             this.ForegroundControls = new ObservableCollection<IControlElement>();
             this.CanvasManager = new CanvasManager(this);
             this.InterfaceSize = InterfaceSize.Small;
+            this.HasChanges = false;
+
+
+            this.BackgroundControls.CollectionChanged += this.Controls_CollectionChanged;
+            this.ForegroundControls.CollectionChanged += this.Controls_CollectionChanged;
         }
+
+        private void Controls_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            this.HasChanges = true;
+            foreach (IControlElement controlElement in e.NewItems ?? Array.Empty<object>())
+            {
+                controlElement.PropertyChanged += (sender, e) => this.HasChanges = true;
+            }
+        }
+
         public UiEditorDataContext(File file) : this()
         {
             this.File = file;
@@ -232,7 +266,6 @@ namespace Arma.Studio.UiEditor.UI
                 e.Handled = true;
             }
         }
-        public override string Title { get => false ? this.File?.Name : String.Concat(this.File?.Name, '*'); set => throw new InvalidOperationException(); }
 
         #region Interface: IEditorDocument
         public File File
@@ -413,11 +446,11 @@ namespace Arma.Studio.UiEditor.UI
                 this.ClassName = dialogConfig.Name;
                 try
                 {
-                    if (dialogConfig.ContainsKey("idd")) { this.InterfaceSizeSerialized = (string)dialogConfig["idd"].Value; }
-                    if (dialogConfig.ContainsKey(InterfaceSizeSerializedKey)) { this.InterfaceSizeSerialized = (string)dialogConfig[InterfaceSizeSerializedKey].Value; }
-                    if (dialogConfig.ContainsKey(GridSizeSerializedKey)) { this.GridSizeSerialized = (int)dialogConfig[GridSizeSerializedKey].Value; }
-                    if (dialogConfig.ContainsKey(WidthSerializedKey)) { this.WidthSerialized = (double)dialogConfig[WidthSerializedKey].Value; }
-                    if (dialogConfig.ContainsKey(HeightSerializedKey)) { this.HeightSerialized = (double)dialogConfig[HeightSerializedKey].Value; }
+                    if (dialogConfig.ContainsKey("idd")) { this.IDD = Convert.ToInt32(dialogConfig["idd"].Value); }
+                    if (dialogConfig.ContainsKey(InterfaceSizeSerializedKey)) { this.InterfaceSizeSerialized = Convert.ToString(dialogConfig[InterfaceSizeSerializedKey].Value); }
+                    if (dialogConfig.ContainsKey(GridSizeSerializedKey)) { this.GridSizeSerialized = Convert.ToInt32(dialogConfig[GridSizeSerializedKey].Value); }
+                    if (dialogConfig.ContainsKey(WidthSerializedKey)) { this.WidthSerialized = Convert.ToDouble(dialogConfig[WidthSerializedKey].Value); }
+                    if (dialogConfig.ContainsKey(HeightSerializedKey)) { this.HeightSerialized = Convert.ToDouble(dialogConfig[HeightSerializedKey].Value); }
                 }
                 catch { }
 
@@ -448,6 +481,7 @@ namespace Arma.Studio.UiEditor.UI
                     }
                 }
             }
+            this.HasChanges = false;
         }
         private ControlBase LoadControl(SqfVm.ClrVirtualmachine vm, SqfVm.Config node)
         {
@@ -561,13 +595,13 @@ namespace Arma.Studio.UiEditor.UI
             }
         }
 
-        public Task Save(CancellationToken cancellationToken)
+        public async Task Save(CancellationToken cancellationToken)
         {
             using (var stream = new System.IO.StreamWriter(this.File.PhysicalPath))
             {
                 int tabstop = 0;
                 string tabs() { return new string(' ', tabstop * 4); }
-                void WriteOutConfig(Type t, object obj)
+                async Task WriteOutConfig(Type t, object obj)
                 {
                     foreach (var propertyInfo in t.GetProperties())
                     {
@@ -577,111 +611,116 @@ namespace Arma.Studio.UiEditor.UI
                             continue;
                         }
                         var armaNameAttribute = armaNameAttributes.First();
-                        stream.Write(tabs());
-                        stream.Write(armaNameAttribute.Title);
+                        await stream.WriteAsync(tabs());
+                        await stream.WriteAsync(armaNameAttribute.Title);
                         var value = propertyInfo.GetValue(obj, null);
                         if (new string[] { "x", "y", "w", "h" }.Contains(armaNameAttribute.Title))
                         {
                             switch (armaNameAttribute.Title)
                             {
                                 case "x":
-                                    stream.WriteLine($" = \"safezoneX + ({value} / {this.CanvasManager.Width}) * safezoneW\";");
+                                    await stream.WriteLineAsync($" = \"safezoneX + ({value} / {this.CanvasManager.Width}) * safezoneW\";");
                                     break;
                                 case "y":
-                                    stream.WriteLine($" = \"safezoneY + ({value} / {this.CanvasManager.Height}) * safezoneH\";");
+                                    await stream.WriteLineAsync($" = \"safezoneY + ({value} / {this.CanvasManager.Height}) * safezoneH\";");
                                     break;
                                 case "w":
-                                    stream.WriteLine($" = \"({value} / {this.CanvasManager.Width}) * safezoneW\";");
+                                    await stream.WriteLineAsync($" = \"({value} / {this.CanvasManager.Width}) * safezoneW\";");
                                     break;
                                 case "h":
-                                    stream.WriteLine($" = \"({value} / {this.CanvasManager.Height}) * safezoneH\";");
+                                    await stream.WriteLineAsync($" = \"({value} / {this.CanvasManager.Height}) * safezoneH\";");
                                     break;
                             }
                             continue;
                         }
                         if (propertyInfo.PropertyType.IsEquivalentTo(typeof(string)))
                         {
-                            stream.Write(" = ");
-                            stream.Write('"');
-                            stream.Write(value);
-                            stream.Write('"');
+                            await stream.WriteAsync(" = ");
+                            await stream.WriteAsync('"');
+                            await stream.WriteAsync(Convert.ToString(value));
+                            await stream.WriteAsync('"');
                         }
                         else if (propertyInfo.PropertyType.IsEquivalentTo(typeof(System.Windows.Media.Color)))
                         {
-                            stream.Write("[] = { ");
+                            await stream.WriteAsync("[] = { ");
                             var color = (System.Windows.Media.Color)value;
-                            stream.Write(color.R / 255.0);
-                            stream.Write(", ");
-                            stream.Write(color.G / 255.0);
-                            stream.Write(", ");
-                            stream.Write(color.B / 255.0);
-                            stream.Write(", ");
-                            stream.Write(color.A / 255.0);
-                            stream.Write(" }");
+                            await stream.WriteAsync(Convert.ToString(color.R / 255.0));
+                            await stream.WriteAsync(", ");
+                            await stream.WriteAsync(Convert.ToString(color.G / 255.0));
+                            await stream.WriteAsync(", ");
+                            await stream.WriteAsync(Convert.ToString(color.B / 255.0));
+                            await stream.WriteAsync(", ");
+                            await stream.WriteAsync(Convert.ToString(color.A / 255.0));
+                            await stream.WriteAsync(" }");
                         }
                         else if (propertyInfo.PropertyType.IsEnum)
                         {
-                            stream.Write(" = ");
-                            stream.Write(Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture));
+                            await stream.WriteAsync(" = ");
+                            await stream.WriteAsync(Convert.ToString(Convert.ToInt32(value, System.Globalization.CultureInfo.InvariantCulture)));
+                        }
+                        else if (propertyInfo.PropertyType.IsEquivalentTo(typeof(bool)))
+                        {
+                            await stream.WriteAsync(" = ");
+                            await stream.WriteAsync(Convert.ToString(value).ToLower());
                         }
                         else
                         {
-                            stream.Write(" = ");
-                            stream.Write(value);
+                            await stream.WriteAsync(" = ");
+                            await stream.WriteAsync(Convert.ToString(value));
                         }
-                        stream.WriteLine(";");
+                        await stream.WriteLineAsync(";");
                     }
                 }
-                stream.Write("class ");
-                stream.Write(this.ClassName);
-                stream.WriteLine(" {");
+                await stream.WriteAsync("class ");
+                await stream.WriteAsync(this.ClassName);
+                await stream.WriteLineAsync(" {");
                 tabstop++;
 
-                WriteOutConfig(typeof(UiEditorDataContext), this);
+                await WriteOutConfig(typeof(UiEditorDataContext), this);
 
-                stream.Write(tabs());
-                stream.WriteLine("class " + dlg_controlsBackground + " {");
+                await stream.WriteAsync(tabs());
+                await stream.WriteLineAsync("class " + dlg_controlsBackground + " {");
                 tabstop++;
                 foreach (var control in this.BackgroundControls)
                 {
-                    stream.Write(tabs());
-                    stream.WriteLine("class " + control.ClassName + " {");
+                    await stream.WriteAsync(tabs());
+                    await stream.WriteLineAsync("class " + control.ClassName + " {");
                     tabstop++;
 
-                    WriteOutConfig(control.GetType(), control);
+                    await WriteOutConfig(control.GetType(), control);
 
                     tabstop--;
-                    stream.Write(tabs());
-                    stream.WriteLine("};");
+                    await stream.WriteAsync(tabs());
+                    await stream.WriteLineAsync("};");
                 }
                 tabstop--;
-                stream.Write(tabs());
-                stream.WriteLine("};");
+                await stream.WriteAsync(tabs());
+                await stream.WriteLineAsync("};");
 
-                stream.Write(tabs());
-                stream.WriteLine("class " + dlg_controls + " {");
+                await stream.WriteAsync(tabs());
+                await stream.WriteLineAsync("class " + dlg_controls + " {");
                 tabstop++;
                 foreach (var control in this.ForegroundControls)
                 {
-                    stream.Write(tabs());
-                    stream.WriteLine("class " + control.ClassName + " {");
+                    await stream.WriteAsync(tabs());
+                    await stream.WriteLineAsync("class " + control.ClassName + " {");
                     tabstop++;
 
-                    WriteOutConfig(control.GetType(), control);
+                    await WriteOutConfig(control.GetType(), control);
 
                     tabstop--;
-                    stream.Write(tabs());
-                    stream.WriteLine("};");
+                    await stream.WriteAsync(tabs());
+                    await stream.WriteLineAsync("};");
                 }
                 tabstop--;
-                stream.Write(tabs());
-                stream.WriteLine("};");
+                await stream.WriteAsync(tabs());
+                await stream.WriteLineAsync("};");
 
                 tabstop--;
-                stream.Write(tabs());
-                stream.WriteLine("};");
+                await stream.WriteAsync(tabs());
+                await stream.WriteLineAsync("};");
             }
-            return Task.CompletedTask;
+            this.HasChanges = false;
         }
     }
 }
