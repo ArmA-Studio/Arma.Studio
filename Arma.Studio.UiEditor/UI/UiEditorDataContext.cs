@@ -619,16 +619,16 @@ namespace Arma.Studio.UiEditor.UI
                             switch (armaNameAttribute.Title)
                             {
                                 case "x":
-                                    await stream.WriteLineAsync($" = \"safezoneX + ({value} / {this.CanvasManager.Width}) * safezoneW\";");
+                                    await stream.WriteLineAsync($" = \"safezoneX + ({((double)value).ToString(System.Globalization.CultureInfo.InvariantCulture)} / {this.CanvasManager.Width}) * safezoneW\";");
                                     break;
                                 case "y":
-                                    await stream.WriteLineAsync($" = \"safezoneY + ({value} / {this.CanvasManager.Height}) * safezoneH\";");
+                                    await stream.WriteLineAsync($" = \"safezoneY + ({((double)value).ToString(System.Globalization.CultureInfo.InvariantCulture)} / {this.CanvasManager.Height}) * safezoneH\";");
                                     break;
                                 case "w":
-                                    await stream.WriteLineAsync($" = \"({value} / {this.CanvasManager.Width}) * safezoneW\";");
+                                    await stream.WriteLineAsync($" = \"({((double)value).ToString(System.Globalization.CultureInfo.InvariantCulture)} / {this.CanvasManager.Width}) * safezoneW\";");
                                     break;
                                 case "h":
-                                    await stream.WriteLineAsync($" = \"({value} / {this.CanvasManager.Height}) * safezoneH\";");
+                                    await stream.WriteLineAsync($" = \"({((double)value).ToString(System.Globalization.CultureInfo.InvariantCulture)} / {this.CanvasManager.Height}) * safezoneH\";");
                                     break;
                             }
                             continue;
