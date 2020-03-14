@@ -24,6 +24,7 @@ namespace Arma.Studio.UI.Windows
     {
         private const string CONST_INI_TYPES_STRING = "Types";
         private const string CONST_INI_PBOPATHS_STRING = "PBO-Paths";
+        private const string CONST_SETTINGS_BREAKPOINTS = "BREAKPOINTS";
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string callee = "")
         {
@@ -286,6 +287,10 @@ namespace Arma.Studio.UI.Windows
         public ICommand CmdQuit => new RelayCommand((p) => this.OwningWindow.Close());
         public ICommand CmdWindowClosing => new RelayCommand((p) =>
         {
+            foreach (var pbo in this.FileManagement)
+            {
+                pbo.WritePboProperties();
+            }
             this.SaveAvalonDockLayout();
         });
         public ICommand CmdActiveContentChanged => new RelayCommand((p) => { });
@@ -390,6 +395,10 @@ namespace Arma.Studio.UI.Windows
                 {
                     tasks.Add(interactionSave.Save(CancellationToken.None));
                 }
+            }
+            foreach (var pbo in this.FileManagement)
+            {
+                tasks.Add(Task.Run(() => pbo.WritePboProperties()));
             }
             await Task.WhenAll(tasks);
         });
@@ -569,6 +578,7 @@ namespace Arma.Studio.UI.Windows
                 {
                     var pbo = new PBO { Name = pboPath };
                     pbo.Rescan();
+                    pbo.ReadPboProperties();
                     this.Solution.Add(pbo);
                 }
             }

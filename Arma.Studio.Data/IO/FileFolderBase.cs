@@ -45,6 +45,20 @@ namespace Arma.Studio.Data.IO
                 }
             }
         }
+
+        public PBO PBO
+        {
+            get
+            {
+                var ffb = this;
+                while (ffb != null && !(ffb is PBO))
+                {
+                    ffb = ffb.Parent;
+                }
+                return ffb as PBO;
+            }
+        }
+
         private readonly WeakReference<FileFolderBase> ParentWeak;
         public FileFolderBase()
         {

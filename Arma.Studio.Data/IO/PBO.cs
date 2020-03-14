@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Arma.Studio.Data.IO
 {
@@ -154,6 +152,12 @@ namespace Arma.Studio.Data.IO
                 }
             }
         }
+        /// <summary>
+        /// Walks the tree recursive to receive all <see cref="File"/>s
+        /// that match the provided condition <paramref name="func"/>.
+        /// </summary>
+        /// <param name="func">A condition to match files for.</param>
+        /// <returns>The <see cref="File"/>s that matched the condition.</returns>
         public IEnumerable<File> GetAll(Func<File, bool> func)
         {
             return GetAllHelper(this, func);
@@ -224,6 +228,117 @@ namespace Arma.Studio.Data.IO
                 }
             }
             this.Sort();
+        }
+
+
+        private Dictionary<string, Dictionary<string, object>> ValueStorage = new Dictionary<string, Dictionary<string, object>>();
+        /// <summary>
+        /// Adds the given value to the assemblies Property Storage.
+        /// Note that <typeparamref name="T"/> is required to have the <see cref="SerializableAttribute"/> set and
+        /// thus NEEDS TO BE serializable by the <see cref="System.Runtime.Serialization.Formatters.Binary.BinaryFormatter"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method should not be used for data, that is in any way important!
+        /// The storage may always fail to load or the user may delete it for any reasons.
+        /// Save important stuff in proper files.
+        /// </remarks>
+        /// <typeparam name="T">The type of the value to set.</typeparam>
+        /// <param name="key">The key to identify the property.</param>
+        /// <param name="value">The value to set.</param>
+        [System.Runtime.CompilerServices.MethodImplAttribute(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        public void SetProperty<T>(string key, T value)
+        {
+            System.Diagnostics.Contracts.Contract.Requires(typeof(T).IsSerializable);
+            var callingAssembly = System.Reflection.Assembly.GetCallingAssembly();
+            if (!this.ValueStorage.TryGetValue(callingAssembly.FullName, out var storage))
+            {
+                storage = new Dictionary<string, object>();
+                this.ValueStorage[callingAssembly.FullName] = storage;
+            }
+            storage[key] = value;
+        }
+        /// <summary>
+        /// Receives a previously set value from the assemblies Property Storage.
+        /// Note that proividing incorrect <typeparamref name="T"/>
+        /// will result in <paramref name="defaultValue"/> being returned.
+        /// </summary>
+        /// <remarks>
+        /// This method should not be used for data, that is in any way important!
+        /// The storage may always fail to load or the user may delete it for any reasons.
+        /// Save important stuff in proper files.
+        /// </remarks>
+        /// <typeparam name="T">The type of the value to set.</typeparam>
+        /// <param name="key">The key to identify the property.</param>
+        /// <param name="defaultValue">
+        /// A default value to return if resolving the
+        /// <paramref name="key"/> failed or the value is not <typeparamref name="T"/>
+        /// </param>
+        /// <returns>The value or <paramref name="defaultValue"/></returns>
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        public T GetProperty<T>(string key, T defaultValue)
+        {
+            var callingAssembly = System.Reflection.Assembly.GetCallingAssembly();
+            if (!this.ValueStorage.TryGetValue(callingAssembly.FullName, out var storage))
+            {
+                storage = new Dictionary<string, object>();
+                this.ValueStorage[callingAssembly.FullName] = storage;
+            }
+            if (storage.TryGetValue(key, out var value) && value is T t)
+            {
+                return t;
+            }
+            else
+            {
+                return defaultValue;
+            }
+        }
+
+        /// <summary>
+        /// Writes all Property Storages to disk.
+        /// </summary>
+        public void WritePboProperties() => this.WritePboProperties(System.IO.Path.Combine(this.FullPath, ".arma.studio.storage.bin"));
+        /// <summary>
+        /// Writes all Property Storages to disk.
+        /// </summary>
+        /// <param name="path">The path to write this information to.</param>
+        public void WritePboProperties(string path)
+        {
+            using (var fstream = System.IO.File.Open(path, System.IO.FileMode.Create))
+            {
+                var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                var helperDictionary = this.ValueStorage
+                    .SelectMany((it) => it.Value.Select((it2) => new { Assembly = it.Key, Key = it2.Key, it2.Value }))
+                    .ToDictionary((it) => new Tuple<string, string>(it.Assembly, it.Key), (it) => it.Value);
+                binaryFormatter.Serialize(fstream, helperDictionary);
+            }
+        }
+        /// <summary>
+        /// Reads Property Storages from disk.
+        /// </summary>
+        public void ReadPboProperties() => this.ReadPboProperties(System.IO.Path.Combine(this.FullPath, ".arma.studio.storage.bin"));
+        /// <summary>
+        /// Reads Property Storages from disk, replacing the currently active.
+        /// </summary>
+        /// <param name="path">The path to read this information from.</param>
+        public void ReadPboProperties(string path)
+        {
+            if (!System.IO.File.Exists(path))
+            {
+                return;
+            }
+            try
+            {
+                using (var fstream = System.IO.File.OpenRead(path))
+                {
+                    var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                    var res = (Dictionary<Tuple<string, string>, object>)binaryFormatter.Deserialize(fstream);
+                    this.ValueStorage = res.GroupBy((it) => it.Key.Item1)
+                        .Select((group) => new KeyValuePair<string, Dictionary<string, object>>(
+                            group.Key, group.ToDictionary((it) => it.Key.Item2, (it) => it.Value)))
+                        .ToDictionary((it) => it.Key, (it) => it.Value);
+                }
+            }
+            catch { /* We do not care for broken data. Nothing important is supposed to be saved in here. */ }
         }
 
         #region ICollection<FileFolderBase>

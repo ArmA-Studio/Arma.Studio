@@ -64,6 +64,7 @@ namespace Arma.Studio.SolutionExplorer
             {
                 var pbo = new PBO { Name = ofd.FileName };
                 pbo.Rescan();
+                pbo.ReadPboProperties();
                 this.FileManagement.Add(pbo);
             }
         });
