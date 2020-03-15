@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -181,7 +182,7 @@ namespace Arma.Studio.UI.Windows
                             {
                                 File.Delete(it);
                             }
-                            foreach (string it in Directory.GetDirectories(dir))
+                            foreach (string it in Directory.GetDirectories(dir).OrderBy((it) => it.Length))
                             {
                                 Directory.Delete(it);
                             }
