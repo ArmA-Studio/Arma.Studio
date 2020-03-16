@@ -160,30 +160,39 @@ namespace Arma.Studio.SqfVmDebugger
                                 Logger.Warning($"No config file located for PBO {pbo.Name}.");
                             }
                         }
-                        if (!hasConfig)
-                        {
-                            Logger.Error("No config files available.");
-                            break;
-                        }
                         // Apply Breakpoints
                         foreach (var breakpoint in this.GetApplication().MainWindow.BreakpointManager.Breakpoints)
                         {
                             this.SetBreakpoint(breakpoint);
                         }
-                        // Run CfgFunctions script
+                        if (hasConfig)
                         {
+                            // Run CfgFunctions script
                             var text = this.CfgFunctionsScript;
                             var preprocessed = this.Virtualmachine.PreProcess(text, "SqfVmDebugger/CfgFunctions.sqf");
                             this.Virtualmachine.ParseSqf(preprocessed, "SqfVmDebugger/CfgFunctions.sqf");
                             this.State = EDebugState.Running;
                             execResult = this.Virtualmachine.Start();
+                            Logger.Diagnostic($"Result of Start: {execResult}");
                         }
-                        //var text = textEditorDocuments.GetContents();
-                        //var preprocessed = this.Virtualmachine.PreProcess(text, textEditorDocuments.TextEditorInstance.File.FullPath);
-                        //this.Virtualmachine.ParseSqf(preprocessed, textEditorDocuments.TextEditorInstance.File.FullPath);
-                        //this.State = EDebugState.Running;
-                        //execResult = this.Virtualmachine.Start();
-                        Logger.Diagnostic($"Result of Start: {execResult}");
+                        else
+                        {
+                            Logger.Warning("No config files available. Trying to use currently open document.");
+                            var editorDocument = this.GetApplication().MainWindow.ActiveDockable as Data.UI.IEditorDocument;
+                            if (editorDocument != null && editorDocument.File.Extension == ".sqf")
+                            {
+                                var text = editorDocument.GetContents();
+                                var preprocessed = this.Virtualmachine.PreProcess(text, editorDocument.TextEditorInstance.File.FullPath);
+                                this.Virtualmachine.ParseSqf(preprocessed, editorDocument.TextEditorInstance.File.FullPath);
+                                this.State = EDebugState.Running;
+                                execResult = this.Virtualmachine.Start();
+                                Logger.Diagnostic($"Result of Start: {execResult}");
+                            }
+                            else
+                            {
+                                Logger.Error("Found nothing to run.");
+                            }
+                        }
                         break;
                     case EDebugAction.Stop:
                         execResult = this.Virtualmachine.Abort();
@@ -247,7 +256,7 @@ namespace Arma.Studio.SqfVmDebugger
         {
             if (this.Virtualmachine == null)
             {
-                throw new InvalidOperationException();
+                return Array.Empty<HaltInfo>();
             }
             Logger.Diagnostic($"IEnumerable<HaltInfo> GetHaltInfos()");
             var callstack = this.Virtualmachine.GetCallstack();

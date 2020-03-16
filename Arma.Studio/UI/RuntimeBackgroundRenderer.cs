@@ -48,7 +48,7 @@ namespace Arma.Studio.UI
         {
             if (this.Editor.Document == null ||
                 App.MWContext.Debugger is null ||
-                App.MWContext.Debugger.State == Data.Debugging.EDebugState.Running)
+                App.MWContext.Debugger.State != Data.Debugging.EDebugState.Halted)
             {
                 return;
             }
