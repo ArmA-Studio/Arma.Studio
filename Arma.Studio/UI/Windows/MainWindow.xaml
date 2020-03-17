@@ -524,6 +524,139 @@
                 </Button>
             </ToolBar>
         </ToolBarTray>
+        <Grid DockPanel.Dock="Bottom" Height="20" Margin="2">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Background" Value="#007ACC"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Debugger.State}" Value="Running">
+                            <Setter Property="Background" Value="#CA5100"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <asd:PopupContainer>
+                <asd:PopupContainer.PopupContent>
+                    <Border BorderBrush="Gray" BorderThickness="1" Background="White" Padding="4" MinWidth="128">
+                        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl ItemsSource="{Binding BusyContainerManager.Items}" BorderThickness="0" Margin="0" Padding="0">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="4"/>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="4"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Margin="1" Grid.Column="0" Padding="2" CornerRadius="4">
+                                                <Border.InputBindings>
+                                                    <MouseBinding MouseAction="LeftClick" Command="{Binding CmdCancel}"/>
+                                                </Border.InputBindings>
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Background" Value="White"/>
+                                                        <Setter Property="Effect">
+                                                            <Setter.Value>
+                                                                <DropShadowEffect ShadowDepth="1" Color="Black" BlurRadius="1" Opacity="0.5"/>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding SupportsCancellation}" Value="False">
+                                                                <Setter Property="Visibility" Value="Hidden"/>
+                                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding WasCancelled}" Value="True">
+                                                                <Setter Property="IsEnabled" Value="False"/>
+                                                            </DataTrigger>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="#EEE"/>
+                                                                <Setter Property="Effect">
+                                                                    <Setter.Value>
+                                                                        <DropShadowEffect ShadowDepth="1" Color="Black" BlurRadius="1" Opacity="1"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                            <Trigger Property="IsEnabled" Value="False">
+                                                                <Setter Property="Background" Value="White"/>
+                                                                <Setter Property="Effect">
+                                                                    <Setter.Value>
+                                                                        <DropShadowEffect ShadowDepth="1" Color="Black" BlurRadius="1" Opacity="0.5"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <Rectangle Width="10" Height="10">
+                                                    <Rectangle.Style>
+                                                        <Style TargetType="Rectangle">
+                                                            <Setter Property="Fill" Value="{StaticResource DrawingBrushCancel}"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsEnabled,
+                                                                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}}"
+                                                                            Value="False">
+                                                                    <Setter Property="Fill" Value="{StaticResource DrawingBrushCancelGray}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Rectangle.Style>
+                                                </Rectangle>
+                                            </Border>
+                                            <ProgressBar Grid.Column="2" Minimum="{Binding MinValue}" Maximum="{Binding MaxValue}" Value="{Binding Value}" IsIndeterminate="{Binding IsIndeterminate}" Height="5">
+                                                <ProgressBar.Style>
+                                                    <Style TargetType="ProgressBar">
+                                                        <Setter Property="Background" Value="#275471"/>
+                                                        <Setter Property="Foreground" Value="#4FB9FE"/>
+                                                        <Style.Triggers>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding WasCancelled}" Value="True"/>
+                                                                    <Condition Binding="{Binding IsIndeterminate}" Value="True"/>
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter Property="LayoutTransform">
+                                                                    <Setter.Value>
+                                                                        <RotateTransform Angle="180"/>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </MultiDataTrigger>
+                                                            <DataTrigger Binding="{Binding WasCancelled}" Value="True">
+                                                                <Setter Property="Background" Value="#722727"/>
+                                                                <Setter Property="Foreground" Value="#FE4D4D"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ProgressBar.Style>
+                                            </ProgressBar>
+                                            <TextBlock Grid.Column="4" Text="{Binding Text}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Border>
+                </asd:PopupContainer.PopupContent>
+                <asd:ProgressSpinner Width="16" Height="16"
+                                     FragmentCount="6"
+                                     IsAnimating="True">
+                    <asd:ProgressSpinner.Style>
+                        <Style TargetType="asd:ProgressSpinner">
+                            <Setter Property="FragmentActive" Value="White"/>
+                            <Setter Property="FragmentInactive" Value="#33adff"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Debugger.State}" Value="Running">
+                                    <Setter Property="FragmentInactive" Value="#ff8533"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </asd:ProgressSpinner.Style>
+                </asd:ProgressSpinner>
+            </asd:PopupContainer>
+        </Grid>
         <ad:DockingManager
             asd:Initialized.Command="{Binding CmdDockingManagerInitialized}"
             asd:Initialized.CommandParameter="{Binding RelativeSource={RelativeSource Self}}"

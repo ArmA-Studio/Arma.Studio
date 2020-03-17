@@ -147,6 +147,7 @@
     <Compile Include="UI\Converters\AllFalseMultiConverter.cs" />
     <Compile Include="UI\Converters\AllTrueMultiConverter.cs" />
     <Compile Include="UI\Converters\BoolAndMultiConverter.cs" />
+    <Compile Include="UI\Converters\OnEqualsConverter.cs" />
     <Compile Include="UI\Converters\SingleToCollectionConverter.cs" />
     <Compile Include="UI\Converters\StringEndsWithConverter.cs" />
     <Compile Include="UI\Converters\EqualMultiConverter.cs" />
@@ -171,6 +172,8 @@
     <Compile Include="UI\IMainWindow.cs" />
     <Compile Include="UI\IEditorDocument.cs" />
     <Compile Include="UI\IEditorProvider.cs" />
+    <Compile Include="UI\PopupContainer.cs" />
+    <Compile Include="UI\ProgressSpinner.cs" />
     <Compile Include="UI\PropertyAttribute.cs" />
     <Compile Include="UI\RelayCommand.cs" />
     <Compile Include="UI\RelayCommandAsync.cs" />
@@ -201,6 +204,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\PopupContainer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\ProgressSpinner.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
