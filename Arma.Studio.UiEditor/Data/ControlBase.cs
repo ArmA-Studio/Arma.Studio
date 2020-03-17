@@ -176,7 +176,7 @@ namespace Arma.Studio.UiEditor.Data
         /// 
         /// Useful to note is that the following should yield the correct sizeEx value: (0.0264 * safeZoneH) * FontSize
         /// </summary>
-        [ArmaName("sizeEx", Group = PropGroup_Text)]
+        [ArmaName("sizeEx", Group = PropGroup_Text, MaxValue = 1.0, MinValue = 0.0, Stepsize = 0.01)]
         public double FontSize
         {
             get => this._FontSize;
@@ -382,11 +382,11 @@ namespace Arma.Studio.UiEditor.Data
         }
         private bool _IsDeletable;
         #endregion
-        #region Property: Opacity {fade} (System.Double)
+        #region Property: Fade {fade} (System.Double)
         /// <summary>
         /// Initial fade of the control
         /// </summary>
-        [ArmaName("fade", Group = PropGroup_Visual)]
+        [ArmaName("fade", Group = PropGroup_Visual, MaxValue = 1.0, MinValue = 0.0, Stepsize = 0.01)]
         public double Fade
         {
             get => this._Fade;

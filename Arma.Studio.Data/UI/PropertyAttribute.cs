@@ -32,6 +32,22 @@ namespace Arma.Studio.Data.UI
         /// </summary>
         public object Default { get; set; }
 
+        /// <summary>
+        /// UI-Configuration.
+        /// The Minimum value the property is supposed to have.
+        /// </summary>
+        public double MinValue { get; set; }
+        /// <summary>
+        /// UI-Configuration.
+        /// The Maximum value the property is supposed to have.
+        /// </summary>
+        public double MaxValue { get; set; }
+        /// <summary>
+        /// UI-Configuration.
+        /// Stepsize for numeric up-down.
+        /// </summary>
+        public double Stepsize { get; set; }
+
         public PropertyAttribute(string title)
         {
             this.Title = title;
@@ -39,6 +55,9 @@ namespace Arma.Studio.Data.UI
             this.Description = string.Empty;
             this.Group = null;
             this.Default = null;
+            this.MinValue = double.MinValue;
+            this.MaxValue = double.MaxValue;
+            this.Stepsize = 1;
         }
     }
 }

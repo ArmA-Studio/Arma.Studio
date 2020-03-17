@@ -20,7 +20,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerByte(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Byte)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerByte(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Byte)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
 		}
     }
     public class PropertyContainerSByte : PropertyContainerBase
@@ -41,7 +45,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerSByte(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (SByte)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerSByte(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (SByte)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
 		}
     }
     public class PropertyContainerInt32 : PropertyContainerBase
@@ -62,7 +70,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerInt32(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Int32)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerInt32(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Int32)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
 		}
     }
     public class PropertyContainerUInt32 : PropertyContainerBase
@@ -83,7 +95,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerUInt32(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (UInt32)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerUInt32(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (UInt32)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
 		}
     }
     public class PropertyContainerInt16 : PropertyContainerBase
@@ -104,7 +120,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerInt16(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Int16)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerInt16(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Int16)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
 		}
     }
     public class PropertyContainerUInt16 : PropertyContainerBase
@@ -125,7 +145,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerUInt16(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (UInt16)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerUInt16(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (UInt16)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
 		}
     }
     public class PropertyContainerInt64 : PropertyContainerBase
@@ -146,7 +170,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerInt64(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Int64)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerInt64(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Int64)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
 		}
     }
     public class PropertyContainerUInt64 : PropertyContainerBase
@@ -167,7 +195,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerUInt64(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (UInt64)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerUInt64(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (UInt64)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
 		}
     }
     public class PropertyContainerSingle : PropertyContainerBase
@@ -188,7 +220,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerSingle(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Single)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerSingle(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Single)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
 		}
     }
     public class PropertyContainerDouble : PropertyContainerBase
@@ -209,7 +245,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerDouble(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Double)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerDouble(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Double)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
 		}
     }
     public class PropertyContainerChar : PropertyContainerBase
@@ -230,7 +270,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerChar(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Char)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerChar(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Char)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
 		}
     }
     public class PropertyContainerBoolean : PropertyContainerBase
@@ -251,7 +295,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerBoolean(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Boolean)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerBoolean(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Boolean)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
 		}
     }
     public class PropertyContainerString : PropertyContainerBase
@@ -272,7 +320,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerString(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (String)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerString(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (String)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
 		}
     }
     public class PropertyContainerDecimal : PropertyContainerBase
@@ -293,7 +345,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerDecimal(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Decimal)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerDecimal(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Decimal)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
 		}
     }
 }

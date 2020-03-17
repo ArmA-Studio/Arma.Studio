@@ -45,7 +45,7 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             }
 
             var enumValues = Enum.GetValues(propertyInfo.PropertyType);
-            return new PropertyContainerEnum(
+            var container = new PropertyContainerEnum(
                 attribute.Title,
                 attribute.Description,
                 data,
@@ -53,6 +53,10 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
                 enumValues.Cast<object>().Select((it) => new EnumValue(it, Studio.Data.UI.Converters.EnumNameConverter.Instance.Convert(propertyInfo.PropertyType, it))),
                 (obj) => propertyInfo.GetValue(obj, null),
                 (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
         }
     }
 }
