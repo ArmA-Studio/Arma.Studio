@@ -439,8 +439,63 @@ namespace Arma.Studio.UI
                 this.FoldingManager = ICSharpCode.AvalonEdit.Folding.FoldingManager.Install(textEditor.TextArea);
 
                 textEditor.TextArea.TextEntering += this.TextArea_TextEntering;
-                textEditor.TextArea.TextEntered += this.TextArea_TextEntered; ;
+                textEditor.TextArea.TextEntered += this.TextArea_TextEntered;
+                textEditor.MouseHover += this.TextEditor_MouseHover;
+                textEditor.MouseHoverStopped += this.TextEditor_MouseHoverStopped;
             }
+        }
+
+
+        public ToolTip ToolTip
+        {
+            get
+            {
+                if (this._ToolTip is null)
+                {
+                    this._ToolTip = new ToolTip
+                    {
+                        PlacementTarget = this.TextEditorControl,
+                        Placement = PlacementMode.MousePoint,
+                        ContentTemplateSelector = new RelayDataTemplateSelector(this.TextEditorControl)
+                    };
+                }
+                this._ToolTip.IsOpen = true;
+                return this._ToolTip;
+            }
+        }
+        private ToolTip _ToolTip;
+        private void TextEditor_MouseHover(object sender, MouseEventArgs e)
+        {
+            var relativePosition = e.GetPosition(this.TextEditorControl);
+            var textPosition = this.TextEditorControl.GetPositionFromPoint(relativePosition);
+            if (textPosition is null)
+            {
+                return;
+            }
+            var offset = this.TextDocument.GetOffset(textPosition.Value.Line, textPosition.Value.Column);
+            int start, end;
+            if (this.TextEditorInstance is ICodeCompletable codeCompletable)
+            {
+                start = this.TextDocument.GetStartOffset(offset, codeCompletable.IsSeparatorCharacter);
+                end = this.TextDocument.GetEndOffset(offset, codeCompletable.IsSeparatorCharacter);
+            }
+            else
+            {
+                start = this.TextDocument.GetStartOffset(offset);
+                end = this.TextDocument.GetEndOffset(offset);
+            }
+            var word = this.TextDocument.GetText(start, end - start);
+            start = this.TextDocument.GetLocation(start).Column - 1;
+            end = this.TextDocument.GetLocation(end).Column;
+            var lintInfo = this.GetLintInfos().Where((it) => it.Line == textPosition.Value.Line && start <= it.Column && it.Column <= end).FirstOrDefault();
+            if (lintInfo != null)
+            {
+                this.ToolTip.Content = lintInfo;
+            }
+        }
+        private void TextEditor_MouseHoverStopped(object sender, MouseEventArgs e)
+        {
+            this.ToolTip.IsOpen = false;
         }
 
         private void TextArea_TextEntered(object sender, TextCompositionEventArgs e)
@@ -571,11 +626,11 @@ namespace Arma.Studio.UI
                     this.CompletionWindow.Closed += delegate {
                         this.CompletionWindow = null;
                     };
-                    this.CompletionWindow.StartOffset = this.TextEditorControl.GetStartOffset(codeCompletable.IsSeparatorCharacter);
+                    this.CompletionWindow.StartOffset = this.TextEditorControl.GetStartOffsetByCaret(codeCompletable.IsSeparatorCharacter);
                     this.CompletionWindow.EndOffset = this.TextEditorControl.CaretOffset;
                     this.CompletionWindow.Show();
                 }
-                this.CompletionWindow.StartOffset = this.TextEditorControl.GetStartOffset(codeCompletable.IsSeparatorCharacter);
+                this.CompletionWindow.StartOffset = this.TextEditorControl.GetStartOffsetByCaret(codeCompletable.IsSeparatorCharacter);
                 var data = this.CompletionWindow.CompletionList.CompletionData;
                 data.Clear();
                 data.AddRange(codeCompletable.GetAutoCompleteInfos(this.TextDocument.Text, this.TextEditorControl.CaretOffset).Select((it) => new CompletionData(it)));

@@ -177,6 +177,7 @@
     <Compile Include="UI\EditorInfo.cs" />
     <Compile Include="UI\EditorInfoDrawingBrush.cs" />
     <Compile Include="UI\EditorInfoIcon.cs" />
+    <Compile Include="UI\RelayDataTemplateSelector.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TypeExtensions.tt">

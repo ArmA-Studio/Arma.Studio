@@ -15,6 +15,23 @@
                     IsReadOnly="{Binding IsReadOnly}"
                     FontFamily="Consolas"
                     asd:AttachedDataContext.DataContext="{Binding}">
-
+        <ae:TextEditor.Resources>
+            <DataTemplate DataType="{x:Type asd:LintInfo}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="4"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="4"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{Binding Severity, Converter={StaticResource EnumNameConverter}}" VerticalAlignment="Center" FontSize="10"/>
+                    <TextBlock Grid.Column="2" Text="{Binding Line, StringFormat={}[L{0}}" VerticalAlignment="Center" FontSize="10"/>
+                    <TextBlock Grid.Column="3" Text="{Binding Column, StringFormat={}C{0}]}" VerticalAlignment="Center" FontSize="10"/>
+                    <TextBlock Grid.Column="5" Text="{Binding Description}" VerticalAlignment="Center"/>
+                </Grid>
+            </DataTemplate>
+        </ae:TextEditor.Resources>
     </ae:TextEditor>
 </DataTemplate>
