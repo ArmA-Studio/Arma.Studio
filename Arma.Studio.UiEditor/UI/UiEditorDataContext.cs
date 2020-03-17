@@ -388,8 +388,13 @@ namespace Arma.Studio.UiEditor.UI
                     // unknown cause
                     throw new Exception();
                 }
-                var preproc = vm.PreProcess(code, this.File.FullPath);
-                var configBin = vm.ParseIntoConfig(preproc, this.File.FullPath);
+                var preproc = Utility.CatchYield(() => vm.PreProcess(code, this.File.FullPath));
+                if (preproc is null)
+                {
+                    // parse failed
+                    throw new Exception();
+                }
+                var configBin = Utility.CatchYield(() => vm.ParseIntoConfig(preproc, this.File.FullPath));
                 if (configBin is null)
                 {
                     // parse failed
