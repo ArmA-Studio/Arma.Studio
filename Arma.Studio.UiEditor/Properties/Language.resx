@@ -312,4 +312,10 @@
   <data name="UiEditor_FailedToLoad_Caption" xml:space="preserve">
     <value>Failed to load all classes</value>
   </data>
+  <data name="UiEditor_FailedToLoadConfig_Body" xml:space="preserve">
+    <value>Failed to load config.</value>
+  </data>
+  <data name="UiEditor_FailedToLoadConfig_Caption" xml:space="preserve">
+    <value>Load Failed</value>
+  </data>
 </root>
