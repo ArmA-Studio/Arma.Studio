@@ -119,7 +119,7 @@ namespace Arma.Studio.Data.UI
 
                 if (parentRank == 0)
                 {
-                    return dt;
+                    return it;
                 }
 
                 if (parentRank < dtRank)
