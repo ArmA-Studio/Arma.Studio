@@ -32,6 +32,24 @@
                     <TextBlock Grid.Column="5" Text="{Binding Description}" VerticalAlignment="Center"/>
                 </Grid>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type asd:VariableInfo}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="4"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="4"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{Binding Data}" VerticalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Column="2" Text="{Binding DataType}" VerticalAlignment="Center" FontSize="10" Opacity="0.5"/>
+                    <TextBlock Grid.Column="4" Text="{Binding ScopeName, StringFormat='{}(scope `{0}` '}" VerticalAlignment="Center" FontSize="10" Opacity="0.5"/>
+                    <TextBlock Grid.Column="5" Text="{Binding ScopeIndex, StringFormat='{} {0}'}" VerticalAlignment="Center" FontSize="10" Opacity="0.5"/>
+                    <TextBlock Grid.Column="6" Text="{Binding VariableName, StringFormat='{} with {0})'}" VerticalAlignment="Center" Opacity="0.5"/>
+                </Grid>
+            </DataTemplate>
         </ae:TextEditor.Resources>
     </ae:TextEditor>
 </DataTemplate>

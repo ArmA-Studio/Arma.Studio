@@ -492,6 +492,15 @@ namespace Arma.Studio.UI
             {
                 this.ToolTip.Content = lintInfo;
             }
+            else if (!String.IsNullOrWhiteSpace(word) && App.MWContext.Debugger != null && App.MWContext.Debugger.State != Data.Debugging.EDebugState.NA)
+            {
+                var variable = App.MWContext.Debugger.GetLocalVariables().FirstOrDefault((it) => it.VariableName.Equals(word, StringComparison.InvariantCultureIgnoreCase));
+                if (variable is null)
+                {
+                    variable = App.MWContext.Debugger.GetVariable(word, Data.Debugging.ENamespace.MissionNamespace);
+                }
+                this.ToolTip.Content = variable;
+            }
         }
         private void TextEditor_MouseHoverStopped(object sender, MouseEventArgs e)
         {
