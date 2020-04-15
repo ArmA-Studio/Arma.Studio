@@ -642,7 +642,9 @@
                 </asd:PopupContainer.PopupContent>
                 <asd:ProgressSpinner Width="16" Height="16"
                                      FragmentCount="6"
-                                     IsAnimating="True">
+                                     IsAnimating="{Binding BusyContainerManager.Items.Count,
+                                                           Converter={StaticResource OnEqualsConverter},
+                                                           ConverterParameter=0|False|True}">
                     <asd:ProgressSpinner.Style>
                         <Style TargetType="asd:ProgressSpinner">
                             <Setter Property="FragmentActive" Value="White"/>
