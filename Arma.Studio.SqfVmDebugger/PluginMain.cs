@@ -242,7 +242,7 @@ namespace Arma.Studio.SqfVmDebugger
                         }, TaskContinuationOptions.OnlyOnRanToCompletion);
                     }
                 }
-                if (this.State == EDebugState.NA)
+                if (this.State == EDebugState.NA && this.Virtualmachine != null)
                 {
                     Logger.Trace($"Destroying Virtualmachine.");
                     this.Virtualmachine.OnLog -= this.Virtualmachine_OnLog;
