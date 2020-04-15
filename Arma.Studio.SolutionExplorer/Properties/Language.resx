@@ -171,4 +171,13 @@
   <data name="SolutionExplorer_ContextMenu_OpenFolder" xml:space="preserve">
     <value>Open folder</value>
   </data>
+  <data name="SolutionExplorer_ContextMenu_RemovePbo" xml:space="preserve">
+    <value>Remove PBO</value>
+  </data>
+  <data name="SolutionExplorer_ContextMenu_RemovePbo_Confirm_Body_0pboname" xml:space="preserve">
+    <value>Are you sure you want to remove the PBO '{0}'?</value>
+  </data>
+  <data name="SolutionExplorer_ContextMenu_RemovePbo_Confirm_Caption" xml:space="preserve">
+    <value>Removal confirmation</value>
+  </data>
 </root>

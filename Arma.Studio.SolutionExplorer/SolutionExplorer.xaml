@@ -55,6 +55,14 @@
                         <Rectangle Fill="{StaticResource DrawingBrushOpen}" Width="16" Height="16"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Header="{x:Static p:Language.SolutionExplorer_ContextMenu_RemovePbo}"
+                          Command="{Binding Tag.CmdRemovePbo}"
+                          CommandParameter="{Binding DataContext}"
+                          IsEnabled="{Binding DataContext, Converter={StaticResource IsAssignableFromConverter}, ConverterParameter={x:Type data:PBO}}">
+                    <MenuItem.Icon>
+                        <Rectangle Fill="{StaticResource DrawingBrushDelete}" Width="16" Height="16"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </ContextMenu>
         </Grid.Resources>
         <Grid.RowDefinitions>

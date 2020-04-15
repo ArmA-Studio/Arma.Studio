@@ -83,6 +83,14 @@ namespace Arma.Studio.SolutionExplorer
                 this.FileManagement.Add(pbo);
             }
         });
+        public ICommand CmdRemovePbo => new RelayCommand<PBO>((pbo) =>
+        {
+            if (MessageBox.Show(String.Format(Properties.Language.SolutionExplorer_ContextMenu_RemovePbo_Confirm_Body_0pboname, pbo.Name),
+                Properties.Language.SolutionExplorer_ContextMenu_RemovePbo_Confirm_Caption, MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+            {
+                this.FileManagement.Remove(pbo);
+            }
+        });
 
         public ICommand CmdAddNewItem => new RelayCommand<FileFolderBase>((ffb) =>
         {

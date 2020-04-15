@@ -196,6 +196,33 @@ namespace Arma.Studio.SolutionExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove PBO.
+        /// </summary>
+        public static string SolutionExplorer_ContextMenu_RemovePbo {
+            get {
+                return ResourceManager.GetString("SolutionExplorer_ContextMenu_RemovePbo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove the PBO &apos;{0}&apos;?.
+        /// </summary>
+        public static string SolutionExplorer_ContextMenu_RemovePbo_Confirm_Body_0pboname {
+            get {
+                return ResourceManager.GetString("SolutionExplorer_ContextMenu_RemovePbo_Confirm_Body_0pboname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removal confirmation.
+        /// </summary>
+        public static string SolutionExplorer_ContextMenu_RemovePbo_Confirm_Caption {
+            get {
+                return ResourceManager.GetString("SolutionExplorer_ContextMenu_RemovePbo_Confirm_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rescan.
         /// </summary>
         public static string SolutionExplorer_ContextMenu_RescanPbo {
