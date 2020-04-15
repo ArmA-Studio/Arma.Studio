@@ -158,8 +158,8 @@ namespace Arma.Studio.SqfEditor
                                         Line = line,
                                         Column = column,
                                         Severity = ESeverity.Error,
-                                        File = file,
-                                        Description = message
+                                        File = file.Trim(),
+                                        Description = message.Trim()
                                     });
                                 }
                             }

@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
-            <xceed:ByteUpDown Grid.Column="2" Value="{Binding Value}"/>
+            <xceed:ByteUpDown Grid.Column="2" Value="{Binding Value}" Minimum="{Binding MinValue}" Maximum="{Binding MaxValue}" Increment="{Binding Stepsize}"/>
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerChar}">
@@ -49,7 +49,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
-            <xceed:DecimalUpDown Grid.Column="2" Value="{Binding Value}"/>
+            <xceed:DecimalUpDown Grid.Column="2" Value="{Binding Value}" Minimum="{Binding MinValue}" Maximum="{Binding MaxValue}" Increment="{Binding Stepsize}"/>
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerDouble}">
@@ -60,7 +60,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
-            <xceed:DoubleUpDown Grid.Column="2" Value="{Binding Value}"/>
+            <xceed:DoubleUpDown Grid.Column="2" Value="{Binding Value}" Minimum="{Binding MinValue}" Maximum="{Binding MaxValue}" Increment="{Binding Stepsize}"/>
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerEnum}">
@@ -82,7 +82,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
-            <xceed:ShortUpDown Grid.Column="2" Value="{Binding Value}"/>
+            <xceed:ShortUpDown Grid.Column="2" Value="{Binding Value}" Minimum="{Binding MinValue}" Maximum="{Binding MaxValue}" Increment="{Binding Stepsize}"/>
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerInt32}">
@@ -93,7 +93,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
-            <xceed:IntegerUpDown Grid.Column="2" Value="{Binding Value}"/>
+            <xceed:IntegerUpDown Grid.Column="2" Value="{Binding Value}" Minimum="{Binding MinValue}" Maximum="{Binding MaxValue}" Increment="{Binding Stepsize}"/>
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerInt64}">
@@ -104,7 +104,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
-            <xceed:LongUpDown Grid.Column="2" Value="{Binding Value}"/>
+            <xceed:LongUpDown Grid.Column="2" Value="{Binding Value}" Minimum="{Binding MinValue}" Maximum="{Binding MaxValue}" Increment="{Binding Stepsize}"/>
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerSByte}">
@@ -115,7 +115,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
-            <xceed:SByteUpDown Grid.Column="2" Value="{Binding Value}"/>
+            <xceed:SByteUpDown Grid.Column="2" Value="{Binding Value}" Minimum="{Binding MinValue}" Maximum="{Binding MaxValue}" Increment="{Binding Stepsize}"/>
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerSingle}">
@@ -126,7 +126,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
-            <xceed:SingleUpDown Grid.Column="2" Value="{Binding Value}"/>
+            <xceed:SingleUpDown Grid.Column="2" Value="{Binding Value}" Minimum="{Binding MinValue}" Maximum="{Binding MaxValue}" Increment="{Binding Stepsize}"/>
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerString}">
@@ -148,7 +148,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
-            <xceed:UShortUpDown Grid.Column="2" Value="{Binding Value}"/>
+            <xceed:UShortUpDown Grid.Column="2" Value="{Binding Value}" Minimum="{Binding MinValue}" Maximum="{Binding MaxValue}" Increment="{Binding Stepsize}"/>
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerUInt32}">
@@ -159,7 +159,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
-            <xceed:UIntegerUpDown Grid.Column="2" Value="{Binding Value}"/>
+            <xceed:UIntegerUpDown Grid.Column="2" Value="{Binding Value}" Minimum="{Binding MinValue}" Maximum="{Binding MaxValue}" Increment="{Binding Stepsize}"/>
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerUInt64}">
@@ -170,7 +170,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{Binding Title}"/>
-            <xceed:UIntegerUpDown Grid.Column="2" Value="{Binding Value}"/>
+            <xceed:UIntegerUpDown Grid.Column="2" Value="{Binding Value}" Minimum="{Binding MinValue}" Maximum="{Binding MaxValue}" Increment="{Binding Stepsize}"/>
         </Grid>
     </DataTemplate>
     <DataTemplate DataType="{x:Type containers:PropertyContainerColor}">

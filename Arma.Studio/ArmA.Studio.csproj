@@ -247,6 +247,11 @@
   <ItemGroup>
     <Resource Include="Resources\UserIdentificationDialog\UserIdentifier.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReadMe.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>git rev-parse HEAD &gt; "$(ProjectDir)\git-version.txt"

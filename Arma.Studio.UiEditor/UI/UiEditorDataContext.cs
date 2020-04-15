@@ -388,12 +388,29 @@ namespace Arma.Studio.UiEditor.UI
                     // unknown cause
                     throw new Exception();
                 }
-                var preproc = vm.PreProcess(code, this.File.FullPath);
-                var configBin = vm.ParseIntoConfig(preproc, this.File.FullPath);
+                var preproc = Utility.CatchYield(() => vm.PreProcess(code, this.File.FullPath));
+                if (preproc is null)
+                {
+                    // parse failed
+                    MessageBox.Show(
+                        Properties.Language.UiEditor_FailedToLoadConfig_Body,
+                        Properties.Language.UiEditor_FailedToLoadConfig_Caption,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                    this.Close();
+                    return;
+                }
+                var configBin = Utility.CatchYield(() => vm.ParseIntoConfig(preproc, this.File.FullPath));
                 if (configBin is null)
                 {
                     // parse failed
-                    throw new Exception();
+                    MessageBox.Show(
+                        Properties.Language.UiEditor_FailedToLoadConfig_Body,
+                        Properties.Language.UiEditor_FailedToLoadConfig_Caption,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information);
+                    this.Close();
+                    return;
                 }
                 if (configBin.Count == 0)
                 {

@@ -26,6 +26,22 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             }
         }
 
+        /// <summary>
+        /// UI-Configuration.
+        /// The Minimum value the property is supposed to have.
+        /// </summary>
+        public double MinValue { get; set; }
+        /// <summary>
+        /// UI-Configuration.
+        /// The Maximum value the property is supposed to have.
+        /// </summary>
+        public double MaxValue { get; set; }
+        /// <summary>
+        /// UI-Configuration.
+        /// Stepsize for numeric up-down.
+        /// </summary>
+        public double Stepsize { get; set; }
+
         public string Title { get; }
         public string ToolTip { get; }
         public PropertyContainerBase(string title, string tooltip, object data, string propertyName, Func<object, object> getFunc, Action<object, object> setFunc)

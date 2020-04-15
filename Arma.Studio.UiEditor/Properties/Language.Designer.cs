@@ -547,6 +547,24 @@ namespace Arma.Studio.UiEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to load config..
+        /// </summary>
+        public static string UiEditor_FailedToLoadConfig_Body {
+            get {
+                return ResourceManager.GetString("UiEditor_FailedToLoadConfig_Body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load Failed.
+        /// </summary>
+        public static string UiEditor_FailedToLoadConfig_Caption {
+            get {
+                return ResourceManager.GetString("UiEditor_FailedToLoadConfig_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Height.
         /// </summary>
         public static string UiEditor_Height {

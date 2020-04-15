@@ -60,7 +60,6 @@ namespace Arma.Studio.UI
             }
         }
 
-
         public void Draw(TextView textView, DrawingContext drawingContext)
         {
             textView.EnsureVisualLines();

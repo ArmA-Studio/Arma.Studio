@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Arma.Studio.Data.UI">
+    <Style x:Key="{x:Type local:ProgressSpinner}" TargetType="{x:Type local:ProgressSpinner}">
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
+    </Style>
+</ResourceDictionary>

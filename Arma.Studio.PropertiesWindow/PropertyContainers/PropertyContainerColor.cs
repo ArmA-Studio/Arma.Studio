@@ -27,7 +27,11 @@ namespace Arma.Studio.PropertiesWindow.PropertyContainers
             {
                 throw new ArgumentException("Missing Arma.Studio.Data.UI.PropertyAttribute.", nameof(propertyInfo));
             }
-            return new PropertyContainerColor(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Color)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            var container = new PropertyContainerColor(attribute.Title, attribute.Description, data, propertyInfo.Name, (obj) => (Color)propertyInfo.GetValue(obj, null), (obj, val) => propertyInfo.SetValue(obj, val, null));
+            container.Stepsize = attribute.Stepsize;
+            container.MinValue = attribute.MinValue;
+            container.MaxValue = attribute.MaxValue;
+            return container;
         }
     }
 }
